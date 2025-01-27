@@ -13,33 +13,34 @@ public class MouseCollisionOnItems : MonoBehaviour
     private HashSet<GameObject> bars = new HashSet<GameObject>();
     private HashSet<GameObject> fences = new HashSet<GameObject>();
     private HashSet<GameObject> electricFences = new HashSet<GameObject>();
+    private HashSet<GameObject> buttons = new HashSet<GameObject>();
+    private HashSet<GameObject> idSlots = new HashSet<GameObject>();
+    private HashSet<GameObject> idPanels = new HashSet<GameObject>();
 
     public bool isTouchingItem => items.Count > 0;
     public GameObject touchedItem => items.Count > 0 ? GetFirst(items) : null;
-
     public bool isTouchingInvSlot => invSlots.Count > 0;
     public GameObject touchedInvSlot => invSlots.Count > 0 ? GetFirst(invSlots) : null;
-
     public bool isTouchingDesk => desks.Count > 0;
     public GameObject touchedDesk => desks.Count > 0 ? GetFirst(desks) : null;
-
     public bool isTouchingDeskSlot => deskSlots.Count > 0;
     public GameObject touchedDeskSlot => deskSlots.Count > 0 ? GetFirst(deskSlots) : null;
-
     public bool isTouchingDeskPanel => deskPanels.Count > 0;
     public GameObject touchedDeskPanel => deskPanels.Count > 0 ? GetFirst(deskPanels) : null;
-
     public bool isTouchingWall => walls.Count > 0;
     public GameObject touchedWall => walls.Count > 0 ? GetFirst(walls) : null;
-
     public bool isTouchingBars => bars.Count > 0;
     public GameObject touchedBars => bars.Count > 0 ? GetFirst(bars) : null;
-
     public bool isTouchingFence => fences.Count > 0;
     public GameObject touchedFence => fences.Count > 0 ? GetFirst(fences) : null;
-
     public bool isTouchingElectricFence => electricFences.Count > 0;
     public GameObject touchedElectricFence => electricFences.Count > 0 ? GetFirst(electricFences) : null;
+    public bool isTouchingButton => buttons.Count > 0;
+    public GameObject touchedButton => buttons.Count > 0 ? GetFirst(buttons) : null;
+    public bool isTouchingIDSlot => idSlots.Count > 0;
+    public GameObject touchedIDSlot => idSlots.Count > 0 ? GetFirst(idSlots) : null;
+    public bool isTouchingIDPanel => idPanels.Count > 0;
+    public GameObject touchedIDPanel => idPanels.Count > 0 ? GetFirst(idPanels) : null;
 
     void Update()
     {
@@ -109,6 +110,15 @@ public class MouseCollisionOnItems : MonoBehaviour
             case "ElectricFence":
                 electricFences.Add(obj);
                 break;
+            case "Button":
+                buttons.Add(obj);
+                break;
+            case "IDSlot":
+                idSlots.Add(obj);
+                break;
+            case "IDPanel":
+                idPanels.Add(obj);
+                break;
         }
     }
 
@@ -123,6 +133,9 @@ public class MouseCollisionOnItems : MonoBehaviour
         bars.Clear();
         fences.Clear();
         electricFences.Clear();
+        buttons.Clear();
+        idSlots.Clear();
+        idPanels.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

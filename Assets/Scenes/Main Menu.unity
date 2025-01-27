@@ -5796,6 +5796,8 @@ MonoBehaviour:
   MainMenuCanvas: {fileID: 256175213}
   normalSprite: {fileID: 21300000, guid: 1d418dac7913d7d42aa82e51d002914b, type: 3}
   pressedSprite: {fileID: 21300000, guid: f425f415347cff84fbb2505dc9162783, type: 3}
+  setName: 
+  setCharacter: 0
 --- !u!1 &1056528131
 GameObject:
   m_ObjectHideFlags: 0

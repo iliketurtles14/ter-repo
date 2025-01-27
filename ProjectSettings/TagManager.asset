@@ -47,6 +47,9 @@ TagManager:
   - Digable
   - Button
   - SmallMenuPanel
+  - StatBar
+  - IDPanel
+  - IDSlot
   layers:
   - Default
   - TransparentFX
