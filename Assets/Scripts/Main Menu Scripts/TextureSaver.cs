@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class TextureSaver : MonoBehaviour
 {
     public List<Texture2D> textureList = new List<Texture2D>(); // Your list of textures
-    public string saveFolderPath = "C:\\Users\\creep\\OneDrive\\Desktop\\directory"; // Change to your preferred directory
+    private string saveFolderPath = "C:\\Users\\creep\\OneDrive\\Desktop\\directory\\Prison Objects"; // Change to your preferred directory
 
     public void Start()
     {
-        textureList = GetComponent<MemoryMappedFileReader>().ImageList;
+        textureList = GetComponent<MemoryMappedFileReader>().PrisonObjectImages;
     }
     public void Update()
     {
@@ -18,7 +18,7 @@ public class TextureSaver : MonoBehaviour
             SaveTextures();
         }
     }
-
+    
 
     public void SaveTextures()
     {
