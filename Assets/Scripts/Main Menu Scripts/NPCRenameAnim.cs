@@ -12,6 +12,7 @@ public class NPCRenameAnim : MonoBehaviour
 {
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
+    public ApplyMainMenuData dataScript;
     public string bodyDirSpritesPath;
     private string outfitDirSpritesPath;
     private int whichCycle = 0;
@@ -23,12 +24,16 @@ public class NPCRenameAnim : MonoBehaviour
     }
     public void OnEnable()
     {
-        if (bodyDirSpritesPath != null)
+        if (bodyDirSprites != null)
         {
-            outfitDirSpritesPath = "NPC Sprites/Outfits/" + tag + "/Movement";
-
-            bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-            outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
+            if (tag == "Inmate")
+            {
+                outfitDirSprites = dataScript.InmateOutiftSprites;
+            }
+            else if (tag == "Guard")
+            {
+                outfitDirSprites = dataScript.GuardOutfitSprites;
+            }
 
             StartCoroutine(AnimCycle());
         }
@@ -36,18 +41,19 @@ public class NPCRenameAnim : MonoBehaviour
     }
     public void Randomize()
     {
-        outfitDirSpritesPath = "NPC Sprites/Outfits/" + tag + "/Movement";
-
-        bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-        outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
+        if (tag == "Inmate")
+        {
+            outfitDirSprites = dataScript.InmateOutiftSprites;
+        }
+        else if (tag == "Guard")
+        {
+            outfitDirSprites = dataScript.GuardOutfitSprites;
+        }
     }
 
     public void Update()
     {
-        bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-
         transform.Find("Outfit").position = transform.position;
-
 
         GetComponent<Image>().sprite = bodyDirSprites[6 + whichCycle];
         transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[6 + whichCycle];

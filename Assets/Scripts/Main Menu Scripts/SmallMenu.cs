@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,11 +13,13 @@ public class SmallMenu : MonoBehaviour
     private bool isOpen;
     public MouseCollisionOnButtons mouseCollisionScript;
     public NPCRename NPCRenameScript;
+    public ApplyMainMenuData dataScript;
     public Canvas MainMenuCanvas;
     public Sprite clearSprite;
     public Sprite normalSetSprite;
     public Sprite pressedSetSprite;
     public Sprite sadSetSprite;
+    public List<Sprite> characterSprites = new List<Sprite>();
 
     public void OnOpen(string name, string type, string character)
     {
@@ -37,15 +41,42 @@ public class SmallMenu : MonoBehaviour
         //get character num
         switch (npcCharacter)
         {
-            case "Rabbit": characterNum = 1; break;
-            case "BaldEagle": characterNum = 2; break;
-            case "Lifer": characterNum = 3; break;
-            case "YoungBuck": characterNum = 4; break;
-            case "OldTimer": characterNum = 5; break;
-            case "BillyGoat": characterNum = 6; break;
-            case "Froseph": characterNum = 7; break;
-            case "Tango": characterNum = 8; break;
-            case "Maru": characterNum = 9; break;
+            case "Rabbit":
+                characterSprites = dataScript.RabbitSprites;
+                characterNum = 1; 
+                break;
+            case "BaldEagle":
+                characterSprites = dataScript.BaldEagleSprites;
+                characterNum = 2; 
+                break;
+            case "Lifer":
+                characterSprites = dataScript.LiferSprites;
+                characterNum = 3; 
+                break;
+            case "YoungBuck":
+                characterSprites = dataScript.YoungBuckSprites;
+                characterNum = 4; 
+                break;
+            case "OldTimer":
+                characterSprites = dataScript.OldTimerSprites;
+                characterNum = 5; 
+                break;
+            case "BillyGoat":
+                characterSprites = dataScript.BillyGoatSprites;
+                characterNum = 6; 
+                break;
+            case "Froseph":
+                characterSprites = dataScript.FrosephSprites;
+                characterNum = 7; 
+                break;
+            case "Tango":
+                characterSprites = dataScript.TangoSprites;
+                characterNum = 8; 
+                break;
+            case "Maru":
+                characterSprites = dataScript.MaruSprites;
+                characterNum = 9; 
+                break;
         }
 
         if (characterNum == 1)
@@ -124,7 +155,7 @@ public class SmallMenu : MonoBehaviour
     }
     private void SetNPC(string name, string displayName, string character)
     {
-        MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).GetComponent<NPCRenameAnim>().bodyDirSpritesPath = "NPC Sprites/" + character + "/Movement";
+        MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).GetComponent<NPCRenameAnim>().bodyDirSprites = characterSprites;
         MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = character;
         if (MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).tag == "Inmate")
         {

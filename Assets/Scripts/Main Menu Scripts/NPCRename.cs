@@ -14,6 +14,7 @@ public class NPCRename : MonoBehaviour
     public SmallMenu smallMenuScript;
     public NPCSave saveScript;
     public PlayerMenu playerMenuScript;
+    public ApplyMainMenuData dataScript;
     public Sprite BackButtonNormalSprite;
     public Sprite BackButtonPressedSprite;
     public Sprite RandomButtonNormalSprite;
@@ -41,7 +42,7 @@ public class NPCRename : MonoBehaviour
     public bool comingFromRename;
     private GameObject NPCGrid;
     public List<NPCRenameAnim> animList;
-    private string path;
+    private List<Sprite> characterSprites = new List<Sprite>();
     public List<string> names = new List<string>();
     public List<string> currentNames = new List<string>();
     private bool hasRandomized;
@@ -294,31 +295,38 @@ public class NPCRename : MonoBehaviour
             int rand = UnityEngine.Random.Range(1, 10);
             switch (rand)
             {
-                case 1: path = "NPC Sprites/Rabbit/Movement";
+                case 1: characterSprites = dataScript.RabbitSprites;
                     setCharacter = "Rabbit";
                     break;
-                case 2: path = "NPC Sprites/BaldEagle/Movement";
+                case 2:
+                    characterSprites = dataScript.BaldEagleSprites;
                     setCharacter = "BaldEagle";
                     break;
-                case 3: path = "NPC Sprites/Lifer/Movement";
+                case 3:
+                    characterSprites = dataScript.LiferSprites;
                     setCharacter = "Lifer";
                     break;
-                case 4: path = "NPC Sprites/YoungBuck/Movement";
+                case 4:
+                    characterSprites = dataScript.YoungBuckSprites;
                     setCharacter = "YoungBuck";
                     break;
-                case 5: path = "NPC Sprites/OldTimer/Movement";
+                case 5:
+                    characterSprites = dataScript.OldTimerSprites;
                     setCharacter = "OldTimer";
                     break;
-                case 6: path = "NPC Sprites/BillyGoat/Movement";
+                case 6: characterSprites = dataScript.BillyGoatSprites;
                     setCharacter = "BillyGoat";
                     break;
-                case 7: path = "NPC Sprites/Froseph/Movement";
+                case 7:
+                    characterSprites = dataScript.FrosephSprites;
                     setCharacter = "Froseph";
                     break;
-                case 8: path = "NPC Sprites/Tango/Movement";
+                case 8:
+                    characterSprites = dataScript.TangoSprites;
                     setCharacter = "Tango";
                     break;
-                case 9: path = "NPC Sprites/Maru/Movement";
+                case 9:
+                    characterSprites = dataScript.MaruSprites;
                     setCharacter = "Maru";
                     break;
             }
@@ -332,7 +340,7 @@ public class NPCRename : MonoBehaviour
             {
                 transform.Find("NPCGrid").Find("Guard" + (i - 8)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
-            animList[i].bodyDirSpritesPath = path;
+            animList[i].bodyDirSprites = characterSprites;
         }
         foreach(Transform child in NPCGrid.transform)
         {
@@ -407,21 +415,44 @@ public class NPCRename : MonoBehaviour
     }
     private void SendData()
     {
-        switch (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSpritesPath)
+        if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.BaldEagleSprites)
         {
-            case "NPC Sprites/BaldEagle/Movement": character = "BaldEagle"; break;
-            case "NPC Sprites/BillyGoat/Movement": character = "BillyGoat"; break;
-            case "NPC Sprites/Froseph/Movement": character = "Froseph"; break;
-            case "NPC Sprites/Lifer/Movement": character = "Lifer"; break;
-            case "NPC Sprites/Maru/Movement": character = "Maru"; break;
-            case "NPC Sprites/OldTimer/Movement": character = "OldTimer"; break;
-            case "NPC Sprites/Rabbit/Movement": character = "Rabbit"; break;
-            case "NPC Sprites/Tango/Movement": character = "Tango"; break;
-            case "NPC Sprites/YoungBuck/Movement": character = "YoungBuck"; break;
+            character = "BaldEagle";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.BillyGoatSprites)
+        {
+            character = "BillyGoat";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.FrosephSprites)
+        {
+            character = "Froseph";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.LiferSprites)
+        {
+            character = "Lifer";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.MaruSprites)
+        {
+            character = "Maru";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.OldTimerSprites)
+        {
+            character = "OldTimer";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.RabbitSprites)
+        {
+            character = "Rabbit";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.TangoSprites)
+        {
+            character = "Tango";
+        }
+        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.YoungBuckSprites)
+        {
+            character = "YoungBuck";
         }
 
         smallMenuScript.OnOpen(lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName, lastPressedCharacter.tag, character);
-
     }
     private void Transfer()
     {

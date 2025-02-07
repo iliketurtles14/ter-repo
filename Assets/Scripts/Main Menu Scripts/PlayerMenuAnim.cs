@@ -13,6 +13,7 @@ public class PlayerMenuAnim : MonoBehaviour
     public string outfitDirSpritesPath;
     private int whichCycle = 0;
     public PlayerMenu playerMenuScript;
+    public ApplyMainMenuData dataScript;
 
     public void OnEnable()
     {
@@ -26,13 +27,21 @@ public class PlayerMenuAnim : MonoBehaviour
     {
         if(playerMenuScript.playerCharacter != null)
         {
-            bodyDirSpritesPath = "NPC Sprites/" + playerMenuScript.playerCharacter + "/Movement";
-            outfitDirSpritesPath = "NPC Sprites/Outfits/Inmate";
-            bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-            outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
+            switch (playerMenuScript.playerCharacter)
+            {
+                case "BaldEagle": bodyDirSprites = dataScript.BaldEagleSprites; break;
+                case "BillyGoat": bodyDirSprites = dataScript.BillyGoatSprites; break;
+                case "Froseph": bodyDirSprites = dataScript.FrosephSprites; break;
+                case "Lifer": bodyDirSprites = dataScript.LiferSprites; break;
+                case "Maru": bodyDirSprites = dataScript.MaruSprites; break;
+                case "OldTimer": bodyDirSprites = dataScript.OldTimerSprites; break;
+                case "Rabbit": bodyDirSprites = dataScript.RabbitSprites; break;
+                case "Tango": bodyDirSprites = dataScript.TangoSprites; break;
+                case "YoungBuck": bodyDirSprites = dataScript.YoungBuckSprites; break;
 
+            }
+            outfitDirSprites = dataScript.InmateOutiftSprites;
             transform.Find("Outfit").position = transform.position;
-
             GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];
             transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[whichCycle + 6];
         }

@@ -14,6 +14,7 @@ public class SmallMenuAnim : MonoBehaviour
     public string outfitDirSpritesPath;
     private int whichCycle = 0;
     public SmallMenu smallMenuScript;
+    public ApplyMainMenuData dataScript;
 
 
     public void OnEnable()
@@ -28,11 +29,16 @@ public class SmallMenuAnim : MonoBehaviour
     {
         if(smallMenuScript.npcCharacter != null && smallMenuScript.npcType != null)
         {
-            bodyDirSpritesPath = "NPC Sprites/" + smallMenuScript.npcCharacter + "/Movement";
-            outfitDirSpritesPath = "NPC Sprites/Outfits/" + smallMenuScript.npcType;
-            bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-            outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
-
+            bodyDirSprites = smallMenuScript.characterSprites;
+            
+            if (smallMenuScript.npcType == "Inmate")
+            {
+                outfitDirSprites = dataScript.InmateOutiftSprites;
+            }
+            else if (smallMenuScript.npcType == "Guard")
+            {
+                outfitDirSprites = dataScript.GuardOutfitSprites;
+            }
             transform.Find("Outfit").position = transform.position;
 
             GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];

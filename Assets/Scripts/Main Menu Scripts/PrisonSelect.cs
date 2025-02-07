@@ -10,8 +10,8 @@ public class PrisonSelect : MonoBehaviour
 {
     public MouseCollisionOnButtons mouseCollisionScript;
     public List<Sprite> prisonSprites = new List<Sprite>();
-    public List<Sprite> difficultySprites = new List<Sprite>();
     public TextMeshProUGUI prisonText;
+    public TextMeshProUGUI difficultyText;
     public GameObject CurrentPrisonObject;
     public GameObject CurrentDifficultyObject;
     public GameObject LeftArrow;
@@ -29,7 +29,6 @@ public class PrisonSelect : MonoBehaviour
     {
         whichPrison = 0;
         CurrentPrisonObject.GetComponent<Image>().sprite = prisonSprites[0];
-        CurrentDifficultyObject.GetComponent<Image>().sprite = difficultySprites[0];
         LeftArrow.GetComponent<Image>().enabled = false;
         LeftArrow.GetComponent<BoxCollider2D>().enabled = false;
     }
@@ -60,13 +59,40 @@ public class PrisonSelect : MonoBehaviour
 
         switch (whichPrison)
         {
-            case 0: prisonText.text = "TUTORIAL"; break;
-            case 1: prisonText.text = "CENTER PERKS"; break;
-            case 2: prisonText.text = "STALAG FLUCHT"; break;
-            case 3: prisonText.text = "SHANKTON STATE PEN"; break;
-            case 4: prisonText.text = "JUNGLE COMPOUND"; break;
-            case 5: prisonText.text = "SAN PANCHO"; break;
-            case 6: prisonText.text = "HMP IRONGATE"; break;
+            case 0:
+                prisonText.text = "TUTORIAL";
+                difficultyText.text = "";
+                break;
+            case 1:
+                prisonText.text = "CENTER PERKS";
+                difficultyText.text = "(Very Easy)";
+                difficultyText.color = new Color(12f / 255f, 255f / 255f, 0f / 255f); // Green color
+                break;
+            case 2:
+                prisonText.text = "STALAG FLUCHT";
+                difficultyText.text = "(Easy)";
+                difficultyText.color = new Color(9f / 255f, 180f / 255f, 0f / 255f); // Dark Green color
+                break;
+            case 3:
+                prisonText.text = "SHANKTON STATE PEN";
+                difficultyText.text = "(Moderate)";
+                difficultyText.color = new Color(255f / 255f, 191f / 255f, 0f / 255f); // Orange color
+                break;
+            case 4:
+                prisonText.text = "JUNGLE COMPOUND";
+                difficultyText.text = "(Moderate)";
+                difficultyText.color = new Color(255f / 255f, 191f / 255f, 0f / 255f); // Orange color
+                break;
+            case 5:
+                prisonText.text = "SAN PANCHO";
+                difficultyText.text = "(Hard)";
+                difficultyText.color = new Color(255f / 255f, 63f / 255f, 0f / 255f); // Red-Orange color
+                break;
+            case 6:
+                prisonText.text = "HMP IRONGATE";
+                difficultyText.text = "(Very Hard)";
+                difficultyText.color = new Color(166f / 255f, 0f / 255f, 0f / 255f); // Dark Red color
+                break;
         }
 
         if (mouseCollisionScript.isTouchingButton)
@@ -98,12 +124,10 @@ public class PrisonSelect : MonoBehaviour
                 case "LeftArrow":
                     whichPrison -= 1;
                     CurrentPrisonObject.GetComponent<Image>().sprite = prisonSprites[whichPrison];
-                    CurrentDifficultyObject.GetComponent<Image>().sprite = difficultySprites[whichPrison];
                     break;
                 case "RightArrow":
                     whichPrison += 1;
                     CurrentPrisonObject.GetComponent<Image>().sprite = prisonSprites[whichPrison];
-                    CurrentDifficultyObject.GetComponent<Image>().sprite = difficultySprites[whichPrison];
                     break;
                 case "BackButton":
                     PrisonSelectPanel.SetActive(false);
