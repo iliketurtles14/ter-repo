@@ -12,6 +12,8 @@ public class MemoryMappedFileReader : MonoBehaviour
 {
     public string mapName = "ClickteamMemoryMap";
 
+    public DataSender senderScript;
+
     // Public lists to store images and sounds
     public List<Texture2D> ImageList = new List<Texture2D>();
     public List<byte[]> ByteSoundList = new List<byte[]>();
@@ -90,6 +92,7 @@ public class MemoryMappedFileReader : MonoBehaviour
             }
             yield return null; // Allow Unity to process the next frame
         }
+        senderScript.SetSoundList(SoundList);
     }
 
     public IEnumerator WaitForImages()

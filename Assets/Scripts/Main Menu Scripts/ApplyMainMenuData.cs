@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class ApplyMainMenuData : MonoBehaviour
 {
     public MemoryMappedFileReader mmfrScript;
+    public DataSender senderScript;
+    private List<Sprite> ItemSprites;
     private List<Sprite> NPCSprites;
+    private List<Sprite> PrisonObjectSprites;
     private List<Sprite> UISprites;
     public Transform mmc;
     private bool hasApplied;
@@ -26,8 +29,12 @@ public class ApplyMainMenuData : MonoBehaviour
     {
         if(mmfrScript.canApply && !hasApplied)
         {
+            ItemSprites = ConvertTexture2DListToSpriteList(mmfrScript.ItemImages);
             NPCSprites = ConvertTexture2DListToSpriteList(mmfrScript.NPCImages);
+            PrisonObjectSprites = ConvertTexture2DListToSpriteList(mmfrScript.PrisonObjectImages);
             UISprites = ConvertTexture2DListToSpriteList(mmfrScript.UIImages);
+
+            senderScript.SetFullLists(ItemSprites, NPCSprites, PrisonObjectSprites, UISprites);
 
             hasApplied = true;
 
@@ -219,6 +226,10 @@ public class ApplyMainMenuData : MonoBehaviour
         GuardOutfitSprites.Add(NPCSprites[41]);
         GuardOutfitSprites.Add(NPCSprites[45]);
         GuardOutfitSprites.Add(NPCSprites[332]);
+
+        senderScript.SetNPCLists(InmateOutiftSprites, GuardOutfitSprites, RabbitSprites, BaldEagleSprites,
+            LiferSprites, YoungBuckSprites, OldTimerSprites, BillyGoatSprites, FrosephSprites,
+            TangoSprites, MaruSprites);
     }
 
 }
