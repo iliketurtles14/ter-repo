@@ -20,22 +20,17 @@ public class PlayerAnimation : MonoBehaviour
     {
         switch (NPCSave.instance.playerCharacter)
         {
-            case 1: character = "Rabbit"; break;
-            case 2: character = "BaldEagle"; break;
-            case 3: character = "Lifer"; break;
-            case 4: character = "YoungBuck"; break;
-            case 5: character = "OldTimer"; break;
-            case 6: character = "BillyGoat"; break;
-            case 7: character = "Froseph"; break;
-            case 8: character = "Tango"; break;
-            case 9: character = "Maru"; break;
+            case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
+            case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
+            case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
+            case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
+            case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
+            case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
+            case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
+            case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
+            case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
         }
-
-        bodyDirSpritesPath = "NPC Sprites/" + character + "/Movement";
-        outfitDirSpritesPath = "NPC Sprites/Outfits/Inmate/Movement";
-
-        bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-        outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
+        outfitDirSprites = DataSender.instance.InmateOutfitSprites;
 
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());

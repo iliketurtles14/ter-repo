@@ -20,12 +20,7 @@ public class NPCAnimation : MonoBehaviour
     private Vector2 currentPos;
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
-    private string bodyDirSpritesPath;
-    private string outfitDirSpritesPath;
-    private string NPCType;
-    private Vector2 direction;
     private int whichCycle = 0;
-    private string character;
 
 
     public void OnEnable()
@@ -38,20 +33,19 @@ public class NPCAnimation : MonoBehaviour
                 {
                     switch(NPCSave.instance.npcCharacters[i + 8])
                     {
-                        case 1: character = "Rabbit"; break;
-                        case 2: character = "BaldEagle"; break;
-                        case 3: character = "Lifer"; break;
-                        case 4: character = "YoungBuck"; break;
-                        case 5: character = "OldTimer"; break;
-                        case 6: character = "BillyGoat"; break;
-                        case 7: character = "Froseph"; break;
-                        case 8: character = "Tango"; break;
-                        case 9: character = "Maru"; break;
+                        case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
+                        case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
+                        case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
+                        case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
+                        case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
+                        case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
+                        case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
+                        case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
+                        case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
                     }
-
-                    bodyDirSpritesPath = "NPC Sprites/" + character + "/Movement";
                 }
             }
+            outfitDirSprites = DataSender.instance.InmateOutfitSprites;
         }
         else if(CompareTag("Inmate"))
         {
@@ -61,27 +55,20 @@ public class NPCAnimation : MonoBehaviour
                 {
                     switch (NPCSave.instance.npcCharacters[i - 1])
                     {
-                        case 1: character = "Rabbit"; break;
-                        case 2: character = "BaldEagle"; break;
-                        case 3: character = "Lifer"; break;
-                        case 4: character = "YoungBuck"; break;
-                        case 5: character = "OldTimer"; break;
-                        case 6: character = "BillyGoat"; break;
-                        case 7: character = "Froseph"; break;
-                        case 8: character = "Tango"; break;
-                        case 9: character = "Maru"; break;
+                        case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
+                        case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
+                        case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
+                        case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
+                        case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
+                        case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
+                        case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
+                        case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
+                        case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
                     }
-
-                    bodyDirSpritesPath = "NPC Sprites/" + character + "/Movement";
                 }
             }
+            outfitDirSprites = DataSender.instance.GuardOutfitSprites;
         }
-        
-        outfitDirSpritesPath = "NPC Sprites/Outfits/" + tag + "/Movement";
-
-        bodyDirSprites = Resources.LoadAll<Sprite>(bodyDirSpritesPath).ToList();
-        outfitDirSprites = Resources.LoadAll<Sprite>(outfitDirSpritesPath).ToList();
-
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
     }

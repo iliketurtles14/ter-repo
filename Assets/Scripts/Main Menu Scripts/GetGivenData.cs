@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System;
 using ImageMagick;
+using System.Threading.Tasks;
 
 public class GetGivenData : MonoBehaviour
 {
@@ -27,13 +28,19 @@ public class GetGivenData : MonoBehaviour
     public List<Sprite> sanpanchoList = new List<Sprite>();
     public List<Sprite> hmpList = new List<Sprite>();
 
-    public void Start()
+    public async void Start()
     {
-        LoadGroundTextures();
-        LoadTileTextures();
-        groundList = ConvertTexture2DListToSpriteList(groundTextureList);
-        tileList = ConvertTexture2DListToSpriteList(tileTextureList);
-        StartCoroutine(LoadMusicClips());
+        await LoadGroundTextures();
+        await LoadTileTextures();
+
+        groundList = new List<Sprite>();
+        tileList = new List<Sprite>();
+
+        // Start coroutines to convert textures to sprites
+        StartCoroutine(ConvertTexture2DListToSpriteList(groundTextureList, groundList));
+        StartCoroutine(ConvertTexture2DListToSpriteList(tileTextureList, tileList));
+
+        await LoadMusicClips();
 
         // Separate the tiles into smaller sprites
         SeparateTilesIntoLists();
@@ -42,24 +49,25 @@ public class GetGivenData : MonoBehaviour
         senderScript.SetMusicList(musicList);
     }
 
-    private void LoadGroundTextures()
+    private async Task LoadGroundTextures()
     {
-        string[] validFiles = new string[]
-        {
-            "ground_alca.gif", "ground_BC.gif", "ground_campepsilon.gif", "ground_CCL.gif",
-            "ground_DTAF.gif", "ground_EA.gif", "ground_escapeteam.gif", "ground_fortbamford.gif",
-            "ground_irongate.gif", "ground_jungle.gif", "ground_pcpen.gif", "ground_perks.gif",
-            "ground_sanpancho.gif", "ground_shanktonstatepen.gif", "ground_SS.gif", "ground_stalagflucht.gif",
-            "ground_TOL.gif", "ground_tutorial.gif", "soil.gif"
-        };
+        HashSet<string> validFiles = new HashSet<string>
+    {
+        "ground_alca.gif", "ground_BC.gif", "ground_campepsilon.gif", "ground_CCL.gif",
+        "ground_DTAF.gif", "ground_EA.gif", "ground_escapeteam.gif", "ground_fortbamford.gif",
+        "ground_irongate.gif", "ground_jungle.gif", "ground_pcpen.gif", "ground_perks.gif",
+        "ground_sanpancho.gif", "ground_shanktonstatepen.gif", "ground_SS.gif", "ground_stalagflucht.gif",
+        "ground_TOL.gif", "ground_tutorial.gif", "soil.gif"
+    };
 
         foreach (string file in Directory.GetFiles(groundPath))
         {
-            if (System.Array.Exists(validFiles, element => file.EndsWith(element)))
+            string fileName = Path.GetFileName(file);
+            if (validFiles.Contains(fileName))
             {
                 try
                 {
-                    byte[] fileData = File.ReadAllBytes(file);
+                    byte[] fileData = await File.ReadAllBytesAsync(file);
                     Texture2D texture = LoadGifAsTexture2D(fileData);
                     if (texture != null)
                     {
@@ -83,13 +91,13 @@ public class GetGivenData : MonoBehaviour
         }
     }
 
-    private void LoadTileTextures()
+    private async Task LoadTileTextures()
     {
-        string[] validFiles = new string[]
-        {
-            "tiles_cus_perks.gif", "tiles_cus_stalagflucht.gif", "tiles_cus_shanktonstatepen.gif",
-            "tiles_cus_jungle.gif", "tiles_cus_sanpancho.gif", "tiles_cus_irongate.gif"
-        };
+        HashSet<string> validFiles = new HashSet<string>
+    {
+        "tiles_cus_perks.gif", "tiles_cus_stalagflucht.gif", "tiles_cus_shanktonstatepen.gif",
+        "tiles_cus_jungle.gif", "tiles_cus_sanpancho.gif", "tiles_cus_irongate.gif"
+    };
 
         foreach (string validFile in validFiles)
         {
@@ -98,7 +106,7 @@ public class GetGivenData : MonoBehaviour
             {
                 try
                 {
-                    byte[] fileData = File.ReadAllBytes(filePath);
+                    byte[] fileData = await File.ReadAllBytesAsync(filePath);
                     Texture2D texture = LoadGifAsTexture2D(fileData);
                     if (texture != null)
                     {
@@ -121,7 +129,6 @@ public class GetGivenData : MonoBehaviour
             }
         }
     }
-
     private Texture2D LoadGifAsTexture2D(byte[] fileData)
     {
         using (MagickImageCollection collection = new MagickImageCollection(fileData))
@@ -165,14 +172,17 @@ public class GetGivenData : MonoBehaviour
         texture.SetPixels(pixels);
         texture.Apply();
     }
-
-    private IEnumerator LoadMusicClips()
+    private async Task LoadMusicClips()
     {
         foreach (string file in Directory.GetFiles(musicPath))
         {
             using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + file, AudioType.UNKNOWN))
             {
-                yield return www.SendWebRequest();
+                var operation = www.SendWebRequest();
+                while (!operation.isDone)
+                {
+                    await Task.Yield();
+                }
 
                 if (www.result == UnityWebRequest.Result.Success)
                 {
@@ -194,17 +204,20 @@ public class GetGivenData : MonoBehaviour
         }
     }
 
-    private List<Sprite> ConvertTexture2DListToSpriteList(List<Texture2D> textures)
+    private IEnumerator ConvertTexture2DListToSpriteList(List<Texture2D> textures, List<Sprite> sprites)
     {
-        List<Sprite> sprites = new List<Sprite>();
-        foreach (Texture2D texture in textures)
-        {
-            Sprite sprite = Texture2DToSprite(texture);
-            sprites.Add(sprite);
-        }
-        return sprites;
-    }
+        int batchSize = 10; // Adjust batch size as needed
 
+        for (int i = 0; i < textures.Count; i += batchSize)
+        {
+            for (int j = i; j < i + batchSize && j < textures.Count; j++)
+            {
+                Sprite sprite = Texture2DToSprite(textures[j]);
+                sprites.Add(sprite);
+            }
+            yield return null; // Yield to ensure this runs on the main thread
+        }
+    }
     private Sprite Texture2DToSprite(Texture2D texture)
     {
         // Set the filter mode to Point (no filter) for pixel-perfect rendering

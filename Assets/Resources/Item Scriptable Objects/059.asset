@@ -28,5 +28,5 @@ MonoBehaviour:
   strength: 2
   opinion: 2
   cameraBlock: -1
-  icon: {fileID: 21300000, guid: 268df34de891ba54caddda8b637b6198, type: 3}
+  icon: {fileID: 0}
   prefab: {fileID: 176320872902523559, guid: 9b3901f374502d4458057e789a45df6c, type: 3}

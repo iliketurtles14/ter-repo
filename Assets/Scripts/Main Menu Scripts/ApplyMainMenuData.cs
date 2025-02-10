@@ -29,14 +29,15 @@ public class ApplyMainMenuData : MonoBehaviour
     {
         if(mmfrScript.canApply && !hasApplied)
         {
+
+            hasApplied = true;
+
             ItemSprites = ConvertTexture2DListToSpriteList(mmfrScript.ItemImages);
             NPCSprites = ConvertTexture2DListToSpriteList(mmfrScript.NPCImages);
             PrisonObjectSprites = ConvertTexture2DListToSpriteList(mmfrScript.PrisonObjectImages);
             UISprites = ConvertTexture2DListToSpriteList(mmfrScript.UIImages);
 
             senderScript.SetFullLists(ItemSprites, NPCSprites, PrisonObjectSprites, UISprites);
-
-            hasApplied = true;
 
             LoadImages();
 
