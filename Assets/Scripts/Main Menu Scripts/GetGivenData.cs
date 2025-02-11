@@ -12,41 +12,28 @@ public class GetGivenData : MonoBehaviour
 {
     public DataSender senderScript;
 
-    private List<Texture2D> groundTextureList = new List<Texture2D>();
-    public List<Sprite> groundList = new List<Sprite>();
-    private List<Texture2D> tileTextureList = new List<Texture2D>();
-    public List<Sprite> tileList = new List<Sprite>();
+    public List<Texture2D> groundTextureList = new List<Texture2D>();
+    public List<Texture2D> tileTextureList = new List<Texture2D>();
     public List<AudioClip> musicList = new List<AudioClip>();
     private string groundPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Data\\images";
-    private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music";
+    private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music\\alca.ogg";
     private string tilePath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Data\\images\\custom";
-
-    public List<Sprite> perksList = new List<Sprite>();
-    public List<Sprite> stalagList = new List<Sprite>();
-    public List<Sprite> shanktonList = new List<Sprite>();
-    public List<Sprite> jungleList = new List<Sprite>();
-    public List<Sprite> sanpanchoList = new List<Sprite>();
-    public List<Sprite> hmpList = new List<Sprite>();
 
     public async void Start()
     {
         await LoadGroundTextures();
         await LoadTileTextures();
 
-        groundList = new List<Sprite>();
-        tileList = new List<Sprite>();
-
-        // Start coroutines to convert textures to sprites
-        StartCoroutine(ConvertTexture2DListToSpriteList(groundTextureList, groundList));
-        StartCoroutine(ConvertTexture2DListToSpriteList(tileTextureList, tileList));
-
-        await LoadMusicClips();
-
-        // Separate the tiles into smaller sprites
-        SeparateTilesIntoLists();
-
-        senderScript.SetKnownLists(groundList, perksList, stalagList, shanktonList, jungleList, sanpanchoList, hmpList);
         senderScript.SetMusicList(musicList);
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            StartCoroutine(PlayAudioClipFromDisk(musicPath));
+        }
     }
 
     private async Task LoadGroundTextures()
@@ -172,79 +159,30 @@ public class GetGivenData : MonoBehaviour
         texture.SetPixels(pixels);
         texture.Apply();
     }
-    private async Task LoadMusicClips()
+    private IEnumerator PlayAudioClipFromDisk(string filePath)
     {
-        foreach (string file in Directory.GetFiles(musicPath))
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + filePath, AudioType.OGGVORBIS))
         {
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + file, AudioType.UNKNOWN))
-            {
-                var operation = www.SendWebRequest();
-                while (!operation.isDone)
-                {
-                    await Task.Yield();
-                }
+            yield return www.SendWebRequest();
 
-                if (www.result == UnityWebRequest.Result.Success)
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+                if (clip != null)
                 {
-                    AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
-                    if (clip != null)
-                    {
-                        musicList.Add(clip);
-                    }
-                    else
-                    {
-                        Debug.LogError($"Failed to load audio clip from {file}");
-                    }
+                    AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+                    audioSource.clip = clip;
+                    audioSource.Play();
+                    Debug.Log($"Playing audio clip from {filePath}");
                 }
                 else
                 {
-                    Debug.LogError($"Failed to load audio clip from {file}: {www.error}");
+                    Debug.LogError($"Failed to load audio clip from {filePath}");
                 }
             }
-        }
-    }
-
-    private IEnumerator ConvertTexture2DListToSpriteList(List<Texture2D> textures, List<Sprite> sprites)
-    {
-        int batchSize = 10; // Adjust batch size as needed
-
-        for (int i = 0; i < textures.Count; i += batchSize)
-        {
-            for (int j = i; j < i + batchSize && j < textures.Count; j++)
+            else
             {
-                Sprite sprite = Texture2DToSprite(textures[j]);
-                sprites.Add(sprite);
-            }
-            yield return null; // Yield to ensure this runs on the main thread
-        }
-    }
-    private Sprite Texture2DToSprite(Texture2D texture)
-    {
-        // Set the filter mode to Point (no filter) for pixel-perfect rendering
-        texture.filterMode = FilterMode.Point;
-
-        // Create the sprite with the appropriate pixels per unit
-        float pixelsPerUnit = 100f; // Adjust this value based on your texture resolution and desired size
-        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
-    }
-
-    private void SeparateTilesIntoLists()
-    {
-        List<List<Sprite>> tileLists = new List<List<Sprite>> { perksList, stalagList, shanktonList, jungleList, sanpanchoList, hmpList };
-
-        for (int i = 0; i < tileList.Count; i++)
-        {
-            Sprite tileSprite = tileList[i];
-            Texture2D tileTexture = tileSprite.texture;
-
-            for (int y = 0; y < tileTexture.height; y += 16)
-            {
-                for (int x = 0; x < tileTexture.width; x += 16)
-                {
-                    Rect rect = new Rect(x, y, 16, 16);
-                    Sprite subSprite = Sprite.Create(tileTexture, rect, new Vector2(0.5f, 0.5f), 100f);
-                    tileLists[i].Add(subSprite);
-                }
+                Debug.LogError($"Failed to load audio clip from {filePath}: {www.error}");
             }
         }
     }

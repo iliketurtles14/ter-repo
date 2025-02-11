@@ -100,7 +100,7 @@ public class SetSprites : MonoBehaviour
             {
                 aName = child.name;
             }
-            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().PerksList[perksTilesetDict[aName]];
+            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
         }
     }
     private void SetItems()
@@ -116,6 +116,6 @@ public class SetSprites : MonoBehaviour
     }
     private void SetGround()
     {
-        Ground.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundList[11];
+        Ground.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
     }
 }

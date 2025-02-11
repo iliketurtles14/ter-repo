@@ -45,7 +45,7 @@ public class NPCAnimation : MonoBehaviour
                     }
                 }
             }
-            outfitDirSprites = DataSender.instance.InmateOutfitSprites;
+            outfitDirSprites = DataSender.instance.GuardOutfitSprites;
         }
         else if(CompareTag("Inmate"))
         {
@@ -67,7 +67,7 @@ public class NPCAnimation : MonoBehaviour
                     }
                 }
             }
-            outfitDirSprites = DataSender.instance.GuardOutfitSprites;
+            outfitDirSprites = DataSender.instance.InmateOutfitSprites;
         }
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());

@@ -15,6 +15,8 @@ public class NPCRename : MonoBehaviour
     public NPCSave saveScript;
     public PlayerMenu playerMenuScript;
     public ApplyMainMenuData dataScript;
+    public TileSetter tileSetterScript;
+    public PrisonSelect prisonSelectScript;
     public Sprite BackButtonNormalSprite;
     public Sprite BackButtonPressedSprite;
     public Sprite RandomButtonNormalSprite;
@@ -472,7 +474,7 @@ public class NPCRename : MonoBehaviour
                 case "Maru": setCharacters.Add(9); break;
             }
         }
-
+        tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript.SetNPC(setNames, setCharacters);
         saveScript.SetPlayer(playerMenuScript.setName, playerMenuScript.setCharacter);
 

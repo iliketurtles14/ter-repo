@@ -16,18 +16,11 @@ public class DumperStartStop : MonoBehaviour
     private IEnumerator Wait()
     {
         StartDumper();
-        yield return new WaitForSeconds(5); // Wait for the process to initialize
-
-        if (mmfrScript != null)
-        {
-            mmfrScript.ReadDataFromMemory();
-        }
-        else
-        {
-            UnityEngine.Debug.LogError("MemoryMappedFileReader script is not assigned!");
-        }
-
-        yield return new WaitForSeconds(5);
+        UnityEngine.Debug.Log("Start Wait");
+        yield return new WaitForSecondsRealtime(5); // Wait for the process to initialize
+        UnityEngine.Debug.Log("Start Read");
+        mmfrScript.ReadDataFromMemory();
+        yield return new WaitForSecondsRealtime(5);
         StopDumper();
     }
 

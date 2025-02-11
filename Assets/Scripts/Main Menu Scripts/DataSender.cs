@@ -19,13 +19,8 @@ public class DataSender : MonoBehaviour
     public List<Sprite> FrosephSprites = new List<Sprite>();
     public List<Sprite> TangoSprites = new List<Sprite>();
     public List<Sprite> MaruSprites = new List<Sprite>();
-    public List<Sprite> GroundList = new List<Sprite>();
-    public List<Sprite> PerksList = new List<Sprite>();
-    public List<Sprite> StalagList = new List<Sprite>();
-    public List<Sprite> ShanktonList = new List<Sprite>();
-    public List<Sprite> JungleList = new List<Sprite>();
-    public List<Sprite> SanPanchoList = new List<Sprite>();
-    public List<Sprite> HMPList = new List<Sprite>();
+    public List<Sprite> TileList = new List<Sprite>();
+    public Sprite GroundSprite;
     public List<AudioClip> SoundList = new List<AudioClip>();
     public List<AudioClip> MusicList = new List<AudioClip>();
 
@@ -54,16 +49,10 @@ public class DataSender : MonoBehaviour
         TangoSprites = tango;
         MaruSprites = maru;
     }
-    public void SetKnownLists(List<Sprite> ground, List<Sprite> perks, List<Sprite> stalag,
-        List<Sprite> shankton, List<Sprite> jungle, List<Sprite> sanPancho, List<Sprite> hmp)
+    public void SetKnownLists(List<Sprite> tiles, Sprite ground)
     {
-        GroundList = ground;
-        PerksList = perks;
-        StalagList = stalag;
-        ShanktonList = shankton;
-        JungleList = jungle;
-        SanPanchoList = sanPancho;
-        HMPList = hmp;
+        TileList = tiles;
+        GroundSprite = ground;
     }
     public void SetSoundList(List<AudioClip> sound)
     {

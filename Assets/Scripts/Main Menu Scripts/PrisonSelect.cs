@@ -16,7 +16,7 @@ public class PrisonSelect : MonoBehaviour
     public GameObject CurrentDifficultyObject;
     public GameObject LeftArrow;
     public GameObject RightArrow;
-    private int whichPrison;
+    public int whichPrison;
     public GameObject TitlePanel;
     public GameObject PrisonSelectPanel;
     public Sprite ButtonNormalSprite;
