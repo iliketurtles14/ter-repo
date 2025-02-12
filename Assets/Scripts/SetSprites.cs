@@ -16,8 +16,8 @@ public class SetSprites : MonoBehaviour
 
     private Dictionary<string, int> perksTilesetDict = new Dictionary<string, int>() //this was a bitch to code holy shit
     {
-        { "Bars", 78 }, { "Bottom Wall Left", 88 }, { "Bottom Wall Middle", 63 }, { "Bottom Wall Right", 71 },
-        { "Box", 73 }, { "Bush", 79 }, { "Concrete", 35 }, { "Electric Horizontal", 43 },
+        { "Bars", 78 }, { "Bottom Wall Left", 91 }, { "Bottom Wall Middle", 63 }, { "Bottom Wall Right", 71 },
+        { "Box", 93 }, { "Bush", 79 }, { "Concrete", 35 }, { "Electric Horizontal", 43 },
         { "Electric Vertical", 39 }, { "Fence Horizontal", 20 }, { "Fence NE Corner", 4 }, { "Fence NW Corner", 0 },
         { "Fence SE Corner", 12 }, { "Fence SW Corner", 8 }, { "Fence Vertical", 16 }, { "Garage", 74 },
         { "Hard Wall Horizontal", 70 }, { "Hard Wall Vertical", 66 }, { "Mask Left", 51 }, { "Mask Middle", 55 },
@@ -84,7 +84,6 @@ public class SetSprites : MonoBehaviour
     {
         SetTiles();
         SetItems();
-        SetMouse();
         SetGround();
     }
     private void SetTiles()
@@ -109,10 +108,6 @@ public class SetSprites : MonoBehaviour
         {
             data.icon = DataSender.instance.GetComponent<DataSender>().ItemImages[itemSpriteDict[data.id]];
         }
-    }
-    private void SetMouse()
-    {
-        InventoryCanvas.transform.Find("MouseOverlay").GetComponent<Image>().sprite = DataSender.instance.GetComponent<DataSender>().UIImages[41];
     }
     private void SetGround()
     {

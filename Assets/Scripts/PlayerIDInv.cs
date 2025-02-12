@@ -32,20 +32,7 @@ public class PlayerIDInv : MonoBehaviour
         }
         inventoryList = inventoryScript.inventory;
         //diable id menu
-        foreach (Transform child in transform)
-        {
-            if (child.GetComponent<Image>() != null)
-            {
-                child.GetComponent<Image>().enabled = false;
-            }
-            if (child.GetComponent<BoxCollider2D>() != null)
-            {
-                child.GetComponent<BoxCollider2D>().enabled = false;
-            }
-        }
-        GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<Image>().enabled = false;
-        idIsOpen = false;
+        CloseMenu();
     }
     public void Update()
     {
@@ -195,57 +182,40 @@ public class PlayerIDInv : MonoBehaviour
             }
 
             //exiting the idmenu
-            if(!mcs.isTouchingIDPanel && !mcs.isTouchingInvSlot && Input.GetMouseButtonDown(0))
+            CloseMenu();
+
+            ///what to enabled when having a menu close
+            //wall, fence, and bar collision (bug fix)
+            foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
             {
-                foreach (Transform child in transform)
-                {
-                    if (child.GetComponent<Image>() != null)
-                    {
-                        child.GetComponent<Image>().enabled = false;
-                    }
-                    if (child.GetComponent<BoxCollider2D>() != null)
-                    {
-                        child.GetComponent<BoxCollider2D>().enabled = false;
-                    }
-                }
-                GetComponent<BoxCollider2D>().enabled = false;
-                GetComponent<Image>().enabled = false;
-
-                idIsOpen = false;
-
-                ///what to enabled when having a menu close
-                //wall, fence, and bar collision (bug fix)
-                foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
-                {
-                    wall.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-                {
-                    fence.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-                {
-                    bars.GetComponent<BoxCollider2D>().enabled = true;
-                }
-
-                //player movement
-                player.GetComponent<PlayerCtrl>().movSpeed = 10;
-
-                //NPC movement
-                foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-                {
-                    guard.GetComponent<AILerp>().speed = 10;
-                }
-                foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-                {
-                    inmate.GetComponent<AILerp>().speed = 10;
-                }
-
-                //time
-                timeObject.GetComponent<Routine>().enabled = true;
-
-                return;
+                wall.GetComponent<BoxCollider2D>().enabled = true;
             }
+            foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
+            {
+                fence.GetComponent<BoxCollider2D>().enabled = true;
+            }
+            foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
+            {
+                bars.GetComponent<BoxCollider2D>().enabled = true;
+            }
+
+            //player movement
+            player.GetComponent<PlayerCtrl>().movSpeed = 10;
+
+            //NPC movement
+            foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
+            {
+                guard.GetComponent<AILerp>().speed = 10;
+            }
+            foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
+            {
+                inmate.GetComponent<AILerp>().speed = 10;
+            }
+
+            //time
+            timeObject.GetComponent<Routine>().enabled = true;
+
+            return;
         }
     }
     public IEnumerator OpenMenu()
@@ -267,5 +237,58 @@ public class PlayerIDInv : MonoBehaviour
         }
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
+    }
+    public void CloseMenu()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        foreach (Transform child in transform.Find("StrengthPanel"))
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        foreach (Transform child in transform.Find("SpeedPanel"))
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        foreach (Transform child in transform.Find("IntellectPanel"))
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        transform.Find("WeaponText").gameObject.SetActive(false);
+        transform.Find("OutfitText").gameObject.SetActive(false);
+        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<Image>().enabled = false;
+        idIsOpen = false;
     }
 }

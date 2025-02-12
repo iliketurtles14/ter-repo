@@ -40,5 +40,6 @@ public class ItemCollectionData : MonoBehaviour
         {
             data.currentDurability = 100;
         }
+        GetComponent<SpriteRenderer>().sprite = GetComponent<ItemCollectionData>().itemData.icon;
     }
 }

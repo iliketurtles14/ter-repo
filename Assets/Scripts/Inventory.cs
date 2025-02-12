@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         mouseCollisionScript = MouseOverlayObject.GetComponent<MouseCollisionOnItems>();
+
     }
     public void Update()
     {
@@ -161,6 +162,7 @@ public class Inventory : MonoBehaviour
         Vector3 playerPosition = Player.transform.position;
         GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerPosition, Quaternion.identity);
         droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
+        droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
         droppedDurability = inventory[slotIndex].itemData.currentDurability;
         isDropped = true;
         inventory[slotIndex].itemData = null;

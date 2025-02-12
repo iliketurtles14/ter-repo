@@ -63,7 +63,7 @@ public class TileSetter : MonoBehaviour
         texture.filterMode = FilterMode.Point;
 
         // Create the sprite with the appropriate pixels per unit
-        float pixelsPerUnit = 100f; // Adjust this value based on your texture resolution and desired size
+        float pixelsPerUnit = 100f;
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
     }
 

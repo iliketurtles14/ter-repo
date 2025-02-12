@@ -191,8 +191,8 @@ public class ApplyMainMenuData : MonoBehaviour
         RabbitSprites.Add(NPCSprites[76]);
         RabbitSprites.Add(NPCSprites[81]);
         RabbitSprites.Add(NPCSprites[82]);
-        RabbitSprites.Add(NPCSprites[77]);
         RabbitSprites.Add(NPCSprites[78]);
+        RabbitSprites.Add(NPCSprites[77]);
         RabbitSprites.Add(NPCSprites[79]);
         RabbitSprites.Add(NPCSprites[80]);
         TangoSprites.Add(NPCSprites[188]);
