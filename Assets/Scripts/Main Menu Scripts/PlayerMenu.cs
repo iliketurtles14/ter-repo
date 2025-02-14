@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerMenu : MonoBehaviour
 {
     public MouseCollisionOnButtons mcs;
+    public NPCSave saveScript;
     public string playerName;
     public string playerCharacter;
     public int characterNum;
@@ -117,6 +118,7 @@ public class PlayerMenu : MonoBehaviour
             {
                 setName = transform.Find("NameText").GetComponent<TMP_InputField>().text;
                 setCharacter = characterNum;
+                saveScript.SetPlayer(setName, setCharacter);
                 
                 MainMenuCanvas.transform.Find("NPCCustomizePanel").gameObject.SetActive(true);
                 MainMenuCanvas.transform.Find("SmallMenuPanel").gameObject.SetActive(true);

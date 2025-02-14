@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\CTFAK.Decompiler.props" />
+</Project>

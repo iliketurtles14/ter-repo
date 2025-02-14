@@ -2,6 +2,7 @@ using NUnit.Framework;
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,7 @@ public class PlayerIDInv : MonoBehaviour
     private bool invIsFull;
     public void Start()
     {
+        StartCoroutine(Wait());
         foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
         {
             invSlots.Add(child.gameObject);
@@ -34,13 +36,19 @@ public class PlayerIDInv : MonoBehaviour
         //diable id menu
         CloseMenu();
     }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = NPCSave.instance.playerName;
+    }
     public void Update()
     {
         if (!idIsOpen)
         {
             if(mcs.isTouchingButton && mcs.touchedButton.name == "PlayerIDButton" && Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(OpenMenu());
+                OpenMenu();
             }
         }
         if (idIsOpen)
@@ -181,47 +189,48 @@ public class PlayerIDInv : MonoBehaviour
                 weaponSlot.GetComponent<Image>().sprite = ClearSprite;
             }
 
-            //exiting the idmenu
-            CloseMenu();
-
-            ///what to enabled when having a menu close
-            //wall, fence, and bar collision (bug fix)
-            foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
+            if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && Input.GetMouseButtonDown(0))
             {
-                wall.GetComponent<BoxCollider2D>().enabled = true;
-            }
-            foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-            {
-                fence.GetComponent<BoxCollider2D>().enabled = true;
-            }
-            foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-            {
-                bars.GetComponent<BoxCollider2D>().enabled = true;
-            }
+                //exiting the idmenu
+                CloseMenu();
 
-            //player movement
-            player.GetComponent<PlayerCtrl>().movSpeed = 10;
+                ///what to enabled when having a menu close
+                //wall, fence, and bar collision (bug fix)
+                foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
+                {
+                    wall.GetComponent<BoxCollider2D>().enabled = true;
+                }
+                foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
+                {
+                    fence.GetComponent<BoxCollider2D>().enabled = true;
+                }
+                foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
+                {
+                    bars.GetComponent<BoxCollider2D>().enabled = true;
+                }
 
-            //NPC movement
-            foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-            {
-                guard.GetComponent<AILerp>().speed = 10;
+                //player movement
+                player.GetComponent<PlayerCtrl>().movSpeed = 10;
+
+                //NPC movement
+                foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
+                {
+                    guard.GetComponent<AILerp>().speed = 10;
+                }
+                foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
+                {
+                    inmate.GetComponent<AILerp>().speed = 10;
+                }
+
+                //time
+                timeObject.GetComponent<Routine>().enabled = true;
+
+                return;
             }
-            foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-            {
-                inmate.GetComponent<AILerp>().speed = 10;
-            }
-
-            //time
-            timeObject.GetComponent<Routine>().enabled = true;
-
-            return;
         }
     }
-    public IEnumerator OpenMenu()
+    public void OpenMenu()
     {
-        yield return new WaitForEndOfFrame();
-
         idIsOpen = true;
 
         foreach(Transform child in transform)
@@ -235,8 +244,12 @@ public class PlayerIDInv : MonoBehaviour
                 child.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
+        transform.Find("WeaponText").gameObject.SetActive(true);
+        transform.Find("OutfitText").gameObject.SetActive(true);
+        transform.Find("NameText").gameObject.SetActive(true);
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
+        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
     }
     public void CloseMenu()
     {
@@ -286,6 +299,7 @@ public class PlayerIDInv : MonoBehaviour
         }
         transform.Find("WeaponText").gameObject.SetActive(false);
         transform.Find("OutfitText").gameObject.SetActive(false);
+        transform.Find("NameText").gameObject.SetActive(false);
         transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;

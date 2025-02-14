@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 public class GetGivenData : MonoBehaviour
 {
     public DataSender senderScript;
+    public LoadingPanel loadScript;
 
     public List<Texture2D> groundTextureList = new List<Texture2D>();
     public List<Texture2D> tileTextureList = new List<Texture2D>();
@@ -59,21 +60,21 @@ public class GetGivenData : MonoBehaviour
                     if (texture != null)
                     {
                         groundTextureList.Add(texture);
-                        Debug.Log($"Successfully loaded texture from {file}");
+                        loadScript.LogLoad($"Successfully loaded texture from {file}");
                     }
                     else
                     {
-                        Debug.LogError($"Failed to load texture from {file}");
+                        loadScript.LogLoad($"Failed to load texture from {file}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"Exception occurred while loading texture from {file}: {ex.Message}");
+                    loadScript.LogLoad($"Exception occurred while loading texture from {file}: {ex.Message}");
                 }
             }
             else
             {
-                Debug.Log($"File {file} is not a valid ground texture.");
+                loadScript.LogLoad($"File {file} is not a valid ground texture.");
             }
         }
     }
@@ -98,21 +99,21 @@ public class GetGivenData : MonoBehaviour
                     if (texture != null)
                     {
                         tileTextureList.Add(texture);
-                        Debug.Log($"Successfully loaded texture from {filePath}");
+                        loadScript.LogLoad($"Successfully loaded texture from {filePath}");
                     }
                     else
                     {
-                        Debug.LogError($"Failed to load texture from {filePath}");
+                        loadScript.LogLoad($"Failed to load texture from {filePath}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"Exception occurred while loading texture from {filePath}: {ex.Message}");
+                    loadScript.LogLoad($"Exception occurred while loading texture from {filePath}: {ex.Message}");
                 }
             }
             else
             {
-                Debug.Log($"File {filePath} does not exist.");
+                loadScript.LogLoad($"File {filePath} does not exist.");
             }
         }
     }

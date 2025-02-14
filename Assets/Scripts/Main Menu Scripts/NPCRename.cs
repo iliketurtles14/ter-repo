@@ -476,7 +476,6 @@ public class NPCRename : MonoBehaviour
         }
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript.SetNPC(setNames, setCharacters);
-        saveScript.SetPlayer(playerMenuScript.setName, playerMenuScript.setCharacter);
 
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         loadOperation.completed += (AsyncOperation op) =>

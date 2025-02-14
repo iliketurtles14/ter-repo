@@ -6,6 +6,7 @@ using System;
 public class DumperStartStop : MonoBehaviour
 {
     private Process dumper;
+    public LoadingPanel loadScript;
     public MemoryMappedFileReader mmfrScript; // Assign in Inspector
 
     private void OnEnable()
@@ -16,19 +17,18 @@ public class DumperStartStop : MonoBehaviour
     private IEnumerator Wait()
     {
         StartDumper();
-        UnityEngine.Debug.Log("Start Wait");
+        loadScript.LogLoad("Starting Dumper");
         yield return new WaitForSecondsRealtime(5); // Wait for the process to initialize
-        UnityEngine.Debug.Log("Start Read");
         mmfrScript.ReadDataFromMemory();
         yield return new WaitForSecondsRealtime(5);
         StopDumper();
+        loadScript.LogLoad("Stopping Dumper");
     }
 
     private void StartDumper()
     {
         try
         {
-            UnityEngine.Debug.Log("Attempting to start CTFAK.Cli...");
 
             dumper = new Process
             {
@@ -50,11 +50,10 @@ public class DumperStartStop : MonoBehaviour
             dumper.BeginOutputReadLine();
             dumper.BeginErrorReadLine();
 
-            UnityEngine.Debug.Log("CTFAK.Cli started successfully!");
         }
         catch (Exception ex)
         {
-            UnityEngine.Debug.LogError("Failed to start CTFAK.Cli: " + ex.Message);
+            loadScript.LogLoad("Failed to start CTFAK.Cli: " + ex.Message);
         }
     }
     private void StopDumper()
@@ -65,7 +64,6 @@ public class DumperStartStop : MonoBehaviour
             dumper.WaitForExit();
             dumper.Dispose();
             dumper = null;
-            UnityEngine.Debug.Log("CTFAK.Cli process stopped.");
         }
     }
 

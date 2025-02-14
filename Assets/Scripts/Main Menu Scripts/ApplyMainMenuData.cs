@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ApplyMainMenuData : MonoBehaviour
 {
     public MemoryMappedFileReader mmfrScript;
+    public LoadingPanel loadScript;
     public DataSender senderScript;
     private List<Sprite> ItemSprites;
     private List<Sprite> NPCSprites;
@@ -40,6 +41,7 @@ public class ApplyMainMenuData : MonoBehaviour
             senderScript.SetFullLists(ItemSprites, NPCSprites, PrisonObjectSprites, UISprites);
 
             LoadImages();
+            loadScript.LogLoad("Images Applied");
 
         }
     }

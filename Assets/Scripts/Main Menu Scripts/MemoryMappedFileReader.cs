@@ -13,6 +13,7 @@ public class MemoryMappedFileReader : MonoBehaviour
     public string mapName = "ClickteamMemoryMap";
 
     public DataSender senderScript;
+    public LoadingPanel loadScript;
 
     // Public lists to store images and sounds
     public List<Texture2D> ImageList = new List<Texture2D>();
@@ -29,18 +30,14 @@ public class MemoryMappedFileReader : MonoBehaviour
 
     public void ReadDataFromMemory()
     {
-        Debug.Log("herehere");
         using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
         {
-            Debug.Log("herherherher");
             using (MemoryMappedViewStream stream = mmf.CreateViewStream())
             {
-                Debug.Log("here 1");
                 byte[] buffer = new byte[1024 * 1024 * 10]; // 10 MB buffer
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                Debug.Log("here 2");
                 string jsonData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                Debug.Log("Received Data");
+                loadScript.LogLoad("Received Data");
 
                 ParseData(jsonData);
             }
@@ -55,7 +52,6 @@ public class MemoryMappedFileReader : MonoBehaviour
         ByteSoundList.Clear();
         SoundList.Clear();
 
-        Debug.Log("Image processing");
         // Process images
         foreach (string base64Image in parsedData["ImageList"])
         {
@@ -65,16 +61,16 @@ public class MemoryMappedFileReader : MonoBehaviour
             ImageList.Add(texture);
         }
         MakeLists();
-        Debug.Log("Sound Processing");
+        loadScript.LogLoad("Images Processed");
         // Process sounds
         foreach (string base64Sound in parsedData["SoundList"])
         {
             byte[] soundBytes = Convert.FromBase64String(base64Sound);
             ByteSoundList.Add(soundBytes);
         }
-        Debug.Log("Sound Conversion");
+        loadScript.LogLoad("Sounds Processed");
         ConvertSounds();
-        Debug.Log("Done with sound conversion");
+        loadScript.LogLoad("Sounds Converted");
     }
     public void ConvertSounds()
     {
@@ -89,11 +85,11 @@ public class MemoryMappedFileReader : MonoBehaviour
             if (clip != null)
             {
                 SoundList.Add(clip);
-                Debug.Log("Loaded AudioClip: " + clip.length + " seconds.");
+                loadScript.LogLoad("Loaded AudioClip: " + clip.length + " seconds.");
             }
             else
             {
-                Debug.LogError("Failed to convert byte array to AudioClip.");
+                loadScript.LogLoad("Failed to convert byte array to AudioClip.");
             }
             yield return null; // Allow Unity to process the next frame
         }
@@ -102,7 +98,6 @@ public class MemoryMappedFileReader : MonoBehaviour
 
     public void MakeLists()
     {
-        Debug.Log("List Start");
         //make lists
         List<int> itemList = new List<int>()
         {
@@ -120,7 +115,6 @@ public class MemoryMappedFileReader : MonoBehaviour
         {
             0,32,33,34,42,43,44,45,57,58,59,60,61,73,74,75,76,94,95,96,97,98,99,100,101,102,103,104,105,106,107,110,111,116,124,125,126,127,128,141,143,147,148,149,150,152,182,189,190,236,253,262,263,273,284,285,286,287,288,289,298,309,310,311,312,313,314,315,316,317,324,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,438,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459,460,461,462,463,464,465,466,467,468,469,470,471,472,473,474,475,476,477,478,479,480,481,482,483,484,485,486,487,488,489,490,504,505,506,507,508,509,510,516,534,535,536,547,608,609,610,650,703,704,705,707,708,709,710,711,713,715,744,745,747,748,749,750,751,758,759,760,761,762,765,766,768,769,770,771,772,773,774,775,776,777,778,779,780,782,783,784,785,791,792,796,797,798,799,800,801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,827,871,872,873,874,875,876,877,878,879,880,881,882,883,884,897,898,899,900,910,911,912,913,914,919,920,921,923,924,925,926,937,1097,1098,1099,1100,1101,1115,1116,1133,1134,1193,1194,1195,1221,1222,1228,1235,1236,1237,1238,1239,1240,1241,1242,1246,1247,1248,1249,1250,1251,1252,1278,1279,1280,1281,1282,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1324,1325,1328,1378,1379,1380,1381,1382,1391,1392,1393,1394,1395,1396,1436,1460,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1990,1995,1996,2001,2002,2036,2037,2038,2039,2045,2046,2188,2189,2195,2196,2197,2198,2203,2204,2205,2214,2215,2226,2227,2228,2229,2230,2241,2242,2243,2244,2245,2246,2247,2248,2249,2250,2251,2252,2253,2254,2255,2256,2257,2258,2259,2260,2261,2262,2263,2264,2265,2266,2267,2268,2270,2271,2272,2273,2274,2275,2276,2277,2278,2279,2281,2282,2283,2284,2285,2286,2287,2288,2289,2290,2291,2292,2293,2294,2297,2298,2299,2300,2301,2302,2303,2304,2305,2307,2308,2309,2310,2311,2312,2313,2318,2319,2320,2321,2322,2323,2324,2330,2331,2337,2338,2339,2340,2341,2342,2343,2344,2345,2346,2347,2348,2349,2350,2351,2352,2353,2354,2355,2356,2357,2358,2359,2360,2361,2362,2363,2364,2365,2366,2367,2368,2371,2372,2375,2376,2377,2378,2379,2380,2381,2382,2383,2384,2385,2386,2387,2388,2389,2390,2391,2392,2393,2404,2405,2406,2407,2408,2409,2410,2411,2435,2436,2437,2438,2439,2442,2443,2444,2445,2645,2650,2651,2652,2721,2722,2723,2724,2725,2726,2727,2728,2729,2730,2731,2732,2802,2803,2820,2821,2857,2858,3193,3238,3304,3343,3366,3647,3649,3843,3844,3845,3846,3860,3861,3862,3863,3864,3865,3866,3867,3868,3877,3878,3879,3880,3881,3882,3883,3884,3885,3890,3892,3893,3894,3895,3896,3897,3898,3899,3900,3901,3902,3903,3904,3907,3908,3909,3910,3911,3912,3923,3947,3948,3949,3950,3951,3958,3959,3960,3961
         };
-        Debug.Log("list end");
         // Clear the existing lists
         ItemImages.Clear();
         NPCImages.Clear();
@@ -145,6 +139,7 @@ public class MemoryMappedFileReader : MonoBehaviour
             UIImages.Add(ImageList[i]);
         }
         canApply = true;
+        loadScript.LogLoad("Lists Made");
     }
 
     private AudioClip ConvertByteToAudioClip(byte[] soundBytes)
@@ -152,7 +147,7 @@ public class MemoryMappedFileReader : MonoBehaviour
         // Assume it's a WAV file; adjust logic if using raw PCM
         if (!IsWavFile(soundBytes))
         {
-            Debug.LogError("Invalid WAV file format.");
+            loadScript.LogLoad("Invalid WAV file format.");
             return null;
         }
 
@@ -162,7 +157,7 @@ public class MemoryMappedFileReader : MonoBehaviour
         int channels;
         if (!WavUtility.ConvertWavToPCM(soundBytes, out audioData, out sampleRate, out channels))
         {
-            Debug.LogError("Failed to decode WAV file.");
+            loadScript.LogLoad("Failed to decode WAV file.");
             return null;
         }
 
