@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Magick.NET.icon_0: 2292658561756624043
+      Magick.NET.icon_1: -1037785169066603386
+      Magick.NET.icon_2: -8327975600377206874
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

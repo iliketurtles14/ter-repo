@@ -34,8 +34,8 @@ public class DumperStartStop : MonoBehaviour
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "C:\\Users\\creep\\OneDrive\\Desktop\\CTFAK\\CTFAK.Cli.exe",
-                    WorkingDirectory = "C:\\Users\\creep\\OneDrive\\Desktop\\CTFAK",
+                    FileName = Application.streamingAssetsPath + "/CTFAK/CTFAK.Cli.exe",
+                    WorkingDirectory = Application.streamingAssetsPath + "/CTFAK",
                     UseShellExecute = true,
                     RedirectStandardOutput = false,
                     RedirectStandardError = false,

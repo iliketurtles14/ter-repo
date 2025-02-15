@@ -16,26 +16,34 @@ public class GetGivenData : MonoBehaviour
     public List<Texture2D> groundTextureList = new List<Texture2D>();
     public List<Texture2D> tileTextureList = new List<Texture2D>();
     public List<AudioClip> musicList = new List<AudioClip>();
-    private string groundPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Data\\images";
-    private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music\\alca.ogg";
-    private string tilePath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Data\\images\\custom";
+    private string groundPath;
+    //private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music\\alca.ogg";
+    private string tilePath;
+    private string mainPath;
 
     public async void Start()
     {
+        //load from ini file
+        string configPath = Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini");
+        IniFile iniFile = new IniFile(configPath);
+        mainPath = iniFile.Read("GameFolderPath", "Settings");
+        groundPath = mainPath + "/Data/images";
+        tilePath = mainPath + "/Data/images/custom";
+
         await LoadGroundTextures();
         await LoadTileTextures();
 
-        senderScript.SetMusicList(musicList);
+        //senderScript.SetMusicList(musicList);
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            StartCoroutine(PlayAudioClipFromDisk(musicPath));
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F1))
+    //    {
+    //        StartCoroutine(PlayAudioClipFromDisk(musicPath));
+    //    }
+    //}
 
     private async Task LoadGroundTextures()
     {
