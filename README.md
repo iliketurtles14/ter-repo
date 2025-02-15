@@ -4,6 +4,8 @@ This is the repository for The Escapists Reincarcerated.
 
 The CTFAK 2.0 GitHub page can be found here: https://github.com/CTFAK/CTFAK2.0
 
+Discord: https://discord.gg/PEzv5ECNgR
+
 For fully built and "stable" releases, go to the "Releases" section.
 
 ## Changing your The Escapists folder directory
