@@ -88,7 +88,7 @@ public class SetSprites : MonoBehaviour
     }
     private void SetTiles()
     {
-        foreach(Transform child in CenterPerksTiles.transform)
+        foreach(Transform child in CenterPerksTiles.transform.Find("Ground"))
         {
             if(child.name.IndexOf(" (") != -1)
             {

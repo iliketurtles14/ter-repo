@@ -16,6 +16,7 @@ public class MouseCollisionOnItems : MonoBehaviour
     private HashSet<GameObject> buttons = new HashSet<GameObject>();
     private HashSet<GameObject> idSlots = new HashSet<GameObject>();
     private HashSet<GameObject> idPanels = new HashSet<GameObject>();
+    private HashSet<GameObject> floors = new HashSet<GameObject>();
 
     public bool isTouchingItem => items.Count > 0;
     public GameObject touchedItem => items.Count > 0 ? GetFirst(items) : null;
@@ -41,6 +42,8 @@ public class MouseCollisionOnItems : MonoBehaviour
     public GameObject touchedIDSlot => idSlots.Count > 0 ? GetFirst(idSlots) : null;
     public bool isTouchingIDPanel => idPanels.Count > 0;
     public GameObject touchedIDPanel => idPanels.Count > 0 ? GetFirst(idPanels) : null;
+    public bool isTouchingFloor => floors.Count > 0;
+    public GameObject touchedFloor => floors.Count > 0 ? GetFirst(floors) : null;
 
     void Update()
     {
@@ -119,6 +122,9 @@ public class MouseCollisionOnItems : MonoBehaviour
             case "IDPanel":
                 idPanels.Add(obj);
                 break;
+            case "Digable":
+                floors.Add(obj);
+                break;
         }
     }
 
@@ -136,6 +142,7 @@ public class MouseCollisionOnItems : MonoBehaviour
         buttons.Clear();
         idSlots.Clear();
         idPanels.Clear();
+        floors.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)
