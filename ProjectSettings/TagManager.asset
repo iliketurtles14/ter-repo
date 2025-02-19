@@ -61,11 +61,11 @@ TagManager:
   - DeskUI
   - Walls
   - Zones
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Underground
+  - Vents
+  - Roof
+  - PickedUpDesk
   - 
   - 
   - 
