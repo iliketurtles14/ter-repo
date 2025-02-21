@@ -3,7 +3,6 @@
 This is the repository for The Escapists Reincarcerated.
 
 Requirements for CTFAK to work properly: 
-.NET 6.0 Desktop Runtime AND .NET 6.0 Runtime: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 .NET 6.0 Desktop Runtime, .NET 6.0 Runtime, and ASP.NET Core Runtime 6.0 : https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
 The CTFAK 2.0 GitHub page can be found here: https://github.com/CTFAK/CTFAK2.0
