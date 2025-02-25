@@ -10,8 +10,11 @@ public class ApplyPrisonData : MonoBehaviour
     private DataSender senderScript;
     public Transform ic;
     public Transform mc;
-    public Transform InventorySelection;
+    public Transform perksTiles;
+    public InventorySelection InventorySelection;
+    public VentClimb VentClimb;
     public Transform PlayerDesk;
+    private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
     private List<Sprite> NPCSprites = new List<Sprite>();
     private List<Sprite> PrisonObjectSprites = new List<Sprite>();
@@ -52,8 +55,8 @@ public class ApplyPrisonData : MonoBehaviour
         ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[193];
         //mouse
         ic.Find("MouseOverlay").GetComponent<Image>().sprite = UISprites[41];
-        InventorySelection.GetComponent<InventorySelection>().mouseNormalSprite = UISprites[41];
-        InventorySelection.GetComponent<InventorySelection>().mousePurpleSprite = UISprites[73];
+        InventorySelection.mouseNormalSprite = UISprites[41];
+        InventorySelection.mousePurpleSprite = UISprites[73];
         //deskmenupanel
         mc.Find("DeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
         //inventory ui (heart, energy, etc.)
@@ -77,6 +80,46 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
         //desk (to be removed later)
         PlayerDesk.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
+        //ventclimb script stuff
+        VentClimb.mouseUpSprite = UISprites[74];
+        VentClimb.mouseDownSprite = UISprites[77];
+        VentClimb.mouseNormalSprite = UISprites[41];
+        //vent covers
+        Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
+        Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+        //other vent objects
+        perksTiles.Find("VentObjects").gameObject.SetActive(true);
+        foreach (Transform child in perksTiles.Find("VentObjects"))
+        {
+            if (child.name.IndexOf(" (") != -1)
+            {
+                int index = child.name.IndexOf(" (");
+                aName = child.name.Remove(index, child.name.Length - index);
+            }
+            else
+            {
+                aName = child.name;
+            }
+            switch (aName)
+            {
+                case "LadderDown":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[140];
+                    break;
+                case "LadderUp":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[147];
+                    break;
+                case "SlatsHorizontal":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[139];
+                    break;
+                case "SlatsVertical":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[40];
+                    break;
+                case "VentCover":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+                    break;
+            }
+        }
+        perksTiles.Find("VentObjects").gameObject.SetActive(false);
         //holding sprites
         RabbitHoldingSprites.Add(NPCSprites[127]);
         RabbitHoldingSprites.Add(NPCSprites[128]);
@@ -158,5 +201,6 @@ public class ApplyPrisonData : MonoBehaviour
         InmateOutfitHoldingSprites.Add(NPCSprites[124]);
         InmateOutfitHoldingSprites.Add(NPCSprites[120]);
         InmateOutfitHoldingSprites.Add(NPCSprites[119]);
+        //medic sprites are in prison objects
     }
 }

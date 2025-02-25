@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,7 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     public InventorySelection selectionScript;
+    public GameObject perksTiles;
     private ItemData selectedItemData;
     private ItemData usedItemData;
     public Canvas InventoryCanvas;
@@ -37,9 +39,11 @@ public class ItemBehaviours : MonoBehaviour
     public bool selectedChippingItem;
     public bool selectedCuttingItem;
     public bool selectedDiggingItem;
+    public bool selectedVentBreakingItem;
 
     public GameObject touchedTileObject;
     public GameObject emptyTile;
+    public GameObject emptyVentCover;
     public void Start()
     {
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
@@ -75,6 +79,8 @@ public class ItemBehaviours : MonoBehaviour
             else { selectedCuttingItem = false; }
             if (selectedItemData.diggingPower != -1) { selectedDiggingItem = true; }
             else { selectedDiggingItem = false; }
+            if (selectedItemData.ventBreakingPower != -1) { selectedVentBreakingItem = true; }
+            else { selectedVentBreakingItem = false; }
         }
         else if (!selectionScript.aSlotSelected) 
         {
@@ -131,6 +137,19 @@ public class ItemBehaviours : MonoBehaviour
         {
             Deselect();
         }
+        //unscrewing vents
+        if(mouseCollisionScript.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
+            if(distance <= 2.4f)
+            {
+                whatAction = "unscrewing vent";
+                touchedTileObject = mouseCollisionScript.touchedVentCover.gameObject;
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Unscrewing");
+                Deselect();
+            }
+        }
         
         if(barIsMoving && oldPlayerTransform.position != PlayerTransform.position)
         {
@@ -143,6 +162,7 @@ public class ItemBehaviours : MonoBehaviour
         selectedChippingItem = false;
         selectedCuttingItem = false;
         selectedDiggingItem = false;
+        selectedVentBreakingItem = false;
     }
     public void RemoveItemDurability(int currentDurability, int durability)
     {
@@ -185,6 +205,7 @@ public class ItemBehaviours : MonoBehaviour
             case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
             case "cutting fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
             case "cutting bars": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower/2); break;
+            case "unscrewing vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
         }
 
     }
@@ -220,9 +241,35 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void BreakTile()
     {
-        Vector3 tilePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
-        Quaternion rotation = Quaternion.identity;
-        Destroy(touchedTileObject);
-        Instantiate(emptyTile, tilePosition, rotation);
+        if(whatAction == "unscrewing vent")
+        {
+            Vector3 ventPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
+            Quaternion ventRotation = Quaternion.identity;
+            Destroy(touchedTileObject);
+            Instantiate(emptyVentCover, ventPosition, ventRotation, perksTiles.transform.Find("VentObjects"));
+
+            //set transparency of vents
+            SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+            SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer sr in ventSpriteRenderers)
+            {
+                Color color = sr.color;
+                color.a = .75f;
+                sr.color = color;
+            }
+            foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
+            {
+                Color color = sr.color;
+                color.a = .75f;
+                sr.color = color;
+            }
+        }
+        else
+        {
+            Vector3 tilePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
+            Quaternion rotation = Quaternion.identity;
+            Destroy(touchedTileObject);
+            Instantiate(emptyTile, tilePosition, rotation, perksTiles.transform.Find("Ground"));
+        }
     }
 }

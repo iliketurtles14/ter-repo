@@ -14,8 +14,10 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Update()
     {
-        speedX = Input.GetAxisRaw("Horizontal") * movSpeed;
-        speedY = Input.GetAxisRaw("Vertical") * movSpeed;
-        rb.linearVelocity = new Vector2(speedX, speedY);
+        speedX = Input.GetAxisRaw("Horizontal");
+        speedY = Input.GetAxisRaw("Vertical");
+
+        Vector2 movement = new Vector2(speedX, speedY).normalized * movSpeed;
+        rb.linearVelocity = movement;
     }
 }

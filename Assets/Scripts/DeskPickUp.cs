@@ -52,7 +52,7 @@ public class DeskPickUp : MonoBehaviour
     {
         int pickedUpLayer = LayerMask.NameToLayer("PickedUpDesk");
         aDesk.layer = pickedUpLayer;
-        aDesk.GetComponent<SpriteRenderer>().sortingOrder = 11;
+        aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
 
         switch (NPCSave.instance.playerCharacter)
         {
@@ -74,7 +74,7 @@ public class DeskPickUp : MonoBehaviour
         desk.transform.position = floor.transform.position;
         int defaultLayer = LayerMask.NameToLayer("Default");
         desk.layer = defaultLayer;
-        desk.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
 
         switch (NPCSave.instance.playerCharacter)
         {
