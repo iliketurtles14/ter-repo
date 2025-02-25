@@ -48,43 +48,11 @@ public class PlayerIDInv : MonoBehaviour
         {
             if(mcs.isTouchingButton && mcs.touchedButton.name == "PlayerIDButton" && Input.GetMouseButtonDown(0))
             {
-                OpenMenu();
+                StartCoroutine(OpenMenu());
             }
         }
         if (idIsOpen)
         {
-            ///what to disable when having a desk/menu open
-            //player movement
-            player.GetComponent<PlayerCtrl>().movSpeed = 0;
-
-            //wall, fence, and bar collision (bug fix)
-            foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
-            {
-                wall.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-            {
-                fence.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-            {
-                bars.GetComponent<BoxCollider2D>().enabled = false;
-            }
-
-
-            //NPC movement
-            foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-            {
-                guard.GetComponent<AILerp>().speed = 0;
-            }
-            foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-            {
-                inmate.GetComponent<AILerp>().speed = 0;
-            }
-
-            //time
-            timeObject.GetComponent<Routine>().enabled = false;
-
             ///continue
             //putting items in slots
             if (idInv[0].itemData != null)
@@ -195,22 +163,15 @@ public class PlayerIDInv : MonoBehaviour
                 CloseMenu();
 
                 ///what to enabled when having a menu close
-                //wall, fence, and bar collision (bug fix)
-                foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
-                {
-                    wall.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-                {
-                    fence.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-                {
-                    bars.GetComponent<BoxCollider2D>().enabled = true;
-                }
+                mcs.EnableTag("Bars");
+                mcs.EnableTag("Fence");
+                mcs.EnableTag("ElectricFence");
+                mcs.EnableTag("Digable");
+                mcs.EnableTag("Wall");
 
                 //player movement
-                player.GetComponent<PlayerCtrl>().movSpeed = 10;
+                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                player.GetComponent<PlayerCtrl>().enabled = true;
 
                 //NPC movement
                 foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
@@ -229,10 +190,8 @@ public class PlayerIDInv : MonoBehaviour
             }
         }
     }
-    public void OpenMenu()
+    public IEnumerator OpenMenu()
     {
-        idIsOpen = true;
-
         foreach(Transform child in transform)
         {
             if(child.GetComponent<Image>() != null)
@@ -250,6 +209,35 @@ public class PlayerIDInv : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
         transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
+
+        ///what to disable when having a desk/menu open
+        //player movement
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        player.GetComponent<PlayerCtrl>().enabled = false;
+
+        mcs.DisableTag("Bars");
+        mcs.DisableTag("Fence");
+        mcs.DisableTag("ElectricFence");
+        mcs.DisableTag("Digable");
+        mcs.DisableTag("Wall");
+
+
+        //NPC movement
+        foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
+        {
+            guard.GetComponent<AILerp>().speed = 0;
+        }
+        foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
+        {
+            inmate.GetComponent<AILerp>().speed = 0;
+        }
+
+        //time
+        timeObject.GetComponent<Routine>().enabled = false;
+
+        yield return new WaitForEndOfFrame();
+
+        idIsOpen = true;
     }
     public void CloseMenu()
     {

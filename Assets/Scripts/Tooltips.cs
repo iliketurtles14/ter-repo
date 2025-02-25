@@ -36,12 +36,14 @@ public class Tooltips : MonoBehaviour
     private float wallDistance;
     private float fenceDistance;
     private float barsDistance;
+    private float ventCoverDistance;
     private int printedInvSlotNumber;
     private int printedDeskSlotNumber;
     private TileData printedTileData;
     private int printedTileDurability;
     private int printedItemDurability;
     private string changeType;
+    private GameObject currentTouchedItem;
     public void Start()
     {
     }
@@ -161,11 +163,18 @@ public class Tooltips : MonoBehaviour
             //for ground items
         if (isTouchingItem && !showingTooltip)
         {
+            currentTouchedItem = mouseCollisionScript.touchedItem;
             toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
             tooltipType = "groundItem";
             DrawTooltip(GetWidth(toPrint), toPrint);
             return;
         }else if(showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
+        {
+            DestroyTooltip();
+            return;
+        }
+        
+        if(isTouchingItem && showingTooltip && mouseCollisionScript.touchedItem != currentTouchedItem)
         {
             DestroyTooltip();
             return;
@@ -267,6 +276,39 @@ public class Tooltips : MonoBehaviour
             ChangeTooltipText(changeType);
             return;
         }
+        //vent covers
+        if (mouseCollisionScript.isTouchingVentCover)
+        {
+            ventCoverDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
+        }
+        if (!showingTooltip && mouseCollisionScript.isTouchingVentCover && ventCoverDistance <= 2.4f && itemBehavioursScript.selectedVentBreakingItem)
+        {
+            toPrint = "Unscrew Vent";
+            printedTileDurability = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability;
+            printDurability = " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+            tooltipType = "ventCover";
+            printedTileData = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData;
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "ventCover" &&
+            (!mouseCollisionScript.isTouchingVentCover || !itemBehavioursScript.selectedVentBreakingItem))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "ventCover" && mouseCollisionScript.isTouchingVentCover && itemBehavioursScript.selectedVentBreakingItem && mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mouseCollisionScript.isTouchingVentCover && showingTooltip && mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            changeType = "tileDurability";
+            ChangeTooltipText(changeType);
+            return;
+        }
+
 
     }
 
@@ -344,6 +386,7 @@ public class Tooltips : MonoBehaviour
                     case "wall": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+                    case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                 }
                 break;
 

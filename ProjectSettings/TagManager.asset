@@ -50,6 +50,8 @@ TagManager:
   - StatBar
   - IDPanel
   - IDSlot
+  - VentCover
+  - OpenVent
   layers:
   - Default
   - TransparentFX

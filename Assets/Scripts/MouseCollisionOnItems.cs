@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MouseCollisionOnItems : MonoBehaviour
+public class MouseCollisionOnItems : MonoBehaviour //this started as an item script and is now how i do collision for the whole game :skull:
 {
     private HashSet<GameObject> items = new HashSet<GameObject>();
     private HashSet<GameObject> invSlots = new HashSet<GameObject>();
@@ -17,6 +17,10 @@ public class MouseCollisionOnItems : MonoBehaviour
     private HashSet<GameObject> idSlots = new HashSet<GameObject>();
     private HashSet<GameObject> idPanels = new HashSet<GameObject>();
     private HashSet<GameObject> floors = new HashSet<GameObject>();
+    private HashSet<GameObject> ventCovers = new HashSet<GameObject>();
+    private HashSet<GameObject> openVents = new HashSet<GameObject>();
+
+    private HashSet<string> disabledTags = new HashSet<string>();
 
     public bool isTouchingItem => items.Count > 0;
     public GameObject touchedItem => items.Count > 0 ? GetFirst(items) : null;
@@ -44,6 +48,10 @@ public class MouseCollisionOnItems : MonoBehaviour
     public GameObject touchedIDPanel => idPanels.Count > 0 ? GetFirst(idPanels) : null;
     public bool isTouchingFloor => floors.Count > 0;
     public GameObject touchedFloor => floors.Count > 0 ? GetFirst(floors) : null;
+    public bool isTouchingVentCover => ventCovers.Count > 0;
+    public GameObject touchedVentCover => ventCovers.Count > 0 ? GetFirst(ventCovers) : null;
+    public bool isTouchingOpenVent => openVents.Count > 0;
+    public GameObject touchedOpenVent => openVents.Count > 0 ? GetFirst(openVents) : null;
 
     void Update()
     {
@@ -53,33 +61,76 @@ public class MouseCollisionOnItems : MonoBehaviour
         // Check for collisions at the mouse position
         Collider2D[] hitColliders = Physics2D.OverlapPointAll(mousePosition);
 
-        // Check if we are touching and InvSlot before processing other objects
         bool touchingInvSlot = false;
-        foreach(var collider in hitColliders)
+        bool touchingVentCover = false;
+        bool touchingOpenVent = false;
+        bool touchingItem = false;
+
+        // First pass: Check for specific tags
+        foreach (var collider in hitColliders)
         {
             if (collider.CompareTag("InvSlot"))
             {
                 touchingInvSlot = true;
-                break;
+            }
+            if (collider.CompareTag("Item"))
+            {
+                touchingItem = true;
+            }
+            if (collider.CompareTag("VentCover"))
+            {
+                touchingVentCover = true;
+            }
+            if (collider.CompareTag("OpenVent"))
+            {
+                touchingOpenVent = true;
             }
         }
+
         // Clear previous collisions
         ClearCollisions();
 
-        // Add current collisions
+        // Second pass: Add current collisions
         foreach (var collider in hitColliders)
         {
             GameObject touchedObject = collider.gameObject;
 
-            if(touchingInvSlot && touchedObject.CompareTag("InvSlot"))
+            if (disabledTags.Contains(touchedObject.tag))
+            {
+                continue;
+            }
+
+            if (touchingInvSlot && touchedObject.CompareTag("InvSlot"))
             {
                 AddCollision(touchedObject);
             }
-            else if (!touchingInvSlot)
+            else if (touchingItem && touchedObject.CompareTag("Item"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (touchingVentCover && touchedObject.CompareTag("VentCover"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (touchingOpenVent && touchedObject.CompareTag("OpenVent"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem)
             {
                 AddCollision(touchedObject);
             }
         }
+    }
+
+    public void DisableTag(string tag)
+    {
+        disabledTags.Add(tag);
+    }
+
+    public void EnableTag(string tag)
+    {
+        disabledTags.Remove(tag);
     }
 
     private void AddCollision(GameObject obj)
@@ -125,6 +176,12 @@ public class MouseCollisionOnItems : MonoBehaviour
             case "Digable":
                 floors.Add(obj);
                 break;
+            case "VentCover":
+                ventCovers.Add(obj);
+                break;
+            case "OpenVent":
+                openVents.Add(obj);
+                break;
         }
     }
 
@@ -143,6 +200,8 @@ public class MouseCollisionOnItems : MonoBehaviour
         idSlots.Clear();
         idPanels.Clear();
         floors.Clear();
+        ventCovers.Clear();
+        openVents.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

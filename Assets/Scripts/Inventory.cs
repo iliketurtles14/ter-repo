@@ -15,6 +15,9 @@ public class Inventory : MonoBehaviour
     public GameObject Player;
     public Sprite ClearSprite;
     public GameObject MouseOverlayObject;
+    public GameObject perksTiles;
+    public DeskStand deskStandScript;
+    public PlayerFloorCollision playerCollisionScript;
     private int slotIndex;
     private MouseCollisionOnItems mouseCollisionScript;
     public Transform PlayerTransform;
@@ -59,7 +62,7 @@ public class Inventory : MonoBehaviour
             if (mouseCollisionScript.touchedItem != null)
             {
                 Transform ItemTransform = mouseCollisionScript.touchedItem.transform;
-                if (Input.GetMouseButtonDown(1) && mouseCollisionScript.isTouchingItem == true && Vector2.Distance(PlayerTransform.position, ItemTransform.position) <= 2.4f)
+                if (Input.GetMouseButtonDown(1) && mouseCollisionScript.isTouchingItem == true && Vector2.Distance(PlayerTransform.position, ItemTransform.position) <= 2.4f && mouseCollisionScript.touchedItem.layer == Player.layer)
                 {
                     ItemCollectionData itemCollectionData = itemObject.GetComponent<ItemCollectionData>();
                     Add(itemCollectionData.itemData);
@@ -159,17 +162,42 @@ public class Inventory : MonoBehaviour
     }
     public void DropItem(int slotIndex, string slotName)
     {
-        Vector3 playerPosition = Player.transform.position;
-        GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerPosition, Quaternion.identity);
-        droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
-        droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
-        droppedDurability = inventory[slotIndex].itemData.currentDurability;
-        isDropped = true;
-        inventory[slotIndex].itemData = null;
+        if (!deskStandScript.hasClimbed && !deskStandScript.isClimbing) //checks if standing on a desk
+        {
+            foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))//checks if item is in the way
+            {
+                if (item.transform.position == playerCollisionScript.playerFloor.transform.position)
+                {
+                    return;
+                }
+            }
+            
+            //ground dropping
+            if (Player.layer == 3)
+            {
+                Vector3 playerPosition = Player.transform.position;
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("GroundObjects"));
+                droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                droppedItem.layer = 3;
+            }
+            else if (Player.layer == 12) //vent dropping
+            {
+                Vector3 playerPosition = Player.transform.position;
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("VentObjects"));
+                droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                droppedItem.layer = 12;
+            }
+            else { return; }
+            droppedDurability = inventory[slotIndex].itemData.currentDurability;
+            isDropped = true;
+            inventory[slotIndex].itemData = null;
 
-        Image slotImage = InventoryCanvas.transform.Find("GUIPanel/" + slotName).GetComponent<Image>();
-        slotImage.sprite = ClearSprite;
-
-        return;
+            Image slotImage = InventoryCanvas.transform.Find("GUIPanel/" + slotName).GetComponent<Image>();
+            slotImage.sprite = ClearSprite;
+        }
     }
 }

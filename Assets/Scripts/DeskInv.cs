@@ -61,37 +61,6 @@ public class DeskInv : MonoBehaviour
         if (deskIsOpen)
         {
 
-            ///what to disable when having a desk/menu open
-            //player movement
-            player.GetComponent<PlayerCtrl>().movSpeed = 0;
-
-            //wall, fence, and bar collision (bug fix)
-            foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
-            {
-                wall.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-            {
-                fence.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-            {
-                bars.GetComponent<BoxCollider2D>().enabled = false;
-            }
-
-
-            //NPC movement
-            foreach(GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-            {
-                guard.GetComponent<AILerp>().speed = 0;
-            }
-            foreach(GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-            {
-                inmate.GetComponent<AILerp>().speed = 0;
-            }
-
-            //time
-            timeObject.GetComponent<Routine>().enabled = false;
 
             ///continue
             //putting items in the desk
@@ -202,24 +171,17 @@ public class DeskInv : MonoBehaviour
                 GetComponent<Image>().enabled = false;
 
                 deskIsOpen = false;
-                
+
                 ///what to enable when having a desk/menu close
-                //wall, fence, and bar collision (bug fix)
-                foreach (GameObject wall in GameObject.FindGameObjectsWithTag("Wall"))
-                {
-                    wall.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject fence in GameObject.FindGameObjectsWithTag("Fence"))
-                {
-                    fence.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                foreach (GameObject bars in GameObject.FindGameObjectsWithTag("Bars"))
-                {
-                    bars.GetComponent<BoxCollider2D>().enabled = true;
-                }
+                mouseCollisionScript.EnableTag("Bars");
+                mouseCollisionScript.EnableTag("Fence");
+                mouseCollisionScript.EnableTag("ElectricFence");
+                mouseCollisionScript.EnableTag("Digable");
+                mouseCollisionScript.EnableTag("Wall");
 
                 //player movement
-                player.GetComponent<PlayerCtrl>().movSpeed = 10;
+                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                player.GetComponent<PlayerCtrl>().enabled = true;
 
                 //NPC movement
                 foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
@@ -240,10 +202,6 @@ public class DeskInv : MonoBehaviour
     }
     public IEnumerator OpenDesk()
     {
-        yield return new WaitForEndOfFrame();
-
-        deskIsOpen = true;
-
         foreach (GameObject slot in deskSlots)
         {
             slot.GetComponent<BoxCollider2D>().enabled = true;
@@ -252,5 +210,32 @@ public class DeskInv : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
 
+        ///what to disable when having a desk/menu open
+        //player movement
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        player.GetComponent<PlayerCtrl>().enabled = false;
+
+        mouseCollisionScript.DisableTag("Bars");
+        mouseCollisionScript.DisableTag("Fence");
+        mouseCollisionScript.DisableTag("ElectricFence");
+        mouseCollisionScript.DisableTag("Digable");
+        mouseCollisionScript.DisableTag("Wall");
+
+        //NPC movement
+        foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
+        {
+            guard.GetComponent<AILerp>().speed = 0;
+        }
+        foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
+        {
+            inmate.GetComponent<AILerp>().speed = 0;
+        }
+
+        //time
+        timeObject.GetComponent<Routine>().enabled = false;
+
+        yield return new WaitForEndOfFrame();
+
+        deskIsOpen = true;
     }
 }
