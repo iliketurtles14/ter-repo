@@ -19,6 +19,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> floors = new HashSet<GameObject>();
     private HashSet<GameObject> ventCovers = new HashSet<GameObject>();
     private HashSet<GameObject> openVents = new HashSet<GameObject>();
+    private HashSet<GameObject> slats = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -52,6 +53,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedVentCover => ventCovers.Count > 0 ? GetFirst(ventCovers) : null;
     public bool isTouchingOpenVent => openVents.Count > 0;
     public GameObject touchedOpenVent => openVents.Count > 0 ? GetFirst(openVents) : null;
+    public bool isTouchingSlats => slats.Count > 0;
+    public GameObject touchedSlats => slats.Count > 0 ? GetFirst(slats) : null;
 
     void Update()
     {
@@ -182,6 +185,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "OpenVent":
                 openVents.Add(obj);
                 break;
+            case "Slats":
+                slats.Add(obj);
+                break;
         }
     }
 
@@ -202,6 +208,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         floors.Clear();
         ventCovers.Clear();
         openVents.Clear();
+        slats.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

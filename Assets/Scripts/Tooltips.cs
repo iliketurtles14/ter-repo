@@ -37,6 +37,7 @@ public class Tooltips : MonoBehaviour
     private float fenceDistance;
     private float barsDistance;
     private float ventCoverDistance;
+    private float slatsDistance;
     private int printedInvSlotNumber;
     private int printedDeskSlotNumber;
     private TileData printedTileData;
@@ -44,6 +45,8 @@ public class Tooltips : MonoBehaviour
     private int printedItemDurability;
     private string changeType;
     private GameObject currentTouchedItem;
+    private bool isScrewingVent;
+    private bool isScrewingSlats;
     public void Start()
     {
     }
@@ -276,33 +279,114 @@ public class Tooltips : MonoBehaviour
             ChangeTooltipText(changeType);
             return;
         }
-        //vent covers
+        //vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
         if (mouseCollisionScript.isTouchingVentCover)
         {
             ventCoverDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
         }
-        if (!showingTooltip && mouseCollisionScript.isTouchingVentCover && ventCoverDistance <= 2.4f && itemBehavioursScript.selectedVentBreakingItem)
+        if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
         {
-            toPrint = "Unscrew Vent";
-            printedTileDurability = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "ventCover";
-            printedTileData = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
-            return;
+            if (!showingTooltip && mouseCollisionScript.isTouchingVentCover && ventCoverDistance <= 2.4f)
+            {
+                if (itemBehavioursScript.selectedVentBreakingItem)
+                {
+                    toPrint = "Unscrew Vent";
+                    isScrewingVent = true;
+                }
+                else
+                {
+                    toPrint = "Cut Vent";
+                    isScrewingVent = false;
+                }
+                printedTileDurability = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability;
+                printDurability = " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+                tooltipType = "ventCover";
+                printedTileData = mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData;
+                DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+                return;
+            }
         }
-        else if (showingTooltip && tooltipType == "ventCover" &&
-            (!mouseCollisionScript.isTouchingVentCover || !itemBehavioursScript.selectedVentBreakingItem))
+        if (isScrewingVent)
         {
-            DestroyTooltip();
-            return;
+            if (showingTooltip && tooltipType == "ventCover" &&
+                (!mouseCollisionScript.isTouchingVentCover || !itemBehavioursScript.selectedVentBreakingItem))
+            {
+                DestroyTooltip();
+                return;
+            }
         }
-        else if (showingTooltip && tooltipType == "ventCover" && mouseCollisionScript.isTouchingVentCover && itemBehavioursScript.selectedVentBreakingItem && mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        else if (!isScrewingVent)
+        {
+            if (showingTooltip && tooltipType == "ventCover" &&
+                (!mouseCollisionScript.isTouchingVentCover || !itemBehavioursScript.selectedCuttingItem))
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+        else if (showingTooltip && tooltipType == "ventCover" && mouseCollisionScript.isTouchingVentCover && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
         {
             DestroyTooltip();
             return;
         }
         if (mouseCollisionScript.isTouchingVentCover && showingTooltip && mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            changeType = "tileDurability";
+            ChangeTooltipText(changeType);
+            return;
+        }
+
+        //slats
+        if (mouseCollisionScript.isTouchingSlats)
+        {
+            slatsDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedSlats.transform.position);
+        }
+        if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
+        {
+            if (!showingTooltip && mouseCollisionScript.isTouchingSlats && slatsDistance <= 2.4f)
+            {
+                if (itemBehavioursScript.selectedVentBreakingItem)
+                {
+                    toPrint = "Unscrew Slats";
+                    isScrewingSlats = true;
+                }
+                else
+                {
+                    toPrint = "Cut Slats";
+                    isScrewingSlats = false;
+                }
+                printedTileDurability = mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability;
+                printDurability = " (" + mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+                tooltipType = "slats";
+                printedTileData = mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData;
+                DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+                return;
+            }
+        }
+        if (isScrewingSlats)
+        {
+            if (showingTooltip && tooltipType == "slats" &&
+                (!mouseCollisionScript.isTouchingSlats || !itemBehavioursScript.selectedVentBreakingItem))
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+        else if (!isScrewingSlats)
+        {
+            if (showingTooltip && tooltipType == "slats" &&
+                (!mouseCollisionScript.isTouchingSlats || !itemBehavioursScript.selectedCuttingItem))
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+        else if (showingTooltip && tooltipType == "slats" && mouseCollisionScript.isTouchingSlats && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mouseCollisionScript.isTouchingSlats && showingTooltip && mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
@@ -387,6 +471,7 @@ public class Tooltips : MonoBehaviour
                     case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+                    case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                 }
                 break;
 
