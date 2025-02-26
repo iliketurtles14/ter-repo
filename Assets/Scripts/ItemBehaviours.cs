@@ -150,8 +150,67 @@ public class ItemBehaviours : MonoBehaviour
                 Deselect();
             }
         }
-        
-        if(barIsMoving && oldPlayerTransform.position != PlayerTransform.position)
+        else if (Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
+
+        //cutting vents
+        if (mouseCollisionScript.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
+            if (distance <= 2.4f)
+            {
+                whatAction = "cutting vent";
+                touchedTileObject = mouseCollisionScript.touchedVentCover.gameObject;
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Cutting");
+                Deselect();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
+
+        //unscrewing slats
+        if (mouseCollisionScript.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedSlats.transform.position);
+            if (distance <= 2.4f)
+            {
+                whatAction = "unscrewing slats";
+                touchedTileObject = mouseCollisionScript.touchedSlats.gameObject;
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Unscrewing");
+                Deselect();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
+
+        // cutting slats
+        if (mouseCollisionScript.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedSlats.transform.position);
+            if (distance <= 2.4f)
+            {
+                whatAction = "cutting slats";
+                touchedTileObject = mouseCollisionScript.touchedSlats.gameObject;
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Cutting");
+                Deselect();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
+
+
+        if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)
         {
             StopCoroutine(DrawActionBar());
             DestroyActionBar();
@@ -206,6 +265,9 @@ public class ItemBehaviours : MonoBehaviour
             case "cutting fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
             case "cutting bars": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower/2); break;
             case "unscrewing vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
+            case "cutting vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+            case "unscrewing slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
+            case "cutting slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
         }
 
     }
@@ -241,28 +303,37 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void BreakTile()
     {
-        if(whatAction == "unscrewing vent")
+        if(whatAction == "unscrewing vent" || whatAction == "cutting vent")
         {
             Vector3 ventPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion ventRotation = Quaternion.identity;
             Destroy(touchedTileObject);
             Instantiate(emptyVentCover, ventPosition, ventRotation, perksTiles.transform.Find("VentObjects"));
 
-            //set transparency of vents
-            SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-            SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sr in ventSpriteRenderers)
+            if(PlayerTransform.gameObject.layer == 15)
             {
-                Color color = sr.color;
-                color.a = .75f;
-                sr.color = color;
+                //set transparency of vents
+                SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+                SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in ventSpriteRenderers)
+                {
+                    Color color = sr.color;
+                    color.a = .75f;
+                    sr.color = color;
+                }
+                foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
+                {
+                    Color color = sr.color;
+                    color.a = .75f;
+                    sr.color = color;
+                }
             }
-            foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
-            {
-                Color color = sr.color;
-                color.a = .75f;
-                sr.color = color;
-            }
+        }
+        else if(whatAction == "unscrewing slats" || whatAction == "cutting slats")
+        {
+            Vector3 slatsPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
+            Quaternion slatsRotation = Quaternion.identity;
+            Destroy(touchedTileObject);
         }
         else
         {

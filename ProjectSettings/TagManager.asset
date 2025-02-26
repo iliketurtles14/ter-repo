@@ -52,6 +52,7 @@ TagManager:
   - IDSlot
   - VentCover
   - OpenVent
+  - Slats
   layers:
   - Default
   - TransparentFX

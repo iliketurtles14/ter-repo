@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1185310849070068460}
   - component: {fileID: -5322703529256288205}
   - component: {fileID: -5508814533031325709}
+  - component: {fileID: 8938770710325085728}
   m_Layer: 12
   m_Name: SlatsVertical
-  m_TagString: Untagged
+  m_TagString: Slats
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,3 +135,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 3.2}
   m_EdgeRadius: 0
+--- !u!114 &8938770710325085728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4610345896515057239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966910a2fe9df8d47a56dc1660bbd4ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileData: {fileID: 0}
+  tileDatas: []
+  folderPath: Tile Scriptable Objects
