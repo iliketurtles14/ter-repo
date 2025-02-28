@@ -53,6 +53,9 @@ TagManager:
   - VentCover
   - OpenVent
   - Slats
+  - Ladder(Roof)
+  - Ladder(Ground)
+  - Ladder(Vent)
   layers:
   - Default
   - TransparentFX

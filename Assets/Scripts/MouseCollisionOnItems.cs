@@ -20,6 +20,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> ventCovers = new HashSet<GameObject>();
     private HashSet<GameObject> openVents = new HashSet<GameObject>();
     private HashSet<GameObject> slats = new HashSet<GameObject>();
+    private HashSet<GameObject> groundLadders = new HashSet<GameObject>();
+    private HashSet<GameObject> ventLadders = new HashSet<GameObject>();
+    private HashSet<GameObject> roofLadders = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -55,6 +58,12 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedOpenVent => openVents.Count > 0 ? GetFirst(openVents) : null;
     public bool isTouchingSlats => slats.Count > 0;
     public GameObject touchedSlats => slats.Count > 0 ? GetFirst(slats) : null;
+    public bool isTouchingGroundLadder => groundLadders.Count > 0;
+    public GameObject touchedGroundLadder => groundLadders.Count > 0 ? GetFirst(groundLadders) : null;
+    public bool isTouchingVentLadder => ventLadders.Count > 0;
+    public GameObject touchedVentLadder => ventLadders.Count > 0 ? GetFirst(ventLadders) : null;
+    public bool isTouchingRoofLadder => roofLadders.Count > 0;
+    public GameObject touchedRoofLadder => roofLadders.Count > 0 ? GetFirst(roofLadders) : null;
 
     void Update()
     {
@@ -68,6 +77,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         bool touchingVentCover = false;
         bool touchingOpenVent = false;
         bool touchingItem = false;
+        bool touchingGroundLadder = false;
+        bool touchingVentLadder = false;
+        bool touchingRoofLadder = false;
 
         // First pass: Check for specific tags
         foreach (var collider in hitColliders)
@@ -87,6 +99,18 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             if (collider.CompareTag("OpenVent"))
             {
                 touchingOpenVent = true;
+            }
+            if (collider.CompareTag("Ladder(Ground)"))
+            {
+                touchingGroundLadder = true;
+            }
+            if (collider.CompareTag("Ladder(Vent)"))
+            {
+                touchingVentLadder = true;
+            }
+            if (collider.CompareTag("Ladder(Roof)"))
+            {
+                touchingRoofLadder = true;
             }
         }
 
@@ -119,7 +143,20 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             {
                 AddCollision(touchedObject);
             }
-            else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem)
+            else if (touchingGroundLadder && touchedObject.CompareTag("Ladder(Ground)"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (touchingVentLadder && touchedObject.CompareTag("Ladder(Vent)"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (touchingRoofLadder && touchedObject.CompareTag("Ladder(Roof)"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
+                && !touchingVentLadder && !touchingRoofLadder)
             {
                 AddCollision(touchedObject);
             }
@@ -188,6 +225,15 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "Slats":
                 slats.Add(obj);
                 break;
+            case "Ladder(Ground)":
+                groundLadders.Add(obj);
+                break;
+            case "Ladder(Vent)":
+                ventLadders.Add(obj);
+                break;
+            case "Ladder(Roof)":
+                roofLadders.Add(obj);
+                break;
         }
     }
 
@@ -209,6 +255,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         ventCovers.Clear();
         openVents.Clear();
         slats.Clear();
+        groundLadders.Clear();
+        ventLadders.Clear();
+        roofLadders.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)
