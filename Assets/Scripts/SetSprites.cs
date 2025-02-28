@@ -116,6 +116,21 @@ public class SetSprites : MonoBehaviour
             child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
         }
         CenterPerksTiles.transform.Find("Vents").gameObject.SetActive(false);
+        CenterPerksTiles.transform.Find("Roof").gameObject.SetActive(true);
+        foreach(Transform child in CenterPerksTiles.transform.Find("Roof"))
+        {
+            if (child.name.IndexOf(" (") != -1)
+            {
+                int index = child.name.IndexOf(" (");
+                aName = child.name.Remove(index, child.name.Length - index);
+            }
+            else
+            {
+                aName = child.name;
+            }
+            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
+        }
+        CenterPerksTiles.transform.Find("Roof").gameObject.SetActive(false);
     }
     private void SetItems()
     {

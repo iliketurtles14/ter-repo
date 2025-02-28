@@ -88,6 +88,7 @@ public class VentClimb : MonoBehaviour
             mcs.DisableTag("ElectricFence");
             mcs.DisableTag("Digable");
             mcs.DisableTag("Wall");
+            mcs.DisableTag("Ladder(Ground)");
             mcs.DisableTag("Desk");//currently the only menu
             hasDisabledTags = true;
         }
@@ -118,7 +119,6 @@ public class VentClimb : MonoBehaviour
     }
     public IEnumerator ClimbVentUp()
     {
-        Debug.Log("Climbing UP");
         yield return new WaitForEndOfFrame();
 
 
@@ -155,7 +155,6 @@ public class VentClimb : MonoBehaviour
     }
     public IEnumerator ClimbVentDown()
     {
-        Debug.Log("Climbing DOWN");
         yield return new WaitForEndOfFrame();
 
         foreach(GameObject desk in GameObject.FindGameObjectsWithTag("Desk"))
