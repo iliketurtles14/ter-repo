@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1185310849070068460}
   - component: {fileID: -5322703529256288205}
   - component: {fileID: -2791653310927143908}
+  - component: {fileID: -6611656833632960212}
   m_Layer: 12
   m_Name: LadderUp (Vent)
   m_TagString: Ladder(Vent)
@@ -134,3 +135,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &-6611656833632960212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4610345896515057239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba88f819f8c72e442b9c1360440a35f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectedLadder: {fileID: 0}

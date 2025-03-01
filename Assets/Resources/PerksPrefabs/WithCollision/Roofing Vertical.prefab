@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1953089432815887721}
   - component: {fileID: 3458658348157372592}
   - component: {fileID: 4872073891335276587}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Roofing Vertical
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
