@@ -120,6 +120,46 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         perksTiles.Find("VentObjects").gameObject.SetActive(false);
+        //ground objects
+        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        {
+            if (child.name.IndexOf(" (") != -1)
+            {
+                int index = child.name.IndexOf(" (");
+                aName = child.name.Remove(index, child.name.Length - index);
+            }
+            else
+            {
+                aName = child.name;
+            }
+            switch (aName)
+            {
+                case "LadderUp":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[147];
+                    break;
+            }
+        }
+        //roof objects
+        perksTiles.Find("RoofObjects").gameObject.SetActive(true);
+        foreach (Transform child in perksTiles.Find("RoofObjects"))
+        {
+            if (child.name.IndexOf(" (") != -1)
+            {
+                int index = child.name.IndexOf(" (");
+                aName = child.name.Remove(index, child.name.Length - index);
+            }
+            else
+            {
+                aName = child.name;
+            }
+            switch (aName)
+            {
+                case "LadderDown":
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[140];
+                    break;
+            }
+        }
+        perksTiles.Find("RoofObjects").gameObject.SetActive(false);
         //holding sprites
         RabbitHoldingSprites.Add(NPCSprites[127]);
         RabbitHoldingSprites.Add(NPCSprites[128]);

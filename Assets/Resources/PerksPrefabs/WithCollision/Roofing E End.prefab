@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7816139870412140129}
   - component: {fileID: 1807507685692014334}
   - component: {fileID: 331676187197344569}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Roofing E End
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

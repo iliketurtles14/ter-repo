@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4961316856870154869}
   - component: {fileID: 2065812960664288635}
   - component: {fileID: 6130986883488506807}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Floor 11 Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 13
   m_Sprite: {fileID: 21300000, guid: 7b349be3b3307f244943b1e3626c75a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

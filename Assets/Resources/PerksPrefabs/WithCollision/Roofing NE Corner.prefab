@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3978718014395254308}
   - component: {fileID: 7812531347395128966}
   - component: {fileID: 1524919586251205634}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Roofing NE Corner
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

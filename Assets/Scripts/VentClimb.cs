@@ -90,6 +90,13 @@ public class VentClimb : MonoBehaviour
             mcs.DisableTag("Wall");
             mcs.DisableTag("Ladder(Ground)");
             mcs.DisableTag("Desk");//currently the only menu
+            foreach(Transform child in perksTiles.transform.Find("GroundObjects"))
+            {
+                if (child.CompareTag("Item"))
+                {
+                    child.GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
             hasDisabledTags = true;
         }
         else if(!inVent && hasDisabledTags)//renable tags when out of vent
@@ -99,7 +106,15 @@ public class VentClimb : MonoBehaviour
             mcs.EnableTag("ElectricFence");
             mcs.EnableTag("Digable");
             mcs.EnableTag("Wall");
+            mcs.EnableTag("Ladder(Ground)");
             mcs.EnableTag("Desk");//currently the only menu
+            foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+            {
+                if (child.CompareTag("Item"))
+                {
+                    child.GetComponent<BoxCollider2D>().enabled = true;
+                }
+            }
             hasDisabledTags = false;
         }
 

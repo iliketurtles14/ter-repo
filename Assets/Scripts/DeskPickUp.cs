@@ -11,7 +11,7 @@ public class DeskPickUp : MonoBehaviour
     public ApplyPrisonData applyScript;
     private float distance;
     private float distance2;
-    private bool isPickedUp;
+    public bool isPickedUp;
     private GameObject desk;
     private Vector3 deskVector;
     private List<GameObject> touchedFloors = new List<GameObject>();
