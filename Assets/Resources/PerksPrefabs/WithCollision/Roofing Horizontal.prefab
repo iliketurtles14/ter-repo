@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7961125380090918221}
   m_Layer: 13
   m_Name: Roofing Horizontal
-  m_TagString: Obstacle
+  m_TagString: RoofLedge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

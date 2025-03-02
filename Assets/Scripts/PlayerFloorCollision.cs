@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerFloorCollision : MonoBehaviour
 {
     public GameObject playerFloor;
+    public GameObject lastTouchedRoofFloor;
     private Vector2 position = new Vector2();
     private Collider2D[] hitColliders;
     private void Update()
@@ -27,9 +28,15 @@ public class PlayerFloorCollision : MonoBehaviour
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.name.StartsWith("Roof Floor"))
+                if (collider.gameObject.name.StartsWith("Roof Floor") ||
+                    collider.gameObject.name.StartsWith("Floor 11") ||
+                    collider.gameObject.name.StartsWith("Floor 14 (Roof)"))
                 {
                     playerFloor = collider.gameObject;
+                }
+                if(collider.gameObject.name.StartsWith("Roof Floor"))
+                {
+                    lastTouchedRoofFloor = collider.gameObject;
                 }
             }
         }

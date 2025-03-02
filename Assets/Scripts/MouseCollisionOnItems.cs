@@ -23,6 +23,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> groundLadders = new HashSet<GameObject>();
     private HashSet<GameObject> ventLadders = new HashSet<GameObject>();
     private HashSet<GameObject> roofLadders = new HashSet<GameObject>();
+    private HashSet<GameObject> roofLedges = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -64,6 +65,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedVentLadder => ventLadders.Count > 0 ? GetFirst(ventLadders) : null;
     public bool isTouchingRoofLadder => roofLadders.Count > 0;
     public GameObject touchedRoofLadder => roofLadders.Count > 0 ? GetFirst(roofLadders) : null;
+    public bool isTouchingRoofLedge => roofLedges.Count > 0;
+    public GameObject touchedRoofLedge => roofLedges.Count > 0 ? GetFirst(roofLedges) : null;
 
     void Update()
     {
@@ -234,6 +237,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "Ladder(Roof)":
                 roofLadders.Add(obj);
                 break;
+            case "RoofLedge":
+                roofLedges.Add(obj);
+                break;
         }
     }
 
@@ -258,6 +264,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         groundLadders.Clear();
         ventLadders.Clear();
         roofLadders.Clear();
+        roofLedges.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

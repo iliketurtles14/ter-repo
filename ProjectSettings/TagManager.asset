@@ -56,6 +56,7 @@ TagManager:
   - Ladder(Roof)
   - Ladder(Ground)
   - Ladder(Vent)
+  - RoofLedge
   layers:
   - Default
   - TransparentFX
