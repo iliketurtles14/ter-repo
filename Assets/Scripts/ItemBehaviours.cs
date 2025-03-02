@@ -22,7 +22,7 @@ public class ItemBehaviours : MonoBehaviour
     private int usedSlotNumber;
     private List<InventoryItem> inventoryList;
     public Inventory inventoryScript;
-    public MouseCollisionOnItems mouseCollisionScript;
+    public MouseCollisionOnItems mcs;
     public GameObject barLine;
     public GameObject actionBarPanel;
     public bool barIsMoving;
@@ -40,10 +40,14 @@ public class ItemBehaviours : MonoBehaviour
     public bool selectedCuttingItem;
     public bool selectedDiggingItem;
     public bool selectedVentBreakingItem;
-
+    //roping/grapling
+    public GameObject ropeTile;
     public GameObject touchedTileObject;
     public GameObject emptyTile;
     public GameObject emptyVentCover;
+    public int currentHeight;
+    public int ropeTileHeight;
+    public bool isRoping;
     public void Start()
     {
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
@@ -89,13 +93,13 @@ public class ItemBehaviours : MonoBehaviour
 
 
         //chipping
-        if (mouseCollisionScript.isTouchingWall && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
+        if (mcs.isTouchingWall && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedWall.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedWall.transform.position);
             if (distance <= 2.4f)
             {
                 whatAction = "chipping";
-                touchedTileObject = mouseCollisionScript.touchedWall.gameObject;
+                touchedTileObject = mcs.touchedWall.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Chipping");
                 Deselect();
@@ -106,13 +110,13 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //cutting fences
-        if(mouseCollisionScript.isTouchingFence && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if(mcs.isTouchingFence && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedFence.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedFence.transform.position);
             if(distance <= 2.4f)
             {
                 whatAction = "cutting fence";
-                touchedTileObject = mouseCollisionScript.touchedFence.gameObject;
+                touchedTileObject = mcs.touchedFence.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Cutting");
                 Deselect();
@@ -122,13 +126,13 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //cutting bars
-        if(mouseCollisionScript.isTouchingBars && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if(mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedBars.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedBars.transform.position);
             if(distance <= 2.4f)
             {
                 whatAction = "cutting bars";
-                touchedTileObject = mouseCollisionScript.touchedBars.gameObject;
+                touchedTileObject = mcs.touchedBars.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Cutting");
                 Deselect();
@@ -138,13 +142,13 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //unscrewing vents
-        if(mouseCollisionScript.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        if(mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
             if(distance <= 2.4f)
             {
                 whatAction = "unscrewing vent";
-                touchedTileObject = mouseCollisionScript.touchedVentCover.gameObject;
+                touchedTileObject = mcs.touchedVentCover.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Unscrewing");
                 Deselect();
@@ -156,13 +160,13 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //cutting vents
-        if (mouseCollisionScript.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if (mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedVentCover.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
             if (distance <= 2.4f)
             {
                 whatAction = "cutting vent";
-                touchedTileObject = mouseCollisionScript.touchedVentCover.gameObject;
+                touchedTileObject = mcs.touchedVentCover.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Cutting");
                 Deselect();
@@ -174,13 +178,13 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //unscrewing slats
-        if (mouseCollisionScript.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        if (mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedSlats.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
             if (distance <= 2.4f)
             {
                 whatAction = "unscrewing slats";
-                touchedTileObject = mouseCollisionScript.touchedSlats.gameObject;
+                touchedTileObject = mcs.touchedSlats.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Unscrewing");
                 Deselect();
@@ -192,13 +196,13 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         // cutting slats
-        if (mouseCollisionScript.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if (mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedSlats.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
             if (distance <= 2.4f)
             {
                 whatAction = "cutting slats";
-                touchedTileObject = mouseCollisionScript.touchedSlats.gameObject;
+                touchedTileObject = mcs.touchedSlats.gameObject;
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Cutting");
                 Deselect();
@@ -209,11 +213,111 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
 
+        ///ROPES AND GRAPPLES
+        //rope
+        if(selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        {
+            touchedTileObject = mcs.touchedRoofLedge;
+            StartCoroutine(Rope());
+        }
 
-        if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)
+
+        if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)//keep at botom
         {
             StopCoroutine(DrawActionBar());
             DestroyActionBar();
+        }
+    }
+    public IEnumerator Rope()
+    {
+        usedItemData = selectedItemData;
+        //get tile to rope to
+        Vector3 ropeTilePos = new Vector3();
+        if(touchedTileObject.name.StartsWith("Roofing Vertical"))
+        {
+            if (PlayerTransform.position.x < touchedTileObject.transform.position.x)//if player is to the left of the ledge
+            {
+                ropeTilePos.x = touchedTileObject.transform.position.x + 1.6f;
+            }
+            else if (PlayerTransform.position.x > touchedTileObject.transform.position.x)//if player is to the right of the ledge
+            {
+                ropeTilePos.x = touchedTileObject.transform.position.x - 1.6f;
+            }
+            ropeTilePos.y = touchedTileObject.transform.position.y;
+            ropeTilePos.z = touchedTileObject.transform.position.z;
+        }
+        else if(touchedTileObject.name.StartsWith("Roofing Horizontal"))
+        {
+            if (PlayerTransform.position.y < touchedTileObject.transform.position.y)//if player is below the ledge
+            {
+                ropeTilePos.y = touchedTileObject.transform.position.y + 1.6f;
+            }
+            else if (PlayerTransform.position.y > touchedTileObject.transform.position.y)//if player is above the ledge
+            {
+                ropeTilePos.y = touchedTileObject.transform.position.y - 1.6f;
+            }
+            ropeTilePos.x = touchedTileObject.transform.position.x;
+            ropeTilePos.z = touchedTileObject.transform.position.z;
+        }
+        foreach (Transform tile in perksTiles.transform.Find("Roof"))//gets tile to rope to
+        {
+            if (tile.position == ropeTilePos)
+            {
+                ropeTile = tile.gameObject;
+                break;
+            }
+        }
+
+        //see if possible based on height
+        GameObject lastTouchedRoofFloor = PlayerTransform.GetComponent<PlayerFloorCollision>().lastTouchedRoofFloor;
+
+        if(lastTouchedRoofFloor.name.StartsWith("Roof Floor High"))
+        {
+            currentHeight = 3;
+        }
+        else if(lastTouchedRoofFloor.name.StartsWith("Roof Floor Medium"))
+        {
+            currentHeight = 2;
+        }
+        else if(lastTouchedRoofFloor.name.StartsWith("Roof Floor Low"))
+        {
+            currentHeight = 1;
+        }
+
+        if (ropeTile.name.StartsWith("Roof Floor High"))
+        {
+            ropeTileHeight = 3;
+        }
+        else if (ropeTile.name.StartsWith("Roof Floor Medium"))
+        {
+            ropeTileHeight = 2;
+        }
+        else if (ropeTile.name.StartsWith("Roof Floor Low"))
+        {
+            ropeTileHeight = 1;
+        }
+
+        if(currentHeight >= ropeTileHeight)
+        {
+            //move to tile
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            float speed = 10f;
+            Vector3 direction = (ropeTile.transform.position - PlayerTransform.position).normalized;
+            isRoping = true;
+            while(Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
+            {
+                PlayerTransform.position += speed * Time.deltaTime * direction;
+
+                yield return null;
+            }
+            PlayerTransform.position = ropeTile.transform.position;
+            isRoping = false;
+            RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else
+        {
+            yield break;
         }
     }
     public void Deselect()

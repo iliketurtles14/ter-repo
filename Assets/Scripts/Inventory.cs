@@ -191,6 +191,15 @@ public class Inventory : MonoBehaviour
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 10;
                 droppedItem.layer = 12;
             }
+            else if(Player.layer == 13) // roof dropping
+            {
+                Vector3 playerPosition = Player.transform.position;
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+                droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                droppedItem.layer = 13;
+            }
             else { return; }
             droppedDurability = inventory[slotIndex].itemData.currentDurability;
             isDropped = true;
