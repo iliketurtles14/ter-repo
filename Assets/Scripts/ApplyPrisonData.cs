@@ -87,6 +87,10 @@ public class ApplyPrisonData : MonoBehaviour
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+        //rope and grapple
+        Resources.Load("PerksPrefabs/Objects/SheetRope").GetComponent<SpriteRenderer>().sprite = UISprites[162];
+        Resources.Load("PerksPrefabs/Objects/Rope").GetComponent<SpriteRenderer>().sprite = UISprites[163];
+        Resources.Load("PerksPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
         //other vent objects
         perksTiles.Find("VentObjects").gameObject.SetActive(true);
         foreach (Transform child in perksTiles.Find("VentObjects"))

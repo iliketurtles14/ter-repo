@@ -18,7 +18,7 @@ public class ItemBehaviours : MonoBehaviour
     private ItemData selectedItemData;
     private ItemData usedItemData;
     public Canvas InventoryCanvas;
-    private int slotNumber;
+    public int slotNumber;
     private int usedSlotNumber;
     private List<InventoryItem> inventoryList;
     public Inventory inventoryScript;
@@ -217,8 +217,34 @@ public class ItemBehaviours : MonoBehaviour
         //rope
         if(selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
         {
-            touchedTileObject = mcs.touchedRoofLedge;
-            StartCoroutine(Rope());
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
+            if(distance <= 2.4f)
+            {
+                touchedTileObject = mcs.touchedRoofLedge;
+                StartCoroutine(Rope("rope"));
+            }
+        }
+
+        //sheetrope
+        if (selectionScript.aSlotSelected && selectedItemData.id == 131 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
+            if (distance <= 2.4f)
+            {
+                touchedTileObject = mcs.touchedRoofLedge;
+                StartCoroutine(Rope("sheet"));
+            }
+        }
+
+        //grapple
+        if (selectionScript.aSlotSelected && selectedItemData.id == 102 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
+            if (distance <= 2.4f)
+            {
+                touchedTileObject = mcs.touchedRoofLedge;
+                StartCoroutine(Rope("grapple"));
+            }
         }
 
 
@@ -228,12 +254,13 @@ public class ItemBehaviours : MonoBehaviour
             DestroyActionBar();
         }
     }
-    public IEnumerator Rope()
+    public IEnumerator Rope(string identifier)
     {
         usedItemData = selectedItemData;
+        usedSlotNumber = slotNumber;
         //get tile to rope to
         Vector3 ropeTilePos = new Vector3();
-        if(touchedTileObject.name.StartsWith("Roofing Vertical"))
+        if(touchedTileObject.name.StartsWith("Roofing Vertical") || touchedTileObject.name.StartsWith("Top Wall Vertical (Roof)"))
         {
             if (PlayerTransform.position.x < touchedTileObject.transform.position.x)//if player is to the left of the ledge
             {
@@ -246,7 +273,7 @@ public class ItemBehaviours : MonoBehaviour
             ropeTilePos.y = touchedTileObject.transform.position.y;
             ropeTilePos.z = touchedTileObject.transform.position.z;
         }
-        else if(touchedTileObject.name.StartsWith("Roofing Horizontal"))
+        else if(touchedTileObject.name.StartsWith("Roofing Horizontal") || touchedTileObject.name.StartsWith("Top Wall Horizontal (Roof)"))
         {
             if (PlayerTransform.position.y < touchedTileObject.transform.position.y)//if player is below the ledge
             {
@@ -266,8 +293,112 @@ public class ItemBehaviours : MonoBehaviour
                 ropeTile = tile.gameObject;
                 break;
             }
+            else if(tile.position != ropeTilePos)
+            {
+                ropeTile = null;
+            }
         }
 
+        if(ropeTile == null && !touchedTileObject.name.StartsWith("Top Wall"))//check if roping off the roof normally
+        {
+            //check if there is an obstacle in the way
+            Vector3 obstacleOffset = new Vector3(0, 1.6f, 0);
+            foreach(Transform tile in perksTiles.transform.Find("Ground"))
+            {
+                if(tile.gameObject.layer == 8 && tile.position == ropeTilePos - obstacleOffset)
+                {
+                    yield break;
+                }
+            }
+            
+            //move to tile
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            float speed = 10f;
+            Vector3 direction = (ropeTilePos - PlayerTransform.position).normalized;
+            isRoping = true;
+            GameObject ropePrefab;
+            switch (identifier)
+            {
+                case "rope":
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    break;
+                case "sheet":
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/SheetRope");
+                    break;
+                case "grapple":
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+                    break;
+                default:
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+                    break;
+            }
+            GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+            Vector2 ropeSize = new Vector2(.1f, .5f);
+            ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            ropeRotation *= Quaternion.Euler(0, 0, 90);
+            ropeObject.transform.rotation = ropeRotation;
+            while (Vector3.Distance(PlayerTransform.position, ropeTilePos) > 0.1f)
+            {
+                PlayerTransform.position += speed * Time.deltaTime * direction;
+
+                ropeSize.x = Vector3.Distance(PlayerTransform.position, ropeTilePos);
+                ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+                Vector3 midpoint = (PlayerTransform.position + ropeTilePos) / 2;
+                ropeObject.transform.position = midpoint;
+
+                yield return null;
+            }
+            Destroy(ropeObject);
+            PlayerTransform.position = ropeTilePos;
+            isRoping = false;
+            RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            yield break;
+        }
+        else if(ropeTile == null && touchedTileObject.name.StartsWith("Top Wall") && identifier == "grapple")//check if roping off the roof via top wall (grapple only)
+        {
+            //check if there is an obstacle in the way
+            Vector3 obstacleOffset = new Vector3(0, 1.6f, 0);
+            foreach (Transform tile in perksTiles.transform.Find("Ground"))
+            {
+                if (tile.gameObject.layer == 8 && tile.position == ropeTilePos - obstacleOffset)
+                {
+                    yield break;
+                }
+            }
+
+            //move to tile
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            float speed = 10f;
+            Vector3 direction = (ropeTilePos - PlayerTransform.position).normalized;
+            isRoping = true;
+            GameObject ropePrefab;
+            ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+            GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+            Vector2 ropeSize = new Vector2(.1f, .5f);
+            ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            ropeRotation *= Quaternion.Euler(0, 0, 90);
+            ropeObject.transform.rotation = ropeRotation;
+            while (Vector3.Distance(PlayerTransform.position, ropeTilePos) > 0.1f)
+            {
+                PlayerTransform.position += speed * Time.deltaTime * direction;
+
+                ropeSize.x = Vector3.Distance(PlayerTransform.position, ropeTilePos);
+                ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+                Vector3 midpoint = (PlayerTransform.position + ropeTilePos) / 2;
+                ropeObject.transform.position = midpoint;
+
+                yield return null;
+            }
+            Destroy(ropeObject);
+            PlayerTransform.position = ropeTilePos;
+            isRoping = false;
+            RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            yield break;
+        }
         //see if possible based on height
         GameObject lastTouchedRoofFloor = PlayerTransform.GetComponent<PlayerFloorCollision>().lastTouchedRoofFloor;
 
@@ -297,19 +428,76 @@ public class ItemBehaviours : MonoBehaviour
             ropeTileHeight = 1;
         }
 
-        if(currentHeight >= ropeTileHeight)
+        if(currentHeight >= ropeTileHeight && (identifier == "rope" || identifier == "sheet"))
         {
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             float speed = 10f;
             Vector3 direction = (ropeTile.transform.position - PlayerTransform.position).normalized;
             isRoping = true;
+            GameObject ropePrefab;
+            switch (identifier)
+            {
+                case "rope":
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    break;
+                case "sheet":
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/SheetRope");
+                    break;
+                default:
+                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    break;
+            }
+            GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+            Vector2 ropeSize = new Vector2(.1f, .5f);
+            ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            ropeRotation *= Quaternion.Euler(0, 0, 90);
+            ropeObject.transform.rotation = ropeRotation;
             while(Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
             {
                 PlayerTransform.position += speed * Time.deltaTime * direction;
 
+                ropeSize.x = Vector3.Distance(PlayerTransform.position, ropeTile.transform.position);
+                ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+                Vector3 midpoint = (PlayerTransform.position + ropeTile.transform.position) / 2;
+                ropeObject.transform.position = midpoint;
+
                 yield return null;
             }
+            Destroy(ropeObject);
+            PlayerTransform.position = ropeTile.transform.position;
+            isRoping = false;
+            RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else if (currentHeight <= ropeTileHeight && identifier == "grapple")
+        {
+            //move to tile
+            PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            float speed = 10f;
+            Vector3 direction = (ropeTile.transform.position - PlayerTransform.position).normalized;
+            isRoping = true;
+            GameObject ropePrefab;
+            ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+            GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+            Vector2 ropeSize = new Vector2(.1f, .5f);
+            ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            ropeRotation *= Quaternion.Euler(0, 0, 90);
+            ropeObject.transform.rotation = ropeRotation;
+            while (Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
+            {
+                PlayerTransform.position += speed * Time.deltaTime * direction;
+
+                ropeSize.x = Vector3.Distance(PlayerTransform.position, ropeTile.transform.position);
+                ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+                Vector3 midpoint = (PlayerTransform.position + ropeTile.transform.position) / 2;
+                ropeObject.transform.position = midpoint;
+
+                yield return null;
+            }
+            Destroy(ropeObject);
             PlayerTransform.position = ropeTile.transform.position;
             isRoping = false;
             RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
