@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     public GameObject MouseOverlayObject;
     public GameObject perksTiles;
     public DeskStand deskStandScript;
+    public ItemBehaviours itemBehavioursScript;
     public PlayerFloorCollision playerCollisionScript;
     private int slotIndex;
     private MouseCollisionOnItems mouseCollisionScript;
@@ -162,7 +163,7 @@ public class Inventory : MonoBehaviour
     }
     public void DropItem(int slotIndex, string slotName)
     {
-        if (!deskStandScript.hasClimbed && !deskStandScript.isClimbing) //checks if standing on a desk
+        if (!deskStandScript.hasClimbed && !deskStandScript.isClimbing && !itemBehavioursScript.isRoping) //checks if standing on a desk
         {
             foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))//checks if item is in the way
             {
