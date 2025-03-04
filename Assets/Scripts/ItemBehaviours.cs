@@ -32,6 +32,10 @@ public class ItemBehaviours : MonoBehaviour
     public TextMeshProUGUI ActionTextBox;
     private int whatSlot;
     public Sprite clearSprite;
+    public Sprite hole24;
+    public Sprite hole49;
+    public Sprite hole74;
+    public Sprite hole99;
     private string whatAction;
     //general
 
@@ -40,6 +44,9 @@ public class ItemBehaviours : MonoBehaviour
     public bool selectedCuttingItem;
     public bool selectedDiggingItem;
     public bool selectedVentBreakingItem;
+    public bool goodForDig;
+    public bool halfDug;
+    public GameObject halfDugHole;
     //roping/grapling
     public GameObject ropeTile;
     public GameObject touchedTileObject;
@@ -212,10 +219,39 @@ public class ItemBehaviours : MonoBehaviour
         {
             Deselect();
         }
+        
+        //digging down holes
+        if(PlayerTransform.gameObject.layer == 3 && mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
+            if(distance <= 2.4f)
+            {
+                touchedTileObject = mcs.touchedFloor.gameObject;
+                foreach(Transform obj in perksTiles.transform.Find("GroundObjects")) //checks if able to dig
+                {
+                    if (!obj.name.StartsWith("100%HoleDown"))
+                    {
+                        if(obj.position != touchedTileObject.transform.position)
+                        {
+                            goodForDig = true;
+                        }
+                        else if(obj.position == touchedTileObject.transform.position)
+                        {
+                            goodForDig = false;
+                            break;
+                        }
+                    }
+                }
+                whatAction = "digging down";
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Digging");
+                Deselect();
+            }
+        }
 
         ///ROPES AND GRAPPLES
         //rope
-        if(selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        if (selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
             if(distance <= 2.4f)
@@ -527,6 +563,66 @@ public class ItemBehaviours : MonoBehaviour
     {
         TileData touchedTileData = touchedTile.GetComponent<TileCollectionData>().tileData;
         touchedTileData.currentDurability = currentDurability - itemStrength;
+        if(whatAction == "digging down")
+        {
+            foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
+            {
+                if(obj.name.StartsWith("HalfHoleDown") && obj.position == touchedTileObject.transform.position)
+                {
+                    halfDug = true;
+                    halfDugHole = obj.gameObject;
+                    break;
+                }
+                else
+                {
+                    halfDug = false;
+                    halfDugHole = null;
+                }
+            }
+
+            if (halfDug)
+            {
+                if (touchedTileData.currentDurability <= 24)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole99;
+                }
+                else if (touchedTileData.currentDurability >= 25 && touchedTileData.currentDurability < 49)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole74;
+                }
+                else if (touchedTileData.currentDurability >= 50 && touchedTileData.currentDurability < 74)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole49;
+                }
+                else if (touchedTileData.currentDurability >= 75 && touchedTileData.currentDurability < 99)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole24;
+                }
+            }
+            else if (!halfDug)
+            {
+                Vector3 halfHolePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
+                Quaternion halfHoleRotation = Quaternion.identity;
+                GameObject halfHoleObject = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleDown");
+                halfDugHole = Instantiate(halfHoleObject, halfHolePosition, halfHoleRotation, perksTiles.transform.Find("GroundObjects"));
+                if (touchedTileData.currentDurability <= 24)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole99;
+                }
+                else if (touchedTileData.currentDurability >= 25 && touchedTileData.currentDurability < 49)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole74;
+                }
+                else if (touchedTileData.currentDurability >= 50 && touchedTileData.currentDurability < 74)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole49;
+                }
+                else if (touchedTileData.currentDurability >= 75 && touchedTileData.currentDurability < 99)
+                {
+                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole24;
+                }
+            }
+        }
         if(touchedTileData.currentDurability <= 0)
         {
             BreakTile();
@@ -560,6 +656,7 @@ public class ItemBehaviours : MonoBehaviour
             case "cutting vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
             case "unscrewing slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
             case "cutting slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+            case "digging down": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
         }
 
     }
@@ -626,6 +723,22 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 slatsPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion slatsRotation = Quaternion.identity;
             Destroy(touchedTileObject);
+        }
+        else if(whatAction == "digging down")
+        {
+            touchedTileObject.GetComponent<BoxCollider2D>().enabled = false;
+            foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
+            {
+                if(obj.name.StartsWith("HalfHoleDown") && obj.transform.position == touchedTileObject.transform.position)
+                {
+                    Destroy(obj.gameObject);
+                    break;
+                }
+            }
+            Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
+            Quaternion holeRotation = Quaternion.identity;
+            GameObject holeObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleDown");
+            Instantiate(holeObject, holePosition, holeRotation, perksTiles.transform.Find("GroundObjects"));
         }
         else
         {
