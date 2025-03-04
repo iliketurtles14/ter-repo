@@ -38,6 +38,7 @@ public class Tooltips : MonoBehaviour
     private float barsDistance;
     private float ventCoverDistance;
     private float slatsDistance;
+    private float floorDistance;
     private int printedInvSlotNumber;
     private int printedDeskSlotNumber;
     private TileData printedTileData;
@@ -279,6 +280,41 @@ public class Tooltips : MonoBehaviour
             ChangeTooltipText(changeType);
             return;
         }
+        //floors
+        if (mouseCollisionScript.isTouchingFloor)
+        {
+            floorDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedFloor.transform.position);
+        }
+        if (!showingTooltip && mouseCollisionScript.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+        {
+            Debug.Log("here");
+            toPrint = "Dig";
+            printedTileDurability = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability;
+            printDurability = " (" + mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+            tooltipType = "floor";
+            printedTileData = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData;
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "floor" &&
+            (!mouseCollisionScript.isTouchingFloor || !itemBehavioursScript.selectedDiggingItem))
+        {
+            Debug.Log("here1");
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "floor" && mouseCollisionScript.isTouchingFloor && itemBehavioursScript.selectedDiggingItem && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mouseCollisionScript.isTouchingFloor && showingTooltip && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            Debug.Log(mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability.ToString() + printedTileDurability.ToString());
+            changeType = "tileDurability";
+            ChangeTooltipText(changeType);
+            return;
+        }
         //vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
         if (mouseCollisionScript.isTouchingVentCover)
         {
@@ -472,6 +508,7 @@ public class Tooltips : MonoBehaviour
                     case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+                    case "floor": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                 }
                 break;
 

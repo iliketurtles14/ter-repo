@@ -13,6 +13,7 @@ public class ApplyPrisonData : MonoBehaviour
     public Transform perksTiles;
     public InventorySelection InventorySelection;
     public VentClimb VentClimb;
+    public ItemBehaviours itemBehavioursScript;
     public Transform PlayerDesk;
     private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
@@ -91,6 +92,12 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("PerksPrefabs/Objects/SheetRope").GetComponent<SpriteRenderer>().sprite = UISprites[162];
         Resources.Load("PerksPrefabs/Objects/Rope").GetComponent<SpriteRenderer>().sprite = UISprites[163];
         Resources.Load("PerksPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
+        //holes
+        Resources.Load("PerksPrefabs/Objects/100%HoleDown").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
+        itemBehavioursScript.hole24 = PrisonObjectSprites[136];
+        itemBehavioursScript.hole49 = PrisonObjectSprites[135];
+        itemBehavioursScript.hole74 = PrisonObjectSprites[134];
+        itemBehavioursScript.hole99 = PrisonObjectSprites[133];       
         //other vent objects
         perksTiles.Find("VentObjects").gameObject.SetActive(true);
         foreach (Transform child in perksTiles.Find("VentObjects"))
