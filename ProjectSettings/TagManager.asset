@@ -58,6 +58,7 @@ TagManager:
   - Ladder(Vent)
   - RoofLedge
   - HoleDown
+  - Dirt
   layers:
   - Default
   - TransparentFX

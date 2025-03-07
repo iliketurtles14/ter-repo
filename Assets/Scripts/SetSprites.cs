@@ -141,6 +141,6 @@ public class SetSprites : MonoBehaviour
     }
     private void SetGround()
     {
-        Ground.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
+        CenterPerksTiles.transform.Find("GroundPlane").GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
     }
 }

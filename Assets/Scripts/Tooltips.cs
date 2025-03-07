@@ -61,7 +61,6 @@ public class Tooltips : MonoBehaviour
         isTouchingItem = mouseCollisionScript.isTouchingItem;
         touchedItem = mouseCollisionScript.touchedItem;
 
-
         ///ITEMS
         //for inventory items
         if (isTouchingInvSlot)
@@ -184,6 +183,38 @@ public class Tooltips : MonoBehaviour
             return;
         }
         ///TILES
+        //floors
+        if (mouseCollisionScript.isTouchingFloor)
+        {
+            floorDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedFloor.transform.position);
+        }
+        if (!showingTooltip && mouseCollisionScript.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+        {
+            toPrint = "Dig";
+            printedTileDurability = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability;
+            printDurability = " (" + mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+            tooltipType = "floor";
+            printedTileData = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData;
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "floor" &&
+            (!mouseCollisionScript.isTouchingFloor || !itemBehavioursScript.selectedDiggingItem))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "floor" && mouseCollisionScript.isTouchingFloor && itemBehavioursScript.selectedDiggingItem && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mouseCollisionScript.isTouchingFloor && showingTooltip && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+
         //walls
         if (mouseCollisionScript.isTouchingWall)
         {
@@ -276,41 +307,6 @@ public class Tooltips : MonoBehaviour
         }
         if (mouseCollisionScript.isTouchingBars && showingTooltip && mouseCollisionScript.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        //floors
-        if (mouseCollisionScript.isTouchingFloor)
-        {
-            floorDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedFloor.transform.position);
-        }
-        if (!showingTooltip && mouseCollisionScript.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            Debug.Log("here");
-            toPrint = "Dig";
-            printedTileDurability = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "floor";
-            printedTileData = mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
-            return;
-        }
-        else if (showingTooltip && tooltipType == "floor" &&
-            (!mouseCollisionScript.isTouchingFloor || !itemBehavioursScript.selectedDiggingItem))
-        {
-            Debug.Log("here1");
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "floor" && mouseCollisionScript.isTouchingFloor && itemBehavioursScript.selectedDiggingItem && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mouseCollisionScript.isTouchingFloor && showingTooltip && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            Debug.Log(mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability.ToString() + printedTileDurability.ToString());
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
             return;

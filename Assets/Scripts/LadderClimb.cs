@@ -8,7 +8,6 @@ public class LadderClimb : MonoBehaviour
     public Canvas ic;
     public InventorySelection selectionScript;
     public VentClimb ventClimbScript; //to get mouse sprites
-    public DeskPickUp deskPickUpScript;
     public GameObject player;
     public GameObject perksTiles;
     private GameObject currentLadder;

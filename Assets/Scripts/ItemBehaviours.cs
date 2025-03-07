@@ -14,6 +14,7 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     public InventorySelection selectionScript;
+    public HoleClimb holeClimbScript; //for sprites
     public GameObject perksTiles;
     private ItemData selectedItemData;
     private ItemData usedItemData;
@@ -36,6 +37,10 @@ public class ItemBehaviours : MonoBehaviour
     public Sprite hole49;
     public Sprite hole74;
     public Sprite hole99;
+    public Sprite holeUp24;
+    public Sprite holeUp49;
+    public Sprite holeUp74;
+    public Sprite holeUp99;
     private string whatAction;
     //general
 
@@ -47,6 +52,7 @@ public class ItemBehaviours : MonoBehaviour
     public bool goodForDig;
     public bool halfDug;
     public GameObject halfDugHole;
+    public GameObject halfDugHoleUp;
     //roping/grapling
     public GameObject ropeTile;
     public GameObject touchedTileObject;
@@ -544,6 +550,100 @@ public class ItemBehaviours : MonoBehaviour
             yield break;
         }
     }
+    public void DigDown(TileData touchedTileData)
+    {
+        foreach (Transform tile in perksTiles.transform.Find("UndergroundObjects"))
+        {
+            if (tile.position == touchedTileObject.transform.position && tile.name.StartsWith("HalfHoleUp"))
+            {
+                Destroy(tile.gameObject); break;
+            }
+        }
+        foreach (Transform tile in perksTiles.transform.Find("GroundObjects"))
+        {
+            if (tile.position == touchedTileObject.transform.position && tile.name.StartsWith("HalfHoleDown"))
+            {
+                Destroy(tile.gameObject); break;
+            }
+        }
+
+        GameObject dirtObject = Resources.Load<GameObject>("PerksPrefabs/Underground/Dirt");
+        GameObject emptyDirtObject = Resources.Load<GameObject>("PerksPrefabs/Underground/DirtEmpty");
+        GameObject halfHoleUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleUp");
+        GameObject halfHoleDownObject = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleDown");
+
+        Vector3 northOffset = new Vector3(0, 1.6f);
+        Vector3 southOffset = new Vector3(0, -1.6f);
+        Vector3 eastOffset = new Vector3(1.6f, 0);
+        Vector3 westOffset = new Vector3(-1.6f, 0);
+
+        bool emptyNorth = false;
+        bool emptySouth = false;
+        bool emptyEast = false;
+        bool emptyWest = false;
+
+        Instantiate(emptyDirtObject, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("Underground"));
+        Instantiate(halfHoleDownObject, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("GroundObjects"));
+        Instantiate(halfHoleUpObject, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+
+        if (touchedTileData.currentDurability <= 24)
+        {
+            halfHoleDownObject.GetComponent<SpriteRenderer>().sprite = hole99;
+            halfHoleUpObject.GetComponent<SpriteRenderer>().sprite = holeUp99;
+        }
+        else if (touchedTileData.currentDurability >= 25 && touchedTileData.currentDurability < 49)
+        {
+            halfHoleDownObject.GetComponent<SpriteRenderer>().sprite = hole74;
+            halfHoleUpObject.GetComponent<SpriteRenderer>().sprite = holeUp74;
+        }
+        else if (touchedTileData.currentDurability >= 50 && touchedTileData.currentDurability < 74)
+        {
+            halfHoleDownObject.GetComponent<SpriteRenderer>().sprite = hole49;
+            halfHoleUpObject.GetComponent<SpriteRenderer>().sprite = holeUp49;
+        }
+        else if (touchedTileData.currentDurability >= 75 && touchedTileData.currentDurability < 99)
+        {
+            halfHoleDownObject.GetComponent<SpriteRenderer>().sprite = hole24;
+            halfHoleUpObject.GetComponent<SpriteRenderer>().sprite = holeUp24;
+        }
+
+        foreach (Transform tile in perksTiles.transform.Find("Underground"))
+        {
+            if (tile.position == touchedTileObject.transform.position + northOffset && tile.name.StartsWith("DirtEmpty"))
+            {
+                emptyNorth = true;
+            }
+            else if (tile.position == touchedTileObject.transform.position + southOffset && tile.name.StartsWith("DirtEmpty"))
+            {
+                emptySouth = true;
+            }
+            else if (tile.position == touchedTileObject.transform.position + eastOffset && tile.name.StartsWith("DirtEmpty"))
+            {
+                emptyEast = true;
+            }
+            else if (tile.position == touchedTileObject.transform.position + westOffset && tile.name.StartsWith("DirtEmpty"))
+            {
+                emptyWest = true;
+            }
+        }
+
+        if (!emptyNorth)
+        {
+            Instantiate(dirtObject, touchedTileObject.transform.position + northOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+        }
+        if (!emptySouth)
+        {
+            Instantiate(dirtObject, touchedTileObject.transform.position + southOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+        }
+        if (!emptyEast)
+        {
+            Instantiate(dirtObject, touchedTileObject.transform.position + eastOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+        }
+        if (!emptyWest)
+        {
+            Instantiate(dirtObject, touchedTileObject.transform.position + westOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+        }
+    }
     public void Deselect()
     {
         selectedChippingItem = false;
@@ -565,65 +665,10 @@ public class ItemBehaviours : MonoBehaviour
         touchedTileData.currentDurability = currentDurability - itemStrength;
         if(whatAction == "digging down")
         {
-            foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
-            {
-                if(obj.name.StartsWith("HalfHoleDown") && obj.position == touchedTileObject.transform.position)
-                {
-                    halfDug = true;
-                    halfDugHole = obj.gameObject;
-                    break;
-                }
-                else
-                {
-                    halfDug = false;
-                    halfDugHole = null;
-                }
-            }
-
-            if (halfDug)
-            {
-                if (touchedTileData.currentDurability <= 24)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole99;
-                }
-                else if (touchedTileData.currentDurability >= 25 && touchedTileData.currentDurability < 49)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole74;
-                }
-                else if (touchedTileData.currentDurability >= 50 && touchedTileData.currentDurability < 74)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole49;
-                }
-                else if (touchedTileData.currentDurability >= 75 && touchedTileData.currentDurability < 99)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole24;
-                }
-            }
-            else if (!halfDug)
-            {
-                Vector3 halfHolePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
-                Quaternion halfHoleRotation = Quaternion.identity;
-                GameObject halfHoleObject = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleDown");
-                halfDugHole = Instantiate(halfHoleObject, halfHolePosition, halfHoleRotation, perksTiles.transform.Find("GroundObjects"));
-                if (touchedTileData.currentDurability <= 24)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole99;
-                }
-                else if (touchedTileData.currentDurability >= 25 && touchedTileData.currentDurability < 49)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole74;
-                }
-                else if (touchedTileData.currentDurability >= 50 && touchedTileData.currentDurability < 74)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole49;
-                }
-                else if (touchedTileData.currentDurability >= 75 && touchedTileData.currentDurability < 99)
-                {
-                    halfDugHole.GetComponent<SpriteRenderer>().sprite = hole24;
-                }
-            }
+            DigDown(touchedTileData);
         }
-        if(touchedTileData.currentDurability <= 0)
+
+        if (touchedTileData.currentDurability <= 0)
         {
             BreakTile();
         }
@@ -729,7 +774,15 @@ public class ItemBehaviours : MonoBehaviour
             touchedTileObject.GetComponent<BoxCollider2D>().enabled = false;
             foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
             {
-                if(obj.name.StartsWith("HalfHoleDown") && obj.transform.position == touchedTileObject.transform.position)
+                if(obj.name.StartsWith("HalfHoleDown") && obj.position == touchedTileObject.transform.position)
+                {
+                    Destroy(obj.gameObject);
+                    break;
+                }
+            }
+            foreach(Transform obj in perksTiles.transform.Find("UndergroundObjects"))
+            {
+                if(obj.name.StartsWith("HalfHoleUp") && obj.position == touchedTileObject.transform.position)
                 {
                     Destroy(obj.gameObject);
                     break;
@@ -738,7 +791,9 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
             GameObject holeObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleDown");
+            GameObject holeUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleUp");
             Instantiate(holeObject, holePosition, holeRotation, perksTiles.transform.Find("GroundObjects"));
+            Instantiate(holeUpObject, holePosition, holeRotation, perksTiles.transform.Find("UndergroundObjects"));
         }
         else
         {
