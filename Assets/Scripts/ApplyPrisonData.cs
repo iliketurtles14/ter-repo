@@ -14,6 +14,7 @@ public class ApplyPrisonData : MonoBehaviour
     public InventorySelection InventorySelection;
     public VentClimb VentClimb;
     public ItemBehaviours itemBehavioursScript;
+    public HoleClimb holeClimbScript;
     public Transform PlayerDesk;
     private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
@@ -94,10 +95,20 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("PerksPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
         //holes
         Resources.Load("PerksPrefabs/Objects/100%HoleDown").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
+        Resources.Load("PerksPrefabs/Objects/100%HoleUp").GetComponent<SpriteRenderer>().sprite = UISprites[38];
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];
         itemBehavioursScript.hole49 = PrisonObjectSprites[135];
         itemBehavioursScript.hole74 = PrisonObjectSprites[134];
-        itemBehavioursScript.hole99 = PrisonObjectSprites[133];       
+        itemBehavioursScript.hole99 = PrisonObjectSprites[133];
+        itemBehavioursScript.holeUp24 = UISprites[34];
+        itemBehavioursScript.holeUp49 = UISprites[35];
+        itemBehavioursScript.holeUp74 = UISprites[36];
+        itemBehavioursScript.holeUp99 = UISprites[37];
+        //dirt
+        Resources.Load("PerksPrefabs/Underground/Dirt").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+        Resources.Load("PerksPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
+        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
         //other vent objects
         perksTiles.Find("VentObjects").gameObject.SetActive(true);
         foreach (Transform child in perksTiles.Find("VentObjects"))

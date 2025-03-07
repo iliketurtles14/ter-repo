@@ -21,6 +21,7 @@ public class DataSender : MonoBehaviour
     public List<Sprite> MaruSprites = new List<Sprite>();
     public List<Sprite> TileList = new List<Sprite>();
     public Sprite GroundSprite;
+    public Sprite UndergroundSprite;
     public List<AudioClip> SoundList = new List<AudioClip>();
     public List<AudioClip> MusicList = new List<AudioClip>();
 
@@ -49,10 +50,11 @@ public class DataSender : MonoBehaviour
         TangoSprites = tango;
         MaruSprites = maru;
     }
-    public void SetKnownLists(List<Sprite> tiles, Sprite ground)
+    public void SetKnownLists(List<Sprite> tiles, Sprite ground, Sprite underground)
     {
         TileList = tiles;
         GroundSprite = ground;
+        UndergroundSprite = underground;
     }
     public void SetSoundList(List<AudioClip> sound)
     {

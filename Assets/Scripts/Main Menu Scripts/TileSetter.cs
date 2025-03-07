@@ -13,6 +13,7 @@ public class TileSetter : MonoBehaviour
 
     private Sprite convertedTileSprite;
     private Sprite convertedGroundSprite;
+    private Sprite convertedUndergroundSprite;
 
     public List<Sprite> groundList = new List<Sprite>();
     public List<Sprite> tileList = new List<Sprite>();
@@ -52,9 +53,10 @@ public class TileSetter : MonoBehaviour
                 convertedGroundSprite = Texture2DToSprite(groundTextureList[8]);
                 break;
         }
+        convertedUndergroundSprite = Texture2DToSprite(groundTextureList[18]);
         SliceAndDice();
 
-        senderScript.SetKnownLists(tileList, convertedGroundSprite);
+        senderScript.SetKnownLists(tileList, convertedGroundSprite, convertedUndergroundSprite);
     }
 
     private Sprite Texture2DToSprite(Texture2D texture)
