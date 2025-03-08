@@ -10027,6 +10027,7 @@ MonoBehaviour:
   MaruSprites: []
   TileList: []
   GroundSprite: {fileID: 0}
+  UndergroundSprite: {fileID: 0}
   SoundList: []
   MusicList: []
 --- !u!4 &947147255

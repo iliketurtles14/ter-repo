@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEngine.Rendering.Universal;
 
 public class ApplyPrisonData : MonoBehaviour
 {
@@ -95,7 +96,7 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("PerksPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
         //holes
         Resources.Load("PerksPrefabs/Objects/100%HoleDown").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
-        Resources.Load("PerksPrefabs/Objects/100%HoleUp").GetComponent<SpriteRenderer>().sprite = UISprites[38];
+        Resources.Load("PerksPrefabs/Objects/100%HoleUp").GetComponent<Light2D>().lightCookieSprite = UISprites[38];
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];
         itemBehavioursScript.hole49 = PrisonObjectSprites[135];
         itemBehavioursScript.hole74 = PrisonObjectSprites[134];
