@@ -26,6 +26,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> roofLedges = new HashSet<GameObject>();
     private HashSet<GameObject> holeDowns = new HashSet<GameObject>();
     private HashSet<GameObject> holeUps = new HashSet<GameObject>();
+    private HashSet<GameObject> dirts = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -73,7 +74,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedHoleDown => holeDowns.Count > 0 ? GetFirst(holeDowns) : null;
     public bool isTouchingHoleUp => holeUps.Count > 0;
     public GameObject touchedHoleUp => holeUps.Count > 0 ? GetFirst(holeUps) : null;
-
+    public bool isTouchingDirt => dirts.Count > 0;
+    public GameObject touchedDirt => dirts.Count > 0 ? GetFirst(dirts) : null;
     void Update()
     {
         // Get mouse position in world space
@@ -252,6 +254,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "HoleUp":
                 holeUps.Add(obj);
                 break;
+            case "Dirt":
+                dirts.Add(obj);
+                break;
         }
     }
 
@@ -279,6 +284,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         roofLedges.Clear();
         holeDowns.Clear();
         holeUps.Clear();
+        dirts.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

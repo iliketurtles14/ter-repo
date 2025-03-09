@@ -39,6 +39,7 @@ public class Tooltips : MonoBehaviour
     private float ventCoverDistance;
     private float slatsDistance;
     private float floorDistance;
+    private float emptyDirtDistance;
     private int printedInvSlotNumber;
     private int printedDeskSlotNumber;
     private TileData printedTileData;
@@ -210,6 +211,38 @@ public class Tooltips : MonoBehaviour
             return;
         }
         if (mouseCollisionScript.isTouchingFloor && showingTooltip && mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+
+        //empty dirt tiles
+        if (mouseCollisionScript.isTouchingDirt && mouseCollisionScript.touchedDirt.name == "DirtEmpty(Clone)")
+        {
+            emptyDirtDistance = Vector2.Distance(PlayerTransform.position, mouseCollisionScript.touchedDirt.transform.position);
+        }
+        if (!showingTooltip && mouseCollisionScript.isTouchingDirt && mouseCollisionScript.touchedDirt.name == "DirtEmpty(Clone)" && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+        {
+            toPrint = "Dig";
+            printedTileDurability = mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability;
+            printDurability = " (" + mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+            tooltipType = "emptyDirt";
+            printedTileData = mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData;
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "emptyDirt" &&
+            (!(mouseCollisionScript.isTouchingDirt && mouseCollisionScript.touchedDirt.name == "DirtEmpty(Clone)") || !itemBehavioursScript.selectedDiggingItem))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "emptyDirt" && mouseCollisionScript.isTouchingDirt && mouseCollisionScript.touchedDirt.name == "DirtEmpty(Clone)" && itemBehavioursScript.selectedDiggingItem && mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mouseCollisionScript.isTouchingDirt && mouseCollisionScript.touchedDirt.name == "DirtEmpty(Clone)" && showingTooltip && mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             DestroyTooltip();
             return;
@@ -505,6 +538,7 @@ public class Tooltips : MonoBehaviour
                     case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "floor": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+                    case "emptyDirt": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mouseCollisionScript.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                 }
                 break;
 
