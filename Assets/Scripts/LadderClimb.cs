@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,11 @@ public class LadderClimb : MonoBehaviour
     public Canvas ic;
     public InventorySelection selectionScript;
     public VentClimb ventClimbScript; //to get mouse sprites
+    public DeskStand deskStandScript;
     public GameObject player;
     public GameObject perksTiles;
     private GameObject currentLadder;
+    public bool hasPickedUp;
     private Vector3 offsetVector = new Vector3(); //only for ground-to-roof operations
     private float distance;
     public void Start()
@@ -37,6 +40,19 @@ public class LadderClimb : MonoBehaviour
             }
             if(Input.GetMouseButtonDown(0) && distance <= 2.4f && player.layer != 15)
             {
+                foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
+                {
+                    if(obj.layer == 14)
+                    {
+                        hasPickedUp = true;
+                        break;
+                    }
+                    else
+                    {
+                        hasPickedUp = false;
+                    }
+                }
+                
                 if (mcs.isTouchingGroundLadder)
                 {
                     currentLadder = mcs.touchedGroundLadder;
@@ -49,7 +65,11 @@ public class LadderClimb : MonoBehaviour
                 {
                     currentLadder = mcs.touchedRoofLadder;
                 }
-                StartCoroutine(ClimbLadder());
+
+                if (!hasPickedUp)
+                {
+                    StartCoroutine(ClimbLadder());
+                }
             }
         }
 

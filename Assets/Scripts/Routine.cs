@@ -124,7 +124,7 @@ public class Routine : MonoBehaviour
             }
             else if (time == "13:00")
             {
-                period = "Leisure / Work Period";
+                period = "Work Period";
                 periodCode = "W";
                 oldPeriod = period;
                 oldPeriodCode = periodCode;
