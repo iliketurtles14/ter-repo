@@ -59,6 +59,8 @@ TagManager:
   - RoofLedge
   - HoleDown
   - Dirt
+  - EmptyDirt
+  - HoleUp
   layers:
   - Default
   - TransparentFX

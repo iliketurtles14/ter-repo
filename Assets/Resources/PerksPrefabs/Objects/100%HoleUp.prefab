@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -7382603156979269956}
   m_Layer: 11
   m_Name: 100%HoleUp
-  m_TagString: Untagged
+  m_TagString: HoleUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
