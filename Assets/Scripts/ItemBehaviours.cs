@@ -58,8 +58,8 @@ public class ItemBehaviours : MonoBehaviour
     public GameObject halfDugHoleUp;
     public GameObject lastDugTile;
     private bool shouldMakeDirt;
-    private GameObject dirtObject;
     private GameObject floorObject;
+    private GameObject dirtObject;
     //roping/grapling
     public GameObject ropeTile;
     public GameObject touchedTileObject;
@@ -72,7 +72,6 @@ public class ItemBehaviours : MonoBehaviour
     {
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
-        dirtObject = null;
     }
     public void Update()
     {
@@ -265,7 +264,6 @@ public class ItemBehaviours : MonoBehaviour
                 {
                     shouldMakeDirt = true;
                 }
-                Debug.Log(shouldMakeDirt);
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Digging");
                 Deselect();
@@ -273,15 +271,15 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //digging up holes
-        if (PlayerTransform.gameObject.layer == 11 && mcs.isTouchingDirt && mcs.touchedDirt.name == "DirtEmpty(Clone)" && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if (PlayerTransform.gameObject.layer == 11 && mcs.isTouchingEmptyDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
-            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
             if (distance <= 2.4f)
             {
-                touchedTileObject = mcs.touchedDirt.gameObject;
+                touchedTileObject = mcs.touchedEmptyDirt.gameObject;
                 foreach (Transform obj in perksTiles.transform.Find("GroundObjects")) //checks if able to dig
                 {
-                    if (!obj.name.StartsWith("100%HoleDown"))
+                    if (!obj.name.StartsWith("HalfHoleDown"))
                     {
                         if (obj.position != touchedTileObject.transform.position)
                         {
@@ -299,20 +297,36 @@ public class ItemBehaviours : MonoBehaviour
                     if(tile.CompareTag("Digable") && tile.position == touchedTileObject.transform.position)
                     {
                         goodForDig2 = true;
+                        break;
                     }
                     else
                     {
                         goodForDig2 = false;
-                        break;
                     }
                 }
-                whatAction = "digging up";
+                if(goodForDig1 && goodForDig2)
+                {
+                    whatAction = "digging up";
+                    StartCoroutine(DrawActionBar());
+                    CreateActionText("Digging");
+                    Deselect();
+                }
+            }
+        }
+
+        //digging normally
+        if(PlayerTransform.gameObject.layer == 11 && mcs.isTouchingDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
+            if (distance <= 2.4f)
+            {
+                touchedTileObject = mcs.touchedDirt.gameObject;
+                whatAction = "digging";
                 StartCoroutine(DrawActionBar());
                 CreateActionText("Digging");
                 Deselect();
             }
         }
-
 
         ///ROPES AND GRAPPLES
         //rope
@@ -609,7 +623,7 @@ public class ItemBehaviours : MonoBehaviour
             yield break;
         }
     }
-    public void DigDown(TileData touchedTileData)
+    public IEnumerator DigDown(TileData touchedTileData)
     {
         foreach (Transform tile in perksTiles.transform.Find("UndergroundObjects"))
         {
@@ -637,12 +651,22 @@ public class ItemBehaviours : MonoBehaviour
         Vector3 westOffset = new Vector3(-1.6f, 0);
         if (shouldMakeDirt)
         {
-            dirtObject = Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("Underground"));
+            Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("Underground"));
         }
         GameObject halfHoleDownObject = Instantiate(halfHoleDownPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("GroundObjects"));
         GameObject halfHoleUpObject = Instantiate(halfHoleUpPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
 
-        dirtObject.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
+        yield return new WaitForEndOfFrame();
+
+        foreach(Transform tile in perksTiles.transform.Find("Underground"))
+        {
+            if(tile.position == touchedTileObject.transform.position && tile.name == "DirtEmpty(Clone)")
+            {
+                tile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
+                dirtObject = tile.gameObject;
+                break;
+            }
+        }
 
         if (touchedTileData.currentDurability <= 24 && touchedTileData.currentDurability > 0)
         {
@@ -670,14 +694,25 @@ public class ItemBehaviours : MonoBehaviour
             Destroy(halfHoleUpObject);
         }
 
+        if(halfHoleUpObject != null)
+        {
+            halfHoleUpObject.GetComponent<Light2D>().intensity = 0;
+        }
+
         bool northEmpty = false;
         bool southEmpty = false;
         bool eastEmpty = false;
         bool westEmpty = false;
 
+
+        if (dirtObject.GetComponent<TileCollectionData>().tileData.currentDurability <= 0)
+        {
+            BreakTile();
+        }
+
         if (!shouldMakeDirt)
         {
-            return;
+            yield break;
         }
 
         foreach(Transform tile in perksTiles.transform.Find("Underground"))
@@ -721,7 +756,7 @@ public class ItemBehaviours : MonoBehaviour
             Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
         }
     }
-    public void DigUp(TileData touchedTileData)
+    public IEnumerator DigUp(TileData touchedTileData)
     {
         foreach (Transform tile in perksTiles.transform.Find("UndergroundObjects"))
         {
@@ -743,13 +778,15 @@ public class ItemBehaviours : MonoBehaviour
 
         GameObject halfHoleDownObject = Instantiate(halfHoleDownPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("GroundObjects"));
         GameObject halfHoleUpObject = Instantiate(halfHoleUpPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
-        
-        foreach(Transform tile in perksTiles.transform.Find("Ground"))
+
+        yield return new WaitForEndOfFrame();
+
+        foreach(GameObject tile in GameObject.FindGameObjectsWithTag("Digable"))
         {
-            if(tile.position == touchedTileObject.transform.position)
+            if(tile.transform.position == touchedTileObject.transform.position)
             {
                 tile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
-                floorObject = tile.gameObject;
+                floorObject = tile;
                 break;
             }
         }
@@ -779,6 +816,89 @@ public class ItemBehaviours : MonoBehaviour
             Destroy(halfHoleDownObject);
             Destroy(halfHoleUpObject);
         }
+
+        if (floorObject.GetComponent<TileCollectionData>().tileData.currentDurability <= 0)
+        {
+            BreakTile();
+        }
+    }
+    public void Dig(TileData touchedTileData)
+    {
+        if (touchedTileData.currentDurability <= 0)
+        {
+            GameObject dirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/Dirt");
+            GameObject emptyDirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/DirtEmpty");
+
+            Vector3 northOffset = new Vector3(0, 1.6f);
+            Vector3 southOffset = new Vector3(0, -1.6f);
+            Vector3 eastOffset = new Vector3(1.6f, 0);
+            Vector3 westOffset = new Vector3(-1.6f, 0);
+
+            Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("Underground"));
+
+            bool northEmpty = false;
+            bool southEmpty = false;
+            bool eastEmpty = false;
+            bool westEmpty = false;
+
+            foreach (Transform tile in perksTiles.transform.Find("Underground"))
+            {
+                if (touchedTileObject.transform.position + northOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+                {
+                    northEmpty = true;
+                }
+                if (touchedTileObject.transform.position + southOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+                {
+                    southEmpty = true;
+                }
+                if (touchedTileObject.transform.position + eastOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+                {
+                    eastEmpty = true;
+                }
+                if (touchedTileObject.transform.position + westOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+                {
+                    westEmpty = true;
+                }
+
+                if (tile.position == touchedTileObject.transform.position && tile.name == "Dirt(Clone)")
+                {
+                    Destroy(tile.gameObject);
+                }
+            }
+            if (!northEmpty)
+            {
+                Instantiate(dirtPrefab, touchedTileObject.transform.position + northOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+            }
+            if (!southEmpty)
+            {
+                Instantiate(dirtPrefab, touchedTileObject.transform.position + southOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+            }
+            if (!eastEmpty)
+            {
+                Instantiate(dirtPrefab, touchedTileObject.transform.position + eastOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+            }
+            if (!westEmpty)
+            {
+                Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, perksTiles.transform.Find("Underground"));
+            }
+
+            foreach (Transform tile in perksTiles.transform.Find("Underground"))
+            {
+                tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
+
+                if (tile.name.StartsWith("Dirt(Clone)"))
+                {
+                    tile.GetComponent<BoxCollider2D>().enabled = true;
+                }
+            }
+            foreach (Transform obj in perksTiles.transform.Find("UndergroundObjects"))
+            {
+                if (obj.name == "Rock(Clone)" || obj.name == "Mine(Clone)" || obj.name == "Brace(Clone)")
+                {
+                    obj.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                }
+            }
+        }
     }
     public void Deselect()
     {
@@ -801,22 +921,18 @@ public class ItemBehaviours : MonoBehaviour
         touchedTileData.currentDurability = currentDurability - itemStrength;
         if(whatAction == "digging down")
         {
-            DigDown(touchedTileData);
-            if(dirtObject.GetComponent<TileCollectionData>().tileData.currentDurability <= 0)
-            {
-                BreakTile();
-            }
+            StartCoroutine(DigDown(touchedTileData));
         }
         else if(whatAction == "digging up")
         {
-            DigUp(touchedTileData);
-            if(floorObject.GetComponent<TileCollectionData>().tileData.currentDurability <= 0)
-            {
-                BreakTile();
-            }
+            StartCoroutine(DigUp(touchedTileData));
+        }
+        else if(whatAction == "digging")
+        {
+            Dig(touchedTileData);
         }
 
-        if (touchedTileData.currentDurability <= 0 && whatAction != "digging down" && whatAction != "digging up")
+        if (touchedTileData.currentDurability <= 0 && whatAction != "digging down" && whatAction != "digging up" && whatAction != "digging")
         {
             BreakTile();
         }
@@ -850,6 +966,8 @@ public class ItemBehaviours : MonoBehaviour
             case "unscrewing slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
             case "cutting slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
             case "digging down": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+            case "digging up": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+            case "digging": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
         }
 
     }
@@ -927,7 +1045,8 @@ public class ItemBehaviours : MonoBehaviour
             GameObject holeObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleDown");
             GameObject holeUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleUp");
             Instantiate(holeObject, holePosition, holeRotation, perksTiles.transform.Find("GroundObjects"));
-            Instantiate(holeUpObject, holePosition, holeRotation, perksTiles.transform.Find("UndergroundObjects"));
+            GameObject obj = Instantiate(holeUpObject, holePosition, holeRotation, perksTiles.transform.Find("UndergroundObjects"));
+            obj.GetComponent<Light2D>().intensity = 0;
         }
         else if(whatAction == "digging up")
         {

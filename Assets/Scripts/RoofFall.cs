@@ -27,7 +27,7 @@ public class RoofFall : MonoBehaviour
                 {
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
-                    player.layer = 10;
+                    player.layer = 3;
                     player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                     player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
                     perksTiles.transform.Find("Roof").gameObject.SetActive(false);
