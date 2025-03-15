@@ -6,4 +6,5 @@ public class TileData : ScriptableObject
 {
     public int currentDurability;
     public string tileName;
+    public int holeStability;
 }

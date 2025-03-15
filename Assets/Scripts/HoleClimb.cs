@@ -69,7 +69,7 @@ public class HoleClimb : MonoBehaviour
         {
             tile.GetComponent<SpriteRenderer>().sortingOrder = -5;
 
-            if (tile.name.StartsWith("Dirt(Clone)"))
+            if (tile.name == ("Dirt(Clone)"))
             {
                 tile.GetComponent<BoxCollider2D>().enabled = false;
             }
