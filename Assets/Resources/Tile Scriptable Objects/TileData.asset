@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3525443e3db024a8a06f5acfdeae61, type: 3}
   m_Name: TileData
   m_EditorClassIdentifier: 
-  currentDurability: -100
+  currentDurability: 100
+  tileName: 
+  holeStability: -1
