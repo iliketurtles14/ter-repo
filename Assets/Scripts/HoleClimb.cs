@@ -95,7 +95,7 @@ public class HoleClimb : MonoBehaviour
         {
             if (child.CompareTag("Item"))
             {
-                child.GetComponent<BoxCollider2D>().enabled = false;
+                child.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
 
