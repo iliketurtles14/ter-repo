@@ -110,6 +110,8 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("PerksPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
         perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
         perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
+        //brace
+        Resources.Load("PerksPrefabs/Objects/Brace").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
         //other vent objects
         perksTiles.Find("VentObjects").gameObject.SetActive(true);
         foreach (Transform child in perksTiles.Find("VentObjects"))

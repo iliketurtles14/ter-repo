@@ -321,10 +321,12 @@ public class ItemBehaviours : MonoBehaviour
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
             if (distance <= 2.4f)
             {
+                Debug.Log("here1");
                 touchedTileObject = mcs.touchedDirt.gameObject;
                 CheckStability();
                 if (!holeIsStable)
                 {
+                    Debug.Log("here2");
                     return;
                 }
                 whatAction = "digging";
@@ -375,9 +377,25 @@ public class ItemBehaviours : MonoBehaviour
             if(distance <= 2.4f)
             {
                 GameObject bracePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Brace");
-                Instantiate(bracePrefab, mcs.touchedEmptyDirt.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+                GameObject braceObj = Instantiate(bracePrefab, mcs.touchedEmptyDirt.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
                 mcs.touchedEmptyDirt.GetComponent<BoxCollider2D>().enabled = false;
+                braceObj.GetComponent<SpriteRenderer>().sortingOrder = 11;
+
+                //remove brace from inv
+                foreach(InventoryItem item in inventoryList)
+                {
+                    if(item.itemData.id == 140)
+                    {
+                        int index = inventoryList.IndexOf(item);
+                        string slotName = "Slot" + (index + 1);
+
+                        inventoryList[index].itemData = null;
+                        InventoryCanvas.transform.Find("GUIPanel/" + slotName).GetComponent<Image>().sprite = clearSprite;
+                        break;
+                    }
+                }
             }
+            Deselect();
         }
 
         if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)//keep at botom
@@ -955,10 +973,11 @@ public class ItemBehaviours : MonoBehaviour
             {
                 foreach(Transform tile2 in perksTiles.transform.Find("Underground"))
                 {
-                    if(tile1.position + northOffset == tile2.position ||
+                    if((tile1.position + northOffset == tile2.position ||
                         tile1.position + southOffset == tile2.position ||
                         tile1.position + eastOffset == tile2.position ||
-                        tile1.position + westOffset == tile2.position)
+                        tile1.position + westOffset == tile2.position) &&
+                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
                     {
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 2;
                     }
