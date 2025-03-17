@@ -16,6 +16,7 @@ public class ApplyPrisonData : MonoBehaviour
     public VentClimb VentClimb;
     public ItemBehaviours itemBehavioursScript;
     public HoleClimb holeClimbScript;
+    public MouseOverlay mouseOverlayScript;
     public Transform PlayerDesk;
     private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
@@ -58,8 +59,10 @@ public class ApplyPrisonData : MonoBehaviour
         ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[193];
         //mouse
         ic.Find("MouseOverlay").GetComponent<Image>().sprite = UISprites[41];
-        InventorySelection.mouseNormalSprite = UISprites[41];
-        InventorySelection.mousePurpleSprite = UISprites[73];
+        mouseOverlayScript.mouseNormal = UISprites[41];
+        mouseOverlayScript.mousePurple = UISprites[73];
+        mouseOverlayScript.mouseUp = UISprites[74];
+        mouseOverlayScript.mouseDown = UISprites[77];
         //deskmenupanel
         mc.Find("DeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
         //inventory ui (heart, energy, etc.)
@@ -83,10 +86,6 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
         //desk (to be removed later)
         PlayerDesk.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
-        //ventclimb script stuff
-        VentClimb.mouseUpSprite = UISprites[74];
-        VentClimb.mouseDownSprite = UISprites[77];
-        VentClimb.mouseNormalSprite = UISprites[41];
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
@@ -112,6 +111,8 @@ public class ApplyPrisonData : MonoBehaviour
         perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
         //brace
         Resources.Load("PerksPrefabs/Objects/Brace").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
+        //rock
+        Resources.Load("PerksPrefabs/Objects/Rock").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[41];
         //other vent objects
         perksTiles.Find("VentObjects").gameObject.SetActive(true);
         foreach (Transform child in perksTiles.Find("VentObjects"))
