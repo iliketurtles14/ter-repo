@@ -322,8 +322,8 @@ public class ItemBehaviours : MonoBehaviour
             if (distance <= 2.4f)
             {
                 Debug.Log("here1");
-                touchedTileObject = mcs.touchedDirt.gameObject;
-                CheckStability();
+                touchedTileObject = mcs.touchedDirt;
+                CheckStability(mcs.touchedDirt);
                 if (!holeIsStable)
                 {
                     Debug.Log("here2");
@@ -334,6 +334,24 @@ public class ItemBehaviours : MonoBehaviour
                 CreateActionText("Digging");
                 Deselect();
             }
+        }
+
+        //chipping rocks
+        if (mcs.isTouchingRock && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRock.transform.position);
+            if (distance <= 2.4f)
+            {
+                whatAction = "chipping rock";
+                touchedTileObject = mcs.touchedRock;
+                StartCoroutine(DrawActionBar());
+                CreateActionText("Chipping");
+                Deselect();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
         }
         ///ROPES AND GRAPPLES
         //rope
@@ -933,10 +951,33 @@ public class ItemBehaviours : MonoBehaviour
                     obj.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 }
             }
+
+            //checks if should spawn a rock (40% chance)
+            bool shouldRock = false;
+            int rand = UnityEngine.Random.Range(1, 10);
+            for (int i = 1; i <= 4; i++)
+            {
+                if(i == rand)
+                {
+                    shouldRock = true;
+                    break;
+                }
+                else
+                {
+                    shouldRock = false;
+                }
+            }
+
+            if (shouldRock)
+            {
+                GameObject rockPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rock");
+                Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+            }
         }
     }
-    public void CheckStability()
+    public void CheckStability(GameObject touchedTileObject)
     {
+        Debug.Log("Checking Stability");
         Vector3 northOffset = new Vector3(0, 1.6f);
         Vector3 southOffset = new Vector3(0, -1.6f);
         Vector3 eastOffset = new Vector3(1.6f, 0);
@@ -952,6 +993,7 @@ public class ItemBehaviours : MonoBehaviour
                     {
                         if(obj.position == tile.position)
                         {
+                            Debug.Log("Setting tiles to 3");
                             tile.GetComponent<TileCollectionData>().tileData.holeStability = 3;
                             break;
                         }
@@ -977,8 +1019,11 @@ public class ItemBehaviours : MonoBehaviour
                         tile1.position + southOffset == tile2.position ||
                         tile1.position + eastOffset == tile2.position ||
                         tile1.position + westOffset == tile2.position) &&
-                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
+                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3 &&
+                        tile2.name == "DirtEmpty(Clone)")
                     {
+                        Debug.Log("Setting tiles to 2");
+                        
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 2;
                     }
                 }
@@ -991,81 +1036,34 @@ public class ItemBehaviours : MonoBehaviour
                         tile1.position + southOffset == tile2.position ||
                         tile1.position + eastOffset == tile2.position ||
                         tile1.position + westOffset == tile2.position) &&
-                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
+                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3 &&
+                        tile2.name == "DirtEmpty(Clone)")
                     {
+                        Debug.Log("Setting tiles to 1");
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 1;
                     }
                 }
             }
         }
 
-        //get player position in relation to the touchedtileobject and check accordingly
-        if(PlayerTransform.position.x < touchedTileObject.transform.position.x) //player to the left
+        //look around the dirt to see if stable
+        foreach (Transform tile in perksTiles.transform.Find("Underground"))
         {
-            foreach(Transform tile in perksTiles.transform.Find("Underground"))
+            if ((touchedTileObject.transform.position == tile.position + eastOffset ||
+                touchedTileObject.transform.position == tile.position + westOffset ||
+                touchedTileObject.transform.position == tile.position + northOffset ||
+                touchedTileObject.transform.position == tile.position + southOffset) &&
+                tile.GetComponent<TileCollectionData>().tileData.holeStability > 1 &&
+                tile.gameObject.name == "DirtEmpty(Clone)")
             {
-                if(touchedTileObject.transform.position == tile.position + eastOffset)
-                {
-                    if(tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
-                    {
-                        holeIsStable = true;
-                    }
-                    else
-                    {
-                        holeIsStable = false;
-                    }
-                }
+                holeIsStable = true;
+                Debug.Log("holeIsStable is " + holeIsStable);
+                break;
             }
-        }
-        else if (PlayerTransform.position.x > touchedTileObject.transform.position.x) //player to the right
-        {
-            foreach (Transform tile in perksTiles.transform.Find("Underground"))
+            else
             {
-                if (touchedTileObject.transform.position == tile.position + westOffset)
-                {
-                    if (tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
-                    {
-                        holeIsStable = true;
-                    }
-                    else
-                    {
-                        holeIsStable = false;
-                    }
-                }
-            }
-        }
-        else if (PlayerTransform.position.y < touchedTileObject.transform.position.y) //player below
-        {
-            foreach (Transform tile in perksTiles.transform.Find("Underground"))
-            {
-                if (touchedTileObject.transform.position == tile.position + northOffset)
-                {
-                    if (tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
-                    {
-                        holeIsStable = true;
-                    }
-                    else
-                    {
-                        holeIsStable = false;
-                    }
-                }
-            }
-        }
-        else if (PlayerTransform.position.y > touchedTileObject.transform.position.y) //player above
-        {
-            foreach (Transform tile in perksTiles.transform.Find("Underground"))
-            {
-                if (touchedTileObject.transform.position == tile.position + southOffset)
-                {
-                    if (tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
-                    {
-                        holeIsStable = true;
-                    }
-                    else
-                    {
-                        holeIsStable = false;
-                    }
-                }
+                holeIsStable = false;
+                Debug.Log("holeIsStable is " + holeIsStable);
             }
         }
     }
@@ -1137,6 +1135,7 @@ public class ItemBehaviours : MonoBehaviour
             case "digging down": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
             case "digging up": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
             case "digging": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+            case "chipping rock": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
         }
 
     }
@@ -1200,8 +1199,6 @@ public class ItemBehaviours : MonoBehaviour
         }
         else if(whatAction == "unscrewing slats" || whatAction == "cutting slats")
         {
-            Vector3 slatsPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
-            Quaternion slatsRotation = Quaternion.identity;
             Destroy(touchedTileObject);
         }
         else if(whatAction == "digging down")
@@ -1228,6 +1225,10 @@ public class ItemBehaviours : MonoBehaviour
             GameObject holeUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleUp");
             Instantiate(holeObject, holePosition, holeRotation, perksTiles.transform.Find("GroundObjects"));
             Instantiate(holeUpObject, holePosition, holeRotation, perksTiles.transform.Find("UndergroundObjects"));
+        }
+        else if(whatAction == "chipping rock")
+        {
+            Destroy(touchedTileObject);
         }
         else
         {

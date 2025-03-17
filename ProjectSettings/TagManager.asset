@@ -61,6 +61,7 @@ TagManager:
   - Dirt
   - EmptyDirt
   - HoleUp
+  - Rock
   layers:
   - Default
   - TransparentFX

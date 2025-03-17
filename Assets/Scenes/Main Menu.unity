@@ -10796,7 +10796,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85adf3971ae4a17409d5c9bf1aea9d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MouseOverlayObject: {fileID: 1047992180}
+  player: {fileID: 0}
   parentCanvas: {fileID: 256175213}
+  offset: {x: 0, y: 0}
+  mouseNormal: {fileID: 0}
+  mousePurple: {fileID: 0}
+  mouseUp: {fileID: 0}
+  mouseDown: {fileID: 0}
 --- !u!114 &1047992184
 MonoBehaviour:
   m_ObjectHideFlags: 0

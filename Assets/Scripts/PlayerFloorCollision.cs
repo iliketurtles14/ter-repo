@@ -51,6 +51,21 @@ public class PlayerFloorCollision : MonoBehaviour
                 }
             }
         }
+        else if(gameObject.layer == 11)
+        {
+            position = transform.position;
+            hitColliders = Physics2D.OverlapPointAll(position);
+            foreach(Collider2D collider in hitColliders)
+            {
+                if(collider.gameObject.name.StartsWith("DirtEmpty") ||
+                    collider.gameObject.name.StartsWith("100%HoleUp") ||
+                    collider.gameObject.name.StartsWith("Brace"))
+                {
+                    playerFloor = collider.gameObject;
+                    break;
+                }
+            }
+        }
         else
         {
             touchedRoofFloor = null;

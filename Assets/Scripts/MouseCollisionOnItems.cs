@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> holeUps = new HashSet<GameObject>();
     private HashSet<GameObject> dirts = new HashSet<GameObject>();
     private HashSet<GameObject> emptyDirts = new HashSet<GameObject>();
+    private HashSet<GameObject> rocks = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -79,8 +81,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedDirt => dirts.Count > 0 ? GetFirst(dirts) : null;
     public bool isTouchingEmptyDirt => emptyDirts.Count > 0;
     public GameObject touchedEmptyDirt => emptyDirts.Count > 0 ? GetFirst(emptyDirts) : null;
+    public bool isTouchingRock => rocks.Count > 0;
+    public GameObject touchedRock => rocks.Count > 0 ? GetFirst(rocks) : null;
     void Update()
     {
+        
         // Get mouse position in world space
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -94,6 +99,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         bool touchingGroundLadder = false;
         bool touchingVentLadder = false;
         bool touchingRoofLadder = false;
+        bool touchingRock = false;
 
         // First pass: Check for specific tags
         foreach (var collider in hitColliders)
@@ -125,6 +131,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             if (collider.CompareTag("Ladder(Roof)"))
             {
                 touchingRoofLadder = true;
+            }
+            if (collider.CompareTag("Rock"))
+            {
+                touchingRock = true;
             }
         }
 
@@ -169,12 +179,18 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             {
                 AddCollision(touchedObject);
             }
+            else if(touchingRock && touchedObject.CompareTag("Rock"))
+            {
+                AddCollision(touchedObject);
+            }
             else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
-                && !touchingVentLadder && !touchingRoofLadder)
+                && !touchingVentLadder && !touchingRoofLadder && !touchingRock)
             {
                 AddCollision(touchedObject);
             }
         }
+
+        Debug.Log(isTouchingSlats);
     }
 
     public void DisableTag(string tag)
@@ -263,6 +279,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "EmptyDirt":
                 emptyDirts.Add(obj);
                 break;
+            case "Rock":
+                rocks.Add(obj);
+                break;
         }
     }
 
@@ -292,6 +311,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         holeUps.Clear();
         dirts.Clear();
         emptyDirts.Clear();
+        rocks.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)

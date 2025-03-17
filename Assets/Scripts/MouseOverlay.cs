@@ -1,41 +1,133 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MouseOverlay : MonoBehaviour
 {
-    private GameObject MouseOverlayObject;
-    private RectTransform MouseOverlayRectTransform;
+    public GameObject MouseOverlayObject;
+    public GameObject player;
     public Canvas parentCanvas; // Reference to the parent Canvas
-    private Vector2 offset;
-    void Start()
+    public Vector2 offset;
+
+    public MouseCollisionOnItems mcs;
+    public InventorySelection iss;
+
+    public Sprite mouseNormal;
+    public Sprite mousePurple;
+    public Sprite mouseUp;
+    public Sprite mouseDown;
+    private void OnEnable()
     {
         // Hide the mouse cursor
         Cursor.visible = false;
-        offset = new Vector2(32, -32);
+        offset = new Vector2(20, -32);
+
+        MouseOverlayObject = gameObject;
+        mcs = GetComponent<MouseCollisionOnItems>();
+
+        StartCoroutine(Loop());
     }
 
-    void Update()
+    private IEnumerator Loop()
     {
-        // Get the mouse position in screen space
-        Vector2 mousePosition = Input.mousePosition;
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
 
-        MouseOverlayObject = parentCanvas.transform.Find("MouseOverlay").gameObject;
-        MouseOverlayRectTransform = MouseOverlayObject.GetComponent<RectTransform>();
+            if (SceneManager.GetActiveScene().name == "Main Menu")
+            {
+                // Get the mouse position in screen space
+                Vector2 mousePosition = Input.mousePosition;
 
+                // Convert mouse position to Canvas (UI) space
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    parentCanvas.GetComponent<RectTransform>(),
+                    mousePosition,
+                    parentCanvas.worldCamera,
+                    out Vector2 localPoint
+                );
 
-        // Convert mouse position to Canvas (UI) space
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            parentCanvas.GetComponent<RectTransform>(),
-            mousePosition,
-            parentCanvas.worldCamera,
-            out Vector2 localPoint
-        );
+                // Apply the offset
+                localPoint += offset;
 
-        // Apply the offset
-        localPoint += offset;
+                // Set the anchoredPosition of the RectTransform
+                MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
+            }
+            else
+            {
 
-        // Set the anchoredPosition of the RectTransform
-        MouseOverlayRectTransform.anchoredPosition = localPoint;
+                if (mcs.isTouchingHoleDown)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+                }
+                else if (mcs.isTouchingHoleUp)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+                }
+                else if (mcs.isTouchingOpenVent && player.layer == 15)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+                }
+                else if (mcs.isTouchingOpenVent && player.layer == 12)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+                }
+                else if (mcs.isTouchingGroundLadder)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+                }
+                else if (mcs.isTouchingRoofLadder)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+                }
+                else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderDown (Vent)"))
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+                }
+                else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderUp (Vent)"))
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+                }
+                else if (iss.aSlotSelected)
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
+                }
+                else
+                {
+                    MouseOverlayObject.GetComponent<Image>().sprite = mouseNormal;
+                }
+
+                if (MouseOverlayObject.GetComponent<Image>().sprite == mouseNormal ||
+                    MouseOverlayObject.GetComponent<Image>().sprite == mousePurple)
+                {
+                    offset = new Vector2(20, -32);
+                }
+                else if (MouseOverlayObject.GetComponent<Image>().sprite == mouseUp)
+                {
+
+                }
+
+                // Get the mouse position in screen space
+                Vector2 mousePosition = Input.mousePosition;
+
+                // Convert mouse position to Canvas (UI) space
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    parentCanvas.GetComponent<RectTransform>(),
+                    mousePosition,
+                    parentCanvas.worldCamera,
+                    out Vector2 localPoint
+                );
+
+                // Apply the offset
+                localPoint += offset;
+
+                // Set the anchoredPosition of the RectTransform
+                MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
+            }
+            yield return null;
+        }
     }
 }
