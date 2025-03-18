@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,6 @@ public class VentClimb : MonoBehaviour
     public MouseCollisionOnItems mcs;
     public Canvas ic;
     public InventorySelection selectionScript;
-    public Sprite mouseUpSprite;
-    public Sprite mouseDownSprite;
-    public Sprite mouseNormalSprite;
-    public bool inVent;
     public GameObject player;
     public GameObject perksTiles;
     private GameObject currentOpenVent;
@@ -40,30 +37,24 @@ public class VentClimb : MonoBehaviour
         {
             if (mcs.isTouchingOpenVent)
             {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = mouseUpSprite;
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
                 if (Input.GetMouseButtonDown(0) && distance <= 2.4f && !deskStandScript.isClimbing && deskStandScript.currentDesk.transform.position + offsetVector == mcs.touchedOpenVent.transform.position)
                 {
                     currentOpenVent = mcs.touchedOpenVent;
                     cameFromDesk = true;
                     StartCoroutine(ClimbVentUp());
-                    inVent = true;
                 }
             }
         }
-        else if (inVent) //when the player is in a vent
+        else if (player.layer == 12) //when the player is in a vent
         {
             if (mcs.isTouchingOpenVent)
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = mouseDownSprite;
+            {                
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
                 if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
                 {
                     currentOpenVent = mcs.touchedOpenVent;
                     StartCoroutine(ClimbVentDown());
-                    inVent = false;
                 }
             }
         }
@@ -81,7 +72,7 @@ public class VentClimb : MonoBehaviour
             deskStandScript.currentDesk.GetComponent<BoxCollider2D>().isTrigger = false;
         }
 
-        if (inVent && !hasDisabledTags)//no collision on walls, fences, etc (and desks and other menus (hopefully i remember that later into development))
+        if (player.layer == 12 && !hasDisabledTags)//no collision on walls, fences, etc (and desks and other menus (hopefully i remember that later into development))
         {
             mcs.DisableTag("Bars");
             mcs.DisableTag("Fence");
@@ -99,7 +90,7 @@ public class VentClimb : MonoBehaviour
             }
             hasDisabledTags = true;
         }
-        else if(!inVent && hasDisabledTags)//renable tags when out of vent
+        else if(player.layer != 12 && hasDisabledTags)//renable tags when out of vent
         {
             mcs.EnableTag("Bars");
             mcs.EnableTag("Fence");
@@ -116,20 +107,6 @@ public class VentClimb : MonoBehaviour
                 }
             }
             hasDisabledTags = false;
-        }
-
-        if (!mcs.isTouchingOpenVent)//(keep this at the bottom of Update())
-        {
-            if (selectionScript.aSlotSelected)
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = selectionScript.mousePurpleSprite;
-            }
-            else
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = mouseNormalSprite;
-            }
         }
     }
     public IEnumerator ClimbVentUp()
@@ -188,10 +165,13 @@ public class VentClimb : MonoBehaviour
 
         if (deskIsUnder)//pulled from the deskstand script
         {
+            Debug.Log("Here");
+            deskStandScript.shouldStepOff = false;
+            yield return new WaitForEndOfFrame();
             player.GetComponent<PlayerCtrl>().enabled = false;
+            deskUnder.GetComponent<BoxCollider2D>().isTrigger = true;
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             deskUnder.GetComponent<DeskPickUp>().enabled = false;
-            deskUnder.GetComponent<BoxCollider2D>().isTrigger = true;
             deskStandScript.hasJumped = true;
             player.GetComponent<PolygonCollider2D>().offset += colliderOffset;
             player.transform.position += playerOffset;
@@ -204,6 +184,9 @@ public class VentClimb : MonoBehaviour
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             deskStandScript.hasClimbed = true;
             deskStandScript.isClimbing = false;
+            deskStandScript.currentDesk = deskUnder;
+            yield return new WaitForEndOfFrame();
+            deskStandScript.shouldStepOff = true;
         }
         else
         {

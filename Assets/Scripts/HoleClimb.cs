@@ -12,6 +12,7 @@ public class HoleClimb : MonoBehaviour
     public ItemBehaviours itemBehavioursScript;
     public GameObject player;
     public GameObject perksTiles;
+    public GameObject aStar;
     public Sprite dirtSprite;
     public Sprite emptyDirtSprite;
     public GameObject undergroundLight;
@@ -34,8 +35,6 @@ public class HoleClimb : MonoBehaviour
 
         if (mcs.isTouchingHoleDown && player.layer == 3)
         {
-            ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-            ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleDown.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
             {
@@ -45,8 +44,6 @@ public class HoleClimb : MonoBehaviour
         }
         else if(mcs.isTouchingHoleUp && player.layer == 11)
         {
-            ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-            ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleUp.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
             {

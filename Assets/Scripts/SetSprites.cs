@@ -16,14 +16,14 @@ public class SetSprites : MonoBehaviour
 
     private Dictionary<string, int> perksTilesetDict = new Dictionary<string, int>() //this was a bitch to code holy shit
     {
-        { "Bars", 78 }, { "Bottom Wall Left", 91 }, { "Bottom Wall Middle", 63 }, { "Bottom Wall Right", 71 },
+        { "Bars", 78 }, { "Bottom Wall Left", 87 }, { "Bottom Wall Middle", 63 }, { "Bottom Wall Right", 71 },
         { "Box", 93 }, { "Bush", 79 }, { "Concrete", 35 }, { "Electric Horizontal", 43 },
         { "Electric Vertical", 39 }, { "Fence Horizontal", 20 }, { "Fence NE Corner", 4 }, { "Fence NW Corner", 0 },
         { "Fence SE Corner", 12 }, { "Fence SW Corner", 8 }, { "Fence Vertical", 16 }, { "Garage", 74 },
-        { "Hard Wall Horizontal", 70 }, { "Hard Wall Vertical", 66 }, { "Mask Left", 51 }, { "Mask Middle", 55 },
-        { "Mask Right", 47 }, { "Obstacle", 84 }, { "Roofing E End", 94 }, { "Roofing Horizontal", 73 },
+        { "Hard Wall Horizontal", 70 }, { "Hard Wall Vertical", 66 }, { "Mask Left", 47 }, { "Mask Middle", 55 },
+        { "Mask Right", 51 }, { "Obstacle", 84 }, { "Roofing E End", 94 }, { "Roofing Horizontal", 73 },
         { "Roofing N End", 86 }, { "Roofing NE Corner", 61 }, { "Roofing NW Corner", 57 }, { "Roofing S End", 82 },
-        { "Roofing SE Corner", 53 }, { "Roofing SW Corner", 49 }, { "Roofing Vertical", 69 }, { "Roofing W End", 90 },
+        { "Roofing SE Corner", 49 }, { "Roofing SW Corner", 53 }, { "Roofing Vertical", 69 }, { "Roofing W End", 90 },
         { "Top Wall Horizontal", 67 }, { "Top Wall NE Corner", 83 }, { "Top Wall NW Corner", 99 }, { "Top Wall SE Corner", 75 },
         { "Top Wall SW Corner", 91 }, { "Top Wall Vertical", 95 }, { "Vent E", 85 }, { "Vent N", 89 },
         { "Vent NE Corner", 33 }, { "Vent NW Corner", 37 }, { "Vent S", 77 }, { "Vent W", 81 },

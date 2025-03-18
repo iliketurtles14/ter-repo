@@ -72,8 +72,7 @@ public class DeskPickUp : MonoBehaviour
     private void DropDesk(GameObject floor)
     {
         desk.transform.position = floor.transform.position;
-        int defaultLayer = LayerMask.NameToLayer("Default");
-        desk.layer = defaultLayer;
+        desk.layer = 10;
         desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
 
         switch (NPCSave.instance.playerCharacter)
