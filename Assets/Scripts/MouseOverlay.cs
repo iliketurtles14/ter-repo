@@ -104,10 +104,13 @@ public class MouseOverlay : MonoBehaviour
                     MouseOverlayObject.GetComponent<Image>().sprite == mousePurple)
                 {
                     offset = new Vector2(20, -32);
+                    MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
                 }
-                else if (MouseOverlayObject.GetComponent<Image>().sprite == mouseUp)
+                else if (MouseOverlayObject.GetComponent<Image>().sprite == mouseUp ||
+                    MouseOverlayObject.GetComponent<Image>().sprite == mouseDown)
                 {
-
+                    offset = new Vector2(5, -25);
+                    MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
                 }
 
                 // Get the mouse position in screen space

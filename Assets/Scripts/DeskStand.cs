@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class DeskStand : MonoBehaviour
 {
+    public DeskPickUp deskPickUpScript;
     public GameObject player;
     public Canvas inventoryCanvas;
     public GameObject perksTiles;
@@ -16,6 +17,7 @@ public class DeskStand : MonoBehaviour
     public GameObject currentDesk;
     private Vector2 colliderOffset = new Vector2();
     private Vector3 playerOffset = new Vector3();
+    public bool shouldStepOff = true;
     private void Start()
     {
         desks = GameObject.FindGameObjectsWithTag("Desk");
@@ -28,7 +30,7 @@ public class DeskStand : MonoBehaviour
     }
     private void Update()
     {
-        if (!hasClimbed && !isClimbing)
+        if (!hasClimbed && !isClimbing && !deskPickUpScript.isPickedUp)
         {
             foreach (GameObject desk in desks)
             {
@@ -41,7 +43,7 @@ public class DeskStand : MonoBehaviour
                 }
             }
         }
-        else if (hasClimbed && !isClimbing)
+        else if (hasClimbed && !isClimbing && shouldStepOff)
         {
             if (!player.GetComponent<PolygonCollider2D>().IsTouching(currentDesk.GetComponent<BoxCollider2D>()))
             {

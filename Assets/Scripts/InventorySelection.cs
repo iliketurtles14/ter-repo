@@ -31,9 +31,6 @@ public class InventorySelection : MonoBehaviour
     private bool hasItem;
     public Inventory inventoryScript;
     public List<InventoryItem> inventoryList;
-    private bool mouseIsPurple;
-    public Sprite mousePurpleSprite;
-    public Sprite mouseNormalSprite;
 
     public void Start()
     {
@@ -124,18 +121,6 @@ public class InventorySelection : MonoBehaviour
             aSlotSelected = true;
         }
         else { aSlotSelected = false; }
-
-        //change mouse texture
-        if (aSlotSelected && !mouseIsPurple)
-        {
-            mouseIsPurple = true;
-            InventoryCanvas.transform.Find("MouseOverlay").GetComponent<Image>().sprite = mousePurpleSprite;
-        }
-        else if(!aSlotSelected && mouseIsPurple)
-        {
-            mouseIsPurple = false;
-            InventoryCanvas.transform.Find("MouseOverlay").GetComponent<Image>().sprite = mouseNormalSprite;
-        }
 
         //when clicking an item in the slot
         if (Input.GetMouseButtonDown(0) && isTouchingSlotWithItem)

@@ -8,7 +8,6 @@ public class LadderClimb : MonoBehaviour
     public MouseCollisionOnItems mcs;
     public Canvas ic;
     public InventorySelection selectionScript;
-    public VentClimb ventClimbScript; //to get mouse sprites
     public DeskStand deskStandScript;
     public GameObject player;
     public GameObject perksTiles;
@@ -25,7 +24,6 @@ public class LadderClimb : MonoBehaviour
         if (mcs.isTouchingGroundLadder || mcs.isTouchingVentLadder || mcs.isTouchingRoofLadder)
         {
             ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-            ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
             if (mcs.isTouchingGroundLadder)
             {
                 distance = Vector2.Distance(player.transform.position, mcs.touchedGroundLadder.transform.position);
@@ -72,61 +70,6 @@ public class LadderClimb : MonoBehaviour
                 }
             }
         }
-
-        if (mcs.isTouchingGroundLadder)
-        {
-            if (mcs.touchedGroundLadder.name.StartsWith("LadderUp"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
-            }
-            else if (mcs.touchedGroundLadder.name.StartsWith("LadderDown"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseDownSprite;
-            }
-        }
-        else if (mcs.isTouchingVentLadder)
-        {
-            if (mcs.touchedVentLadder.name.StartsWith("LadderUp"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
-            }
-            else if (mcs.touchedVentLadder.name.StartsWith("LadderDown"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseDownSprite;
-            }
-        }
-        else if (mcs.isTouchingRoofLadder)
-        {
-            if (mcs.touchedRoofLadder.name.StartsWith("LadderUp"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseUpSprite;
-            }
-            else if (mcs.touchedRoofLadder.name.StartsWith("LadderDown"))
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseDownSprite;
-            }
-        }
-
-        if(!mcs.isTouchingGroundLadder && !mcs.isTouchingVentLadder && !mcs.isTouchingRoofLadder)
-        {
-            if (selectionScript.aSlotSelected)
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = selectionScript.mousePurpleSprite;
-            }
-            else
-            {
-                ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
-                ic.transform.Find("MouseOverlay").GetComponent<Image>().sprite = ventClimbScript.mouseNormalSprite;
-            }
-        }
-
     }
     public IEnumerator ClimbLadder()
     {
@@ -139,6 +82,10 @@ public class LadderClimb : MonoBehaviour
         switch (currentLadder.GetComponent<LadderConnect>().connectedLadder.layer)
         {
             case 10:
+                foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
+                {
+                    obj.GetComponent<DeskPickUp>().enabled = true;
+                }
                 player.layer = 3;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;

@@ -49,6 +49,11 @@ public class RoofFall : MonoBehaviour
 
                     player.transform.position -= offset;
 
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
+                    {
+                        obj.GetComponent<DeskPickUp>().enabled = true;
+                    }
+
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 }
             }

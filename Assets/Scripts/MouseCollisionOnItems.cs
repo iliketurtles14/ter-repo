@@ -190,7 +190,6 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             }
         }
 
-        Debug.Log(isTouchingSlats);
     }
 
     public void DisableTag(string tag)
