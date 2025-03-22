@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.U2D;
 
 public class SetSprites : MonoBehaviour
 {
@@ -85,6 +86,16 @@ public class SetSprites : MonoBehaviour
         SetTiles();
         SetItems();
         SetGround();
+        AddSpritesToAtlas();
+    }
+    private void AddSpritesToAtlas()
+    {
+        SpriteAtlas atlas = Resources.Load<SpriteAtlas>("SpriteAtlas");
+
+        foreach (Sprite sprite in DataSender.instance.GetComponent<DataSender>().TileList)
+        {
+         //   atlas.GetComponent<Packing>
+        }
     }
     private void SetTiles()
     {
