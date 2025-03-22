@@ -19,6 +19,7 @@ public class HoleClimb : MonoBehaviour
     public GameObject globalLight;
     private GameObject currentHole;
     private bool hasDisabledColliders;
+    private bool hasPickedUp;
     public void Start()
     {
         undergroundLight.SetActive(false);
@@ -38,8 +39,24 @@ public class HoleClimb : MonoBehaviour
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleDown.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
             {
-                currentHole = mcs.touchedHoleDown;
-                StartCoroutine(ClimbDown());
+                foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
+                {
+                    if (obj.layer == 14)
+                    {
+                        hasPickedUp = true;
+                        break;
+                    }
+                    else
+                    {
+                        hasPickedUp = false;
+                    }
+                }
+
+                if (!hasPickedUp)
+                {
+                    currentHole = mcs.touchedHoleDown;
+                    StartCoroutine(ClimbDown());
+                }
             }
         }
         else if(mcs.isTouchingHoleUp && player.layer == 11)
