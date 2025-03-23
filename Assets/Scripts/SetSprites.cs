@@ -86,16 +86,6 @@ public class SetSprites : MonoBehaviour
         SetTiles();
         SetItems();
         SetGround();
-        AddSpritesToAtlas();
-    }
-    private void AddSpritesToAtlas()
-    {
-        SpriteAtlas atlas = Resources.Load<SpriteAtlas>("SpriteAtlas");
-
-        foreach (Sprite sprite in DataSender.instance.GetComponent<DataSender>().TileList)
-        {
-         //   atlas.GetComponent<Packing>
-        }
     }
     private void SetTiles()
     {
