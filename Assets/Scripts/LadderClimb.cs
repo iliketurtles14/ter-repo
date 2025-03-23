@@ -122,6 +122,7 @@ public class LadderClimb : MonoBehaviour
                 DisableTags();
                 break;
             case 13:
+                Debug.Log("here");
                 player.layer = 13;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 15;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
