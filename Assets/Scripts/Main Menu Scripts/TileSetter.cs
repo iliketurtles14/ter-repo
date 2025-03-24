@@ -69,26 +69,6 @@ public class TileSetter : MonoBehaviour
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
     }
 
-    //private void SeparateTilesIntoLists()
-    //{
-    //    List<List<Sprite>> tileLists = new List<List<Sprite>> { perksList, stalagList, shanktonList, jungleList, sanpanchoList, hmpList };
-
-    //    for (int i = 0; i < tileList.Count; i++)
-    //    {
-    //        Sprite tileSprite = tileList[i];
-    //        Texture2D tileTexture = tileSprite.texture;
-
-    //        for (int y = 0; y < tileTexture.height; y += 16)
-    //        {
-    //            for (int x = 0; x < tileTexture.width; x += 16)
-    //            {
-    //                Rect rect = new Rect(x, y, 16, 16);
-    //                Sprite subSprite = Sprite.Create(tileTexture, rect, new Vector2(0.5f, 0.5f), 100f);
-    //                tileLists[i].Add(subSprite);
-    //            }
-    //        }
-    //    }
-    //}
     private void SliceAndDice()
     {
         Texture2D tileTexture = convertedTileSprite.texture;

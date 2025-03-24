@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "com.unity.2d.animation": "10.1.4",
-    "com.unity.2d.pixel-perfect": "5.0.3",
+    "com.unity.2d.pixel-perfect": "5.1.0",
     "com.unity.2d.psdimporter": "9.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.spriteshape": "10.0.7",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ai.navigation": "2.0.6",
+    "com.unity.cinemachine": "3.1.3",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.ext.nunit": "2.0.5",
     "com.unity.feature.2d": "2.0.1",
