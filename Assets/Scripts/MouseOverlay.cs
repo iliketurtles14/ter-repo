@@ -19,7 +19,7 @@ public class MouseOverlay : MonoBehaviour
     public Sprite mousePurple;
     public Sprite mouseUp;
     public Sprite mouseDown;
-    private void OnEnable()
+    private void Start()
     {
         // Hide the mouse cursor
         Cursor.visible = false;
@@ -27,110 +27,102 @@ public class MouseOverlay : MonoBehaviour
 
         MouseOverlayObject = gameObject;
         mcs = GetComponent<MouseCollisionOnItems>();
-
-        StartCoroutine(Loop());
     }
-
-    private IEnumerator Loop()
+    private void Update()
     {
-        while (true)
+        if (SceneManager.GetActiveScene().name == "Main Menu")
         {
-            yield return new WaitForEndOfFrame();
+            // Get the mouse position in screen space
+            Vector2 mousePosition = Input.mousePosition;
 
-            if (SceneManager.GetActiveScene().name == "Main Menu")
+            // Convert mouse position to Canvas (UI) space
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentCanvas.GetComponent<RectTransform>(),
+                mousePosition,
+                parentCanvas.worldCamera,
+                out Vector2 localPoint
+            );
+
+            // Apply the offset
+            localPoint += offset;
+
+            // Set the anchoredPosition of the RectTransform
+            MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
+        }
+        else
+        {
+
+            if (mcs.isTouchingHoleDown)
             {
-                // Get the mouse position in screen space
-                Vector2 mousePosition = Input.mousePosition;
-
-                // Convert mouse position to Canvas (UI) space
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    parentCanvas.GetComponent<RectTransform>(),
-                    mousePosition,
-                    parentCanvas.worldCamera,
-                    out Vector2 localPoint
-                );
-
-                // Apply the offset
-                localPoint += offset;
-
-                // Set the anchoredPosition of the RectTransform
-                MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+            }
+            else if (mcs.isTouchingHoleUp)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+            }
+            else if (mcs.isTouchingOpenVent && player.layer == 15)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+            }
+            else if (mcs.isTouchingOpenVent && player.layer == 12)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+            }
+            else if (mcs.isTouchingGroundLadder)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+            }
+            else if (mcs.isTouchingRoofLadder)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+            }
+            else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderDown (Vent)"))
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
+            }
+            else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderUp (Vent)"))
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
+            }
+            else if (iss.aSlotSelected)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
             }
             else
             {
-
-                if (mcs.isTouchingHoleDown)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
-                }
-                else if (mcs.isTouchingHoleUp)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
-                }
-                else if (mcs.isTouchingOpenVent && player.layer == 15)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
-                }
-                else if (mcs.isTouchingOpenVent && player.layer == 12)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
-                }
-                else if (mcs.isTouchingGroundLadder)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
-                }
-                else if (mcs.isTouchingRoofLadder)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
-                }
-                else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderDown (Vent)"))
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
-                }
-                else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderUp (Vent)"))
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
-                }
-                else if (iss.aSlotSelected)
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
-                }
-                else
-                {
-                    MouseOverlayObject.GetComponent<Image>().sprite = mouseNormal;
-                }
-
-                if (MouseOverlayObject.GetComponent<Image>().sprite == mouseNormal ||
-                    MouseOverlayObject.GetComponent<Image>().sprite == mousePurple)
-                {
-                    offset = new Vector2(20, -32);
-                    MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
-                }
-                else if (MouseOverlayObject.GetComponent<Image>().sprite == mouseUp ||
-                    MouseOverlayObject.GetComponent<Image>().sprite == mouseDown)
-                {
-                    offset = new Vector2(5, -25);
-                    MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
-                }
-
-                // Get the mouse position in screen space
-                Vector2 mousePosition = Input.mousePosition;
-
-                // Convert mouse position to Canvas (UI) space
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    parentCanvas.GetComponent<RectTransform>(),
-                    mousePosition,
-                    parentCanvas.worldCamera,
-                    out Vector2 localPoint
-                );
-
-                // Apply the offset
-                localPoint += offset;
-
-                // Set the anchoredPosition of the RectTransform
-                MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseNormal;
             }
-            yield return null;
+
+            if (MouseOverlayObject.GetComponent<Image>().sprite == mouseNormal ||
+                MouseOverlayObject.GetComponent<Image>().sprite == mousePurple)
+            {
+                offset = new Vector2(20, -32);
+                MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 65);
+            }
+            else if (MouseOverlayObject.GetComponent<Image>().sprite == mouseUp ||
+                MouseOverlayObject.GetComponent<Image>().sprite == mouseDown)
+            {
+                offset = new Vector2(5, -25);
+                MouseOverlayObject.GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
+            }
+
+            // Get the mouse position in screen space
+            Vector2 mousePosition = Input.mousePosition;
+
+            // Convert mouse position to Canvas (UI) space
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentCanvas.GetComponent<RectTransform>(),
+                mousePosition,
+                parentCanvas.worldCamera,
+                out Vector2 localPoint
+            );
+
+            // Apply the offset
+            localPoint += offset;
+
+            // Set the anchoredPosition of the RectTransform
+            MouseOverlayObject.GetComponent<RectTransform>().anchoredPosition = localPoint;
         }
     }
+
 }
