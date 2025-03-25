@@ -90,7 +90,7 @@ public class VentClimb : MonoBehaviour
             }
             hasDisabledTags = true;
         }
-        else if(player.layer != 12 && hasDisabledTags)//renable tags when out of vent
+        else if(player.layer != 12 && player.layer != 13 && player.layer != 11 && hasDisabledTags)//renable tags when out of vent
         {
             mcs.EnableTag("Bars");
             mcs.EnableTag("Fence");

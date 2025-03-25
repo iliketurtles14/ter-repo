@@ -26,12 +26,31 @@ public class HoleClimb : MonoBehaviour
 
         mcs.DisableTag("Dirt");
         mcs.DisableTag("EmptyDirt");
+
+        foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        {
+            if (child.gameObject.CompareTag("Item"))
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
     }
     public void Update()
     {
         if(player.layer == 11)
         {
             undergroundLight.transform.position = player.transform.position;
+        }
+
+        if(player.layer != 11)
+        {
+            foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+            {
+                if (child.gameObject.CompareTag("Item"))
+                {
+                    child.GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
         }
 
         if (mcs.isTouchingHoleDown && player.layer == 3)
@@ -107,9 +126,16 @@ public class HoleClimb : MonoBehaviour
         mcs.DisableTag("EmptyDirt");
         foreach(Transform child in perksTiles.transform.Find("GroundObjects"))
         {
-            if (child.CompareTag("Item"))
+            if (child.gameObject.CompareTag("Item"))
             {
                 child.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+        foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        {
+            if (child.gameObject.CompareTag("Item"))
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
 
@@ -119,6 +145,7 @@ public class HoleClimb : MonoBehaviour
         mcs.EnableTag("Digable");
         mcs.EnableTag("Wall");
         mcs.EnableTag("Ladder(Ground)");
+        mcs.EnableTag("HoleDown");
         mcs.EnableTag("Desk");//currently the only menu
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -161,9 +188,16 @@ public class HoleClimb : MonoBehaviour
         mcs.EnableTag("EmptyDirt");
         foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
         {
-            if (child.CompareTag("Item"))
+            if (child.gameObject.CompareTag("Item"))
             {
                 child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        foreach(Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        {
+            if (child.gameObject.CompareTag("Item"))
+            {
+                child.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
         mcs.DisableTag("Bars");
@@ -172,6 +206,7 @@ public class HoleClimb : MonoBehaviour
         mcs.DisableTag("Digable");
         mcs.DisableTag("Wall");
         mcs.DisableTag("Ladder(Ground)");
+        mcs.DisableTag("HoleDown");
         mcs.DisableTag("Desk");//currently the only menu
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;

@@ -96,7 +96,7 @@ public class LadderClimb : MonoBehaviour
                 perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
                 {
-                    if (child.CompareTag("Item"))
+                    if (child.gameObject.CompareTag("Item"))
                     {
                         child.GetComponent<BoxCollider2D>().enabled = true;
                     }
@@ -113,7 +113,7 @@ public class LadderClimb : MonoBehaviour
                 perksTiles.transform.Find("VentObjects").gameObject.SetActive(true);
                 foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
                 {
-                    if (child.CompareTag("Item"))
+                    if (child.gameObject.CompareTag("Item"))
                     {
                         child.GetComponent<BoxCollider2D>().enabled = false;
                     }
@@ -122,7 +122,6 @@ public class LadderClimb : MonoBehaviour
                 DisableTags();
                 break;
             case 13:
-                Debug.Log("here");
                 player.layer = 13;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 15;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
@@ -133,7 +132,7 @@ public class LadderClimb : MonoBehaviour
                 perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
                 {
-                    if (child.CompareTag("Item"))
+                    if (child.gameObject.CompareTag("Item"))
                     {
                         child.GetComponent<BoxCollider2D>().enabled = false;
                     }
