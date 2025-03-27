@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,6 +56,15 @@ public class LoadingPanel : MonoBehaviour
             titlePanel.transform.Find("OptionsButton").GetComponent<BoxCollider2D>().enabled = true;
             titlePanel.transform.Find("MapEditorButton").GetComponent<BoxCollider2D>().enabled = true;
             GetComponent<Animator>().Play("LoadingScreenAnim");
+            StartCoroutine(WaitLoop());
         }
+    }
+    public IEnumerator WaitLoop()
+    {
+        while(GetComponent<Image>().color.a > 0)
+        {
+            yield return null;
+        }
+        gameObject.SetActive(false);
     }
 }

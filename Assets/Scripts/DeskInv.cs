@@ -91,28 +91,21 @@ public class DeskInv : MonoBehaviour
 
             if (mouseCollisionScript.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !deskIsFull)
             {
-                foreach (DeskItem slot in deskInv)
+                for (int i = 0; i < deskInv.Count; i++)
                 {
-                    if (slot.itemData == null)
+                    if (deskInv[i].itemData == null)
                     {
-                        slot.itemData = inventoryList[invSlotNumber].itemData;
-                        break;
-                    }
-                }
-                foreach (GameObject slot in deskSlots)
-                {
-                    if (slot.GetComponent<Image>().sprite == ClearSprite)
-                    {
-                        slot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
+                        deskInv[i].itemData = inventoryList[invSlotNumber].itemData;
+                        deskSlots[i].GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
                         break;
                     }
                 }
                 inventoryList[invSlotNumber].itemData = null;
                 mouseCollisionScript.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
             }
-
+            
             //putting items in the inv
-            for(int i = 0; i <= 5; i++)
+            for (int i = 0; i <= 5; i++)
             {
                 if (inventoryList[i].itemData != null)
                 {
