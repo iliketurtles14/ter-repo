@@ -73,6 +73,9 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").Find("PlayButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("MapEditorButton").GetComponent<Image>().sprite = UISprites[198];
+        mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Image>().sprite = UISprites[328];
+        //patch notes buttosns
+        mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[248];
         //prison select backdrop
         mmc.Find("PrisonSelectPanel").GetComponent<Image>().sprite = UISprites[208];
         //arrows
@@ -117,6 +120,10 @@ public class ApplyMainMenuData : MonoBehaviour
         //script images
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonNormalSprite = UISprites[198];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonPressedSprite = UISprites[199];
+        mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonNormalSprite = UISprites[328];
+        mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonPressedSprite = UISprites[329];
+        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonNormalSprite = UISprites[248];
+        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonPressedSprite = UISprites[249];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[518]);
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[519]);
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[520]);

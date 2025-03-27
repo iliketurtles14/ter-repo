@@ -7,10 +7,13 @@ public class OnMainButtonPress : MonoBehaviour
     public NPCRename NPCRenameScript;
     public Sprite ButtonNormalSprite;
     public Sprite ButtonPressedSprite;
+    public Sprite PatchNotesButtonNormalSprite;
+    public Sprite PatchNotesButtonPressedSprite;
     private GameObject lastTouchedButton;
     private bool touchingPlayButton;
     private bool touchingOptionsButton;
     private bool touchingMapEditorButton;
+    private bool touchingPatchNotesButton;
     public Canvas MainMenuCanvas;
     public bool isPrisonSelectPanelOpen;
 
@@ -27,6 +30,7 @@ public class OnMainButtonPress : MonoBehaviour
         MainMenuCanvas.transform.Find("NPCCustomizePanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("SmallMenuPanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("PlayerPanel").gameObject.SetActive(false);
+        MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(false);
         isPrisonSelectPanelOpen = false;
         if (NPCRenameScript.comingFromRename)
         {
@@ -64,6 +68,11 @@ public class OnMainButtonPress : MonoBehaviour
                     lastTouchedButton = mouseCollisionScript.touchedButton;
                     touchingMapEditorButton = true;
                     break;
+                case "PatchNotesButton":
+                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = PatchNotesButtonPressedSprite;
+                    lastTouchedButton = mouseCollisionScript.touchedButton;
+                    touchingPatchNotesButton = true;
+                    break;
             }
         }
         else
@@ -71,7 +80,15 @@ public class OnMainButtonPress : MonoBehaviour
             touchingPlayButton = false;
             touchingOptionsButton = false;
             touchingMapEditorButton = false;
-            if (lastTouchedButton != null) { lastTouchedButton.GetComponent<Image>().sprite = ButtonNormalSprite; }
+            touchingPatchNotesButton = false;
+            if (lastTouchedButton != null && lastTouchedButton.name != "PatchNotesButton") 
+            { 
+                lastTouchedButton.GetComponent<Image>().sprite = ButtonNormalSprite; 
+            }
+            else if(lastTouchedButton != null && lastTouchedButton.name == "PatchNotesButton")
+            {
+                lastTouchedButton.GetComponent<Image>().sprite = PatchNotesButtonNormalSprite;
+            }
             lastTouchedButton = null;
 
         }
@@ -81,6 +98,18 @@ public class OnMainButtonPress : MonoBehaviour
             MainMenuCanvas.transform.Find("PrisonSelectPanel").gameObject.SetActive(true);
             MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
             isPrisonSelectPanelOpen = true;
+            foreach(Transform child in transform)
+            {
+                if(child.GetComponent<BoxCollider2D>() != null)
+                {
+                    child.GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
+        }
+        else if(touchingPatchNotesButton && Input.GetMouseButtonDown(0))
+        {
+            MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(true);
+            MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
             foreach(Transform child in transform)
             {
                 if(child.GetComponent<BoxCollider2D>() != null)
