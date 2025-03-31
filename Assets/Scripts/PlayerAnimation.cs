@@ -16,7 +16,7 @@ public class PlayerAnimation : MonoBehaviour
     private int whichCycle;
     private string character;
 
-    public void Start()
+    public void OnEnable()
     {
         switch (NPCSave.instance.playerCharacter)
         {
@@ -34,6 +34,10 @@ public class PlayerAnimation : MonoBehaviour
 
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
+    }
+    public void OnDisable()
+    {
+        StopAllCoroutines();
     }
     public void Update()
     {

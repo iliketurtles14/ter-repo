@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Tube of Super Glue
   id: 145
   currentDurability: 100
+  token: 2
   isContraband: 0
   causeSolitary: 0
   durability: -1

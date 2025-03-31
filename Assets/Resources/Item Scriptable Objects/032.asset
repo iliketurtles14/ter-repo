@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Plated Inmate Outfit
   id: 32
   currentDurability: 100
+  token: 0
   isContraband: 1
   causeSolitary: 0
   durability: -1

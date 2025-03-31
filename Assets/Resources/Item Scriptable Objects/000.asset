@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Cell Key
   id: 0
   currentDurability: 100
+  token: 0
   isContraband: 1
   causeSolitary: 1
   durability: -1

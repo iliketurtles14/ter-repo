@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Super Sock Mace
   id: 68
   currentDurability: 100
+  token: 5
   isContraband: 1
   causeSolitary: 0
   durability: -1

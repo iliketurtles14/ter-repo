@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Nunchucks
   id: 64
   currentDurability: 100
+  token: 5
   isContraband: 1
   causeSolitary: 0
   durability: -1

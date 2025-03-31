@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Penarium Barrel
   id: 121
   currentDurability: 100
+  token: 3
   isContraband: 0
   causeSolitary: 0
   durability: -1

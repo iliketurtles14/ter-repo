@@ -10,6 +10,7 @@ public class ItemData : ScriptableObject
     public string displayName;
     public int id;
     public int currentDurability;
+    public int token;
     public bool isContraband;
     public bool causeSolitary;
     public int durability;

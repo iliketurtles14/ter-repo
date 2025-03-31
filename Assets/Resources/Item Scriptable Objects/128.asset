@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3447e085eed36f4cb508fa127640465, type: 3}
   m_Name: 128
   m_EditorClassIdentifier: 
-  displayName: Roll of Duct Tape
+  displayName: Roll of Toilet Paper
   id: 128
   currentDurability: 100
+  token: 0
   isContraband: 0
   causeSolitary: 0
   durability: -1

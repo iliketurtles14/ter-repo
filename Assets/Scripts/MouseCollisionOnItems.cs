@@ -30,6 +30,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> dirts = new HashSet<GameObject>();
     private HashSet<GameObject> emptyDirts = new HashSet<GameObject>();
     private HashSet<GameObject> rocks = new HashSet<GameObject>();
+    private HashSet<GameObject> extras = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -83,6 +84,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedEmptyDirt => emptyDirts.Count > 0 ? GetFirst(emptyDirts) : null;
     public bool isTouchingRock => rocks.Count > 0;
     public GameObject touchedRock => rocks.Count > 0 ? GetFirst(rocks) : null;
+    public bool isTouchingExtra => extras.Count > 0;
+    public GameObject touchedExtra => extras.Count > 0 ? GetFirst(extras) : null;
     void Update()
     {
         
@@ -281,6 +284,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "Rock":
                 rocks.Add(obj);
                 break;
+            case "Extra":
+                extras.Add(obj);
+                break;
         }
     }
 
@@ -311,6 +317,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         dirts.Clear();
         emptyDirts.Clear();
         rocks.Clear();
+        extras.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)
