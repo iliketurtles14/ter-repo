@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Roll of Duct Tape
   id: 127
   currentDurability: 100
+  token: 4
   isContraband: 1
   causeSolitary: 0
   durability: -1

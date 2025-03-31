@@ -72,7 +72,11 @@ public class NPCAnimation : MonoBehaviour
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
     }
-    
+    public void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public void Update()
     {
         transform.Find("Outfit").position = transform.position;

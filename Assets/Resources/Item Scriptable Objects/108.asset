@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Lighter
   id: 108
   currentDurability: 100
+  token: 2
   isContraband: 0
   causeSolitary: 0
   durability: -1

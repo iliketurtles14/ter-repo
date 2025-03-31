@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Plastic Fork
   id: 26
   currentDurability: 100
+  token: 3
   isContraband: 0
   causeSolitary: 0
   durability: 15

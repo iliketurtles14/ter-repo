@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Mop
   id: 63
   currentDurability: 100
+  token: 1
   isContraband: 0
   causeSolitary: 0
   durability: -1

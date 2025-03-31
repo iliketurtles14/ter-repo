@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Bottle of Sleeping Pills
   id: 79
   currentDurability: 100
+  token: 3
   isContraband: 1
   causeSolitary: 0
   durability: -1

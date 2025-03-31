@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Magazine
   id: 109
   currentDurability: 100
+  token: 2
   isContraband: 0
   causeSolitary: 0
   durability: -1

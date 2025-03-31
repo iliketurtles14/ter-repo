@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Elf Outfit
   id: 40
   currentDurability: 100
+  token: 0
   isContraband: 0
   causeSolitary: 0
   durability: -1

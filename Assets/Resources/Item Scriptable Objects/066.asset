@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Sock Mace
   id: 66
   currentDurability: 100
+  token: 3
   isContraband: 1
   causeSolitary: 0
   durability: -1

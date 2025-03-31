@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Inmate Outfit
   id: 29
   currentDurability: 100
+  token: 0
   isContraband: 0
   causeSolitary: 0
   durability: -1

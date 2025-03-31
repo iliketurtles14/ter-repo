@@ -63,8 +63,15 @@ public class ApplyPrisonData : MonoBehaviour
         mouseOverlayScript.mousePurple = UISprites[73];
         mouseOverlayScript.mouseUp = UISprites[74];
         mouseOverlayScript.mouseDown = UISprites[77];
-        //deskmenupanel
-        mc.Find("DeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
+        //deskmenupanels
+        mc.Find("PlayerDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
+        foreach(Transform child in mc)
+        {
+            if (child.name.StartsWith("DeskMenuPanel"))
+            {
+                child.GetComponent<Image>().sprite = UISprites[31];
+            }
+        }
         //inventory ui (heart, energy, etc.)
         ic.Find("HealthSprite").GetComponent<Image>().sprite = Cutter(UISprites[63], 99, 78, 9, 11);
         ic.Find("HeatSprite").GetComponent<Image>().sprite = Cutter(UISprites[64], 99, 79, 9, 10);
@@ -84,8 +91,15 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("PlayerMenuPanel").Find("WeaponBackdrop").GetComponent<Image>().sprite = UISprites[33];
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
-        //desk (to be removed later)
-        PlayerDesk.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
+        //desks
+        perksTiles.Find("GroundObjects").Find("PlayerDesk").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
+        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        {
+            if (child.name.StartsWith("Desk"))
+            {
+                child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[51];
+            }
+        }
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];

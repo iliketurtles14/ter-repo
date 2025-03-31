@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Poster
   id: 124
   currentDurability: 100
+  token: 4
   isContraband: 0
   causeSolitary: 0
   durability: -1

@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Book
   id: 77
   currentDurability: 100
+  token: 1
   isContraband: 0
   causeSolitary: 0
   durability: -1
