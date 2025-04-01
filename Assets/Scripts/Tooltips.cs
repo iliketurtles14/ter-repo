@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Drawing;
@@ -11,6 +11,7 @@ public class Tooltips : MonoBehaviour
 {
     public Transform PlayerTransform;
     public Canvas InventoryCanvas;
+    public Canvas menuCanvas;
     private Transform TooltipPanelTransform;
     public GameObject TooltipMid;
     public GameObject TooltipSide;
@@ -51,6 +52,7 @@ public class Tooltips : MonoBehaviour
     private GameObject currentTouchedItem;
     private bool isScrewingVent;
     private bool isScrewingSlats;
+    private GameObject currentDeskMenu;
     public void Start()
     {
     }
@@ -58,11 +60,23 @@ public class Tooltips : MonoBehaviour
     {
         //update these vars
         inventoryList = inventoryScript.inventory;
-        deskInvList = deskInvScript.deskInv;
         touchedInvSlot = mouseCollisionScript.touchedInvSlot;
         isTouchingInvSlot = mouseCollisionScript.isTouchingInvSlot;
         isTouchingItem = mouseCollisionScript.isTouchingItem;
         touchedItem = mouseCollisionScript.touchedItem;
+        currentDeskMenu = null;
+        foreach(Transform child in menuCanvas.transform)
+        {
+            if((child.name.StartsWith("DeskMenuPanel") || child.name == "PlayerDeskMenuPanel") && child.GetComponent<Image>().enabled == true)
+            {
+                currentDeskMenu = child.gameObject;
+                break;
+            }
+        }
+        if(currentDeskMenu != null)
+        {
+            deskInvList = currentDeskMenu.GetComponent<DeskInv>().deskInv;
+        }
 
         ///ITEMS
         //for inventory items
