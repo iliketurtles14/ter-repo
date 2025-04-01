@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using TMPro;
+using System.Linq;
 
 public class DeskInv : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class DeskInv : MonoBehaviour
     public Canvas InventoryCanvas;
     public GameObject perksTiles;
     public Inventory inventoryScript;
+    public GameObject aStar;
     private List<InventoryItem> inventoryList;
     public MouseCollisionOnItems mouseCollisionScript;
     public List<DeskItem> deskInv = new List<DeskItem>();
@@ -27,6 +30,7 @@ public class DeskInv : MonoBehaviour
     private bool deskIsFull;
     private bool invIsFull;
     public GameObject desk;
+    public string deskText;
     public void Start()
     {
         //what desk to take
@@ -52,9 +56,11 @@ public class DeskInv : MonoBehaviour
                 }
             }
         }
-        
+
+        StartCoroutine(StartWait());
+
         //make slot list
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             deskSlots.Add(child.gameObject);
         }
@@ -74,6 +80,34 @@ public class DeskInv : MonoBehaviour
 
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
+        MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
+    }
+    public IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+
+        //what text to take
+        if (name == "PlayerDeskMenuPanel")
+        {
+            deskText = (player.GetComponent<PlayerCollectionData>().playerData.displayName.ToString() + "'s Desk").Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+        }
+        else if (name.StartsWith("DeskMenuPanel"))
+        {
+            int num = 0;
+            Match match = Regex.Match(name, @"\d+");
+            if (match.Success)
+            {
+                num = int.Parse(match.Value);
+            }
+            foreach (Transform child in aStar.transform)
+            {
+                if (child.name == "Inmate" + num.ToString())
+                {
+                    deskText = (child.GetComponent<NPCCollectionData>().npcData.displayName.ToString() + "'s Desk").Replace("\r\n", "").Replace("\n", "").Replace("\r", ""); ;
+                    break;
+                }
+            }
+        }
     }
     public void Update()
     {
@@ -196,6 +230,7 @@ public class DeskInv : MonoBehaviour
 
                 MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
                 MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
+                MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
 
                 deskIsOpen = false;
 
@@ -242,6 +277,8 @@ public class DeskInv : MonoBehaviour
         }
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
+        Debug.Log(deskText);
+        MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = deskText;
 
         Debug.Log(name);
 
