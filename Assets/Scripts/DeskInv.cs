@@ -89,7 +89,7 @@ public class DeskInv : MonoBehaviour
         //what text to take
         if (name == "PlayerDeskMenuPanel")
         {
-            deskText = (player.GetComponent<PlayerCollectionData>().playerData.displayName.ToString() + "'s Desk").Replace("\r\n", "").Replace("\n", "").Replace("\r", "");
+            deskText = "Your Desk";
         }
         else if (name.StartsWith("DeskMenuPanel"))
         {
@@ -241,6 +241,7 @@ public class DeskInv : MonoBehaviour
                 mouseCollisionScript.EnableTag("Digable");
                 mouseCollisionScript.EnableTag("Wall");
                 mouseCollisionScript.EnableTag("Item");
+                mouseCollisionScript.EnableTag("Desk");
 
                 //player movement
                 player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -297,6 +298,7 @@ public class DeskInv : MonoBehaviour
         mouseCollisionScript.DisableTag("Digable");
         mouseCollisionScript.DisableTag("Wall");
         mouseCollisionScript.DisableTag("Item");
+        mouseCollisionScript.DisableTag("Desk");
 
         //NPC movement
         foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))

@@ -6,12 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 public class Tooltips : MonoBehaviour
 {
     public Transform PlayerTransform;
     public Canvas InventoryCanvas;
     public Canvas menuCanvas;
+    public GameObject aStar;
     private Transform TooltipPanelTransform;
     public GameObject TooltipMid;
     public GameObject TooltipSide;
@@ -539,7 +541,73 @@ public class Tooltips : MonoBehaviour
             return;
         }
 
+        ///OBJECTS
+        //desks
+        if (mouseCollisionScript.isTouchingDesk && !showingTooltip)
+        {
+            if (mouseCollisionScript.touchedDesk.name == "PlayerDesk")
+            {
+                toPrint = "Your Desk";
+            }
+            else if (mouseCollisionScript.touchedDesk.name.StartsWith("Desk"))
+            {
+                int num = 0;
+                Match match = Regex.Match(mouseCollisionScript.touchedDesk.name, @"\d+");
+                if (match.Success)
+                {
+                    num = int.Parse(match.Value);
+                }
 
+                foreach (Transform child in aStar.transform)
+                {
+                    if (child.name == "Inmate" + num)
+                    {
+                        toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                    }
+                }
+            }
+            tooltipType = "desk";
+            DrawTooltip(GetWidth(toPrint), toPrint);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "desk" &&
+            !mouseCollisionScript.isTouchingDesk)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "desk")
+        {
+            string str = null;
+
+            if(mouseCollisionScript.touchedDesk.name == "PlayerDesk")
+            {
+                str = "Your Desk";
+            }
+            else if (mouseCollisionScript.touchedDesk.name.StartsWith("Desk"))
+            {
+                int num = 0;
+                Match match = Regex.Match(mouseCollisionScript.touchedDesk.name, @"\d+");
+                if (match.Success)
+                {
+                    num = int.Parse(match.Value);
+                }
+
+                foreach (Transform child in aStar.transform)
+                {
+                    if (child.name == "Inmate" + num)
+                    {
+                        str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                    }
+                }
+            }
+
+            if (str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
     }
 
     public void DrawTooltip(int width, string text)

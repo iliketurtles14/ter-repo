@@ -103,10 +103,15 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         bool touchingVentLadder = false;
         bool touchingRoofLadder = false;
         bool touchingRock = false;
+        bool touchingDesk = false;
 
         // First pass: Check for specific tags
         foreach (var collider in hitColliders)
         {
+            if (collider.CompareTag("Desk"))
+            {
+                touchingDesk = true;
+            }
             if (collider.CompareTag("InvSlot"))
             {
                 touchingInvSlot = true;
@@ -154,7 +159,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 continue;
             }
 
-            if (touchingInvSlot && touchedObject.CompareTag("InvSlot"))
+            if(touchingDesk && touchedObject.CompareTag("Desk"))
+            {
+                AddCollision(touchedObject);
+            }
+            else if (touchingInvSlot && touchedObject.CompareTag("InvSlot"))
             {
                 AddCollision(touchedObject);
             }
@@ -187,7 +196,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 AddCollision(touchedObject);
             }
             else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
-                && !touchingVentLadder && !touchingRoofLadder && !touchingRock)
+                && !touchingVentLadder && !touchingRoofLadder && !touchingRock && !touchingDesk)
             {
                 AddCollision(touchedObject);
             }
