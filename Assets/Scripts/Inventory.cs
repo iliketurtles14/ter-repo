@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -71,6 +72,19 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+
+        foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
+        {
+            if(child.GetComponent<Image>().sprite = ClearSprite)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+            else
+            {
+                child.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+
         if (Input.GetMouseButtonDown(1) && mouseCollisionScript.isTouchingInvSlot == true)
         {
             if(mouseCollisionScript.touchedInvSlot.name == "Slot1") 
