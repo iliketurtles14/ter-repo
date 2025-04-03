@@ -118,5 +118,9 @@ public class OnMainButtonPress : MonoBehaviour
                 }
             }
         }
+        else if(touchingOptionsButton && Input.GetMouseButtonDown(0))
+        {
+            MainMenuCanvas.transform.Find("")
+        }
     }
 }

@@ -67,14 +67,16 @@ public class DeskRNG : MonoBehaviour
                 case 6: tier6Items.Add(item.id); break;
             }
         }
+
+        RandomizeDesk();
     }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            RandomizeDesk();
-        }
-    }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F1))
+    //    {
+    //        RandomizeDesk();
+    //    }
+    //}
     public void RandomizeDesk()
     {
         // Clear the desk
@@ -85,11 +87,43 @@ public class DeskRNG : MonoBehaviour
         }
 
         // Add predefined items
-        AddItem(82);
-        AddItem(146);
-        AddItem(128);
-        AddItem(134);
+        if(name != "DevDeskMenuPanel")
+        {
+            AddItem(82);
+            AddItem(146);
+            AddItem(128);
+            AddItem(134);
+        }
 
+        if (name == "DevDeskMenuPanel")
+        {
+            AddItem(012);
+            AddItem(015);
+            AddItem(018);
+            AddItem(019);
+            AddItem(000);
+            AddItem(021);
+            AddItem(026);
+            AddItem(027);
+            AddItem(028);
+            AddItem(026);
+            AddItem(027);
+            AddItem(028);
+            AddItem(105);
+            AddItem(102);
+            AddItem(131);
+            AddItem(140);
+            AddItem(140);
+            AddItem(140);
+            AddItem(140);
+            AddItem(140);
+            return;
+        }
+
+        if (name == "PlayerDeskMenuPanel")
+        {
+            return;
+        }
 
         int amountOfItems = 6;
         tokens = UnityEngine.Random.Range(8, 13);//designed for center perks

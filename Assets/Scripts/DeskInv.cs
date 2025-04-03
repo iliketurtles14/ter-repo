@@ -15,6 +15,7 @@ public class DeskInv : MonoBehaviour
     public GameObject perksTiles;
     public Inventory inventoryScript;
     public GameObject aStar;
+    public ItemBehaviours itemBehavioursScript;
     private List<InventoryItem> inventoryList;
     public MouseCollisionOnItems mouseCollisionScript;
     public List<DeskItem> deskInv = new List<DeskItem>();
@@ -31,6 +32,7 @@ public class DeskInv : MonoBehaviour
     private bool invIsFull;
     public GameObject desk;
     public string deskText;
+    private bool isOpening;
     public void Start()
     {
         //what desk to take
@@ -55,6 +57,10 @@ public class DeskInv : MonoBehaviour
                     break;
                 }
             }
+        }
+        else if(name == "DevDeskMenuPanel")
+        {
+            desk = perksTiles.transform.Find("GroundObjects").Find("DevDesk").gameObject;
         }
 
         StartCoroutine(StartWait());
@@ -107,6 +113,10 @@ public class DeskInv : MonoBehaviour
                     break;
                 }
             }
+        }
+        else if(name == "DevDeskMenuPanel")
+        {
+            deskText = "Dev Desk";
         }
     }
     public void Update()
@@ -271,6 +281,29 @@ public class DeskInv : MonoBehaviour
     }
     public IEnumerator OpenDesk()
     {
+        if (isOpening)
+        {
+            yield break;
+        }
+        
+        if (desk.name.StartsWith("Desk") && !itemBehavioursScript.barIsMoving)
+        {
+            isOpening = true;
+
+            Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y, desk.gameObject.transform.position.z);
+            
+            StartCoroutine(itemBehavioursScript.DrawActionBar(false));
+            itemBehavioursScript.CreateActionText("Opening Desk");
+            yield return new WaitForSeconds(.045f);
+            if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
+            for (int i = 1; i <= 49; i++)
+            {
+                if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
+                yield return new WaitForSeconds(.045f);
+            }
+        }
+        isOpening = false;
+
         foreach (GameObject slot in deskSlots)
         {
             slot.GetComponent<BoxCollider2D>().enabled = true;

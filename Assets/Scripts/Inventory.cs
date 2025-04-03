@@ -75,7 +75,7 @@ public class Inventory : MonoBehaviour
 
         foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
         {
-            if(child.GetComponent<Image>().sprite = ClearSprite)
+            if(child.GetComponent<Image>().sprite == ClearSprite)
             {
                 child.GetComponent<BoxCollider2D>().enabled = false;
             }

@@ -65,6 +65,7 @@ public class ApplyPrisonData : MonoBehaviour
         mouseOverlayScript.mouseDown = UISprites[77];
         //deskmenupanels
         mc.Find("PlayerDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
+        mc.Find("DevDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
         foreach(Transform child in mc)
         {
             if (child.name.StartsWith("DeskMenuPanel"))
