@@ -74,6 +74,12 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("MapEditorButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Image>().sprite = UISprites[328];
+        //options stuff
+        mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
+        mmc.Find("OptionsPanel").Find("NormalizeCheckBox").GetComponent<Image>().sprite = UISprites[215];
+        mmc.Find("OptionsPanel").Find("OptionsTextBackdrop").GetComponent<Image>().sprite = UISprites[186];
+        mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
+        mmc.Find("OptionsPanel").GetComponent<Image>().sprite = UISprites[184];
         //patch notes buttosns
         mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[248];
         //prison select backdrop

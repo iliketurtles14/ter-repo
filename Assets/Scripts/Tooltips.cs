@@ -69,7 +69,7 @@ public class Tooltips : MonoBehaviour
         currentDeskMenu = null;
         foreach(Transform child in menuCanvas.transform)
         {
-            if((child.name.StartsWith("DeskMenuPanel") || child.name == "PlayerDeskMenuPanel") && child.GetComponent<Image>().enabled == true)
+            if((child.name.StartsWith("DeskMenuPanel") || child.name == "PlayerDeskMenuPanel" || child.name == "DevDeskMenuPanel") && child.GetComponent<Image>().enabled == true)
             {
                 currentDeskMenu = child.gameObject;
                 break;
@@ -566,6 +566,10 @@ public class Tooltips : MonoBehaviour
                     }
                 }
             }
+            else if(mouseCollisionScript.touchedDesk.name == "DevDesk")
+            {
+                toPrint = "Dev Desk";
+            }
             tooltipType = "desk";
             DrawTooltip(GetWidth(toPrint), toPrint);
             return;
@@ -600,6 +604,10 @@ public class Tooltips : MonoBehaviour
                         str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
                     }
                 }
+            }
+            else if(mouseCollisionScript.touchedDesk.name == "DevDesk")
+            {
+                str = "Dev Desk";
             }
 
             if (str != toPrint)

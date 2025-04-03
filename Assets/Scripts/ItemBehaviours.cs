@@ -30,7 +30,7 @@ public class ItemBehaviours : MonoBehaviour
     public bool barIsMoving;
     public Transform PlayerTransform;
     public Transform oldPlayerTransform;
-    private bool cancelBar;
+    public bool cancelBar;
     public TextMeshProUGUI ActionTextBox;
     private int whatSlot;
     public Sprite clearSprite;
@@ -121,7 +121,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "chipping";
                 touchedTileObject = mcs.touchedWall.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Chipping");
                 Deselect();
             }
@@ -138,7 +138,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting fence";
                 touchedTileObject = mcs.touchedFence.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -154,7 +154,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting bars";
                 touchedTileObject = mcs.touchedBars.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -170,7 +170,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "unscrewing vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Unscrewing");
                 Deselect();
             }
@@ -188,7 +188,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -206,7 +206,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "unscrewing slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Unscrewing");
                 Deselect();
             }
@@ -224,7 +224,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -265,7 +265,7 @@ public class ItemBehaviours : MonoBehaviour
                 {
                     shouldMakeDirt = true;
                 }
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Digging");
                 Deselect();
             }
@@ -308,7 +308,7 @@ public class ItemBehaviours : MonoBehaviour
                 if(goodForDig1 && goodForDig2)
                 {
                     whatAction = "digging up";
-                    StartCoroutine(DrawActionBar());
+                    StartCoroutine(DrawActionBar(true));
                     CreateActionText("Digging");
                     Deselect();
                 }
@@ -330,7 +330,7 @@ public class ItemBehaviours : MonoBehaviour
                     return;
                 }
                 whatAction = "digging";
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Digging");
                 Deselect();
             }
@@ -344,7 +344,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "chipping rock";
                 touchedTileObject = mcs.touchedRock;
-                StartCoroutine(DrawActionBar());
+                StartCoroutine(DrawActionBar(true));
                 CreateActionText("Chipping");
                 Deselect();
             }
@@ -418,7 +418,7 @@ public class ItemBehaviours : MonoBehaviour
 
         if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)//keep at botom
         {
-            StopCoroutine(DrawActionBar());
+            StopCoroutine(DrawActionBar(false));
             DestroyActionBar();
         }
     }
@@ -1104,7 +1104,7 @@ public class ItemBehaviours : MonoBehaviour
             BreakTile();
         }
     }
-    public IEnumerator DrawActionBar()
+    public IEnumerator DrawActionBar(bool isTool)
     {
         cancelBar = false;
         barIsMoving = true;
@@ -1121,23 +1121,26 @@ public class ItemBehaviours : MonoBehaviour
             yield return new WaitForSeconds(.045f);
         }
         DestroyActionBar();
-        RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
-
-        switch (whatAction)
+        if (isTool)
         {
-            case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
-            case "cutting fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
-            case "cutting bars": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower/2); break;
-            case "unscrewing vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
-            case "cutting vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
-            case "unscrewing slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
-            case "cutting slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
-            case "digging down": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
-            case "digging up": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
-            case "digging": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
-            case "chipping rock": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
-        }
+            RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
 
+            switch (whatAction)
+            {
+                case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
+                case "cutting fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+                case "cutting bars": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower / 2); break;
+                case "unscrewing vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
+                case "cutting vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+                case "unscrewing slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
+                case "cutting slats": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+                case "digging down": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+                case "digging up": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+                case "digging": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.diggingPower); break;
+                case "chipping rock": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
+                default: break;
+            }
+        }
     }
     public void CreateActionText(string text)
     {
