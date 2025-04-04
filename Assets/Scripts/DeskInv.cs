@@ -121,6 +121,8 @@ public class DeskInv : MonoBehaviour
     }
     public void Update()
     {
+        Debug.Log(mouseCollisionScript.isTouchingDesk);
+        
         if (!deskIsOpen)
         {
             if (mouseCollisionScript.isTouchingDesk && mouseCollisionScript.touchedDesk.name == desk.name)
@@ -227,7 +229,7 @@ public class DeskInv : MonoBehaviour
                 mouseCollisionScript.touchedDeskSlot.GetComponent<Image>().sprite = ClearSprite;
             }
             //exiting the desk
-            if (!mouseCollisionScript.isTouchingInvSlot && !mouseCollisionScript.isTouchingDeskPanel && !mouseCollisionScript.isTouchingDeskSlot && !mouseCollisionScript.isTouchingExtra && Input.GetMouseButtonDown(0))
+            if (!mouseCollisionScript.isTouchingInvSlot && !mouseCollisionScript.isTouchingDeskPanel && !mouseCollisionScript.isTouchingDeskSlot && !mouseCollisionScript.isTouchingExtra && !mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
                 foreach (GameObject slot in deskSlots)
                 {
@@ -275,6 +277,14 @@ public class DeskInv : MonoBehaviour
                 //time
                 timeObject.GetComponent<Routine>().enabled = true;
 
+                foreach (Transform obj in perksTiles.transform.Find("GroundObjects"))
+                {
+                    if (obj.gameObject.CompareTag("Desk"))
+                    {
+                        obj.GetComponent<BoxCollider2D>().enabled = true;
+                    }
+                }
+
                 return;
             }
         }
@@ -293,7 +303,7 @@ public class DeskInv : MonoBehaviour
             Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y, desk.gameObject.transform.position.z);
             
             StartCoroutine(itemBehavioursScript.DrawActionBar(false));
-            itemBehavioursScript.CreateActionText("Opening Desk");
+            itemBehavioursScript.CreateActionText("Opening");
             yield return new WaitForSeconds(.045f);
             if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
             for (int i = 1; i <= 49; i++)
@@ -311,10 +321,8 @@ public class DeskInv : MonoBehaviour
         }
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
-        Debug.Log(deskText);
         MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = deskText;
 
-        Debug.Log(name);
 
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = true;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
@@ -349,6 +357,14 @@ public class DeskInv : MonoBehaviour
 
         //time
         timeObject.GetComponent<Routine>().enabled = false;
+
+        foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
+        {
+            if (obj.gameObject.CompareTag("Desk"))
+            {
+                obj.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
 
         yield return new WaitForEndOfFrame();
 

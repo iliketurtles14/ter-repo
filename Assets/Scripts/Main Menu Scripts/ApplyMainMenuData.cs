@@ -128,6 +128,10 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonPressedSprite = UISprites[199];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonNormalSprite = UISprites[328];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonPressedSprite = UISprites[329];
+        mmc.Find("OptionsPanel").GetComponent<Options>().backButtonNormalSprite = UISprites[326];
+        mmc.Find("OptionsPanel").GetComponent<Options>().backButtonPressedSprite = UISprites[327];
+        mmc.Find("OptionsPanel").GetComponent<Options>().checkedBoxSprite = UISprites[216];
+        mmc.Find("OptionsPanel").GetComponent<Options>().uncheckedBoxSprite = UISprites[215];
         mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonNormalSprite = UISprites[248];
         mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonPressedSprite = UISprites[249];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[518]);

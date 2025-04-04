@@ -18,6 +18,7 @@ public class ApplyPrisonData : MonoBehaviour
     public HoleClimb holeClimbScript;
     public MouseOverlay mouseOverlayScript;
     public Transform PlayerDesk;
+    public Pause pauseScript;
     private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
     private List<Sprite> NPCSprites = new List<Sprite>();
@@ -90,6 +91,15 @@ public class ApplyPrisonData : MonoBehaviour
         //playermenu item slots
         mc.Find("PlayerMenuPanel").Find("OutfitBackdrop").GetComponent<Image>().sprite = UISprites[33];
         mc.Find("PlayerMenuPanel").Find("WeaponBackdrop").GetComponent<Image>().sprite = UISprites[33];
+        //pause menu stuff
+        mc.Find("PauseMenuPanel").GetComponent<Image>().sprite = UISprites[357];
+        mc.Find("PauseMenuPanel").Find("ContinueButton").GetComponent<Image>().sprite = UISprites[359];
+        mc.Find("PauseMenuPanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[359];
+        mc.Find("PauseMenuPanel").Find("HelpButton").GetComponent<Image>().sprite = UISprites[359];
+        mc.Find("PauseMenuPanel").Find("QuitButton").GetComponent<Image>().sprite = UISprites[359];
+        pauseScript.buttonNormalSprite = UISprites[359];
+        pauseScript.buttonPressedSprite = UISprites[360];
+
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
         //desks
