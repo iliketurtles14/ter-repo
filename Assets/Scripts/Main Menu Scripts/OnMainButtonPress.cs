@@ -31,6 +31,7 @@ public class OnMainButtonPress : MonoBehaviour
         MainMenuCanvas.transform.Find("SmallMenuPanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("PlayerPanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(false);
+        MainMenuCanvas.transform.Find("OptionsPanel").gameObject.SetActive(false);
         isPrisonSelectPanelOpen = false;
         if (NPCRenameScript.comingFromRename)
         {
@@ -120,7 +121,15 @@ public class OnMainButtonPress : MonoBehaviour
         }
         else if(touchingOptionsButton && Input.GetMouseButtonDown(0))
         {
-            MainMenuCanvas.transform.Find("")
+            MainMenuCanvas.transform.Find("OptionsPanel").gameObject.SetActive(true);
+            MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
+            foreach (Transform child in transform)
+            {
+                if(child.GetComponent<BoxCollider2D>() != null)
+                {
+                    child.GetComponent<BoxCollider2D>().enabled = false;
+                }
+            }
         }
     }
 }

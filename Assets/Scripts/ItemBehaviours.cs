@@ -875,7 +875,7 @@ public class ItemBehaviours : MonoBehaviour
             BreakTile();
         }
     }
-    public void Dig(TileData touchedTileData)
+    public IEnumerator Dig(TileData touchedTileData)
     {        
         if (touchedTileData.currentDurability <= 0)
         {
@@ -971,7 +971,24 @@ public class ItemBehaviours : MonoBehaviour
             if (shouldRock)
             {
                 GameObject rockPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rock");
-                Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+                GameObject rockObject = Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+                //set percentage
+                int aRand = UnityEngine.Random.Range(1, 3);
+                if(aRand == 1)
+                {
+                    yield return new WaitForEndOfFrame();
+                    rockObject.GetComponent<TileCollectionData>().tileData.currentDurability = 30;
+                }
+                else if(aRand == 2)
+                {
+                    rockObject.GetComponent<TileCollectionData>().tileData.currentDurability = 40;
+                    yield return new WaitForEndOfFrame();
+                }
+                else if(aRand == 3)
+                {
+                    rockObject.GetComponent<TileCollectionData>().tileData.currentDurability = 50;
+                    yield return new WaitForEndOfFrame();
+                }
             }
         }
     }
@@ -1096,7 +1113,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         else if(whatAction == "digging")
         {
-            Dig(touchedTileData);
+            StartCoroutine(Dig(touchedTileData));
         }
 
         if (touchedTileData.currentDurability <= 0 && whatAction != "digging down" && whatAction != "digging up" && whatAction != "digging")

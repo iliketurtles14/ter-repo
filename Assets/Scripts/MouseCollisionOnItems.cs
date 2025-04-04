@@ -195,8 +195,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             {
                 AddCollision(touchedObject);
             }
-            else if (!touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
-                && !touchingVentLadder && !touchingRoofLadder && !touchingRock && !touchingDesk)
+            else if (!touchingDesk && !touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
+                && !touchingVentLadder && !touchingRoofLadder && !touchingRock)
             {
                 AddCollision(touchedObject);
             }
