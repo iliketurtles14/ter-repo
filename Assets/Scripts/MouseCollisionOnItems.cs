@@ -31,6 +31,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<GameObject> emptyDirts = new HashSet<GameObject>();
     private HashSet<GameObject> rocks = new HashSet<GameObject>();
     private HashSet<GameObject> extras = new HashSet<GameObject>();
+    private HashSet<GameObject> npcs = new HashSet<GameObject>();
 
     private HashSet<string> disabledTags = new HashSet<string>();
 
@@ -86,6 +87,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedRock => rocks.Count > 0 ? GetFirst(rocks) : null;
     public bool isTouchingExtra => extras.Count > 0;
     public GameObject touchedExtra => extras.Count > 0 ? GetFirst(extras) : null;
+    public bool isTouchingNPC => npcs.Count > 0;
+    public GameObject touchedNPC => npcs.Count > 0 ? GetFirst(npcs) : null;
+
     void Update()
     {
         
@@ -104,10 +108,15 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         bool touchingRoofLadder = false;
         bool touchingRock = false;
         bool touchingDesk = false;
+        bool touchingNPC = false;
 
         // First pass: Check for specific tags
         foreach (var collider in hitColliders)
         {
+            if(collider.CompareTag("Inmate") || collider.CompareTag("Guard"))
+            {
+                touchingNPC = true;
+            }
             if (collider.CompareTag("Desk"))
             {
                 touchingDesk = true;
@@ -159,7 +168,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 continue;
             }
 
-            if(touchingDesk && touchedObject.CompareTag("Desk"))
+            if(touchingNPC && (touchedObject.CompareTag("Inmate") || touchedObject.CompareTag("Guard")))
+            {
+                AddCollision(touchedObject);
+            }
+            else if(touchingDesk && touchedObject.CompareTag("Desk"))
             {
                 AddCollision(touchedObject);
             }
@@ -195,7 +208,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             {
                 AddCollision(touchedObject);
             }
-            else if (!touchingDesk && !touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
+            else if (!touchingNPC && !touchingDesk && !touchingInvSlot && !touchingVentCover && !touchingOpenVent && !touchingItem && !touchingGroundLadder
                 && !touchingVentLadder && !touchingRoofLadder && !touchingRock)
             {
                 AddCollision(touchedObject);
@@ -296,6 +309,12 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             case "Extra":
                 extras.Add(obj);
                 break;
+            case "Inmate":
+                npcs.Add(obj);
+                break;
+            case "Guard":
+                npcs.Add(obj);
+                break;
         }
     }
 
@@ -327,6 +346,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         emptyDirts.Clear();
         rocks.Clear();
         extras.Clear();
+        npcs.Clear();
     }
 
     private GameObject GetFirst(HashSet<GameObject> set)
