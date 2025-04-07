@@ -47,6 +47,10 @@ public class Combat : MonoBehaviour
 
         yield return new WaitForSeconds(punchTime);
     }
+    public IEnumerator TargetAnim(GameObject npc)
+    {
+
+    }
     public void LockOn(GameObject npc)
     {
         //do stuff for whenever you lock on to an npc

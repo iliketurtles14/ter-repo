@@ -25,6 +25,12 @@ public class ApplyPrisonData : MonoBehaviour
     private List<Sprite> PrisonObjectSprites = new List<Sprite>();
     private List<Sprite> UISprites = new List<Sprite>();
 
+
+    ///NPC SPRITE RULES:
+    //start with looking east with foot out,
+    //then north with foot out being the right
+    //then west with foot out
+    //then south with foot out being the left (yes its technically supposed to be the right foot. whatever.)
     public List<Sprite> RabbitHoldingSprites = new List<Sprite>();
     public List<Sprite> BaldEagleHoldingSprites = new List<Sprite>();
     public List<Sprite> LiferHoldingSprites = new List<Sprite>();
@@ -35,6 +41,17 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> TangoHoldingSprites = new List<Sprite>();
     public List<Sprite> MaruHoldingSprites = new List<Sprite>();
     public List<Sprite> InmateOutfitHoldingSprites = new List<Sprite>();
+
+    public List<Sprite> RabbitPunchingSprites = new List<Sprite>();
+    public List<Sprite> BaldEaglePunchingSprites = new List<Sprite>();
+    public List<Sprite> LiferPunchingSprites = new List<Sprite>();
+    public List<Sprite> YoungBuckPunchingSprites = new List<Sprite>();
+    public List<Sprite> OldTimerPunchingSprites = new List<Sprite>();
+    public List<Sprite> BillyGoatPunchingSprites = new List<Sprite>();
+    public List<Sprite> FrosephPunchingSprites = new List<Sprite>();
+    public List<Sprite> TangoPunchingSprites = new List<Sprite>();
+    public List<Sprite> MaruPunchingSprites = new List<Sprite>();
+    public List<Sprite> InmateOutfitPunchingSprites = new List<Sprite>();
 
     private void Start()
     {
@@ -292,6 +309,50 @@ public class ApplyPrisonData : MonoBehaviour
         InmateOutfitHoldingSprites.Add(NPCSprites[124]);
         InmateOutfitHoldingSprites.Add(NPCSprites[120]);
         InmateOutfitHoldingSprites.Add(NPCSprites[119]);
+
+        //punching sprites (only on intervals of one instead of two)
+        RabbitPunchingSprites.Add(NPCSprites[359]);
+        RabbitPunchingSprites.Add(NPCSprites[348]);
+        RabbitPunchingSprites.Add(NPCSprites[360]);
+        RabbitPunchingSprites.Add(NPCSprites[333]);
+        BaldEaglePunchingSprites.Add(NPCSprites[372]);
+        BaldEaglePunchingSprites.Add(NPCSprites[353]);
+        BaldEaglePunchingSprites.Add(NPCSprites[373]);
+        BaldEaglePunchingSprites.Add(NPCSprites[358]);
+        LiferPunchingSprites.Add(NPCSprites[361]);
+        LiferPunchingSprites.Add(NPCSprites[367]);
+        LiferPunchingSprites.Add(NPCSprites[362]);
+        LiferPunchingSprites.Add(NPCSprites[363]);
+        YoungBuckPunchingSprites.Add(NPCSprites[346]);
+        YoungBuckPunchingSprites.Add(NPCSprites[349]);
+        YoungBuckPunchingSprites.Add(NPCSprites[347]);
+        YoungBuckPunchingSprites.Add(NPCSprites[357]);
+        OldTimerPunchingSprites.Add(NPCSprites[340]);
+        OldTimerPunchingSprites.Add(NPCSprites[352]);
+        OldTimerPunchingSprites.Add(NPCSprites[341]);
+        OldTimerPunchingSprites.Add(NPCSprites[356]);
+        BillyGoatPunchingSprites.Add(NPCSprites[342]);
+        BillyGoatPunchingSprites.Add(NPCSprites[351]);
+        BillyGoatPunchingSprites.Add(NPCSprites[343]);
+        BillyGoatPunchingSprites.Add(NPCSprites[355]);
+        FrosephPunchingSprites.Add(NPCSprites[369]);
+        FrosephPunchingSprites.Add(NPCSprites[368]);
+        FrosephPunchingSprites.Add(NPCSprites[370]);
+        FrosephPunchingSprites.Add(NPCSprites[371]);
+        TangoPunchingSprites.Add(NPCSprites[344]);
+        TangoPunchingSprites.Add(NPCSprites[350]);
+        TangoPunchingSprites.Add(NPCSprites[345]);
+        TangoPunchingSprites.Add(NPCSprites[354]);
+        MaruPunchingSprites.Add(NPCSprites[337]);
+        MaruPunchingSprites.Add(NPCSprites[336]);
+        MaruPunchingSprites.Add(NPCSprites[338]);
+        MaruPunchingSprites.Add(NPCSprites[339]);
+        InmateOutfitPunchingSprites.Add(NPCSprites[365]);
+        InmateOutfitPunchingSprites.Add(NPCSprites[364]);
+        InmateOutfitPunchingSprites.Add(NPCSprites[366]);
+        InmateOutfitPunchingSprites.Add(NPCSprites[63]); //holy fuck why was this placed in a completely different place
+
+
         //medic sprites are in prison objects
     }
 }
