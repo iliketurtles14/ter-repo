@@ -29,8 +29,10 @@ public class Combat : MonoBehaviour
 
         if(inAttackMode && hasLockedOn && player.transform.Find("CombatBox").GetComponent<BoxCollider2D>().IsTouching(currentNPC.GetComponent<BoxCollider2D>()) && !inPunchCycle)
         {
-            //punch animation and health remove from npc
-            AggroNPC(currentNPC);
+            if (!currentNPC.GetComponent<NPCCollectionData>().npcData.isAggro)//if not aggroed already
+            {
+                AggroNPC(currentNPC);
+            }
 
             inPunchCycle = true;
             StartCoroutine(PunchCycle());
@@ -39,20 +41,27 @@ public class Combat : MonoBehaviour
     }
     public void AggroNPC(GameObject npc)
     {
-        //change pathfinding method
+        npc.GetComponent<NPCCollectionData>().npcData.isAggro = true;
     }
     public IEnumerator PunchCycle()
     {
         float punchTime = (player.GetComponent<PlayerCollectionData>().playerData.speed * -.005f) + 1.15f;
 
+        int str = 0; //PLACEHOLDER INT. THIS IS THE PLAYER'S TOTAL STRENGTH (INCLUDING STRENGTH STAT AND WEAPON)
+        currentNPC.GetComponent<NPCCollectionData>().npcData.health -= str;
+        if(currentNPC.GetComponent<NPCCollectionData>().npcData.health <= 0)
+        {
+            KillNPC(currentNPC);
+        }
+
         yield return new WaitForSeconds(punchTime);
     }
-    public IEnumerator TargetAnim(GameObject npc)
+    public void KillNPC(GameObject npc)
     {
-
+        //kill npc
     }
     public void LockOn(GameObject npc)
     {
-        //do stuff for whenever you lock on to an npc
+        npc.transform.Find("CombatBox").gameObject.SetActive(true);
     }
 }

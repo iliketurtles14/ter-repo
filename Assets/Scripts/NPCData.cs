@@ -18,4 +18,5 @@ public class NPCData : ScriptableObject
     public int order;
     public bool hasShop;
     public bool hasFavor;
+    public bool isAggro;
 }
