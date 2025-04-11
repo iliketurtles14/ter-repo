@@ -277,13 +277,13 @@ public class DeskInv : MonoBehaviour
                 //time
                 timeObject.GetComponent<Routine>().enabled = true;
 
-                foreach (Transform obj in perksTiles.transform.Find("GroundObjects"))
-                {
-                    if (obj.gameObject.CompareTag("Desk"))
-                    {
-                        obj.GetComponent<BoxCollider2D>().enabled = true;
-                    }
-                }
+                //foreach (Transform obj in perksTiles.transform.Find("GroundObjects"))
+                //{
+                //    if (obj.gameObject.CompareTag("Desk"))
+                //    {
+                //        obj.GetComponent<BoxCollider2D>().enabled = true;
+                //    }
+                //}
 
                 return;
             }
@@ -358,13 +358,13 @@ public class DeskInv : MonoBehaviour
         //time
         timeObject.GetComponent<Routine>().enabled = false;
 
-        foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
-        {
-            if (obj.gameObject.CompareTag("Desk"))
-            {
-                obj.GetComponent<BoxCollider2D>().enabled = false;
-            }
-        }
+        //foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
+        //{
+        //    if (obj.gameObject.CompareTag("Desk"))
+        //    {
+        //        obj.GetComponent<BoxCollider2D>().enabled = false;
+        //    }
+        //}
 
         yield return new WaitForEndOfFrame();
 
