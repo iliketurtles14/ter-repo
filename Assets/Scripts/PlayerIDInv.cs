@@ -168,21 +168,27 @@ public class PlayerIDInv : MonoBehaviour
                 mcs.EnableTag("ElectricFence");
                 mcs.EnableTag("Digable");
                 mcs.EnableTag("Wall");
+                mcs.EnableTag("Item");
+                mcs.EnableTag("Desk");
 
                 //player movement
-                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 player.GetComponent<PlayerCtrl>().enabled = true;
+                player.GetComponent<PlayerAnimation>().enabled = true;
 
                 //NPC movement
                 foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
                 {
                     guard.GetComponent<AILerp>().speed = 10;
+                    guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                    guard.GetComponent<NPCAnimation>().enabled = true;
                 }
                 foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
                 {
                     inmate.GetComponent<AILerp>().speed = 10;
+                    inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                    inmate.GetComponent<NPCAnimation>().enabled = true;
                 }
-
                 //time
                 timeObject.GetComponent<Routine>().enabled = true;
 
@@ -214,22 +220,29 @@ public class PlayerIDInv : MonoBehaviour
         //player movement
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         player.GetComponent<PlayerCtrl>().enabled = false;
+        player.GetComponent<PlayerAnimation>().enabled = false;
 
         mcs.DisableTag("Bars");
         mcs.DisableTag("Fence");
         mcs.DisableTag("ElectricFence");
         mcs.DisableTag("Digable");
         mcs.DisableTag("Wall");
+        mcs.DisableTag("Item");
+        mcs.DisableTag("Desk");
 
 
         //NPC movement
         foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
         {
             guard.GetComponent<AILerp>().speed = 0;
+            guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            guard.GetComponent<NPCAnimation>().enabled = false;
         }
         foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
         {
             inmate.GetComponent<AILerp>().speed = 0;
+            inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            inmate.GetComponent<NPCAnimation>().enabled = false;
         }
 
         //time
