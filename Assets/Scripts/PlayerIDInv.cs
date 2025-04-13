@@ -157,7 +157,7 @@ public class PlayerIDInv : MonoBehaviour
                 weaponSlot.GetComponent<Image>().sprite = ClearSprite;
             }
 
-            if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && Input.GetMouseButtonDown(0))
+            if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
             {
                 //exiting the idmenu
                 CloseMenu();
