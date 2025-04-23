@@ -353,6 +353,9 @@ public class ApplyPrisonData : MonoBehaviour
         InmateOutfitPunchingSprites.Add(NPCSprites[63]); //holy fuck why was this placed in a completely different place
 
 
+        //decided to do all of the outfit sprites (im going slightly insane)
+
+
         //medic sprites are in prison objects
     }
 }

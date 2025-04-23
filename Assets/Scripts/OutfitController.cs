@@ -19,14 +19,14 @@ public class OutfitController : MonoBehaviour
                 currentOutfitID = -1;
             }
 
-            switch (currentOutfitID)
-            {
-                case 29:
-                case 30:
-                case 31:
-                case 32:
-                    GetComponent<PlayerAnimation>().outfitDirSprites = DataSender.instance.
-            }
+            //switch (currentOutfitID)
+            //{
+            //    case 29:
+            //    case 30:
+            //    case 31:
+            //    case 32:
+            //        GetComponent<PlayerAnimation>().outfitDirSprites = DataSender.instance.
+            //}
         }
         else if(gameObject.CompareTag("Inmate") || gameObject.CompareTag("Guard"))
         {
