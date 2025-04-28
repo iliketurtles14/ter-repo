@@ -9,6 +9,7 @@ public class DeskPickUp : MonoBehaviour
     public MouseCollisionOnItems mcs;
     public PlayerAnimation playerAnimationScript;
     public ApplyPrisonData applyScript;
+    public OutfitController outfitControllerScript;
     private float distance;
     private float distance2;
     public bool isPickedUp;
@@ -35,6 +36,8 @@ public class DeskPickUp : MonoBehaviour
         }
         else if (isPickedUp)
         {
+            outfitControllerScript.deskIsPickedUp = true;
+            
             desk.transform.position = player.position + deskVector;
 
             if (mcs.isTouchingFloor)
@@ -43,6 +46,7 @@ public class DeskPickUp : MonoBehaviour
                 if(distance2 <= 2.4f && Input.GetMouseButtonDown(1) && !deskScript.deskIsOpen && !player.GetComponent<PolygonCollider2D>().IsTouching(mcs.touchedFloor.GetComponent<BoxCollider2D>()))
                 {
                     isPickedUp = false;
+                    outfitControllerScript.deskIsPickedUp = false;
                     DropDesk(mcs.touchedFloor);
                 }
             }
