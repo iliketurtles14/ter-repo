@@ -44,6 +44,9 @@ public class ItemBehaviours : MonoBehaviour
     public Sprite holeUp99;
     private string whatAction;
     //general
+    public bool isDigging;
+    public bool isChipping;
+    public bool isCutting;
 
     //breaking
     public bool selectedChippingItem;
@@ -121,6 +124,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "chipping";
                 touchedTileObject = mcs.touchedWall.gameObject;
+                isChipping = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Chipping");
                 Deselect();
@@ -138,6 +142,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting fence";
                 touchedTileObject = mcs.touchedFence.gameObject;
+                isCutting = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
@@ -154,6 +159,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting bars";
                 touchedTileObject = mcs.touchedBars.gameObject;
+                isCutting = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
@@ -188,6 +194,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
+                isCutting = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
@@ -224,6 +231,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "cutting slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
+                isCutting = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Cutting");
                 Deselect();
@@ -265,6 +273,7 @@ public class ItemBehaviours : MonoBehaviour
                 {
                     shouldMakeDirt = true;
                 }
+                isDigging = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Digging");
                 Deselect();
@@ -308,6 +317,7 @@ public class ItemBehaviours : MonoBehaviour
                 if(goodForDig1 && goodForDig2)
                 {
                     whatAction = "digging up";
+                    isDigging = true;
                     StartCoroutine(DrawActionBar(true));
                     CreateActionText("Digging");
                     Deselect();
@@ -330,6 +340,7 @@ public class ItemBehaviours : MonoBehaviour
                     return;
                 }
                 whatAction = "digging";
+                isDigging = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Digging");
                 Deselect();
@@ -344,6 +355,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "chipping rock";
                 touchedTileObject = mcs.touchedRock;
+                isChipping = true;
                 StartCoroutine(DrawActionBar(true));
                 CreateActionText("Chipping");
                 Deselect();
@@ -1173,7 +1185,9 @@ public class ItemBehaviours : MonoBehaviour
         }
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
-
+        isDigging = false;
+        isChipping = false;
+        isCutting = false;
     }
     public void BreakItem()
     {
