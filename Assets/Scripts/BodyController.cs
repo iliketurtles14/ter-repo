@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BodyController : MonoBehaviour
@@ -29,7 +30,7 @@ public class BodyController : MonoBehaviour
     public List<List<Sprite>> ChenLists = new List<List<Sprite>>();
     public List<List<Sprite>> CraneLists = new List<List<Sprite>>();
     public List<List<Sprite>> ElbrahLists = new List<List<Sprite>>();
-    public List<List<Sprite>> GenieElfLists = new List<List<Sprite>>();
+    public List<List<Sprite>> GenieLists = new List<List<Sprite>>();
     public List<List<Sprite>> HenchmanLists = new List<List<Sprite>>();
     public List<List<Sprite>> IceElfLists = new List<List<Sprite>>();
     public List<List<Sprite>> LazeeboiLists = new List<List<Sprite>>();
@@ -44,5 +45,411 @@ public class BodyController : MonoBehaviour
     public List<List<Sprite>> WaltonLists = new List<List<Sprite>>();
     public List<List<Sprite>> WhiteElfLists = new List<List<Sprite>>();
     public List<List<Sprite>> YellowElfLists = new List<List<Sprite>>();
+    public Dictionary<string, List<List<Sprite>>> characterDict = new Dictionary<string, List<List<Sprite>>>();
 
+    public void Start()
+    {
+        RabbitLists.Add(prisonDataScript.RabbitSleepDeadSprites);
+        RabbitLists.Add(prisonDataScript.RabbitDiggingSprites);
+        RabbitLists.Add(DataSender.instance.RabbitSprites);
+        RabbitLists.Add(prisonDataScript.RabbitPunchingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitCuttingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitRakingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitBroomingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitPushUpSprites);
+        RabbitLists.Add(prisonDataScript.RabbitBenchingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitJumpRopeSprites);
+        RabbitLists.Add(prisonDataScript.RabbitPullUpSprites);
+        RabbitLists.Add(prisonDataScript.RabbitChippingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitBoundSprites);
+        RabbitLists.Add(prisonDataScript.RabbitTraySprites);
+        RabbitLists.Add(prisonDataScript.RabbitZippingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleSleepDeadSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleDiggingSprites);
+        BaldEagleLists.Add(DataSender.instance.BaldEagleSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEaglePunchingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleCuttingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleRakingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleBroomingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEaglePushUpSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleBenchingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleJumpRopeSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEaglePullUpSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleChippingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleBoundSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleTraySprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleZippingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatSleepDeadSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatDiggingSprites);
+        BillyGoatLists.Add(DataSender.instance.BillyGoatSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatPunchingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatCuttingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatRakingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatBroomingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatPushUpSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatBenchingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatJumpRopeSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatPullUpSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatChippingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatBoundSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatTraySprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatZippingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephSleepDeadSprites);
+        FrosephLists.Add(prisonDataScript.FrosephDiggingSprites);
+        FrosephLists.Add(DataSender.instance.FrosephSprites);
+        FrosephLists.Add(prisonDataScript.FrosephPunchingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephCuttingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephRakingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephBroomingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephPushUpSprites);
+        FrosephLists.Add(prisonDataScript.FrosephBenchingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephJumpRopeSprites);
+        FrosephLists.Add(prisonDataScript.FrosephPullUpSprites);
+        FrosephLists.Add(prisonDataScript.FrosephChippingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephBoundSprites);
+        FrosephLists.Add(prisonDataScript.FrosephTraySprites);
+        FrosephLists.Add(prisonDataScript.FrosephZippingSprites);
+        LiferLists.Add(prisonDataScript.LiferSleepDeadSprites);
+        LiferLists.Add(prisonDataScript.LiferDiggingSprites);
+        LiferLists.Add(DataSender.instance.LiferSprites);
+        LiferLists.Add(prisonDataScript.LiferPunchingSprites);
+        LiferLists.Add(prisonDataScript.LiferCuttingSprites);
+        LiferLists.Add(prisonDataScript.LiferRakingSprites);
+        LiferLists.Add(prisonDataScript.LiferBroomingSprites);
+        LiferLists.Add(prisonDataScript.LiferPushUpSprites);
+        LiferLists.Add(prisonDataScript.LiferBenchingSprites);
+        LiferLists.Add(prisonDataScript.LiferJumpRopeSprites);
+        LiferLists.Add(prisonDataScript.LiferPullUpSprites);
+        LiferLists.Add(prisonDataScript.LiferChippingSprites);
+        LiferLists.Add(prisonDataScript.LiferBoundSprites);
+        LiferLists.Add(prisonDataScript.LiferTraySprites);
+        LiferLists.Add(prisonDataScript.LiferZippingSprites);
+        MaruLists.Add(prisonDataScript.MaruSleepDeadSprites);
+        MaruLists.Add(prisonDataScript.MaruDiggingSprites);
+        MaruLists.Add(DataSender.instance.MaruSprites);
+        MaruLists.Add(prisonDataScript.MaruPunchingSprites);
+        MaruLists.Add(prisonDataScript.MaruCuttingSprites);
+        MaruLists.Add(prisonDataScript.MaruRakingSprites);
+        MaruLists.Add(prisonDataScript.MaruBroomingSprites);
+        MaruLists.Add(prisonDataScript.MaruPushUpSprites);
+        MaruLists.Add(prisonDataScript.MaruBenchingSprites);
+        MaruLists.Add(prisonDataScript.MaruJumpRopeSprites);
+        MaruLists.Add(prisonDataScript.MaruPullUpSprites);
+        MaruLists.Add(prisonDataScript.MaruChippingSprites);
+        MaruLists.Add(prisonDataScript.MaruBoundSprites);
+        MaruLists.Add(prisonDataScript.MaruTraySprites);
+        MaruLists.Add(prisonDataScript.MaruZippingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerSleepDeadSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerDiggingSprites);
+        OldTimerLists.Add(DataSender.instance.OldTimerSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerPunchingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerCuttingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerRakingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerBroomingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerPushUpSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerBenchingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerJumpRopeSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerPullUpSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerChippingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerBoundSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerTraySprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerZippingSprites);
+        TangoLists.Add(prisonDataScript.TangoSleepDeadSprites);
+        TangoLists.Add(prisonDataScript.TangoDiggingSprites);
+        TangoLists.Add(DataSender.instance.TangoSprites);
+        TangoLists.Add(prisonDataScript.TangoPunchingSprites);
+        TangoLists.Add(prisonDataScript.TangoCuttingSprites);
+        TangoLists.Add(prisonDataScript.TangoRakingSprites);
+        TangoLists.Add(prisonDataScript.TangoBroomingSprites);
+        TangoLists.Add(prisonDataScript.TangoPushUpSprites);
+        TangoLists.Add(prisonDataScript.TangoBenchingSprites);
+        TangoLists.Add(prisonDataScript.TangoJumpRopeSprites);
+        TangoLists.Add(prisonDataScript.TangoPullUpSprites);
+        TangoLists.Add(prisonDataScript.TangoChippingSprites);
+        TangoLists.Add(prisonDataScript.TangoBoundSprites);
+        TangoLists.Add(prisonDataScript.TangoTraySprites);
+        TangoLists.Add(prisonDataScript.TangoZippingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckSleepDeadSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckDiggingSprites);
+        YoungBuckLists.Add(DataSender.instance.YoungBuckSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckPunchingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckCuttingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckRakingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckBroomingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckPushUpSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckBenchingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckJumpRopeSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckPullUpSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckChippingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckBoundSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckTraySprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckZippingSprites);
+        BuddyLists.Add(prisonDataScript.BuddySleepDeadSprites);
+        BuddyLists.Add(prisonDataScript.BuddyDiggingSprites);
+        BuddyLists.Add(DataSender.instance.BuddyWalkingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyPunchingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyCuttingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyRakingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyBroomingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyPushUpSprites);
+        BuddyLists.Add(prisonDataScript.BuddyBenchingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyJumpRopeSprites);
+        BuddyLists.Add(prisonDataScript.BuddyChippingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyBoundSprites);
+        BuddyLists.Add(prisonDataScript.BuddyTraySprites);
+        BuddyLists.Add(prisonDataScript.BuddyZippingSprites);
+        ClintLists.Add(prisonDataScript.ClintSleepDeadSprites);
+        ClintLists.Add(prisonDataScript.ClintDiggingSprites);
+        ClintLists.Add(DataSender.instance.ClintWalkingSprites);
+        ClintLists.Add(prisonDataScript.ClintPunchingSprites);
+        ClintLists.Add(prisonDataScript.ClintCuttingSprites);
+        ClintLists.Add(prisonDataScript.ClintRakingSprites);
+        ClintLists.Add(prisonDataScript.ClintBroomingSprites);
+        ClintLists.Add(prisonDataScript.ClintPushUpSprites);
+        ClintLists.Add(prisonDataScript.ClintBenchingSprites);
+        ClintLists.Add(prisonDataScript.ClintJumpRopeSprites);
+        ClintLists.Add(prisonDataScript.ClintPullUpSprites);
+        ClintLists.Add(prisonDataScript.ClintChippingSprites);
+        ClintLists.Add(prisonDataScript.ClintBoundSprites);
+        ClintLists.Add(prisonDataScript.ClintTraySprites);
+        ClintLists.Add(prisonDataScript.ClintZippingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellySleepDeadSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyDiggingSprites);
+        ConnellyLists.Add(DataSender.instance.ConnellyWalkingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyPunchingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyCuttingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyRakingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyBroomingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyPushUpSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyBenchingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyJumpRopeSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyPullUpSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyChippingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyBoundSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyTraySprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyZippingSprites);
+        AndyLists.Add(prisonDataScript.AndySleepDeadSprites);
+        AndyLists.Add(DataSender.instance.AndyWalkingSprites);
+        AndyLists.Add(prisonDataScript.AndyPunchingSprites);
+        AndyLists.Add(prisonDataScript.AndyBenchingSprites);
+        AndyLists.Add(prisonDataScript.AndyBoundSprites);
+        BlackElfLists.Add(prisonDataScript.BlackElfSleepDeadSprites);
+        BlackElfLists.Add(DataSender.instance.BlackElfWalkingSprites);
+        BlackElfLists.Add(prisonDataScript.BlackElfPunchingSprites);
+        BlackElfLists.Add(prisonDataScript.BlackElfBenchingSprites);
+        BlackElfLists.Add(prisonDataScript.BlackElfBoundSprites);
+        BlackElfLists.Add(prisonDataScript.BlackElfTraySprites);
+        BlondeLists.Add(prisonDataScript.BlondeSleepDeadSprites);
+        BlondeLists.Add(DataSender.instance.BlondeWalkingSprites);
+        BlondeLists.Add(prisonDataScript.BlondePunchingSprites);
+        BlondeLists.Add(prisonDataScript.BlondeBoundSprites);
+        BlondeLists.Add(prisonDataScript.BlondeTraySprites);
+        BrownElfLists.Add(prisonDataScript.BrownElfSleepDeadSprites);
+        BrownElfLists.Add(DataSender.instance.BrownElfWalkingSprites);
+        BrownElfLists.Add(prisonDataScript.BrownElfPunchingSprites);
+        BrownElfLists.Add(prisonDataScript.BrownElfBenchingSprites);
+        BrownElfLists.Add(prisonDataScript.BrownElfBoundSprites);
+        BrownElfLists.Add(prisonDataScript.BrownElfTraySprites);
+        CageLists.Add(prisonDataScript.CageSleepDeadSprites);
+        CageLists.Add(DataSender.instance.CageWalkingSprites);
+        CageLists.Add(prisonDataScript.CagePunchingSprites);
+        CageLists.Add(prisonDataScript.CageBenchingSprites);
+        CageLists.Add(prisonDataScript.CageBoundSprites);
+        CageLists.Add(prisonDataScript.CageTraySprites);
+        ChenLists.Add(prisonDataScript.ChenSleepDeadSprites);
+        ChenLists.Add(DataSender.instance.ChenWalkingSprites);
+        ChenLists.Add(prisonDataScript.ChenPunchingSprites);
+        ChenLists.Add(prisonDataScript.ChenBenchingSprites);
+        ChenLists.Add(prisonDataScript.ChenTraySprites);
+        CraneLists.Add(prisonDataScript.CraneSleepDeadSprites);
+        CraneLists.Add(DataSender.instance.CraneWalkingSprites);
+        CraneLists.Add(prisonDataScript.CranePunchingSprites);
+        CraneLists.Add(prisonDataScript.CraneBoundSprites);
+        CraneLists.Add(prisonDataScript.CraneTraySprites);
+        ElbrahLists.Add(prisonDataScript.ElbrahSleepDeadSprites);
+        ElbrahLists.Add(DataSender.instance.ElbrahWalkingSprites);
+        ElbrahLists.Add(prisonDataScript.ElbrahPunchingSprites);
+        ElbrahLists.Add(prisonDataScript.ElbrahBoundSprites);
+        ElbrahLists.Add(prisonDataScript.ElbrahTraySprites);
+        GenieLists.Add(prisonDataScript.GenieSleepDeadSprites);
+        GenieLists.Add(DataSender.instance.GenieWalkingSprites);
+        GenieLists.Add(prisonDataScript.GeniePunchingSprites);
+        GenieLists.Add(prisonDataScript.GenieBenchingSprites);
+        GenieLists.Add(prisonDataScript.GenieBoundSprites);
+        GenieLists.Add(prisonDataScript.GenieTraySprites);
+        HenchmanLists.Add(prisonDataScript.HenchmanSleepDeadSprites);
+        HenchmanLists.Add(DataSender.instance.HenchmanWalkingSprites);
+        HenchmanLists.Add(prisonDataScript.HenchmanPunchingSprites);
+        IceElfLists.Add(prisonDataScript.IceElfSleepDeadSprites);
+        IceElfLists.Add(DataSender.instance.IceElfWalkingSprites);
+        IceElfLists.Add(prisonDataScript.IceElfPunchingSprites);
+        IceElfLists.Add(prisonDataScript.IceElfBenchingSprites);
+        IceElfLists.Add(prisonDataScript.IceElfBoundSprites);
+        IceElfLists.Add(prisonDataScript.IceElfTraySprites);
+        LazeeboiLists.Add(prisonDataScript.LazeeboiSleepDeadSprites);
+        LazeeboiLists.Add(DataSender.instance.LazeeboiWalkingSprites);
+        LazeeboiLists.Add(prisonDataScript.LazeeboiPunchingSprites);
+        LazeeboiLists.Add(prisonDataScript.LazeeboiBenchingSprites);
+        LazeeboiLists.Add(prisonDataScript.LazeeboiBoundSprites);
+        LazeeboiLists.Add(prisonDataScript.LazeeboiTraySprites);
+        MournLists.Add(prisonDataScript.MournSleepDeadSprites);
+        MournLists.Add(DataSender.instance.MournWalkingSprites);
+        MournLists.Add(prisonDataScript.MournPunchingSprites);
+        MournLists.Add(prisonDataScript.MournBoundSprites);
+        MournLists.Add(prisonDataScript.MournTraySprites);
+        OrangeElfLists.Add(prisonDataScript.OrangeElfSleepDeadSprites);
+        OrangeElfLists.Add(DataSender.instance.OrangeElfWalkingSprites);
+        OrangeElfLists.Add(prisonDataScript.OrangeElfPunchingSprites);
+        OrangeElfLists.Add(prisonDataScript.OrangeElfBenchingSprites);
+        OrangeElfLists.Add(prisonDataScript.OrangeElfBoundSprites);
+        OrangeElfLists.Add(prisonDataScript.OrangeElfTraySprites);
+        PiersLists.Add(prisonDataScript.PiersSleepDeadSprites);
+        PiersLists.Add(DataSender.instance.PiersWalkingSprites);
+        PiersLists.Add(prisonDataScript.PiersPunchingSprites);
+        PiersLists.Add(prisonDataScript.PiersBenchingSprites);
+        PiersLists.Add(prisonDataScript.PiersBoundSprites);
+        PiersLists.Add(prisonDataScript.PiersTraySprites);
+        PinkElfLists.Add(prisonDataScript.PinkElfSleepDeadSprites);
+        PinkElfLists.Add(DataSender.instance.PinkElfWalkingSprites);
+        PinkElfLists.Add(prisonDataScript.PinkElfPunchingSprites);
+        PinkElfLists.Add(prisonDataScript.PinkElfBenchingSprites);
+        PinkElfLists.Add(prisonDataScript.PinkElfBoundSprites);
+        PinkElfLists.Add(prisonDataScript.PinkElfTraySprites);
+        ProwlerLists.Add(prisonDataScript.ProwlerSleepDeadSprites);
+        ProwlerLists.Add(DataSender.instance.ProwlerWalkingSprites);
+        ProwlerLists.Add(prisonDataScript.ProwlerPunchingSprites);
+        ProwlerLists.Add(prisonDataScript.ProwlerBoundSprites);
+        ProwlerLists.Add(prisonDataScript.ProwlerTraySprites);
+        SeanLists.Add(prisonDataScript.SeanSleepDeadSprites);
+        SeanLists.Add(DataSender.instance.SeanWalkingSprites);
+        SeanLists.Add(prisonDataScript.SeanPunchingSprites);
+        SeanLists.Add(prisonDataScript.SeanBoundSprites);
+        SeanLists.Add(prisonDataScript.SeanTraySprites);
+        SoldierLists.Add(prisonDataScript.SoldierSleepDeadSprites);
+        SoldierLists.Add(DataSender.instance.SoldierWalkingSprites);
+        SoldierLists.Add(prisonDataScript.SoldierPunchingSprites);
+        SoldierLists.Add(prisonDataScript.SoldierBoundSprites);
+        GuardElfLists.Add(prisonDataScript.GuardElfSleepDeadSprites);
+        GuardElfLists.Add(DataSender.instance.GuardElfWalkingSprites);
+        GuardElfLists.Add(prisonDataScript.GuardElfPunchingSprites);
+        GuardElfLists.Add(prisonDataScript.GuardElfBoundSprites);
+        WaltonLists.Add(prisonDataScript.WaltonSleepDeadSprites);
+        WaltonLists.Add(DataSender.instance.WaltonWalkingSprites);
+        WaltonLists.Add(prisonDataScript.WaltonPunchingSprites);
+        WaltonLists.Add(prisonDataScript.WaltonBenchingSprites);
+        WaltonLists.Add(prisonDataScript.WaltonBoundSprites);
+        WaltonLists.Add(prisonDataScript.WaltonTraySprites);
+        WhiteElfLists.Add(prisonDataScript.WhiteElfSleepDeadSprites);
+        WhiteElfLists.Add(DataSender.instance.WhiteElfWalkingSprites);
+        WhiteElfLists.Add(prisonDataScript.WhiteElfPunchingSprites);
+        WhiteElfLists.Add(prisonDataScript.WhiteElfBenchingSprites);
+        WhiteElfLists.Add(prisonDataScript.WhiteElfBoundSprites);
+        WhiteElfLists.Add(prisonDataScript.WhiteElfTraySprites);
+
+        characterDict = new Dictionary<string, List<List<Sprite>>>
+        {
+            { "Rabbit", RabbitLists },
+            { "BaldEagle", BaldEagleLists },
+            { "BillyGoat", BillyGoatLists },
+            { "Froseph", FrosephLists },
+            { "Lifer", LiferLists },
+            { "Maru", MaruLists },
+            { "OldTimer", OldTimerLists },
+            { "Tango", TangoLists },
+            { "YoungBuck", YoungBuckLists },
+            { "Buddy", BuddyLists },
+            { "Clint", ClintLists },
+            { "Connelly", ConnellyLists },
+            { "Andy", AndyLists },
+            { "BlackElf", BlackElfLists },
+            { "Blonde", BlondeLists },
+            { "BrownElf", BrownElfLists },
+            { "Cage", CageLists },
+            { "Chen", ChenLists },
+            { "Crane", CraneLists },
+            { "Elbrah", ElbrahLists },
+            { "Genie", GenieLists },
+            { "Henchman", HenchmanLists },
+            { "IceElf", IceElfLists },
+            { "Lazeeboi", LazeeboiLists },
+            { "Mourn", MournLists },
+            { "OrangeElf", OrangeElfLists },
+            { "Piers", PiersLists },
+            { "PinkElf", PinkElfLists },
+            { "Prowler", ProwlerLists },
+            { "Sean", SeanLists },
+            { "Soldier", SoldierLists },
+            { "GuardElf", GuardElfLists },
+            { "Walton", WaltonLists },
+            { "WhiteElf", WhiteElfLists },
+            { "YellowElf", YellowElfLists }
+        };
+    }
+    public void Update()
+    {
+        if (gameObject.CompareTag("Player"))
+        {
+            if (itemBehavioursScript.isChipping)
+            {
+                currentActionNum = 11;
+            }
+            else if (itemBehavioursScript.isCutting)
+            {
+                currentActionNum = 4;
+            }
+            else if (itemBehavioursScript.isDigging)
+            {
+                currentActionNum = 1;
+            }
+            else if (deskIsPickedUp)
+            {
+                currentActionNum = 15;
+            }
+            else
+            {
+                currentActionNum = 2;
+            }
+
+            switch (NPCSave.instance.playerCharacter)
+            {
+                case 1: character = "Rabbit"; break;
+                case 2: character = "BaldEagle"; break;
+                case 3: character = "Lifer"; break;
+                case 4: character = "YoungBuck"; break;
+                case 5: character = "OldTimer"; break;
+                case 6: character = "BillyGoat"; break;
+                case 7: character = "Froseph"; break;
+                case 8: character = "Tango"; break;
+                case 9: character = "Maru"; break;
+                case 10: character = "Buddy"; break;
+                case 11: character = "IceElf"; break;
+                case 12: character = "BlackElf"; break;
+                case 13: character = "YellowElf"; break;
+                case 14: character = "PinkElf"; break;
+                case 15: character = "OrangeElf"; break;
+                case 16: character = "BrownElf"; break;
+                case 17: character = "WhiteElf"; break;
+                case 18: character = "Genie"; break;
+                case 19: character = "GuardElf"; break;
+                case 20: character = "Connelly"; break;
+                case 21: character = "Elbrah"; break;
+                case 22: character = "Chen"; break;
+                case 23: character = "Piers"; break;
+                case 24: character = "Mourn"; break;
+                case 25: character = "Lazeeboi"; break;
+                case 26: character = "Blonde"; break;
+                case 27: character = "Walton"; break;
+                case 28: character = "Prowler"; break;
+                case 29: character = "Crane"; break;
+                case 30: character = "Henchman"; break;
+                case 31: character = "Clint"; break;
+                case 32: character = "Cage"; break;
+                case 33: character = "Sean"; break;
+                case 34: character = "Andy"; break;
+                case 35: character = "Soldier"; break;
+            }
+
+            GetComponent<PlayerAnimation>().bodyDirSprites = characterDict[character][currentActionNum];
+        }
+    }
 }
