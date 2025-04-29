@@ -258,6 +258,14 @@ public class OutfitController : MonoBehaviour
             {
                 currentActionNum = 1;
             }
+            else if (deskIsPickedUp)
+            {
+                currentActionNum = 15;
+            }
+            else
+            {
+                currentActionNum = 2;
+            }
 
             if(currentOutfitID != -1)
             {
