@@ -19,6 +19,7 @@ public class ApplyPrisonData : MonoBehaviour
     public MouseOverlay mouseOverlayScript;
     public Transform PlayerDesk;
     public Pause pauseScript;
+    public Sprite clearSprite;
     private string aName;
     private List<Sprite> ItemSprites = new List<Sprite>();
     private List<Sprite> NPCSprites = new List<Sprite>();
@@ -2058,7 +2059,7 @@ public class ApplyPrisonData : MonoBehaviour
         InmateOutfitCuttingSprites.Add(NPCSprites[760]);
         InmateOutfitCuttingSprites.Add(NPCSprites[761]);
         InmateOutfitCuttingSprites.Add(NPCSprites[738]);
-        InmateOutfitCuttingSprites.Add(NPCSprites[-1]);
+        InmateOutfitCuttingSprites.Add(clearSprite);
         InmateOutfitRakingSprites.Add(NPCSprites[988]);
         InmateOutfitRakingSprites.Add(NPCSprites[987]);
         InmateOutfitRakingSprites.Add(NPCSprites[994]);
@@ -2105,7 +2106,7 @@ public class ApplyPrisonData : MonoBehaviour
         InmateOutfitChippingSprites.Add(NPCSprites[748]);
         InmateOutfitChippingSprites.Add(NPCSprites[749]);
         InmateOutfitChippingSprites.Add(NPCSprites[739]);
-        InmateOutfitChippingSprites.Add(NPCSprites[-1]);
+        InmateOutfitChippingSprites.Add(clearSprite);
         InmateOutfitBoundSprites.Add(NPCSprites[258]);
         InmateOutfitBoundSprites.Add(NPCSprites[259]);
         InmateOutfitTraySprites.Add(NPCSprites[325]);
@@ -2138,7 +2139,7 @@ public class ApplyPrisonData : MonoBehaviour
         POWOutfitCuttingSprites.Add(NPCSprites[1076]);
         POWOutfitCuttingSprites.Add(NPCSprites[1077]);
         POWOutfitCuttingSprites.Add(NPCSprites[1075]);
-        POWOutfitCuttingSprites.Add(NPCSprites[-1]);
+        POWOutfitCuttingSprites.Add(clearSprite);
         POWOutfitRakingSprites.Add(NPCSprites[1068]);
         POWOutfitRakingSprites.Add(NPCSprites[1067]);
         POWOutfitRakingSprites.Add(NPCSprites[1074]);
