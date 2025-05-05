@@ -450,6 +450,7 @@ public class BodyController : MonoBehaviour
             }
 
             GetComponent<PlayerAnimation>().bodyDirSprites = characterDict[character][currentActionNum];
+            GetComponent<SpriteRenderer>().size = new Vector2((GetComponent<SpriteRenderer>().sprite.rect.width / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10, (GetComponent<SpriteRenderer>().sprite.rect.height / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10);
         }
     }
 }

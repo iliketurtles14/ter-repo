@@ -277,7 +277,7 @@ public class OutfitController : MonoBehaviour
                 transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
             }
 
-            transform.Find("Outfit").GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+
         }
         else if(gameObject.CompareTag("Inmate") || gameObject.CompareTag("Guard"))
         {
