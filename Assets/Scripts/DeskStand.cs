@@ -34,7 +34,7 @@ public class DeskStand : MonoBehaviour
         {
             foreach (GameObject desk in desks)
             {
-                if (player.GetComponent<PolygonCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                if (player.GetComponent<CircleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                 {
                     currentDesk = desk;
                     isClimbing = true;
