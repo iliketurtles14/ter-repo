@@ -22,7 +22,7 @@ public class DeskStand : MonoBehaviour
     {
         desks = GameObject.FindGameObjectsWithTag("Desk");
 
-        colliderOffset.y = -.5f;
+        colliderOffset.y = -.05f;
         colliderOffset.x = 0;
         playerOffset.y = .5f;
         playerOffset.x = 0;
@@ -34,7 +34,7 @@ public class DeskStand : MonoBehaviour
         {
             foreach (GameObject desk in desks)
             {
-                if (player.GetComponent<CircleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                if (player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                 {
                     currentDesk = desk;
                     isClimbing = true;
@@ -45,7 +45,7 @@ public class DeskStand : MonoBehaviour
         }
         else if (hasClimbed && !isClimbing && shouldStepOff)
         {
-            if (!player.GetComponent<PolygonCollider2D>().IsTouching(currentDesk.GetComponent<BoxCollider2D>()))
+            if (!player.GetComponent<CapsuleCollider2D>().IsTouching(currentDesk.GetComponent<BoxCollider2D>()))
             {
                 hasClimbed = false;
                 hasJumped = false;
@@ -73,7 +73,7 @@ public class DeskStand : MonoBehaviour
             {
                 hasJumped = true;
 
-                player.GetComponent<PolygonCollider2D>().offset += colliderOffset;
+                player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
                 player.transform.position += playerOffset;
                 player.layer = 15;
                 ShowVents();
@@ -89,7 +89,7 @@ public class DeskStand : MonoBehaviour
     }
     private void StepOffDesk()
     {
-        player.GetComponent<PolygonCollider2D>().offset -= colliderOffset;
+        player.GetComponent<CapsuleCollider2D>().offset -= colliderOffset;
         player.GetComponent<Transform>().position -= playerOffset;
         currentDesk.GetComponent<DeskPickUp>().enabled = true;
 

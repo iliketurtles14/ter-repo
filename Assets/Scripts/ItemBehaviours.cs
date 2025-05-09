@@ -125,7 +125,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "chipping";
                 touchedTileObject = mcs.touchedWall.gameObject;
                 isChipping = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Chipping");
                 Deselect();
             }
@@ -143,7 +143,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "cutting fence";
                 touchedTileObject = mcs.touchedFence.gameObject;
                 isCutting = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -160,7 +160,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "cutting bars";
                 touchedTileObject = mcs.touchedBars.gameObject;
                 isCutting = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -176,7 +176,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "unscrewing vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Unscrewing");
                 Deselect();
             }
@@ -195,7 +195,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "cutting vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
                 isCutting = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -213,7 +213,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 whatAction = "unscrewing slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Unscrewing");
                 Deselect();
             }
@@ -232,7 +232,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "cutting slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
                 isCutting = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Cutting");
                 Deselect();
             }
@@ -274,7 +274,7 @@ public class ItemBehaviours : MonoBehaviour
                     shouldMakeDirt = true;
                 }
                 isDigging = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Digging");
                 Deselect();
             }
@@ -318,7 +318,7 @@ public class ItemBehaviours : MonoBehaviour
                 {
                     whatAction = "digging up";
                     isDigging = true;
-                    StartCoroutine(DrawActionBar(true));
+                    StartCoroutine(DrawActionBar(true, false));
                     CreateActionText("Digging");
                     Deselect();
                 }
@@ -341,7 +341,7 @@ public class ItemBehaviours : MonoBehaviour
                 }
                 whatAction = "digging";
                 isDigging = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Digging");
                 Deselect();
             }
@@ -356,7 +356,7 @@ public class ItemBehaviours : MonoBehaviour
                 whatAction = "chipping rock";
                 touchedTileObject = mcs.touchedRock;
                 isChipping = true;
-                StartCoroutine(DrawActionBar(true));
+                StartCoroutine(DrawActionBar(true, false));
                 CreateActionText("Chipping");
                 Deselect();
             }
@@ -430,7 +430,7 @@ public class ItemBehaviours : MonoBehaviour
 
         if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)//keep at botom
         {
-            StopCoroutine(DrawActionBar(false));
+            StopCoroutine(DrawActionBar(false, false));
             DestroyActionBar();
         }
     }
@@ -1133,7 +1133,7 @@ public class ItemBehaviours : MonoBehaviour
             BreakTile();
         }
     }
-    public IEnumerator DrawActionBar(bool isTool)
+    public IEnumerator DrawActionBar(bool isTool, bool normal)
     {
         cancelBar = false;
         barIsMoving = true;
@@ -1143,13 +1143,16 @@ public class ItemBehaviours : MonoBehaviour
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = true;
         yield return new WaitForSeconds(.045f);
         if (cancelBar) { yield break; }
-        for(int i = 1; i <= 49; i++)
+        if (normal)
         {
-            if (cancelBar) { yield break; }
-            Instantiate(barLine, actionBarPanel.transform);
-            yield return new WaitForSeconds(.045f);
+            for (int i = 1; i <= 49; i++)
+            {
+                if (cancelBar) { yield break; }
+                Instantiate(barLine, actionBarPanel.transform);
+                yield return new WaitForSeconds(.045f);
+            }
+            DestroyActionBar();
         }
-        DestroyActionBar();
         if (isTool)
         {
             RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);

@@ -45,7 +45,7 @@ public class DeskPickUp : MonoBehaviour
             if (mcs.isTouchingFloor)
             {
                 distance2 = Vector2.Distance(player.position, mcs.touchedFloor.transform.position);
-                if(distance2 <= 2.4f && Input.GetMouseButtonDown(1) && !deskScript.deskIsOpen && !player.GetComponent<PolygonCollider2D>().IsTouching(mcs.touchedFloor.GetComponent<BoxCollider2D>()))
+                if(distance2 <= 2.4f && Input.GetMouseButtonDown(1) && !deskScript.deskIsOpen && !player.GetComponent<CapsuleCollider2D>().IsTouching(mcs.touchedFloor.GetComponent<BoxCollider2D>()))
                 {
                     isPickedUp = false;
                     outfitControllerScript.deskIsPickedUp = false;

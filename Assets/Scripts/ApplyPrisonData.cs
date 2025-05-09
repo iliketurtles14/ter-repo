@@ -540,6 +540,17 @@ public class ApplyPrisonData : MonoBehaviour
                 child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[51];
             }
         }
+        //equipment
+        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        {
+            if (child.CompareTag("Equipment"))
+            {
+                if (child.name.StartsWith("BenchPress"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[52];
+                }
+            }
+        }
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];

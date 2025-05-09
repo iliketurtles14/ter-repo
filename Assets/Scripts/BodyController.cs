@@ -64,6 +64,7 @@ public class BodyController : MonoBehaviour
         RabbitLists.Add(prisonDataScript.RabbitBoundSprites);
         RabbitLists.Add(prisonDataScript.RabbitTraySprites);
         RabbitLists.Add(prisonDataScript.RabbitZippingSprites);
+        RabbitLists.Add(prisonDataScript.RabbitHoldingSprites);
         BaldEagleLists.Add(prisonDataScript.BaldEagleSleepDeadSprites);
         BaldEagleLists.Add(prisonDataScript.BaldEagleDiggingSprites);
         BaldEagleLists.Add(DataSender.instance.BaldEagleSprites);
@@ -79,6 +80,7 @@ public class BodyController : MonoBehaviour
         BaldEagleLists.Add(prisonDataScript.BaldEagleBoundSprites);
         BaldEagleLists.Add(prisonDataScript.BaldEagleTraySprites);
         BaldEagleLists.Add(prisonDataScript.BaldEagleZippingSprites);
+        BaldEagleLists.Add(prisonDataScript.BaldEagleHoldingSprites);
         BillyGoatLists.Add(prisonDataScript.BillyGoatSleepDeadSprites);
         BillyGoatLists.Add(prisonDataScript.BillyGoatDiggingSprites);
         BillyGoatLists.Add(DataSender.instance.BillyGoatSprites);
@@ -94,6 +96,7 @@ public class BodyController : MonoBehaviour
         BillyGoatLists.Add(prisonDataScript.BillyGoatBoundSprites);
         BillyGoatLists.Add(prisonDataScript.BillyGoatTraySprites);
         BillyGoatLists.Add(prisonDataScript.BillyGoatZippingSprites);
+        BillyGoatLists.Add(prisonDataScript.BillyGoatHoldingSprites);
         FrosephLists.Add(prisonDataScript.FrosephSleepDeadSprites);
         FrosephLists.Add(prisonDataScript.FrosephDiggingSprites);
         FrosephLists.Add(DataSender.instance.FrosephSprites);
@@ -109,6 +112,7 @@ public class BodyController : MonoBehaviour
         FrosephLists.Add(prisonDataScript.FrosephBoundSprites);
         FrosephLists.Add(prisonDataScript.FrosephTraySprites);
         FrosephLists.Add(prisonDataScript.FrosephZippingSprites);
+        FrosephLists.Add(prisonDataScript.FrosephHoldingSprites);
         LiferLists.Add(prisonDataScript.LiferSleepDeadSprites);
         LiferLists.Add(prisonDataScript.LiferDiggingSprites);
         LiferLists.Add(DataSender.instance.LiferSprites);
@@ -124,6 +128,7 @@ public class BodyController : MonoBehaviour
         LiferLists.Add(prisonDataScript.LiferBoundSprites);
         LiferLists.Add(prisonDataScript.LiferTraySprites);
         LiferLists.Add(prisonDataScript.LiferZippingSprites);
+        LiferLists.Add(prisonDataScript.LiferHoldingSprites);
         MaruLists.Add(prisonDataScript.MaruSleepDeadSprites);
         MaruLists.Add(prisonDataScript.MaruDiggingSprites);
         MaruLists.Add(DataSender.instance.MaruSprites);
@@ -139,6 +144,7 @@ public class BodyController : MonoBehaviour
         MaruLists.Add(prisonDataScript.MaruBoundSprites);
         MaruLists.Add(prisonDataScript.MaruTraySprites);
         MaruLists.Add(prisonDataScript.MaruZippingSprites);
+        MaruLists.Add(prisonDataScript.MaruHoldingSprites);
         OldTimerLists.Add(prisonDataScript.OldTimerSleepDeadSprites);
         OldTimerLists.Add(prisonDataScript.OldTimerDiggingSprites);
         OldTimerLists.Add(DataSender.instance.OldTimerSprites);
@@ -154,6 +160,7 @@ public class BodyController : MonoBehaviour
         OldTimerLists.Add(prisonDataScript.OldTimerBoundSprites);
         OldTimerLists.Add(prisonDataScript.OldTimerTraySprites);
         OldTimerLists.Add(prisonDataScript.OldTimerZippingSprites);
+        OldTimerLists.Add(prisonDataScript.OldTimerHoldingSprites);
         TangoLists.Add(prisonDataScript.TangoSleepDeadSprites);
         TangoLists.Add(prisonDataScript.TangoDiggingSprites);
         TangoLists.Add(DataSender.instance.TangoSprites);
@@ -169,6 +176,7 @@ public class BodyController : MonoBehaviour
         TangoLists.Add(prisonDataScript.TangoBoundSprites);
         TangoLists.Add(prisonDataScript.TangoTraySprites);
         TangoLists.Add(prisonDataScript.TangoZippingSprites);
+        TangoLists.Add(prisonDataScript.TangoHoldingSprites);
         YoungBuckLists.Add(prisonDataScript.YoungBuckSleepDeadSprites);
         YoungBuckLists.Add(prisonDataScript.YoungBuckDiggingSprites);
         YoungBuckLists.Add(DataSender.instance.YoungBuckSprites);
@@ -184,6 +192,7 @@ public class BodyController : MonoBehaviour
         YoungBuckLists.Add(prisonDataScript.YoungBuckBoundSprites);
         YoungBuckLists.Add(prisonDataScript.YoungBuckTraySprites);
         YoungBuckLists.Add(prisonDataScript.YoungBuckZippingSprites);
+        YoungBuckLists.Add(prisonDataScript.YoungBuckHoldingSprites);
         BuddyLists.Add(prisonDataScript.BuddySleepDeadSprites);
         BuddyLists.Add(prisonDataScript.BuddyDiggingSprites);
         BuddyLists.Add(DataSender.instance.BuddyWalkingSprites);
@@ -198,6 +207,7 @@ public class BodyController : MonoBehaviour
         BuddyLists.Add(prisonDataScript.BuddyBoundSprites);
         BuddyLists.Add(prisonDataScript.BuddyTraySprites);
         BuddyLists.Add(prisonDataScript.BuddyZippingSprites);
+        BuddyLists.Add(prisonDataScript.BuddyHoldingSprites);
         ClintLists.Add(prisonDataScript.ClintSleepDeadSprites);
         ClintLists.Add(prisonDataScript.ClintDiggingSprites);
         ClintLists.Add(DataSender.instance.ClintWalkingSprites);
@@ -213,6 +223,7 @@ public class BodyController : MonoBehaviour
         ClintLists.Add(prisonDataScript.ClintBoundSprites);
         ClintLists.Add(prisonDataScript.ClintTraySprites);
         ClintLists.Add(prisonDataScript.ClintZippingSprites);
+        ClintLists.Add(prisonDataScript.ClintHoldingSprites);
         ConnellyLists.Add(prisonDataScript.ConnellySleepDeadSprites);
         ConnellyLists.Add(prisonDataScript.ConnellyDiggingSprites);
         ConnellyLists.Add(DataSender.instance.ConnellyWalkingSprites);
@@ -228,6 +239,7 @@ public class BodyController : MonoBehaviour
         ConnellyLists.Add(prisonDataScript.ConnellyBoundSprites);
         ConnellyLists.Add(prisonDataScript.ConnellyTraySprites);
         ConnellyLists.Add(prisonDataScript.ConnellyZippingSprites);
+        ConnellyLists.Add(prisonDataScript.ConnellyHoldingSprites);
         AndyLists.Add(prisonDataScript.AndySleepDeadSprites);
         AndyLists.Add(DataSender.instance.AndyWalkingSprites);
         AndyLists.Add(prisonDataScript.AndyPunchingSprites);
@@ -449,7 +461,11 @@ public class BodyController : MonoBehaviour
                 case 35: character = "Soldier"; break;
             }
 
-            GetComponent<PlayerAnimation>().bodyDirSprites = characterDict[character][currentActionNum];
+            try
+            {
+                GetComponent<PlayerAnimation>().bodyDirSprites = characterDict[character][currentActionNum];
+            }
+            catch { }
             GetComponent<SpriteRenderer>().size = new Vector2((GetComponent<SpriteRenderer>().sprite.rect.width / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10, (GetComponent<SpriteRenderer>().sprite.rect.height / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10);
         }
     }
