@@ -302,7 +302,7 @@ public class DeskInv : MonoBehaviour
 
             Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y, desk.gameObject.transform.position.z);
             
-            StartCoroutine(itemBehavioursScript.DrawActionBar(false));
+            StartCoroutine(itemBehavioursScript.DrawActionBar(false, true));
             itemBehavioursScript.CreateActionText("Opening");
             yield return new WaitForSeconds(.045f);
             if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
