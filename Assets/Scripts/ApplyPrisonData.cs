@@ -531,6 +531,7 @@ public class ApplyPrisonData : MonoBehaviour
 
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
+        Resources.Load("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
         //desks
         perksTiles.Find("GroundObjects").Find("PlayerDesk").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
         foreach(Transform child in perksTiles.Find("GroundObjects"))
@@ -548,6 +549,10 @@ public class ApplyPrisonData : MonoBehaviour
                 if (child.name.StartsWith("BenchPress"))
                 {
                     child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[52];
+                }
+                if (child.name.StartsWith("Treadmill"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[54];
                 }
             }
         }
