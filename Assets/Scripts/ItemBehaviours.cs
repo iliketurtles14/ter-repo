@@ -1145,7 +1145,7 @@ public class ItemBehaviours : MonoBehaviour
         if (cancelBar) { yield break; }
         if (normal)
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 49; i++)
             {
                 if (cancelBar) { yield break; }
                 Instantiate(barLine, actionBarPanel.transform);

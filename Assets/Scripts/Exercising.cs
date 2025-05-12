@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Transactions;
 using UnityEngine;
 
 public class Exercising : MonoBehaviour
@@ -20,6 +21,7 @@ public class Exercising : MonoBehaviour
     private bool hasAdded;
     private int subDistanceNum;
     private Vector3 offset;
+    private bool running;
     public void Start()
     {
         barLine = Resources.Load<GameObject>("BarLine");
@@ -92,6 +94,14 @@ public class Exercising : MonoBehaviour
         {
             offset = new Vector3(0, .4f);
         }
+        else if (currentEquipment.name.StartsWith("RunningPad"))
+        {
+            offset = new Vector3(0, .4f);
+        }
+        else if (currentEquipment.name.StartsWith("PushupPad"))
+        {
+            offset = new Vector3(0, 0, 0);
+        }
         else
         {
             offset = new Vector3(0, 0, 0);
@@ -111,16 +121,35 @@ public class Exercising : MonoBehaviour
         {
             StartCoroutine(BenchPress());
         }
-        else if (currentEquipment.name.StartsWith("Treadmill"))
+        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad"))
         {
             StartCoroutine(Treadmill());
+        }
+        else if (currentEquipment.name.StartsWith("PushupPad"))
+        {
+            StartCoroutine(PushupPad());
         }
     }
     public IEnumerator LeaveEquipment()
     {
+        running = false;
         isLeaving = true;
         itemBehavioursScript.DestroyActionBar();
         GetComponent<PlayerAnimation>().enabled = true;
+
+        if (currentEquipment.name.StartsWith("BenchPress"))
+        {
+            StopCoroutine(BenchPress());
+        }
+        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad"))
+        {
+            StopCoroutine(Treadmill());
+            StopCoroutine(TreadmillWalk());
+        }
+        else if (currentEquipment.name.StartsWith("PushupPad"))
+        {
+            StopCoroutine(PushupPad());
+        }
 
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         while(Vector2.Distance(transform.position, goToTile.transform.position) > .1f)
@@ -131,16 +160,6 @@ public class Exercising : MonoBehaviour
         transform.position = goToTile.transform.position;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         GetComponent<PlayerCtrl>().enabled = true;
-
-        if (currentEquipment.name.StartsWith("BenchPress"))
-        {
-            StopCoroutine(BenchPress());
-        }
-        else if (currentEquipment.name.StartsWith("Treadmill"))
-        {
-            StopCoroutine(Treadmill());
-            StopCoroutine(TreadmillWalk());
-        }
 
         currentEquipment.GetComponent<BoxCollider2D>().enabled = true;
 
@@ -179,12 +198,12 @@ public class Exercising : MonoBehaviour
                 }
             }
 
-            if (amountOfBars > 50)
+            if (amountOfBars > 49)
             {
-                amountOfBars = 50;
+                amountOfBars = 49;
             }
             
-            if(amountOfBars == 50)
+            if(amountOfBars == 49)
             {
                 GetComponent<PlayerCollectionData>().playerData.strength++;
                 hasAdded = true;
@@ -227,7 +246,88 @@ public class Exercising : MonoBehaviour
             yield return null;
         }
     }
-    public IEnumerator Treadmill()
+    //public IEnumerator SpeedBag()
+    //{
+    //    StopCoroutine(ClimbEquipment());
+    //    StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+    //    GetComponent<PlayerAnimation>().enabled = false;
+    //    itemBehavioursScript.CreateActionText("asdf");
+    //    BodyController bodyController = GetComponent<BodyController>();
+    //    OutfitController outfitController = GetComponent<OutfitController>();
+
+    //    amountOfBars = 0;
+    //    yield return null;
+    //}
+    public IEnumerator PushupPad()
+    {
+        StopCoroutine(ClimbEquipment());
+        StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+        GetComponent<PlayerAnimation>().enabled = false;
+        itemBehavioursScript.CreateActionText("asdf");
+        BodyController bodyController = GetComponent<BodyController>();
+        OutfitController outfitController = GetComponent<OutfitController>();
+
+        amountOfBars = 0;
+        while(onEquipment && !isLeaving)
+        {
+            if(hasAdded == false)
+            {
+                if (Input.GetKeyDown(KeyCode.Q) && onQ)
+                {
+                    onQ = false;
+                    onE = true;
+
+                    amountOfBars += 10;
+                }
+                else if (Input.GetKeyDown(KeyCode.E) && onE)
+                {
+                    onQ = true;
+                    onE = false;
+
+                    amountOfBars += 10;
+                }
+            }
+
+            if (amountOfBars > 49)
+            {
+                amountOfBars = 49;
+            }
+
+            if (amountOfBars == 49)
+            {
+                GetComponent<PlayerCollectionData>().playerData.strength++;
+                hasAdded = true;
+            }
+
+            foreach (Transform barLine in actionBarPanel.transform)
+            {
+                Destroy(barLine.gameObject);
+            }
+            for (int i = 0; i < amountOfBars; i++)
+            {
+                Instantiate(barLine, actionBarPanel.transform);
+            }
+
+            if(amountOfBars < 25)
+            {
+                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][7][0];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][7][0];
+                }
+            }
+            else if(amountOfBars >= 25)
+            {
+                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][7][1];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][7][1];
+                }
+            }
+            yield return null;
+        }
+    }
+    public IEnumerator Treadmill() //also for running mat
     {
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
@@ -237,9 +337,11 @@ public class Exercising : MonoBehaviour
         amountOfBars = 0;
         subDistanceNum = 0;
 
+        running = true;
         StartCoroutine(TreadmillWalk());
         while(onEquipment && !isLeaving)
         {
+            GetComponent<PlayerAnimation>().enabled = false;
             if (Input.GetKeyDown(KeyCode.Q) && onQ)
             {
                 onQ = false;
@@ -247,7 +349,7 @@ public class Exercising : MonoBehaviour
                 subDistanceNum++;
                 if(amountOfBars >= 48)
                 {
-                    amountOfBars = 50;
+                    amountOfBars = 49;
                 }
                 else if(amountOfBars < 48)
                 {
@@ -261,7 +363,7 @@ public class Exercising : MonoBehaviour
                 subDistanceNum++;
                 if (amountOfBars >= 48)
                 {
-                    amountOfBars = 50;
+                    amountOfBars = 49;
                 }
                 else if (amountOfBars < 48)
                 {
@@ -295,17 +397,33 @@ public class Exercising : MonoBehaviour
 
         while(true)
         {
-            yield return new WaitForSeconds(.266f);
             GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][0];
             if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][0];
             }
+            if (!running)
+            {
+                break;
+            }
             yield return new WaitForSeconds(.266f);
+            if (!running)
+            {
+                break;
+            }
             GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][1];
             if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][1];
+            }
+            if (!running)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(.266f);
+            if (!running)
+            {
+                break;
             }
         }
     }
@@ -313,7 +431,7 @@ public class Exercising : MonoBehaviour
     {
         while (true)
         {
-            if(onEquipment && currentEquipment.name.StartsWith("BenchPress"))
+            if(onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad")))
             {
                 if (amountOfBars > 0)
                 {
@@ -326,7 +444,7 @@ public class Exercising : MonoBehaviour
                     hasAdded = false;
                 }
             }
-            else if (onEquipment && currentEquipment.name.StartsWith("Treadmill"))
+            else if (onEquipment && (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad")))
             {
                 Debug.Log("Here");
                 if(amountOfBars > 0)

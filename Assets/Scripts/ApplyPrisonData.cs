@@ -486,7 +486,8 @@ public class ApplyPrisonData : MonoBehaviour
     private void LoadImages()
     {
         //tooltip panel
-        ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[193];
+        ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[283];
+        ic.Find("ActionBarHitBox").GetComponent<Image>().sprite = UISprites[349];
         //mouse
         ic.Find("MouseOverlay").GetComponent<Image>().sprite = UISprites[41];
         mouseOverlayScript.mouseNormal = UISprites[41];
@@ -553,6 +554,14 @@ public class ApplyPrisonData : MonoBehaviour
                 if (child.name.StartsWith("Treadmill"))
                 {
                     child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[54];
+                }
+                if (child.name.StartsWith("RunningPad"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[212];
+                }
+                if (child.name.StartsWith("PushupPad"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[213];
                 }
             }
         }
