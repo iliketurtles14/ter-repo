@@ -21,10 +21,10 @@ public class ApplyPrisonData : MonoBehaviour
     public Pause pauseScript;
     public Sprite clearSprite;
     private string aName;
-    private List<Sprite> ItemSprites = new List<Sprite>();
-    private List<Sprite> NPCSprites = new List<Sprite>();
-    private List<Sprite> PrisonObjectSprites = new List<Sprite>();
-    private List<Sprite> UISprites = new List<Sprite>();
+    public List<Sprite> ItemSprites = new List<Sprite>();
+    public List<Sprite> NPCSprites = new List<Sprite>();
+    public List<Sprite> PrisonObjectSprites = new List<Sprite>();
+    public List<Sprite> UISprites = new List<Sprite>();
 
 
     ///NPC SPRITE RULES:
@@ -562,6 +562,12 @@ public class ApplyPrisonData : MonoBehaviour
                 if (child.name.StartsWith("PushupPad"))
                 {
                     child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[213];
+                }
+                if (child.name.StartsWith("SpeedBag"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[259];
+                    child.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[258];
+                    child.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(1, 1.2f);
                 }
             }
         }
