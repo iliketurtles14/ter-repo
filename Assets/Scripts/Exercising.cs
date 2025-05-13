@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Transactions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Exercising : MonoBehaviour
 {
     public MouseCollisionOnItems mcs;
     public ItemBehaviours itemBehavioursScript;
     public Transform perksTiles;
+    public Canvas ic;
+    public ApplyPrisonData applyPrisonDataScript;
     private GameObject barLine;
     public GameObject actionBarPanel;
     public GameObject currentEquipment;
@@ -22,9 +25,11 @@ public class Exercising : MonoBehaviour
     private int subDistanceNum;
     private Vector3 offset;
     private bool running;
+    private bool punching;
     public void Start()
     {
         barLine = Resources.Load<GameObject>("BarLine");
+        ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
         StartCoroutine(BarLoop());
     }
     public void Update()
@@ -81,6 +86,16 @@ public class Exercising : MonoBehaviour
                 StartCoroutine(LeaveEquipment());
             }
         }
+
+        try
+        {
+            if (currentEquipment.name.StartsWith("SpeedBag"))
+            {
+                SpriteRenderer sr = currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>();
+                sr.size = new Vector2((sr.sprite.rect.width / sr.sprite.pixelsPerUnit) * 10, (sr.sprite.rect.height / sr.sprite.pixelsPerUnit) * 10);
+            }
+        }
+        catch { }
     }
     public IEnumerator ClimbEquipment()
     {
@@ -101,6 +116,10 @@ public class Exercising : MonoBehaviour
         else if (currentEquipment.name.StartsWith("PushupPad"))
         {
             offset = new Vector3(0, 0, 0);
+        }
+        else if (currentEquipment.name.StartsWith("SpeedBag"))
+        {
+            offset = new Vector3(-.4f, .4f);
         }
         else
         {
@@ -129,6 +148,10 @@ public class Exercising : MonoBehaviour
         {
             StartCoroutine(PushupPad());
         }
+        else if (currentEquipment.name.StartsWith("SpeedBag"))
+        {
+            StartCoroutine(SpeedBag());
+        }
     }
     public IEnumerator LeaveEquipment()
     {
@@ -136,6 +159,7 @@ public class Exercising : MonoBehaviour
         isLeaving = true;
         itemBehavioursScript.DestroyActionBar();
         GetComponent<PlayerAnimation>().enabled = true;
+        ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
 
         if (currentEquipment.name.StartsWith("BenchPress"))
         {
@@ -149,6 +173,11 @@ public class Exercising : MonoBehaviour
         else if (currentEquipment.name.StartsWith("PushupPad"))
         {
             StopCoroutine(PushupPad());
+        }
+        else if (currentEquipment.name.StartsWith("SpeedBag"))
+        {
+            StopCoroutine(SpeedBag());
+            StopCoroutine(SpeedBagWalk());
         }
 
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -246,18 +275,134 @@ public class Exercising : MonoBehaviour
             yield return null;
         }
     }
-    //public IEnumerator SpeedBag()
-    //{
-    //    StopCoroutine(ClimbEquipment());
-    //    StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
-    //    GetComponent<PlayerAnimation>().enabled = false;
-    //    itemBehavioursScript.CreateActionText("asdf");
-    //    BodyController bodyController = GetComponent<BodyController>();
-    //    OutfitController outfitController = GetComponent<OutfitController>();
+    public IEnumerator SpeedBag()
+    {
+        StopCoroutine(ClimbEquipment());
+        StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+        running = true;
+        StartCoroutine(SpeedBagWalk());
+        ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
+        GetComponent<PlayerAnimation>().enabled = false;
+        itemBehavioursScript.CreateActionText("asdf");
+        BodyController bodyController = GetComponent<BodyController>();
+        OutfitController outfitController = GetComponent<OutfitController>();
 
-    //    amountOfBars = 0;
-    //    yield return null;
-    //}
+        amountOfBars = 0;
+        while (onEquipment && !isLeaving)
+        {
+            GetComponent<PlayerAnimation>().enabled = false;
+            
+            if (amountOfBars < 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
+                punching = false;
+            }
+            else if (amountOfBars >= 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    punching = true;
+                    GetComponent<PlayerCollectionData>().playerData.speed++;
+                    StartCoroutine(SpeedBagPunch());
+                }
+            }
+
+            foreach (Transform barLine in actionBarPanel.transform)
+            {
+                Destroy(barLine.gameObject);
+            }
+            for (int i = 0; i < amountOfBars; i++)
+            {
+                Instantiate(barLine, actionBarPanel.transform);
+            }
+
+            yield return null;
+        }
+    }
+    public IEnumerator SpeedBagPunch()
+    {
+        Debug.Log("bag is punched");
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[240];
+        yield return new WaitForSeconds(.117f);
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[241];
+        yield return new WaitForSeconds(.117f);
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[239];
+        yield return new WaitForSeconds(.117f);
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[258];
+    }
+    public IEnumerator SpeedBagWalk()//stuipd supid stupdi stupid
+    {
+        BodyController bodyController = GetComponent<BodyController>();
+        OutfitController outfitController = GetComponent<OutfitController>();
+
+        while (true)
+        {
+            if (punching)
+            {
+                Debug.Log("doing punch anim");
+                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][3][0];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][3][0];
+                }
+                punching = false;
+
+                // Custom timer for .467 seconds
+                float timer = 0f;
+                while (timer < 0.467f)
+                {
+                    if (!running) { Debug.Log("stopping early during punch anim"); yield break; } // Exit coroutine early
+                    if (punching) { Debug.Log("punching again during punch anim"); break; } // Break timer to return to main loop
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+            }
+            else
+            {
+                Debug.Log("not punching");
+                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][0];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][0];
+                }
+
+                if (!running) { Debug.Log("not running1"); break; }
+                if (punching) { Debug.Log("punching1"); continue; }
+
+                // Custom timer for .266 seconds
+                float timer = 0f;
+                while (timer < 0.266f)
+                {
+                    if (!running) { Debug.Log("stopping early during wait"); yield break; } // Exit coroutine early
+                    if (punching) { Debug.Log("punching again during wait"); break; } // Break timer to return to main loop
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+
+                if (!running) { Debug.Log("not running2"); break; }
+                if (punching) { Debug.Log("punching2"); continue; }
+
+                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][1];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][1];
+                }
+
+                // Custom timer for another .266 seconds
+                timer = 0f;
+                while (timer < 0.266f)
+                {
+                    if (!running) { Debug.Log("stopping early during second wait"); yield break; } // Exit coroutine early
+                    if (punching) { Debug.Log("punching again during second wait"); break; } // Break timer to return to main loop
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+            }
+
+            yield return null;
+        }
+    }
     public IEnumerator PushupPad()
     {
         StopCoroutine(ClimbEquipment());
@@ -446,12 +591,20 @@ public class Exercising : MonoBehaviour
             }
             else if (onEquipment && (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad")))
             {
-                Debug.Log("Here");
                 if(amountOfBars > 0)
                 {
                     amountOfBars--;
                     yield return new WaitForSeconds(.1f);
                 }
+            }
+            else if(onEquipment && currentEquipment.name.StartsWith("SpeedBag"))
+            {
+                amountOfBars++;
+                if(amountOfBars == 50)
+                {
+                    amountOfBars = 0;
+                }
+                yield return new WaitForSeconds(.01f);
             }
             yield return null;
         }
