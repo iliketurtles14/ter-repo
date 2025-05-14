@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Transactions;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class Exercising : MonoBehaviour
     private Vector3 offset;
     private bool running;
     private bool punching;
+    private bool isGoingDown;
     public void Start()
     {
         barLine = Resources.Load<GameObject>("BarLine");
@@ -96,6 +98,16 @@ public class Exercising : MonoBehaviour
             }
         }
         catch { }
+        
+        try
+        {
+            if (currentEquipment.name.StartsWith("PunchBag"))
+            {
+                SpriteRenderer sr = currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>();
+                sr.size = new Vector2((sr.sprite.rect.width / sr.sprite.pixelsPerUnit) * 10, (sr.sprite.rect.height / sr.sprite.pixelsPerUnit) * 10);
+            }
+        }
+        catch { }
     }
     public IEnumerator ClimbEquipment()
     {
@@ -120,6 +132,18 @@ public class Exercising : MonoBehaviour
         else if (currentEquipment.name.StartsWith("SpeedBag"))
         {
             offset = new Vector3(-.4f, .4f);
+        }
+        else if (currentEquipment.name.StartsWith("PunchBag"))
+        {
+            offset = new Vector3(-.6f, .6f);
+        }
+        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        {
+            offset = new Vector3(0, .2f);
+        }
+        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        {
+            offset = new Vector3(0, .1f);
         }
         else
         {
@@ -152,6 +176,18 @@ public class Exercising : MonoBehaviour
         {
             StartCoroutine(SpeedBag());
         }
+        else if (currentEquipment.name.StartsWith("PunchBag"))
+        {
+            StartCoroutine(PunchBag());
+        }
+        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        {
+            StartCoroutine(JumpRopePad());
+        }
+        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        {
+            StartCoroutine(PullUpBar());
+        }
     }
     public IEnumerator LeaveEquipment()
     {
@@ -179,6 +215,20 @@ public class Exercising : MonoBehaviour
             StopCoroutine(SpeedBag());
             StopCoroutine(SpeedBagWalk());
         }
+        else if (currentEquipment.name.StartsWith("PunchBag"))
+        {
+            StopCoroutine(PunchBag());
+            StopCoroutine(SpeedBagWalk());
+        }
+        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        {
+            StopCoroutine(JumpRopePad());
+            StopCoroutine(JumpRopeWalk());
+        }
+        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        {
+            StopCoroutine(PullUpBar());
+        }
 
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         while(Vector2.Distance(transform.position, goToTile.transform.position) > .1f)
@@ -202,8 +252,8 @@ public class Exercising : MonoBehaviour
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
         itemBehavioursScript.CreateActionText("asdf");
-        BodyController bodyController = GetComponent<BodyController>();
-        OutfitController outfitController = GetComponent<OutfitController>();
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
 
@@ -249,30 +299,221 @@ public class Exercising : MonoBehaviour
 
             if(amountOfBars >= 0 && amountOfBars < 16)
             {
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][8][0];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][0];
                 if(transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][8][0];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][0];
                 }
             }
             else if(amountOfBars >= 16 && amountOfBars < 32)
             {
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][8][1];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][1];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][8][1];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][1];
                 }
             }
             else if(amountOfBars >= 32)
             {
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][8][2];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][2];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][8][2];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][2];
                 }
             }
 
             yield return null;
+        }
+    }
+    public IEnumerator JumpRopePad()
+    {
+        StopCoroutine(ClimbEquipment());
+        StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+        StartCoroutine(JumpRopeWalk());
+        ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
+        GetComponent<PlayerAnimation>().enabled = false;
+        itemBehavioursScript.CreateActionText("asdf");
+
+        amountOfBars = 0;
+        while(onEquipment && !isLeaving)
+        {
+            GetComponent<PlayerAnimation>().enabled = false;
+
+            if (amountOfBars < 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
+            }
+            else if (amountOfBars >= 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    GetComponent<PlayerCollectionData>().playerData.speed++;
+                }
+            }
+            
+            foreach (Transform barLine in actionBarPanel.transform)
+            {
+                Destroy(barLine.gameObject);
+            }
+            for (int i = 0; i < amountOfBars; i++)
+            {
+                Instantiate(barLine, actionBarPanel.transform);
+            }
+
+            yield return null;
+        }
+    }
+    public IEnumerator PullUpBar()
+    {
+        StopCoroutine(ClimbEquipment());
+        StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+        GetComponent<PlayerAnimation>().enabled = false;
+        itemBehavioursScript.CreateActionText("asdf");
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
+
+        amountOfBars = 0;
+        while (onEquipment && !isLeaving)
+        {
+            if (hasAdded == false)
+            {
+                if (Input.GetKeyDown(KeyCode.Q) && onQ)
+                {
+                    onQ = false;
+                    onE = true;
+
+                    amountOfBars += 10;
+                }
+                else if (Input.GetKeyDown(KeyCode.E) && onE)
+                {
+                    onQ = true;
+                    onE = false;
+
+                    amountOfBars += 10;
+                }
+            }
+
+            if (amountOfBars > 49)
+            {
+                amountOfBars = 49;
+            }
+
+            if (amountOfBars == 49)
+            {
+                GetComponent<PlayerCollectionData>().playerData.strength++;
+                hasAdded = true;
+            }
+
+            foreach (Transform barLine in actionBarPanel.transform)
+            {
+                Destroy(barLine.gameObject);
+            }
+            for (int i = 0; i < amountOfBars; i++)
+            {
+                Instantiate(barLine, actionBarPanel.transform);
+            }
+
+            if (amountOfBars >= 0 && amountOfBars < 16)
+            {
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][0];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][0];
+                }
+            }
+            else if (amountOfBars >= 16 && amountOfBars < 32)
+            {
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][1];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][1];
+                }
+            }
+            else if (amountOfBars >= 32)
+            {
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][2];
+                if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                {
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][2];
+                }
+            }
+
+            yield return null;
+        }
+    }
+    public IEnumerator PunchBag()
+    {
+        StopCoroutine(ClimbEquipment());
+        StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
+        running = true;
+        StartCoroutine(SpeedBagWalk());
+        ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
+        GetComponent<PlayerAnimation>().enabled = false;
+        itemBehavioursScript.CreateActionText("asdf");
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
+
+        amountOfBars = 0;
+        while(onEquipment && !isLeaving)
+        {
+            GetComponent<PlayerAnimation>().enabled = false;
+
+            if (amountOfBars < 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
+                punching = false;
+            }
+            else if (amountOfBars >= 35)
+            {
+                ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
+                if (Input.GetKeyUp(KeyCode.Q))
+                {
+                    punching = true;
+                    GetComponent<PlayerCollectionData>().playerData.strength++;
+                    StartCoroutine(PunchBagPunch());
+                }
+            }
+
+            foreach (Transform barLine in actionBarPanel.transform)
+            {
+                Destroy(barLine.gameObject);
+            }
+            for (int i = 0; i < amountOfBars; i++)
+            {
+                Instantiate(barLine, actionBarPanel.transform);
+            }
+            
+            yield return null;
+        }
+    }
+    public IEnumerator JumpRopeWalk()
+    {
+        int cycle = 0;
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
+        while (true)
+        {
+            if(cycle == 8)
+            {
+                cycle = 0;
+            }
+            GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][9][cycle];
+            if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+            {
+                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][9][cycle];
+            }
+            
+            //timer for .266f seconds
+            float timer = 0f;
+            while(timer < .266f)
+            {
+                if (isLeaving) { yield break; }
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            
+            cycle++;
         }
     }
     public IEnumerator SpeedBag()
@@ -284,8 +525,8 @@ public class Exercising : MonoBehaviour
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
         GetComponent<PlayerAnimation>().enabled = false;
         itemBehavioursScript.CreateActionText("asdf");
-        BodyController bodyController = GetComponent<BodyController>();
-        OutfitController outfitController = GetComponent<OutfitController>();
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         while (onEquipment && !isLeaving)
@@ -320,6 +561,15 @@ public class Exercising : MonoBehaviour
             yield return null;
         }
     }
+    public IEnumerator PunchBagPunch()
+    {
+        Debug.Log("bag is punched");
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[235];
+        yield return new WaitForSeconds(.15f);
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[237];
+        yield return new WaitForSeconds(.15f);
+        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[234];
+    }
     public IEnumerator SpeedBagPunch()
     {
         Debug.Log("bag is punched");
@@ -333,18 +583,18 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator SpeedBagWalk()//stuipd supid stupdi stupid
     {
-        BodyController bodyController = GetComponent<BodyController>();
-        OutfitController outfitController = GetComponent<OutfitController>();
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
 
         while (true)
         {
             if (punching)
             {
                 Debug.Log("doing punch anim");
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][3][0];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][3][0];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][3][0];
                 }
                 punching = false;
 
@@ -361,10 +611,10 @@ public class Exercising : MonoBehaviour
             else
             {
                 Debug.Log("not punching");
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][0];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][0];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
                 }
 
                 if (!running) { Debug.Log("not running1"); break; }
@@ -383,10 +633,10 @@ public class Exercising : MonoBehaviour
                 if (!running) { Debug.Log("not running2"); break; }
                 if (punching) { Debug.Log("punching2"); continue; }
 
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][1];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][1];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
                 }
 
                 // Custom timer for another .266 seconds
@@ -402,15 +652,15 @@ public class Exercising : MonoBehaviour
 
             yield return null;
         }
-    }
+    } // also for punchbag
     public IEnumerator PushupPad()
     {
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
         itemBehavioursScript.CreateActionText("asdf");
-        BodyController bodyController = GetComponent<BodyController>();
-        OutfitController outfitController = GetComponent<OutfitController>();
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         while(onEquipment && !isLeaving)
@@ -455,18 +705,18 @@ public class Exercising : MonoBehaviour
 
             if(amountOfBars < 25)
             {
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][7][0];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][0];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][7][0];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][0];
                 }
             }
             else if(amountOfBars >= 25)
             {
-                GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][7][1];
+                GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][1];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
-                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][7][1];
+                    transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][1];
                 }
             }
             yield return null;
@@ -537,15 +787,15 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator TreadmillWalk()
     {
-        BodyController bodyController = GetComponent<BodyController>();
-        OutfitController outfitController = GetComponent<OutfitController>();
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
 
         while(true)
         {
-            GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][0];
+            GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
             if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
-                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][0];
+                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
             }
             if (!running)
             {
@@ -556,10 +806,10 @@ public class Exercising : MonoBehaviour
             {
                 break;
             }
-            GetComponent<SpriteRenderer>().sprite = bodyController.characterDict[bodyController.character][2][1];
+            GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
             if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
-                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitController.outfitDict[outfitController.outfit][2][1];
+                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
             }
             if (!running)
             {
@@ -576,7 +826,7 @@ public class Exercising : MonoBehaviour
     {
         while (true)
         {
-            if(onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad")))
+            if(onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad") || currentEquipment.name.StartsWith("PullUpBar")))
             {
                 if (amountOfBars > 0)
                 {
@@ -597,7 +847,7 @@ public class Exercising : MonoBehaviour
                     yield return new WaitForSeconds(.1f);
                 }
             }
-            else if(onEquipment && currentEquipment.name.StartsWith("SpeedBag"))
+            else if(onEquipment && (currentEquipment.name.StartsWith("SpeedBag") || currentEquipment.name.StartsWith("JumpRopePad")))
             {
                 amountOfBars++;
                 if(amountOfBars == 50)
@@ -605,6 +855,31 @@ public class Exercising : MonoBehaviour
                     amountOfBars = 0;
                 }
                 yield return new WaitForSeconds(.01f);
+            }
+            else if(onEquipment && currentEquipment.name.StartsWith("PunchBag"))
+            {
+                if (Input.GetKey(KeyCode.Q) && !isGoingDown)
+                {
+                    amountOfBars++;
+                    if(amountOfBars > 49)
+                    {
+                        amountOfBars = 49;
+                    }
+                    yield return new WaitForSeconds(.007f);
+                }
+                else
+                {
+                    if(amountOfBars > 0)
+                    {
+                        isGoingDown = true;
+                        amountOfBars--;
+                        yield return new WaitForSeconds(.002f);
+                    }
+                    else
+                    {
+                        isGoingDown = false;
+                    }
+                }
             }
             yield return null;
         }

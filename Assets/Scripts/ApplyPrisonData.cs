@@ -569,6 +569,20 @@ public class ApplyPrisonData : MonoBehaviour
                     child.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[258];
                     child.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(1, 1.2f);
                 }
+                if (child.name.StartsWith("PunchBag"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[236];
+                    child.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[234];
+                    child.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(.8f, 1.7f);
+                }
+                if (child.name.StartsWith("JumpRopePad"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[238];
+                }
+                if (child.name.StartsWith("PullUpBar"))
+                {
+                    child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[250];
+                }
             }
         }
         //vent covers
