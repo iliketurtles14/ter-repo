@@ -28,6 +28,7 @@ public class Exercising : MonoBehaviour
     private bool running;
     private bool punching;
     private bool isGoingDown;
+    private int subGain;
     public void Start()
     {
         barLine = Resources.Load<GameObject>("BarLine");
@@ -256,6 +257,7 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
+        subGain = 0;
 
         while (onEquipment && !isLeaving)
         {
@@ -284,7 +286,12 @@ public class Exercising : MonoBehaviour
             
             if(amountOfBars == 49)
             {
-                GetComponent<PlayerCollectionData>().playerData.strength++;
+                subGain++;
+                if(subGain == 2)
+                {
+                    GetComponent<PlayerCollectionData>().playerData.strength++;
+                    subGain = 0;
+                }
                 hasAdded = true;
             }
 
@@ -335,6 +342,7 @@ public class Exercising : MonoBehaviour
         itemBehavioursScript.CreateActionText("asdf");
 
         amountOfBars = 0;
+        subGain = 0;
         while(onEquipment && !isLeaving)
         {
             GetComponent<PlayerAnimation>().enabled = false;
@@ -348,7 +356,12 @@ public class Exercising : MonoBehaviour
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    GetComponent<PlayerCollectionData>().playerData.speed++;
+                    subGain++;
+                    if (subGain == 4)
+                    {
+                        GetComponent<PlayerCollectionData>().playerData.speed++;
+                        subGain = 0;
+                    }
                 }
             }
             
@@ -374,6 +387,7 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
+        subGain = 0;
         while (onEquipment && !isLeaving)
         {
             if (hasAdded == false)
@@ -401,7 +415,12 @@ public class Exercising : MonoBehaviour
 
             if (amountOfBars == 49)
             {
-                GetComponent<PlayerCollectionData>().playerData.strength++;
+                subGain++;
+                if (subGain == 2)
+                {
+                    GetComponent<PlayerCollectionData>().playerData.strength++;
+                    subGain = 0;
+                }
                 hasAdded = true;
             }
 
@@ -455,6 +474,7 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
+        subGain = 0;
         while(onEquipment && !isLeaving)
         {
             GetComponent<PlayerAnimation>().enabled = false;
@@ -470,7 +490,12 @@ public class Exercising : MonoBehaviour
                 if (Input.GetKeyUp(KeyCode.Q))
                 {
                     punching = true;
-                    GetComponent<PlayerCollectionData>().playerData.strength++;
+                    subGain++;
+                    if (subGain == 3)
+                    {
+                        GetComponent<PlayerCollectionData>().playerData.strength++;
+                        subGain = 0;
+                    }
                     StartCoroutine(PunchBagPunch());
                 }
             }
@@ -529,6 +554,7 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
+        subGain = 0;
         while (onEquipment && !isLeaving)
         {
             GetComponent<PlayerAnimation>().enabled = false;
@@ -544,7 +570,12 @@ public class Exercising : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
                     punching = true;
-                    GetComponent<PlayerCollectionData>().playerData.speed++;
+                    subGain++;
+                    if (subGain == 4)
+                    {
+                        GetComponent<PlayerCollectionData>().playerData.speed++;
+                        subGain = 0;
+                    }
                     StartCoroutine(SpeedBagPunch());
                 }
             }
@@ -663,6 +694,7 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
+        subGain = 0;
         while(onEquipment && !isLeaving)
         {
             if(hasAdded == false)
@@ -690,7 +722,12 @@ public class Exercising : MonoBehaviour
 
             if (amountOfBars == 49)
             {
-                GetComponent<PlayerCollectionData>().playerData.strength++;
+                subGain++;
+                if (subGain == 2)
+                {
+                    GetComponent<PlayerCollectionData>().playerData.strength++;
+                    subGain = 0;
+                }
                 hasAdded = true;
             }
 
@@ -730,6 +767,7 @@ public class Exercising : MonoBehaviour
         itemBehavioursScript.CreateActionText("asdf");
 
         amountOfBars = 0;
+        subGain = 0;
         subDistanceNum = 0;
 
         running = true;
@@ -769,7 +807,12 @@ public class Exercising : MonoBehaviour
             if (subDistanceNum == 20)
             {
                 subDistanceNum = 0;
-                GetComponent<PlayerCollectionData>().playerData.speed++;
+                subGain++;
+                if (subGain == 2)
+                {
+                    GetComponent<PlayerCollectionData>().playerData.speed++;
+                    subGain = 0;
+                }
             }
 
             foreach (Transform barLine in actionBarPanel.transform)

@@ -1145,10 +1145,15 @@ public class ItemBehaviours : MonoBehaviour
         if (cancelBar) { yield break; }
         if (normal)
         {
-            for (int i = 0; i < 49; i++)
+            GameObject bar = Instantiate(barLine, actionBarPanel.transform);
+            RectTransform rect = bar.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(54.5f, 47.5f);
+            rect.sizeDelta = new Vector2(0f, 25f);
+            for(int i = 0; i < 49; i++)
             {
                 if (cancelBar) { yield break; }
-                Instantiate(barLine, actionBarPanel.transform);
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x + 5, 25);
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x + 2.5f, rect.anchoredPosition.y);
                 yield return new WaitForSeconds(.045f);
             }
             DestroyActionBar();
