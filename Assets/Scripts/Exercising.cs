@@ -295,16 +295,7 @@ public class Exercising : MonoBehaviour
                 hasAdded = true;
             }
 
-            foreach(Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for(int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
-
-            if(amountOfBars >= 0 && amountOfBars < 16)
+            if (amountOfBars >= 0 && amountOfBars < 16)
             {
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][0];
                 if(transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
@@ -328,6 +319,9 @@ public class Exercising : MonoBehaviour
                     transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][2];
                 }
             }
+
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
 
             yield return null;
         }
@@ -364,15 +358,8 @@ public class Exercising : MonoBehaviour
                     }
                 }
             }
-            
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
 
             yield return null;
         }
@@ -424,15 +411,6 @@ public class Exercising : MonoBehaviour
                 hasAdded = true;
             }
 
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
-
             if (amountOfBars >= 0 && amountOfBars < 16)
             {
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][0];
@@ -457,6 +435,9 @@ public class Exercising : MonoBehaviour
                     transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][2];
                 }
             }
+
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
 
             yield return null;
         }
@@ -500,15 +481,9 @@ public class Exercising : MonoBehaviour
                 }
             }
 
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
-            
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
+
             yield return null;
         }
     }
@@ -580,14 +555,8 @@ public class Exercising : MonoBehaviour
                 }
             }
 
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
 
             yield return null;
         }
@@ -731,15 +700,6 @@ public class Exercising : MonoBehaviour
                 hasAdded = true;
             }
 
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
-
             if(amountOfBars < 25)
             {
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][0];
@@ -756,6 +716,9 @@ public class Exercising : MonoBehaviour
                     transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][1];
                 }
             }
+
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
             yield return null;
         }
     }
@@ -814,16 +777,8 @@ public class Exercising : MonoBehaviour
                     subGain = 0;
                 }
             }
-
-            foreach (Transform barLine in actionBarPanel.transform)
-            {
-                Destroy(barLine.gameObject);
-            }
-            for (int i = 0; i < amountOfBars; i++)
-            {
-                Instantiate(barLine, actionBarPanel.transform);
-            }
-
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
+            actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().anchoredPosition = new Vector2(55f + (2.5f * amountOfBars), 47.5f);
 
             yield return null;
         }
@@ -869,7 +824,7 @@ public class Exercising : MonoBehaviour
     {
         while (true)
         {
-            if(onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad") || currentEquipment.name.StartsWith("PullUpBar")))
+            if (onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad") || currentEquipment.name.StartsWith("PullUpBar")))
             {
                 if (amountOfBars > 0)
                 {

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatController : MonoBehaviour
 {
@@ -32,31 +33,15 @@ public class StatController : MonoBehaviour
 
         if (!isSet)
         {
-            foreach (Transform bar in playerMenuPanel.transform.Find("StrengthPanel"))
-            {
-                Destroy(bar.gameObject);
-            }
-            foreach (Transform bar in playerMenuPanel.transform.Find("SpeedPanel"))
-            {
-                Destroy(bar.gameObject);
-            }
-            foreach (Transform bar in playerMenuPanel.transform.Find("IntellectPanel"))
-            {
-                Destroy(bar.gameObject);
-            }
-
-            for (int i = 0; i < Mathf.Floor(data.strength / 2); i++)
-            {
-                Instantiate(strBar, playerMenuPanel.transform.Find("StrengthPanel"));
-            }
-            for (int i = 0; i < Mathf.Floor(data.speed / 2); i++)
-            {
-                Instantiate(spdBar, playerMenuPanel.transform.Find("SpeedPanel"));
-            }
-            for (int i = 0; i < Mathf.Floor(data.intellect / 2); i++)
-            {
-                Instantiate(intBar, playerMenuPanel.transform.Find("IntellectPanel"));
-            }
+            playerMenuPanel.transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<Image>().enabled = true;
+            playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<Image>().enabled = true;
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().enabled = true;
+            playerMenuPanel.transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<RectTransform>().sizeDelta = new Vector2(data.strength / 2 * 5, 25);
+            playerMenuPanel.transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.strength / 2 * 2.5f + 454.5f, -102);
+            playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<RectTransform>().sizeDelta = new Vector2(data.speed / 2 * 5, 25);
+            playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.speed / 2 * 2.5f + 454.5f, -157.5f);
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<RectTransform>().sizeDelta = new Vector2(data.intellect / 2 * 5, 25);
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.intellect / 2 * 2.5f + 454.5f, -213);
 
             isSet = true;
         }

@@ -1145,9 +1145,9 @@ public class ItemBehaviours : MonoBehaviour
         if (cancelBar) { yield break; }
         if (normal)
         {
-            GameObject bar = Instantiate(barLine, actionBarPanel.transform);
+            GameObject bar = actionBarPanel.transform.Find("BarLine").gameObject;
             RectTransform rect = bar.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector2(54.5f, 47.5f);
+            rect.anchoredPosition = new Vector2(55, 47.5f);
             rect.sizeDelta = new Vector2(0f, 25f);
             for(int i = 0; i < 49; i++)
             {
@@ -1187,10 +1187,7 @@ public class ItemBehaviours : MonoBehaviour
     {
         barIsMoving = false;
         cancelBar = true;
-        foreach (Transform child in actionBarPanel.GetComponent<Transform>())
-        {
-            Destroy(child.gameObject);
-        }
+        actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(0f, 25f);
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
         isDigging = false;
