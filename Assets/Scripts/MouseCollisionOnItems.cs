@@ -68,7 +68,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedDeskPanel;
     public bool isTouchingEquipment;
     public GameObject touchedEquipment;
-
+    public bool isTouchingReader;
+    public GameObject touchedReader;
     void Update()
     {
         ClearCollisions();
@@ -102,6 +103,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         "VentCover",
         "OpenVent",
         "Equipment", //workout stuff
+        "Reader",
         "Digable",
         "Dirt",
         "Rock",
@@ -210,6 +212,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Equipment":
                     isTouchingEquipment = true;
                     touchedEquipment = highestPriorityObject;
+                    break;
+                case "Reader":
+                    isTouchingReader = true;
+                    touchedReader = highestPriorityObject;
                     break;
                 case "Digable":
                     isTouchingFloor = true;
@@ -326,5 +332,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedDeskPanel = null;
         isTouchingEquipment = false;
         touchedEquipment = null;
+        isTouchingReader = false;
+        touchedReader = null;
     }
 }

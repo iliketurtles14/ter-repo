@@ -16,6 +16,7 @@ public class ApplyPrisonData : MonoBehaviour
     public VentClimb VentClimb;
     public ItemBehaviours itemBehavioursScript;
     public HoleClimb holeClimbScript;
+    public VitalController vitalControllerScript;
     public MouseOverlay mouseOverlayScript;
     public Transform PlayerDesk;
     public Pause pauseScript;
@@ -533,6 +534,8 @@ public class ApplyPrisonData : MonoBehaviour
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];
         Resources.Load("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
+        ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
+        mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
         //desks
         perksTiles.Find("GroundObjects").Find("PlayerDesk").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
         foreach(Transform child in perksTiles.Find("GroundObjects"))
@@ -585,6 +588,8 @@ public class ApplyPrisonData : MonoBehaviour
                 }
             }
         }
+        //readers (int gainers)
+        perksTiles.Find("GroundObjects").Find("Computer").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
@@ -685,6 +690,60 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         perksTiles.Find("RoofObjects").gameObject.SetActive(false);
+        //vital sprites
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 145, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 154, 78, 6, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 163, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 172, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 181, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 190, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 199, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 208, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 217, 78, 8, 11));
+        vitalControllerScript.energyList.Add(Cutter(UISprites[150], 226, 78, 8, 11));
+        vitalControllerScript.energyPercentage = Cutter(UISprites[150], 45, 78, 9, 11);
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 145, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 154, 78, 6, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 163, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 172, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 181, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 190, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 199, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 208, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 217, 78, 8, 11));
+        vitalControllerScript.healthList.Add(Cutter(UISprites[63], 226, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 145, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 154, 78, 6, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 163, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 172, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 181, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 190, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 199, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 208, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 217, 78, 8, 11));
+        vitalControllerScript.heatList.Add(Cutter(UISprites[64], 226, 78, 8, 11));
+        vitalControllerScript.heatPercentage = Cutter(UISprites[64], 45, 78, 9, 11);
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 145, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 154, 78, 6, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 163, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 172, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 181, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 190, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 199, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 208, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 217, 78, 8, 11));
+        vitalControllerScript.moneyList.Add(Cutter(UISprites[45], 226, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 145, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 154, 78, 6, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 163, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 172, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 181, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 190, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 199, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 208, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 217, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 226, 78, 8, 11));
+
         //holding sprites
         RabbitHoldingSprites.Add(NPCSprites[127]);
         RabbitHoldingSprites.Add(NPCSprites[128]);
