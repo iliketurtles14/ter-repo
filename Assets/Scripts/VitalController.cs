@@ -42,6 +42,7 @@ public class VitalController : MonoBehaviour
         oldEnergy = data.energy;
         oldMoney = data.money;
         oldHeat = data.heat;
+        SetVitals();
     }
 
     public void Update()
