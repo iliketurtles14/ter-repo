@@ -65,6 +65,7 @@ TagManager:
   - Rock
   - Equipment
   - Reader
+  - Sittable
   layers:
   - Default
   - TransparentFX

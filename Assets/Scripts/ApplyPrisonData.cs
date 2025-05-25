@@ -590,6 +590,29 @@ public class ApplyPrisonData : MonoBehaviour
         }
         //readers (int gainers)
         perksTiles.Find("GroundObjects").Find("Computer").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
+        //sittables
+        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        {
+            if (child.name.StartsWith("PlayerBed"))
+            {
+                child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[264];
+                child.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 3.2f);
+            }
+            if (child.name.StartsWith("MedicBed"))
+            {
+                child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[56];
+                child.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 3.2f);
+            }
+            if (child.name.StartsWith("SunChair"))
+            {
+                child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[206];
+                child.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 3.2f);
+            }
+            if (child.name.StartsWith("Seat"))
+            {
+                child.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[78];
+            }
+        }
         //vent covers
         Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
         Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
