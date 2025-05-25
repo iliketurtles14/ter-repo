@@ -17,6 +17,8 @@ public class VitalController : MonoBehaviour
     private PlayerData data;
     public float energyRate;
     public float healthRate;
+    public int energyRateAmount;
+    public int healthRateAmount;
     private Vector2 sizeVector;
     public Transform ic;
     private int oldHealth;
@@ -30,6 +32,8 @@ public class VitalController : MonoBehaviour
     {
         energyRate = 5;
         healthRate = 3;
+        energyRateAmount = 1;
+        healthRateAmount = 1;
         data = GetComponent<PlayerCollectionData>().playerData;
         StartCoroutine(EnergyDeplete());
         StartCoroutine(HealthGain());
@@ -152,7 +156,11 @@ public class VitalController : MonoBehaviour
             yield return new WaitForSeconds(energyRate);
             if(data.energy > 0)
             {
-                data.energy--;
+                data.energy -= energyRateAmount;
+            }
+            if(data.energy < 0)
+            {
+                data.energy = 0;
             }
             yield return null;
         }
@@ -164,7 +172,7 @@ public class VitalController : MonoBehaviour
             yield return new WaitForSeconds(healthRate);
             if(data.health < Mathf.Floor(data.strength / 2))
             {
-                data.health++;
+                data.health += healthRateAmount;
             }
             yield return null;
         }
@@ -177,6 +185,10 @@ public class VitalController : MonoBehaviour
             if(data.heat > 0)
             {
                 data.heat--;
+            }
+            if(data.heat < 0)
+            {
+                data.heat = 0;
             }
             yield return null;
         }

@@ -70,6 +70,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedEquipment;
     public bool isTouchingReader;
     public GameObject touchedReader;
+    public bool isTouchingSittable;
+    public GameObject touchedSittable;
     void Update()
     {
         ClearCollisions();
@@ -104,6 +106,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         "OpenVent",
         "Equipment", //workout stuff
         "Reader",
+        "Sittable", //beds, chairs, anything that you can sit on
         "Digable",
         "Dirt",
         "Rock",
@@ -216,6 +219,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Reader":
                     isTouchingReader = true;
                     touchedReader = highestPriorityObject;
+                    break;
+                case "Sittable":
+                    isTouchingSittable = true;
+                    touchedSittable = highestPriorityObject;
                     break;
                 case "Digable":
                     isTouchingFloor = true;
@@ -334,5 +341,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedEquipment = null;
         isTouchingReader = false;
         touchedReader = null;
+        isTouchingSittable = false;
+        touchedSittable = null;
     }
 }
