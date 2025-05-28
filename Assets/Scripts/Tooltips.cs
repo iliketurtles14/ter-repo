@@ -673,6 +673,207 @@ public class Tooltips : MonoBehaviour
                 return;
             }
         }
+
+        //equipment
+        if(mcs.isTouchingEquipment && !showingTooltip)
+        {
+            if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
+            {
+                toPrint = "Train (treadmill)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("BenchPress"))
+            {
+                toPrint = "Train (weights)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PullUpBar"))
+            {
+                toPrint = "Train (chin ups)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PushupPad"))
+            {
+                toPrint = "Train (press ups)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("RunningPad"))
+            {
+                toPrint = "Train (jogging)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("JumpRopePad"))
+            {
+                toPrint = "Train (skipping)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PunchBag"))
+            {
+                toPrint = "Train (punch bag)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
+            {
+                toPrint = "Train (speed bag)";
+            }
+            tooltipType = "equipment";
+            DrawTooltip(GetWidth(toPrint), toPrint);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "equipment" && !mcs.isTouchingEquipment)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(showingTooltip && tooltipType == "equipment")
+        {
+            string str = null;
+
+            if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
+            {
+                str = "Train (treadmill)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("BenchPress"))
+            {
+                str = "Train (weights)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PullUpBar"))
+            {
+                str = "Train (chin ups)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PushupPad"))
+            {
+                str = "Train (press ups)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("RunningPad"))
+            {
+                str = "Train (jogging)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("JumpRopePad"))
+            {
+                str = "Train (skipping)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("PunchBag"))
+            {
+                str = "Train (punch bag)";
+            }
+            else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
+            {
+                str = "Train (speed bag)";
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //readers
+        if(mcs.isTouchingReader && !showingTooltip)
+        {
+            if (mcs.touchedReader.name.StartsWith("Computer"))
+            {
+                toPrint = "Internet";
+            }
+            tooltipType = "reader";
+            DrawTooltip(GetWidth(toPrint), toPrint);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "reader" && !mcs.isTouchingReader)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(showingTooltip && tooltipType == "reader")
+        {
+            string str = null;
+
+            if (mcs.touchedReader.name.StartsWith("Computer"))
+            {
+                str = "Internet";
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //sittables
+        if(mcs.isTouchingSittable && !showingTooltip)
+        {
+            if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
+            {
+                toPrint = "Your Bed";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
+            {
+                toPrint = "Infirmary Bed";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("SunChair"))
+            {
+                toPrint = "Sun Lounger";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("Seat"))
+            {
+                toPrint = "Sit Down";
+            }
+            tooltipType = "sittable";
+            DrawTooltip(GetWidth(toPrint), toPrint);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(showingTooltip && tooltipType == "sittable")
+        {
+            string str = null;
+
+            if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
+            {
+                str = "Your Bed";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
+            {
+                str = "Infirmary Bed";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("SunChair"))
+            {
+                str = "Sun Lounger";
+            }
+            else if (mcs.touchedSittable.name.StartsWith("Seat"))
+            {
+                str = "Sit Down";
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        ///NPCS
+        //inmates/guards
+        if (mcs.isTouchingNPC && !showingTooltip)
+        {
+            toPrint = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
+            tooltipType = "inmates/guards";
+            DrawTooltip(GetWidth(toPrint), toPrint);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "inmates/guards" && !mcs.isTouchingNPC)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(showingTooltip && tooltipType == "inmates/guards")
+        {
+            string str = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
     }
 
     public void DrawTooltip(int width, string text)

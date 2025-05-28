@@ -967,9 +967,9 @@ public class ApplyPrisonData : MonoBehaviour
         RabbitZippingSprites.Add(NPCSprites[1102]);
         RabbitZippingSprites.Add(NPCSprites[1103]);
         RabbitZippingSprites.Add(NPCSprites[1099]);
-        RabbitZippingSprites.Add(NPCSprites[1098]);
+        RabbitZippingSprites.Add(NPCSprites[1098]);//(0,15)
         BaldEagleSleepDeadSprites.Add(NPCSprites[313]);
-        BaldEagleSleepDeadSprites.Add(NPCSprites[266]);
+        BaldEagleSleepDeadSprites.Add(Cutter(NPCSprites[266], 0, 0, 16, 15));
         BaldEagleSleepDeadSprites.Add(NPCSprites[1472]);
         BaldEagleDiggingSprites.Add(NPCSprites[484]);
         BaldEagleDiggingSprites.Add(NPCSprites[486]);

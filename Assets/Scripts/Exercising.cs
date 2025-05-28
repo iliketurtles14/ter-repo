@@ -22,7 +22,7 @@ public class Exercising : MonoBehaviour
     private bool clearTile;
     private GameObject goToTile;
     private bool isLeaving;
-    private bool hasAdded;
+    public bool hasAdded;
     private int subDistanceNum;
     private Vector3 offset;
     private bool running;
@@ -261,7 +261,7 @@ public class Exercising : MonoBehaviour
 
         while (onEquipment && !isLeaving)
         {
-            if(hasAdded == false)
+            if(!hasAdded && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
@@ -284,9 +284,10 @@ public class Exercising : MonoBehaviour
                 amountOfBars = 49;
             }
             
-            if(amountOfBars == 49)
+            if(amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if(subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
@@ -345,17 +346,19 @@ public class Exercising : MonoBehaviour
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
             }
-            else if (amountOfBars >= 35)
+            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.Q) && !hasAdded)
                 {
                     subGain++;
+                    GetComponent<PlayerCollectionData>().playerData.energy += 2;
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
                         subGain = 0;
                     }
+                    hasAdded = true;
                 }
             }
             actionBarPanel.transform.Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(5 * amountOfBars, 25);
@@ -377,7 +380,7 @@ public class Exercising : MonoBehaviour
         subGain = 0;
         while (onEquipment && !isLeaving)
         {
-            if (hasAdded == false)
+            if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
@@ -400,9 +403,10 @@ public class Exercising : MonoBehaviour
                 amountOfBars = 49;
             }
 
-            if (amountOfBars == 49)
+            if (amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
@@ -465,18 +469,20 @@ public class Exercising : MonoBehaviour
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
                 punching = false;
             }
-            else if (amountOfBars >= 35)
+            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
-                if (Input.GetKeyUp(KeyCode.Q))
+                if (Input.GetKeyUp(KeyCode.Q) && !hasAdded)
                 {
                     punching = true;
                     subGain++;
+                    GetComponent<PlayerCollectionData>().playerData.energy += 3;
                     if (subGain == 3)
                     {
                         GetComponent<PlayerCollectionData>().playerData.strength++;
                         subGain = 0;
                     }
+                    hasAdded = true;
                     StartCoroutine(PunchBagPunch());
                 }
             }
@@ -539,18 +545,20 @@ public class Exercising : MonoBehaviour
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
                 punching = false;
             }
-            else if (amountOfBars >= 35)
+            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (Input.GetKeyDown(KeyCode.Q) && !hasAdded)
                 {
                     punching = true;
                     subGain++;
+                    GetComponent<PlayerCollectionData>().playerData.energy += 2;
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
                         subGain = 0;
                     }
+                    hasAdded = true;
                     StartCoroutine(SpeedBagPunch());
                 }
             }
@@ -666,7 +674,7 @@ public class Exercising : MonoBehaviour
         subGain = 0;
         while(onEquipment && !isLeaving)
         {
-            if(hasAdded == false)
+            if(hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
@@ -689,9 +697,10 @@ public class Exercising : MonoBehaviour
                 amountOfBars = 49;
             }
 
-            if (amountOfBars == 49)
+            if (amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
@@ -738,7 +747,7 @@ public class Exercising : MonoBehaviour
         while(onEquipment && !isLeaving)
         {
             GetComponent<PlayerAnimation>().enabled = false;
-            if (Input.GetKeyDown(KeyCode.Q) && onQ)
+            if (Input.GetKeyDown(KeyCode.Q) && onQ && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 onQ = false;
                 onE = true;
@@ -752,7 +761,7 @@ public class Exercising : MonoBehaviour
                     amountOfBars += 3;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.E) && onE)
+            else if (Input.GetKeyDown(KeyCode.E) && onE && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 onQ = true;
                 onE = false;
@@ -771,6 +780,7 @@ public class Exercising : MonoBehaviour
             {
                 subDistanceNum = 0;
                 subGain++;
+                GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.speed++;
@@ -851,6 +861,7 @@ public class Exercising : MonoBehaviour
                 if(amountOfBars == 50)
                 {
                     amountOfBars = 0;
+                    hasAdded = false;
                 }
                 yield return new WaitForSeconds(.01f);
             }
@@ -877,6 +888,11 @@ public class Exercising : MonoBehaviour
                     {
                         isGoingDown = false;
                     }
+                }
+
+                if(amountOfBars == 0)
+                {
+                    hasAdded = false;
                 }
             }
             yield return null;
