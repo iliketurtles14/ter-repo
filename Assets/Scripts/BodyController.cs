@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using System.IO;
 
 public class BodyController : MonoBehaviour
 {
@@ -357,6 +358,13 @@ public class BodyController : MonoBehaviour
         WhiteElfLists.Add(prisonDataScript.WhiteElfBenchingSprites);
         WhiteElfLists.Add(prisonDataScript.WhiteElfBoundSprites);
         WhiteElfLists.Add(prisonDataScript.WhiteElfTraySprites);
+        YellowElfLists.Add(prisonDataScript.YellowElfSleepDeadSprites);
+        YellowElfLists.Add(DataSender.instance.YellowElfWalkingSprites);
+        YellowElfLists.Add(prisonDataScript.YellowElfPunchingSprites);
+        YellowElfLists.Add(prisonDataScript.YellowElfBenchingSprites);
+        YellowElfLists.Add(prisonDataScript.YellowElfBoundSprites);
+        YellowElfLists.Add(prisonDataScript.YellowElfTraySprites);
+
 
         characterDict = new Dictionary<string, List<List<Sprite>>>
         {
@@ -467,6 +475,36 @@ public class BodyController : MonoBehaviour
             }
             catch { }
             GetComponent<SpriteRenderer>().size = new Vector2((GetComponent<SpriteRenderer>().sprite.rect.width / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10, (GetComponent<SpriteRenderer>().sprite.rect.height / GetComponent<SpriteRenderer>().sprite.pixelsPerUnit) * 10);
+
         }
+    }
+    public static void SaveSpriteAsPNG(Sprite sprite, string filePath)
+    {
+        // Convert Sprite to Texture2D
+        Texture2D texture = new Texture2D(
+            (int)sprite.rect.width,
+            (int)sprite.rect.height,
+            TextureFormat.RGBA32,
+            false
+        );
+
+        // Copy the pixels from the sprite's texture
+        Color[] pixels = sprite.texture.GetPixels(
+            (int)sprite.textureRect.x,
+            (int)sprite.textureRect.y,
+            (int)sprite.textureRect.width,
+            (int)sprite.textureRect.height
+        );
+        texture.SetPixels(pixels);
+        texture.Apply();
+
+        // Encode texture to PNG
+        byte[] pngData = texture.EncodeToPNG();
+
+        // Save to file
+        File.WriteAllBytes(filePath, pngData);
+
+        // Clean up
+        Object.Destroy(texture);
     }
 }

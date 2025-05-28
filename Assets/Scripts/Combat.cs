@@ -9,6 +9,14 @@ public class Combat : MonoBehaviour
     public GameObject currentNPC;
     public GameObject player;
     public bool inPunchCycle;
+    public Transform aStar;
+    public void Start()
+    {
+        foreach(Transform npc in aStar)
+        {
+            npc.Find("CombatBox").gameObject.SetActive(false);
+        }
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !inAttackMode)

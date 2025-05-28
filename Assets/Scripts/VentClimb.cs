@@ -173,7 +173,7 @@ public class VentClimb : MonoBehaviour
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             deskUnder.GetComponent<DeskPickUp>().enabled = false;
             deskStandScript.hasJumped = true;
-            player.GetComponent<PolygonCollider2D>().offset += colliderOffset;
+            player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
             player.transform.position += playerOffset;
             player.layer = 15;
             player.GetComponent<SpriteRenderer>().sortingOrder = 6;

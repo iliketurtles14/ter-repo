@@ -11,7 +11,7 @@ public class Reading : MonoBehaviour
     private bool stopReading = false;
     public void Update()
     {
-        if(Input.GetMouseButtonDown(0) && mcs.isTouchingReader)
+        if(Input.GetMouseButtonDown(0) && mcs.isTouchingReader && GetComponent<PlayerCollectionData>().playerData.energy < 100 && !isReading)
         {
             float distance = Vector2.Distance(transform.position, mcs.touchedReader.transform.position);
             if (distance <= 2.4f)
@@ -39,6 +39,7 @@ public class Reading : MonoBehaviour
             yield return new WaitForSeconds(.045f);
         }
         GetComponent<PlayerCollectionData>().playerData.intellect++;
+        GetComponent<PlayerCollectionData>().playerData.energy += 5;
         isReading = false;
     }
 }
