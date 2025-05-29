@@ -106,5 +106,11 @@ TagManager:
   - name: UI
     uniqueID: 1972456887
     locked: 0
+  - name: Outside
+    uniqueID: 1951758995
+    locked: 0
+  - name: Inside
+    uniqueID: 3507173125
+    locked: 0
   m_RenderingLayers:
   - Default
