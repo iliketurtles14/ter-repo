@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2966246732533212233}
   - component: {fileID: -6570635844575482289}
   - component: {fileID: 9210591496631406939}
+  - component: {fileID: 2715445402455173404}
   m_Layer: 8
   m_Name: Box
   m_TagString: Obstacle
@@ -189,7 +190,7 @@ MonoBehaviour:
     m_TrimEdge: 0.08
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.08
+    m_InitialTrim: 0
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: -1
@@ -201,3 +202,19 @@ MonoBehaviour:
     - rid: 6283425914392936479
       type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &2715445402455173404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305240738248455039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

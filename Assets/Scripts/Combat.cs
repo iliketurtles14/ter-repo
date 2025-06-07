@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class Combat : MonoBehaviour
 {
@@ -10,13 +11,9 @@ public class Combat : MonoBehaviour
     public GameObject player;
     public bool inPunchCycle;
     public Transform aStar;
-    public void Start()
-    {
-        foreach(Transform npc in aStar)
-        {
-            npc.Find("CombatBox").gameObject.SetActive(false);
-        }
-    }
+    public GameObject combatBox;
+    public Transform idPanel;
+    public NPCAggro npcAggroScript;
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !inAttackMode)
@@ -35,41 +32,97 @@ public class Combat : MonoBehaviour
             LockOn(mcs.touchedNPC);
         }
 
-        if(inAttackMode && hasLockedOn && player.transform.Find("CombatBox").GetComponent<BoxCollider2D>().IsTouching(currentNPC.GetComponent<BoxCollider2D>()) && !inPunchCycle)
+        if (hasLockedOn)
+        {
+            combatBox.transform.position = currentNPC.transform.position;
+        }
+
+        if(inAttackMode && hasLockedOn && player.GetComponent<CapsuleCollider2D>().IsTouching(combatBox.GetComponent<BoxCollider2D>()) && !inPunchCycle)
         {
             if (!currentNPC.GetComponent<NPCCollectionData>().npcData.isAggro)//if not aggroed already
             {
                 AggroNPC(currentNPC);
             }
 
-            inPunchCycle = true;
             StartCoroutine(PunchCycle());
-            inPunchCycle = false;
         }
     }
     public void AggroNPC(GameObject npc)
     {
         npc.GetComponent<NPCCollectionData>().npcData.isAggro = true;
+        npc.GetComponent<NPCCollectionData>().npcData.aggroTarget = player;
+        npcAggroScript.ActivateAggro(npc, player);
+    }
+    public void DeaggroNPC(GameObject npc)
+    {
+        npc.GetComponent<NPCCollectionData>().npcData.isAggro = false;
+        npc.GetComponent<NPCCollectionData>().npcData.aggroTarget = null;
+        npcAggroScript.DeactivateAggro(npc);
     }
     public IEnumerator PunchCycle()
     {
         float punchTime = (player.GetComponent<PlayerCollectionData>().playerData.speed * -.005f) + 1.15f;
 
-        int str = 0; //PLACEHOLDER INT. THIS IS THE PLAYER'S TOTAL STRENGTH (INCLUDING STRENGTH STAT AND WEAPON)
-        currentNPC.GetComponent<NPCCollectionData>().npcData.health -= str;
-        if(currentNPC.GetComponent<NPCCollectionData>().npcData.health <= 0)
+        //ADD THE NPC DEEFENSE WHEN THATS DONE
+        int str;
+        if (idPanel.GetComponent<PlayerIDInv>().idInv[1].itemData != null)
         {
-            KillNPC(currentNPC);
+            str = (int)Math.Ceiling(player.GetComponent<PlayerCollectionData>().playerData.strength / 20.0) + idPanel.GetComponent<PlayerIDInv>().idInv[1].itemData.strength;
+        }
+        else
+        {
+            str = (int)Math.Ceiling(player.GetComponent<PlayerCollectionData>().playerData.strength / 20.0);
         }
 
+        currentNPC.GetComponent<NPCCollectionData>().npcData.health -= str;
+        //if(currentNPC.GetComponent<NPCCollectionData>().npcData.health <= 0)
+        //{
+        //    KillNPC(currentNPC);
+        //}
+
+        int lookNum;
+        switch (player.GetComponent<PlayerAnimation>().lookDir)
+        {
+            case "right":
+                lookNum = 0;
+                break;
+            case "up":
+                lookNum = 1;
+                break;
+            case "left":
+                lookNum = 2;
+                break;
+            case "down":
+                lookNum = 3;
+                break;
+            default:
+                lookNum = 0;
+                break;
+        }
+        inPunchCycle = true;
+        StartCoroutine(PunchAnim(lookNum));
         yield return new WaitForSeconds(punchTime);
+        inPunchCycle = false;
+    }
+    public IEnumerator PunchAnim(int lookNum)
+    {
+        BodyController bc = player.GetComponent<BodyController>();
+        player.GetComponent<PlayerCtrl>().enabled = false;
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        player.GetComponent<PlayerAnimation>().enabled = false;
+        player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][lookNum];
+        yield return new WaitForSeconds(.45f);
+        player.GetComponent<PlayerCtrl>().enabled = true;
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        player.GetComponent<PlayerAnimation>().enabled = true;
     }
     public void KillNPC(GameObject npc)
     {
-        //kill npc
+        Debug.Log("hes dead lol");
     }
     public void LockOn(GameObject npc)
     {
-        npc.transform.Find("CombatBox").gameObject.SetActive(true);
+        combatBox.SetActive(true);
+        combatBox.transform.position = npc.transform.position;
     }
 }

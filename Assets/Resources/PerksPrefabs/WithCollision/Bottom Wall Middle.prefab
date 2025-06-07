@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6904723491651744436}
   - component: {fileID: -3098012848509034173}
   - component: {fileID: -4290334424232130917}
+  - component: {fileID: -6163854113776879952}
   m_Layer: 8
   m_Name: Bottom Wall Middle
   m_TagString: Obstacle
@@ -189,7 +190,7 @@ MonoBehaviour:
     m_TrimEdge: 0.08
     m_FlipX: 0
     m_FlipY: 0
-    m_InitialTrim: 0.08
+    m_InitialTrim: 0
   m_CastingOption: 2
   m_PreviousTrimEdge: 0
   m_PreviousEdgeProcessing: -1
@@ -201,3 +202,19 @@ MonoBehaviour:
     - rid: 6283425914392936505
       type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
       data: 
+--- !u!114 &-6163854113776879952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323281394964600248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

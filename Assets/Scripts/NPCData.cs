@@ -19,4 +19,5 @@ public class NPCData : ScriptableObject
     public bool hasShop;
     public bool hasFavor;
     public bool isAggro;
+    public GameObject aggroTarget;
 }

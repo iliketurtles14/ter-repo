@@ -6,8 +6,8 @@ using Unity.VisualScripting;
 
 public class Routine : MonoBehaviour
 {
-    private int min = 7;
-    private int sec = 50;
+    public int min = 7;
+    public int sec = 50;
     private float interval = 0.75f;
     public string time;
     private bool withMinZero;

@@ -9,12 +9,11 @@ public class RemoveMissingScriptsByTag : MonoBehaviour
         string[] prefabGuids = AssetDatabase.FindAssets("t:Prefab");
         int removedCount = 0;
 
-        foreach (string guid in prefabGuids)
+        foreach (GameObject prefab in Resources.LoadAll<GameObject>("PerksPrefabs/WithoutCollision"))
         {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            string path = Application.dataPath + "/Resources/PerksPrefabs/WithoutCollision/" + prefab.name + ".prefab";
 
-            if (prefab != null && prefab.CompareTag("Item"))
+            if (prefab != null)
             {
                 // Instantiate the prefab, clean it up, then save it back
                 GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;

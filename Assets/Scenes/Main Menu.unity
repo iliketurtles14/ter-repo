@@ -13037,10 +13037,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   mcs: {fileID: 0}
   iss: {fileID: 0}
+  combatScript: {fileID: 0}
   mouseNormal: {fileID: 0}
   mousePurple: {fileID: 0}
   mouseUp: {fileID: 0}
   mouseDown: {fileID: 0}
+  mouseRed: {fileID: 0}
 --- !u!114 &1047992184
 MonoBehaviour:
   m_ObjectHideFlags: 0

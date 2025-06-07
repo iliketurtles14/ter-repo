@@ -14,11 +14,13 @@ public class MouseOverlay : MonoBehaviour
 
     public MouseCollisionOnItems mcs;
     public InventorySelection iss;
+    public Combat combatScript;
 
     public Sprite mouseNormal;
     public Sprite mousePurple;
     public Sprite mouseUp;
     public Sprite mouseDown;
+    public Sprite mouseRed;
     private void Start()
     {
         // Hide the mouse cursor
@@ -87,6 +89,10 @@ public class MouseOverlay : MonoBehaviour
             else if (iss.aSlotSelected)
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
+            }
+            else if (combatScript.inAttackMode)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseRed;
             }
             else
             {
