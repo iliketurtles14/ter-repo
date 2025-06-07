@@ -495,6 +495,7 @@ public class ApplyPrisonData : MonoBehaviour
         mouseOverlayScript.mousePurple = UISprites[73];
         mouseOverlayScript.mouseUp = UISprites[74];
         mouseOverlayScript.mouseDown = UISprites[77];
+        mouseOverlayScript.mouseRed = UISprites[42];
         //deskmenupanels
         mc.Find("PlayerDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
         mc.Find("DevDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];

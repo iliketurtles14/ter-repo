@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1509995852146911156}
   - component: {fileID: -1896982748116980051}
   - component: {fileID: 7213295576450664547}
+  - component: {fileID: -2502947848083961815}
   m_Layer: 0
   m_Name: Floor 9
   m_TagString: Digable
@@ -150,3 +151,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &-2502947848083961815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042987122147400812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 0
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
