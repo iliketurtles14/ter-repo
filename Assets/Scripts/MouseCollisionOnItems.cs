@@ -11,6 +11,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private HashSet<string> disabledTags = new HashSet<string>();
     private HashSet<Collider2D> hitColliders = new HashSet<Collider2D>();
     private HashSet<GameObject> collidedObjects = new HashSet<GameObject>();
+    private List<string> priorityOrder = new List<string>();
 
     public bool isTouchingDeskSlot;
     public GameObject touchedDeskSlot;
@@ -84,40 +85,40 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             collidedObjects.Add(obj.gameObject);
         }
 
-        var priorityOrder = new List<string>
-    {
-        "DeskSlot",
-        "InvSlot",
-        "IDSlot",
-        "DeskPanel",
-        "IDPanel",
-        "Extra",
-        "Button",
-        "Inmate",
-        "Guard",
-        "Desk",
-        "Ladder(Roof)",
-        "Ladder(Vent)",
-        "Ladder(Ground)",
-        "Item",
-        "HoleDown",
-        "HoleUp",
-        "VentCover",
-        "OpenVent",
-        "Equipment", //workout stuff
-        "Reader",
-        "Sittable", //beds, chairs, anything that you can sit on
-        "Digable",
-        "Dirt",
-        "Rock",
-        "EmptyDirt",
-        "Wall",
-        "Bars",
-        "Fence",
-        "ElectricFence",
-        "RoofLedge",
-        "Slats"
-    };
+        priorityOrder = new List<string>
+        {
+            "DeskSlot",
+            "InvSlot",
+            "IDSlot",
+            "DeskPanel",
+            "IDPanel",
+            "Extra",
+            "Button",
+            "Inmate",
+            "Guard",
+            "Desk",
+            "Ladder(Roof)",
+            "Ladder(Vent)",
+            "Ladder(Ground)",
+            "Item",
+            "HoleDown",
+            "HoleUp",
+            "VentCover",
+            "OpenVent",
+            "Equipment", //workout stuff
+            "Reader",
+            "Sittable", //beds, chairs, anything that you can sit on
+            "Digable",
+            "Dirt",
+            "Rock",
+            "EmptyDirt",
+            "Wall",
+            "Bars",
+            "Fence",
+            "ElectricFence",
+            "RoofLedge",
+            "Slats"
+        };
 
         GameObject highestPriorityObject = null;
         int highestPriorityIndex = int.MaxValue;
@@ -276,6 +277,22 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public void EnableTag(string tag)
     {
         disabledTags.Remove(tag);
+    }
+
+    public void DisableAllTags()
+    {
+        foreach(string tag in priorityOrder)
+        {
+            disabledTags.Add(tag);
+        }
+    }
+
+    public void EnableAllTags()
+    {
+        foreach(string tag in disabledTags)
+        {
+            disabledTags.Remove(tag);
+        }
     }
 
     private void ClearCollisions()
