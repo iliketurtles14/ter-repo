@@ -185,103 +185,94 @@ public class OutfitController : MonoBehaviour
     }
     public void Update()
     {
-        if (gameObject.CompareTag("Player"))
+        currentIDPanel = mc.transform.Find("PlayerMenuPanel").gameObject;
+        try
         {
-            currentIDPanel = mc.transform.Find("PlayerMenuPanel").gameObject;
-            try
-            {
-                currentOutfitID = currentIDPanel.GetComponent<PlayerIDInv>().idInv[0].itemData.id;
-            }
-            catch
-            {
-                currentOutfitID = -1;
-            }
-
-            switch (currentOutfitID)
-            {
-                case 29:
-                case 30:
-                case 31:
-                case 32:
-                    outfit = "Inmate";
-                    break;
-                case 33:
-                case 34:
-                case 35:
-                case 36:
-                    outfit = "POW";
-                    break;
-                case 39:
-                    outfit = "Guard";
-                    break;
-                case 40:
-                case 41:
-                case 42:
-                case 43:
-                    outfit = "Elf";
-                    break;
-                case 44:
-                    outfit = "GuardElf";
-                    break;
-                case 45:
-                case 46:
-                case 47:
-                case 48:
-                    outfit = "Tux";
-                    break;
-                case 49:
-                    outfit = "Henchman";
-                    break;
-                case 50:
-                case 51:
-                case 52:
-                case 53:
-                    outfit = "Prisoner";
-                    break;
-                case 54:
-                    outfit = "Soldier";
-                    break;
-                default:
-                    outfit = null;
-                    break;
-            }
-
-            if (itemBehavioursScript.isChipping)
-            {
-                currentActionNum = 11;
-            }
-            else if (itemBehavioursScript.isCutting)
-            {
-                currentActionNum = 4;
-            }
-            else if (itemBehavioursScript.isDigging)
-            {
-                currentActionNum = 1;
-            }
-            else if (deskIsPickedUp)
-            {
-                currentActionNum = 15;
-            }
-            else
-            {
-                currentActionNum = 2;
-            }
-
-            if(currentOutfitID != -1)
-            {
-                transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
-                GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
-            }
-            else if(currentOutfitID == -1)
-            {
-                transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
-            }
-
-
+            currentOutfitID = currentIDPanel.GetComponent<PlayerIDInv>().idInv[0].itemData.id;
         }
-        else if(gameObject.CompareTag("Inmate") || gameObject.CompareTag("Guard"))
+        catch
         {
-            
+            currentOutfitID = -1;
+        }
+
+        switch (currentOutfitID)
+        {
+            case 29:
+            case 30:
+            case 31:
+            case 32:
+                outfit = "Inmate";
+                break;
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+                outfit = "POW";
+                break;
+            case 39:
+                outfit = "Guard";
+                break;
+            case 40:
+            case 41:
+            case 42:
+            case 43:
+                outfit = "Elf";
+                break;
+            case 44:
+                outfit = "GuardElf";
+                break;
+            case 45:
+            case 46:
+            case 47:
+            case 48:
+                outfit = "Tux";
+                break;
+            case 49:
+                outfit = "Henchman";
+                break;
+            case 50:
+            case 51:
+            case 52:
+            case 53:
+                outfit = "Prisoner";
+                break;
+            case 54:
+                outfit = "Soldier";
+                break;
+            default:
+                outfit = null;
+                break;
+        }
+
+        if (itemBehavioursScript.isChipping)
+        {
+            currentActionNum = 11;
+        }
+        else if (itemBehavioursScript.isCutting)
+        {
+            currentActionNum = 4;
+        }
+        else if (itemBehavioursScript.isDigging)
+        {
+            currentActionNum = 1;
+        }
+        else if (deskIsPickedUp)
+        {
+            currentActionNum = 15;
+        }
+        else
+        {
+            currentActionNum = 2;
+        }
+
+        if(currentOutfitID != -1)
+        {
+            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
+            GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
+        }
+        else if(currentOutfitID == -1)
+        {
+            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }

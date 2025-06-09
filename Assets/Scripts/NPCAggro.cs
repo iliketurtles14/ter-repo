@@ -26,7 +26,14 @@ public class NPCAggro : MonoBehaviour
         while (npc.GetComponent<NPCCollectionData>().npcData.isAggro)
         {
             agent.SetDestination(target.transform.position);
-            
+
+            //combat stuff
+            if (npc.GetComponent<CapsuleCollider2D>().IsTouching(target.GetComponent<CapsuleCollider2D>()))
+            {
+                agent.speed = 0;
+                StartCoroutine(Punch(npc));
+            }
+
             yield return new WaitForEndOfFrame();
         }
     }
@@ -36,5 +43,13 @@ public class NPCAggro : MonoBehaviour
         npc.GetComponent<AILerp>().enabled = true;
         npc.GetComponent<AStar>().enabled = true;
         npc.GetComponent<Seeker>().enabled = true;
+    }
+    public IEnumerator Punch(GameObject npc)
+    {
+        float punchTime = (npc.GetComponent<NPCCollectionData>().npcData.speed * -.005f) + 1.15f;
+
+
+        
+        yield return null;
     }
 }

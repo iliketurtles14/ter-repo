@@ -21,6 +21,7 @@ public class ApplyPrisonData : MonoBehaviour
     public Transform PlayerDesk;
     public Pause pauseScript;
     public Sprite clearSprite;
+    public Transform aStar;
     private string aName;
     public List<Sprite> ItemSprites = new List<Sprite>();
     public List<Sprite> NPCSprites = new List<Sprite>();
@@ -475,6 +476,7 @@ public class ApplyPrisonData : MonoBehaviour
         PrisonObjectSprites = senderScript.PrisonObjectImages;
         UISprites = senderScript.UIImages;
 
+        SetNPCOrder();
         LoadImages();
     }
     private Sprite Cutter(Sprite sprite, int x, int y, int width, int height)
@@ -483,6 +485,15 @@ public class ApplyPrisonData : MonoBehaviour
         Texture2D texture = sprite.texture;
         Sprite newSprite = Sprite.Create(texture, rect, new Vector2(.5f, .5f), sprite.pixelsPerUnit);
         return newSprite;
+    }
+    private void SetNPCOrder()
+    {
+        foreach(GameObject npc in aStar)
+        {
+            int i = 0;
+            npc.GetComponent<NPCCollectionData>().npcData.order = i;
+            i++;
+        }
     }
     private void LoadImages()
     {

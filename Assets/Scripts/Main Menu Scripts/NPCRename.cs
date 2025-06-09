@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -472,6 +473,33 @@ public class NPCRename : MonoBehaviour
                 case "Froseph": setCharacters.Add(7); break;
                 case "Tango": setCharacters.Add(8); break;
                 case "Maru": setCharacters.Add(9); break;
+                case "Buddy": setCharacters.Add(10); break;
+                case "IceElf": setCharacters.Add(11); break;
+                case "BlackElf": setCharacters.Add(12); break;
+                case "YellowElf": setCharacters.Add(13); break;
+                case "PinkElf": setCharacters.Add(14); break;
+                case "OrangeElf": setCharacters.Add(15); break;
+                case "BrownElf": setCharacters.Add(16); break;
+                case "WhiteElf": setCharacters.Add(17); break;
+                case "Genie": setCharacters.Add(18); break;
+                case "GuardElf": setCharacters.Add(19); break;
+                case "Connelly": setCharacters.Add(20); break;
+                case "Elbrah": setCharacters.Add(21); break;
+                case "Chen": setCharacters.Add(22); break;
+                case "Piers": setCharacters.Add(23); break;
+                case "Mourn": setCharacters.Add(24); break;
+                case "Lazeeboi": setCharacters.Add(25); break;
+                case "Blonde": setCharacters.Add(26); break;
+                case "Walton": setCharacters.Add(27); break;
+                case "Prowler": setCharacters.Add(28); break;
+                case "Crane": setCharacters.Add(29); break;
+                case "Henchman": setCharacters.Add(30); break;
+                case "Clint": setCharacters.Add(31); break;
+                case "Cage": setCharacters.Add(32); break;
+                case "Sean": setCharacters.Add(33); break;
+                case "Andy": setCharacters.Add(34); break;
+                case "Soldier": setCharacters.Add(35); break;
+
             }
         }
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
