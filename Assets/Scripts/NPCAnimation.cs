@@ -114,6 +114,7 @@ public class NPCAnimation : MonoBehaviour
             yield return new WaitForEndOfFrame();
             currentPos = transform.position;
             DirGet();
+            yield return null;
         }
     }
     public void DirGet()
@@ -123,7 +124,7 @@ public class NPCAnimation : MonoBehaviour
         yDif = currentPos.y - oldPos.y;
 
         // Threshold to determine movement
-        float threshold = 0.01f;
+        float threshold = 0.1f;
 
         // Check if there's enough movement to update direction
         if (Mathf.Abs(xDif) >= threshold || Mathf.Abs(yDif) >= threshold)
