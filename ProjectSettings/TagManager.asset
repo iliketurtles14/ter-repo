@@ -66,6 +66,8 @@ TagManager:
   - Equipment
   - Reader
   - Sittable
+  - NPCInvPanel
+  - NPCInvSlot
   layers:
   - Default
   - TransparentFX

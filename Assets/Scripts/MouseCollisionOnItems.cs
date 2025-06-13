@@ -73,6 +73,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedReader;
     public bool isTouchingSittable;
     public GameObject touchedSittable;
+    public bool isTouchingNPCInvSlot;
+    public GameObject touchedNPCInvSlot;
+    public bool isTouchingNPCInvPanel;
+    public GameObject touchedNPCInvPanel;
     void Update()
     {
         ClearCollisions();
@@ -90,8 +94,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "DeskSlot",
             "InvSlot",
             "IDSlot",
+            "NPCInvSlot",
             "DeskPanel",
             "IDPanel",
+            "NPCInvPanel",
             "Extra",
             "Button",
             "Inmate",
@@ -156,6 +162,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingIDSlot = true;
                     touchedIDSlot = highestPriorityObject;
                     break;
+                case "NPCInvSlot":
+                    isTouchingNPCInvSlot = true;
+                    touchedNPCInvSlot = highestPriorityObject;
+                    break;
                 case "DeskPanel":
                     isTouchingDeskPanel = true;
                     touchedDeskPanel = highestPriorityObject;
@@ -163,6 +173,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "IDPanel":
                     isTouchingIDPanel = true;
                     touchedIDPanel = highestPriorityObject;
+                    break;
+                case "NPCInvPanel":
+                    isTouchingNPCInvPanel = true;
+                    touchedNPCInvPanel = highestPriorityObject;
                     break;
                 case "Extra":
                     isTouchingExtra = true;
@@ -360,5 +374,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedReader = null;
         isTouchingSittable = false;
         touchedSittable = null;
+        isTouchingNPCInvSlot = false;
+        touchedNPCInvSlot = null;
+        isTouchingNPCInvPanel = false;
+        touchedNPCInvPanel = null;
     }
 }
