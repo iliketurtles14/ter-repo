@@ -33,6 +33,7 @@ public class DeskInv : MonoBehaviour
     public GameObject desk;
     public string deskText;
     private bool isOpening;
+    public PauseController pauseController;
     public void Start()
     {
         //what desk to take
@@ -121,7 +122,6 @@ public class DeskInv : MonoBehaviour
     }
     public void Update()
     {
-        Debug.Log(mouseCollisionScript.isTouchingDesk);
         
         if (!deskIsOpen)
         {
@@ -246,44 +246,7 @@ public class DeskInv : MonoBehaviour
 
                 deskIsOpen = false;
 
-                ///what to enable when having a desk/menu close
-                mouseCollisionScript.EnableTag("Bars");
-                mouseCollisionScript.EnableTag("Fence");
-                mouseCollisionScript.EnableTag("ElectricFence");
-                mouseCollisionScript.EnableTag("Digable");
-                mouseCollisionScript.EnableTag("Wall");
-                mouseCollisionScript.EnableTag("Item");
-                mouseCollisionScript.EnableTag("Desk");
-
-                //player movement
-                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                player.GetComponent<PlayerCtrl>().enabled = true;
-                player.GetComponent<PlayerAnimation>().enabled = true;
-
-                //NPC movement
-                foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-                {
-                    guard.GetComponent<AILerp>().speed = 10;
-                    guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    guard.GetComponent<NPCAnimation>().enabled = true;
-                }
-                foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-                {
-                    inmate.GetComponent<AILerp>().speed = 10;
-                    inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    inmate.GetComponent<NPCAnimation>().enabled = true;
-                }
-
-                //time
-                timeObject.GetComponent<Routine>().enabled = true;
-
-                //foreach (Transform obj in perksTiles.transform.Find("GroundObjects"))
-                //{
-                //    if (obj.gameObject.CompareTag("Desk"))
-                //    {
-                //        obj.GetComponent<BoxCollider2D>().enabled = true;
-                //    }
-                //}
+                pauseController.Unpause();
 
                 return;
             }
@@ -327,44 +290,7 @@ public class DeskInv : MonoBehaviour
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = true;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
 
-        ///what to disable when having a desk/menu open
-        //player movement
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        player.GetComponent<PlayerCtrl>().enabled = false;
-        player.GetComponent<PlayerAnimation>().enabled = false;
-
-        mouseCollisionScript.DisableTag("Bars");
-        mouseCollisionScript.DisableTag("Fence");
-        mouseCollisionScript.DisableTag("ElectricFence");
-        mouseCollisionScript.DisableTag("Digable");
-        mouseCollisionScript.DisableTag("Wall");
-        mouseCollisionScript.DisableTag("Item");
-        mouseCollisionScript.DisableTag("Desk");
-
-        //NPC movement
-        foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-        {
-            guard.GetComponent<AILerp>().speed = 0;
-            guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            guard.GetComponent<NPCAnimation>().enabled = false;
-        }
-        foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-        {
-            inmate.GetComponent<AILerp>().speed = 0;
-            inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            inmate.GetComponent<NPCAnimation>().enabled = false;
-        }
-
-        //time
-        timeObject.GetComponent<Routine>().enabled = false;
-
-        //foreach(Transform obj in perksTiles.transform.Find("GroundObjects"))
-        //{
-        //    if (obj.gameObject.CompareTag("Desk"))
-        //    {
-        //        obj.GetComponent<BoxCollider2D>().enabled = false;
-        //    }
-        //}
+        pauseController.Pause(false);
 
         yield return new WaitForEndOfFrame();
 
