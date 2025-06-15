@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ab50fa232ccae4cb09a8ca0ee6ab6f, type: 3}
+  m_Name: perks
+  m_EditorClassIdentifier: 
+  inmateAmount: 9
+  guardAmount: 5
+  npcLevel: 1
+  prisonStyle: 1
+  grounds: 3
+  prisonName: CenterPerks
+  wardenNote: Dear $name,\n\nWelcome to Center Perks - the most comfortable low security
+    prison in the county. On behalf of all the staff here we wish you a happy and
+    relaxing visit!\n\nShould you get bored of the complimentary cable TV we pride
+    ourselves in many other engaging activities around the grounds.
+  specialNoteAmount: 0
+  specialNotes: []
+  startingJob: Laundry
+  metalshop: 1
+  mailman: 1
+  kitchen: 1
+  gardening: 0
+  janitor: 1
+  woodshop: 0
+  library: 0
+  tailor: 0
+  deliveries: 0
+  laundry: 1
+  hasHints: 0
+  hint1: 
+  hint2: 
+  hint3: 
+  version: 1

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ab50fa232ccae4cb09a8ca0ee6ab6f, type: 3}
+  m_Name: BC
+  m_EditorClassIdentifier: 
+  inmateAmount: 9
+  guardAmount: 10
+  npcLevel: 3
+  prisonStyle: 4
+  grounds: 3
+  prisonName: Banned Camp
+  wardenNote: Dear Client,\n\nThe trial was a farce, but as you can see, I was able
+    to pull some last minut strings with my good friend the Judge and get you sent
+    to 'summer camp'.\n\nHow do you like the place? Nice little quiet spot by the
+    lake, like you always wanted, right? They've forecast a great summer, so enjoy!\n\nLou
+    Pole\nAttorney At Law
+  specialNoteAmount: 0
+  specialNotes: []
+  startingJob: 
+  metalshop: 1
+  mailman: 0
+  kitchen: 1
+  gardening: 1
+  janitor: 0
+  woodshop: 1
+  library: 0
+  tailor: 0
+  deliveries: 0
+  laundry: 0
+  hasHints: 0
+  hint1: 
+  hint2: 
+  hint3: 
+  version: 1

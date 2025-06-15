@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ab50fa232ccae4cb09a8ca0ee6ab6f, type: 3}
+  m_Name: SS
+  m_EditorClassIdentifier: 
+  inmateAmount: 8
+  guardAmount: 10
+  npcLevel: 2
+  prisonStyle: 3
+  grounds: 2
+  prisonName: Santa's Sweatshop
+  wardenNote: Fellow Elves,\n\nI'm SICK of this place! Awful pay, no holidays, and
+    a horrible boss!\n\nSince Santa's banned all holiday celebrations, I'm going
+    to get revenge by decorating the tree in his room with some festive cheer! Then...
+    I'm outta here!\n\nSigned, $name
+  specialNoteAmount: 0
+  specialNotes: []
+  startingJob: Janitor
+  metalshop: 0
+  mailman: 1
+  kitchen: 0
+  gardening: 0
+  janitor: 1
+  woodshop: 0
+  library: 0
+  tailor: 1
+  deliveries: 1
+  laundry: 0
+  hasHints: 0
+  hint1: 
+  hint2: 
+  hint3: 
+  version: 1

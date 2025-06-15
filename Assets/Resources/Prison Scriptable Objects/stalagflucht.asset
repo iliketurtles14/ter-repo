@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ab50fa232ccae4cb09a8ca0ee6ab6f, type: 3}
+  m_Name: stalagflucht
+  m_EditorClassIdentifier: 
+  inmateAmount: 9
+  guardAmount: 5
+  npcLevel: 1
+  prisonStyle: 3
+  grounds: 3
+  prisonName: Stalag Flucht
+  wardenNote: Sent me another one have they?..\n\nListen $name, I don't have to remind
+    you that Stalag Flucht is famous for housing inmates with a record of escapism,
+    so if you're planning on getting out of this one, think again!\n\nNow get yourself
+    settled in, it's going to be a cold, long winter.
+  specialNoteAmount: 0
+  specialNotes: []
+  startingJob: Gardening
+  metalshop: 0
+  mailman: 0
+  kitchen: 0
+  gardening: 1
+  janitor: 0
+  woodshop: 1
+  library: 1
+  tailor: 1
+  deliveries: 1
+  laundry: 0
+  hasHints: 0
+  hint1: 
+  hint2: 
+  hint3: 
+  version: 1
