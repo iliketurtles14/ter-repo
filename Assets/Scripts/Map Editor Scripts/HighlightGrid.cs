@@ -21,13 +21,16 @@ public class HighlightGrid : MonoBehaviour
         // Convert mouse position to world, then to grid-local coordinates
         Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition) - offset;
 
-        // Calculate grid indices
+        // Calculate grid indices (do NOT clamp yet)
         int gridX = Mathf.FloorToInt(mouseWorld.x / cellSize);
         int gridY = Mathf.FloorToInt(mouseWorld.y / cellSize);
 
-        // Clamp to grid bounds
-        gridX = Mathf.Clamp(gridX, 0, columns - 1);
-        gridY = Mathf.Clamp(gridY, 0, rows - 1);
+        // Check if mouse is inside the grid bounds
+        if (gridX < 0 || gridX >= columns || gridY < 0 || gridY >= rows)
+        {
+            HighlightSquare(new Vector2(9999f, 9999f));
+            return;
+        }
 
         // Calculate the world position of the cell center
         Vector2 cellWorldPos = new Vector2(
