@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OnMainButtonPress : MonoBehaviour
@@ -16,7 +17,7 @@ public class OnMainButtonPress : MonoBehaviour
     private bool touchingPatchNotesButton;
     public Canvas MainMenuCanvas;
     public bool isPrisonSelectPanelOpen;
-
+    private bool hasPressedMap;
 
     private void Start()
     {
@@ -130,6 +131,16 @@ public class OnMainButtonPress : MonoBehaviour
                     child.GetComponent<BoxCollider2D>().enabled = false;
                 }
             }
+        }
+        else if(touchingMapEditorButton && Input.GetMouseButtonDown(0) && !hasPressedMap)
+        {
+            hasPressedMap = true;
+
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
+            loadOperation.completed += (AsyncOperation op) =>
+            {
+                SceneManager.UnloadSceneAsync(0);
+            };
         }
     }
 }
