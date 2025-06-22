@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Center Perks.unity
     guid: 0da3f44e8f0b1e346baeb4ac3a993897
+  - enabled: 1
+    path: Assets/Scenes/Map Editor.unity
+    guid: 67976e995cb3c214a94ca691cd75683f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
