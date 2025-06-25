@@ -8,8 +8,8 @@ public class TilePlacer : MonoBehaviour
     public Transform tiles;
     public bool canPlace;
     public LayerController layerControllerScript;
-    private bool inDeleteMode = false;
-    private string layer;
+    public bool inDeleteMode = false;
+    public string layer;
     private void Start()
     {
         foreach(Transform layer in tiles)
@@ -18,11 +18,31 @@ public class TilePlacer : MonoBehaviour
             empty.name = "empty";
             empty.transform.position = new Vector3(9999, 9999);
             empty.transform.SetParent(layer);
+            empty.AddComponent<BoxCollider2D>();
         }
     }
     private void Update()
     {
-        if(!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected)
+        switch (layerControllerScript.currentLayer)
+        {
+            case 0:
+                layer = "Underground";
+                break;
+            case 1:
+                layer = "Ground";
+                break;
+            case 2:
+                layer = "Vent";
+                break;
+            case 3:
+                layer = "Roof";
+                break;
+            case 4:
+                layer = "Zones";
+                break;
+        }
+
+        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected)
         {
             switch (layerControllerScript.currentLayer)
             {

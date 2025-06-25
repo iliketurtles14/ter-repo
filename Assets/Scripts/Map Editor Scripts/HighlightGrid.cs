@@ -5,7 +5,8 @@ public class HighlightGrid : MonoBehaviour
 {
     public GameObject highlight;
     private RuntimeGrid grid;
-
+    public ObjectSelect objectSelectScript;
+    public ObjectPlacer objectPlacerScript;
     private void Awake()
     {
         grid = GetComponent<RuntimeGrid>();
@@ -39,6 +40,18 @@ public class HighlightGrid : MonoBehaviour
         ) + new Vector2(-0.8f, -0.8f);
 
         HighlightSquare(cellWorldPos);
+        if (objectSelectScript.hasSelected && !objectPlacerScript.inDeleteMode)
+        {
+            RectTransform rt = objectSelectScript.selectedObj.GetComponent<RectTransform>();
+            Vector2 worldSize = rt.sizeDelta / 50.0f;
+            Vector3 bottomLeft = new Vector3(
+                highlight.transform.position.x + worldSize.x / 2f,
+                highlight.transform.position.y + worldSize.y / 2f,
+                0.0f
+            ) - new Vector3(.9f, .9f, 0f);
+
+            HighlightSquare(bottomLeft);
+        }
     }
 
     private void HighlightSquare(Vector2 pos)

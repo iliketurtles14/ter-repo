@@ -69,6 +69,7 @@ TagManager:
   - NPCInvPanel
   - NPCInvSlot
   - Menu
+  - Object
   layers:
   - Default
   - TransparentFX
