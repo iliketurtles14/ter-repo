@@ -9,6 +9,8 @@ public class CameraZoomAndPan : MonoBehaviour
     private Camera cam;
     private Vector3 dragOrigin;
 
+    public MouseCollisionOnMap mcs;
+
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -24,7 +26,7 @@ public class CameraZoomAndPan : MonoBehaviour
     {
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scrollInput != 0f)
+        if (scrollInput != 0f && !mcs.isTouchingMenu)
         {
             Vector3 mouseWorldBeforeZoom = cam.ScreenToWorldPoint(Input.mousePosition);
 
