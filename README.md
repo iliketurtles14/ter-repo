@@ -16,7 +16,7 @@ Discord: https://discord.gg/PEzv5ECNgR
 
 For fully built and "stable" releases, go to the "Releases" section.
 
-TER uses Unity 6000.0.41f1
+TER uses Unity 6000.0.41f1 (Note: Older versions of Unity were used in much older versions of the source. The current version has been used since May 6, 2025 and is not expected to change.)
 
 The source code presented in the ```main``` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
 
