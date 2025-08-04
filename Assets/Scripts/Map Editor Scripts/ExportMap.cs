@@ -15,7 +15,7 @@ public class ExportMap : MonoBehaviour
 
         text = "";
         SetProperties();
-
+        SetTiles();
     }
     private void SetProperties()
     {
