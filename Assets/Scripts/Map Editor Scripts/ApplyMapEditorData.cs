@@ -13,6 +13,7 @@ public class ApplyMapEditorData : MonoBehaviour
     public List<Sprite> UISprites = new List<Sprite>();
 
     public Transform uic;
+    public Transform so;
 
     private void Start()
     {
@@ -549,5 +550,17 @@ public class ApplyMapEditorData : MonoBehaviour
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
             }
         }
+
+        //job panel checkboxes
+        foreach(Transform child in uic.Find("JobPanel").Find("CheckBoxGrid1"))
+        {
+            child.GetComponent<Image>().sprite = UISprites[447];
+        }
+        foreach(Transform child in uic.Find("JobPanel").Find("CheckBoxGrid2"))
+        {
+            child.GetComponent<Image>().sprite = UISprites[447];
+        }
+        so.GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
+        so.GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];
     }
 }
