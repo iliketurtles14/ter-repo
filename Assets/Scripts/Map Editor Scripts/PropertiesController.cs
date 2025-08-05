@@ -5,65 +5,68 @@ public class PropertiesController : MonoBehaviour
 {
     public MouseCollisionOnMap mcs;
     public Transform uic;
-    private string buttonType;
+    public string buttonType;
     private void Update()
     {
-        if(mcs.isTouchingButton && mcs.touchedButton.name == "TilesetButton")
+        if(mcs.isTouchingButton && Input.GetMouseButtonDown(0))
         {
-            buttonType = "tileset";
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "GroundButton" && mcs.touchedButton.transform.parent.name == "PropertiesPanel")
-        {
-            buttonType = "ground";
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "MusicButton")
-        {
-            buttonType = "music";
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "GroundsButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("GroundsSelectMenu").gameObject.SetActive(true);
-        }
-        else if(mcs.isTouchingButton && mcs.touchedButton.name == "WardenNoteButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("NotePanel").gameObject.SetActive(true);
-        }
-        else if(mcs.isTouchingButton && mcs.touchedButton.name == "RoutineButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("RoutinePanel").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "HintButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("HintPanel").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "JobButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("JobPanel").gameObject.SetActive(true);
-        }
-        else if (mcs.isTouchingButton && mcs.touchedButton.name == "ExtrasButton")
-        {
-            DeactivateButtons();
-            uic.Find("Black").gameObject.SetActive(true);
-            uic.Find("ExtrasPanel").gameObject.SetActive(true);
+            if (mcs.touchedButton.name == "TilesetButton")
+            {
+                buttonType = "tileset";
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "GroundButton" && mcs.touchedButton.transform.parent.name == "PropertiesPanel")
+            {
+                buttonType = "ground";
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "MusicButton")
+            {
+                buttonType = "music";
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "GroundsButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("GroundsSelectMenu").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "WardenNoteButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("NotePanel").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "RoutineButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("RoutinePanel").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "HintButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("HintPanel").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "JobButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("JobPanel").gameObject.SetActive(true);
+            }
+            else if (mcs.touchedButton.name == "ExtrasButton")
+            {
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                uic.Find("ExtrasPanel").gameObject.SetActive(true);
+            }
         }
     }
     private void DeactivateButtons()

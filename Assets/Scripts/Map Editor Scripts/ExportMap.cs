@@ -15,11 +15,14 @@ public class ExportMap : MonoBehaviour
 
         text = "";
         SetProperties();
+        SetRoutine();
+        SetJobs();
         SetTiles();
     }
     private void SetProperties()
     {
         Transform properties = uic.Find("PropertiesPanel");
+        SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
 
         text += "[Properties]\n";
         text += "Version=0.0.7\n";
@@ -38,6 +41,61 @@ public class ExportMap : MonoBehaviour
         text += "Hint1=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint1Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Hint2=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint2Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Hint3=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint3Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "Snowing=" + subMenuControllerScript.snowing;
+        text += "POWOutfits=" + subMenuControllerScript.powOutfits;
+        text += "StunRods=" + subMenuControllerScript.stunRods;
+    }
+    private void SetRoutine()
+    {
+        Transform routinePanel = uic.Find("RoutinePanel");
+        Transform routineGrid1 = routinePanel.Find("RoutineInputGrid1");
+        Transform routineGrid2 = routinePanel.Find("RoutineInputGrid2");
+
+        text += "\n";
+        text += "[Routine]";
+        text += "00:00 - " + routineGrid1.Find("00:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "01:00 - " + routineGrid1.Find("01:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "02:00 - " + routineGrid1.Find("02:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "03:00 - " + routineGrid1.Find("03:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "04:00 - " + routineGrid1.Find("04:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "05:00 - " + routineGrid1.Find("05:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "06:00 - " + routineGrid1.Find("06:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "07:00 - " + routineGrid1.Find("07:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "08:00 - " + routineGrid1.Find("08:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "09:00 - " + routineGrid1.Find("09:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "10:00 - " + routineGrid1.Find("10:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "11:00 - " + routineGrid1.Find("11:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "12:00 - " + routineGrid2.Find("12:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "13:00 - " + routineGrid2.Find("13:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "14:00 - " + routineGrid2.Find("14:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "15:00 - " + routineGrid2.Find("15:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "16:00 - " + routineGrid2.Find("16:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "17:00 - " + routineGrid2.Find("17:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "18:00 - " + routineGrid2.Find("18:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "19:00 - " + routineGrid2.Find("19:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "20:00 - " + routineGrid2.Find("20:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "21:00 - " + routineGrid2.Find("21:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "22:00 - " + routineGrid2.Find("22:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "23:00 - " + routineGrid2.Find("23:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+    }
+    private void SetJobs()
+    {
+        Transform jobPanel = uic.Find("JobPanel");
+        SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
+
+        text += "\n";
+        text += "[Jobs]";
+        text += "StartingJob=" + jobPanel.Find("StartingJobInput").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "Janitor=" + subMenuControllerScript.janitor;
+        text += "Gardening=" + subMenuControllerScript.gardening;
+        text += "Laundry=" + subMenuControllerScript.laundry;
+        text += "Kitchen=" + subMenuControllerScript.kitchen;
+        text += "Tailor=" + subMenuControllerScript.tailor;
+        text += "Woodshop=" + subMenuControllerScript.woodshop;
+        text += "Metalshop=" + subMenuControllerScript.metalshop;
+        text += "Deliveries=" + subMenuControllerScript.deliveries;
+        text += "Mailman=" + subMenuControllerScript.mailman;
+        text += "Library=" + subMenuControllerScript.library;
     }
     private void SetTiles()
     {
