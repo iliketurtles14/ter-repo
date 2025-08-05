@@ -13,7 +13,6 @@ public class ApplyMapEditorData : MonoBehaviour
     public List<Sprite> UISprites = new List<Sprite>();
 
     public Transform uic;
-    public Transform so;
 
     private void Start()
     {
@@ -560,7 +559,12 @@ public class ApplyMapEditorData : MonoBehaviour
         {
             child.GetComponent<Image>().sprite = UISprites[447];
         }
-        so.GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
-        so.GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];
+        //extras panel checkboxes
+        uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        uic.Find("ExtrasPanel").Find("POWCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        //submenucontroller checkbox sprites
+        GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
+        GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];
     }
 }

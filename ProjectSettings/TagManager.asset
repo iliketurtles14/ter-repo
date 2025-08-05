@@ -71,6 +71,7 @@ TagManager:
   - Menu
   - Object
   - PropertiesSubButton
+  - Handle
   layers:
   - Default
   - TransparentFX

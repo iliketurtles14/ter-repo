@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using SFB;
 
 public class SubMenuController : MonoBehaviour
 {
@@ -11,19 +11,33 @@ public class SubMenuController : MonoBehaviour
     public Sprite uncheckedBoxSprite;
     public Sprite checkedBoxSprite;
 
+    public bool janitor;
+    public bool gardening;
+    public bool laundry;
+    public bool kitchen;
+    public bool tailor;
+    public bool woodshop;
+    public bool metalshop;
+    public bool deliveries;
+    public bool mailman;
+    public bool library;
+    public bool snowing;
+    public bool powOutfits;
+    public bool stunRods;
+
     public Dictionary<string, string> prisonDict = new Dictionary<string, string>()
     {
         { "Center Perks", "perks" }, { "Stalag Flucht", "stalag" }, { "Shankton State Pen", "shankton" },
         { "Jungle Compound", "jungle" }, { "San Pancho", "sanpancho" }, { "HMP Irongate", "irongate" },
         { "Jingle Cells", "JC" }, { "Banned Camp", "BC" }, { "London Tower", "london" },
-        { "Paris Central Pen", "PCP" }, { "Santa's Sweatshop", "SS" }, { "Duct Tapes Are Forever", "DTAF" },
+        { "Paris Central Pen", "PCP" }, { "Santa's Sweatshop", "SS" }, { "Duct Tapes are Forever", "DTAF" },
         { "Escape Team", "ET" }, { "Alcatraz", "alca" }, { "Fhurst Peak Correctional", "fhurst" },
         { "Camp Epsilon", "epsilon" }, { "Fort Bamford", "bamford" }
     };
 
     private void Update()
     {
-        if (mcs.isTouchingButton)
+        if (mcs.isTouchingButton && Input.GetMouseButtonDown(0))
         {
             if (mcs.touchedButton.name == "ContinueButton" && mcs.touchedButton.transform.parent.name == "NotePanel")
             {
@@ -46,10 +60,96 @@ public class SubMenuController : MonoBehaviour
             else if (mcs.touchedButton.name.EndsWith("Checkbox") && mcs.touchedButton.GetComponent<Image>().sprite == checkedBoxSprite)
             {
                 mcs.touchedButton.GetComponent<Image>().sprite = uncheckedBoxSprite;
+
+                switch (mcs.touchedButton.name)
+                {
+                    case "JanitorCheckbox":
+                        janitor = false;
+                        break;
+                    case "GardeningCheckbox":
+                        gardening = false;
+                        break;
+                    case "LaundryCheckbox":
+                        laundry = false;
+                        break;
+                    case "KitchenCheckbox":
+                        kitchen = false;
+                        break;
+                    case "TailorCheckbox":
+                        tailor = false;
+                        break;
+                    case "WoodshopCheckbox":
+                        woodshop = false;
+                        break;
+                    case "MetalshopCheckbox":
+                        metalshop = false;
+                        break;
+                    case "DeliveriesCheckbox":
+                        deliveries = false;
+                        break;
+                    case "MailmanCheckbox":
+                        mailman = false;
+                        break;
+                    case "LibraryCheckbox":
+                        library = false;
+                        break;
+                    case "SnowingCheckbox":
+                        snowing = false;
+                        break;
+                    case "POWCheckbox":
+                        powOutfits = false;
+                        break;
+                    case "StunRodCheckbox":
+                        stunRods = false;
+                        break;
+                }
             }
             else if (mcs.touchedButton.name.EndsWith("Checkbox") && mcs.touchedButton.GetComponent<Image>().sprite == uncheckedBoxSprite)
             {
                 mcs.touchedButton.GetComponent<Image>().sprite = checkedBoxSprite;
+
+                switch (mcs.touchedButton.name)
+                {
+                    case "JanitorCheckbox":
+                        janitor = true;
+                        break;
+                    case "GardeningCheckbox":
+                        gardening = true;
+                        break;
+                    case "LaundryCheckbox":
+                        laundry = true;
+                        break;
+                    case "KitchenCheckbox":
+                        kitchen = true;
+                        break;
+                    case "TailorCheckbox":
+                        tailor = true;
+                        break;
+                    case "WoodshopCheckbox":
+                        woodshop = true;
+                        break;
+                    case "MetalshopCheckbox":
+                        metalshop = true;
+                        break;
+                    case "DeliveriesCheckbox":
+                        deliveries = true;
+                        break;
+                    case "MailmanCheckbox":
+                        mailman = true;
+                        break;
+                    case "LibraryCheckbox":
+                        library = true;
+                        break;
+                    case "SnowingCheckbox":
+                        snowing = true;
+                        break;
+                    case "POWCheckbox":
+                        powOutfits = true;
+                        break;
+                    case "StunRodCheckbox":
+                        stunRods = true;
+                        break;
+                }
             }
             else if(mcs.touchedButton.name == "CloseButton" && mcs.touchedButton.transform.parent.name == "JobPanel")
             {
@@ -63,9 +163,101 @@ public class SubMenuController : MonoBehaviour
                 uic.Find("Black").gameObject.SetActive(false);
                 ReactivateButtons();
             }
-            else if(mcs.touchedButton.name.EndsWith("Button") && mcs.touchedButton.transform.parent.parent.name == "PrisonSelectMenu")
+            else if(mcs.touchedButton.transform.parent.parent.name == "PrisonSelectMenu")
             {
+                if(mcs.touchedButton.name != "CustomButton") //actual prison
+                {
+                    string whatPrison = "";
 
+                    foreach(Transform child in uic.Find("PrisonSelectMenu").Find("NameGrid")) //get the name of the prison you selected
+                    {
+                        if(child.position == mcs.touchedButton.transform.position)
+                        {
+                            whatPrison = child.GetComponent<TextMeshProUGUI>().text;
+                            Debug.Log(whatPrison);
+                        }
+                    }
+
+                    switch (GetComponent<PropertiesController>().buttonType) //make changes to result texts and close menu
+                    {                        
+                        case "tileset":
+                            uic.Find("PropertiesPanel").Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            break;
+                        case "ground":
+                            uic.Find("PropertiesPanel").Find("GroundResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            break;
+                        case "music":
+                            uic.Find("PropertiesPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            break;
+                    }
+
+                    uic.Find("PrisonSelectMenu").gameObject.SetActive(false);
+                    uic.Find("Black").gameObject.SetActive(false);
+                    ReactivateButtons();
+                }
+                else if(mcs.touchedButton.name == "CustomButton") //custom stuff
+                {
+                    ExtensionFilter[] extensions = null;
+                    string title = "";
+                    string resultTextField = "";
+
+                    switch (GetComponent<PropertiesController>().buttonType) //open file dialog to select the custom file
+                    {
+                        case "tileset":
+                            extensions = new []
+                            {
+                                new ExtensionFilter("Image Files", "png")
+                            };
+                            title = "Select a custom tileset.";
+                            resultTextField = "TilesetResultText";
+                            break;
+                        case "ground":
+                            extensions = new []
+                            {
+                                new ExtensionFilter("Image Files", "png")
+                            };
+                            title = "Select a custom ground.";
+                            resultTextField = "GroundResultText";
+                            break;
+                        case "music":
+                            extensions = new []
+                            {
+                                new ExtensionFilter("Sound Files", "mp3")
+                            };
+                            title = "Select custom music.";
+                            resultTextField = "MusicResultText";
+                            break;
+                    }
+
+                    var paths = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
+
+                    uic.Find("PropertiesPanel").Find(resultTextField).GetComponent<TextMeshProUGUI>().text = "Custom";
+                    uic.Find("PrisonSelectMenu").gameObject.SetActive(false);
+                    uic.Find("Black").gameObject.SetActive(false);
+                    ReactivateButtons();
+                }
+            }
+            else if(mcs.touchedButton.transform.parent.name == "GroundsSelectMenu")
+            {
+                switch (mcs.touchedButton.name)
+                {
+                    case "InsideButton":
+                        uic.Find("PropertiesPanel").Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text = "Inside";
+                        break;
+                    case "InsideOutsideButton":
+                        uic.Find("PropertiesPanel").Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text = "In/Out";
+                        break;
+                    case "OutsideButton":
+                        uic.Find("PropertiesPanel").Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text = "Outside";
+                        break;
+                }
+                uic.Find("GroundsSelectMenu").gameObject.SetActive(false);
+                uic.Find("Black").gameObject.SetActive(false);
+                ReactivateButtons();
+            }
+            else if(mcs.touchedButton.transform.parent.parent.name == "ZonesPanel")
+            {
+                //do zone stuff idfk
             }
         }
     }
