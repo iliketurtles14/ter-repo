@@ -67,6 +67,23 @@ public class PropertiesController : MonoBehaviour
                 uic.Find("Black").gameObject.SetActive(true);
                 uic.Find("ExtrasPanel").gameObject.SetActive(true);
             }
+            else if(mcs.touchedButton.name == "SizeButton")
+            {
+                Transform sizePanel = uic.Find("SizePanel");
+
+                DeactivateButtons();
+                uic.Find("Black").gameObject.SetActive(true);
+                sizePanel.gameObject.SetActive(true);
+
+                string currentResultText = uic.Find("PropertiesPanel").Find("SizeResultText").GetComponent<TextMeshProUGUI>().text;
+                string[] parts = currentResultText.Split('x');
+
+                int currentX = int.Parse(parts[0]);
+                int currentY = int.Parse(parts[1]);
+
+                sizePanel.Find("SizeX").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentX.ToString();
+                sizePanel.Find("SizeY").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentY.ToString();
+            }
         }
     }
     private void DeactivateButtons()
@@ -86,19 +103,17 @@ public class PropertiesController : MonoBehaviour
         propertiesPanel.Find("GuardsNum").GetComponent<TMP_InputField>().enabled = false;
         propertiesPanel.Find("InmatesNum").GetComponent<TMP_InputField>().enabled = false;
         propertiesPanel.Find("NPCLevelNum").GetComponent<TMP_InputField>().enabled = false;
-        propertiesPanel.Find("SizeX").GetComponent<TMP_InputField>().enabled = false;
-        propertiesPanel.Find("SizeY").GetComponent<TMP_InputField>().enabled = false;
         propertiesPanel.Find("NameInputField").GetComponent<TMP_InputField>().enabled = false;
+        propertiesPanel.Find("SizeButton").GetComponent<BoxCollider2D>().enabled = false;
 
-        uic.Find("LoadButton").GetComponent<BoxCollider2D>().enabled = false;
+        uic.Find("FileButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("TilesButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("ObjectsButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("PropertiesButton").GetComponent<BoxCollider2D>().enabled = false;
-        uic.Find("ExportButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("GroundButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("UndergroundButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("VentsButton").GetComponent<BoxCollider2D>().enabled = false;
         uic.Find("RoofButton").GetComponent<BoxCollider2D>().enabled = false;
-        uic.Find("ZonesButton").GetComponent<BoxCollider2D>().enabled = false;
+        uic.Find("ZoneObjectsButton").GetComponent<BoxCollider2D>().enabled = false;
     }
 }

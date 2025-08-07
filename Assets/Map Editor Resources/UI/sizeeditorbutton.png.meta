@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 26fcd1d814a9b784f9d118ac558e2de2
+guid: bb57f456b9ed0b846b53db068467de27
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2893739014956287364
-    second: medic_0
+      213: -7059050672185124477
+    second: sizeeditorbutton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: medic_0
+      name: sizeeditorbutton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 18
-        height: 18
+        width: 41
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7a77d492bf57d7d0800000000000000
-      internalID: -2893739014956287364
+      spriteID: 3895ce860d6390e90800000000000000
+      internalID: -7059050672185124477
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      medic_0: -2893739014956287364
+      sizeeditorbutton_0: -7059050672185124477
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

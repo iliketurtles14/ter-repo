@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using SFB;
+using System;
+using System.Text.RegularExpressions;
 
 public class SubMenuController : MonoBehaviour
 {
@@ -10,6 +12,13 @@ public class SubMenuController : MonoBehaviour
     public Transform uic;
     public Sprite uncheckedBoxSprite;
     public Sprite checkedBoxSprite;
+    public RuntimeGrid gridScript;
+    public GroundSizeSet groundSizeSetScript;
+
+    public string[] tilesPath = null;
+    public string[] groundPath = null;
+    public string[] musicPath = null;
+    public string[] iconPath = null;
 
     public bool janitor;
     public bool gardening;
@@ -182,12 +191,15 @@ public class SubMenuController : MonoBehaviour
                     {                        
                         case "tileset":
                             uic.Find("PropertiesPanel").Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            tilesPath = null;
                             break;
                         case "ground":
                             uic.Find("PropertiesPanel").Find("GroundResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            groundPath = null;
                             break;
                         case "music":
                             uic.Find("PropertiesPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = prisonDict[whatPrison];
+                            musicPath = null;
                             break;
                     }
 
@@ -210,6 +222,9 @@ public class SubMenuController : MonoBehaviour
                             };
                             title = "Select a custom tileset.";
                             resultTextField = "TilesetResultText";
+
+                            tilesPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
+
                             break;
                         case "ground":
                             extensions = new []
@@ -218,6 +233,9 @@ public class SubMenuController : MonoBehaviour
                             };
                             title = "Select a custom ground.";
                             resultTextField = "GroundResultText";
+
+                            groundPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
+
                             break;
                         case "music":
                             extensions = new []
@@ -226,11 +244,11 @@ public class SubMenuController : MonoBehaviour
                             };
                             title = "Select custom music.";
                             resultTextField = "MusicResultText";
+
+                            musicPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
+
                             break;
                     }
-
-                    var paths = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
-
                     uic.Find("PropertiesPanel").Find(resultTextField).GetComponent<TextMeshProUGUI>().text = "Custom";
                     uic.Find("PrisonSelectMenu").gameObject.SetActive(false);
                     uic.Find("Black").gameObject.SetActive(false);
@@ -255,9 +273,58 @@ public class SubMenuController : MonoBehaviour
                 uic.Find("Black").gameObject.SetActive(false);
                 ReactivateButtons();
             }
-            else if(mcs.touchedButton.transform.parent.parent.name == "ZonesPanel")
+            else if(mcs.touchedButton.name == "IconButton")
             {
-                //do zone stuff idfk
+                ExtensionFilter[] extensions = new ExtensionFilter[]
+                {
+                    new ExtensionFilter("Image Files", "png")
+                };
+                iconPath = StandaloneFileBrowser.OpenFilePanel("Select a custom icon.", "", extensions, false);
+
+                uic.Find("PropertiesPanel").Find("IconResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+            }
+            else if(mcs.touchedButton.name == "IconCancel")
+            {
+                iconPath = null;
+                
+                uic.Find("PropertiesPanel").Find("IconResultText").GetComponent<TextMeshProUGUI>().text = "None";
+            }
+            else if(mcs.touchedButton.name == "ExportButton")
+            {
+                ExportMap exportScript = GetComponent<ExportMap>();
+                exportScript.Export();
+            }
+            else if(mcs.touchedButton.name == "SetButton" && mcs.touchedButton.transform.parent.name == "SizePanel")
+            {
+                Transform sizePanel = uic.Find("SizePanel");
+                string rawX = sizePanel.Find("SizeX").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+                string rawY = sizePanel.Find("SizeY").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+
+                rawX = Regex.Replace(rawX, @"[^\d]", "");
+                rawY = Regex.Replace(rawY, @"[^\d]", "");
+
+                int x = Convert.ToInt32(rawX);
+                int y = Convert.ToInt32(rawY);
+            
+                if(x >= 25 && x <= 150 && y >= 25 && x <= 150) //check to see if the map will be too small or big
+                {
+                    gridScript.DrawGrid(x, y);
+                    groundSizeSetScript.SetSize();
+                    uic.Find("PropertiesPanel").Find("SizeResultText").GetComponent<TextMeshProUGUI>().text = x + "x" + y;
+                    uic.Find("Black").gameObject.SetActive(false);
+                    uic.Find("SizePanel").gameObject.SetActive(false);
+                    ReactivateButtons();
+                }
+                else
+                {
+                    Debug.Log("Map size is too big or too small.");
+                }
+            }
+            else if(mcs.touchedButton.name == "CancelButton" && mcs.touchedButton.transform.parent.name == "SizePanel")
+            {
+                uic.Find("Black").gameObject.SetActive(false);
+                uic.Find("SizePanel").gameObject.SetActive(false);
+                ReactivateButtons();
             }
         }
     }
@@ -278,19 +345,18 @@ public class SubMenuController : MonoBehaviour
         propertiesPanel.Find("GuardsNum").GetComponent<TMP_InputField>().enabled = true;
         propertiesPanel.Find("InmatesNum").GetComponent<TMP_InputField>().enabled = true;
         propertiesPanel.Find("NPCLevelNum").GetComponent<TMP_InputField>().enabled = true;
-        propertiesPanel.Find("SizeX").GetComponent<TMP_InputField>().enabled = true;
-        propertiesPanel.Find("SizeY").GetComponent<TMP_InputField>().enabled = true;
         propertiesPanel.Find("NameInputField").GetComponent<TMP_InputField>().enabled = true;
+        propertiesPanel.Find("SizeButton").GetComponent<BoxCollider2D>().enabled = true;
 
-        uic.Find("LoadButton").GetComponent<BoxCollider2D>().enabled = true;
+        uic.Find("FileButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("TilesButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("ObjectsButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("PropertiesButton").GetComponent<BoxCollider2D>().enabled = true;
-        uic.Find("ExportButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("GroundButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("UndergroundButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("VentsButton").GetComponent<BoxCollider2D>().enabled = true;
         uic.Find("RoofButton").GetComponent<BoxCollider2D>().enabled = true;
-        uic.Find("ZonesButton").GetComponent<BoxCollider2D>().enabled = true;
+        uic.Find("ZoneObjectsButton").GetComponent<BoxCollider2D>().enabled = true;
     }
+    
 }

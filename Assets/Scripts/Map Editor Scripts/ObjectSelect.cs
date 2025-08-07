@@ -12,13 +12,20 @@ public class ObjectSelect : MonoBehaviour
 
     private void Update()
     {
-        if(mcs.isTouchingObject && Input.GetMouseButtonDown(0))
+        string currentPanel = GetComponent<PanelSelect>().currentPanel;
+        
+        if(currentPanel == "ObjectsPanel" && mcs.isTouchingObject && Input.GetMouseButtonDown(0))
         {
             if(selectedObj != null) 
             {
                 selectedObj.GetComponent<Image>().material = unlitMat;
             }
             SelectObject(mcs.touchedObject);
+        }
+
+        if(currentPanel != "ObjectsPanel" && hasSelected)
+        {
+            DeselectObject();
         }
     }
     public void SelectObject(GameObject obj)
@@ -27,7 +34,16 @@ public class ObjectSelect : MonoBehaviour
         selectedObj = obj;
         hasSelected = true;
 
+        highlight.SetActive(true);
         highlight.GetComponent<SpriteRenderer>().size = obj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
         highlight.GetComponent<BoxCollider2D>().size = obj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f) - new Vector2(.1f, .1f);
+    }
+    public void DeselectObject()
+    {
+        selectedObj.GetComponent<Image>().material = unlitMat;
+        selectedObj = null;
+        hasSelected = false;
+
+        highlight.SetActive(false);
     }
 }

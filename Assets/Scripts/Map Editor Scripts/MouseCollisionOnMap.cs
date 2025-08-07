@@ -16,6 +16,8 @@ public class MouseCollisionOnMap : MonoBehaviour
     public GameObject touchedObject;
     public bool isTouchingHandle;
     public GameObject touchedHandle;
+    public bool isTouchingMover;
+    public GameObject touchedMover;
 
     private void Update()
     {
@@ -33,6 +35,7 @@ public class MouseCollisionOnMap : MonoBehaviour
         {
             "Button",
             "Object",
+            "Mover",
             "Handle",
             "Menu"
         };
@@ -68,6 +71,10 @@ public class MouseCollisionOnMap : MonoBehaviour
                 case "Object":
                     isTouchingObject = true;
                     touchedObject = highestPriorityObject;
+                    break;
+                case "Mover":
+                    isTouchingMover = true;
+                    touchedMover = highestPriorityObject;
                     break;
                 case "Handle":
                     isTouchingHandle = true;
@@ -116,5 +123,7 @@ public class MouseCollisionOnMap : MonoBehaviour
         touchedObject = null;
         isTouchingHandle = false;
         touchedHandle = null;
+        isTouchingMover = false;
+        touchedMover = null;
     }
 }

@@ -34,6 +34,13 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                 }
             }
         }
+
+        if(!inDeleteMode && GetComponent<PanelSelect>().currentPanel == "ObjectsPanel" && !highlight.gameObject.activeInHierarchy && GetComponent<ObjectSelect>().hasSelected)
+        {
+            highlight.gameObject.SetActive(true);
+            highlight.GetComponent<SpriteRenderer>().size = GetComponent<ObjectSelect>().selectedObj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
+            highlight.GetComponent<BoxCollider2D>().size = GetComponent<ObjectSelect>().selectedObj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f) - new Vector2(.1f, .1f);
+        }
     }
     private void PlaceObject(string layer, GameObject objToPlace)
     {
@@ -45,6 +52,10 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                 canPlace = false;
                 break;
             }
+        }
+        if(GetComponent<TilePlacer>().layer == "Zones")
+        {
+            canPlace = false;
         }
         if (canPlace)
         {

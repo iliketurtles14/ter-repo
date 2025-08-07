@@ -1,7 +1,11 @@
 using UnityEngine;
 using System.IO;
+using System.IO.Compression;
 using TMPro;
 using System.Text.RegularExpressions;
+using NUnit.Framework;
+using System.Collections.Generic;
+using System;
 
 public class ExportMap : MonoBehaviour
 {
@@ -11,13 +15,13 @@ public class ExportMap : MonoBehaviour
 
     public void Export()
     {
-        string path = Application.streamingAssetsPath;
-
         text = "";
         SetProperties();
         SetRoutine();
         SetJobs();
         SetTiles();
+        SetZones();
+        ZipFiles();
     }
     private void SetProperties()
     {
@@ -27,7 +31,7 @@ public class ExportMap : MonoBehaviour
         text += "[Properties]\n";
         text += "Version=0.0.7\n";
         text += "MapName=" + properties.Find("NameInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Note=" + Regex.Unescape(uic.Find("NotePanel").Find("NoteInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "Note=" + Regex.Escape(uic.Find("NotePanel").Find("NoteInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Warden=" + uic.Find("NotePanel").Find("WardenInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Guards=" + properties.Find("GuardsNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Inmates=" + properties.Find("InmatesNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
@@ -37,13 +41,13 @@ public class ExportMap : MonoBehaviour
         text += "Icon=" + properties.Find("IconResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "NPCLevel=" + properties.Find("NPCLevelNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Grounds=" + properties.Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Size=" + properties.Find("SizeX").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "," + properties.Find("SizeY").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Hint1=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint1Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
-        text += "Hint2=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint2Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
-        text += "Hint3=" + Regex.Unescape(uic.Find("HintPanel").Find("Hint3Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
-        text += "Snowing=" + subMenuControllerScript.snowing;
-        text += "POWOutfits=" + subMenuControllerScript.powOutfits;
-        text += "StunRods=" + subMenuControllerScript.stunRods;
+        text += "Size=" + properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Hint1=" + Regex.Escape(uic.Find("HintPanel").Find("Hint1Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "Hint2=" + Regex.Escape(uic.Find("HintPanel").Find("Hint2Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "Hint3=" + Regex.Escape(uic.Find("HintPanel").Find("Hint3Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "Snowing=" + subMenuControllerScript.snowing + "\n";
+        text += "POWOutfits=" + subMenuControllerScript.powOutfits + "\n";
+        text += "StunRods=" + subMenuControllerScript.stunRods + "\n";
     }
     private void SetRoutine()
     {
@@ -52,31 +56,31 @@ public class ExportMap : MonoBehaviour
         Transform routineGrid2 = routinePanel.Find("RoutineInputGrid2");
 
         text += "\n";
-        text += "[Routine]";
-        text += "00:00 - " + routineGrid1.Find("00:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "01:00 - " + routineGrid1.Find("01:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "02:00 - " + routineGrid1.Find("02:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "03:00 - " + routineGrid1.Find("03:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "04:00 - " + routineGrid1.Find("04:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "05:00 - " + routineGrid1.Find("05:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "06:00 - " + routineGrid1.Find("06:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "07:00 - " + routineGrid1.Find("07:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "08:00 - " + routineGrid1.Find("08:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "09:00 - " + routineGrid1.Find("09:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "10:00 - " + routineGrid1.Find("10:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "11:00 - " + routineGrid1.Find("11:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "12:00 - " + routineGrid2.Find("12:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "13:00 - " + routineGrid2.Find("13:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "14:00 - " + routineGrid2.Find("14:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "15:00 - " + routineGrid2.Find("15:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "16:00 - " + routineGrid2.Find("16:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "17:00 - " + routineGrid2.Find("17:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "18:00 - " + routineGrid2.Find("18:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "19:00 - " + routineGrid2.Find("19:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "20:00 - " + routineGrid2.Find("20:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "21:00 - " + routineGrid2.Find("21:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "22:00 - " + routineGrid2.Find("22:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "23:00 - " + routineGrid2.Find("23:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+        text += "[Routine]\n";
+        text += "00=" + routineGrid1.Find("00:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "01=" + routineGrid1.Find("01:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "02=" + routineGrid1.Find("02:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "03=" + routineGrid1.Find("03:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "04=" + routineGrid1.Find("04:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "05=" + routineGrid1.Find("05:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "06=" + routineGrid1.Find("06:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "07=" + routineGrid1.Find("07:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "08=" + routineGrid1.Find("08:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "09=" + routineGrid1.Find("09:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "10=" + routineGrid1.Find("10:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "11=" + routineGrid1.Find("11:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "12=" + routineGrid2.Find("12:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "13=" + routineGrid2.Find("13:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "14=" + routineGrid2.Find("14:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "15=" + routineGrid2.Find("15:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "16=" + routineGrid2.Find("16:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "17=" + routineGrid2.Find("17:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "18=" + routineGrid2.Find("18:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "19=" + routineGrid2.Find("19:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "20=" + routineGrid2.Find("20:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "21=" + routineGrid2.Find("21:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "22=" + routineGrid2.Find("22:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "23=" + routineGrid2.Find("23:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
     }
     private void SetJobs()
     {
@@ -84,18 +88,18 @@ public class ExportMap : MonoBehaviour
         SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
 
         text += "\n";
-        text += "[Jobs]";
-        text += "StartingJob=" + jobPanel.Find("StartingJobInput").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
-        text += "Janitor=" + subMenuControllerScript.janitor;
-        text += "Gardening=" + subMenuControllerScript.gardening;
-        text += "Laundry=" + subMenuControllerScript.laundry;
-        text += "Kitchen=" + subMenuControllerScript.kitchen;
-        text += "Tailor=" + subMenuControllerScript.tailor;
-        text += "Woodshop=" + subMenuControllerScript.woodshop;
-        text += "Metalshop=" + subMenuControllerScript.metalshop;
-        text += "Deliveries=" + subMenuControllerScript.deliveries;
-        text += "Mailman=" + subMenuControllerScript.mailman;
-        text += "Library=" + subMenuControllerScript.library;
+        text += "[Jobs] \n";
+        text += "StartingJob=" + jobPanel.Find("StartingJobInput").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Janitor=" + subMenuControllerScript.janitor + "\n";
+        text += "Gardening=" + subMenuControllerScript.gardening + "\n";
+        text += "Laundry=" + subMenuControllerScript.laundry + "\n";
+        text += "Kitchen=" + subMenuControllerScript.kitchen + "\n";
+        text += "Tailor=" + subMenuControllerScript.tailor + "\n";
+        text += "Woodshop=" + subMenuControllerScript.woodshop + "\n";
+        text += "Metalshop=" + subMenuControllerScript.metalshop + "\n";
+        text += "Deliveries=" + subMenuControllerScript.deliveries + "\n";
+        text += "Mailman=" + subMenuControllerScript.mailman + "\n";
+        text += "Library=" + subMenuControllerScript.library + "\n";
     }
     private void SetTiles()
     {
@@ -104,49 +108,166 @@ public class ExportMap : MonoBehaviour
         text += "[GroundTiles]\n";
         foreach (Transform tile in tiles.Find("Ground"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[VentTiles]\n";
         foreach (Transform tile in tiles.Find("Vent"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if (tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[RoofTiles]\n";
         foreach (Transform tile in tiles.Find("Roof"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[UndergroundTiles]\n";
         foreach (Transform tile in tiles.Find("Underground"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[GroundObjects]\n";
         foreach (Transform tile in tiles.Find("GroundObjects"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[VentObjects]\n";
         foreach (Transform tile in tiles.Find("VentObjects"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[RoofObjects]\n";
         foreach (Transform tile in tiles.Find("RoofObjects"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
         text += "\n";
         text += "[UndergroundObjects]\n";
         foreach (Transform tile in tiles.Find("UndergroundObjects"))
         {
-            text += tile.name + " | " + (tile.position.x + .8f) / 1.6f + "," + (tile.position.y + .8f) / 1.6f + "\n";
+            if(tile.name != "empty")
+            {
+                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+            }
         }
+    }
+    private void SetZones()
+    {
+        text += "\n";
+        text += "[Zones]\n";
+
+        Transform zonesLayer = tiles.Find("Zones");
+        foreach(Transform zone in zonesLayer)
+        {
+            if(zone.name != "empty")
+            {
+                text += zone.name + "=" + " NW | " + Math.Round((zone.Find("NW").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("NW").position.y + 1.6f) / 1.6f, 1) + "; NE | " + Math.Round((zone.Find("NE").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("NE").position.y + 1.6f) / 1.6f, 1) + "; SW | " + Math.Round((zone.Find("SW").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("SW").position.y + 1.6f) / 1.6f, 1) + "; SE | " + Math.Round((zone.Find("SE").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("SE").position.y + 1.6f) / 1.6f, 1) + "\n";
+            }
+        }
+    }
+    private void ZipFiles()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons") + Path.DirectorySeparatorChar;
+
+        SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
+
+        string[] tilesPath = subMenuControllerScript.tilesPath;
+        string[] groundPath = subMenuControllerScript.groundPath;
+        string[] musicPath = subMenuControllerScript.musicPath;
+        string[] iconPath = subMenuControllerScript.iconPath;
+
+        List<string> filesToZip = new List<string>();
+
+        File.WriteAllText(path + "Data.ini", text); //make Data.ini file
+        filesToZip.Add(path + "Data.ini");
+
+        //copy files to location temporarily
+        try
+        {
+            File.Copy(tilesPath[0], path + "Tiles.png", true);
+            filesToZip.Add(path + "Tiles.png");
+        }
+        catch { }
+        try
+        {
+            File.Copy(groundPath[0], path + "Ground.png", true);
+            filesToZip.Add(path + "Ground.png");
+        }
+        catch { }
+        try
+        {
+            File.Copy(musicPath[0], path + "Music.mp3", true);
+            filesToZip.Add(path + "Music.mp3");
+        }
+        catch { }
+        try
+        {
+            File.Copy(iconPath[0], path + "Icon.png", true);
+            filesToZip.Add(path + "Icon.png");
+        }
+        catch { }
+
+        //zip files
+        string mapName = uic.Find("PropertiesPanel").Find("NameInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text;
+
+        using (FileStream zipToOpen = new FileStream(path + mapName + ".zip", FileMode.Create))
+        {
+            using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create))
+            {
+                foreach(string filePath in filesToZip)
+                {
+                    archive.CreateEntryFromFile(filePath, Path.GetFileName(filePath));
+                }
+            }
+        }
+
+        //delete others
+        if(File.Exists(path + "Tiles.png"))
+        {
+            File.Delete(path + "Tiles.png");
+        }
+        if (File.Exists(path + "Ground.png"))
+        {
+            File.Delete(path + "Ground.png");
+        }
+        if (File.Exists(path + "Music.mp3"))
+        {
+            File.Delete(path + "Music.mp3");
+        }
+        if (File.Exists(path + "Icon.png"))
+        {
+            File.Delete(path + "Icon.png");
+        }
+        File.Delete(path + "Data.ini");
+
+        //rename zip to zmap
+        string newPath = Path.ChangeExtension(path + mapName + ".zip", ".zmap");
+        File.Move(path + mapName + ".zip", newPath);
     }
 }
