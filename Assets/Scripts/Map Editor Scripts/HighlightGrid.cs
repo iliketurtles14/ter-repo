@@ -15,8 +15,8 @@ public class HighlightGrid : MonoBehaviour
     private void Update()
     {
         float cellSize = grid.cellSize; // Should be 1.6f
-        int columns = grid.width;
-        int rows = grid.height;
+        int columns = grid.sizeX;
+        int rows = grid.sizeY;
         Vector3 offset = new Vector3(-0.8f, -0.8f, 0f);
 
         // Convert mouse position to world, then to grid-local coordinates

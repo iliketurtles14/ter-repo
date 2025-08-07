@@ -23,6 +23,8 @@ public class TilePlacer : MonoBehaviour
     }
     private void Update()
     {
+        string currentPanel = GetComponent<PanelSelect>().currentPanel;
+
         switch (layerControllerScript.currentLayer)
         {
             case 0:
@@ -42,27 +44,8 @@ public class TilePlacer : MonoBehaviour
                 break;
         }
 
-        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected)
+        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones")
         {
-            switch (layerControllerScript.currentLayer)
-            {
-                case 0:
-                    layer = "Underground";
-                    break;
-                case 1:
-                    layer = "Ground";
-                    break;
-                case 2:
-                    layer = "Vent";
-                    break;
-                case 3:
-                    layer = "Roof";
-                    break;
-                case 4:
-                    layer = "Zones";
-                    break;
-            }
-
             foreach(Transform tile in tiles.Find(layer))
             {
                 if(tile.position == highlight.position)
@@ -82,15 +65,22 @@ public class TilePlacer : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !inDeleteMode)
+        if (Input.GetKeyDown(KeyCode.Space) && !inDeleteMode && (currentPanel == "TilesPanel" || currentPanel == "ObjectsPanel"))
         {
             inDeleteMode = true;
 
+            highlight.gameObject.SetActive(true);
+            highlight.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
             highlight.GetComponent<SpriteRenderer>().color = new Color(255f / 255f, 0, 0, 150f / 255f);
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && inDeleteMode)
+        else if((Input.GetKeyDown(KeyCode.Space) && inDeleteMode) || (currentPanel != "TilesPanel" && currentPanel != "ObjectsPanel"))
         {
             inDeleteMode = false;
+
+            if (!GetComponent<TileSelect>().hasSelected)
+            {
+                highlight.gameObject.SetActive(false);
+            }
 
             highlight.GetComponent<SpriteRenderer>().color = new Color(255f / 255f, 220f / 255f, 0, 150f / 255f);
         }

@@ -7,25 +7,20 @@ using UnityEditor;
 public class RuntimeGrid : MonoBehaviour
 {
     public float cellSize = 1f;
-    public int width = 20;
-    public int height = 20;
+    public int sizeX;
+    public int sizeY;
     public Material lineMaterial;
 
     void Start()
     {
-        DrawGrid();
+        DrawGrid(50, 50);
     }
 
-    void Update()
+    public void DrawGrid(int width, int height)
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            DrawGrid();
-        }
-    }
-
-    public void DrawGrid()
-    {
+        sizeX = width;
+        sizeY = height;
+        
         ClearGrid();
 
         Vector3 offset = new Vector3(-0.8f, -0.8f, 0f);
@@ -69,6 +64,6 @@ public class RuntimeGrid : MonoBehaviour
         lr.material = lineMaterial;
         lr.startWidth = lr.endWidth = 0.05f;
         lr.useWorldSpace = true;
-        lr.sortingOrder = 100;
+        lr.sortingOrder = 4;
     }
 }

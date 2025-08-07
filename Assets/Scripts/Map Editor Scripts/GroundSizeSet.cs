@@ -15,8 +15,8 @@ public class GroundSizeSet : MonoBehaviour
     }
     public void SetSize()
     {
-        int x = gridLines.GetComponent<RuntimeGrid>().width;
-        int y = gridLines.GetComponent<RuntimeGrid>().height;
+        int x = gridLines.GetComponent<RuntimeGrid>().sizeX;
+        int y = gridLines.GetComponent<RuntimeGrid>().sizeY;
 
         transform.Find("Ground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
         transform.Find("Ground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
