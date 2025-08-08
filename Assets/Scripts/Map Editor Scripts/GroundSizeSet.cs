@@ -18,8 +18,11 @@ public class GroundSizeSet : MonoBehaviour
         int x = gridLines.GetComponent<RuntimeGrid>().sizeX;
         int y = gridLines.GetComponent<RuntimeGrid>().sizeY;
 
-        transform.Find("Ground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
-        transform.Find("Ground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
+        if(transform.Find("Ground").GetComponent<SpriteRenderer>().drawMode == SpriteDrawMode.Tiled)
+        {
+            transform.Find("Ground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
+            transform.Find("Ground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
+        }
         transform.Find("Underground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
         transform.Find("Underground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
         transform.Find("Vent").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);

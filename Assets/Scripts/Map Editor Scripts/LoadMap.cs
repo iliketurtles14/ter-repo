@@ -3,14 +3,24 @@ using UnityEngine;
 using System.IO;
 using System.IO.Compression;
 using System.Collections;
+using System.Linq;
 using UnityEngine.Networking;
 using TMPro;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System;
 
 public class LoadMap : MonoBehaviour
 {
     public Transform uic;
+    public Transform tilesParent;
+    public Transform groundsParent;
+
+    private DataSender senderScript;
+    private GetGivenData givenDataScript;
     
     public AudioClip music = null;
     public Sprite tiles = null;
@@ -18,8 +28,22 @@ public class LoadMap : MonoBehaviour
     public Sprite icon = null;
     public string[] data = null;
 
+    private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
+    {
+        { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
+        { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
+        { "irongate", 8 }, { "jungle", 9 }, { "pcpen", 10 }, { "perks", 11 },
+        { "sanpancho", 12 }, { "shanktonstatepen", 13 }, { "SS", 14 }, { "stalagflucht", 15 },
+        { "TOL", 16 }, { "tutorial", 17 }
+    };
+
     public Sprite checkedBox;
     public Sprite uncheckedBox;
+    private void Start()
+    {
+        senderScript = DataSender.instance;
+        givenDataScript = GetGivenData.instance;
+    }
     public void StartLoad()
     {
         ExtensionFilter[] extensions = new ExtensionFilter[]
@@ -58,12 +82,25 @@ public class LoadMap : MonoBehaviour
         }
         if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
         {
-            ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3"));
+            StartCoroutine(ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3")));
             File.Delete(Path.Combine(extractPath, "Music.mp3"));
         }
 
         LoadProperties();
         LoadTiles();
+        LoadObjects();
+        LoadGround();
+
+        //set sizes of ground and grid
+        string rawSizeStr = GetINIVar("Properties", "Size", data);
+        string[] parts = rawSizeStr.Split('x');
+        int gridX = Convert.ToInt32(parts[0]);
+        int gridY = Convert.ToInt32(parts[1]);
+
+        GetComponent<RuntimeGrid>().DrawGrid(gridX, gridY);
+        GetComponent<GroundSizeSet>().SetSize();
+
+        //DO ZONES
     }
     private Sprite ConvertPNGToSprite(string path)
     {
@@ -183,7 +220,277 @@ public class LoadMap : MonoBehaviour
     }
     private void LoadTiles()
     {
+        Texture2D tileset;
+        string tilesetChoice = GetINIVar("Properties", "Tileset", data);
 
+        if(tilesetChoice != "Custom")
+        {
+            int prisonIndex = tilesetDict[tilesetChoice];
+            tileset = givenDataScript.tileTextureList[prisonIndex];
+        }
+        else
+        {
+            tileset = tiles.texture;
+        }
+
+        GetComponent<TileSpriteSetter>().SetSprites(tileset);
+        
+        Dictionary<string, string> groundTiles = GetINISet("GroundTiles", data);
+        Dictionary<string, string> ventTiles = GetINISet("VentTiles", data);
+        Dictionary<string, string> roofTiles = GetINISet("RoofTiles", data);
+        Dictionary<string, string> undergroundTiles = GetINISet("UndergroundTiles", data);
+
+        List<Dictionary<string, string>> dictList = new List<Dictionary<string, string>>()
+        {
+            groundTiles, ventTiles, roofTiles, undergroundTiles
+        };
+
+        foreach(Dictionary<string, string> dict in dictList)
+        {
+            string layer = null;
+            if(dict == groundTiles)
+            {
+                layer = "Ground";
+            }
+            else if(dict == ventTiles)
+            {
+                layer = "Vent";
+            }
+            else if(dict == roofTiles)
+            {
+                layer = "Roof";
+            }
+            else if(dict == undergroundTiles)
+            {
+                layer = "Underground";
+            }
+            
+            for (int i = 0; i < dict.Count; i++)
+            {
+                var pair = dict.ElementAt(i);
+                string rawPos = pair.Value;
+                string[] parts = rawPos.Split(',');
+
+                string name = pair.Key;
+                Vector2 tilePos = new Vector2(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+
+                //convert tilePos to actual world space
+                float tilePosX = (tilePos.x * 1.6f) - 1.6f;
+                float tilePosY = (tilePos.y * 1.6f) - 1.6f;
+
+                tilePos = new Vector2(tilePosX, tilePosY);
+
+                PlaceTile(layer, tilePos, name);
+            }
+        }
+
+        for (int i = 0; i < groundTiles.Count; i++)
+        {
+            var pair = groundTiles.ElementAt(i);
+            string rawPos = pair.Value;
+            string[] parts = rawPos.Split(',');
+
+            string name = pair.Key;
+            Vector2 tilePos = new Vector2(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+
+            //convert tilePos to actual world space
+            float tilePosX = (tilePos.x * 1.6f) - 1.6f;
+            float tilePosY = (tilePos.y * 1.6f) - 1.6f;
+
+            tilePos = new Vector2(tilePosX, tilePosY);
+
+            PlaceTile("Ground", tilePos, name);
+        }
+    }
+    private void LoadObjects()
+    {
+        Dictionary<string, string> groundObjects = GetINISet("GroundObjects", data);
+        Dictionary<string, string> ventObjects = GetINISet("VentObjects", data);
+        Dictionary<string, string> roofObjects = GetINISet("RoofObjects", data);
+        Dictionary<string, string> undergroundObjects = GetINISet("UndergroundObjects", data);
+
+        List<Dictionary<string, string>> dictList = new List<Dictionary<string, string>>()
+        {
+            groundObjects, ventObjects, roofObjects, undergroundObjects
+        };
+
+        foreach(Dictionary<string, string> dict in dictList)
+        {
+            string layer = null;
+            if (dict == groundObjects)
+            {
+                layer = "Ground";
+            }
+            else if (dict == ventObjects)
+            {
+                layer = "Vent";
+            }
+            else if (dict == roofObjects)
+            {
+                layer = "Roof";
+            }
+            else if (dict == undergroundObjects)
+            {
+                layer = "Underground";
+            }
+            
+            for(int i = 0; i < dict.Count; i++)
+            {
+                var pair = dict.ElementAt(i);
+                string rawPos = pair.Value;
+                string[] parts = rawPos.Split(',');
+
+                string name = pair.Key;
+                Vector2 objPos = new Vector2(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+
+                //convert objPos to actual world space
+                float objPosX = (objPos.x * 1.6f) - 1.6f;
+                float objPosY = (objPos.y * 1.6f) - 1.6f;
+
+                objPos = new Vector2 (objPosX, objPosY);
+
+                PlaceObj(layer, objPos, name);
+            }
+        }
+    }
+    private void LoadGround()
+    {
+        Texture2D groundTex;
+        string groundChoice = GetINIVar("Properties", "Ground", data);
+
+        if(groundChoice != "Custom")
+        {
+            int prisonIndex = tilesetDict[groundChoice];
+            groundTex = givenDataScript.groundTextureList[prisonIndex];
+        }
+        else
+        {
+            groundTex = ground.texture;
+        }
+
+        groundTex.filterMode = FilterMode.Point;
+
+        bool isTiled = false;
+        if (groundChoice != "BC" && groundChoice != "CCL" && groundChoice != "DTAF" && groundChoice != "Custom")
+        {
+            groundTex = textureCornerGet(groundTex, 16, 16);
+            isTiled = true;
+        }
+
+        Transform groundTransform = groundsParent.Find("Ground");
+
+        Sprite groundSprite = Sprite.Create(groundTex, new Rect(0, 0, groundTex.width, groundTex.height), new Vector2(.5f, .5f), 100.0f);
+
+        groundTransform.GetComponent<SpriteRenderer>().sprite = groundSprite;
+
+        if (isTiled)
+        {
+            groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Tiled;
+        }
+        else
+        {
+            groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+            groundTransform.GetComponent<SpriteRenderer>().size = new Vector2(groundTex.width * .01f, groundTex.height * .01f);
+        }
+    }
+    private void LoadZones()
+    {
+        //float tilePosX = (tilePos.x * 1.6f) - 1.6f;
+
+        Dictionary<string, string> zoneSet = GetINISet("Zones", data);
+
+        for(int i = 0; i < zoneSet.Count; i++)
+        {
+            var pair = zoneSet.ElementAt(i);
+            string zoneName = pair.Key;
+            string zoneVars = pair.Value;
+
+            string[] zoneParts = zoneVars.Split("; ");
+        }
+    }
+    private void PlaceTile(string layer, Vector2 pos, string name)
+    {        
+        List<Sprite> sprites = GetComponent<TileSpriteSetter>().sprites;
+
+        int tileIndex = Convert.ToInt32(name.Replace("tile", ""));
+        Sprite tileSprite = sprites[tileIndex];
+
+        GameObject placedTile = new GameObject();
+        placedTile.AddComponent<SpriteRenderer>();
+        placedTile.AddComponent<BoxCollider2D>();
+        placedTile.name = name;
+        placedTile.transform.position = pos;
+        placedTile.transform.SetParent(tilesParent.Find(layer));
+        placedTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+        placedTile.GetComponent<SpriteRenderer>().sprite = tileSprite;
+        placedTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+        placedTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+        placedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+    }
+    private void PlaceObj(string layer, Vector2 pos, string name)
+    {
+        Sprite objSprite = null;
+        foreach(Transform obj in uic.Find("ObjectsPanel"))
+        {
+            if(obj.name == name)
+            {
+                objSprite = obj.GetComponent<Image>().sprite;
+                break;
+            }
+        }
+        
+        GameObject placedObj = new GameObject();
+        placedObj.AddComponent<SpriteRenderer>();
+        placedObj.AddComponent<BoxCollider2D>();
+        placedObj.name = name;
+        placedObj.transform.position = pos;
+        placedObj.transform.SetParent(tilesParent.Find(layer));
+        placedObj.GetComponent<BoxCollider2D>().size = (objSprite.textureRect.size * new Vector2(.1f, .1f)) - new Vector2(.1f, .1f); //texture padding remove (for the object select shader)
+        placedObj.GetComponent<SpriteRenderer>().sprite = GetComponent<ObjectPlacer>().RemovePaddingToSprite(objSprite, 1);
+        placedObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+        placedObj.GetComponent<SpriteRenderer>().size = (objSprite.textureRect.size * new Vector2(.1f, .1f)) - new Vector2(.1f, .1f);
+        placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+    }
+    public Dictionary<string, string> GetINISet(string header, string[] file)
+    {
+        int startLine = 0;
+        int endLine = 0;
+
+        for(int i = 0; i < file.Length; i++) //get the start and end line indexes
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                startLine = i;
+                for(int j = i; j < file.Length - i; j++)
+                {
+                    if (file[j].Contains('[') && file[j].Contains(']'))
+                    {
+                        endLine = j;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if(endLine == 0) //if at the end of the file and no header after the start line
+        {
+            endLine = file.Length - 1;
+        }
+        
+        Dictionary<string, string> setDict = new Dictionary<string, string>();
+
+        for(int i = startLine; i < endLine; i++) //add the stuff to the dictionary
+        {
+            if (file[i].Contains('='))
+            {
+                string[] parts = file[i].Split('=');
+
+                setDict.Add(parts[0], parts[1]);
+            }
+        }
+
+        return setDict;
     }
     public string GetINIVar(string header, string varName, string[] file)
     {
@@ -198,8 +505,10 @@ public class LoadMap : MonoBehaviour
                     if (file[j].Contains(varName))
                     {
                         line = file[j];
+                        break;
                     }
                 }
+                break;
             }
         }
 
@@ -211,5 +520,15 @@ public class LoadMap : MonoBehaviour
         string[] parts = line.Split('=');
 
         return parts[1];
+    }
+    private Texture2D textureCornerGet(Texture2D source, int sizeX, int sizeY)
+    {
+        Color[] pixels = source.GetPixels(0, 0, sizeX, sizeY);
+
+        Texture2D cornerTex = new Texture2D(sizeX, sizeY, source.format, false);
+        cornerTex.SetPixels(pixels);
+        cornerTex.Apply();
+
+        return cornerTex;
     }
 }

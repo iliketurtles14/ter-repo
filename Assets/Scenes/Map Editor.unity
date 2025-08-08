@@ -12527,7 +12527,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328373070}
-  - component: {fileID: 328373069}
   - component: {fileID: 328373071}
   - component: {fileID: 328373073}
   - component: {fileID: 328373072}
@@ -12549,20 +12548,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &328373069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328373068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025f892b4d3448e489287c971a208c30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sourceTexture: {fileID: 2800000, guid: d4f0f60e6dc032c4d8257b1815f15be7, type: 3}
-  sprites: []
 --- !u!4 &328373070
 Transform:
   m_ObjectHideFlags: 0
@@ -12590,9 +12575,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3793ee976fa6b74bb71e0a250d054bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteSplitterScript: {fileID: 328373069}
   tilesPanel: {fileID: 1574169201}
   tileObject: {fileID: 8910540913368025400, guid: 9a27ba27f06d17f4da2c81806a8a8961, type: 3}
+  devTiles: {fileID: 2800000, guid: d4f0f60e6dc032c4d8257b1815f15be7, type: 3}
+  sprites: []
 --- !u!114 &328373072
 MonoBehaviour:
   m_ObjectHideFlags: 0

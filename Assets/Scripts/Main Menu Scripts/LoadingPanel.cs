@@ -32,7 +32,7 @@ public class LoadingPanel : MonoBehaviour
     public void IncrementLoadCount()
     {
         loadCount++;
-        currentPercentage = Mathf.RoundToInt((loadCount / 79f) * 100);
+        currentPercentage = Mathf.RoundToInt((loadCount / 97f) * 100);
         Transform loadBarTransform = transform.Find("LoadBar");
         int childCount = loadBarTransform.childCount;
 
@@ -50,7 +50,7 @@ public class LoadingPanel : MonoBehaviour
                 childImage.sprite = clearSprite;
             }
         }
-        if (loadCount == 79)
+        if (loadCount == 97)
         {
             titlePanel.transform.Find("PlayButton").GetComponent<BoxCollider2D>().enabled = true;
             titlePanel.transform.Find("OptionsButton").GetComponent<BoxCollider2D>().enabled = true;
