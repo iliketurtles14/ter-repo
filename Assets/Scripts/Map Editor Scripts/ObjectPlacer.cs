@@ -72,7 +72,7 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
             placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
     }
-    public static Sprite RemovePaddingToSprite(Sprite paddedSprite, int padding)
+    public Sprite RemovePaddingToSprite(Sprite paddedSprite, int padding)
     {
         // Get the original padded texture and rect
         Texture2D paddedTexture = paddedSprite.texture;

@@ -258,7 +258,7 @@ public class ZonePlacer : MonoBehaviour
                         zoneObj.Find("NW").position = newHandlePos;
                     }
                     //making smaller
-                    if (mousePos.y <= handle.position.y - .8f && zoneSize.y     ) //check for negative y
+                    if (mousePos.y <= handle.position.y - .8f && zoneSize.y >= .31f) //check for negative y
                     {
                         //change pos
                         newPos = zoneObj.position + negY;

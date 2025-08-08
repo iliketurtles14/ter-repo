@@ -7,11 +7,13 @@ using System.Collections;
 using System;
 using ImageMagick;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class GetGivenData : MonoBehaviour
 {
     public DataSender senderScript;
     public LoadingPanel loadScript;
+    public TileDecrypt tileDecryptScript;
 
     public List<Texture2D> groundTextureList = new List<Texture2D>();
     public List<Texture2D> tileTextureList = new List<Texture2D>();
@@ -21,6 +23,8 @@ public class GetGivenData : MonoBehaviour
     private string tilePath;
     private string mainPath;
 
+    public static GetGivenData instance { get; private set; }
+
     public async void Start()
     {
         //load from ini file
@@ -28,7 +32,7 @@ public class GetGivenData : MonoBehaviour
         IniFile iniFile = new IniFile(configPath);
         mainPath = iniFile.Read("GameFolderPath", "Settings");
         groundPath = mainPath + "/Data/images";
-        tilePath = mainPath + "/Data/images/custom";
+        tilePath = mainPath + "/Data/images";
 
         await LoadGroundTextures();
         await LoadTileTextures();
@@ -91,13 +95,26 @@ public class GetGivenData : MonoBehaviour
     {
         HashSet<string> validFiles = new HashSet<string>
     {
-        "tiles_cus_perks.gif", "tiles_cus_stalagflucht.gif", "tiles_cus_shanktonstatepen.gif",
-        "tiles_cus_jungle.gif", "tiles_cus_sanpancho.gif", "tiles_cus_irongate.gif"
+        "tiles_alca.gif", "tiles_BC.gif", "tiles_campepsilon.gif", "tiles_CCL.gif",
+        "tiles_DTAF.gif", "tiles_EA.gif", "tiles_escapeteam.gif", "tiles_fortbamford.gif",
+        "tiles_irongate.gif", "tiles_jungle.gif", "tiles_pcpen.gif", "tiles_perks.gif",
+        "tiles_sanpancho.gif", "tiles_shanktonstatepen.gif", "tiles_SS.gif", "tiles_stalagflucht.gif",
+        "tiles_TOL.gif", "tiles_tutorial.gif"
     };
 
         foreach (string validFile in validFiles)
         {
-            string filePath = Path.Combine(tilePath, validFile);
+            //decrypt
+            tileDecryptScript.DecryptTileset(Path.Combine(tilePath, validFile));
+            loadScript.LogLoad($"Successfully decrypted {validFile}");
+
+            string encryptedPath = Path.Combine(tilePath, validFile);
+            string[] parts = encryptedPath.Split('.');
+            string part1 = parts[0] + "_decr.";
+            string part2 = parts[1];
+            string decryptedPath = part1 + part2;
+
+            string filePath = decryptedPath;
             if (File.Exists(filePath))
             {
                 try
@@ -108,6 +125,8 @@ public class GetGivenData : MonoBehaviour
                     {
                         tileTextureList.Add(texture);
                         loadScript.LogLoad($"Successfully loaded texture from {filePath}");
+
+                        File.Delete(filePath);
                     }
                     else
                     {
@@ -193,6 +212,18 @@ public class GetGivenData : MonoBehaviour
             {
                 Debug.LogError($"Failed to load audio clip from {filePath}: {www.error}");
             }
+        }
+    }
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
