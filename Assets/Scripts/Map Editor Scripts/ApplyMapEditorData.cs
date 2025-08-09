@@ -566,5 +566,8 @@ public class ApplyMapEditorData : MonoBehaviour
         //submenucontroller checkbox sprites
         GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
         GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];
+        //loadmap checkbox sprites
+        GetComponent<LoadMap>().uncheckedBox = UISprites[447];
+        GetComponent<LoadMap>().checkedBox = UISprites[448];
     }
 }

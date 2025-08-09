@@ -159,10 +159,12 @@ public class GetGivenData : MonoBehaviour
 
             // Load the PNG data into a Texture2D
             Texture2D texture = new Texture2D(2, 2);
+
+            texture.filterMode = FilterMode.Point;
             if (texture.LoadImage(pngData))
             {
                 // Replace white pixels with transparency
-                ReplaceWhiteWithTransparency(texture);
+                //ReplaceWhiteWithTransparency(texture);
                 return texture;
             }
             else

@@ -1,0 +1,43 @@
+CUSTOM TILESET KEY
+------------------
+
+Use this to help create custom tilesets.
+If you edit this file, it will NOT change how the game reads custom tilesets.
+In case of emergency: download this file again here: https://pastebin.com/eFdEN1SZ
+Assume all tiles produce shadows and have collision unless stated otherwise.
+
+Chippable
+	1-8
+
+Cuttable
+	9-16
+	
+Bars (Stonger fences)
+	17-18
+
+Electric Fences
+	19-20
+
+Wall/Fence/Etc. Corners (These are separate from Obstacles, as these have special shadow properties)
+	NW: 17-20
+	NE: 21-24
+	SW: 25-28
+	SE: 29-32
+
+Floors (No collision or shadow)
+	33-48
+
+Obstacles
+	49-72
+	
+Roof Ledges
+	Horizontal: 73
+	Vertical: 74
+	
+Roof Floors (No collision)
+	High: 75
+	Medium: 76
+	Low: 77
+
+Obstacles - No Shadows
+	78-100

@@ -16,6 +16,11 @@ public class TileSpriteSetter : MonoBehaviour
     }
     public void SetSprites(Texture2D tileset)
     {
+        foreach(Transform tile in tilesPanel.Find("TileGrid"))
+        {
+            Destroy(tile.gameObject);
+        }
+
         SplitTexture(tileset);
         
         int i = 0;
