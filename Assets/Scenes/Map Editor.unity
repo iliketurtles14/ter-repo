@@ -12541,6 +12541,7 @@ GameObject:
   - component: {fileID: 328373082}
   - component: {fileID: 328373083}
   - component: {fileID: 328373084}
+  - component: {fileID: 328373085}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -12811,6 +12812,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles: {fileID: 794001620}
   uic: {fileID: 784611932}
+--- !u!114 &328373085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328373068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a939c9cf2b5c7a345baa9051330227c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uic: {fileID: 784611932}
+  tilesParent: {fileID: 794001620}
+  groundsParent: {fileID: 1999153954}
+  gridLines: {fileID: 2084084937}
+  music: {fileID: 0}
+  tiles: {fileID: 0}
+  ground: {fileID: 0}
+  icon: {fileID: 0}
+  data: []
+  checkedBox: {fileID: 0}
+  uncheckedBox: {fileID: 0}
 --- !u!1 &336659943
 GameObject:
   m_ObjectHideFlags: 0

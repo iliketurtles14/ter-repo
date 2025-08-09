@@ -103,6 +103,8 @@ public class ExportMap : MonoBehaviour
     }
     private void SetTiles()
     {
+        Debug.Log("Setting tiles...");
+
         text += "\n";
         
         text += "[GroundTiles]\n";
@@ -110,7 +112,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -119,7 +121,7 @@ public class ExportMap : MonoBehaviour
         {
             if (tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -128,7 +130,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -137,7 +139,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -146,7 +148,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -155,7 +157,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -164,7 +166,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
         text += "\n";
@@ -173,7 +175,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + (tile.position.x + 1.6f) / 1.6f + "," + (tile.position.y + 1.6f) / 1.6f + "\n";
+                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
     }
@@ -187,7 +189,12 @@ public class ExportMap : MonoBehaviour
         {
             if(zone.name != "empty")
             {
-                text += zone.name + "=" + " NW | " + Math.Round((zone.Find("NW").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("NW").position.y + 1.6f) / 1.6f, 1) + "; NE | " + Math.Round((zone.Find("NE").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("NE").position.y + 1.6f) / 1.6f, 1) + "; SW | " + Math.Round((zone.Find("SW").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("SW").position.y + 1.6f) / 1.6f, 1) + "; SE | " + Math.Round((zone.Find("SE").position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((zone.Find("SE").position.y + 1.6f) / 1.6f, 1) + "\n";
+                float posX = Convert.ToSingle(Math.Round((zone.position.x + 1.6f) / 1.6f, 1));
+                float posY = Convert.ToSingle(Math.Round((zone.position.y + 1.6f) / 1.6f, 1));
+                float sizeX = Convert.ToSingle(Math.Round(zone.GetComponent<SpriteRenderer>().size.x / .16f, 1));
+                float sizeY = Convert.ToSingle(Math.Round(zone.GetComponent<SpriteRenderer>().size.y / .16f, 1));
+                
+                text += zone.name + "=" + posX + "," + posY + ";" + sizeX + "x" + sizeY + "\n";
             }
         }
     }
