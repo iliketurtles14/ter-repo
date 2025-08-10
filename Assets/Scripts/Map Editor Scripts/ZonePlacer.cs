@@ -485,7 +485,7 @@ public class ZonePlacer : MonoBehaviour
         GameObject newZone = Instantiate(Resources.Load<GameObject>("MapEditorPrefabs/ZoneObject"), placePos, Quaternion.identity, zonesLayer);
         newZone.name = name;
         newZone.transform.Find("NameText").GetComponent<TextMeshPro>().text = name;
-        newZone.transform.Find("NameText").GetComponent<MeshRenderer>().sortingOrder = 6;
+        newZone.transform.Find("NameText").GetComponent<MeshRenderer>().sortingOrder = 10;
 
         if (inDeleteMode)
         {

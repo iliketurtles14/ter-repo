@@ -69,7 +69,15 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
             placedObj.GetComponent<SpriteRenderer>().sprite = RemovePaddingToSprite(objToPlace.GetComponent<Image>().sprite, 1);
             placedObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
             placedObj.GetComponent<SpriteRenderer>().size = highlight.GetComponent<BoxCollider2D>().size + new Vector2(.1f, .1f);
-            placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            
+            if(GetComponent<TilePlacer>().layer == "Ground"  || GetComponent<TilePlacer>().layer == "Underground")
+            {
+                placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            }
+            else
+            {
+                placedObj.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
         }
     }
     public Sprite RemovePaddingToSprite(Sprite paddedSprite, int padding)

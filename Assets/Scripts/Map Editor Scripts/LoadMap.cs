@@ -429,7 +429,7 @@ public class LoadMap : MonoBehaviour
             Transform mover = zoneObj.transform.Find("Mover");
             Transform nameText = zoneObj.transform.Find("NameText");
             nameText.GetComponent<TextMeshPro>().text = zoneName;
-            nameText.GetComponent<MeshRenderer>().sortingOrder = 6;
+            nameText.GetComponent<MeshRenderer>().sortingOrder = 10;
 
             float posX = Convert.ToSingle(zoneParts[0].Split(',')[0]) * 1.6f - 1.6f;
             float posY = Convert.ToSingle(zoneParts[0].Split(',')[1]) * 1.6f - 1.6f;
@@ -467,16 +467,26 @@ public class LoadMap : MonoBehaviour
         placedTile.GetComponent<SpriteRenderer>().sprite = tileSprite;
         placedTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         placedTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
-        placedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        if(layer == "Ground" || layer == "Underground")
+        {
+            placedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+        else
+        {
+            placedTile.GetComponent<SpriteRenderer>().sortingOrder = 4;
+        }
     }
     private void PlaceObj(string layer, Vector2 pos, string name)
     {
         Sprite objSprite = null;
+        GameObject objToPlace = null;
         foreach(Transform obj in uic.Find("ObjectsPanel").Find("ObjectsScrollRect").Find("Viewport").Find("Content"))
         {
             if(obj.name == name)
             {
                 objSprite = obj.GetComponent<Image>().sprite;
+                objToPlace = obj.gameObject;
                 break;
             }
         }
@@ -487,11 +497,19 @@ public class LoadMap : MonoBehaviour
         placedObj.name = name;
         placedObj.transform.position = pos;
         placedObj.transform.SetParent(tilesParent.Find(layer));
-        placedObj.GetComponent<BoxCollider2D>().size = (objSprite.textureRect.size * new Vector2(.1f, .1f)) - new Vector2(.2f, .2f); //texture padding remove (for the object select shader)
+        placedObj.GetComponent<BoxCollider2D>().size = objToPlace.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
         placedObj.GetComponent<SpriteRenderer>().sprite = GetComponent<ObjectPlacer>().RemovePaddingToSprite(objSprite, 1);
         placedObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
-        placedObj.GetComponent<SpriteRenderer>().size = (objSprite.textureRect.size * new Vector2(.1f, .1f)) - new Vector2(.2f, .2f);
-        placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        placedObj.GetComponent<SpriteRenderer>().size = objToPlace.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
+        
+        if(layer == "GroundObjects" || layer == "UndergroundObjects")
+        {
+            placedObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        }
+        else
+        {
+            placedObj.GetComponent<SpriteRenderer>().sortingOrder = 5;
+        }
     }
     public List<string> GetINISet(string header, string[] file)
     {
