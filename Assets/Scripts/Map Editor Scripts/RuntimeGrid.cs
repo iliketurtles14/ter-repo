@@ -64,6 +64,6 @@ public class RuntimeGrid : MonoBehaviour
         lr.material = lineMaterial;
         lr.startWidth = lr.endWidth = 0.05f;
         lr.useWorldSpace = true;
-        lr.sortingOrder = 4;
+        lr.sortingOrder = 8;
     }
 }

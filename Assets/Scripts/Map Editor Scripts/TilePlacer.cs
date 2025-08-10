@@ -109,6 +109,14 @@ public class TilePlacer : MonoBehaviour
         placedTile.GetComponent<SpriteRenderer>().sprite = tileToPlace.GetComponent<Image>().sprite;
         placedTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         placedTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
-        placedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        if(layer == "Ground" || layer == "Underground")
+        {
+            placedTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        }
+        else
+        {
+            placedTile.GetComponent<SpriteRenderer>().sortingOrder = 4;
+        }
     }
 }

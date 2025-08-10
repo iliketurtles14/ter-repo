@@ -21,8 +21,16 @@ public class GroundSizeSet : MonoBehaviour
         if(transform.Find("Ground").GetComponent<SpriteRenderer>().drawMode == SpriteDrawMode.Tiled)
         {
             transform.Find("Ground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
+            transform.Find("Ground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
         }
-        transform.Find("Ground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
+        else
+        {
+            float sizeX = transform.Find("Ground").GetComponent<SpriteRenderer>().size.x;
+            float sizeY = transform.Find("Ground").GetComponent<SpriteRenderer>().size.y;
+            
+            transform.Find("Ground").position = new Vector2(-.8f, -.8f);
+            transform.Find("Ground").position += new Vector3(sizeX / 2f, sizeY / 2f, 0);
+        }
         transform.Find("Underground").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
         transform.Find("Underground").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
         transform.Find("Vent").GetComponent<SpriteRenderer>().size = new Vector2(.16f * x, .16f * y);
