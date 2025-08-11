@@ -334,6 +334,24 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "BedHorizontal":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[265];
                     break;
+                case "PlayerBedVertical":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[262];
+                    break;
+                case "PlayerBedHorizontal":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[267];
+                    break;
+                case "Sniper":
+                    obj.GetComponent<Image>().sprite = NPCSprites[1449];
+                    break;
+                case "CheckpointCharlie":
+                    obj.GetComponent<Image>().sprite = NPCSprites[3];
+                    break;
+                case "VisitorPlayer":
+                    obj.GetComponent<Image>().sprite = NPCSprites[397];
+                    break;
+                case "VisitorNPC":
+                    obj.GetComponent<Image>().sprite = NPCSprites[557];
+                    break;
                 case "ETTank":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[268];
                     break;
@@ -543,7 +561,7 @@ public class ApplyMapEditorData : MonoBehaviour
                 obj.name != "GuardShower" && obj.name != "GuardWaypoint" && obj.name != "InmateRollcall" &&
                 obj.name != "InmateCanteen" && obj.name != "InmateWaypoint" && obj.name != "InmateShower" && 
                 !obj.name.StartsWith("Jeep") && obj.name != "JobWaypoint" && obj.name != "MedicWaypoint" &&
-                obj.name != "Mines" && obj.name != "NPCSpawnpoint" && obj.name != "Spotlight")
+                obj.name != "Mines" && obj.name != "NPCSpawnpoint" && obj.name != "Spotlight" && obj.name != "Light")
             {
                 obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);

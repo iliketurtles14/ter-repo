@@ -22,6 +22,7 @@ public class GetGivenData : MonoBehaviour
     //private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music\\alca.ogg";
     private string tilePath;
     private string mainPath;
+    private string blackGroundPath;
 
     public static GetGivenData instance { get; private set; }
 
@@ -33,6 +34,7 @@ public class GetGivenData : MonoBehaviour
         mainPath = iniFile.Read("GameFolderPath", "Settings");
         groundPath = mainPath + "/Data/images";
         tilePath = mainPath + "/Data/images";
+        blackGroundPath = mainPath + "/Data/images/custom/ground_cus_black.gif";
 
         await LoadGroundTextures();
         await LoadTileTextures();
@@ -89,6 +91,10 @@ public class GetGivenData : MonoBehaviour
                 loadScript.LogLoad($"File {file} is not a valid ground texture.");
             }
         }
+
+        byte[] blackGroundData = await File.ReadAllBytesAsync(blackGroundPath);
+        Texture2D blackTexture = LoadGifAsTexture2D(blackGroundData);
+        groundTextureList.Add(blackTexture);
     }
 
     private async Task LoadTileTextures()
