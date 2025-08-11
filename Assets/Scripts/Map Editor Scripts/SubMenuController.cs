@@ -298,6 +298,10 @@ public class SubMenuController : MonoBehaviour
             {
                 GetComponent<LoadMap>().StartLoad();
             }
+            else if(mcs.touchedButton.name == "ConvertButton")
+            {
+                GetComponent<CmapConvert>().ConvertCmap();
+            }
             else if(mcs.touchedButton.name == "SetButton" && mcs.touchedButton.transform.parent.name == "SizePanel")
             {
                 Transform sizePanel = uic.Find("SizePanel");

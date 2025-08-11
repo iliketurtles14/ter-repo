@@ -373,8 +373,15 @@ public class LoadMap : MonoBehaviour
 
         if(groundChoice != "Custom")
         {
-            int prisonIndex = tilesetDict[prisonDict[groundChoice]];
-            groundTex = givenDataScript.groundTextureList[prisonIndex];
+            if(groundChoice == "black")
+            {
+                groundTex = givenDataScript.groundTextureList[19];
+            }
+            else
+            {
+                int prisonIndex = tilesetDict[prisonDict[groundChoice]];
+                groundTex = givenDataScript.groundTextureList[prisonIndex];
+            }
         }
         else
         {

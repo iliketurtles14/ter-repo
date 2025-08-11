@@ -50,6 +50,11 @@ public class HighlightGrid : MonoBehaviour
                 0.0f
             ) - new Vector3(.9f, .9f, 0f);
 
+            if(objectSelectScript.hasSelectedSpecial)
+            {
+                bottomLeft += new Vector3(.1f, .1f, 0f);
+            }
+
             HighlightSquare(bottomLeft);
         }
     }
