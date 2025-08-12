@@ -32,6 +32,14 @@ public class LoadMap : MonoBehaviour
     {
         { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
         { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
+        { "irongate", 12 }, { "jungle", 13 }, { "pcpen", 8 }, { "perks", 14 },
+        { "sanpancho", 15 }, { "shanktonstatepen", 16 }, { "SS", 9 }, { "stalagflucht", 17 },
+        { "TOL", 10 }, { "tutorial", 11 }
+    };
+    private Dictionary<string, int> groundDict = new Dictionary<string, int>()
+    {
+        { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
+        { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
         { "irongate", 8 }, { "jungle", 9 }, { "pcpen", 10 }, { "perks", 11 },
         { "sanpancho", 12 }, { "shanktonstatepen", 13 }, { "SS", 14 }, { "stalagflucht", 15 },
         { "TOL", 16 }, { "tutorial", 17 }
@@ -52,51 +60,60 @@ public class LoadMap : MonoBehaviour
     {
         givenDataScript = GetGivenData.instance;
     }
-    public void StartLoad()
+    public void StartLoad(bool isNewMap)
     {
-        ExtensionFilter[] extensions = new ExtensionFilter[]
+        if (isNewMap)
         {
-            new ExtensionFilter("Map Files", "zmap")
-        };
-        string[] paths = StandaloneFileBrowser.OpenFilePanel("Select a map file.", "", extensions, false);
-        if(paths.Length < 0) //if nothign was selected
-        {
-            return;
+            TextAsset iniFile = Resources.Load<TextAsset>("Data");
+            data = iniFile.text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         }
+        else
+        {
+            ExtensionFilter[] extensions = new ExtensionFilter[]
+            {
+                new ExtensionFilter("Map Files", "zmap")
+            };
+            string[] paths = StandaloneFileBrowser.OpenFilePanel("Select a map file.", "", extensions, false);
+            if (paths.Length < 0) //if nothign was selected
+            {
+                return;
+            }
 
-        //unzip files
-        string extractPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons") + Path.DirectorySeparatorChar;
+            //unzip files
+            string extractPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons") + Path.DirectorySeparatorChar;
 
-        ZipFile.ExtractToDirectory(paths[0], extractPath);
+            ZipFile.ExtractToDirectory(paths[0], extractPath);
 
-        //load Data.ini to a string[]
-        data = File.ReadAllLines(Path.Combine(extractPath, "Data.ini"));
-        File.Delete(Path.Combine(extractPath, "Data.ini"));
+            //load Data.ini to a string[]
+            data = File.ReadAllLines(Path.Combine(extractPath, "Data.ini"));
+            File.Delete(Path.Combine(extractPath, "Data.ini"));
+
+            //load other files to memory
+            if (File.Exists(Path.Combine(extractPath, "Tiles.png")))
+            {
+                tiles = ConvertPNGToSprite(Path.Combine(extractPath, "Tiles.png"));
+                File.Delete(Path.Combine(extractPath, "Tiles.png"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Ground.png")))
+            {
+                ground = ConvertPNGToSprite(Path.Combine(extractPath, "Ground.png"));
+                File.Delete(Path.Combine(extractPath, "Ground.png"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Icon.png")))
+            {
+                icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
+                File.Delete(Path.Combine(extractPath, "Icon.png"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
+            {
+                StartCoroutine(ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3")));
+                File.Delete(Path.Combine(extractPath, "Music.mp3"));
+            }
+        }
 
         for (int i = 0; i < data.Length; i++)
         {
             data[i] = data[i].Replace("\n", "").Replace("\r", "");
-        }
-        //load other files to memory
-        if (File.Exists(Path.Combine(extractPath, "Tiles.png")))
-        {
-            tiles = ConvertPNGToSprite(Path.Combine(extractPath, "Tiles.png"));
-            File.Delete(Path.Combine(extractPath, "Tiles.png"));
-        }
-        if(File.Exists(Path.Combine(extractPath, "Ground.png")))
-        {
-            ground = ConvertPNGToSprite(Path.Combine(extractPath, "Ground.png"));
-            File.Delete(Path.Combine(extractPath, "Ground.png"));
-        }
-        if(File.Exists(Path.Combine(extractPath, "Icon.png")))
-        {
-            icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
-            File.Delete(Path.Combine(extractPath, "Icon.png"));
-        }
-        if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
-        {
-            StartCoroutine(ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3")));
-            File.Delete(Path.Combine(extractPath, "Music.mp3"));
         }
 
         LoadProperties();
@@ -257,6 +274,7 @@ public class LoadMap : MonoBehaviour
         if(tilesetChoice != "Custom")
         {
             int prisonIndex = tilesetDict[prisonDict[tilesetChoice]];
+            Debug.Log(prisonIndex);
             tileset = givenDataScript.tileTextureList[prisonIndex];
         }
         else
@@ -379,7 +397,7 @@ public class LoadMap : MonoBehaviour
             }
             else
             {
-                int prisonIndex = tilesetDict[prisonDict[groundChoice]];
+                int prisonIndex = groundDict[prisonDict[groundChoice]];
                 groundTex = givenDataScript.groundTextureList[prisonIndex];
             }
         }
@@ -508,6 +526,7 @@ public class LoadMap : MonoBehaviour
         placedObj.GetComponent<SpriteRenderer>().sprite = GetComponent<ObjectPlacer>().RemovePaddingToSprite(objSprite, 1);
         placedObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         placedObj.GetComponent<SpriteRenderer>().size = objToPlace.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
+        placedObj.GetComponent<BoxCollider2D>().enabled = true;
         
         if(layer == "GroundObjects" || layer == "UndergroundObjects")
         {

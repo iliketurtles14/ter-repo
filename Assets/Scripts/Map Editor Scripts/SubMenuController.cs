@@ -296,11 +296,15 @@ public class SubMenuController : MonoBehaviour
             }
             else if(mcs.touchedButton.name == "LoadButton")
             {
-                GetComponent<LoadMap>().StartLoad();
+                GetComponent<LoadMap>().StartLoad(false);
             }
             else if(mcs.touchedButton.name == "ConvertButton")
             {
                 GetComponent<CmapConvert>().ConvertCmap();
+            }
+            else if(mcs.touchedButton.name == "NewButton")
+            {
+                GetComponent<LoadMap>().StartLoad(true);
             }
             else if(mcs.touchedButton.name == "SetButton" && mcs.touchedButton.transform.parent.name == "SizePanel")
             {

@@ -78,21 +78,6 @@ public class LayerController : MonoBehaviour
         grounds.Find("Roof").GetComponent<SpriteRenderer>().enabled = false;
         grounds.Find("Zones").GetComponent<SpriteRenderer>().enabled = false;
     }
-    private void EnableLowGround() //to show ground while doing vents, zones, or roof
-    {
-        tiles.Find("Ground").gameObject.SetActive(true);
-        tiles.Find("GroundObjects").gameObject.SetActive(true);
-        grounds.Find("Ground").GetComponent<SpriteRenderer>().enabled = true;
-
-        foreach(Transform tile in tiles.Find("Ground"))
-        {
-            tile.GetComponent<BoxCollider2D>().enabled = false;
-        }
-        foreach(Transform obj in tiles.Find("GroundObjects"))
-        {
-            obj.GetComponent<BoxCollider2D>().enabled = false;
-        }
-    }
     private void EnableGround()
     {
         tiles.Find("Ground").gameObject.SetActive(true);
@@ -110,22 +95,19 @@ public class LayerController : MonoBehaviour
         tiles.Find("Vent").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true);
         grounds.Find("Vent").GetComponent<SpriteRenderer>().enabled = true;
-
-        EnableLowGround();
+        EnableGround();
     }
     private void EnableRoof()
     {
         tiles.Find("Roof").gameObject.SetActive(true);
         tiles.Find("RoofObjects").gameObject.SetActive(true);
         grounds.Find("Roof").GetComponent<SpriteRenderer>().enabled = true;
-
-        EnableLowGround();
+        EnableGround();
     }
     private void EnableZones()
     {
         tiles.Find("Zones").gameObject.SetActive(true);
         grounds.Find("Zones").GetComponent<SpriteRenderer>().enabled = true;
-
-        EnableLowGround();
+        EnableGround();
     }
 }
