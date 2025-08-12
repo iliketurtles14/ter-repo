@@ -89,7 +89,7 @@ public class TilePlacer : MonoBehaviour
         {
             foreach(Transform tile in tiles.Find(layer))
             {
-                if(tile.position == highlight.position)
+                if (Vector3.Distance(tile.position, highlight.position) < 0.01f)
                 {
                     Destroy(tile.gameObject);
                     break;

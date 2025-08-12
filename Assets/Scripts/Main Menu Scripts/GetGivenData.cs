@@ -100,13 +100,13 @@ public class GetGivenData : MonoBehaviour
     private async Task LoadTileTextures()
     {
         HashSet<string> validFiles = new HashSet<string>
-    {
-        "tiles_alca.gif", "tiles_BC.gif", "tiles_campepsilon.gif", "tiles_CCL.gif",
-        "tiles_DTAF.gif", "tiles_EA.gif", "tiles_escapeteam.gif", "tiles_fortbamford.gif",
-        "tiles_irongate.gif", "tiles_jungle.gif", "tiles_pcpen.gif", "tiles_perks.gif",
-        "tiles_sanpancho.gif", "tiles_shanktonstatepen.gif", "tiles_SS.gif", "tiles_stalagflucht.gif",
-        "tiles_TOL.gif", "tiles_tutorial.gif"
-    };
+        {
+            "tiles_alca.gif", "tiles_BC.gif", "tiles_campepsilon.gif", "tiles_CCL.gif",
+            "tiles_DTAF.gif", "tiles_EA.gif", "tiles_escapeteam.gif", "tiles_fortbamford.gif",
+            "tiles_pcpen.gif",
+            "tiles_SS.gif",
+            "tiles_TOL.gif", "tiles_tutorial.gif"
+        };
 
         foreach (string validFile in validFiles)
         {
@@ -129,6 +129,11 @@ public class GetGivenData : MonoBehaviour
                     Texture2D texture = LoadGifAsTexture2D(fileData);
                     if (texture != null)
                     {
+                        ReplaceColorWithTransparency(texture, Color.white, 0.0001f);
+                        if(validFile == "tiles_DTAF.gif")
+                        {
+                            ReplaceColorWithTransparency(texture, new Color(48f / 255f, 1f, 0f));
+                        }
                         tileTextureList.Add(texture);
                         loadScript.LogLoad($"Successfully loaded texture from {filePath}");
 
@@ -148,6 +153,44 @@ public class GetGivenData : MonoBehaviour
             {
                 loadScript.LogLoad($"File {filePath} does not exist.");
             }
+        }
+
+        //load the custom versions of main maps
+        HashSet<string> customFiles = new HashSet<string>
+        {
+            "tiles_cus_irongate.gif", "tiles_cus_jungle.gif", "tiles_cus_perks.gif", "tiles_cus_sanpancho.gif",
+            "tiles_cus_shanktonstatepen.gif", "tiles_cus_stalagflucht.gif"
+        };
+        foreach(string customFile in customFiles)
+        {
+            string filePath = Path.Combine(tilePath, "custom", customFile);
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    byte[] fileData = await File.ReadAllBytesAsync(filePath);
+                    Texture2D texture = LoadGifAsTexture2D(fileData);
+                    if (texture != null)
+                    {
+                        ReplaceColorWithTransparency(texture, Color.white, 0.0001f);
+                        tileTextureList.Add(texture);
+                        loadScript.LogLoad($"Successfully loaded texture from {filePath}");
+                    }
+                    else
+                    {
+                        loadScript.LogLoad($"Failed to load texture from {filePath}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    loadScript.LogLoad($"Exception occurred while loading texture from {filePath}: {ex.Message}");
+                }
+            }
+            else
+            {
+                loadScript.LogLoad($"File {filePath} does not exist.");
+            }
+
         }
     }
     private Texture2D LoadGifAsTexture2D(byte[] fileData)
@@ -180,13 +223,15 @@ public class GetGivenData : MonoBehaviour
         }
     }
 
-    private void ReplaceWhiteWithTransparency(Texture2D texture)
+    private void ReplaceColorWithTransparency(Texture2D texture, Color color, float tolerance = 0.01f)
     {
         Color[] pixels = texture.GetPixels();
 
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (pixels[i].r > 0.9f && pixels[i].g > 0.9f && pixels[i].b > 0.9f)
+            if (Mathf.Abs(pixels[i].r - color.r) < tolerance &&
+                Mathf.Abs(pixels[i].g - color.g) < tolerance &&
+                Mathf.Abs(pixels[i].b - color.b) < tolerance)
             {
                 pixels[i] = new Color(pixels[i].r, pixels[i].g, pixels[i].b, 0);
             }

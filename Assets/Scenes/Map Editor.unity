@@ -12789,6 +12789,7 @@ GameObject:
   - component: {fileID: 328373084}
   - component: {fileID: 328373085}
   - component: {fileID: 328373086}
+  - component: {fileID: 328373087}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -13096,6 +13097,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uic: {fileID: 784611932}
+--- !u!114 &328373087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328373068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48cba6f62849774ba1b76d023ddd58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &336659943
 GameObject:
   m_ObjectHideFlags: 0
@@ -51918,7 +51931,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 600, y: -7605}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 80, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1511763628
 BoxCollider2D:
@@ -51964,7 +51977,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 80, y: 80}
+  m_Size: {x: 80, y: 160}
   m_EdgeRadius: 0
 --- !u!114 &1511763629
 MonoBehaviour:

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,11 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
     public MouseCollisionOnMap mcs;
     public Transform highlight;
     public bool inDeleteMode;
+
+    private Dictionary<int, int> layerDict = new Dictionary<int, int>() //releates LayerController.currentLayer with the sorting orders of objects depending on the layer
+    {
+        { 1, 2 }, { 0, 2 }, { 2, 5 }, { 3, 5 }
+    };
     private void Update()
     {
         inDeleteMode = GetComponent<TilePlacer>().inDeleteMode;
@@ -21,13 +27,15 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
         if (inDeleteMode)
         {
             highlight.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+            highlight.GetComponent<BoxCollider2D>().size = new Vector2(1.5f, 1.5f);
         }
 
         if(highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && !mcs.isTouchingObject && Input.GetMouseButton(0) && inDeleteMode)
         {
+            int layer = GetComponent<LayerController>().currentLayer;
             foreach(Transform obj in tiles.Find(GetComponent<TilePlacer>().layer + "Objects"))
             {
-                if (highlight.GetComponent<BoxCollider2D>().IsTouching(obj.GetComponent<BoxCollider2D>()))
+                if (highlight.GetComponent<BoxCollider2D>().IsTouching(obj.GetComponent<BoxCollider2D>()) && layerDict[layer] == obj.GetComponent<SpriteRenderer>().sortingOrder)
                 {
                     Destroy(obj.gameObject);
                     break;

@@ -48,6 +48,15 @@ public class CmapConvert : MonoBehaviour
     private bool mailman;
     private bool library;
     private string startingJob;
+
+    private Dictionary<string, string> prisonDict = new Dictionary<string, string>()
+    {
+        { "perks", "perks" }, { "stalagflucht", "stalag" }, { "shanktonstatepen", "shankton" },
+        { "jungle", "jungle" }, { "sanpancho", "sanpancho" }, { "irongate", "irongate" },
+        { "CCL", "JC" }, { "BC", "BC" }, { "TOL", "london" }, { "pcpen", "PCP" }, { "SS", "SS" },
+        { "DTAF", "DTAF" }, { "escapeteam", "ET" }, { "alca", "alca" }, { "EA", "fhurst" },
+        { "campepsilon", "epsilon" }, { "fortbamford", "bamford" }, { "tutorial", "tutorial" }
+    }; 
     public void ConvertCmap()
     {
         ExtensionFilter[] extensions = new ExtensionFilter[]
@@ -111,10 +120,28 @@ public class CmapConvert : MonoBehaviour
         tileset = GetINIVar("Info", "Tileset", cmapFile);
         ground = GetINIVar("Info", "Floor", cmapFile);
         music = GetINIVar("Info", "Music", cmapFile);
+        try
+        {
+            tileset = prisonDict[tileset];
+            ground = prisonDict[ground];
+            music = prisonDict[music];
+        }
+        catch
+        {
+
+        }
         grounds = GetINIVar("Info", "MapType", cmapFile);
         if (grounds == "InsideOutside")
         {
             grounds = "In/Out";
+        }
+        else if(grounds == "InsideOnly")
+        {
+            grounds = "Inside";
+        }
+        else if(grounds == "OutsideOnly")
+        {
+            grounds = "Outside";
         }
         routineType = GetINIVar("Info", "RoutineSet", cmapFile);
         npcLevel = Convert.ToInt32(GetINIVar("Info", "NPClvl", cmapFile));
@@ -200,28 +227,34 @@ public class CmapConvert : MonoBehaviour
                 }
 
                 string[] varParts = zoneVars.Split('_');
-                //get pos and size (the rounding here is done to snap any off-tile things onto a tile, since ter doesnt support that
-                int rawPosX = Convert.ToInt32(Math.Round(Convert.ToSingle(varParts[0])));
-                int rawPosY = Convert.ToInt32(Math.Round(Convert.ToSingle(varParts[1])));
-                int rawSizeX = Convert.ToInt32(Math.Round(Convert.ToSingle(varParts[2])));
-                int rawSizeY = Convert.ToInt32(Math.Round(Convert.ToSingle(varParts[3])));
-                int posX;
-                int posY;
-                int sizeX;
-                int sizeY;
 
-                //convert to tile pos
-                rawPosX = rawPosX / 16;
-                rawPosY = rawPosY / 16;
+                int ogPosX1 = Convert.ToInt32(varParts[0]);
+                int ogPosY1 = Convert.ToInt32(varParts[1]);
+                int ogPosX2 = Convert.ToInt32(varParts[2]);
+                int ogPosY2 = Convert.ToInt32(varParts[3]);
 
-                //make the (0, 0) point in the bottom left instead of top left
-                //x stays the same since it doesnt change because of this
-                posX = rawPosX;
-                posY = 108 - rawPosY;
+                int ogSizeX = ogPosX2 - ogPosX1;
+                int ogSizeY = ogPosY2 - ogPosY1;
 
-                //convert to tile size
-                sizeX = rawSizeX / 16;
-                sizeY = rawSizeY / 16;
+                //snap
+                float snappedPosX = Convert.ToSingle(Math.Round(Convert.ToSingle(ogPosX1) / 16.0f)) * 16;
+                float snappedPosY = Convert.ToSingle(Math.Round(Convert.ToSingle(ogPosY1) / 16.0f)) * 16;
+                int snappedSizeX = Convert.ToInt32(Math.Round(Convert.ToSingle(ogSizeX) / 16.0f)) * 16;
+                int snappedSizeY = Convert.ToInt32(Math.Round(Convert.ToSingle(ogSizeY) / 16.0f)) * 16;
+
+                //center pos
+                float centerPosX = snappedPosX + (snappedSizeX / 2);
+                float centerPosY = snappedPosY + (snappedSizeY / 2);
+
+                //scale size
+                int scaledSizeX = snappedSizeX / 16;
+                int scaledSizeY = snappedSizeY / 16;
+
+                //finish vars
+                float posX = (centerPosX / 16) + .5f;
+                float posY = 108 - (centerPosY / 16) + .5f; //make bottom left = (0, 0)
+                int sizeX = scaledSizeX + 1;
+                int sizeY = scaledSizeY + 1;
 
                 zoneText += zoneName + "=" + posX + "," + posY + ";" + sizeX + "x" + sizeY + "\n";
             }
@@ -282,7 +315,7 @@ public class CmapConvert : MonoBehaviour
                             continue;
                         }
 
-                        int posX = j;
+                        int posX = j + 1;
                         int posY = 108 - i;
 
                         switch (layer)
@@ -382,8 +415,21 @@ public class CmapConvert : MonoBehaviour
                     }
                 }
 
-                posX = rawPosX + (objSize.x / 2) - .8f;
-                posY = rawPosY + (objSize.y / 2) - .8f;
+                posX = (rawPosX * 1.6f) + (objSize.x / 2) - .8f;
+                posY = (rawPosY * 1.6f) - (objSize.y / 2) - .8f;
+
+                posX = (posX + 1.6f) / 1.6f;
+                posY = (posY + 1.6f) / 1.6f;
+
+                List<string> weirdObjNames = new List<string>() //these are objects that load one tile below what theyre supposed to because of their dead space above their sprites
+                {
+                    "Oven", "Washer", "DetectorVertical", "LicensePress", "Locker"
+                };
+
+                if (weirdObjNames.Contains(objName))
+                {
+                    posY += 1;
+                }
 
                 switch (layer)
                 {

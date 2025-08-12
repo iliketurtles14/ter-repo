@@ -32,7 +32,7 @@ public class LoadingPanel : MonoBehaviour
     public void IncrementLoadCount()
     {
         loadCount++;
-        currentPercentage = Mathf.RoundToInt((loadCount / 97f) * 100);
+        currentPercentage = Mathf.RoundToInt((loadCount / 105f) * 100);
         Transform loadBarTransform = transform.Find("LoadBar");
         int childCount = loadBarTransform.childCount;
 
@@ -65,6 +65,7 @@ public class LoadingPanel : MonoBehaviour
         {
             yield return null;
         }
+        Debug.Log("amount of loads: " + loadCount);
         gameObject.SetActive(false);
     }
 }
