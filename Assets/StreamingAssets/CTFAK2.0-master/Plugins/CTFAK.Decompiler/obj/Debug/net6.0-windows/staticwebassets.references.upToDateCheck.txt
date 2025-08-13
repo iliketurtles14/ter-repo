@@ -1,2 +1,0 @@
-C:\Users\creep\OneDrive\Desktop\CTFAK2.0-master\Core\CTFAK.Core\obj\Debug\net6.0-windows\staticwebassets.build.json
-C:\Users\creep\OneDrive\Desktop\CTFAK2.0-master\Core\CTFAK.Core\obj\Debug\net6.0-windows\staticwebassets.build.json
