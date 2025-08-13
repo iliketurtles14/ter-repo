@@ -39,7 +39,7 @@ public class DumperStartStop : MonoBehaviour
                     UseShellExecute = true,
                     RedirectStandardOutput = false,
                     RedirectStandardError = false,
-                    CreateNoWindow = false
+                    CreateNoWindow = true
                 }
             };
 

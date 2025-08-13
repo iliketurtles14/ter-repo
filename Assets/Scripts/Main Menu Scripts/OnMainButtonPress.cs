@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class OnMainButtonPress : MonoBehaviour
 {
@@ -136,11 +137,7 @@ public class OnMainButtonPress : MonoBehaviour
         {
             hasPressedMap = true;
 
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
-            loadOperation.completed += (AsyncOperation op) =>
-            {
-                SceneManager.UnloadSceneAsync(0);
-            };
+            Addressables.LoadSceneAsync("Map Editor");
         }
     }
 }

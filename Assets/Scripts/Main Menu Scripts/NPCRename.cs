@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class NPCRename : MonoBehaviour
 {
@@ -505,10 +506,6 @@ public class NPCRename : MonoBehaviour
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript.SetNPC(setNames, setCharacters);
 
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        loadOperation.completed += (AsyncOperation op) =>
-        {
-            SceneManager.UnloadSceneAsync(0);
-        };
+        Addressables.LoadSceneAsync("Center Perks");
     }
 }
