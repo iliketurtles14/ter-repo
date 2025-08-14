@@ -6,8 +6,8 @@ using System.IO;
 
 public class BodyController : MonoBehaviour
 {
-    public ApplyPrisonData prisonDataScript;
-    public ItemBehaviours itemBehavioursScript;
+    private ApplyPrisonData prisonDataScript;
+    private ItemBehaviours itemBehavioursScript;
     public bool deskIsPickedUp;
     public int currentActionNum;
     public string character;
@@ -50,6 +50,10 @@ public class BodyController : MonoBehaviour
 
     public void Start()
     {
+        Transform so = RootObjectCache.GetRoot("ScriptObject").transform;
+        prisonDataScript = so.GetComponent<ApplyPrisonData>();
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+
         RabbitLists.Add(prisonDataScript.RabbitSleepDeadSprites);
         RabbitLists.Add(prisonDataScript.RabbitDiggingSprites);
         RabbitLists.Add(DataSender.instance.RabbitSprites);

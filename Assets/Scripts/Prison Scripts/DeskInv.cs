@@ -7,64 +7,48 @@ using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using TMPro;
 using System.Linq;
+using System;
 
 public class DeskInv : MonoBehaviour
 {
-    public Canvas MenuCanvas;
-    public Canvas InventoryCanvas;
-    public GameObject perksTiles;
-    public Inventory inventoryScript;
-    public GameObject aStar;
-    public ItemBehaviours itemBehavioursScript;
+    private GameObject MenuCanvas;
+    private GameObject InventoryCanvas;
+    private GameObject tiles;
+    private Inventory inventoryScript;
+    private GameObject aStar;
+    private ItemBehaviours itemBehavioursScript;
     private List<InventoryItem> inventoryList;
-    public MouseCollisionOnItems mouseCollisionScript;
-    public List<DeskItem> deskInv = new List<DeskItem>();
-    public GameObject player;
-    public Sprite ClearSprite;
+    private MouseCollisionOnItems mouseCollisionScript;
+    private GameObject player;
+    private Sprite ClearSprite;
     private List<GameObject> deskSlots = new List<GameObject>();
     private List<GameObject> invSlots = new List<GameObject>();
     public int invSlotNumber;
     public int deskSlotNumber;
     private float distance;
     public bool deskIsOpen;
-    public GameObject timeObject;
+    private GameObject timeObject;
     private bool deskIsFull;
     private bool invIsFull;
-    public GameObject desk;
-    public string deskText;
+    private GameObject desk;
+    private string deskText;
     private bool isOpening;
-    public PauseController pauseController;
+    private PauseController pauseController;
+    private List<DeskItem> deskInv;
     public void Start()
     {
-        //what desk to take
-        if(name == "PlayerDeskMenuPanel")
-        {
-            desk = perksTiles.transform.Find("GroundObjects").Find("PlayerDesk").gameObject;
-        }
-        else if (name.StartsWith("DeskMenuPanel"))
-        {
-            int num = 0;
-            Match match = Regex.Match(name, @"\d+");
-            if (match.Success)
-            {
-                num = int.Parse(match.Value);
-            }
-
-            foreach(Transform child in perksTiles.transform.Find("GroundObjects"))
-            {
-                if(child.name == "Desk" + num.ToString())
-                {
-                    desk = child.gameObject;
-                    break;
-                }
-            }
-        }
-        else if(name == "DevDeskMenuPanel")
-        {
-            desk = perksTiles.transform.Find("GroundObjects").Find("DevDesk").gameObject;
-        }
-
-        StartCoroutine(StartWait());
+        //get vars
+        MenuCanvas = RootObjectCache.GetRoot("MenuCanvas");
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        tiles = RootObjectCache.GetRoot("Tiles");
+        inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
+        aStar = RootObjectCache.GetRoot("A*");
+        itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+        mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        ClearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        timeObject = InventoryCanvas.transform.Find("Time").gameObject;
+        pauseController = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -77,68 +61,27 @@ public class DeskInv : MonoBehaviour
         }
         inventoryList = inventoryScript.inventory;
         //disable desk
-        foreach(GameObject slot in deskSlots)
-        {
-            slot.GetComponent<BoxCollider2D>().enabled = false;
-            slot.GetComponent<Image>().enabled = false;
-        }
-        GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<Image>().enabled = false;
-
-        MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
-        MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
-        MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
-    }
-    public IEnumerator StartWait()
-    {
-        yield return new WaitForEndOfFrame();
-
-        //what text to take
-        if (name == "PlayerDeskMenuPanel")
-        {
-            deskText = "Your Desk";
-        }
-        else if (name.StartsWith("DeskMenuPanel"))
-        {
-            int num = 0;
-            Match match = Regex.Match(name, @"\d+");
-            if (match.Success)
-            {
-                num = int.Parse(match.Value);
-            }
-            foreach (Transform child in aStar.transform)
-            {
-                if (child.name == "Inmate" + num.ToString())
-                {
-                    deskText = (child.GetComponent<NPCCollectionData>().npcData.displayName.ToString() + "'s Desk").Replace("\r\n", "").Replace("\n", "").Replace("\r", ""); ;
-                    break;
-                }
-            }
-        }
-        else if(name == "DevDeskMenuPanel")
-        {
-            deskText = "Dev Desk";
-        }
+        CloseDesk();
     }
     public void Update()
     {
-        
         if (!deskIsOpen)
         {
-            if (mouseCollisionScript.isTouchingDesk && mouseCollisionScript.touchedDesk.name == desk.name)
+            if (mouseCollisionScript.isTouchingDesk && mouseCollisionScript.touchedDesk.name == desk.name && Input.GetMouseButtonDown(0))
             {
                 distance = Vector2.Distance(player.transform.position, mouseCollisionScript.touchedDesk.transform.position);
-            }
-            if (mouseCollisionScript.isTouchingDesk && mouseCollisionScript.touchedDesk.name == desk.name && Input.GetMouseButtonDown(0) && distance <= 2.4f)
-            {
-                StartCoroutine(OpenDesk());
+                if(distance <= 2.4f)
+                {
+                    desk = mouseCollisionScript.touchedDesk;
+                    deskText = GetDeskText(desk);
+                    deskInv = desk.GetComponent<DeskData>().deskInv;
+                    StartCoroutine(OpenDesk());
+                }
             }
         }
 
         if (deskIsOpen)
         {
-
-
             ///continue
             //putting items in the desk
             for (int i = 0; i <= 19; i++)
@@ -231,26 +174,53 @@ public class DeskInv : MonoBehaviour
             //exiting the desk
             if (!mouseCollisionScript.isTouchingInvSlot && !mouseCollisionScript.isTouchingDeskPanel && !mouseCollisionScript.isTouchingDeskSlot && !mouseCollisionScript.isTouchingExtra && !mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
-                foreach (GameObject slot in deskSlots)
-                {
-                    slot.GetComponent<BoxCollider2D>().enabled = false;
-                    slot.GetComponent<Image>().enabled = false;
-                }
-                
-                GetComponent<BoxCollider2D>().enabled = false;
-                GetComponent<Image>().enabled = false;
-
-                MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
-                MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
-                MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
-
-                deskIsOpen = false;
-
-                pauseController.Unpause();
-
-                return;
+                CloseDesk();
             }
         }
+    }
+    private string GetDeskText(GameObject aDesk)
+    {
+        if(aDesk.name == "PlayerDesk")
+        {
+            return "Your Desk";
+        }
+        else if(aDesk.name == "DevDesk")
+        {
+            return "Dev Desk";
+        }
+        else
+        {
+            int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;
+            foreach(Transform npc in aStar.transform)
+            {
+                if (npc.name.StartsWith("Inmate"))
+                {
+                    int inmateNumber = Convert.ToInt32(npc.name.Replace("Inmate", ""));
+                    if (inmateNumber == deskNumber)
+                    {
+                        return npc.GetComponent<NPCCollectionData>().npcData.displayName + "'s Desk";
+                    }
+                }
+            }
+            return "Desk";
+
+        }
+    }
+    private void CloseDesk()
+    {
+        foreach(GameObject slot in deskSlots)
+        {
+            slot.GetComponent<Image>().sprite = ClearSprite;
+        }
+        
+        MenuCanvas.transform.Find("DeskMenuPanel").gameObject.SetActive(false);
+        MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
+        MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
+        MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
+
+        deskIsOpen = false;
+
+        pauseController.Unpause();
     }
     public IEnumerator OpenDesk()
     {
@@ -259,11 +229,11 @@ public class DeskInv : MonoBehaviour
             yield break;
         }
         
-        if (desk.name.StartsWith("Desk") && !itemBehavioursScript.barIsMoving)
+        if (desk.name.StartsWith("Desk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
         {
             isOpening = true;
 
-            Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y, desk.gameObject.transform.position.z);
+            Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y);
             
             StartCoroutine(itemBehavioursScript.DrawActionBar(false, true));
             itemBehavioursScript.CreateActionText("Opening");
@@ -277,16 +247,16 @@ public class DeskInv : MonoBehaviour
         }
         isOpening = false;
 
-        foreach (GameObject slot in deskSlots)
+        for(int i = 0; i < 20; i++)
         {
-            slot.GetComponent<BoxCollider2D>().enabled = true;
-            slot.GetComponent<Image>().enabled = true;
+            if (deskInv[i].itemData != null)
+            {
+                deskSlots[i].GetComponent<Image>().sprite = deskInv[i].itemData.icon;
+            }
         }
-        GetComponent<BoxCollider2D>().enabled = true;
-        GetComponent<Image>().enabled = true;
+
+        MenuCanvas.transform.Find("DeskMenuPanel").gameObject.SetActive(true);
         MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = deskText;
-
-
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = true;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
 
