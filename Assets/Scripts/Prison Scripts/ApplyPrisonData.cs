@@ -9,19 +9,15 @@ using UnityEngine.Rendering.Universal;
 public class ApplyPrisonData : MonoBehaviour
 {
     private DataSender senderScript;
-    public Transform ic;
-    public Transform mc;
-    public Transform perksTiles;
-    public InventorySelection InventorySelection;
-    public VentClimb VentClimb;
-    public ItemBehaviours itemBehavioursScript;
-    public HoleClimb holeClimbScript;
-    public VitalController vitalControllerScript;
-    public MouseOverlay mouseOverlayScript;
-    public Transform PlayerDesk;
-    public Pause pauseScript;
-    public Sprite clearSprite;
-    public Transform aStar;
+    private Transform ic;
+    private Transform mc;
+    private Transform tiles;
+    private ItemBehaviours itemBehavioursScript;
+    private VitalController vitalControllerScript;
+    private MouseOverlay mouseOverlayScript;
+    private Pause pauseScript;
+    private Sprite clearSprite;
+    private Transform aStar;
     private string aName;
     public List<Sprite> ItemSprites = new List<Sprite>();
     public List<Sprite> NPCSprites = new List<Sprite>();
@@ -470,12 +466,22 @@ public class ApplyPrisonData : MonoBehaviour
     private void Start()
     {
         senderScript = DataSender.instance;
+        ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        vitalControllerScript = RootObjectCache.GetRoot("Player").GetComponent<VitalController>();
+        mouseOverlayScript = ic.Find("MouseOverlay").GetComponent<MouseOverlay>();
+        pauseScript = mc.Find("PauseMenuPanel").GetComponent<Pause>();
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        aStar = RootObjectCache.GetRoot("A*").transform;
 
         ItemSprites = senderScript.ItemImages;
         NPCSprites = senderScript.NPCImages;
         PrisonObjectSprites = senderScript.PrisonObjectImages;
         UISprites = senderScript.UIImages;
 
+        //GetComponent<LoadPrison>().StartLoad()
         SetNPCOrder();
         LoadImages();
     }
@@ -507,16 +513,8 @@ public class ApplyPrisonData : MonoBehaviour
         mouseOverlayScript.mouseUp = UISprites[74];
         mouseOverlayScript.mouseDown = UISprites[77];
         mouseOverlayScript.mouseRed = UISprites[42];
-        //deskmenupanels
-        mc.Find("PlayerDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
-        mc.Find("DevDeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
-        foreach(Transform child in mc)
-        {
-            if (child.name.StartsWith("DeskMenuPanel"))
-            {
-                child.GetComponent<Image>().sprite = UISprites[31];
-            }
-        }
+        //deskmenupanel
+        mc.Find("DeskMenuPanel").GetComponent<Image>().sprite = UISprites[31];
         //inventory ui (heart, energy, etc.)
         ic.Find("HealthSprite").GetComponent<Image>().sprite = Cutter(UISprites[63], 99, 78, 9, 11);
         ic.Find("HeatSprite").GetComponent<Image>().sprite = Cutter(UISprites[64], 99, 79, 9, 10);
@@ -549,8 +547,8 @@ public class ApplyPrisonData : MonoBehaviour
         ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
         mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
         //desks
-        perksTiles.Find("GroundObjects").Find("PlayerDesk").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
-        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        tiles.Find("GroundObjects").Find("PlayerDesk").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
+        foreach(Transform child in tiles.Find("GroundObjects"))
         {
             if (child.name.StartsWith("Desk"))
             {
@@ -558,7 +556,7 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         //equipment
-        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        foreach(Transform child in tiles.Find("GroundObjects"))
         {
             if (child.CompareTag("Equipment"))
             {
@@ -601,9 +599,9 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         //readers (int gainers)
-        perksTiles.Find("GroundObjects").Find("Computer").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
+        tiles.Find("GroundObjects").Find("Computer").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
         //sittables
-        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        foreach(Transform child in tiles.Find("GroundObjects"))
         {
             if (child.name.StartsWith("PlayerBed"))
             {
@@ -626,15 +624,15 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         //vent covers
-        Resources.Load("PerksPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
-        Resources.Load("PerksPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+        Resources.Load("PrisonPrefabs/Objects/EmptyVentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
+        Resources.Load("PrisonPrefabs/Objects/VentCover").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
         //rope and grapple
-        Resources.Load("PerksPrefabs/Objects/SheetRope").GetComponent<SpriteRenderer>().sprite = UISprites[162];
-        Resources.Load("PerksPrefabs/Objects/Rope").GetComponent<SpriteRenderer>().sprite = UISprites[163];
-        Resources.Load("PerksPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
+        Resources.Load("PrisonPrefabs/Objects/SheetRope").GetComponent<SpriteRenderer>().sprite = UISprites[162];
+        Resources.Load("PrisonPrefabs/Objects/Rope").GetComponent<SpriteRenderer>().sprite = UISprites[163];
+        Resources.Load("PrisonPrefabs/Objects/Grapple").GetComponent<SpriteRenderer>().sprite = UISprites[163];
         //holes
-        Resources.Load("PerksPrefabs/Objects/100%HoleDown").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
-        Resources.Load("PerksPrefabs/Objects/100%HoleUp").GetComponent<Light2D>().lightCookieSprite = UISprites[38];
+        Resources.Load("PrisonPrefabs/Objects/100%HoleDown").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
+        Resources.Load("PrisonPrefabs/Objects/100%HoleUp").GetComponent<Light2D>().lightCookieSprite = UISprites[38];
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];
         itemBehavioursScript.hole49 = PrisonObjectSprites[135];
         itemBehavioursScript.hole74 = PrisonObjectSprites[134];
@@ -644,17 +642,17 @@ public class ApplyPrisonData : MonoBehaviour
         itemBehavioursScript.holeUp74 = UISprites[36];
         itemBehavioursScript.holeUp99 = UISprites[37];
         //dirt
-        Resources.Load("PerksPrefabs/Underground/Dirt").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
-        Resources.Load("PerksPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
-        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
-        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
+        Resources.Load("PrisonPrefabs/Underground/Dirt").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+        Resources.Load("PrisonPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
+        tiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+        tiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
         //brace
-        Resources.Load("PerksPrefabs/Objects/Brace").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
+        Resources.Load("PrisonPrefabs/Objects/Brace").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
         //rock
-        Resources.Load("PerksPrefabs/Objects/Rock").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[41];
+        Resources.Load("PrisonPrefabs/Objects/Rock").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[41];
         //other vent objects
-        perksTiles.Find("VentObjects").gameObject.SetActive(true);
-        foreach (Transform child in perksTiles.Find("VentObjects"))
+        tiles.Find("VentObjects").gameObject.SetActive(true);
+        foreach (Transform child in tiles.Find("VentObjects"))
         {
             if (child.name.IndexOf(" (") != -1)
             {
@@ -684,9 +682,9 @@ public class ApplyPrisonData : MonoBehaviour
                     break;
             }
         }
-        perksTiles.Find("VentObjects").gameObject.SetActive(false);
+        tiles.Find("VentObjects").gameObject.SetActive(false);
         //ground objects
-        foreach(Transform child in perksTiles.Find("GroundObjects"))
+        foreach(Transform child in tiles.Find("GroundObjects"))
         {
             if (child.name.IndexOf(" (") != -1)
             {
@@ -705,8 +703,8 @@ public class ApplyPrisonData : MonoBehaviour
             }
         }
         //roof objects
-        perksTiles.Find("RoofObjects").gameObject.SetActive(true);
-        foreach (Transform child in perksTiles.Find("RoofObjects"))
+        tiles.Find("RoofObjects").gameObject.SetActive(true);
+        foreach (Transform child in tiles.Find("RoofObjects"))
         {
             if (child.name.IndexOf(" (") != -1)
             {
@@ -724,7 +722,7 @@ public class ApplyPrisonData : MonoBehaviour
                     break;
             }
         }
-        perksTiles.Find("RoofObjects").gameObject.SetActive(false);
+        tiles.Find("RoofObjects").gameObject.SetActive(false);
         //vital sprites
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 145, 78, 8, 11));
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 154, 78, 6, 11));

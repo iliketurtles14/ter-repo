@@ -5,15 +5,22 @@ using System;
 public class Combat : MonoBehaviour
 {
     public bool inAttackMode;
-    public MouseCollisionOnItems mcs;
+    private MouseCollisionOnItems mcs;
     public bool hasLockedOn;
     public GameObject currentNPC;
-    public GameObject player;
+    private GameObject player;
     public bool inPunchCycle;
-    public Transform aStar;
-    public GameObject combatBox;
-    public Transform idPanel;
-    public NPCAggro npcAggroScript;
+    private GameObject combatBox;
+    private Transform idPanel;
+    private NPCAggro npcAggroScript;
+    private void Start()
+    {
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        combatBox = RootObjectCache.GetRoot("CombatBox");
+        idPanel = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel");
+        npcAggroScript = GetComponent<NPCAggro>();
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !inAttackMode)

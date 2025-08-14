@@ -38,10 +38,10 @@ public class Map
     public bool mailman;
     public bool library;
     public List<int[]> tilesList; //each int[] is like this: [tile],[posx],[posy],[layer]
-    public string[] objNames;
-    public int[] objVars; //[posx],[posy],[layer]
-    public string[] zoneNames;
-    public int[] zoneVars; //[posx],[posy],[sizex],[sizey]
+    public List<string> objNames; //ground, underground, vent, roof (order)
+    public List<float[]> objVars; //[posx],[posy],[layer]
+    public List<string> zoneNames;
+    public List<float[]> zoneVars; //[posx],[posy],[sizex],[sizey]
 
     public Map(
         string mapName,
@@ -76,10 +76,10 @@ public class Map
         bool mailman,
         bool library,
         List<int[]> tilesList,
-        string[] objNames,
-        int[] objVars,
-        string[] zoneNames,
-        int[] zoneVars
+        List<string> objNames,
+        List<float[]> objVars,
+        List<string> zoneNames,
+        List<float[]> zoneVars
     )
     {
         this.mapName = mapName;
