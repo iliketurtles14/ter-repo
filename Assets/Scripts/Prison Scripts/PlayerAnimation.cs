@@ -11,10 +11,7 @@ public class PlayerAnimation : MonoBehaviour
     private int lookNum;
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
-    private string bodyDirSpritesPath;
-    private string outfitDirSpritesPath;
     private int whichCycle;
-    private string character;
 
     public void OnEnable()
     {

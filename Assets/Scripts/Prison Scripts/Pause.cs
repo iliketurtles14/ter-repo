@@ -7,121 +7,33 @@ using UnityEngine.UI;
 public class Pause : MonoBehaviour
 {
     private GameObject lastTouchedButton;
-    public MouseCollisionOnItems mcs;
+    private MouseCollisionOnItems mcs;
     public Sprite buttonNormalSprite;
     public Sprite buttonPressedSprite;
-    public GameObject player;
-    public GameObject aStar;
-    public GameObject timeObject;
-    public GameObject black;
-    public GameObject inventoryCanvas;
+    private GameObject black;
+    private PauseController pc;
     public bool paused = false;
     public bool isQuitting = false;
 
     public void Start()
     {
-        //disable panel
-        foreach (Transform child in transform)
-        {
-            if (child.GetComponent<BoxCollider2D>() != null)
-            {
-                child.GetComponent<BoxCollider2D>().enabled = false;
-            }
-            if (child.GetComponent<Image>() != null)
-            {
-                child.GetComponent<Image>().enabled = false;
-            }
-            if (child.GetComponent<TextMeshProUGUI>() != null)
-            {
-                child.GetComponent<TextMeshProUGUI>().enabled = false;
-            }
-        }
-        black.GetComponent<Image>().enabled = false;
-        GetComponent<Image>().enabled = false;
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        black = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Black").gameObject;
+
+        ClosePauseMenu();
     }
     public void Update()
     {        
         if (Input.GetKeyDown(KeyCode.Escape) && !paused)
         {
-            paused = true;
-
-            foreach (Transform child in transform)
-            {
-                if (child.GetComponent<BoxCollider2D>() != null)
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = true;
-                }
-                if (child.GetComponent<Image>() != null)
-                {
-                    child.GetComponent<Image>().enabled = true;
-                }
-                if (child.GetComponent<TextMeshProUGUI>() != null)
-                {
-                    child.GetComponent<TextMeshProUGUI>().enabled = true;
-                }
-            }
-            black.GetComponent<Image>().enabled = true;
-            GetComponent<Image>().enabled = true;
-            foreach (Transform child in aStar.transform)
-            {
-                child.GetComponent<AILerp>().speed = 0;
-                child.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-                child.GetComponent<NPCAnimation>().enabled = false;
-            }
-            timeObject.GetComponent<Routine>().enabled = false;
-            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            player.GetComponent<PlayerCtrl>().enabled = false;
-            player.GetComponent<PlayerAnimation>().enabled = false;
-            mcs.DisableTag("Bars");
-            mcs.DisableTag("Fence");
-            mcs.DisableTag("ElectricFence");
-            mcs.DisableTag("Digable");
-            mcs.DisableTag("Wall");
-            mcs.DisableTag("Item");
-            mcs.DisableTag("Desk");
-            inventoryCanvas.transform.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = false;
+            OpenPauseMenu();
             return;
         } 
 
         if (Input.GetKeyDown(KeyCode.Escape) && paused)
         {
-            paused = false;
-            
-            foreach (Transform child in transform)
-            {
-                if (child.GetComponent<BoxCollider2D>() != null)
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = false;
-                }
-                if (child.GetComponent<Image>() != null)
-                {
-                    child.GetComponent<Image>().enabled = false;
-                }
-                if (child.GetComponent<TextMeshProUGUI>() != null)
-                {
-                    child.GetComponent<TextMeshProUGUI>().enabled = false;
-                }
-            }
-            black.GetComponent<Image>().enabled = false;
-            GetComponent<Image>().enabled = false;
-            foreach (Transform child in aStar.transform)
-            {
-                child.GetComponent<AILerp>().speed = 10;
-                child.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                child.GetComponent<NPCAnimation>().enabled = true;
-            }
-            timeObject.GetComponent<Routine>().enabled = true;
-            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-            player.GetComponent<PlayerCtrl>().enabled = true;
-            player.GetComponent<PlayerAnimation>().enabled = true;
-            mcs.EnableTag("Bars");
-            mcs.EnableTag("Fence");
-            mcs.EnableTag("ElectricFence");
-            mcs.EnableTag("Digable");
-            mcs.EnableTag("Wall");
-            mcs.EnableTag("Item");
-            mcs.EnableTag("Desk");
-            inventoryCanvas.transform.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = true;
+            ClosePauseMenu();
             return;
         }
 
@@ -134,42 +46,7 @@ public class Pause : MonoBehaviour
             {
                 if(lastTouchedButton.name == "ContinueButton")
                 {
-                    foreach(Transform child in transform)
-                    {
-                        if(child.GetComponent<BoxCollider2D>() != null)
-                        {
-                            child.GetComponent<BoxCollider2D>().enabled = false;
-                        }
-                        if(child.GetComponent<Image>() != null)
-                        {
-                            child.GetComponent<Image>().enabled = false;
-                        }
-                        if(child.GetComponent<TextMeshProUGUI>() != null)
-                        {
-                            child.GetComponent<TextMeshProUGUI>().enabled = false;
-                        }
-                    }
-                    black.GetComponent<Image>().enabled = false;
-                    GetComponent<Image>().enabled = false;
-                    foreach(Transform child in aStar.transform)
-                    {
-                        child.GetComponent<AILerp>().speed = 10;
-                        child.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                        child.GetComponent<NPCAnimation>().enabled = true;
-                    }
-                    timeObject.GetComponent<Routine>().enabled = true;
-                    player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    player.GetComponent<PlayerCtrl>().enabled = true;
-                    player.GetComponent<PlayerAnimation>().enabled = true;
-                    mcs.EnableTag("Bars");
-                    mcs.EnableTag("Fence");
-                    mcs.EnableTag("ElectricFence");
-                    mcs.EnableTag("Digable");
-                    mcs.EnableTag("Wall");
-                    mcs.EnableTag("Item");
-                    mcs.EnableTag("Desk");
-                    inventoryCanvas.transform.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = true;
-                    paused = false;
+                    ClosePauseMenu();
                 }
                 else if(lastTouchedButton.name == "QuitButton" && !isQuitting)
                 {
@@ -186,5 +63,31 @@ public class Pause : MonoBehaviour
         {
             lastTouchedButton.GetComponent<Image>().sprite = buttonNormalSprite;
         }
+    }
+    private void ClosePauseMenu()
+    {
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+        GetComponent<Image>().enabled = false;
+        black.GetComponent<Image>().enabled = false;
+        
+        pc.Unpause();
+        
+        paused = false;
+    }
+    private void OpenPauseMenu()
+    {
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+        GetComponent<Image>().enabled = true;
+        black.GetComponent<Image>().enabled = true;
+        
+        pc.Pause(true);
+
+        paused = true;
     }
 }

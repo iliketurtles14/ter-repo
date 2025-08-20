@@ -15,8 +15,7 @@ public class ItemCollectionData : MonoBehaviour
     public void LoadAllAssets()
     {
         itemDatas = Resources.LoadAll<ItemData>(folderPath);
-        GameObject inventoryObject = GameObject.Find("Inventory");
-        inventoryScript = inventoryObject.GetComponent<Inventory>();
+        inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
     }
 
     public void Start()

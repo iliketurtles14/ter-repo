@@ -9,8 +9,8 @@ using UnityEngine.U2D;
 
 public class SetSprites : MonoBehaviour
 {
-    public GameObject CenterPerksTiles;
-    public Canvas InventoryCanvas;
+    private Transform tiles;
+    private GameObject InventoryCanvas;
     public GameObject Ground;
     private string aName;
 
@@ -83,13 +83,16 @@ public class SetSprites : MonoBehaviour
     };
     private void Start()
     {
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        
         SetTiles();
         SetItems();
         SetGround();
     }
     private void SetTiles()
     {
-        foreach(Transform child in CenterPerksTiles.transform.Find("Ground"))
+        foreach(Transform child in tiles.Find("Ground"))
         {
             if(child.name.IndexOf(" (") != -1)
             {
@@ -102,8 +105,8 @@ public class SetSprites : MonoBehaviour
             }
             child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
         }
-        CenterPerksTiles.transform.Find("Vents").gameObject.SetActive(true);
-        foreach(Transform child in CenterPerksTiles.transform.Find("Vents"))
+        tiles.Find("Vents").gameObject.SetActive(true);
+        foreach(Transform child in tiles.Find("Vents"))
         {
             if (child.name.IndexOf(" (") != -1)
             {
@@ -116,9 +119,9 @@ public class SetSprites : MonoBehaviour
             }
             child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
         }
-        CenterPerksTiles.transform.Find("Vents").gameObject.SetActive(false);
-        CenterPerksTiles.transform.Find("Roof").gameObject.SetActive(true);
-        foreach(Transform child in CenterPerksTiles.transform.Find("Roof"))
+        tiles.Find("Vents").gameObject.SetActive(false);
+        tiles.Find("Roof").gameObject.SetActive(true);
+        foreach(Transform child in tiles.Find("Roof"))
         {
             if (child.name.IndexOf(" (") != -1)
             {
@@ -131,7 +134,7 @@ public class SetSprites : MonoBehaviour
             }
             child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
         }
-        CenterPerksTiles.transform.Find("Roof").gameObject.SetActive(false);
+        tiles.Find("Roof").gameObject.SetActive(false);
     }
     private void SetItems()
     {
@@ -142,6 +145,6 @@ public class SetSprites : MonoBehaviour
     }
     private void SetGround()
     {
-        CenterPerksTiles.transform.Find("GroundPlane").GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
+        tiles.Find("GroundPlane").GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
     }
 }

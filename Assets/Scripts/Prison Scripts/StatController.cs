@@ -4,24 +4,18 @@ using UnityEngine.UI;
 
 public class StatController : MonoBehaviour
 {
-    public GameObject playerMenuPanel;
-    private GameObject intBar;
-    private GameObject spdBar;
-    private GameObject strBar;
+    private GameObject playerMenuPanel;
     private PlayerData data;
     private bool isSet;
     public void Start()
     {
+        playerMenuPanel = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel").gameObject;
+        
         data = GetComponent<PlayerCollectionData>().playerData;
         
         data.intellect = 30;
         data.strength = 30;
         data.speed = 30;
-
-        intBar = Resources.Load<GameObject>("IntellectBar");
-        spdBar = Resources.Load<GameObject>("SpeedBar");
-        strBar = Resources.Load<GameObject>("StrengthBar");
-
     }
     public void Update()
     {

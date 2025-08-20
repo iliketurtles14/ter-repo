@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class VentClimb : MonoBehaviour
 {
-    public DeskStand deskStandScript;
-    public MouseCollisionOnItems mcs;
-    public Canvas ic;
-    public InventorySelection selectionScript;
-    public GameObject player;
-    public GameObject perksTiles;
+    private DeskStand deskStandScript;
+    private MouseCollisionOnItems mcs;
+    private GameObject ic;
+    private InventorySelection selectionScript;
+    private GameObject player;
+    private Transform tiles;
     private GameObject currentOpenVent;
     private Vector3 offsetVector = new Vector3();
     private Vector2 colliderOffset = new Vector2();
@@ -21,6 +21,13 @@ public class VentClimb : MonoBehaviour
     private bool hasDisabledTags;
     public void Start()
     {
+        deskStandScript = GetComponent<DeskStand>();
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        ic = RootObjectCache.GetRoot("InventoryCanvas");
+        selectionScript = GetComponent<InventorySelection>();
+        player = RootObjectCache.GetRoot("Player");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        
         offsetVector.y = 1.6f;
 
         colliderOffset.y = -.5f;
@@ -81,7 +88,7 @@ public class VentClimb : MonoBehaviour
             mcs.DisableTag("Wall");
             mcs.DisableTag("Ladder(Ground)");
             mcs.DisableTag("Desk");//currently the only menu
-            foreach(Transform child in perksTiles.transform.Find("GroundObjects"))
+            foreach(Transform child in tiles.Find("GroundObjects"))
             {
                 if (child.CompareTag("Item"))
                 {
@@ -99,7 +106,7 @@ public class VentClimb : MonoBehaviour
             mcs.EnableTag("Wall");
             mcs.EnableTag("Ladder(Ground)");
             mcs.EnableTag("Desk");//currently the only menu
-            foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+            foreach (Transform child in tiles.Find("GroundObjects"))
             {
                 if (child.CompareTag("Item"))
                 {
@@ -118,13 +125,13 @@ public class VentClimb : MonoBehaviour
 
         player.transform.position = currentOpenVent.transform.position;
 
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
-        Color color = perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
+        Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
         color.a = 235f / 256f;
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
 
-        SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-        SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer sr in ventSpriteRenderers)
         {
             Color aColor = sr.color;
@@ -190,16 +197,16 @@ public class VentClimb : MonoBehaviour
         }
         else
         {
-            Color color = perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color;
+            Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
             color.a = 170f / 256f;
-            perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
+            tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
 
             player.transform.position = currentOpenVent.transform.position - offsetVector;
 
-            perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
+            tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
 
-            perksTiles.transform.Find("Vents").gameObject.SetActive(false);
-            perksTiles.transform.Find("VentObjects").gameObject.SetActive(false);
+            tiles.Find("Vents").gameObject.SetActive(false);
+            tiles.Find("VentObjects").gameObject.SetActive(false);
 
             player.layer = 3;
 

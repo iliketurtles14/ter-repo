@@ -22,18 +22,22 @@ public class InventorySelection : MonoBehaviour
     public bool slot5Selected;
     public bool slot6Selected;
     public bool aSlotSelected;
-    public Canvas InventoryCanvas;
-    public MouseCollisionOnItems mouseCollisionScript;
+    private GameObject InventoryCanvas;
+    private MouseCollisionOnItems mouseCollisionScript;
     private bool isTouchingSlotWithItem;
     private bool isTouchingSlot;
     private GameObject touchedSlot;
     private string slotName;
     private bool hasItem;
-    public Inventory inventoryScript;
-    public List<InventoryItem> inventoryList;
+    private Inventory inventoryScript;
+    private List<InventoryItem> inventoryList;
 
     public void Start()
     {
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        mouseCollisionScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        inventoryScript = GetComponent<Inventory>();
+
         //define the Images
         Transform slot1 = InventoryCanvas.transform.Find("SelectionPanel/SelectOutline1");
         Transform slot2 = InventoryCanvas.transform.Find("SelectionPanel/SelectOutline2");

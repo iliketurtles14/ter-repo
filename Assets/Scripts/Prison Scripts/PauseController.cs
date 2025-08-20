@@ -4,12 +4,20 @@ using UnityEngine.AI;
 
 public class PauseController : MonoBehaviour
 {
-    public GameObject player;
-    public MouseCollisionOnItems mcs;
-    public Transform aStar;
-    public GameObject timeObject;
-    public Transform ic;
+    private GameObject player;
+    private MouseCollisionOnItems mcs;
+    private Transform aStar;
+    private GameObject timeObject;
+    private Transform ic;
 
+    private void Start()
+    {
+        player = RootObjectCache.GetRoot("Player");
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        aStar = RootObjectCache.GetRoot("A*").transform;
+        timeObject = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Time").gameObject;
+        ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+    }
     public void Pause(bool disableInv)
     {
         //player movement

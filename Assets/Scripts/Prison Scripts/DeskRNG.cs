@@ -9,6 +9,7 @@ public class DeskRNG : MonoBehaviour
 {
     private Sprite clearSprite;
     private List<ItemData> itemList = new List<ItemData>();
+    private Transform tiles;
     private Dictionary<string, List<int>> percentageDict = new Dictionary<string, List<int>>()
     {
         { "Center Perks", new List<int>() { 0, 5, 5, 40, 30, 20 } },
@@ -43,11 +44,12 @@ public class DeskRNG : MonoBehaviour
     private List<int> tier6Items = new List<int>();
     private void Start()
     {
-        clearSprite = GetComponent<DeskInv>().ClearSprite;
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
 
         itemList = Resources.LoadAll<ItemData>("Item Scriptable Objects").ToList();
 
         percentages = percentageDict[SceneManager.GetActiveScene().name];
+        Debug.Log("PLEASE DONT FORGET TO CHANGE THIS");
         tokens = 20;
 
         foreach (Transform child in transform)
@@ -68,7 +70,13 @@ public class DeskRNG : MonoBehaviour
             }
         }
 
-        RandomizeDesk();
+        foreach(Transform obj in tiles)
+        {
+            if (obj.gameObject.CompareTag("Desk"))
+            {
+                RandomizeDesk(obj.gameObject);
+            }
+        }
     }
     //public void Update()
     //{
@@ -77,56 +85,59 @@ public class DeskRNG : MonoBehaviour
     //        RandomizeDesk();
     //    }
     //}
-    public void RandomizeDesk()
+    public void RandomizeDesk(GameObject desk)
     {
+        List<DeskItem> deskInv = desk.GetComponent<DeskData>().deskInv;
+        string deskName = desk.name;
+
         // Clear the desk
         for (int i = 0; i < deskSlots.Count; i++)
         {
-            GetComponent<DeskInv>().deskInv[i].itemData = null;
+            deskInv[i].itemData = null;
             deskSlots[i].GetComponent<Image>().sprite = clearSprite;
         }
 
         // Add predefined items
-        if(name != "DevDeskMenuPanel")
+        if(deskName != "DevDesk")
         {
-            AddItem(82);
-            AddItem(146);
-            AddItem(128);
-            AddItem(134);
+            AddItem(82, deskInv);
+            AddItem(146, deskInv);
+            AddItem(128, deskInv);
+            AddItem(134, deskInv);
         }
 
-        if (name == "DevDeskMenuPanel")
+        if (deskName == "DevDesk")
         {
-            AddItem(012);
-            AddItem(015);
-            AddItem(018);
-            AddItem(019);
-            AddItem(000);
-            AddItem(021);
-            AddItem(026);
-            AddItem(027);
-            AddItem(028);
-            AddItem(026);
-            AddItem(027);
-            AddItem(028);
-            AddItem(105);
-            AddItem(102);
-            AddItem(131);
-            AddItem(140);
-            AddItem(140);
-            AddItem(140);
-            AddItem(140);
-            AddItem(140);
+            AddItem(012, deskInv);
+            AddItem(015, deskInv);
+            AddItem(018, deskInv);
+            AddItem(019, deskInv);
+            AddItem(000, deskInv);
+            AddItem(021, deskInv);
+            AddItem(026, deskInv);
+            AddItem(027, deskInv);
+            AddItem(028, deskInv);
+            AddItem(026, deskInv);
+            AddItem(027, deskInv);
+            AddItem(028, deskInv);
+            AddItem(105, deskInv);
+            AddItem(102, deskInv);
+            AddItem(131, deskInv);
+            AddItem(140, deskInv);
+            AddItem(140, deskInv);
+            AddItem(140, deskInv);
+            AddItem(140, deskInv);
+            AddItem(140, deskInv);
             return;
         }
 
-        if (name == "PlayerDeskMenuPanel")
+        if (deskName == "PlayerDesk")
         {
             return;
         }
 
         int amountOfItems = 6;
-        tokens = UnityEngine.Random.Range(8, 13);//designed for center perks
+        tokens = UnityEngine.Random.Range(8, 13);
 
         for(int i = 0; i < amountOfItems && tokens != 0; i++)
         {
@@ -178,42 +189,42 @@ public class DeskRNG : MonoBehaviour
             if (isTier1)
             {
                 int rand = UnityEngine.Random.Range(0, tier1Items.Count - 1);
-                AddItem(tier1Items[rand]);
+                AddItem(tier1Items[rand], deskInv);
             }
             else if (isTier2)
             {
                 int rand = UnityEngine.Random.Range(0, tier2Items.Count - 1);
-                AddItem(tier2Items[rand]);
+                AddItem(tier2Items[rand], deskInv);
             }
             else if (isTier3)
             {
                 int rand = UnityEngine.Random.Range(0, tier3Items.Count - 1);
-                AddItem(tier3Items[rand]);
+                AddItem(tier3Items[rand], deskInv);
             }
             else if (isTier4)
             {
                 int rand = UnityEngine.Random.Range(0, tier4Items.Count - 1);
-                AddItem(tier4Items[rand]);
+                AddItem(tier4Items[rand], deskInv);
             }
             else if (isTier5)
             {
                 int rand = UnityEngine.Random.Range(0, tier5Items.Count - 1);
-                AddItem(tier5Items[rand]);
+                AddItem(tier5Items[rand], deskInv);
             }
             else if (isTier6)
             {
                 int rand = UnityEngine.Random.Range(0, tier6Items.Count - 1);
-                AddItem(tier6Items[rand]);
+                AddItem(tier6Items[rand], deskInv);
             }
         }
     }
-    public void AddItem(int id)
+    public void AddItem(int id, List<DeskItem> deskInv)
     {
-        for (int i = 0; i < GetComponent<DeskInv>().deskInv.Count; i++)
+        for (int i = 0; i < deskInv.Count; i++)
         {
-            if (GetComponent<DeskInv>().deskInv[i].itemData == null)
+            if (deskInv[i].itemData == null)
             {
-                GetComponent<DeskInv>().deskInv[i].itemData = itemList[id];
+                deskInv[i].itemData = itemList[id];
                 deskSlots[i].GetComponent<Image>().sprite = itemList[id].icon;
                 break;
             }

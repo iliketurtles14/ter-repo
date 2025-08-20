@@ -10,14 +10,14 @@ using System.Text.RegularExpressions;
 
 public class Tooltips : MonoBehaviour
 {
-    public Transform PlayerTransform;
-    public Canvas InventoryCanvas;
-    public Canvas menuCanvas;
-    public GameObject aStar;
+    private Transform PlayerTransform;
+    private GameObject InventoryCanvas;
+    private GameObject menuCanvas;
+    private GameObject aStar;
     private Transform TooltipPanelTransform;
-    public GameObject TooltipMid;
-    public GameObject TooltipSide;
-    public GameObject TooltipTextBox;
+    private GameObject TooltipMid;
+    private GameObject TooltipSide;
+    private GameObject TooltipTextBox;
     private string toPrint;
     private string printDurability;
     private int textWidth;
@@ -26,11 +26,11 @@ public class Tooltips : MonoBehaviour
     private List<InventoryItem> inventoryList;
     private List<DeskItem> deskInvList;
     private List<IDItem> idInvList;
-    public Inventory inventoryScript;
-    public DeskInv deskInvScript;
-    public MouseCollisionOnItems mcs;
-    public InventorySelection selectionScript;
-    public ItemBehaviours itemBehavioursScript;
+    private Inventory inventoryScript;
+    private DeskInv deskInvScript;
+    private MouseCollisionOnItems mcs;
+    private InventorySelection selectionScript;
+    private ItemBehaviours itemBehavioursScript;
     private GameObject touchedInvSlot;
     private bool isTouchingInvSlot;
     private int invSlotNumber; //starts at 0
@@ -57,9 +57,22 @@ public class Tooltips : MonoBehaviour
     private GameObject currentTouchedItem;
     private bool isScrewingVent;
     private bool isScrewingSlats;
-    private GameObject currentDeskMenu;
+    private GameObject deskMenu;
     public void Start()
     {
+        PlayerTransform = RootObjectCache.GetRoot("Player").transform;
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        menuCanvas = RootObjectCache.GetRoot("MenuCanvas");
+        aStar = RootObjectCache.GetRoot("A*");
+        TooltipMid = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipMid");
+        TooltipSide = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipSide");
+        TooltipTextBox = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipText");
+        inventoryScript = GetComponent<Inventory>();
+        mcs = menuCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        selectionScript = GetComponent<InventorySelection>();
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;
+        deskInvScript = deskMenu.GetComponent<DeskInv>();
     }
     public void Update()
     {
@@ -70,19 +83,7 @@ public class Tooltips : MonoBehaviour
         isTouchingInvSlot = mcs.isTouchingInvSlot;
         isTouchingItem = mcs.isTouchingItem;
         touchedItem = mcs.touchedItem;
-        currentDeskMenu = null;
-        foreach(Transform child in menuCanvas.transform)
-        {
-            if((child.name.StartsWith("DeskMenuPanel") || child.name == "PlayerDeskMenuPanel" || child.name == "DevDeskMenuPanel") && child.GetComponent<Image>().enabled == true)
-            {
-                currentDeskMenu = child.gameObject;
-                break;
-            }
-        }
-        if(currentDeskMenu != null)
-        {
-            deskInvList = currentDeskMenu.GetComponent<DeskInv>().deskInv;
-        }
+        deskInvList = deskInvScript.deskInv;
 
         ///ITEMS
         //for inventory items

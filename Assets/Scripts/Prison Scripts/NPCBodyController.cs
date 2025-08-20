@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NPCBodyController : MonoBehaviour
 {
-    public BodyController bodyControllerScript;
-    public ItemBehaviours itemBehavioursScript;
+    private BodyController bodyControllerScript;
+    private ItemBehaviours itemBehavioursScript;
     public int currentActionNum;
     public string character;
     private bool doneWaiting;
@@ -14,6 +14,9 @@ public class NPCBodyController : MonoBehaviour
 
     public void Start()
     {
+        bodyControllerScript = RootObjectCache.GetRoot("Player").GetComponent<BodyController>();
+        itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+
         characterDict = bodyControllerScript.characterDict;
 
         StartCoroutine(WaitForOrder());

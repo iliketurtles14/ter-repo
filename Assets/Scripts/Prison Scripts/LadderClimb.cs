@@ -5,18 +5,25 @@ using UnityEngine.UI;
 
 public class LadderClimb : MonoBehaviour
 {
-    public MouseCollisionOnItems mcs;
-    public Canvas ic;
-    public InventorySelection selectionScript;
-    public DeskStand deskStandScript;
-    public GameObject player;
-    public GameObject perksTiles;
+    private MouseCollisionOnItems mcs;
+    private GameObject ic;
+    private InventorySelection selectionScript;
+    private DeskStand deskStandScript;
+    private GameObject player;
+    private Transform tiles;
     private GameObject currentLadder;
     public bool hasPickedUp;
     private Vector3 offsetVector = new Vector3(); //only for ground-to-roof operations
     private float distance;
     public void Start()
     {
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        ic = RootObjectCache.GetRoot("InventoryCanvas");
+        selectionScript = GetComponent<InventorySelection>();
+        deskStandScript = GetComponent<DeskStand>();
+        player = RootObjectCache.GetRoot("Player");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+
         offsetVector.y = 1.6f;
     }
     public void Update()
@@ -89,12 +96,12 @@ public class LadderClimb : MonoBehaviour
                 player.layer = 3;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
-                perksTiles.transform.Find("Roof").gameObject.SetActive(false);
-                perksTiles.transform.Find("RoofObjects").gameObject.SetActive(false);
-                perksTiles.transform.Find("Vents").gameObject.SetActive(false);
-                perksTiles.transform.Find("VentObjects").gameObject.SetActive(false);
-                perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
-                foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+                tiles.Find("Roof").gameObject.SetActive(false);
+                tiles.Find("RoofObjects").gameObject.SetActive(false);
+                tiles.Find("Vents").gameObject.SetActive(false);
+                tiles.Find("VentObjects").gameObject.SetActive(false);
+                tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
+                foreach (Transform child in tiles.Find("GroundObjects"))
                 {
                     if (child.gameObject.CompareTag("Item"))
                     {
@@ -107,11 +114,11 @@ public class LadderClimb : MonoBehaviour
                 player.layer = 12;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
-                perksTiles.transform.Find("Roof").gameObject.SetActive(false);
-                perksTiles.transform.Find("RoofObjects").gameObject.SetActive(false);
-                perksTiles.transform.Find("Vents").gameObject.SetActive(true);
-                perksTiles.transform.Find("VentObjects").gameObject.SetActive(true);
-                foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+                tiles.Find("Roof").gameObject.SetActive(false);
+                tiles.Find("RoofObjects").gameObject.SetActive(false);
+                tiles.Find("Vents").gameObject.SetActive(true);
+                tiles.Find("VentObjects").gameObject.SetActive(true);
+                foreach (Transform child in tiles.Find("GroundObjects"))
                 {
                     if (child.gameObject.CompareTag("Item"))
                     {
@@ -125,12 +132,12 @@ public class LadderClimb : MonoBehaviour
                 player.layer = 13;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 15;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
-                perksTiles.transform.Find("Roof").gameObject.SetActive(true);
-                perksTiles.transform.Find("RoofObjects").gameObject.SetActive(true);
-                perksTiles.transform.Find("Vents").gameObject.SetActive(false);
-                perksTiles.transform.Find("VentObjects").gameObject.SetActive(false);
-                perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
-                foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+                tiles.Find("Roof").gameObject.SetActive(true);
+                tiles.Find("RoofObjects").gameObject.SetActive(true);
+                tiles.Find("Vents").gameObject.SetActive(false);
+                tiles.Find("VentObjects").gameObject.SetActive(false);
+                tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
+                foreach (Transform child in tiles.Find("GroundObjects"))
                 {
                     if (child.gameObject.CompareTag("Item"))
                     {
@@ -166,13 +173,13 @@ public class LadderClimb : MonoBehaviour
     }
     public void VentEnable()
     {
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
-        Color color = perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
+        Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
         color.a = 235f / 256f;
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
 
-        SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-        SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer sr in ventSpriteRenderers)
         {
             Color aColor = sr.color;

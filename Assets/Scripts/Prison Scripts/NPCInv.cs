@@ -7,60 +7,37 @@ using UnityEngine.UI;
 
 public class NPCInv : MonoBehaviour
 {
-    public Transform aStar;
+    private Transform aStar;
     private GameObject npc;
     private string menuText;
     private List<GameObject> npcInvSlots = new List<GameObject>();
     private List<GameObject> invSlots = new List<GameObject>();
-    public Transform ic;
+    private Transform ic;
     private List<InventoryItem> inventoryList = new List<InventoryItem>();
-    public Inventory inventoryScript;
-    public Transform mc;
+    private Inventory inventoryScript;
+    private Transform mc;
     private bool menuIsOpen;
-    public MouseCollisionOnItems mcs;
-    public GameObject player;
+    private MouseCollisionOnItems mcs;
+    private GameObject player;
     private int invSlotNumber;
     public List<NPCInvItem> npcInv = new List<NPCInvItem>();
     private bool npcInvIsFull;
-    public Sprite clearSprite;
+    private Sprite clearSprite;
     private bool invIsFull;
     private int npcInvSlotNumber;
-    public PauseController pauseController;
-    public NPCInvItem weapon;
-    public NPCInvItem outfit;
+    private PauseController pauseController;
+    private NPCInvItem weapon;
+    private NPCInvItem outfit;
     public void Start()
     {
-        //what npc to take
-        int num = 0;
-        Match match = Regex.Match(name, @"\d+");
-        if (match.Success)
-        {
-            num = int.Parse(match.Value);
-        }
-
-        if (name.StartsWith("Inmate"))
-        {
-            foreach(Transform child in aStar)
-            {
-                if(child.name == "Inmate" + num)
-                {
-                    npc = child.gameObject;
-                    break;
-                }
-            }
-        }
-        else if (name.StartsWith("Guard"))
-        {
-            foreach(Transform child in aStar)
-            {
-                if(child.name == "Guard" + num)
-                {
-                    npc = child.gameObject;
-                    break;
-                }
-            }
-        }
-        StartCoroutine(StartWait());
+        aStar = RootObjectCache.GetRoot("A*").transform;
+        ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        mc = RootObjectCache.GetRoot("MainCanvas").transform;
+        inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
+        mcs = mc.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        pauseController = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
 
         //make slot list
         foreach(Transform child in transform.Find("ItemPanel"))
@@ -75,22 +52,20 @@ public class NPCInv : MonoBehaviour
         //disable menu
         CloseNPCInv();
     }
-    public IEnumerator StartWait()
-    {
-        yield return new WaitForEndOfFrame();
-
-        //what text to take
-        menuText = npc.name + "\'s Pockets";
-    }
     public void Update()
     {
         if (!menuIsOpen)
         {
-            if(mcs.isTouchingNPC && mcs.touchedNPC.name == npc.name && npc.GetComponent<NPCCollectionData>().npcData.isDead)
+            if(mcs.isTouchingNPC && mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedNPC.transform.position);
                 if(distance <= 2.4f && Input.GetMouseButtonDown(0))
                 {
+                    npc = mcs.touchedNPC;
+                    menuText = npc.GetComponent<NPCCollectionData>().npcData.displayName + "'s Pockets";
+                    npcInv = npc.GetComponent<NPCInvData>().npcInv;
+                    weapon = npc.GetComponent<NPCInvData>().weapon;
+                    outfit = npc.GetComponent<NPCInvData>().outfit;
                     StartCoroutine(OpenNPCInv());
                 }
             }
@@ -236,21 +211,16 @@ public class NPCInv : MonoBehaviour
     }
     public IEnumerator OpenNPCInv()
     {
-        foreach(GameObject slot in npcInvSlots)
+        for(int i = 0; i < 6; i++)
         {
-            slot.GetComponent<BoxCollider2D>().enabled = true;
-            slot.GetComponent<Image>().enabled = true;
+            if (npcInv[i].itemData != null)
+            {
+                npcInvSlots[i].GetComponent<Image>().sprite = npcInv[i].itemData.icon;
+            }
         }
 
-        GetComponent<BoxCollider2D>().enabled = true;
-        GetComponent<Image>().enabled = true;
-
-        mc.Find("BlacK").GetComponent<Image>().enabled = true;
-        transform.Find("Weapon").GetComponent<BoxCollider2D>().enabled = true;
-        transform.Find("Weapon").GetComponent<Image>().enabled = true;
-        transform.Find("Outfit").GetComponent<BoxCollider2D>().enabled = true;
-        transform.Find("Outfit").GetComponent<Image>().enabled = true;
-        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = menuText;
+        mc.Find("Black").GetComponent<Image>().enabled = true;
+        mc.Find("NPCInvMenu").gameObject.SetActive(true);
 
         pauseController.Pause(false);
 
@@ -262,19 +232,11 @@ public class NPCInv : MonoBehaviour
     {
         foreach (GameObject slot in npcInvSlots)
         {
-            slot.GetComponent<BoxCollider2D>().enabled = false;
-            slot.GetComponent<Image>().enabled = false;
+            slot.GetComponent<Image>().sprite = clearSprite;
         }
 
-        GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<Image>().enabled = false;
-
         mc.Find("Black").GetComponent<Image>().enabled = false;
-        transform.Find("Weapon").GetComponent<BoxCollider2D>().enabled = false;
-        transform.Find("Weapon").GetComponent<Image>().enabled = false;
-        transform.Find("Outfit").GetComponent<BoxCollider2D>().enabled = false;
-        transform.Find("Outfit").GetComponent<Image>().enabled = false;
-        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = null;
+        mc.Find("NPCInvMenu").gameObject.SetActive(false);
 
         menuIsOpen = false;
 

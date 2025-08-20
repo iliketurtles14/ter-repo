@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TooltipMouseFollow : MonoBehaviour
 {
-    public Canvas InventoryCanvas;
+    private GameObject InventoryCanvas;
     private GameObject TooltipPanel;
     private GameObject TooltipTextBox;//TooltipText(Clone)
     private RectTransform TooltipPanelRectTransform;
@@ -10,11 +10,12 @@ public class TooltipMouseFollow : MonoBehaviour
     private RectTransform MouseOverlayRectTransform;
     private GameObject MouseOverlayObject;
     private bool showingTooltip;
-    public Tooltips tooltipScript;
+    private Tooltips tooltipScript;
 
     public void Start()
     {
-        
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        tooltipScript = GetComponent<Tooltips>();
     }
     public void Update()
     {

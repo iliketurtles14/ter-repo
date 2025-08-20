@@ -7,10 +7,11 @@ public class Schedule : MonoBehaviour
     private string time;
     private Routine timeScript;
     public string period;
-    public GameObject TimeObject;
+    private GameObject TimeObject;
     public string periodCode;
     void Start()
     {
+        TimeObject = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Time").gameObject;
         timeScript = TimeObject.GetComponent<Routine>();
         period = "Lights Out";
         periodCode = "LO";

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Sittables : MonoBehaviour
 {
-    public MouseCollisionOnItems mcs;
-    public VitalController vitalScript;
-    public GameObject player;
-    public Transform perksTiles;
+    private MouseCollisionOnItems mcs;
+    private VitalController vitalScript;
+    private GameObject player;
+    private Transform tiles;
     public bool onSittable = false;
     private Vector3 leaveVector;
     private bool clearTile;
@@ -16,6 +16,13 @@ public class Sittables : MonoBehaviour
     private Vector3 bedOffset;
     private bool onBed;
     private Vector3 climbOffset;
+    private void Start()
+    {
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        vitalScript = player.GetComponent<VitalController>();
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+    }
     public void Update()
     {
         if (mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable)
@@ -66,7 +73,7 @@ public class Sittables : MonoBehaviour
                 return;
             }
 
-            foreach (Transform tile in perksTiles.Find("Ground"))
+            foreach (Transform tile in tiles.Find("Ground"))
             {
                 if (tile.position == leaveVector + bedOffset + player.transform.position - climbOffset&& tile.gameObject.CompareTag("Digable"))
                 {
