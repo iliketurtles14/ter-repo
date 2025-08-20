@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class Exercising : MonoBehaviour
 {
-    public MouseCollisionOnItems mcs;
-    public ItemBehaviours itemBehavioursScript;
-    public Transform perksTiles;
-    public Canvas ic;
-    public ApplyPrisonData applyPrisonDataScript;
+    private MouseCollisionOnItems mcs;
+    private ItemBehaviours itemBehavioursScript;
+    private Transform tiles;
+    private GameObject ic;
+    private ApplyPrisonData applyPrisonDataScript;
     private GameObject barLine;
-    public GameObject actionBarPanel;
+    private GameObject actionBarPanel;
     public GameObject currentEquipment;
     public bool onEquipment = false;
     private bool onQ = true;
@@ -31,6 +31,13 @@ public class Exercising : MonoBehaviour
     private int subGain;
     public void Start()
     {
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        ic = RootObjectCache.GetRoot("InventoryCanvas");
+        applyPrisonDataScript = GetComponent<ApplyPrisonData>();
+        actionBarPanel = ic.transform.Find("ActionBarPanel").gameObject;
+
         barLine = Resources.Load<GameObject>("BarLine");
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
         StartCoroutine(BarLoop());
@@ -70,7 +77,7 @@ public class Exercising : MonoBehaviour
 
             clearTile = false;
 
-            foreach (Transform tile in perksTiles.Find("Ground"))
+            foreach (Transform tile in tiles.Find("Ground"))
             {
                 if (tile.position == leaveVector + (transform.position - offset) && tile.gameObject.CompareTag("Digable"))
                 {

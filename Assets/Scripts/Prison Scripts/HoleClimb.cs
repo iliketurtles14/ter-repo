@@ -5,29 +5,27 @@ using UnityEngine.UI;
 
 public class HoleClimb : MonoBehaviour
 {
-    public MouseCollisionOnItems mcs;
-    public Canvas ic;
-    public InventorySelection selectionScript;
-    public VentClimb ventClimbScript; //to get mosue srpites
-    public ItemBehaviours itemBehavioursScript;
-    public GameObject player;
-    public GameObject perksTiles;
-    public GameObject aStar;
-    public Sprite dirtSprite;
-    public Sprite emptyDirtSprite;
-    public GameObject undergroundLight;
-    public GameObject globalLight;
+    private MouseCollisionOnItems mcs;
+    private GameObject player;
+    private Transform tiles;
+    private GameObject undergroundLight;
+    private GameObject globalLight;
     private GameObject currentHole;
-    private bool hasDisabledColliders;
     private bool hasPickedUp;
     public void Start()
     {
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        undergroundLight = RootObjectCache.GetRoot("UndergroundLight");
+        globalLight = RootObjectCache.GetRoot("GlobalLight");
+
         undergroundLight.SetActive(false);
 
         mcs.DisableTag("Dirt");
         mcs.DisableTag("EmptyDirt");
 
-        foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        foreach (Transform child in tiles.Find("UndergroundObjects"))
         {
             if (child.gameObject.CompareTag("Item"))
             {
@@ -44,7 +42,7 @@ public class HoleClimb : MonoBehaviour
 
         if(player.layer != 11)
         {
-            foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+            foreach (Transform child in tiles.Find("UndergroundObjects"))
             {
                 if (child.gameObject.CompareTag("Item"))
                 {
@@ -98,7 +96,7 @@ public class HoleClimb : MonoBehaviour
         player.layer = 3;
         player.GetComponent<SpriteRenderer>().sortingOrder = 6;
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
-        foreach(Transform tile in perksTiles.transform.Find("Underground"))
+        foreach(Transform tile in tiles.Find("Underground"))
         {
             tile.GetComponent<SpriteRenderer>().sortingOrder = -5;
 
@@ -107,7 +105,7 @@ public class HoleClimb : MonoBehaviour
                 tile.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
-        foreach(Transform obj in perksTiles.transform.Find("UndergroundObjects"))
+        foreach(Transform obj in tiles.Find("UndergroundObjects"))
         {
             if(obj.name == "Rock(Clone)" || obj.name == "Mine(Clone)" || obj.name == "Brace(Clone)")
             {
@@ -118,20 +116,20 @@ public class HoleClimb : MonoBehaviour
                 obj.GetComponent<Light2D>().intensity = 0;
             }
         }
-        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = -6;
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = -6;
         undergroundLight.SetActive(false);
         globalLight.SetActive(true);
 
         mcs.DisableTag("Dirt");
         mcs.DisableTag("EmptyDirt");
-        foreach(Transform child in perksTiles.transform.Find("GroundObjects"))
+        foreach(Transform child in tiles.Find("GroundObjects"))
         {
             if (child.gameObject.CompareTag("Item"))
             {
                 child.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
-        foreach (Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        foreach (Transform child in tiles.Find("UndergroundObjects"))
         {
             if (child.gameObject.CompareTag("Item"))
             {
@@ -160,7 +158,7 @@ public class HoleClimb : MonoBehaviour
         player.layer = 11;
         player.GetComponent<SpriteRenderer>().sortingOrder = 12;
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 13;
-        foreach(Transform tile in perksTiles.transform.Find("Underground"))
+        foreach(Transform tile in tiles.Find("Underground"))
         {
             tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
 
@@ -169,7 +167,7 @@ public class HoleClimb : MonoBehaviour
                 tile.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
-        foreach (Transform obj in perksTiles.transform.Find("UndergroundObjects"))
+        foreach (Transform obj in tiles.Find("UndergroundObjects"))
         {
             if(obj.name == "Rock(Clone)" || obj.name == "Mine(Clone)" || obj.name == "Brace(Clone)")
             {
@@ -180,20 +178,20 @@ public class HoleClimb : MonoBehaviour
                 obj.GetComponent<Light2D>().intensity = 15;
             }
         }
-        perksTiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = 9;
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = 9;
         undergroundLight.SetActive(true);
         globalLight.SetActive(false);
 
         mcs.EnableTag("Dirt");
         mcs.EnableTag("EmptyDirt");
-        foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+        foreach (Transform child in tiles.Find("GroundObjects"))
         {
             if (child.gameObject.CompareTag("Item"))
             {
                 child.GetComponent<BoxCollider2D>().enabled = false;
             }
         }
-        foreach(Transform child in perksTiles.transform.Find("UndergroundObjects"))
+        foreach(Transform child in tiles.Find("UndergroundObjects"))
         {
             if (child.gameObject.CompareTag("Item"))
             {

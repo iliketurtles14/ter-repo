@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class DeskStand : MonoBehaviour
 {
-    public DeskPickUp deskPickUpScript;
-    public GameObject player;
-    public Canvas inventoryCanvas;
-    public GameObject perksTiles;
+    private DeskPickUp deskPickUpScript;
+    private GameObject player;
+    private GameObject inventoryCanvas;
+    private Transform tiles;
     public bool hasClimbed;
     public bool isClimbing;
     public bool hasJumped;
+    public bool isPickedUp;
     private GameObject[] desks;
     public GameObject currentDesk;
     private Vector2 colliderOffset = new Vector2();
@@ -21,6 +22,10 @@ public class DeskStand : MonoBehaviour
     private void Start()
     {
         desks = GameObject.FindGameObjectsWithTag("Desk");
+        deskPickUpScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskPickUp>();
+        player = RootObjectCache.GetRoot("Player");
+        inventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
 
         colliderOffset.y = -.05f;
         colliderOffset.x = 0;
@@ -30,7 +35,7 @@ public class DeskStand : MonoBehaviour
     }
     private void Update()
     {
-        if (!hasClimbed && !isClimbing && !deskPickUpScript.isPickedUp)
+        if (!hasClimbed && !isClimbing && !isPickedUp)
         {
             foreach (GameObject desk in desks)
             {
@@ -100,16 +105,16 @@ public class DeskStand : MonoBehaviour
     }
     public void ShowVents()
     {
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true; //enable backdrop
-        Color aColor = perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true; //enable backdrop
+        Color aColor = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
         aColor.a = 170f / 256f;
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().color = aColor;
-        perksTiles.transform.Find("Vents").gameObject.SetActive(true); //enable vent tiles
-        perksTiles.transform.Find("VentObjects").gameObject.SetActive(true); //enable vent objects
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = aColor;
+        tiles.Find("Vents").gameObject.SetActive(true); //enable vent tiles
+        tiles.Find("VentObjects").gameObject.SetActive(true); //enable vent objects
 
         //set transparency of vents
-        SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-        SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
         foreach (SpriteRenderer sr in ventSpriteRenderers)
         {
             Color color = sr.color;
@@ -125,13 +130,13 @@ public class DeskStand : MonoBehaviour
     }
     private void HideVents()
     {
-        perksTiles.transform.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false; //diable backdrop
-        perksTiles.transform.Find("VentObjects").gameObject.SetActive(false); //disable vent objects
-        perksTiles.transform.Find("Vents").gameObject.SetActive(false); //disable vent tiles
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false; //diable backdrop
+        tiles.Find("VentObjects").gameObject.SetActive(false); //disable vent objects
+        tiles.Find("Vents").gameObject.SetActive(false); //disable vent tiles
 
         //undo transparency setting of vents
-        SpriteRenderer[] ventSpriteRenderers = perksTiles.transform.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-        SpriteRenderer[] ventObjectSpriteRenderers = perksTiles.transform.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
         foreach(SpriteRenderer sr in ventSpriteRenderers)
         {
             Color color = sr.color;

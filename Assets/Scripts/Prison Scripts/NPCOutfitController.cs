@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class NPCOutfitController : MonoBehaviour
 {
-    public OutfitController outfitControllerScript;
-    public ItemBehaviours itemBehavioursScript;
+    private OutfitController outfitControllerScript;
+    private ItemBehaviours itemBehavioursScript;
     public int currentActionNum;
     public string outfit;
     private GameObject currentIDPanel;
-    public GameObject mc;
+    private GameObject mc;
     private int order;
     private bool doneWaiting;
     public int currentOutfitID;
@@ -17,6 +18,10 @@ public class NPCOutfitController : MonoBehaviour
 
     public void Start()
     {
+        itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+        outfitControllerScript = RootObjectCache.GetRoot("Player").GetComponent<OutfitController>();
+        mc = RootObjectCache.GetRoot("MenuCanvas");
+
         outfitDict = outfitControllerScript.outfitDict;
         
         StartCoroutine(WaitForOrder());
@@ -33,6 +38,8 @@ public class NPCOutfitController : MonoBehaviour
     }
     public void Update()
     {
+        int frameNumber = 1;
+        
         if (!doneWaiting)
         {
             return;
@@ -41,8 +48,10 @@ public class NPCOutfitController : MonoBehaviour
         currentIDPanel = mc.transform.Find("NPCMenuPanel" + order).gameObject;
         try
         {
-            //fix when you finish npc id panels
-            //currentOutfitID = currentIDPanel.GetComponent<NPCIDInv>().idInv[0].itemData.id;
+            if(frameNumber > 1)
+            {
+                currentOutfitID = GetComponent<NPCInvData>().outfit.itemData.id;
+            }
         }
         catch
         {
@@ -109,5 +118,7 @@ public class NPCOutfitController : MonoBehaviour
         {
             transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
         }
+
+        frameNumber++;
     }
 }

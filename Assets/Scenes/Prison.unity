@@ -1874,14 +1874,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5716ed29253bfec4bae5c015e86b1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 1933501345}
   buttonNormalSprite: {fileID: 0}
   buttonPressedSprite: {fileID: 0}
-  player: {fileID: 0}
-  aStar: {fileID: 0}
-  timeObject: {fileID: 1213987030155984982}
-  black: {fileID: 230349896}
-  inventoryCanvas: {fileID: 1119005036427091979}
   paused: 0
   isQuitting: 0
 --- !u!114 &315970110
@@ -3662,6 +3656,8 @@ GameObject:
   - component: {fileID: 567059159}
   - component: {fileID: 567059158}
   - component: {fileID: 567059174}
+  - component: {fileID: 567059176}
+  - component: {fileID: 567059175}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -3709,10 +3705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee564bce0ad76543b56179f873170a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 0}
-  vitalScript: {fileID: 0}
-  player: {fileID: 0}
-  perksTiles: {fileID: 0}
   onSittable: 0
 --- !u!114 &567059161
 MonoBehaviour:
@@ -3726,18 +3718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf466f1353d02b49ad9bd1f4b9a4b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 0}
-  ic: {fileID: 0}
-  selectionScript: {fileID: 0}
-  ventClimbScript: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
-  player: {fileID: 0}
-  perksTiles: {fileID: 0}
-  aStar: {fileID: 0}
-  dirtSprite: {fileID: 0}
-  emptyDirtSprite: {fileID: 0}
-  undergroundLight: {fileID: 0}
-  globalLight: {fileID: 0}
 --- !u!114 &567059162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3750,10 +3730,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec8a1cc30d6b194e9d01fc89825cff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  perksTiles: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
-  mcs: {fileID: 0}
 --- !u!114 &567059163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3766,21 +3742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d46fccad4f4f6344a04adc442beebb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionScript: {fileID: 0}
-  holeClimbScript: {fileID: 0}
-  perksTiles: {fileID: 0}
-  InventoryCanvas: {fileID: 0}
   slotNumber: 0
-  inventoryScript: {fileID: 0}
-  mcs: {fileID: 0}
-  barLine: {fileID: 0}
-  actionBarPanel: {fileID: 0}
   barIsMoving: 0
-  PlayerTransform: {fileID: 0}
-  oldPlayerTransform: {fileID: 0}
   cancelBar: 0
-  ActionTextBox: {fileID: 0}
-  clearSprite: {fileID: 0}
   hole24: {fileID: 0}
   hole49: {fileID: 0}
   hole74: {fileID: 0}
@@ -3822,8 +3786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71d3485f483f6b478589e2d5d8d5e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryCanvas: {fileID: 0}
-  tooltipScript: {fileID: 0}
 --- !u!114 &567059165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3836,20 +3798,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1530386ff8ec4434daaf40055c39350e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTransform: {fileID: 0}
-  InventoryCanvas: {fileID: 0}
-  menuCanvas: {fileID: 0}
-  aStar: {fileID: 0}
-  TooltipMid: {fileID: 0}
-  TooltipSide: {fileID: 0}
-  TooltipTextBox: {fileID: 0}
   showingTooltip: 0
   tooltipType: 
-  inventoryScript: {fileID: 0}
-  deskInvScript: {fileID: 0}
-  mcs: {fileID: 0}
-  selectionScript: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
 --- !u!114 &567059166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3862,12 +3812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9782ab82e25484db81cc584c268eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 0}
-  ic: {fileID: 0}
-  selectionScript: {fileID: 0}
-  deskStandScript: {fileID: 0}
-  player: {fileID: 0}
-  perksTiles: {fileID: 0}
   hasPickedUp: 0
 --- !u!114 &567059167
 MonoBehaviour:
@@ -3881,12 +3825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f2d3bd78fbc864c9299832c7d53104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deskStandScript: {fileID: 0}
-  mcs: {fileID: 0}
-  ic: {fileID: 0}
-  selectionScript: {fileID: 0}
-  player: {fileID: 0}
-  perksTiles: {fileID: 0}
 --- !u!114 &567059168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3899,13 +3837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff34fefe76c5c80419bf4c8afeb35e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deskPickUpScript: {fileID: 0}
-  player: {fileID: 0}
-  inventoryCanvas: {fileID: 0}
-  perksTiles: {fileID: 0}
   hasClimbed: 0
   isClimbing: 0
   hasJumped: 0
+  isPickedUp: 0
   currentDesk: {fileID: 0}
   shouldStepOff: 1
 --- !u!114 &567059169
@@ -3927,10 +3862,6 @@ MonoBehaviour:
   slot5Selected: 0
   slot6Selected: 0
   aSlotSelected: 0
-  InventoryCanvas: {fileID: 0}
-  mouseCollisionScript: {fileID: 0}
-  inventoryScript: {fileID: 0}
-  inventoryList: []
 --- !u!114 &567059170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3943,16 +3874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a376cefe7472846885e951f33a0a08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryCanvas: {fileID: 4691171244346025801, guid: c227c6ed291c8f140a3429a16274ad33, type: 3}
   inventory: []
-  Player: {fileID: 2791741707418295386, guid: e07a285922ba311448718983937ccab8, type: 3}
-  ClearSprite: {fileID: 21300000, guid: 7da01816f256fd8419020e323f0cab9a, type: 3}
-  MouseOverlayObject: {fileID: 0}
-  perksTiles: {fileID: 0}
-  deskStandScript: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
-  playerCollisionScript: {fileID: 0}
-  PlayerTransform: {fileID: 6300947276231400514, guid: e07a285922ba311448718983937ccab8, type: 3}
   droppedDurability: 100
   isDropped: 0
 --- !u!114 &567059171
@@ -4412,8 +4334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a070695ea1d3c74a9abc68dfe3f9487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CenterPerksTiles: {fileID: 0}
-  InventoryCanvas: {fileID: 0}
   Ground: {fileID: 0}
 --- !u!4 &567059173
 Transform:
@@ -4442,11 +4362,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa75994db6f5bef4595d0a9717057f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  mcs: {fileID: 0}
-  aStar: {fileID: 0}
-  timeObject: {fileID: 0}
-  ic: {fileID: 0}
+--- !u!114 &567059175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1731609bd3edef4891b07dd27d00aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcInv: []
+  weapon:
+    itemData: {fileID: 0}
+  outfit:
+    itemData: {fileID: 0}
+  inmateCorrelationNumber: -1
+  guardCorrelationNumber: -1
+--- !u!114 &567059176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dccf549e6abb514bb9bbf4245b5a0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deskInv: []
+  inmateCorrelationNumber: 0
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5582,43 +5530,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7492a62103bb00e4392b989505917529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuCanvas: {fileID: 4310912997187607466}
-  InventoryCanvas: {fileID: 7540840124203143873}
-  perksTiles: {fileID: 0}
-  inventoryScript: {fileID: 0}
-  aStar: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
-  mouseCollisionScript: {fileID: 1933501345}
-  deskInv:
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
-  player: {fileID: 0}
-  ClearSprite: {fileID: 21300000, guid: 7da01816f256fd8419020e323f0cab9a, type: 3}
   invSlotNumber: 0
   deskSlotNumber: 0
   deskIsOpen: 0
-  timeObject: {fileID: 1213987030155984982}
-  desk: {fileID: 0}
-  deskText: 
-  pauseController: {fileID: 0}
+  deskInv: []
 --- !u!61 &694438576
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9748,7 +9663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0177ff40d93e9846a0cd90550b573a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routineScript: {fileID: 0}
 --- !u!114 &1249231537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13971,7 +13885,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   period: 
-  TimeObject: {fileID: 1213987030155984982}
   periodCode: 
 --- !u!1 &1771703899
 GameObject:
@@ -15388,13 +15301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85adf3971ae4a17409d5c9bf1aea9d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouseOverlayObject: {fileID: 1933501340}
-  player: {fileID: 0}
-  parentCanvas: {fileID: 7540840124203143873}
   offset: {x: 0, y: 0}
-  mcs: {fileID: 1933501345}
-  iss: {fileID: 0}
-  combatScript: {fileID: 0}
   mouseNormal: {fileID: 0}
   mousePurple: {fileID: 0}
   mouseUp: {fileID: 0}

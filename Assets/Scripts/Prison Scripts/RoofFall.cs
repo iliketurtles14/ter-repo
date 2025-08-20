@@ -3,15 +3,20 @@ using UnityEngine;
 
 public class RoofFall : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject perksTiles;
-    public ItemBehaviours itemBehavioursScript;
-    public MouseCollisionOnItems mcs;
+    private GameObject player;
+    private Transform tiles;
+    private ItemBehaviours itemBehavioursScript;
+    private MouseCollisionOnItems mcs;
     private PlayerFloorCollision floorCollisionScript;
     Vector3 offset;
 
     public void Start()
     {
+        player = RootObjectCache.GetRoot("Player");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        
         floorCollisionScript = player.GetComponent<PlayerFloorCollision>();
         offset = new Vector3(0, 1.6f, 0);
 
@@ -30,9 +35,9 @@ public class RoofFall : MonoBehaviour
                     player.layer = 3;
                     player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                     player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
-                    perksTiles.transform.Find("Roof").gameObject.SetActive(false);
-                    perksTiles.transform.Find("RoofObjects").gameObject.SetActive(false);
-                    foreach (Transform child in perksTiles.transform.Find("GroundObjects"))
+                    tiles.Find("Roof").gameObject.SetActive(false);
+                    tiles.Find("RoofObjects").gameObject.SetActive(false);
+                    foreach (Transform child in tiles.Find("GroundObjects"))
                     {
                         if (child.CompareTag("Item"))
                         {

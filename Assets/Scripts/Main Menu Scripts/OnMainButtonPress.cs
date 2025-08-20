@@ -96,20 +96,20 @@ public class OnMainButtonPress : MonoBehaviour
 
         }
 
-        if(touchingPlayButton && Input.GetMouseButtonDown(0))
+        if (touchingPlayButton && Input.GetMouseButtonDown(0))
         {
             MainMenuCanvas.transform.Find("PrisonSelectPanel").gameObject.SetActive(true);
             MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
             isPrisonSelectPanelOpen = true;
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
-                if(child.GetComponent<BoxCollider2D>() != null)
+                if (child.GetComponent<BoxCollider2D>() != null)
                 {
                     child.GetComponent<BoxCollider2D>().enabled = false;
                 }
             }
         }
-        else if(touchingPatchNotesButton && Input.GetMouseButtonDown(0))
+        else if (touchingPatchNotesButton && Input.GetMouseButtonDown(0))
         {
             MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(true);
             MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;

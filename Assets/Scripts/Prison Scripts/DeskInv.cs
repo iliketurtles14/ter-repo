@@ -34,7 +34,7 @@ public class DeskInv : MonoBehaviour
     private string deskText;
     private bool isOpening;
     private PauseController pauseController;
-    private List<DeskItem> deskInv;
+    public List<DeskItem> deskInv;
     public void Start()
     {
         //get vars
@@ -67,7 +67,7 @@ public class DeskInv : MonoBehaviour
     {
         if (!deskIsOpen)
         {
-            if (mouseCollisionScript.isTouchingDesk && mouseCollisionScript.touchedDesk.name == desk.name && Input.GetMouseButtonDown(0))
+            if (mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
                 distance = Vector2.Distance(player.transform.position, mouseCollisionScript.touchedDesk.transform.position);
                 if(distance <= 2.4f)

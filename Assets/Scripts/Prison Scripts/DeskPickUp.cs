@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DeskPickUp : MonoBehaviour
 {
-    public DeskInv deskScript;
-    public Transform player;
-    public MouseCollisionOnItems mcs;
-    public PlayerAnimation playerAnimationScript;
-    public ApplyPrisonData applyScript;
-    public OutfitController outfitControllerScript;
-    public BodyController bodyControllerScript;
+    private DeskInv deskScript;
+    private Transform player;
+    private MouseCollisionOnItems mcs;
+    private OutfitController outfitControllerScript;
+    private BodyController bodyControllerScript;
+    private DeskStand deskStandScript;
     private float distance;
     private float distance2;
     public bool isPickedUp;
@@ -20,10 +19,17 @@ public class DeskPickUp : MonoBehaviour
 
     private void Start()
     {
+        deskScript = GetComponent<DeskInv>();
+        player = RootObjectCache.GetRoot("Player").transform;
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        outfitControllerScript = player.GetComponent<OutfitController>();
+        bodyControllerScript = player.GetComponent<BodyController>();
+        deskStandScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<DeskStand>();
+
         deskVector = new Vector3(0, .8f);
     }
     private void Update()
-    {
+    {        
         if (mcs.isTouchingDesk && !isPickedUp)
         {
             distance = Vector2.Distance(player.position, mcs.touchedDesk.transform.position);
@@ -60,6 +66,7 @@ public class DeskPickUp : MonoBehaviour
         int pickedUpLayer = LayerMask.NameToLayer("PickedUpDesk");
         aDesk.layer = pickedUpLayer;
         aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
+        deskStandScript.isPickedUp = true;
 
         //switch (NPCSave.instance.playerCharacter)
         //{
@@ -81,6 +88,7 @@ public class DeskPickUp : MonoBehaviour
         desk.transform.position = floor.transform.position;
         desk.layer = 10;
         desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        deskStandScript.isPickedUp = false;
 
         //switch (NPCSave.instance.playerCharacter)
         //{

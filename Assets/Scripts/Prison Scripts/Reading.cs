@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Reading : MonoBehaviour
 {
-    public MouseCollisionOnItems mcs;
-    public ItemBehaviours itemBehavioursScript;
+    private MouseCollisionOnItems mcs;
+    private ItemBehaviours itemBehavioursScript;
     private Vector3 oldPos;
     private bool isReading = false;
     private bool stopReading = false;
+    private void Start()
+    {
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+    }
     public void Update()
     {
         if(Input.GetMouseButtonDown(0) && mcs.isTouchingReader && GetComponent<PlayerCollectionData>().playerData.energy < 100 && !isReading)

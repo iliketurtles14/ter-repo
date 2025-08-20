@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class MouseOverlay : MonoBehaviour
 {
-    public GameObject MouseOverlayObject;
-    public GameObject player;
-    public Canvas parentCanvas; // Reference to the parent Canvas
+    private GameObject MouseOverlayObject;
+    private GameObject player;
+    private Canvas parentCanvas; // Reference to the parent Canvas
     public Vector2 offset;
 
-    public MouseCollisionOnItems mcs;
-    public InventorySelection iss;
-    public Combat combatScript;
+    private MouseCollisionOnItems mcs;
+    private InventorySelection iss;
+    private Combat combatScript;
 
     public Sprite mouseNormal;
     public Sprite mousePurple;
@@ -23,6 +23,13 @@ public class MouseOverlay : MonoBehaviour
     public Sprite mouseRed;
     private void Start()
     {
+        MouseOverlayObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").gameObject;
+        player = RootObjectCache.GetRoot("Player");
+        parentCanvas = transform.parent.GetComponent<Canvas>();
+        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        iss = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
+        combatScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Combat>();
+
         // Hide the mouse cursor
         Cursor.visible = false;
         offset = new Vector2(20, -32);

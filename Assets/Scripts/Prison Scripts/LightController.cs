@@ -4,8 +4,11 @@ using UnityEngine.Rendering.Universal;
 
 public class LightController : MonoBehaviour
 {
-    public Routine routineScript;
-
+    private Routine routineScript;
+    private void Start()
+    {
+        routineScript = RootObjectCache.GetRoot("InvnetoryCanvas").transform.Find("Time").GetComponent<Routine>();
+    }
     public void Update()
     {
         var light2D = GetComponent<Light2D>();

@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class OutfitController : MonoBehaviour
 {
-    public ApplyPrisonData prisonDataScript;
-    public ItemBehaviours itemBehavioursScript;
+    private ApplyPrisonData prisonDataScript;
+    private ItemBehaviours itemBehavioursScript;
     public bool deskIsPickedUp;
     public int currentOutfitID;
     public int currentActionNum;
     private GameObject currentIDPanel;
-    public GameObject mc;
+    private GameObject mc;
     public string outfit;
     public List<List<Sprite>> InmateOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> POWOutfitLists = new List<List<Sprite>>();
@@ -23,6 +23,10 @@ public class OutfitController : MonoBehaviour
     public Dictionary<string, List<List<Sprite>>> outfitDict = new Dictionary<string, List<List<Sprite>>>();
     public void Start()
     {
+        prisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+        itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+        mc = RootObjectCache.GetRoot("MenuCanvas");
+
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitSleepDeadSprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitDiggingSprites);
         InmateOutfitLists.Add(DataSender.instance.InmateOutfitSprites);

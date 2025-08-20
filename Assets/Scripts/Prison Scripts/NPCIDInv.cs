@@ -7,22 +7,21 @@ using UnityEngine.UI;
 
 public class NPCIDInv : MonoBehaviour
 {
-    public GameObject mc;
-    public GameObject ic;
-    public Inventory inventoryScript;
-    public MouseCollisionOnItems mcs;
+    private GameObject mc;
+    private MouseCollisionOnItems mcs;
     public List<IDItem> idInv = new List<IDItem>();
-    public GameObject player;
-    public Sprite ClearSprite;
     public GameObject outfitSlot;
     public GameObject weaponSlot;
     public int invSlotNumber;
     public bool idIsOpen;
-    public GameObject timeObject;
-    public PauseController pc;
+    private PauseController pc;
 
     public void Start()
     {
+        mc = RootObjectCache.GetRoot("MenuCanvas");
+        mcs = mc.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+
         StartCoroutine(Wait());
         CloseMenu();
     }

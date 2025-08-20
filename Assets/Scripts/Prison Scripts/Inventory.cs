@@ -11,25 +11,31 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Canvas InventoryCanvas;
+    private GameObject InventoryCanvas;
     public List<InventoryItem> inventory = new List<InventoryItem>();
-    public GameObject Player;
-    public Sprite ClearSprite;
-    public GameObject MouseOverlayObject;
-    public GameObject perksTiles;
-    public DeskStand deskStandScript;
-    public ItemBehaviours itemBehavioursScript;
-    public PlayerFloorCollision playerCollisionScript;
+    private GameObject Player;
+    private Sprite ClearSprite;
+    private Transform tiles;
+    private DeskStand deskStandScript;
+    private ItemBehaviours itemBehavioursScript;
+    private PlayerFloorCollision playerCollisionScript;
     private int slotIndex;
     private MouseCollisionOnItems mouseCollisionScript;
-    public Transform PlayerTransform;
+    private Transform PlayerTransform;
     private string slotName;
     public int droppedDurability = 100;
     public bool isDropped = false;
     public void Start()
     {
-        mouseCollisionScript = MouseOverlayObject.GetComponent<MouseCollisionOnItems>();
-
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        Player = RootObjectCache.GetRoot("Player");
+        ClearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        deskStandScript = GetComponent<DeskStand>();
+        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        playerCollisionScript = Player.GetComponent<PlayerFloorCollision>();
+        PlayerTransform = Player.transform;
+        mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
     }
     public void Update()
     {
@@ -51,7 +57,6 @@ public class Inventory : MonoBehaviour
         Image slot4Image = slot4.GetComponent<Image>();
         Image slot5Image = slot5.GetComponent<Image>();
         Image slot6Image = slot6.GetComponent<Image>();
-        PolygonCollider2D mouseCollider = MouseOverlayObject.GetComponent<PolygonCollider2D>();
         GameObject itemObject = mouseCollisionScript.touchedItem;
 
         if(inventory[0].itemData == null || 
@@ -191,7 +196,7 @@ public class Inventory : MonoBehaviour
             if (Player.layer == 3)
             {
                 Vector3 playerPosition = Player.transform.position;
-                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("GroundObjects"));
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
@@ -200,7 +205,7 @@ public class Inventory : MonoBehaviour
             else if (Player.layer == 12) //vent dropping
             {
                 Vector3 playerPosition = Player.transform.position;
-                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("VentObjects"));
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("VentObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 10;
@@ -209,7 +214,7 @@ public class Inventory : MonoBehaviour
             else if (Player.layer == 13) // roof dropping
             {
                 Vector3 playerPosition = Player.transform.position;
-                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("RoofObjects"));
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("RoofObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 14;
@@ -218,7 +223,7 @@ public class Inventory : MonoBehaviour
             else if (Player.layer == 11) //underground deropping
             {
                 Vector3 playerPosition = Player.transform.position;
-                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, perksTiles.transform.Find("UndergroundObjects"));
+                GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 11;
