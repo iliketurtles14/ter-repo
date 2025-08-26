@@ -15,6 +15,8 @@ public class ButtonController : MonoBehaviour
     private int whichPrison;
     public PrisonSelect prisonSelectScript;
     public PlayerMenu playerMenuScript;
+    public SmallMenu smallMenuScript;
+    public NPCRename npcRenameScript;
     public void MainPlayGame()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
@@ -130,6 +132,18 @@ public class ButtonController : MonoBehaviour
             }
         }
     }
+    public void OptionsBack()
+    {
+        mmc.Find("OptionsPanel").gameObject.SetActive(false);
+        mmc.Find("Black").GetComponent<Image>().enabled = false;
+        foreach(Transform child in mmc.Find("TitlePanel"))
+        {
+            if(child.GetComponent<Button>() != null)
+            {
+                child.GetComponent<Button>().enabled = true;
+            }
+        }
+    }
     public void PrisonSelectLeft()
     {
         prisonSelectScript.whichPrison--;
@@ -181,5 +195,43 @@ public class ButtonController : MonoBehaviour
         mmc.Find("NPCCustomizePanel").gameObject.SetActive(true);
         mmc.Find("SmallMenuPanel").gameObject.SetActive(true);
         mmc.Find("PlayerMenu").gameObject.SetActive(false);
+    }
+    public void SmallMenuLeft()
+    {
+        smallMenuScript.characterNum--;
+    }
+    public void SmallMenuRight()
+    {
+        smallMenuScript.characterNum++;
+    }
+    public void SmallMenuSet()
+    {
+        string name = smallMenuScript.NPCRenameScript.pressedNPCName;
+        string displayName = mmc.Find("SmallMenuPanel").Find("NameText").GetComponent<TMP_InputField>().text;
+        string character = smallMenuScript.npcCharacter;
+
+        smallMenuScript.SetNPC(name, displayName, character);
+    }
+    public void NPCRenameBack()
+    {
+        mmc.Find("PlayerPanel").gameObject.SetActive(true);
+        mmc.Find("SmallMenuPanel").gameObject.SetActive(false);
+        mmc.Find("NPCCUstomizePanel").gameObject.SetActive(false);
+    }
+    public void NPCRenameStart()
+    {
+        if (!npcRenameScript.isStarting)
+        {
+            npcRenameScript.isStarting = true;
+            npcRenameScript.Transfer();
+        }
+    }
+    public void NPCRenameRandom()
+    {
+        StartCoroutine(npcRenameScript.RandomizeWait());
+    }
+    public void NPCRenameNPC()
+    {
+        npcRenameScript.OnNPCClick();
     }
 }

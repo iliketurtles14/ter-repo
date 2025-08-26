@@ -39,121 +39,68 @@ public class SmallMenu : MonoBehaviour
         }
 
         //get character num
-        switch (npcCharacter)
+        characterNum = CharacterEnumClass.GetCharacterInt(npcCharacter);
+        switch (characterNum)
         {
-            case "Rabbit":
+            case 0:
                 characterSprites = dataScript.RabbitSprites;
-                characterNum = 1; 
                 break;
-            case "BaldEagle":
+            case 1:
                 characterSprites = dataScript.BaldEagleSprites;
-                characterNum = 2; 
                 break;
-            case "Lifer":
+            case 2:
                 characterSprites = dataScript.LiferSprites;
-                characterNum = 3; 
                 break;
-            case "YoungBuck":
+            case 3:
                 characterSprites = dataScript.YoungBuckSprites;
-                characterNum = 4; 
                 break;
-            case "OldTimer":
+            case 4:
                 characterSprites = dataScript.OldTimerSprites;
-                characterNum = 5; 
                 break;
-            case "BillyGoat":
+            case 5:
                 characterSprites = dataScript.BillyGoatSprites;
-                characterNum = 6; 
                 break;
-            case "Froseph":
+            case 6:
                 characterSprites = dataScript.FrosephSprites;
-                characterNum = 7; 
                 break;
-            case "Tango":
+            case 7:
                 characterSprites = dataScript.TangoSprites;
-                characterNum = 8; 
                 break;
-            case "Maru":
+            case 8:
                 characterSprites = dataScript.MaruSprites;
-                characterNum = 9; 
                 break;
         }
 
-        if (characterNum == 1)
+        if (characterNum == 0)
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = false;
-            transform.Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = false;
+            transform.Find("LeftArrow").GetComponent<Button>().enabled = false;
         }
         else
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = true;
-            transform.Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = true;
+            transform.Find("LeftArrow").GetComponent<Button>().enabled = true;
         }
 
-        if (characterNum == 9)
+        if (characterNum == 8)
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = false;
-            transform.Find("RightArrow").GetComponent<BoxCollider2D>().enabled = false;
+            transform.Find("RightArrow").GetComponent<Button>().enabled = false;
         }
         else
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = true;
-            transform.Find("RightArrow").GetComponent<BoxCollider2D>().enabled = true;
+            transform.Find("RightArrow").GetComponent<Button>().enabled = true;
         }
 
+        npcCharacter = CharacterEnumClass.GetCharacterString(characterNum);
 
-        if (mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "LeftArrow" && Input.GetMouseButtonDown(0))
-        {
-            characterNum -= 1;
-        }
-        else if (mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "RightArrow" && Input.GetMouseButtonDown(0))
-        {
-            characterNum += 1;
-        }
-        switch (characterNum)
-        {
-            case 1: npcCharacter = "Rabbit"; break;
-            case 2: npcCharacter = "BaldEagle"; break;
-            case 3: npcCharacter = "Lifer"; break;
-            case 4: npcCharacter = "YoungBuck"; break;
-            case 5: npcCharacter = "OldTimer"; break;
-            case 6: npcCharacter = "BillyGoat"; break;
-            case 7: npcCharacter = "Froseph"; break;
-            case 8: npcCharacter = "Tango"; break;
-            case 9: npcCharacter = "Maru"; break;
-        }
-
-        if(mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "NameBox" && Input.GetMouseButtonDown(0))
-        {
-            transform.Find("NameText").GetComponent<TMP_InputField>().ActivateInputField();
-            transform.Find("NameText").GetComponent<TMP_InputField>().caretPosition = 22;
-        }
-        else if((mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name != "NameBox" && Input.GetMouseButtonDown(0)) ||
-            !mouseCollisionScript.isTouchingButton && Input.GetMouseButtonDown(0))
-        {
-            transform.Find("NameText").GetComponent<TMP_InputField>().DeactivateInputField();
-        }
-
-        if(mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "SetButton")
-        {
-            transform.Find("SetButton").GetComponent<Image>().sprite = pressedSetSprite;
-        }
-        else
-        {
-            transform.Find("SetButton").GetComponent<Image>().sprite = normalSetSprite;
-        }
-
-        if (!transform.Find("SetButton").GetComponent<BoxCollider2D>().enabled)
+        if (!transform.Find("SetButton").GetComponent<Button>().enabled)
         {
             transform.Find("SetButton").GetComponent<Image>().sprite = sadSetSprite;
         }
-
-        if(mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "SetButton" && Input.GetMouseButtonDown(0))
-        {
-            SetNPC(NPCRenameScript.pressedNPCName, transform.Find("NameText").GetComponent<TMP_InputField>().text, npcCharacter);
-        }
     }
-    private void SetNPC(string name, string displayName, string character)
+    public void SetNPC(string name, string displayName, string character)
     {
         MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).GetComponent<NPCRenameAnim>().bodyDirSprites = characterSprites;
         MainMenuCanvas.transform.Find("NPCCustomizePanel").Find("NPCGrid").Find(name).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = character;

@@ -23,19 +23,25 @@ public class MouseOverlay : MonoBehaviour
     public Sprite mouseRed;
     private void Start()
     {
-        MouseOverlayObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").gameObject;
-        player = RootObjectCache.GetRoot("Player");
-        parentCanvas = transform.parent.GetComponent<Canvas>();
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        iss = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
-        combatScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Combat>();
-
+        if(SceneManager.GetActiveScene().name != "Main Menu")
+        {
+            MouseOverlayObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").gameObject;
+            player = RootObjectCache.GetRoot("Player");
+            parentCanvas = transform.parent.GetComponent<Canvas>();
+            mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+            iss = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
+            combatScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Combat>();
+        }
+        else
+        {
+            MouseOverlayObject = gameObject;
+            mcs = GetComponent<MouseCollisionOnItems>();
+            parentCanvas = transform.parent.GetComponent<Canvas>();
+        }
         // Hide the mouse cursor
         Cursor.visible = false;
         offset = new Vector2(20, -32);
 
-        MouseOverlayObject = gameObject;
-        mcs = GetComponent<MouseCollisionOnItems>();
     }
     private void Update()
     {
