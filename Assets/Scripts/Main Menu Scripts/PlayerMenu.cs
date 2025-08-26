@@ -29,23 +29,23 @@ public class PlayerMenu : MonoBehaviour
         if (characterNum == 0)
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = false;
-            transform.Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = false;
+            transform.Find("LeftArrow").GetComponent<Button>().enabled = false;
         }
         else
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = true;
-            transform.Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = true;
+            transform.Find("LeftArrow").GetComponent<Button>().enabled = true;
         }
 
         if (characterNum == 8)
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = false;
-            transform.Find("RightArrow").GetComponent<BoxCollider2D>().enabled = false;
+            transform.Find("RightArrow").GetComponent<Button>().enabled = false;
         }
         else
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = true;
-            transform.Find("RightArrow").GetComponent<BoxCollider2D>().enabled = true;
+            transform.Find("RightArrow").GetComponent<Button>().enabled = true;
         }
     }
 }

@@ -20,9 +20,9 @@ public class LoadingPanel : MonoBehaviour
         {
             child.GetComponent<Image>().sprite = clearSprite;
         }
-        titlePanel.transform.Find("PlayButton").GetComponent<BoxCollider2D>().enabled = false;
-        titlePanel.transform.Find("OptionsButton").GetComponent<BoxCollider2D>().enabled = false;
-        titlePanel.transform.Find("MapEditorButton").GetComponent<BoxCollider2D>().enabled = false;
+        titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = false;
+        titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = false;
+        titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = false;
     }
     public void LogLoad(string log)
     {
@@ -52,9 +52,9 @@ public class LoadingPanel : MonoBehaviour
         }
         if (loadCount == 97)
         {
-            titlePanel.transform.Find("PlayButton").GetComponent<BoxCollider2D>().enabled = true;
-            titlePanel.transform.Find("OptionsButton").GetComponent<BoxCollider2D>().enabled = true;
-            titlePanel.transform.Find("MapEditorButton").GetComponent<BoxCollider2D>().enabled = true;
+            titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = true;
+            titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;
+            titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = true;
             GetComponent<Animator>().Play("LoadingScreenAnim");
             StartCoroutine(WaitLoop());
         }

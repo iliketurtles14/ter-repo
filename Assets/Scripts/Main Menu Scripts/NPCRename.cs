@@ -56,17 +56,13 @@ public class NPCRename : MonoBehaviour
     private List<string> setNames = new List<string>();
     private List<int> setCharacters = new List<int>();
     private string setCharacter;
-    private bool isStarting;
+    public bool isStarting;
 
-    private void Start()
-    {
-        OnEnable();
-    }
     private void OnEnable()
     {
         ClearPanel();
+        LoadNPCGrid(prisonSelectScript.currentPrisonGuardNum + prisonSelectScript.currentPrisonInmateNum - 1);
         MakeList();
-        //HidePanel();
         lastTouchedButton = null;
         lastTouchedCharacter = null;
         foreach (Transform child in transform.Find("NPCSelectionGrid"))
@@ -81,67 +77,6 @@ public class NPCRename : MonoBehaviour
     }
     private void Update()
     {
-
-        if (mouseCollisionScript.isTouchingButton)
-        {
-            switch (mouseCollisionScript.touchedButton.name)
-            {
-                case "BackButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = BackButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingBackButton = true;
-                    break;
-                case "RandomButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = RandomButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingRandomButton = true;
-                    break;
-                case "StartGameButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = StartButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingStartButton = true;
-                    break;
-            }
-        }
-        else
-        {
-            touchingBackButton = false;
-            touchingRandomButton = false;
-            touchingStartButton = false;
-            if(lastTouchedButton != null)
-            {
-                switch (lastTouchedButton.name)
-                {
-                    case "BackButton":
-                        lastTouchedButton.GetComponent<Image>().sprite = BackButtonNormalSprite; break;
-                    case "RandomButton":
-                        lastTouchedButton.GetComponent<Image>().sprite = RandomButtonNormalSprite; break;
-                    case "StartGameButton":
-                        lastTouchedButton.GetComponent<Image>().sprite = StartButtonNormalSprite; break;
-                }
-
-            }
-            lastTouchedButton = null;
-        }
-        if(touchingBackButton && Input.GetMouseButtonDown(0))
-        {
-            MainMenuCanvas.transform.Find("PlayerPanel").gameObject.SetActive(true);
-            MainMenuCanvas.transform.Find("SmallMenuPanel").gameObject.SetActive(false);
-            gameObject.SetActive(false);
-        }
-        else if(touchingStartButton && Input.GetMouseButtonDown(0))
-        {
-            if (!isStarting)
-            {
-                isStarting = true;
-                Transfer();
-            }
-        }
-        else if(touchingRandomButton && Input.GetMouseButtonDown(0))
-        {
-            StartCoroutine(RandomizeWait());
-        }
-        
         if(mouseCollisionScript.isTouchingInmate || mouseCollisionScript.isTouchingGuard)
         {
             if (mouseCollisionScript.isTouchingInmate)
@@ -152,7 +87,7 @@ public class NPCRename : MonoBehaviour
                     currentText = NameText.text;
                 }
                 lastTouchedCharacter = mouseCollisionScript.touchedInmate;
-                for (int i = 1; i <= 9; i++)
+                for (int i = 1; i <= prisonSelectScript.currentPrisonInmateNum - 1; i++)
                 {
                     if (mouseCollisionScript.touchedInmate.name == "Inmate" + i)
                     {
@@ -169,122 +104,114 @@ public class NPCRename : MonoBehaviour
                     currentText = NameText.text;
                 }
                 lastTouchedCharacter = mouseCollisionScript.touchedGuard;
-                for (int i = 1; i <= 5; i++)
+                for (int i = 1; i <= prisonSelectScript.currentPrisonGuardNum; i++)
                 {
                     if (mouseCollisionScript.touchedGuard.name == "Guard" + i)
                     {
-                        selectionNum = i + 9;
+                        selectionNum = i + prisonSelectScript.currentPrisonInmateNum - 1;
                         break;
                     }
                 }
             }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                hasPressedCharacter = true;
-                lastPressedCharacter = lastTouchedCharacter;
-                pressedNum = selectionNum;
-                pressedCharacterAmount++;
-                NameText.text = lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName;
-                SendData();
-                foreach (Transform child in transform.Find("NPCSelectionGrid"))
-                {
-                    child.GetComponent<Image>().sprite = ClearSprite;
-                }
-                transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = SelectHoverSprite;
-                transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Image>().sprite = SelectPressedSprite;
-                transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = SelectPressedSprite;
-                if (mouseCollisionScript.isTouchingInmate)
-                {
-                    pressedNPCName = mouseCollisionScript.touchedInmate.name;
-                    OpenPanel(mouseCollisionScript.touchedInmate.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
-                } 
-                else if (mouseCollisionScript.isTouchingGuard)
-                {
-                    pressedNPCName = mouseCollisionScript.touchedGuard.name;
-                    OpenPanel(mouseCollisionScript.touchedGuard.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
-                }
-            }
-            else if (!Input.GetMouseButtonDown(0) && transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite == ClearSprite)
-            {
-                if (mouseCollisionScript.isTouchingInmate)
-                {
-                    lastTouchedCharacter = mouseCollisionScript.touchedInmate;
-                }
-                else if (mouseCollisionScript.isTouchingGuard)
-                {
-                    lastTouchedCharacter = mouseCollisionScript.touchedGuard;
-                }
-                transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = SelectHoverSprite;
-            }
-
-            if (pressedCharacterAmount > 1)
-            {
-                foreach(Transform child in transform.Find("NPCSelectionGrid"))
-                {
-                    child.GetComponent<Image>().sprite = ClearSprite;
-                }
-                transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = SelectPressedSprite;
-                pressedNum = selectionNum;
-                pressedCharacterAmount = 1;
-            }
-            if (hasPressedCharacter)
-            {
-                foreach(Transform child in transform.Find("NPCSelectionGrid"))
-                {
-                    child.GetComponent<Image>().sprite = ClearSprite;
-                }
-                transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = SelectHoverSprite;
-                transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Image>().sprite = SelectPressedSprite;
-            }
         }
         else
         {
+            lastTouchedCharacter = null;
+            
             if (!hasPressedCharacter)
             {
                 NameText.text = "";
                 currentText = null;
                 ClearPanel();
             }
-
-            if (lastTouchedCharacter != null)
-            {
-                if (!hasPressedCharacter)
-                {
-                    transform.Find("NPCSelectionGrid").Find("Selection" + selectionNum).GetComponent<Image>().sprite = ClearSprite;
-                }
-                else if (hasPressedCharacter)
-                {
-                    foreach (Transform child in transform.Find("NPCSelectionGrid"))
-                    {
-                        child.GetComponent<Image>().sprite = ClearSprite;
-                    }
-                    transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Image>().sprite = SelectPressedSprite;
-                }
-                else { return; }
-            }
-            lastTouchedCharacter = null;
             if(Input.GetMouseButtonDown(0) && mouseCollisionScript.isTouchingButton && mouseCollisionScript.touchedButton.name == "NameBox")
             {
                 return;
             }
             else if (Input.GetMouseButtonDown(0) && !mouseCollisionScript.isTouchingSmallMenuPanel && !mouseCollisionScript.isTouchingGuard && !mouseCollisionScript.isTouchingInmate)
             {
-                foreach (Transform child in transform.Find("NPCSelectionGrid"))
-                {
-                    child.GetComponent<Image>().sprite = ClearSprite;
-                }
                 hasPressedCharacter = false;
                 lastPressedCharacter = null;
                 pressedCharacterAmount = 0;
                 pressedNum = 0;
-                //HidePanel();
             }
         }
-        /*for(int i = 1; i <= 14; i++)
+    }
+    public void OnNPCClick()
+    {
+        hasPressedCharacter = true;
+        lastPressedCharacter = lastTouchedCharacter;
+        pressedNum = selectionNum;
+        pressedCharacterAmount++;
+        NameText.text = lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName;
+        SendData();
+        transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Image>().sprite = SelectPressedSprite;
+        SpriteState spriteState = transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = SelectPressedSprite;
+        transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Button>().spriteState = spriteState;
+        if (mouseCollisionScript.isTouchingInmate)
         {
+            pressedNPCName = mouseCollisionScript.touchedInmate.name;
+            OpenPanel(mouseCollisionScript.touchedInmate.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
+        }
+        else if (mouseCollisionScript.isTouchingGuard)
+        {
+            pressedNPCName = mouseCollisionScript.touchedGuard.name;
+            OpenPanel(mouseCollisionScript.touchedGuard.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
+        }
+    }
+    private void LoadNPCGrid(int npcCount)
+    {
+        Vector2 gridSize = Vector2.zero;
 
-        }*/
+        if(npcCount <= 5)
+        {
+            gridSize = new Vector2(5, 1);
+        }
+        else if(npcCount >= 6 && npcCount <= 10)
+        {
+            gridSize = new Vector2(5, 2);
+        }
+        else if(npcCount >= 11 && npcCount <= 15)
+        {
+            gridSize = new Vector2(5, 3);
+        }
+        else if(npcCount >= 16 && npcCount <= 21)
+        {
+            gridSize = new Vector2(7, 3);
+        }
+        else if(npcCount >= 22 && npcCount <= 25)
+        {
+            gridSize = new Vector2(8, 4);
+        }
+        else if(npcCount >= 26)
+        {
+            int rows = npcCount / 9;
+
+            gridSize = new Vector2(9, rows);
+        }
+
+        transform.Find("NPCGrid").GetComponent<GridLayoutGroup>().constraintCount = Convert.ToInt32(gridSize.x);
+        transform.Find("NPCSelectionGrid").GetComponent<GridLayoutGroup>().constraintCount = Convert.ToInt32(gridSize.x);
+
+        int inmateCount = prisonSelectScript.currentPrisonInmateNum;
+        int guardCount = prisonSelectScript.currentPrisonGuardNum;
+
+        for(int i = 1; i <= inmateCount; i++)
+        {
+            GameObject inmate = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Inmate"));
+            inmate.name = "Inmate" + i;
+        }
+        for(int i = 1; i <= guardCount; i++)
+        {
+            GameObject guard = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Guard"));
+            guard.name = "Guard" + i;
+        }
+        for(int i = 1; i <= npcCount; i++)
+        {
+            GameObject selection = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Selection"));
+            selection.name = "Selection" + i;
+        }
     }
     private void Randomize()
     {
@@ -294,12 +221,13 @@ public class NPCRename : MonoBehaviour
         {
             animList.Add(child.gameObject.GetComponent<NPCRenameAnim>());
         }
-        for(int i = 0; i <= 13; i++)
+        for(int i = 0; i < prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum; i++)
         {
             int rand = UnityEngine.Random.Range(1, 10);
             switch (rand)
             {
-                case 1: characterSprites = dataScript.RabbitSprites;
+                case 1: 
+                    characterSprites = dataScript.RabbitSprites;
                     setCharacter = "Rabbit";
                     break;
                 case 2:
@@ -336,13 +264,13 @@ public class NPCRename : MonoBehaviour
             }
             
 
-            if(i <= 8)
+            if(i < prisonSelectScript.currentPrisonInmateNum - 1)
             {
                 transform.Find("NPCGrid").Find("Inmate" + (i + 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
-            else if(i > 8)
+            else if(i >= prisonSelectScript.currentPrisonGuardNum)
             {
-                transform.Find("NPCGrid").Find("Guard" + (i - 8)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
+                transform.Find("NPCGrid").Find("Guard" + (i - prisonSelectScript.currentPrisonGuardNum - 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
             animList[i].bodyDirSprites = characterSprites;
         }
@@ -354,14 +282,14 @@ public class NPCRename : MonoBehaviour
         currentNames = new List<string>(names);
 
         //inmates
-        for(int i = 1; i <= 9; i++)
+        for(int i = 1; i <= prisonSelectScript.currentPrisonInmateNum - 1; i++)
         {
             int rand = UnityEngine.Random.Range(0, currentNames.Count - 1);
             NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = currentNames[rand];
             currentNames.RemoveAt(rand);
         }
         //guards
-        for(int i = 1; i <= 5; i++)
+        for(int i = 1; i <= prisonSelectScript.currentPrisonGuardNum; i++)
         {
             int rand = UnityEngine.Random.Range(0, currentNames.Count);
             NPCGrid.transform.Find("Guard" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = "Officer " + currentNames[rand];
@@ -375,7 +303,7 @@ public class NPCRename : MonoBehaviour
 
         names = new List<string>(namesFile.text.Split('\n'));
     }
-    private IEnumerator RandomizeWait()
+    public IEnumerator RandomizeWait()
     {
         yield return new WaitForEndOfFrame();
         Randomize();
@@ -386,22 +314,22 @@ public class NPCRename : MonoBehaviour
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("NPC").GetComponent<Image>().sprite = ClearSprite;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().sprite = ClearSprite;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<Image>().sprite = ClearSprite;
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<BoxCollider2D>().enabled = false;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<Button>().enabled = false;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<Image>().sprite = ClearSprite;
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = false;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<Button>().enabled = false;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("NameText").gameObject.SetActive(false);
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("SetButton").GetComponent<BoxCollider2D>().enabled = false;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("SetButton").GetComponent<Button>().enabled = false;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("SetButton").GetComponent<Image>().sprite = SetButtonSadSprite;
     }
     private void OpenPanel(string name)
     {
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("NPC").GetComponent<SmallMenuAnim>().enabled = true;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<Image>().sprite = RightArrowSprite;
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<BoxCollider2D>().enabled = true;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("RightArrow").GetComponent<Button>().enabled = true;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<Image>().sprite = LeftArrowSprite;
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<BoxCollider2D>().enabled = true;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("LeftArrow").GetComponent<Button>().enabled = true;
         MainMenuCanvas.transform.Find("SmallMenuPanel").Find("NameText").gameObject.SetActive(true);
-        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("SetButton").GetComponent<BoxCollider2D>().enabled = true;
+        MainMenuCanvas.transform.Find("SmallMenuPanel").Find("SetButton").GetComponent<Button>().enabled = true;
         if (lastPressedCharacter.tag == "Inmate")
         {
             int startIndex = name.IndexOf("") + "".Length;
@@ -458,7 +386,7 @@ public class NPCRename : MonoBehaviour
 
         smallMenuScript.OnOpen(lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName, lastPressedCharacter.tag, character);
     }
-    private void Transfer()
+    public void Transfer()
     {
         foreach(Transform npc in transform.Find("NPCGrid"))
         {
