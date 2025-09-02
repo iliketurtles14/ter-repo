@@ -17,42 +17,16 @@ public class TileSetter : MonoBehaviour
 
     public List<Sprite> groundList = new List<Sprite>();
     public List<Sprite> tileList = new List<Sprite>();
-    public List<Sprite> perksList = new List<Sprite>();
-    public List<Sprite> stalagList = new List<Sprite>();
-    public List<Sprite> shanktonList = new List<Sprite>();
-    public List<Sprite> jungleList = new List<Sprite>();
-    public List<Sprite> sanpanchoList = new List<Sprite>();
-    public List<Sprite> hmpList = new List<Sprite>();
 
-    public void SetTiles(int whatPrison)//starting from tutorial, being 0
+
+    public void SetTiles(int whatPrison)
     {
         tileTextureList = givenDataScript.tileTextureList;
         groundTextureList = givenDataScript.groundTextureList;
 
-        switch (whatPrison)
-        {
-            case 0: convertedTileSprite = Texture2DToSprite(tileTextureList[0]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[17]);
-                break;
-            case 1: convertedTileSprite = Texture2DToSprite(tileTextureList[0]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[11]);
-                break;
-            case 2: convertedTileSprite = Texture2DToSprite(tileTextureList[1]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[15]);
-                break;
-            case 3: convertedTileSprite = Texture2DToSprite(tileTextureList[2]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[13]);
-                break;
-            case 4: convertedTileSprite = Texture2DToSprite(tileTextureList[3]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[9]);
-                break;
-            case 5: convertedTileSprite = Texture2DToSprite(tileTextureList[4]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[12]);
-                break;
-            case 6: convertedTileSprite = Texture2DToSprite(tileTextureList[5]);
-                convertedGroundSprite = Texture2DToSprite(groundTextureList[8]);
-                break;
-        }
+        convertedTileSprite = Texture2DToSprite(tileTextureList[whatPrison]);
+        convertedGroundSprite = Texture2DToSprite(groundTextureList[whatPrison]);
+
         convertedUndergroundSprite = Texture2DToSprite(groundTextureList[18]);
         SliceAndDice();
 

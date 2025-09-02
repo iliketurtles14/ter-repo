@@ -141,6 +141,7 @@ public class ButtonController : MonoBehaviour
             if(child.GetComponent<Button>() != null)
             {
                 child.GetComponent<Button>().enabled = true;
+                child.GetComponent<EventTrigger>().enabled = true;
             }
         }
     }
@@ -161,6 +162,7 @@ public class ButtonController : MonoBehaviour
             if(child.GetComponent<Button>() != null)
             {
                 child.GetComponent<Button>().enabled = true;
+                child.GetComponent<EventTrigger>().enabled = true;
             }
         }
     }

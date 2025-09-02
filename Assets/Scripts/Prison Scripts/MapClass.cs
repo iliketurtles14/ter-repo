@@ -11,6 +11,9 @@ public class Map
     public string warden;
     public int guardCount;
     public int inmateCount;
+    public string tilesetStr;
+    public string groundStr;
+    public string musicStr;
     public Sprite tileset;
     public Sprite ground;
     public AudioClip music;
@@ -37,7 +40,7 @@ public class Map
     public bool deliveries;
     public bool mailman;
     public bool library;
-    public List<int[]> tilesList; //each int[] is like this: [tile],[posx],[posy],[layer]
+    public List<int[]> tilesList; //each int[] is like this: [tile],[posx],[posy],[layer (0, 1, 2, 3)]
     public List<string> objNames; //ground, underground, vent, roof (order)
     public List<float[]> objVars; //[posx],[posy],[layer]
     public List<string> zoneNames;
@@ -49,6 +52,9 @@ public class Map
         string warden,
         int guardCount,
         int inmateCount,
+        string tilesetStr,
+        string groundStr,
+        string musicStr,
         Sprite tileset,
         Sprite ground,
         AudioClip music,
@@ -87,6 +93,9 @@ public class Map
         this.warden = warden;
         this.guardCount = guardCount;
         this.inmateCount = inmateCount;
+        this.tilesetStr = tilesetStr;
+        this.groundStr = groundStr;
+        this.musicStr = musicStr;
         this.tileset = tileset;
         this.ground = ground;
         this.music = music;

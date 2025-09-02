@@ -55,11 +55,11 @@ public class GetGivenData : MonoBehaviour
     {
         HashSet<string> validFiles = new HashSet<string>
     {
-        "ground_alca.gif", "ground_BC.gif", "ground_campepsilon.gif", "ground_CCL.gif",
-        "ground_DTAF.gif", "ground_EA.gif", "ground_escapeteam.gif", "ground_fortbamford.gif",
-        "ground_irongate.gif", "ground_jungle.gif", "ground_pcpen.gif", "ground_perks.gif",
-        "ground_sanpancho.gif", "ground_shanktonstatepen.gif", "ground_SS.gif", "ground_stalagflucht.gif",
-        "ground_TOL.gif", "ground_tutorial.gif", "soil.gif"
+        "ground_tutorial", "ground_perks", "ground_stalagflucht", "ground_shanktonstatepen",
+        "ground_jungle", "ground_sanpancho", "ground_irongate", "ground_CCL",
+        "ground_BC", "ground_TOL", "ground_pcpen", "ground_SS",
+        "ground_DTAF", "ground_escapeteam", "ground_alca", "ground_EA",
+        "ground_campepsilon", "ground_fortbamford", "ground_soil"
     };
 
         foreach (string file in Directory.GetFiles(groundPath))
@@ -103,9 +103,7 @@ public class GetGivenData : MonoBehaviour
         {
             "tiles_alca.gif", "tiles_BC.gif", "tiles_campepsilon.gif", "tiles_CCL.gif",
             "tiles_DTAF.gif", "tiles_EA.gif", "tiles_escapeteam.gif", "tiles_fortbamford.gif",
-            "tiles_pcpen.gif",
-            "tiles_SS.gif",
-            "tiles_TOL.gif", "tiles_tutorial.gif"
+            "tiles_pcpen.gif", "tiles_SS.gif", "tiles_TOL.gif", "tiles_tutorial.gif"
         };
 
         foreach (string validFile in validFiles)
@@ -192,6 +190,27 @@ public class GetGivenData : MonoBehaviour
             }
 
         }
+
+        //reorder the texture list to fit with the list laid out in discord
+        List<Texture2D> tempList = tileTextureList;
+        tileTextureList[0] = tempList[11];
+        tileTextureList[1] = tempList[14];
+        tileTextureList[2] = tempList[17];
+        tileTextureList[3] = tempList[16];
+        tileTextureList[4] = tempList[13];
+        tileTextureList[5] = tempList[15];
+        tileTextureList[6] = tempList[12];
+        tileTextureList[7] = tempList[3];
+        tileTextureList[8] = tempList[1];
+        tileTextureList[9] = tempList[10];
+        tileTextureList[10] = tempList[8];
+        tileTextureList[11] = tempList[9];
+        tileTextureList[12] = tempList[4];
+        tileTextureList[13] = tempList[6];
+        tileTextureList[14] = tempList[0];
+        tileTextureList[15] = tempList[5];
+        tileTextureList[16] = tempList[2];
+        tileTextureList[17] = tempList[7];
     }
     private Texture2D LoadGifAsTexture2D(byte[] fileData)
     {

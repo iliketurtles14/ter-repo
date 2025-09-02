@@ -58,6 +58,7 @@ public class DataSender : MonoBehaviour
     public Sprite UndergroundSprite;
     public List<AudioClip> SoundList = new List<AudioClip>();
     public List<AudioClip> MusicList = new List<AudioClip>();
+    public string currentMapPath;
     public static DataSender instance { get; private set; }
     
     public void SetFullLists(List<Sprite> item, List<Sprite> npc, List<Sprite> prisonObject, List<Sprite> ui)
@@ -141,6 +142,10 @@ public class DataSender : MonoBehaviour
     public void SetMusicList(List<AudioClip> music)
     {
         MusicList = music;
+    }
+    public void SetCurrentMapPath(string path)
+    {
+        currentMapPath = path;
     }
     private void Awake()
     {

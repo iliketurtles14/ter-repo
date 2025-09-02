@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
@@ -27,15 +28,16 @@ public class PrisonSelect : MonoBehaviour
     private GameObject lastTouchedButton;
     public OnMainButtonPress titlePanelScript;
     public Canvas MainMenuCanvas;
-    private List<string> mainPrisonPaths = new List<string>();
+    public List<string> mainPrisonPaths = new List<string>();
     public int currentPrisonInmateNum;
     public int currentPrisonGuardNum;
     public bool currentPrisonHasPOW;
+    public string currentPrisonPath;
     private List<Sprite> mainPrisonIcons = new List<Sprite>();
     private List<int> mainPrisonInmateNums = new List<int>();
     private List<int> mainPrisonGuardNums = new List<int>();
     private List<bool> mainPrisonHasPOWBools = new List<bool>();
-    private List<string> mainPrisonNames = new List<string>();
+    public List<string> mainPrisonNames = new List<string>();
     private Sprite noIconSprite;
     public int amountOfMainPrisons;
 
@@ -62,6 +64,7 @@ public class PrisonSelect : MonoBehaviour
             if(File.Exists(Path.Combine(extractPath, "Icon.png")))
             {
                 mainPrisonIcons.Add(ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png")));
+                File.Delete(Path.Combine(extractPath, "Icon.png"));
             }
             else
             {
@@ -87,6 +90,13 @@ public class PrisonSelect : MonoBehaviour
             {
                 mainPrisonHasPOWBools.Add(false);
             }
+
+            for(int j = 0; j < data.Length; j++)
+            {
+                data[j] = data[j].Replace("\n", "");
+                data[j] = data[j].Replace("\r", "");
+                data[j] = data[j].Replace("\u200B", "");
+            }
             mainPrisonInmateNums.Add(Convert.ToInt32(GetINIVar("Properties", "Inmates", data)));
             mainPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
             mainPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
@@ -99,23 +109,23 @@ public class PrisonSelect : MonoBehaviour
         if(whichPrison == 0)
         {
             LeftArrow.GetComponent<Image>().enabled = false;
-            LeftArrow.GetComponent<BoxCollider2D>().enabled = false;
+            LeftArrow.GetComponent<Button>().enabled = false;
         }
         else
         {
             LeftArrow.GetComponent<Image>().enabled = true;
-            LeftArrow.GetComponent<BoxCollider2D>().enabled = true;
+            LeftArrow.GetComponent<Button>().enabled = true;
         }
 
-        if (whichPrison == amountOfMainPrisons)
+        if (whichPrison + 1 == amountOfMainPrisons)
         {
             RightArrow.GetComponent<Image>().enabled = false;
-            RightArrow.GetComponent<BoxCollider2D>().enabled = false;
+            RightArrow.GetComponent<Button>().enabled = false;
         }
         else
         {
             RightArrow.GetComponent<Image>().enabled = true;
-            RightArrow.GetComponent<BoxCollider2D>().enabled = true;
+            RightArrow.GetComponent<Button>().enabled = true;
         }
 
         prisonText.text = mainPrisonNames[whichPrison];
@@ -123,6 +133,7 @@ public class PrisonSelect : MonoBehaviour
         currentPrisonGuardNum = mainPrisonGuardNums[whichPrison];
         currentPrisonInmateNum = mainPrisonInmateNums[whichPrison];
         currentPrisonHasPOW = mainPrisonHasPOWBools[whichPrison];
+        currentPrisonPath = mainPrisonPaths[whichPrison];
     }
     public string GetINIVar(string header, string varName, string[] file)
     {
