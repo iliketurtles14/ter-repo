@@ -17,6 +17,7 @@ public class NPCRename : MonoBehaviour
     public NPCSave saveScript;
     public PlayerMenu playerMenuScript;
     public ApplyMainMenuData dataScript;
+    public DataSender dataSenderScript;
     public TileSetter tileSetterScript;
     public PrisonSelect prisonSelectScript;
     public Sprite BackButtonNormalSprite;
@@ -433,6 +434,7 @@ public class NPCRename : MonoBehaviour
         }
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript.SetNPC(setNames, setCharacters);
+        dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
 
         Addressables.LoadSceneAsync("Center Perks");
     }

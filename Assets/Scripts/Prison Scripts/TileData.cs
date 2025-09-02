@@ -5,6 +5,6 @@ using UnityEngine;
 public class TileData : ScriptableObject
 {
     public int currentDurability;
-    public string tileName;
+    public string tileType;
     public int holeStability;
 }

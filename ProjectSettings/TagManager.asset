@@ -73,6 +73,7 @@ TagManager:
   - PropertiesSubButton
   - Handle
   - Mover
+  - Tile
   layers:
   - Default
   - TransparentFX
