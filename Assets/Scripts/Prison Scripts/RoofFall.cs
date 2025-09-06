@@ -15,7 +15,7 @@ public class RoofFall : MonoBehaviour
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         itemBehavioursScript = GetComponent<ItemBehaviours>();
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         
         floorCollisionScript = player.GetComponent<PlayerFloorCollision>();
         offset = new Vector3(0, 1.6f, 0);

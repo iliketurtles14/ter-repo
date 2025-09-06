@@ -10,6 +10,7 @@ public class DeskRNG : MonoBehaviour
     private Sprite clearSprite;
     private List<ItemData> itemList = new List<ItemData>();
     private Transform tiles;
+    private LoadPrison loadPrisonScript;
     private Dictionary<string, List<int>> percentageDict = new Dictionary<string, List<int>>()
     {
         { "Center Perks", new List<int>() { 0, 5, 5, 40, 30, 20 } },
@@ -28,7 +29,16 @@ public class DeskRNG : MonoBehaviour
         { "Alcatraz", new List<int>() { 5, 10, 15, 25, 25, 20 } },
         { "Fhurst Peak Correctional", new List<int>() { 5, 15, 20, 20, 30, 10 } },
         { "Camp Epsilon", new List<int>() { 5, 15, 20, 20, 30, 10 } },
-        { "Fort Bamford", new List<int>() { 5, 15, 20, 20, 30, 10 } }
+        { "Fort Bamford", new List<int>() { 5, 15, 20, 20, 30, 10 } },
+        { "Custom", new List<int>() {5, 15, 20, 20, 30, 10} }
+    };
+    private List<string> prisonNames = new List<string>()
+    {
+        "Center Perks", "Stalag Flucht", "Shankton State Pen", "Jungle Compound",
+        "San Pancho", "HMP Irongate", "Jingle Cells", "Banned Camp",
+        "London Tower", "Paris Central Pen", "Santas Sweatshop", "Duct Tapes Are Forever",
+        "Escape Team", "Alcatraz", "Fhurst Peak Correctional", "Camp Epsilon",
+        "Fort Bamford"
     };
     private List<int> percentages = new List<int>();//dependent on prison
     private List<GameObject> deskSlots = new List<GameObject>();
@@ -48,7 +58,18 @@ public class DeskRNG : MonoBehaviour
 
         itemList = Resources.LoadAll<ItemData>("Item Scriptable Objects").ToList();
 
-        percentages = percentageDict[SceneManager.GetActiveScene().name];
+        loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
+
+
+        string currentMapName = loadPrisonScript.currentMap.mapName;
+        if (prisonNames.Contains(currentMapName))
+        {
+            percentages = percentageDict[loadPrisonScript.currentMap.mapName];
+        }
+        else
+        {
+            percentages = percentageDict["Custom"];
+        }
         Debug.Log("PLEASE DONT FORGET TO CHANGE THIS");
         tokens = 20;
 

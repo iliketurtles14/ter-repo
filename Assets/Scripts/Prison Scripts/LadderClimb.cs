@@ -17,7 +17,7 @@ public class LadderClimb : MonoBehaviour
     private float distance;
     public void Start()
     {
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         ic = RootObjectCache.GetRoot("InventoryCanvas");
         selectionScript = GetComponent<InventorySelection>();
         deskStandScript = GetComponent<DeskStand>();

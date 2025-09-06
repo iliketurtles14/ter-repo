@@ -7,7 +7,7 @@ public class LightController : MonoBehaviour
     private Routine routineScript;
     private void Start()
     {
-        routineScript = RootObjectCache.GetRoot("InvnetoryCanvas").transform.Find("Time").GetComponent<Routine>();
+        routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").GetComponent<Routine>();
     }
     public void Update()
     {

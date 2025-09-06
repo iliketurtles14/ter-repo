@@ -195,23 +195,28 @@ public class NPCRename : MonoBehaviour
         transform.Find("NPCGrid").GetComponent<GridLayoutGroup>().constraintCount = Convert.ToInt32(gridSize.x);
         transform.Find("NPCSelectionGrid").GetComponent<GridLayoutGroup>().constraintCount = Convert.ToInt32(gridSize.x);
 
-        int inmateCount = prisonSelectScript.currentPrisonInmateNum;
+        int inmateCount = prisonSelectScript.currentPrisonInmateNum - 1;
         int guardCount = prisonSelectScript.currentPrisonGuardNum;
 
         for(int i = 1; i <= inmateCount; i++)
         {
             GameObject inmate = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Inmate"));
             inmate.name = "Inmate" + i;
+            inmate.GetComponent<NPCRenameAnim>().dataScript = dataScript;
+            inmate.transform.parent = transform.Find("NPCGrid");
         }
         for(int i = 1; i <= guardCount; i++)
         {
             GameObject guard = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Guard"));
             guard.name = "Guard" + i;
+            guard.GetComponent<NPCRenameAnim>().dataScript = dataScript;
+            guard.transform.parent = transform.Find("NPCGrid");
         }
-        for(int i = 1; i <= npcCount; i++)
+        for (int i = 1; i <= npcCount; i++)
         {
             GameObject selection = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Selection"));
             selection.name = "Selection" + i;
+            selection.transform.parent = transform.Find("NPCSelectionGrid");
         }
     }
     private void Randomize()
@@ -222,7 +227,7 @@ public class NPCRename : MonoBehaviour
         {
             animList.Add(child.gameObject.GetComponent<NPCRenameAnim>());
         }
-        for(int i = 0; i < prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum; i++)
+        for(int i = 0; i < (prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum); i++)
         {
             int rand = UnityEngine.Random.Range(1, 10);
             switch (rand)
@@ -269,9 +274,9 @@ public class NPCRename : MonoBehaviour
             {
                 transform.Find("NPCGrid").Find("Inmate" + (i + 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
-            else if(i >= prisonSelectScript.currentPrisonGuardNum)
+            else if(i >= prisonSelectScript.currentPrisonInmateNum)
             {
-                transform.Find("NPCGrid").Find("Guard" + (i - prisonSelectScript.currentPrisonGuardNum - 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
+                transform.Find("NPCGrid").Find("Guard" + (i - (prisonSelectScript.currentPrisonInmateNum - 1))).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
             animList[i].bodyDirSprites = characterSprites;
         }
@@ -436,6 +441,6 @@ public class NPCRename : MonoBehaviour
         saveScript.SetNPC(setNames, setCharacters);
         dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
 
-        Addressables.LoadSceneAsync("Center Perks");
+        Addressables.LoadSceneAsync("Prison");
     }
 }

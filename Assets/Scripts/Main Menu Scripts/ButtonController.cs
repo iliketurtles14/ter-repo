@@ -14,7 +14,7 @@ public class ButtonController : MonoBehaviour
     private IniFile iniFile;
     private int whichPrison;
     public PrisonSelect prisonSelectScript;
-    public PlayerMenu playerMenuScript;
+    public PlayerMenu PlayerMenuScript;
     public SmallMenu smallMenuScript;
     public NPCRename npcRenameScript;
     public void MainPlayGame()
@@ -173,30 +173,30 @@ public class ButtonController : MonoBehaviour
     }
     public void PlayerMenuLeft()
     {
-        playerMenuScript.characterNum--;
-        mmc.Find("PlayerMenu").Find("NameText").GetComponent<TMP_InputField>().text = playerMenuScript.playerCharacter;
-        mmc.Find("PlayerMenu").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = playerMenuScript.playerCharacter;
+        PlayerMenuScript.characterNum--;
+        mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
+        mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
     }
     public void PlayerMenuRight()
     {
-        playerMenuScript.characterNum++;
-        mmc.Find("PlayerMenu").Find("NameText").GetComponent<TMP_InputField>().text = playerMenuScript.playerCharacter;
-        mmc.Find("PlayerMenu").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = playerMenuScript.playerCharacter;
+        PlayerMenuScript.characterNum++;
+        mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
+        mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
     }
     public void PlayerMenuBack()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
-        mmc.Find("PlayerMenu").gameObject.SetActive(false);
+        mmc.Find("PlayerPanel").gameObject.SetActive(false);
     }
     public void PlayerMenuContinue()
     {
-        string setName = mmc.Find("PlayerMenu").Find("NameText").GetComponent<TMP_InputField>().text;
-        int setCharacter = playerMenuScript.characterNum;
-        playerMenuScript.saveScript.SetPlayer(setName, setCharacter);
+        string setName = mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text;
+        int setCharacter = PlayerMenuScript.characterNum;
+        PlayerMenuScript.saveScript.SetPlayer(setName, setCharacter);
 
         mmc.Find("NPCCustomizePanel").gameObject.SetActive(true);
         mmc.Find("SmallMenuPanel").gameObject.SetActive(true);
-        mmc.Find("PlayerMenu").gameObject.SetActive(false);
+        mmc.Find("PlayerPanel").gameObject.SetActive(false);
     }
     public void SmallMenuLeft()
     {

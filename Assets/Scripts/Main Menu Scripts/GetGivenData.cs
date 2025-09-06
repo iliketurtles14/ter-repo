@@ -55,11 +55,11 @@ public class GetGivenData : MonoBehaviour
     {
         HashSet<string> validFiles = new HashSet<string>
     {
-        "ground_tutorial", "ground_perks", "ground_stalagflucht", "ground_shanktonstatepen",
-        "ground_jungle", "ground_sanpancho", "ground_irongate", "ground_CCL",
-        "ground_BC", "ground_TOL", "ground_pcpen", "ground_SS",
-        "ground_DTAF", "ground_escapeteam", "ground_alca", "ground_EA",
-        "ground_campepsilon", "ground_fortbamford", "ground_soil"
+        "ground_tutorial.gif", "ground_perks.gif", "ground_stalagflucht.gif", "ground_shanktonstatepen.gif",
+        "ground_jungle.gif", "ground_sanpancho.gif", "ground_irongate.gif", "ground_CCL.gif",
+        "ground_BC.gif", "ground_TOL.gif", "ground_pcpen.gif", "ground_SS.gif",
+        "ground_DTAF.gif", "ground_escapeteam.gif", "ground_alca.gif", "ground_EA.gif",
+        "ground_campepsilon.gif", "ground_fortbamford.gif", "soil.gif"
     };
 
         foreach (string file in Directory.GetFiles(groundPath))

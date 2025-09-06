@@ -22,7 +22,7 @@ public class VentClimb : MonoBehaviour
     public void Start()
     {
         deskStandScript = GetComponent<DeskStand>();
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         ic = RootObjectCache.GetRoot("InventoryCanvas");
         selectionScript = GetComponent<InventorySelection>();
         player = RootObjectCache.GetRoot("Player");

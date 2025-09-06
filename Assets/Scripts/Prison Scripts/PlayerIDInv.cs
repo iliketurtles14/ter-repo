@@ -8,25 +8,35 @@ using UnityEngine.UI;
 
 public class PlayerIDInv : MonoBehaviour
 {
-    public Canvas MenuCanvas;
-    public Canvas InventoryCanvas;
-    public Inventory inventoryScript;
+    private GameObject MenuCanvas;
+    private GameObject InventoryCanvas;
+    private Inventory inventoryScript;
     private List<InventoryItem> inventoryList;
-    public MouseCollisionOnItems mcs;
+    private MouseCollisionOnItems mcs;
     public List<IDItem> idInv = new List<IDItem>();
-    public GameObject player;
-    public Sprite ClearSprite;
-    public GameObject outfitSlot;
-    public GameObject weaponSlot;
+    private GameObject player;
+    private Sprite ClearSprite;
+    private GameObject outfitSlot;
+    private GameObject weaponSlot;
     private List<GameObject> invSlots = new List<GameObject>();
     public int invSlotNumber;
     public bool idIsOpen;
-    public GameObject timeObject;
+    private GameObject timeObject;
     private bool outfitIsFull;
     private bool weaponIsFull;
     private bool invIsFull;
     public void Start()
     {
+        MenuCanvas = RootObjectCache.GetRoot("MenuCanvas");
+        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
+        mcs = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        player = RootObjectCache.GetRoot("Player");
+        ClearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        outfitSlot = transform.Find("Outfit").gameObject;
+        weaponSlot = transform.Find("Weapon").gameObject;
+        timeObject = InventoryCanvas.transform.Find("Time").gameObject;
+        
         StartCoroutine(Wait());
         foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
         {

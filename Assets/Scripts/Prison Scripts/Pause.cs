@@ -18,7 +18,7 @@ public class Pause : MonoBehaviour
     public void Start()
     {
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         black = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Black").gameObject;
 
         ClosePauseMenu();

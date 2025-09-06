@@ -7420,12 +7420,6 @@ MonoBehaviour:
   senderScript: {fileID: 947147254}
   groundList: []
   tileList: []
-  perksList: []
-  stalagList: []
-  shanktonList: []
-  jungleList: []
-  sanpanchoList: []
-  hmpList: []
 --- !u!1001 &578681021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18736,7 +18730,7 @@ MonoBehaviour:
   checkedBoxSprite: {fileID: 0}
   uncheckedBoxSprite: {fileID: 0}
   prisonSelectScript: {fileID: 1665980459}
-  playerMenuScript: {fileID: 1055657939}
+  PlayerMenuScript: {fileID: 1055657939}
   smallMenuScript: {fileID: 173090025}
   npcRenameScript: {fileID: 827161743}
 --- !u!4 &1738218530
