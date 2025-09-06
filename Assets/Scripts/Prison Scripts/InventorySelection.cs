@@ -35,7 +35,7 @@ public class InventorySelection : MonoBehaviour
     public void Start()
     {
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
-        mouseCollisionScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mouseCollisionScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         inventoryScript = GetComponent<Inventory>();
 
         //define the Images

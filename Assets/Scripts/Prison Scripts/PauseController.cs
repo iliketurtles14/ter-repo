@@ -13,7 +13,7 @@ public class PauseController : MonoBehaviour
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player");
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         aStar = RootObjectCache.GetRoot("A*").transform;
         timeObject = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Time").gameObject;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;

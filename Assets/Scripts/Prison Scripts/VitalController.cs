@@ -20,7 +20,7 @@ public class VitalController : MonoBehaviour
     public int energyRateAmount;
     public int healthRateAmount;
     private Vector2 sizeVector;
-    public Transform ic;
+    private Transform ic;
     private int oldHealth;
     private int oldEnergy;
     private int oldMoney;
@@ -30,6 +30,8 @@ public class VitalController : MonoBehaviour
 
     public void Start()
     {
+        ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+
         energyRate = 5;
         healthRate = 3;
         energyRateAmount = 1;

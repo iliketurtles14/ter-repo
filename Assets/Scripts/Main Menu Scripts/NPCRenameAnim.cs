@@ -18,23 +18,10 @@ public class NPCRenameAnim : MonoBehaviour
     private int whichCycle = 0;
 
 
-    public void Start()
-    {
-        OnEnable();
-    }
     public void OnEnable()
     {
         if (bodyDirSprites != null)
         {
-            if (tag == "Inmate")
-            {
-                outfitDirSprites = dataScript.InmateOutiftSprites;
-            }
-            else if (tag == "Guard")
-            {
-                outfitDirSprites = dataScript.GuardOutfitSprites;
-            }
-
             StartCoroutine(AnimCycle());
         }
         else { OnEnable(); }

@@ -79,7 +79,7 @@ public class ItemBehaviours : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
         inventoryScript = GetComponent<Inventory>();
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         barLine = Resources.Load<GameObject>("BarLine");
         actionBarPanel = InventoryCanvas.transform.Find("ActionBarPanel").gameObject;
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;

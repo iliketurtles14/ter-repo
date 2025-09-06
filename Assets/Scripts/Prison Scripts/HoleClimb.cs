@@ -14,7 +14,7 @@ public class HoleClimb : MonoBehaviour
     private bool hasPickedUp;
     public void Start()
     {
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         undergroundLight = RootObjectCache.GetRoot("UndergroundLight");

@@ -18,7 +18,7 @@ public class Sittables : MonoBehaviour
     private Vector3 climbOffset;
     private void Start()
     {
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player");
         vitalScript = player.GetComponent<VitalController>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;

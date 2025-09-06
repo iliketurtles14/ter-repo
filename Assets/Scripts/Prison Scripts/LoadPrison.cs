@@ -582,6 +582,13 @@ public class LoadPrison : MonoBehaviour
         givenDataScript = GetGivenData.instance;
         dataSenderScript = DataSender.instance;
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+
+        StartCoroutine(LoadWait());
+    }
+    private IEnumerator LoadWait()
+    {
+        yield return new WaitForEndOfFrame();
+        StartLoad();
     }
     public void StartLoad()
     {
@@ -653,6 +660,8 @@ public class LoadPrison : MonoBehaviour
         }
 
         SetTiles(currentTileDict);
+        SetObjects();
+        //set the zones when you need em; i love ya, isaac. :3 im so proud of where youve gotten to. keep it up! cya...
     }
     private void SetTiles(Dictionary<int, string> tileDict)
     {
@@ -672,16 +681,73 @@ public class LoadPrison : MonoBehaviour
                 tile = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Tiles/Wall"), tiles.Find(tileLayer));
             }
 
-            Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) + .8f, (tileVars[2] * 1.6f) + .8f, 0);
+            Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
         }
-
-        for(int i = 0; i < currentMap.objNames.Count; i++)
+    }
+    private void SetObjects()
+    {
+        for (int i = 0; i < currentMap.objNames.Count; i++)
         {
             float[] objVars = currentMap.objVars[i];
             string objName = currentMap.objNames[i];
 
+            bool objIsAvailable = false;
+            GameObject objPrefab = null;
+            foreach (GameObject obj in Resources.LoadAll<GameObject>("PrisonPrefabs/Objects"))
+            {
+                if (obj.name == objName)
+                {
+                    objIsAvailable = true;
+                    objPrefab = obj;
+                }
+            }
+            if (objName.StartsWith("Ladder"))//special cases can go here :)
+            {
+                objIsAvailable = true;
 
+                if (objName == "LadderUp")
+                {
+                    switch (objVars[2])
+                    {
+                        case 1:
+                            objPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/LadderUp (Ground)");
+                            objName = "LadderUp (Ground)";
+                            break;
+                        case 2:
+                            objPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/LadderUp (Vent)");
+                            objName = "LadderUp (Vent)";
+                            break;
+                        default:
+                            objIsAvailable = false;
+                            break;
+                    }
+                }
+                else if (objName == "LadderDown")
+                {
+                    switch (objVars[2])
+                    {
+                        case 2:
+                            objPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/LadderDown (Vent)");
+                            objName = "LadderDown (Vent)";
+                            break;
+                        case 3:
+                            objPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/LadderDown (Roof)");
+                            objName = "LadderDown (Roof)";
+                            break;
+                        default:
+                            objIsAvailable = false;
+                            break;
+                    }
+                }
+            }
+
+            if (objIsAvailable)
+            {
+                Vector3 objPos = new Vector3((objVars[0] * 1.6f) - 1.6f, (objVars[1] * 1.6f) - 1.6f, 0);
+                GameObject objInst = Instantiate(objPrefab, objPos, Quaternion.identity, tiles.Find(layerDict[Convert.ToInt32(objVars[2])] + "Objects"));
+                objInst.name = objName;
+            }
         }
     }
     public Map MakeMapObject(string path)
@@ -720,6 +786,9 @@ public class LoadPrison : MonoBehaviour
         for (int i = 0; i < data.Length; i++)
         {
             data[i] = data[i].Trim();
+            data[i] = data[i].Replace("\n", "");
+            data[i] = data[i].Replace("\r", "");
+            data[i] = data[i].Replace("\u200B", "");
         }
 
         string mapName = GetINIVar("Properties", "MapName", data);
