@@ -17,15 +17,15 @@ public class PlayerAnimation : MonoBehaviour
     {
         switch (NPCSave.instance.playerCharacter)
         {
-            case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
-            case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
-            case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
-            case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
-            case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
-            case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
-            case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
-            case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
-            case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
+            case 0: bodyDirSprites = DataSender.instance.RabbitSprites; break;
+            case 1: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
+            case 2: bodyDirSprites = DataSender.instance.LiferSprites; break;
+            case 3: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
+            case 4: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
+            case 5: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
+            case 6: bodyDirSprites = DataSender.instance.FrosephSprites; break;
+            case 7: bodyDirSprites = DataSender.instance.TangoSprites; break;
+            case 8: bodyDirSprites = DataSender.instance.MaruSprites; break;
         }
         outfitDirSprites = DataSender.instance.InmateOutfitSprites;
 
@@ -40,7 +40,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         transform.Find("Outfit").position = transform.position;
 
-        if(lookDir != null)
+        if(lookDir != null )
         {
             switch (lookDir)
             {

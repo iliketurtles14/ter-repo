@@ -24,6 +24,9 @@ public class GetGivenData : MonoBehaviour
     private string mainPath;
     private string blackGroundPath;
 
+    private bool doneWithGroundLoad = false;
+    private bool doneWithTileLoad = false;
+    public bool doneWithGivenLoad = false;
     public static GetGivenData instance { get; private set; }
 
     public async void Start()
@@ -50,56 +53,64 @@ public class GetGivenData : MonoBehaviour
     //        StartCoroutine(PlayAudioClipFromDisk(musicPath));
     //    }
     //}
+    private void Update()
+    {
+        if(doneWithGroundLoad && doneWithTileLoad)
+        {
+            doneWithGivenLoad = true;
+        }
+    }
 
     private async Task LoadGroundTextures()
     {
-        HashSet<string> validFiles = new HashSet<string>
-    {
-        "ground_tutorial.gif", "ground_perks.gif", "ground_stalagflucht.gif", "ground_shanktonstatepen.gif",
-        "ground_jungle.gif", "ground_sanpancho.gif", "ground_irongate.gif", "ground_CCL.gif",
-        "ground_BC.gif", "ground_TOL.gif", "ground_pcpen.gif", "ground_SS.gif",
-        "ground_DTAF.gif", "ground_escapeteam.gif", "ground_alca.gif", "ground_EA.gif",
-        "ground_campepsilon.gif", "ground_fortbamford.gif", "soil.gif"
-    };
-
-        foreach (string file in Directory.GetFiles(groundPath))
+        List<string> validFiles = new List<string>
         {
-            string fileName = Path.GetFileName(file);
-            if (validFiles.Contains(fileName))
+            "ground_tutorial.gif", "ground_perks.gif", "ground_stalagflucht.gif", "ground_shanktonstatepen.gif",
+            "ground_jungle.gif", "ground_sanpancho.gif", "ground_irongate.gif", "ground_CCL.gif",
+            "ground_BC.gif", "ground_TOL.gif", "ground_pcpen.gif", "ground_SS.gif",
+            "ground_DTAF.gif", "ground_escapeteam.gif", "ground_alca.gif", "ground_EA.gif",
+            "ground_campepsilon.gif", "ground_fortbamford.gif", "soil.gif"
+        };
+
+        foreach (string fileName in validFiles)
+        {
+            string filePath = Path.Combine(groundPath, fileName);
+            if (File.Exists(filePath))
             {
                 try
                 {
-                    byte[] fileData = await File.ReadAllBytesAsync(file);
+                    byte[] fileData = await File.ReadAllBytesAsync(filePath);
                     Texture2D texture = LoadGifAsTexture2D(fileData);
                     if (texture != null)
                     {
                         groundTextureList.Add(texture);
-                        loadScript.LogLoad($"Successfully loaded texture from {file}");
+                        loadScript.LogLoad($"Successfully loaded texture from {filePath}");
                     }
                     else
                     {
-                        loadScript.LogLoad($"Failed to load texture from {file}");
+                        loadScript.LogLoad($"Failed to load texture from {filePath}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    loadScript.LogLoad($"Exception occurred while loading texture from {file}: {ex.Message}");
+                    loadScript.LogLoad($"Exception occurred while loading texture from {filePath}: {ex.Message}");
                 }
             }
             else
             {
-                loadScript.LogLoad($"File {file} is not a valid ground texture.");
+                loadScript.LogLoad($"File {filePath} does not exist.");
             }
         }
-
         byte[] blackGroundData = await File.ReadAllBytesAsync(blackGroundPath);
         Texture2D blackTexture = LoadGifAsTexture2D(blackGroundData);
         groundTextureList.Add(blackTexture);
+
+        doneWithGroundLoad = true;
     }
 
     private async Task LoadTileTextures()
     {
-        HashSet<string> validFiles = new HashSet<string>
+        List<string> validFiles = new List<string>
         {
             "tiles_alca.gif", "tiles_BC.gif", "tiles_campepsilon.gif", "tiles_CCL.gif",
             "tiles_DTAF.gif", "tiles_EA.gif", "tiles_escapeteam.gif", "tiles_fortbamford.gif",
@@ -154,10 +165,10 @@ public class GetGivenData : MonoBehaviour
         }
 
         //load the custom versions of main maps
-        HashSet<string> customFiles = new HashSet<string>
+        List<string> customFiles = new List<string>
         {
-            "tiles_cus_irongate.gif", "tiles_cus_jungle.gif", "tiles_cus_perks.gif", "tiles_cus_sanpancho.gif",
-            "tiles_cus_shanktonstatepen.gif", "tiles_cus_stalagflucht.gif"
+               "tiles_cus_irongate.gif", "tiles_cus_jungle.gif", "tiles_cus_perks.gif", "tiles_cus_sanpancho.gif",
+               "tiles_cus_shanktonstatepen.gif", "tiles_cus_stalagflucht.gif"
         };
         foreach(string customFile in customFiles)
         {
@@ -211,6 +222,8 @@ public class GetGivenData : MonoBehaviour
         tileTextureList[15] = tempList[5];
         tileTextureList[16] = tempList[2];
         tileTextureList[17] = tempList[7];
+
+        doneWithTileLoad = true;
     }
     private Texture2D LoadGifAsTexture2D(byte[] fileData)
     {

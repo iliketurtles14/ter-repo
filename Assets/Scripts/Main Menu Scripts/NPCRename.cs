@@ -62,6 +62,7 @@ public class NPCRename : MonoBehaviour
     private void OnEnable()
     {
         ClearPanel();
+        ResetNPCGrid();
         LoadNPCGrid(prisonSelectScript.currentPrisonGuardNum + prisonSelectScript.currentPrisonInmateNum - 1);
         MakeList();
         lastTouchedButton = null;
@@ -161,6 +162,17 @@ public class NPCRename : MonoBehaviour
             OpenPanel(mouseCollisionScript.touchedGuard.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
         }
     }
+    private void ResetNPCGrid()
+    {
+        foreach(Transform npc in transform.Find("NPCGrid"))
+        {
+            Destroy(npc.gameObject);
+        }
+        foreach(Transform selection in transform.Find("NPCSelectionGrid"))
+        {
+            Destroy(selection.gameObject);
+        }
+    }
     private void LoadNPCGrid(int npcCount)
     {
         Vector2 gridSize = Vector2.zero;
@@ -204,6 +216,7 @@ public class NPCRename : MonoBehaviour
             inmate.name = "Inmate" + i;
             inmate.GetComponent<NPCRenameAnim>().dataScript = dataScript;
             inmate.transform.parent = transform.Find("NPCGrid");
+            inmate.transform.localScale = new Vector3(1, 1, 1);
         }
         for(int i = 1; i <= guardCount; i++)
         {
@@ -211,12 +224,14 @@ public class NPCRename : MonoBehaviour
             guard.name = "Guard" + i;
             guard.GetComponent<NPCRenameAnim>().dataScript = dataScript;
             guard.transform.parent = transform.Find("NPCGrid");
+            guard.transform.localScale = new Vector3(1, 1, 1);
         }
         for (int i = 1; i <= npcCount; i++)
         {
             GameObject selection = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Selection"));
             selection.name = "Selection" + i;
             selection.transform.parent = transform.Find("NPCSelectionGrid");
+            selection.transform.localScale = new Vector3(1, 1, 1);
         }
     }
     private void Randomize()
