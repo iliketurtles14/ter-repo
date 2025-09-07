@@ -148,11 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f01ce22cd57b8149949e2b8a33873aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deskScript: {fileID: 0}
-  player: {fileID: 0}
-  mcs: {fileID: 0}
-  playerAnimationScript: {fileID: 0}
-  applyScript: {fileID: 0}
   isPickedUp: 0
 --- !u!1 &9166930802731366036
 GameObject:

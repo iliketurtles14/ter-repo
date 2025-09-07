@@ -25,7 +25,6 @@ public class PrisonSelect : MonoBehaviour
     public GameObject PrisonSelectPanel;
     public Sprite ButtonNormalSprite;
     public Sprite ButtonPressedSprite;
-    private GameObject lastTouchedButton;
     public OnMainButtonPress titlePanelScript;
     public Canvas MainMenuCanvas;
     public List<string> mainPrisonPaths = new List<string>();
@@ -38,15 +37,12 @@ public class PrisonSelect : MonoBehaviour
     private List<int> mainPrisonGuardNums = new List<int>();
     private List<bool> mainPrisonHasPOWBools = new List<bool>();
     public List<string> mainPrisonNames = new List<string>();
-    private Sprite noIconSprite;
     public int amountOfMainPrisons;
 
-    public void Start()
-    {
-        noIconSprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/noicon");
-    }
     public void OnEnable()
     {
+        ResetLists();
+        
         foreach (string path in Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "Prisons", "MainPrisons")))
         {
             if(Path.GetExtension(path) == ".zmap")
@@ -68,7 +64,7 @@ public class PrisonSelect : MonoBehaviour
             }
             else
             {
-                mainPrisonIcons.Add(noIconSprite);
+                mainPrisonIcons.Add(Resources.Load<Sprite>("Main Menu Resources/UI Stuff/noicon"));
             }
             if (File.Exists(Path.Combine(extractPath, "Tiles.png")))
             {
@@ -134,6 +130,17 @@ public class PrisonSelect : MonoBehaviour
         currentPrisonInmateNum = mainPrisonInmateNums[whichPrison];
         currentPrisonHasPOW = mainPrisonHasPOWBools[whichPrison];
         currentPrisonPath = mainPrisonPaths[whichPrison];
+    }
+
+    private void ResetLists()
+    {
+        mainPrisonPaths.Clear();
+        mainPrisonIcons.Clear();
+        mainPrisonInmateNums.Clear();
+        mainPrisonGuardNums.Clear();
+        mainPrisonHasPOWBools.Clear();
+        mainPrisonNames.Clear();
+        amountOfMainPrisons = 0;
     }
     public string GetINIVar(string header, string varName, string[] file)
     {

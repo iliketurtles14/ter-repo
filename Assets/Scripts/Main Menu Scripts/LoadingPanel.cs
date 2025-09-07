@@ -16,41 +16,18 @@ public class LoadingPanel : MonoBehaviour
     public GameObject titlePanel;
     public void Start()
     {
-        foreach (Transform child in transform.Find("LoadBar"))
-        {
-            child.GetComponent<Image>().sprite = clearSprite;
-        }
         titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = false;
         titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = false;
         titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = false;
     }
-    public void LogLoad(string log)
+    public void Update()
     {
-        transform.Find("LoadText").GetComponent<TextMeshProUGUI>().text = log;
-        IncrementLoadCount();
-    }
-    public void IncrementLoadCount()
-    {
-        loadCount++;
-        currentPercentage = Mathf.RoundToInt((loadCount / 105f) * 100);
-        Transform loadBarTransform = transform.Find("LoadBar");
-        int childCount = loadBarTransform.childCount;
-
-        for (int i = 0; i < childCount; i++)
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            Transform child = loadBarTransform.GetChild(i);
-            Image childImage = child.GetComponent<Image>();
-
-            if (i < currentPercentage)
-            {
-                childImage.sprite = barSprite;
-            }
-            else
-            {
-                childImage.sprite = clearSprite;
-            }
+            GetGivenData.instance.doneWithGivenLoad = true;
         }
-        if (loadCount == 97)
+
+        if (GetGivenData.instance.doneWithGivenLoad)
         {
             titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = true;
             titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;
@@ -58,6 +35,16 @@ public class LoadingPanel : MonoBehaviour
             GetComponent<Animator>().Play("LoadingScreenAnim");
             StartCoroutine(WaitLoop());
         }
+    }
+    public void LogLoad(string log)
+    {
+        transform.Find("LoadText").GetComponent<TextMeshProUGUI>().text = log;
+        Debug.Log(log);
+        IncrementLoadCount();
+    }
+    public void IncrementLoadCount()
+    {
+        loadCount++;
     }
     public IEnumerator WaitLoop()
     {

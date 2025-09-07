@@ -218,7 +218,7 @@ public class ButtonController : MonoBehaviour
     {
         mmc.Find("PlayerPanel").gameObject.SetActive(true);
         mmc.Find("SmallMenuPanel").gameObject.SetActive(false);
-        mmc.Find("NPCCUstomizePanel").gameObject.SetActive(false);
+        mmc.Find("NPCCustomizePanel").gameObject.SetActive(false);
     }
     public void NPCRenameStart()
     {

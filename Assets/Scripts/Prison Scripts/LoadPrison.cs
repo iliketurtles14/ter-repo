@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
@@ -14,6 +15,13 @@ public class LoadPrison : MonoBehaviour
     private Sprite tileset;
     private Sprite ground;
     private Sprite icon;
+
+    private List<Sprite> ItemSprites = new List<Sprite>();
+    private List<Sprite> NPCSprites = new List<Sprite>();
+    private List<Sprite> PrisonObjectSprites = new List<Sprite>();
+    private List<Sprite> UISprites = new List<Sprite>();
+
+    private ApplyPrisonData dataScript;
 
     private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     {
@@ -671,6 +679,7 @@ public class LoadPrison : MonoBehaviour
     {
         Texture2D groundTex;
         string groundChoice = currentMap.groundStr;
+        Debug.Log("Setting " + groundChoice);
 
         if (groundChoice != "Custom")
         {
@@ -681,6 +690,7 @@ public class LoadPrison : MonoBehaviour
             else
             {
                 int prisonIndex = tilesetDict[prisonDict[groundChoice]];
+                Debug.Log("prisonIndex = " + prisonIndex);
                 groundTex = givenDataScript.groundTextureList[prisonIndex];
             }
         }
@@ -707,15 +717,40 @@ public class LoadPrison : MonoBehaviour
         if (isTiled)
         {
             groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Tiled;
+            groundTransform.GetComponent<SpriteRenderer>().size = new Vector2(currentMap.sizeX * .16f, currentMap.sizeY * .16f);
         }
         else
         {
             groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
             groundTransform.GetComponent<SpriteRenderer>().size = new Vector2(groundTex.width * .01f, groundTex.height * .01f);
         }
+
+        //set underground plane
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = TextureToSprite(givenDataScript.groundTextureList[18]);
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(currentMap.sizeX * .16f, currentMap.sizeY * .16f);
+
+        //set ground sizes
+        int x = currentMap.sizeX;
+        int y = currentMap.sizeY;
+
+        if (isTiled)
+        {
+            groundTransform.position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
+        }
+        else
+        {
+            float sizeX = groundTransform.GetComponent<SpriteRenderer>().size.x;
+            float sizeY = groundTransform.GetComponent<SpriteRenderer>().size.y;
+
+            groundTransform.position = new Vector2(-.8f, -.8f);
+            groundTransform.position += new Vector3(sizeX / 2f, sizeY / 2f, 0);
+        }
+        tiles.Find("UndergroundPlane").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
     }
     private void SetTiles(Dictionary<int, string> tileDict)
     {
+        int tilesetID = tilesetDict[currentMap.tilesetStr];
+        List<Sprite> tileList = SliceAndDice(currentMap.tileset);
         foreach (int[] tileVars in currentMap.tilesList)
         {
             string tileType = tileDict[tileVars[0]];
@@ -735,6 +770,24 @@ public class LoadPrison : MonoBehaviour
             Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
             tile.name = tileVars[0].ToString();
+
+            tile.GetComponent<SpriteRenderer>().sprite = tileList[tileVars[0]];
+
+            switch (tileLayer)
+            {
+                case "Underground":
+                    tile.GetComponent<SpriteRenderer>().sortingOrder = -1;
+                    break;
+                case "Ground":
+                    tile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    break;
+                case "Vents":
+                    tile.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                    break;
+                case "Roof":
+                    tile.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                    break;
+            }
         }
     }
     private void SetObjects()
@@ -800,8 +853,135 @@ public class LoadPrison : MonoBehaviour
             if (objIsAvailable)
             {
                 Vector3 objPos = new Vector3((objVars[0] * 1.6f) - 1.6f, (objVars[1] * 1.6f) - 1.6f, 0);
-                GameObject objInst = Instantiate(objPrefab, objPos, Quaternion.identity, tiles.Find(layerDict[Convert.ToInt32(objVars[2])] + "Objects"));
+                GameObject objInst = Instantiate(objPrefab);
+                string objLayer = layerDict[Convert.ToInt32(objVars[2])];
+                objInst.transform.position = objPos;
+                if (objVars[2] == 2) //this is here because "Vents" and "VentObjects" are named differently (the 's' isnt on the VentObjects one, which the layerDict uses)
+                {
+                    objInst.transform.parent = tiles.Find("VentObjects");
+                }
+                else
+                {
+                    objInst.transform.parent = tiles.Find(objLayer + "Objects");
+                }
                 objInst.name = objName;
+
+                switch (objLayer)
+                {
+                    case "Underground":
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = -1;
+                        break;
+                    case "Ground":
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                        break;
+                    case "Vents":
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                        break;
+                    case "Roof":
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                        break;
+                }
+
+                dataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+                ItemSprites = dataScript.ItemSprites;
+                NPCSprites = dataScript.NPCSprites;
+                PrisonObjectSprites = dataScript.PrisonObjectSprites;
+                UISprites = dataScript.UISprites;
+
+                switch (objInst.name)
+                {
+                    case "NPCDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[51];
+                        break;
+                    case "PlayerDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
+                        break;
+                    case "Benchpress":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[52];
+                        break;
+                    case "Treadmill":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[54];
+                        break;
+                    case "RunningMat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[212];
+                        break;
+                    case "PushupMat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[213];
+                        break;
+                    case "SpeedBag":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[259];
+                        objInst.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[258];
+                        objInst.transform.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(1, 1.2f);
+                        break;
+                    case "PunchingMat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[236];
+                        objInst.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[234];
+                        objInst.transform.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(.8f, 1.7f);
+                        break;
+                    case "JumpropeMat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[238];
+                        break;
+                    case "PullupBar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[250];
+                        break;
+                    case "ComputerTable":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
+                        break;
+                    case "PlayerBedVertical":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[264];
+                        break;
+                    case "MedicBed":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[56];
+                        break;
+                    case "Lounger":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[206];
+                        break;
+                    case "Seat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[78];
+                        break;
+                    case "EmptyVentCover":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
+                        break;
+                    case "Vent":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+                        break;
+                    case "SheetRope":
+                        objInst.GetComponent<SpriteRenderer>().sprite = UISprites[162];
+                        break;
+                    case "Rope":
+                        objInst.GetComponent<SpriteRenderer>().sprite = UISprites[163];
+                        break;
+                    case "Grapple":
+                        objInst.GetComponent<SpriteRenderer>().sprite = UISprites[163];
+                        break;
+                    case "100%HoleDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
+                        break;
+                    case "100%HoleUp":
+                        objInst.GetComponent<UnityEngine.Rendering.Universal.Light2D>().lightCookieSprite = UISprites[38];
+                        break;
+                    case "Brace":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
+                        break;
+                    case "Rock":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[41];
+                        break;
+                    case "LadderDown (Vent)":
+                    case "LadderDown (Roof)":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[140];
+                        break;
+                    case "LadderUp (Ground)":
+                    case "LadderUp (Vent)":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[147];
+                        break;
+                    case "SlatsHorizontal":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[139];
+                        break;
+                    case "SlatsVertical":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[40];
+                        break;
+
+                }
             }
         }
     }
@@ -974,7 +1154,7 @@ public class LoadPrison : MonoBehaviour
         {
             string[] strParts = str.Split('=');
             string[] tileVars = strParts[1].Split(',');
-            int tileID = int.Parse(tileVars[0]);
+            int tileID = Convert.ToInt32(strParts[0].Split('e')[1]);
             int posX = Convert.ToInt32(tileVars[0]);
             int posY = Convert.ToInt32(tileVars[1]);
             int layer = 1;
@@ -988,7 +1168,7 @@ public class LoadPrison : MonoBehaviour
         {
             string[] strParts = str.Split('=');
             string[] tileVars = strParts[1].Split(',');
-            int tileID = int.Parse(tileVars[0]);
+            int tileID = Convert.ToInt32(strParts[0].Split('e')[1]);
             int posX = Convert.ToInt32(tileVars[0]);
             int posY = Convert.ToInt32(tileVars[1]);
             int layer = 0;
@@ -1002,7 +1182,7 @@ public class LoadPrison : MonoBehaviour
         {
             string[] strParts = str.Split('=');
             string[] tileVars = strParts[1].Split(',');
-            int tileID = int.Parse(tileVars[0]);
+            int tileID = Convert.ToInt32(strParts[0].Split('e')[1]);
             int posX = Convert.ToInt32(tileVars[0]);
             int posY = Convert.ToInt32(tileVars[1]);
             int layer = 2;
@@ -1016,7 +1196,7 @@ public class LoadPrison : MonoBehaviour
         {
             string[] strParts = str.Split('=');
             string[] tileVars = strParts[1].Split(',');
-            int tileID = int.Parse(tileVars[0]);
+            int tileID = Convert.ToInt32(strParts[0].Split('e')[1]);
             int posX = Convert.ToInt32(tileVars[0]);
             int posY = Convert.ToInt32(tileVars[1]);
             int layer = 3;
@@ -1237,5 +1417,25 @@ public class LoadPrison : MonoBehaviour
 
         return cornerTex;
     }
+    private List<Sprite> SliceAndDice(Sprite tileset)
+    {
+        Texture2D tilesetTex = tileset.texture;
+        List<Sprite> tileList = new List<Sprite>();
 
+        int tileWidth = 16;
+        int tileHeight = 16;
+
+        // Start from the top row and move down
+        for (int y = tilesetTex.height - tileHeight; y >= 0; y -= tileHeight)
+        {
+            for (int x = 0; x < tilesetTex.width; x += tileWidth)
+            {
+                Rect rect = new Rect(x, y, tileWidth, tileHeight);
+                Sprite subSprite = Sprite.Create(tilesetTex, rect, new Vector2(.5f, .5f), 100f);
+                tileList.Add(subSprite);
+            }
+        }
+
+        return tileList;
+    }
 }

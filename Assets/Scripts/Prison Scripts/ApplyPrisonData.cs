@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine.Rendering.Universal;
+using System.Linq;
 
 public class ApplyPrisonData : MonoBehaviour
 {
@@ -546,104 +547,7 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
         ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
         mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
-        
-        //objects
-        foreach(GameObject obj in Resources.LoadAll<GameObject>("PrisonPrefabs/Objects"))
-        {
-            switch (obj.name)
-            {
-                case "NPCDesk":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[51];
-                    break;
-                case "PlayerDesk":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[143];
-                    break;
-                case "Benchpress":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[52];
-                    break;
-                case "Treadmill":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[54];
-                    break;
-                case "RunningMat":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[212];
-                    break;
-                case "PushupMat":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[213];
-                    break;
-                case "SpeedBag":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[259];
-                    obj.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[258];
-                    obj.transform.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(1, 1.2f);
-                    break;
-                case "PunchingMat":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[236];
-                    obj.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[234];
-                    obj.transform.Find("Bag").GetComponent<SpriteRenderer>().size = new Vector2(.8f, 1.7f);
-                    break;
-                case "JumpropeMat":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[238];
-                    break;
-                case "PullupBar":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[250];
-                    break;
-                case "ComputerTable":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[188];
-                    break;
-                case "PlayerBedVertical":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[264];
-                    break;
-                case "MedicBed":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[56];
-                    break;
-                case "Lounger":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[206];
-                    break;
-                case "Seat":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[78];
-                    break;
-                case "EmptyVentCover":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[138];
-                    break;
-                case "Vent":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
-                    break;
-                case "SheetRope":
-                    obj.GetComponent<SpriteRenderer>().sprite = UISprites[162];
-                    break;
-                case "Rope":
-                    obj.GetComponent<SpriteRenderer>().sprite = UISprites[163];
-                    break;
-                case "Grapple":
-                    obj.GetComponent<SpriteRenderer>().sprite = UISprites[163];
-                    break;
-                case "100%HoleDown":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[132];
-                    break;
-                case "100%HoleUp":
-                    obj.GetComponent<Light2D>().lightCookieSprite = UISprites[38];
-                    break;
-                case "Brace":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[96];
-                    break;
-                case "Rock":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[41];
-                    break;
-                case "LadderDown (Vent)":
-                case "LadderDown (Roof)":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[140];
-                    break;
-                case "LadderUp (Ground)":
-                case "LadderUp (Vent)":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[147];
-                    break;
-                case "SlatsHorizontal":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[139];
-                    break;
-                case "SlatsVertical":
-                    obj.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[40];
-                    break;
-            }
-        }
+
         
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];
         itemBehavioursScript.hole49 = PrisonObjectSprites[135];
@@ -656,8 +560,6 @@ public class ApplyPrisonData : MonoBehaviour
         //dirt
         Resources.Load("PrisonPrefabs/Underground/Dirt").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
         Resources.Load("PrisonPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
-        tiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
-        tiles.transform.Find("UndergroundPlane").GetComponent<SpriteRenderer>().size = new Vector2(20, 20);
         //vital sprites
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 145, 78, 8, 11));
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 154, 78, 6, 11));
