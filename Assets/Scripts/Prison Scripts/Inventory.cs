@@ -36,6 +36,12 @@ public class Inventory : MonoBehaviour
         playerCollisionScript = Player.GetComponent<PlayerFloorCollision>();
         PlayerTransform = Player.transform;
         mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        
+        InventoryItem blankItem = new InventoryItem();
+        for (int i = 0; i < 6; i++)
+        {
+            inventory.Add(blankItem);
+        }
     }
     public void Update()
     {

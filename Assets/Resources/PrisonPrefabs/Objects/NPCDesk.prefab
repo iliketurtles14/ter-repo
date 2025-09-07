@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6279451819527532882}
   - component: {fileID: 2525775307917493921}
   m_Layer: 0
-  m_Name: InmateDesk
+  m_Name: NPCDesk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

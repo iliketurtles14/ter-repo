@@ -15,7 +15,7 @@ public class PauseController : MonoBehaviour
         player = RootObjectCache.GetRoot("Player");
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         aStar = RootObjectCache.GetRoot("A*").transform;
-        timeObject = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Time").gameObject;
+        timeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
     }
     public void Pause(bool disableInv)
@@ -57,6 +57,10 @@ public class PauseController : MonoBehaviour
     public void Unpause()
     {
         //player movement
+        if(player == null)
+        {
+            player = RootObjectCache.GetRoot("Player");
+        }
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         player.GetComponent<PlayerCtrl>().enabled = true;
         int actionNum = player.GetComponent<BodyController>().currentActionNum;
@@ -66,9 +70,17 @@ public class PauseController : MonoBehaviour
         }
         
         //mouse collision stuff
+        if(mcs == null)
+        {
+            mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        }
         mcs.EnableAllTags();
 
         //npc movement
+        if(aStar == null)
+        {
+            aStar = RootObjectCache.GetRoot("A*").transform;
+        }
         foreach(GameObject npc in aStar)
         {
             npc.GetComponent<AILerp>().speed = 8;
@@ -78,9 +90,17 @@ public class PauseController : MonoBehaviour
         }
 
         //time unfreeze
+        if(timeObject == null)
+        {
+            timeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
+        }
         timeObject.GetComponent<Routine>().enabled = true;
 
         //enable id button
+        if(ic == null)
+        {
+            ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        }
         ic.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = true;
     }
 }
