@@ -311,7 +311,14 @@ public class PlayerIDInv : MonoBehaviour
         transform.Find("WeaponText").gameObject.SetActive(false);
         transform.Find("OutfitText").gameObject.SetActive(false);
         transform.Find("NameText").gameObject.SetActive(false);
-        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
+        if(name == "NPCMenuPanel")
+        {
+            transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = false;
+        }
+        else if(name == "PlayerMenuPanel")
+        {
+            transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
+        }
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
         idIsOpen = false;

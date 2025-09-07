@@ -31,7 +31,7 @@ public class Exercising : MonoBehaviour
     private int subGain;
     public void Start()
     {
-        mcs = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         itemBehavioursScript = GetComponent<ItemBehaviours>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         ic = RootObjectCache.GetRoot("InventoryCanvas");

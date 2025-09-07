@@ -68,7 +68,7 @@ public class Tooltips : MonoBehaviour
         TooltipSide = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipSide");
         TooltipTextBox = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipText");
         inventoryScript = GetComponent<Inventory>();
-        mcs = menuCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         selectionScript = GetComponent<InventorySelection>();
         itemBehavioursScript = GetComponent<ItemBehaviours>();
         deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;

@@ -576,6 +576,7 @@ public class LoadPrison : MonoBehaviour
 
     private Transform tiles;
 
+    [SerializeField]
     public Map currentMap;
     private void Start()
     {
@@ -587,6 +588,8 @@ public class LoadPrison : MonoBehaviour
     }
     private IEnumerator LoadWait()
     {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         StartLoad();
     }
@@ -659,9 +662,57 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
+        SetGround();
         SetTiles(currentTileDict);
         SetObjects();
-        //set the zones when you need em; i love ya, isaac. :3 im so proud of where youve gotten to. keep it up! cya...
+        //set the zones when you need to
+    }
+    private void SetGround()
+    {
+        Texture2D groundTex;
+        string groundChoice = currentMap.groundStr;
+
+        if (groundChoice != "Custom")
+        {
+            if (groundChoice == "black")
+            {
+                groundTex = givenDataScript.groundTextureList[19];
+            }
+            else
+            {
+                int prisonIndex = tilesetDict[prisonDict[groundChoice]];
+                groundTex = givenDataScript.groundTextureList[prisonIndex];
+            }
+        }
+        else
+        {
+            groundTex = ground.texture;
+        }
+
+        groundTex.filterMode = FilterMode.Point;
+
+        bool isTiled = false;
+        if (groundChoice != "BC" && groundChoice != "JC" && groundChoice != "DTAF" && groundChoice != "Custom")
+        {
+            groundTex = textureCornerGet(groundTex, 16, 16);
+            isTiled = true;
+        }
+
+        Transform groundTransform = tiles.Find("GroundPlane");
+
+        Sprite groundSprite = Sprite.Create(groundTex, new Rect(0, 0, groundTex.width, groundTex.height), new Vector2(.5f, .5f), 100.0f);
+
+        groundTransform.GetComponent<SpriteRenderer>().sprite = groundSprite;
+
+        if (isTiled)
+        {
+            groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Tiled;
+        }
+        else
+        {
+            groundTransform.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+            groundTransform.GetComponent<SpriteRenderer>().size = new Vector2(groundTex.width * .01f, groundTex.height * .01f);
+        }
     }
     private void SetTiles(Dictionary<int, string> tileDict)
     {
@@ -683,10 +734,14 @@ public class LoadPrison : MonoBehaviour
 
             Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
+            tile.name = tileVars[0].ToString();
         }
     }
     private void SetObjects()
     {
+        Debug.Log("objVars count = " + currentMap.objVars.Count);
+        Debug.Log("objNames count = " + currentMap.objNames.Count);
+
         for (int i = 0; i < currentMap.objNames.Count; i++)
         {
             float[] objVars = currentMap.objVars[i];
@@ -990,6 +1045,8 @@ public class LoadPrison : MonoBehaviour
                     Convert.ToSingle(varParts[1]),
                     1
                 };
+
+                objVars.Add(vars);
             }
         }
         foreach (string str in undergroundObjSet)
@@ -1005,6 +1062,8 @@ public class LoadPrison : MonoBehaviour
                     Convert.ToSingle(varParts[1]),
                     0
                 };
+
+                objVars.Add(vars);
             }
         }
         foreach (string str in ventObjSet)
@@ -1020,6 +1079,8 @@ public class LoadPrison : MonoBehaviour
                     Convert.ToSingle(varParts[1]),
                     2
                 };
+
+                objVars.Add(vars);
             }
         }
         foreach (string str in roofObjSet)
@@ -1035,6 +1096,8 @@ public class LoadPrison : MonoBehaviour
                     Convert.ToSingle(varParts[1]),
                     3
                 };
+
+                objVars.Add(vars);
             }
         }
         List<string> zoneNames = new List<string>();
@@ -1052,6 +1115,8 @@ public class LoadPrison : MonoBehaviour
                 Convert.ToSingle(posParts[0]), Convert.ToSingle(posParts[1]),
                 Convert.ToSingle(aSizeParts[0]), Convert.ToSingle(aSizeParts[1])
             };
+
+            zoneVars.Add(vars);
         }
 
         Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, tileset, ground, music, icon, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
@@ -1160,6 +1225,17 @@ public class LoadPrison : MonoBehaviour
 
         string[] parts = line.Split('=');
         return parts[1];
+    }
+    private Texture2D textureCornerGet(Texture2D source, int sizeX, int sizeY)
+    {
+        Color[] pixels = source.GetPixels(0, 0, sizeX, sizeY);
+
+        Texture2D cornerTex = new Texture2D(sizeX, sizeY, source.format, false);
+        cornerTex.SetPixels(pixels);
+        cornerTex.Apply();
+        cornerTex.filterMode = FilterMode.Point;
+
+        return cornerTex;
     }
 
 }

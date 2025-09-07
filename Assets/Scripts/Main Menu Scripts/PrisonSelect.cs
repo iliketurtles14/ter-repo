@@ -43,7 +43,7 @@ public class PrisonSelect : MonoBehaviour
 
     public void Start()
     {
-        noIconSprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff");
+        noIconSprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/noicon");
     }
     public void OnEnable()
     {

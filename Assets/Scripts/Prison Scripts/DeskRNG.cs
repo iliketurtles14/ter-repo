@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -60,6 +61,15 @@ public class DeskRNG : MonoBehaviour
 
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
 
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
         string currentMapName = loadPrisonScript.currentMap.mapName;
         if (prisonNames.Contains(currentMapName))
@@ -78,7 +88,7 @@ public class DeskRNG : MonoBehaviour
             deskSlots.Add(child.gameObject);
         }
 
-        foreach(ItemData item in itemList)
+        foreach (ItemData item in itemList)
         {
             switch (item.token)
             {
@@ -91,7 +101,7 @@ public class DeskRNG : MonoBehaviour
             }
         }
 
-        foreach(Transform obj in tiles)
+        foreach (Transform obj in tiles)
         {
             if (obj.gameObject.CompareTag("Desk"))
             {

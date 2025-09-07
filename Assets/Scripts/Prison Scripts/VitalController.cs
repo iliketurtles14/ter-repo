@@ -26,6 +26,7 @@ public class VitalController : MonoBehaviour
     private int oldMoney;
     private int oldHeat;
     private int oldFriends;
+    private bool doneWithWait = false;
 
 
     public void Start()
@@ -36,6 +37,12 @@ public class VitalController : MonoBehaviour
         healthRate = 3;
         energyRateAmount = 1;
         healthRateAmount = 1;
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+
         data = GetComponent<PlayerCollectionData>().playerData;
         StartCoroutine(EnergyDeplete());
         StartCoroutine(HealthGain());
@@ -49,10 +56,16 @@ public class VitalController : MonoBehaviour
         oldMoney = data.money;
         oldHeat = data.heat;
         SetVitals();
+        doneWithWait = true;
     }
 
     public void Update()
     {
+        if (!doneWithWait)
+        {
+            return;
+        }
+        
         if(oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat)
         {
             oldHealth = data.health;

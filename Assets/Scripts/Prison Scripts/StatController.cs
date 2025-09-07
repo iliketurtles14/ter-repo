@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +11,11 @@ public class StatController : MonoBehaviour
     public void Start()
     {
         playerMenuPanel = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel").gameObject;
-        
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
         data = GetComponent<PlayerCollectionData>().playerData;
-        
         data.intellect = 30;
         data.strength = 30;
         data.speed = 30;

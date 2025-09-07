@@ -8,9 +8,9 @@ using System.Diagnostics.Contracts;
 
 public class MouseCollisionOnItems : MonoBehaviour //this started as an item script and is now how i do collision for the whole game :skull:
 {
-    private HashSet<string> disabledTags = new HashSet<string>();
-    private HashSet<Collider2D> hitColliders = new HashSet<Collider2D>();
-    private HashSet<GameObject> collidedObjects = new HashSet<GameObject>();
+    private List<string> disabledTags = new List<string>();
+    private List<Collider2D> hitColliders = new List<Collider2D>();
+    private List<GameObject> collidedObjects = new List<GameObject>();
     private List<string> priorityOrder = new List<string>();
 
     public bool isTouchingDeskSlot;
@@ -83,7 +83,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        hitColliders = System.Linq.Enumerable.ToHashSet(Physics2D.OverlapPointAll(mousePosition));
+        hitColliders = System.Linq.Enumerable.ToList(Physics2D.OverlapPointAll(mousePosition));
         foreach (var obj in hitColliders)
         {
             collidedObjects.Add(obj.gameObject);
@@ -303,10 +303,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
 
     public void EnableAllTags()
     {
-        foreach(string tag in disabledTags)
-        {
-            disabledTags.Remove(tag);
-        }
+        disabledTags.Clear();
     }
 
     private void ClearCollisions()

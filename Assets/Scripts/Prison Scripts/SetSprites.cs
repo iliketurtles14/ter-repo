@@ -7,39 +7,11 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.U2D;
 
-public class SetSprites : MonoBehaviour
+public class SetSprites : MonoBehaviour //this turned into just a script that sets item sprites. tiles and objects sprites get set in LoadPrison.cs
 {
-    private Transform tiles;
-    private GameObject InventoryCanvas;
     public GameObject Ground;
-    private string aName;
 
 
-    private Dictionary<string, int> perksTilesetDict = new Dictionary<string, int>() //this was a bitch to code holy shit
-    {
-        { "Bars", 78 }, { "Bottom Wall Left", 87 }, { "Bottom Wall Middle", 63 }, { "Bottom Wall Right", 71 },
-        { "Box", 93 }, { "Bush", 79 }, { "Concrete", 35 }, { "Electric Horizontal", 43 },
-        { "Electric Vertical", 39 }, { "Fence Horizontal", 20 }, { "Fence NE Corner", 4 }, { "Fence NW Corner", 0 },
-        { "Fence SE Corner", 12 }, { "Fence SW Corner", 8 }, { "Fence Vertical", 16 }, { "Garage", 74 },
-        { "Hard Wall Horizontal", 70 }, { "Hard Wall Vertical", 66 }, { "Mask Left", 47 }, { "Mask Middle", 55 },
-        { "Mask Right", 51 }, { "Obstacle", 84 }, { "Roofing E End", 94 }, { "Roofing Horizontal", 73 },
-        { "Roofing N End", 86 }, { "Roofing NE Corner", 61 }, { "Roofing NW Corner", 57 }, { "Roofing S End", 82 },
-        { "Roofing SE Corner", 49 }, { "Roofing SW Corner", 53 }, { "Roofing Vertical", 69 }, { "Roofing W End", 90 },
-        { "Top Wall Horizontal", 67 }, { "Top Wall NE Corner", 83 }, { "Top Wall NW Corner", 99 }, { "Top Wall SE Corner", 75 },
-        { "Top Wall SW Corner", 91 }, { "Top Wall Vertical", 95 }, { "Vent E", 85 }, { "Vent N", 89 },
-        { "Vent NE Corner", 33 }, { "Vent NW Corner", 37 }, { "Vent S", 77 }, { "Vent W", 81 },
-        { "Wall E T-Shape", 40 }, { "Wall Horizontal", 76 }, { "Wall N T-Shape", 44 }, { "Wall NE Corner", 64 },
-        { "Wall NW Corner", 68 }, { "Wall Plus Shape", 36 }, { "Wall S T-Shape", 52 }, { "Wall SE Corner", 56 },
-        { "Wall SW Corner", 60 }, { "Wall Vertical", 72 }, { "Wall W T-Shape", 48 }, { "Water", 6 },
-        { "Water E", 45 }, { "Water N", 9 }, { "Water NE Corner", 22 }, { "Water NW Corner", 18 },
-        { "Water S", 2 }, { "Water SE Corner", 10 }, { "Water SW Corner", 14 }, { "Water W", 41 }, { "Window", 65 },
-        { "Floor 1", 96 }, { "Floor 2", 97 }, { "Floor 3", 98 }, { "Floor 4", 92 },
-        { "Floor 5", 88 }, { "Floor 6", 84 }, { "Floor 7", 24 }, { "Floor 7 NE", 38 },
-        { "Floor 7 NW", 34 }, { "Floor 7 SE", 26 }, { "Floor 7 SW", 30 }, { "Floor 8", 31 },
-        { "Floor 9", 27 }, { "Floor 10", 23 }, { "Floor 11 Horizontal", 17 }, { "Floor 11 Vertical", 13 },
-        { "Floor 12 Horizontal", 15 }, { "Floor 12 Vertical", 19 }, { "Floor 13", 5 }, { "Floor 14", 28 },
-        { "GrassPlaceholder", 1 }, { "Roof Floor High", 21 }, { "Roof Floor Low", 29 }, { "Roof Floor Medium", 25 }
-    };
     private Dictionary<int, int> itemSpriteDict = new Dictionary<int, int>() //this was even more of a bitch to code
     {
         { 0, 6 }, { 1, 7 }, { 2, 64 }, { 3, 4 }, { 4, 113 }, { 5, 68 }, { 6, 67 }, { 7, 66 },
@@ -82,59 +54,8 @@ public class SetSprites : MonoBehaviour
         { 272, 271 }, { 273, 214 }, { 274, 165 }
     };
     private void Start()
-    {
-        tiles = RootObjectCache.GetRoot("Tiles").transform;
-        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
-        
-        SetTiles();
+    {        
         SetItems();
-        SetGround();
-    }
-    private void SetTiles()
-    {
-        foreach(Transform child in tiles.Find("Ground"))
-        {
-            if(child.name.IndexOf(" (") != -1)
-            {
-                int index = child.name.IndexOf(" (");
-                aName = child.name.Remove(index, child.name.Length - index);
-            }
-            else
-            {
-                aName = child.name;
-            }
-            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
-        }
-        tiles.Find("Vents").gameObject.SetActive(true);
-        foreach(Transform child in tiles.Find("Vents"))
-        {
-            if (child.name.IndexOf(" (") != -1)
-            {
-                int index = child.name.IndexOf(" (");
-                aName = child.name.Remove(index, child.name.Length - index);
-            }
-            else
-            {
-                aName = child.name;
-            }
-            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
-        }
-        tiles.Find("Vents").gameObject.SetActive(false);
-        tiles.Find("Roof").gameObject.SetActive(true);
-        foreach(Transform child in tiles.Find("Roof"))
-        {
-            if (child.name.IndexOf(" (") != -1)
-            {
-                int index = child.name.IndexOf(" (");
-                aName = child.name.Remove(index, child.name.Length - index);
-            }
-            else
-            {
-                aName = child.name;
-            }
-            child.GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().TileList[perksTilesetDict[aName]];
-        }
-        tiles.Find("Roof").gameObject.SetActive(false);
     }
     private void SetItems()
     {
@@ -142,9 +63,5 @@ public class SetSprites : MonoBehaviour
         {
             data.icon = DataSender.instance.GetComponent<DataSender>().ItemImages[itemSpriteDict[data.id]];
         }
-    }
-    private void SetGround()
-    {
-        tiles.Find("GroundPlane").GetComponent<SpriteRenderer>().sprite = DataSender.instance.GetComponent<DataSender>().GroundSprite;
     }
 }

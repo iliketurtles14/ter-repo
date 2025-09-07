@@ -52,7 +52,7 @@ public class BodyController : MonoBehaviour
     {
         Transform so = RootObjectCache.GetRoot("ScriptObject").transform;
         prisonDataScript = so.GetComponent<ApplyPrisonData>();
-        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        itemBehavioursScript = so.GetComponent<ItemBehaviours>();
 
         RabbitLists.Add(prisonDataScript.RabbitSleepDeadSprites);
         RabbitLists.Add(prisonDataScript.RabbitDiggingSprites);
