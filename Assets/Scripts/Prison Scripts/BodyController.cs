@@ -436,41 +436,41 @@ public class BodyController : MonoBehaviour
 
         switch (NPCSave.instance.playerCharacter)
         {
-            case 1: character = "Rabbit"; break;
-            case 2: character = "BaldEagle"; break;
-            case 3: character = "Lifer"; break;
-            case 4: character = "YoungBuck"; break;
-            case 5: character = "OldTimer"; break;
-            case 6: character = "BillyGoat"; break;
-            case 7: character = "Froseph"; break;
-            case 8: character = "Tango"; break;
-            case 9: character = "Maru"; break;
-            case 10: character = "Buddy"; break;
-            case 11: character = "IceElf"; break;
-            case 12: character = "BlackElf"; break;
-            case 13: character = "YellowElf"; break;
-            case 14: character = "PinkElf"; break;
-            case 15: character = "OrangeElf"; break;
-            case 16: character = "BrownElf"; break;
-            case 17: character = "WhiteElf"; break;
-            case 18: character = "Genie"; break;
-            case 19: character = "GuardElf"; break;
-            case 20: character = "Connelly"; break;
-            case 21: character = "Elbrah"; break;
-            case 22: character = "Chen"; break;
-            case 23: character = "Piers"; break;
-            case 24: character = "Mourn"; break;
-            case 25: character = "Lazeeboi"; break;
-            case 26: character = "Blonde"; break;
-            case 27: character = "Walton"; break;
-            case 28: character = "Prowler"; break;
-            case 29: character = "Crane"; break;
-            case 30: character = "Henchman"; break;
-            case 31: character = "Clint"; break;
-            case 32: character = "Cage"; break;
-            case 33: character = "Sean"; break;
-            case 34: character = "Andy"; break;
-            case 35: character = "Soldier"; break;
+            case 0: character = "Rabbit"; break;
+            case 1: character = "BaldEagle"; break;
+            case 2: character = "Lifer"; break;
+            case 3: character = "YoungBuck"; break;
+            case 4: character = "OldTimer"; break;
+            case 5: character = "BillyGoat"; break;
+            case 6: character = "Froseph"; break;
+            case 7: character = "Tango"; break;
+            case 8: character = "Maru"; break;
+            case 9: character = "Buddy"; break;
+            case 10: character = "IceElf"; break;
+            case 11: character = "BlackElf"; break;
+            case 12: character = "YellowElf"; break;
+            case 13: character = "PinkElf"; break;
+            case 14: character = "OrangeElf"; break;
+            case 15: character = "BrownElf"; break;
+            case 16: character = "WhiteElf"; break;
+            case 17: character = "Genie"; break;
+            case 18: character = "GuardElf"; break;
+            case 19: character = "Connelly"; break;
+            case 20: character = "Elbrah"; break;
+            case 21: character = "Chen"; break;
+            case 22: character = "Piers"; break;
+            case 23: character = "Mourn"; break;
+            case 24: character = "Lazeeboi"; break;
+            case 25: character = "Blonde"; break;
+            case 26: character = "Walton"; break;
+            case 27: character = "Prowler"; break;
+            case 28: character = "Crane"; break;
+            case 29: character = "Henchman"; break;
+            case 30: character = "Clint"; break;
+            case 31: character = "Cage"; break;
+            case 32: character = "Sean"; break;
+            case 33: character = "Andy"; break;
+            case 34: character = "Soldier"; break;
         }
 
         try

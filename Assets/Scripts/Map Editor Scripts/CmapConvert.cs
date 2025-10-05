@@ -334,6 +334,13 @@ public class CmapConvert : MonoBehaviour
                                 break;
                         }
                     }
+                    else if (tileArray[j] == "0" && layer == "[Tiles]")
+                    {
+                        int posX = j + 1;
+                        int posY = 108 - i;
+
+                        groundTileText += "tile100=" + posX + "," + posY + "\n";
+                    }
                 }
             }
         }

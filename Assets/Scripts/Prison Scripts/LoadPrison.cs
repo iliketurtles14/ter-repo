@@ -753,6 +753,20 @@ public class LoadPrison : MonoBehaviour
         List<Sprite> tileList = SliceAndDice(currentMap.tileset);
         foreach (int[] tileVars in currentMap.tilesList)
         {
+            if (tileVars[0] == 100) //if its an empty tile
+            {
+                GameObject emptyTile = new GameObject("Empty");
+                emptyTile.AddComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+                emptyTile.GetComponent<BoxCollider2D>().isTrigger = true;
+                Vector3 emptyTilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
+                emptyTile.transform.position = emptyTilePos;
+                emptyTile.layer = 10;
+                emptyTile.tag = "Digable";
+                emptyTile.transform.parent = tiles.Find("Ground");
+
+                continue;
+            }
+            
             string tileType = tileDict[tileVars[0]];
             string tileLayer = layerDict[tileVars[3]];
 
