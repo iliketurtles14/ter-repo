@@ -10,6 +10,7 @@ public class Exercising : MonoBehaviour
     private ItemBehaviours itemBehavioursScript;
     private Transform tiles;
     private GameObject ic;
+    private Transform so;
     private ApplyPrisonData applyPrisonDataScript;
     private GameObject barLine;
     private GameObject actionBarPanel;
@@ -19,7 +20,7 @@ public class Exercising : MonoBehaviour
     private bool onE = false;
     private int amountOfBars = 0;
     private Vector3 leaveVector;
-    private bool clearTile;
+    public bool clearTile;
     private GameObject goToTile;
     private bool isLeaving;
     public bool hasAdded;
@@ -31,11 +32,12 @@ public class Exercising : MonoBehaviour
     private int subGain;
     public void Start()
     {
+        so = RootObjectCache.GetRoot("ScriptObject").transform;
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        itemBehavioursScript = GetComponent<ItemBehaviours>();
+        itemBehavioursScript = so.GetComponent<ItemBehaviours>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         ic = RootObjectCache.GetRoot("InventoryCanvas");
-        applyPrisonDataScript = GetComponent<ApplyPrisonData>();
+        applyPrisonDataScript = so.GetComponent<ApplyPrisonData>();
         actionBarPanel = ic.transform.Find("ActionBarPanel").gameObject;
 
         barLine = Resources.Load<GameObject>("BarLine");
@@ -199,6 +201,7 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator LeaveEquipment()
     {
+        Debug.Log("Leaving Equipment.");
         running = false;
         isLeaving = true;
         itemBehavioursScript.DestroyActionBar();

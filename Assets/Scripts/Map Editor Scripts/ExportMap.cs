@@ -13,6 +13,8 @@ public class ExportMap : MonoBehaviour
     private string text;
     public Transform uic;
 
+    private Vector2 mapSize;
+
     public void Export()
     {
         text = "";
@@ -48,6 +50,13 @@ public class ExportMap : MonoBehaviour
         text += "Snowing=" + subMenuControllerScript.snowing + "\n";
         text += "POWOutfits=" + subMenuControllerScript.powOutfits + "\n";
         text += "StunRods=" + subMenuControllerScript.stunRods + "\n";
+
+        //set the mapSize variable for empty tile placing
+        string sizeStr = properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text;
+        string[] sizeParts = sizeStr.Split('x');
+        int sizeX = Convert.ToInt32(sizeParts[0]);
+        int sizeY = Convert.ToInt32(sizeParts[1]);
+        mapSize = new Vector2(sizeX, sizeY);
     }
     private void SetRoutine()
     {
@@ -115,6 +124,32 @@ public class ExportMap : MonoBehaviour
                 text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
+
+        //set the empty tiles
+
+        List<Vector2> posList = new List<Vector2>();
+
+        foreach (Transform tile in tiles.Find("Ground"))
+        {
+            posList.Add(new Vector2(
+                (float)Math.Round((tile.position.x + 1.6f) / 1.6f, 1),
+                (float)Math.Round((tile.position.y + 1.6f) / 1.6f, 1)
+            ));
+        }
+
+        Vector2 currentPos;
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                currentPos = new Vector2(x, y);
+                if (!posList.Contains(currentPos))
+                {
+                    text += "tile100=" + currentPos.x + "," + currentPos.y + "\n";
+                }
+            }
+        }
+
         text += "\n";
         text += "[VentTiles]\n";
         foreach (Transform tile in tiles.Find("Vent"))
@@ -178,6 +213,7 @@ public class ExportMap : MonoBehaviour
                 text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
             }
         }
+
     }
     private void SetZones()
     {
