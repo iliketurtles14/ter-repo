@@ -607,7 +607,7 @@ public class Tooltips : MonoBehaviour
             {
                 toPrint = "Your Desk";
             }
-            else if (mcs.touchedDesk.name.StartsWith("Desk"))
+            else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
             {
                 int num = 0;
                 Match match = Regex.Match(mcs.touchedDesk.name, @"\d+");
@@ -646,7 +646,7 @@ public class Tooltips : MonoBehaviour
             {
                 str = "Your Desk";
             }
-            else if (mcs.touchedDesk.name.StartsWith("Desk"))
+            else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
             {
                 int num = 0;
                 Match match = Regex.Match(mcs.touchedDesk.name, @"\d+");
@@ -682,27 +682,27 @@ public class Tooltips : MonoBehaviour
             {
                 toPrint = "Train (treadmill)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("BenchPress"))
+            else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
             {
                 toPrint = "Train (weights)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PullUpBar"))
+            else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
             {
                 toPrint = "Train (chin ups)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PushupPad"))
+            else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
             {
                 toPrint = "Train (press ups)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("RunningPad"))
+            else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
             {
                 toPrint = "Train (jogging)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("JumpRopePad"))
+            else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
             {
                 toPrint = "Train (skipping)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PunchBag"))
+            else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
             {
                 toPrint = "Train (punch bag)";
             }
@@ -727,27 +727,27 @@ public class Tooltips : MonoBehaviour
             {
                 str = "Train (treadmill)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("BenchPress"))
+            else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
             {
                 str = "Train (weights)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PullUpBar"))
+            else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
             {
                 str = "Train (chin ups)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PushupPad"))
+            else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
             {
                 str = "Train (press ups)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("RunningPad"))
+            else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
             {
                 str = "Train (jogging)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("JumpRopePad"))
+            else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
             {
                 str = "Train (skipping)";
             }
-            else if (mcs.touchedEquipment.name.StartsWith("PunchBag"))
+            else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
             {
                 str = "Train (punch bag)";
             }
@@ -766,7 +766,7 @@ public class Tooltips : MonoBehaviour
         //readers
         if(mcs.isTouchingReader && !showingTooltip)
         {
-            if (mcs.touchedReader.name.StartsWith("Computer"))
+            if (mcs.touchedReader.name.StartsWith("ComputerTable"))
             {
                 toPrint = "Internet";
             }
@@ -783,7 +783,7 @@ public class Tooltips : MonoBehaviour
         {
             string str = null;
 
-            if (mcs.touchedReader.name.StartsWith("Computer"))
+            if (mcs.touchedReader.name.StartsWith("ComputerTable"))
             {
                 str = "Internet";
             }
@@ -806,7 +806,7 @@ public class Tooltips : MonoBehaviour
             {
                 toPrint = "Infirmary Bed";
             }
-            else if (mcs.touchedSittable.name.StartsWith("SunChair"))
+            else if (mcs.touchedSittable.name.StartsWith("Lounger"))
             {
                 toPrint = "Sun Lounger";
             }
@@ -835,7 +835,7 @@ public class Tooltips : MonoBehaviour
             {
                 str = "Infirmary Bed";
             }
-            else if (mcs.touchedSittable.name.StartsWith("SunChair"))
+            else if (mcs.touchedSittable.name.StartsWith("Lounger"))
             {
                 str = "Sun Lounger";
             }

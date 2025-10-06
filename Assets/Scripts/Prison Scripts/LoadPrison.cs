@@ -758,6 +758,7 @@ public class LoadPrison : MonoBehaviour
                 GameObject emptyTile = new GameObject("Empty");
                 emptyTile.AddComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                 emptyTile.GetComponent<BoxCollider2D>().isTrigger = true;
+                emptyTile.AddComponent<TileCollectionData>();
                 Vector3 emptyTilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
                 emptyTile.transform.position = emptyTilePos;
                 emptyTile.layer = 10;
