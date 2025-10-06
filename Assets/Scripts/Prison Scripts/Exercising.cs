@@ -170,15 +170,15 @@ public class Exercising : MonoBehaviour
         transform.position = currentEquipment.transform.position + offset;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        if (currentEquipment.name.StartsWith("BenchPress"))
+        if (currentEquipment.name.StartsWith("Benchpress"))
         {
             StartCoroutine(BenchPress());
         }
-        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad"))
+        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningMat"))
         {
             StartCoroutine(Treadmill());
         }
-        else if (currentEquipment.name.StartsWith("PushupPad"))
+        else if (currentEquipment.name.StartsWith("PushupMat"))
         {
             StartCoroutine(PushupPad());
         }
@@ -186,15 +186,15 @@ public class Exercising : MonoBehaviour
         {
             StartCoroutine(SpeedBag());
         }
-        else if (currentEquipment.name.StartsWith("PunchBag"))
+        else if (currentEquipment.name.StartsWith("PunchingMat"))
         {
             StartCoroutine(PunchBag());
         }
-        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        else if (currentEquipment.name.StartsWith("JumpropeMat"))
         {
             StartCoroutine(JumpRopePad());
         }
-        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        else if (currentEquipment.name.StartsWith("PullupBar"))
         {
             StartCoroutine(PullUpBar());
         }
@@ -208,16 +208,16 @@ public class Exercising : MonoBehaviour
         GetComponent<PlayerAnimation>().enabled = true;
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
 
-        if (currentEquipment.name.StartsWith("BenchPress"))
+        if (currentEquipment.name.StartsWith("Benchpress"))
         {
             StopCoroutine(BenchPress());
         }
-        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad"))
+        else if (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningMat"))
         {
             StopCoroutine(Treadmill());
             StopCoroutine(TreadmillWalk());
         }
-        else if (currentEquipment.name.StartsWith("PushupPad"))
+        else if (currentEquipment.name.StartsWith("PushupMat"))
         {
             StopCoroutine(PushupPad());
         }
@@ -226,17 +226,17 @@ public class Exercising : MonoBehaviour
             StopCoroutine(SpeedBag());
             StopCoroutine(SpeedBagWalk());
         }
-        else if (currentEquipment.name.StartsWith("PunchBag"))
+        else if (currentEquipment.name.StartsWith("PunchingMat"))
         {
             StopCoroutine(PunchBag());
             StopCoroutine(SpeedBagWalk());
         }
-        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        else if (currentEquipment.name.StartsWith("JumpropeMat"))
         {
             StopCoroutine(JumpRopePad());
             StopCoroutine(JumpRopeWalk());
         }
-        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        else if (currentEquipment.name.StartsWith("PullupBar"))
         {
             StopCoroutine(PullUpBar());
         }
@@ -844,7 +844,7 @@ public class Exercising : MonoBehaviour
     {
         while (true)
         {
-            if (onEquipment && (currentEquipment.name.StartsWith("BenchPress") || currentEquipment.name.StartsWith("PushupPad") || currentEquipment.name.StartsWith("PullUpBar")))
+            if (onEquipment && (currentEquipment.name.StartsWith("Benchpress") || currentEquipment.name.StartsWith("PushupMat") || currentEquipment.name.StartsWith("PullupBar")))
             {
                 if (amountOfBars > 0)
                 {
@@ -857,7 +857,7 @@ public class Exercising : MonoBehaviour
                     hasAdded = false;
                 }
             }
-            else if (onEquipment && (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningPad")))
+            else if (onEquipment && (currentEquipment.name.StartsWith("Treadmill") || currentEquipment.name.StartsWith("RunningMat")))
             {
                 if(amountOfBars > 0)
                 {
@@ -865,7 +865,7 @@ public class Exercising : MonoBehaviour
                     yield return new WaitForSeconds(.1f);
                 }
             }
-            else if(onEquipment && (currentEquipment.name.StartsWith("SpeedBag") || currentEquipment.name.StartsWith("JumpRopePad")))
+            else if(onEquipment && (currentEquipment.name.StartsWith("SpeedBag") || currentEquipment.name.StartsWith("JumpropeMat")))
             {
                 amountOfBars++;
                 if(amountOfBars == 50)
@@ -875,7 +875,7 @@ public class Exercising : MonoBehaviour
                 }
                 yield return new WaitForSeconds(.01f);
             }
-            else if(onEquipment && currentEquipment.name.StartsWith("PunchBag"))
+            else if(onEquipment && currentEquipment.name.StartsWith("PunchingMat"))
             {
                 if (Input.GetKey(KeyCode.Q) && !isGoingDown)
                 {

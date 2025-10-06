@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DeskRNG : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class DeskRNG : MonoBehaviour
     private List<ItemData> itemList = new List<ItemData>();
     private Transform tiles;
     private LoadPrison loadPrisonScript;
+    private SetDeskNum setDeskNumScript;
     private Dictionary<string, List<int>> percentageDict = new Dictionary<string, List<int>>()
     {
         { "Center Perks", new List<int>() { 0, 5, 5, 40, 30, 20 } },
@@ -60,16 +62,24 @@ public class DeskRNG : MonoBehaviour
         itemList = Resources.LoadAll<ItemData>("Item Scriptable Objects").ToList();
 
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
+        setDeskNumScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetDeskNum>();
 
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
     {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
+        while (true)
+        {
+            if (!setDeskNumScript.isReadyForRNG)
+            {
+                yield return new WaitForEndOfFrame();
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
 
         string currentMapName = loadPrisonScript.currentMap.mapName;
         if (prisonNames.Contains(currentMapName))
@@ -125,7 +135,7 @@ public class DeskRNG : MonoBehaviour
         for (int i = 0; i < deskSlots.Count; i++)
         {
             deskInv[i].itemData = null;
-            deskSlots[i].GetComponent<Image>().sprite = clearSprite;
+            deskSlots[i].GetComponent<UnityEngine.UI.Image>().sprite = clearSprite;
         }
 
         // Add predefined items
@@ -256,7 +266,7 @@ public class DeskRNG : MonoBehaviour
             if (deskInv[i].itemData == null)
             {
                 deskInv[i].itemData = itemList[id];
-                deskSlots[i].GetComponent<Image>().sprite = itemList[id].icon;
+                deskSlots[i].GetComponent<UnityEngine.UI.Image>().sprite = itemList[id].icon;
                 break;
             }
         }

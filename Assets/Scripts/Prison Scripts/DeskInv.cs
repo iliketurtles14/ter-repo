@@ -212,8 +212,9 @@ public class DeskInv : MonoBehaviour
         {
             slot.GetComponent<Image>().sprite = ClearSprite;
         }
-        
-        MenuCanvas.transform.Find("DeskMenuPanel").gameObject.SetActive(false);
+
+        MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<Image>().enabled = false;
+        MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<BoxCollider2D>().enabled = false;
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = false;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
         MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = null;
@@ -229,7 +230,7 @@ public class DeskInv : MonoBehaviour
             yield break;
         }
         
-        if (desk.name.StartsWith("Desk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
+        if (desk.name.StartsWith("NPCDesk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
         {
             isOpening = true;
 
@@ -255,7 +256,8 @@ public class DeskInv : MonoBehaviour
             }
         }
 
-        MenuCanvas.transform.Find("DeskMenuPanel").gameObject.SetActive(true);
+        MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<Image>().enabled = true;
+        MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<BoxCollider2D>().enabled = true;
         MenuCanvas.transform.Find("DeskMenuText").GetComponent<TextMeshProUGUI>().text = deskText;
         MenuCanvas.transform.Find("DeskMenuBackdrop").GetComponent<Image>().enabled = true;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
