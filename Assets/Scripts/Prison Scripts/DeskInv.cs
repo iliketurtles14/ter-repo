@@ -69,10 +69,10 @@ public class DeskInv : MonoBehaviour
         {
             if (mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
-                distance = Vector2.Distance(player.transform.position, mouseCollisionScript.touchedDesk.transform.position);
+                desk = mouseCollisionScript.touchedDesk;
+                distance = Vector2.Distance(player.transform.position, desk.transform.position);
                 if(distance <= 2.4f)
                 {
-                    desk = mouseCollisionScript.touchedDesk;
                     deskText = GetDeskText(desk);
                     deskInv = desk.GetComponent<DeskData>().deskInv;
                     StartCoroutine(OpenDesk());
@@ -211,6 +211,7 @@ public class DeskInv : MonoBehaviour
         foreach(GameObject slot in deskSlots)
         {
             slot.GetComponent<Image>().sprite = ClearSprite;
+            slot.GetComponent<BoxCollider2D>().enabled = false;
         }
 
         MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<Image>().enabled = false;
@@ -254,6 +255,11 @@ public class DeskInv : MonoBehaviour
             {
                 deskSlots[i].GetComponent<Image>().sprite = deskInv[i].itemData.icon;
             }
+        }
+
+        foreach(GameObject slot in deskSlots)
+        {
+            slot.GetComponent<BoxCollider2D>().enabled = true;
         }
 
         MenuCanvas.transform.Find("DeskMenuPanel").GetComponent<Image>().enabled = true;

@@ -64,6 +64,8 @@ public class DeskRNG : MonoBehaviour
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
         setDeskNumScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetDeskNum>();
 
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -111,7 +113,7 @@ public class DeskRNG : MonoBehaviour
             }
         }
 
-        foreach (Transform obj in tiles)
+        foreach (Transform obj in tiles.Find("GroundObjects"))
         {
             if (obj.gameObject.CompareTag("Desk"))
             {
@@ -119,20 +121,13 @@ public class DeskRNG : MonoBehaviour
             }
         }
     }
-    //public void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F1))
-    //    {
-    //        RandomizeDesk();
-    //    }
-    //}
     public void RandomizeDesk(GameObject desk)
     {
         List<DeskItem> deskInv = desk.GetComponent<DeskData>().deskInv;
         string deskName = desk.name;
 
         // Clear the desk
-        for (int i = 0; i < deskSlots.Count; i++)
+        for (int i = 0; i < deskInv.Count; i++)
         {
             deskInv[i].itemData = null;
             deskSlots[i].GetComponent<UnityEngine.UI.Image>().sprite = clearSprite;
@@ -261,10 +256,12 @@ public class DeskRNG : MonoBehaviour
     }
     public void AddItem(int id, List<DeskItem> deskInv)
     {
+        Debug.Log("Attempting to add item");
         for (int i = 0; i < deskInv.Count; i++)
         {
             if (deskInv[i].itemData == null)
             {
+                Debug.Log("Adding item " + id);
                 deskInv[i].itemData = itemList[id];
                 deskSlots[i].GetComponent<UnityEngine.UI.Image>().sprite = itemList[id].icon;
                 break;
