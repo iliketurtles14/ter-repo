@@ -19,7 +19,7 @@ public class DeskPickUp : MonoBehaviour
 
     private void Start()
     {
-        deskScript = GetComponent<DeskInv>();
+        deskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskInv>();
         player = RootObjectCache.GetRoot("Player").transform;
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         outfitControllerScript = player.GetComponent<OutfitController>();

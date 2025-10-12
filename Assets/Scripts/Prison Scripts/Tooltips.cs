@@ -58,6 +58,7 @@ public class Tooltips : MonoBehaviour
     private bool isScrewingVent;
     private bool isScrewingSlats;
     private GameObject deskMenu;
+    private Sprite clearSprite;
     public void Start()
     {
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
@@ -73,6 +74,7 @@ public class Tooltips : MonoBehaviour
         itemBehavioursScript = GetComponent<ItemBehaviours>();
         deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;
         deskInvScript = deskMenu.GetComponent<DeskInv>();
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
     }
     public void Update()
     {
@@ -150,7 +152,7 @@ public class Tooltips : MonoBehaviour
                 }
             }
         }
-        if(mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData != null && !showingTooltip)
+        if(mcs.isTouchingDeskSlot && mcs.touchedDeskSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
         {
             if (deskInvList[deskSlotNumber].itemData.durability != -1)
             {
