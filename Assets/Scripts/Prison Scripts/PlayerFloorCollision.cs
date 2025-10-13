@@ -7,7 +7,7 @@ public class PlayerFloorCollision : MonoBehaviour
     public GameObject touchedRoofFloor;
     private Vector2 position = new Vector2();
     private Collider2D[] hitColliders;
-    private void Update()
+    private void FixedUpdate()
     {
         if(gameObject.layer == 12)
         {
@@ -16,7 +16,7 @@ public class PlayerFloorCollision : MonoBehaviour
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.name.StartsWith("Floor 2") ||
+                if (collider.gameObject.CompareTag("Digable") ||
                     collider.gameObject.name.StartsWith("VentCover") ||
                     collider.gameObject.name.StartsWith("EmptyVentCover"))
                 {
@@ -30,19 +30,11 @@ public class PlayerFloorCollision : MonoBehaviour
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.name.StartsWith("Roof Floor"))
-                {
-                    lastTouchedRoofFloor = collider.gameObject;
-                }
-                if (collider.gameObject.name.StartsWith("Roof Floor") ||
-                    collider.gameObject.name.StartsWith("Floor 11") ||
-                    collider.gameObject.name.StartsWith("Floor 14 (Roof)") ||
-                    collider.gameObject.name.StartsWith("Roofing") ||
-                    collider.gameObject.name.StartsWith("Box (Roof)") ||
-                    collider.gameObject.name.StartsWith("RoofFallConstraint"))
+                if (collider.gameObject.CompareTag("Digable"))
                 {
                     playerFloor = collider.gameObject;
                     touchedRoofFloor = collider.gameObject;
+                    lastTouchedRoofFloor = collider.gameObject;
                     break;
                 }
                 else
@@ -73,8 +65,7 @@ public class PlayerFloorCollision : MonoBehaviour
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.name.StartsWith("Floor") ||
-                    collider.gameObject.name.StartsWith("GrassPlaceholder"))
+                if (collider.gameObject.CompareTag("Digable"))
                 {
                     playerFloor = collider.gameObject;
                 }

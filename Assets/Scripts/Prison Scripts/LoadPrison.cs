@@ -605,7 +605,13 @@ public class LoadPrison : MonoBehaviour
     {
         currentMap = MakeMapObject(dataSenderScript.currentMapPath);
 
+        foreach(char c in currentMap.tilesetStr)
+        {
+            Debug.Log(c);
+        }
+
         Dictionary<int, string> currentTileDict;
+        currentTileDict = customDict;
         switch (currentMap.tilesetStr)
         {
             case "perks":
@@ -665,13 +671,10 @@ public class LoadPrison : MonoBehaviour
             case "Custom":
                 currentTileDict = customDict;
                 break;
-            default:
-                currentTileDict = customDict;
-                break;
         }
 
         SetGround();
-        SetTiles(currentTileDict);
+        StartCoroutine(SetTiles(currentTileDict));
         SetObjects();
         //set the zones when you need to
     }
@@ -747,7 +750,7 @@ public class LoadPrison : MonoBehaviour
         }
         tiles.Find("UndergroundPlane").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
     }
-    private void SetTiles(Dictionary<int, string> tileDict)
+    private IEnumerator SetTiles(Dictionary<int, string> tileDict)
     {
         int tilesetID = tilesetDict[currentMap.tilesetStr];
         List<Sprite> tileList = SliceAndDice(currentMap.tileset);
@@ -762,7 +765,6 @@ public class LoadPrison : MonoBehaviour
                 Vector3 emptyTilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
                 emptyTile.transform.position = emptyTilePos;
                 emptyTile.layer = 10;
-                emptyTile.tag = "Digable";
                 emptyTile.transform.parent = tiles.Find("Ground");
 
                 continue;
@@ -785,6 +787,7 @@ public class LoadPrison : MonoBehaviour
             Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
             tile.name = tileVars[0].ToString();
+            tile.GetComponent<TileCollectionData>().tileData.tileType = tileType;
 
             tile.GetComponent<SpriteRenderer>().sprite = tileList[tileVars[0]];
 
@@ -792,15 +795,175 @@ public class LoadPrison : MonoBehaviour
             {
                 case "Underground":
                     tile.GetComponent<SpriteRenderer>().sortingOrder = -1;
+                    tile.layer = 11;
                     break;
                 case "Ground":
                     tile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    tile.layer = 10;
                     break;
                 case "Vents":
                     tile.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                    tile.layer = 12;
                     break;
                 case "Roof":
                     tile.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                    tile.layer = 13;
+                    break;
+            }
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        //set tile tags
+        foreach (Transform tile in tiles.Find("Ground"))
+        {
+            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            {
+                case "inFloor":
+                case "outFloor":
+                case "lowFloor":
+                case "medFloor":
+                case "highFloor":
+                    tile.tag = "Digable";
+                    break;
+                case "chip":
+                    tile.tag = "Wall";
+                    break;
+                case "cut":
+                    tile.tag = "Fence";
+                    break;
+                case "elec":
+                    tile.tag = "ElectricFence";
+                    break;
+                case "bar":
+                    tile.tag = "Bars";
+                    break;
+                case "obstacle":
+                case "obstNoShad":
+                case "nw":
+                case "ne":
+                case "sw":
+                case "se":
+                case "box":
+                    tile.tag = "Obstacle";
+                    break;
+                case "horiLedge":
+                case "vertLedge":
+                    tile.tag = "RoofLedge";
+                    break;
+            }
+        }
+        foreach (Transform tile in tiles.Find("Underground"))
+        {
+            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            {
+                case "inFloor":
+                case "outFloor":
+                case "lowFloor":
+                case "medFloor":
+                case "highFloor":
+                    tile.tag = "Digable";
+                    break;
+                case "chip":
+                    tile.tag = "Wall";
+                    break;
+                case "cut":
+                    tile.tag = "Fence";
+                    break;
+                case "elec":
+                    tile.tag = "ElectricFence";
+                    break;
+                case "bar":
+                    tile.tag = "Bars";
+                    break;
+                case "obstacle":
+                case "obstNoShad":
+                case "nw":
+                case "ne":
+                case "sw":
+                case "se":
+                case "box":
+                    tile.tag = "Obstacle";
+                    break;
+                case "horiLedge":
+                case "vertLedge":
+                    tile.tag = "RoofLedge";
+                    break;
+            }
+        }
+        foreach (Transform tile in tiles.Find("Vents"))
+        {
+            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            {
+                case "inFloor":
+                case "outFloor":
+                case "lowFloor":
+                case "medFloor":
+                case "highFloor":
+                    tile.tag = "Digable";
+                    break;
+                case "chip":
+                    tile.tag = "Wall";
+                    break;
+                case "cut":
+                    tile.tag = "Fence";
+                    break;
+                case "elec":
+                    tile.tag = "ElectricFence";
+                    break;
+                case "bar":
+                    tile.tag = "Bars";
+                    break;
+                case "obstacle":
+                case "obstNoShad":
+                case "nw":
+                case "ne":
+                case "sw":
+                case "se":
+                case "box":
+                    tile.tag = "Obstacle";
+                    break;
+                case "horiLedge":
+                case "vertLedge":
+                    tile.tag = "RoofLedge";
+                    break;
+            }
+        }
+        foreach (Transform tile in tiles.Find("Roof"))
+        {
+            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            {
+                case "inFloor":
+                case "outFloor":
+                case "lowFloor":
+                case "medFloor":
+                case "highFloor":
+                    tile.tag = "Digable";
+                    break;
+                case "chip":
+                    tile.tag = "Wall";
+                    break;
+                case "cut":
+                    tile.tag = "Fence";
+                    break;
+                case "elec":
+                    tile.tag = "ElectricFence";
+                    break;
+                case "bar":
+                    tile.tag = "Bars";
+                    break;
+                case "obstacle":
+                case "obstNoShad":
+                case "nw":
+                case "ne":
+                case "sw":
+                case "se":
+                case "box":
+                    tile.tag = "Obstacle";
+                    break;
+                case "horiLedge":
+                case "vertLedge":
+                    tile.tag = "RoofLedge";
                     break;
             }
         }
@@ -885,15 +1048,19 @@ public class LoadPrison : MonoBehaviour
                 {
                     case "Underground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = -1;
+                        objInst.layer = 11;
                         break;
                     case "Ground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                        objInst.layer = 10;
                         break;
                     case "Vents":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                        objInst.layer = 12;
                         break;
                     case "Roof":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                        objInst.layer = 13;
                         break;
                 }
 
