@@ -29,7 +29,7 @@ public class DeskInv : MonoBehaviour
     public bool deskIsOpen;
     private GameObject timeObject;
     private bool deskIsFull;
-    private bool invIsFull;
+    public bool invIsFull;
     private GameObject desk;
     private string deskText;
     private bool isOpening;
@@ -125,7 +125,7 @@ public class DeskInv : MonoBehaviour
             }
             
             //putting items in the inv
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 if (inventoryList[i].itemData != null)
                 {

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6279451819527532882}
   - component: {fileID: 2525775307917493921}
   - component: {fileID: 7510825498367396635}
+  - component: {fileID: 6583069707027632039}
   m_Layer: 0
   m_Name: NPCDesk
   m_TagString: Desk
@@ -152,3 +153,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeskData
   deskInv: []
   inmateCorrelationNumber: 0
+--- !u!114 &6583069707027632039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375087261025833086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c26af5b0ac1742840dd57dd5ee113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskRNG

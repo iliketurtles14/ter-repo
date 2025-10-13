@@ -419,7 +419,7 @@ public class ItemBehaviours : MonoBehaviour
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
             if(distance <= 2.4f)
             {
-                GameObject bracePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Brace");
+                GameObject bracePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Brace");
                 GameObject braceObj = Instantiate(bracePrefab, mcs.touchedEmptyDirt.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 mcs.touchedEmptyDirt.GetComponent<BoxCollider2D>().enabled = false;
                 braceObj.GetComponent<SpriteRenderer>().sortingOrder = 11;
@@ -513,16 +513,16 @@ public class ItemBehaviours : MonoBehaviour
             switch (identifier)
             {
                 case "rope":
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
                     break;
                 case "sheet":
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/SheetRope");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/SheetRope");
                     break;
                 case "grapple":
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
                     break;
                 default:
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
                     break;
             }
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
@@ -567,7 +567,7 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 direction = (ropeTilePos - PlayerTransform.position).normalized;
             isRoping = true;
             GameObject ropePrefab;
-            ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+            ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
@@ -632,13 +632,13 @@ public class ItemBehaviours : MonoBehaviour
             switch (identifier)
             {
                 case "rope":
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
                     break;
                 case "sheet":
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/SheetRope");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/SheetRope");
                     break;
                 default:
-                    ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rope");
+                    ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
                     break;
             }
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
@@ -672,7 +672,7 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 direction = (ropeTile.transform.position - PlayerTransform.position).normalized;
             isRoping = true;
             GameObject ropePrefab;
-            ropePrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Grapple");
+            ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
@@ -718,10 +718,10 @@ public class ItemBehaviours : MonoBehaviour
             }
         }
 
-        GameObject dirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/Dirt");
-        GameObject emptyDirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/DirtEmpty");
-        GameObject halfHoleUpPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleUp");
-        GameObject halfHoleDownPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleDown");
+        GameObject dirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/Dirt");
+        GameObject emptyDirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/DirtEmpty");
+        GameObject halfHoleUpPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleUp");
+        GameObject halfHoleDownPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleDown");
 
         Vector3 northOffset = new Vector3(0, 1.6f);
         Vector3 southOffset = new Vector3(0, -1.6f);
@@ -851,8 +851,8 @@ public class ItemBehaviours : MonoBehaviour
             }
         }
 
-        GameObject halfHoleUpPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleUp");
-        GameObject halfHoleDownPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/HalfHoleDown");
+        GameObject halfHoleUpPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleUp");
+        GameObject halfHoleDownPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleDown");
 
         GameObject halfHoleDownObject = Instantiate(halfHoleDownPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
         GameObject halfHoleUpObject = Instantiate(halfHoleUpPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
@@ -904,8 +904,8 @@ public class ItemBehaviours : MonoBehaviour
     {        
         if (touchedTileData.currentDurability <= 0)
         {
-            GameObject dirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/Dirt");
-            GameObject emptyDirtPrefab = Resources.Load<GameObject>("PerksPrefabs/Underground/DirtEmpty");
+            GameObject dirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/Dirt");
+            GameObject emptyDirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/DirtEmpty");
 
             Vector3 northOffset = new Vector3(0, 1.6f);
             Vector3 southOffset = new Vector3(0, -1.6f);
@@ -995,7 +995,7 @@ public class ItemBehaviours : MonoBehaviour
 
             if (shouldRock)
             {
-                GameObject rockPrefab = Resources.Load<GameObject>("PerksPrefabs/Objects/Rock");
+                GameObject rockPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rock");
                 GameObject rockObject = Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 //set percentage
                 int aRand = UnityEngine.Random.Range(1, 3);
@@ -1260,8 +1260,8 @@ public class ItemBehaviours : MonoBehaviour
 
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
-            GameObject holeObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleDown");
-            GameObject holeUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleUp");
+            GameObject holeObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleDown");
+            GameObject holeUpObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleUp");
             Instantiate(holeObject, holePosition, holeRotation, tiles.Find("GroundObjects"));
             GameObject obj = Instantiate(holeUpObject, holePosition, holeRotation, tiles.Find("UndergroundObjects"));
             obj.GetComponent<Light2D>().intensity = 0;
@@ -1273,8 +1273,8 @@ public class ItemBehaviours : MonoBehaviour
 
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
-            GameObject holeObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleDown");
-            GameObject holeUpObject = Resources.Load<GameObject>("PerksPrefabs/Objects/100%HoleUp");
+            GameObject holeObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleDown");
+            GameObject holeUpObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleUp");
             Instantiate(holeObject, holePosition, holeRotation, tiles.Find("GroundObjects"));
             Instantiate(holeUpObject, holePosition, holeRotation, tiles.Find("UndergroundObjects"));
         }

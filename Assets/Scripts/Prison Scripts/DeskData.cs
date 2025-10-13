@@ -11,10 +11,10 @@ public class DeskData : MonoBehaviour
 
     private void Start()
     {
-        DeskItem nullItem = new DeskItem();
-        nullItem.itemData = null;
         for (int i = 0; i < 20; i++)
         {
+            DeskItem nullItem = new DeskItem();
+            nullItem.itemData = null;
             deskInv.Add(nullItem);
         }
     }

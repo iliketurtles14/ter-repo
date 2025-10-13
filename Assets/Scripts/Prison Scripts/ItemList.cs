@@ -2,16 +2,11 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
-using Unity.VisualScripting;
-using UnityEngine.UI;
-using UnityEngine.U2D;
 
-public class SetSprites : MonoBehaviour //this turned into just a script that sets item sprites. tiles and objects sprites get set in LoadPrison.cs
+public class ItemList : MonoBehaviour
 {
-    public GameObject Ground;
-
-
+    public static List<ItemData> itemList;
+    private DataSender dataSenderScript;
     private Dictionary<int, int> itemSpriteDict = new Dictionary<int, int>() //this was even more of a bitch to code
     {
         { 0, 6 }, { 1, 7 }, { 2, 64 }, { 3, 4 }, { 4, 113 }, { 5, 68 }, { 6, 67 }, { 7, 66 },
@@ -53,15 +48,16 @@ public class SetSprites : MonoBehaviour //this turned into just a script that se
         { 265, 161 }, { 266, 162 }, { 267, 156 }, { 268, 154 }, { 269, 153 }, { 270, 155 }, { 271, 272 },
         { 272, 271 }, { 273, 214 }, { 274, 165 }
     };
+
     private void Start()
-    {        
-        SetItems();
-    }
-    private void SetItems()
     {
-        foreach(ItemData data in Resources.LoadAll("Item Scriptable Objects"))
+        dataSenderScript = DataSender.instance.GetComponent<DataSender>();
+
+        itemList = Resources.LoadAll<ItemData>("Item Scriptable Objects").ToList();
+        foreach(ItemData item in itemList)
         {
-            data.icon = DataSender.instance.GetComponent<DataSender>().ItemImages[itemSpriteDict[data.id]];
+            item.icon = dataSenderScript.ItemImages[itemSpriteDict[item.id]];
+            item.currentDurability = 100;
         }
     }
 }
