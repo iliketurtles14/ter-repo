@@ -548,7 +548,7 @@ public class ApplyPrisonData : MonoBehaviour
         ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
         mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
 
-        
+        //dirt and holes
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];
         itemBehavioursScript.hole49 = PrisonObjectSprites[135];
         itemBehavioursScript.hole74 = PrisonObjectSprites[134];
@@ -557,9 +557,11 @@ public class ApplyPrisonData : MonoBehaviour
         itemBehavioursScript.holeUp49 = UISprites[35];
         itemBehavioursScript.holeUp74 = UISprites[36];
         itemBehavioursScript.holeUp99 = UISprites[37];
-        //dirt
-        Resources.Load("PrisonPrefabs/Underground/Dirt").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
-        Resources.Load("PrisonPrefabs/Underground/DirtEmpty").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[25];
+        itemBehavioursScript.hole100 = PrisonObjectSprites[132];
+        itemBehavioursScript.holeUp100 = UISprites[38];
+        itemBehavioursScript.emptyDirtSprite = PrisonObjectSprites[25];
+        itemBehavioursScript.rockSprite = PrisonObjectSprites[41];
+
         //vital sprites
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 145, 78, 8, 11));
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 154, 78, 6, 11));

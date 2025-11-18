@@ -890,10 +890,14 @@ public class Tooltips : MonoBehaviour
         }
         Instantiate(TooltipSide, TooltipPanelTransform);
 
+        TooltipPanelTransform.position = InventoryCanvas.transform.Find("MouseOverlay").position;
+
         //make the textbox
         TooltipTextBox.GetComponent<RectTransform>().sizeDelta = new Vector2(width * 5, 80);
         TooltipTextBox.GetComponent<TextMeshProUGUI>().text = text;
-        Instantiate(TooltipTextBox, InventoryCanvas.transform);
+        GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
+
+        textBox.transform.position = InventoryCanvas.transform.Find("MouseOverlay").position + new Vector3(1.46f, -.9f); //this is just an offset
 
         showingTooltip = true;
     }

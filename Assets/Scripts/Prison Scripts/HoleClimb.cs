@@ -98,7 +98,10 @@ public class HoleClimb : MonoBehaviour
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
         foreach(Transform tile in tiles.Find("Underground"))
         {
-            tile.GetComponent<SpriteRenderer>().sortingOrder = -5;
+            if (!tile.name.StartsWith("Dirt(Clone)"))
+            {
+                tile.GetComponent<SpriteRenderer>().sortingOrder = -5;
+            }
 
             if (tile.name == ("Dirt(Clone)"))
             {
@@ -160,7 +163,10 @@ public class HoleClimb : MonoBehaviour
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 13;
         foreach(Transform tile in tiles.Find("Underground"))
         {
-            tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
+            if (!tile.name.StartsWith("Dirt(Clone)"))
+            {
+                tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
+            }
 
             if (tile.name.StartsWith("Dirt(Clone)"))
             {

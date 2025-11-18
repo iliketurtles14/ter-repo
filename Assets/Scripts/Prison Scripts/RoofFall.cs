@@ -28,6 +28,7 @@ public class RoofFall : MonoBehaviour
         {
             if(player.layer == 13 && !itemBehavioursScript.isRoping)
             {
+                yield return new WaitForFixedUpdate();
                 if (floorCollisionScript.touchedRoofFloor == null)
                 {
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;

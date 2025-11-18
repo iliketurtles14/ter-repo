@@ -71,9 +71,13 @@ public class LadderClimb : MonoBehaviour
                     currentLadder = mcs.touchedRoofLadder;
                 }
 
-                if (!hasPickedUp)
+                if (!hasPickedUp && !currentLadder.GetComponent<LadderConnect>().fall)
                 {
                     StartCoroutine(ClimbLadder());
+                }
+                else if(!hasPickedUp && currentLadder.GetComponent<LadderConnect>().fall)
+                {
+                    //fall
                 }
             }
         }
@@ -82,13 +86,13 @@ public class LadderClimb : MonoBehaviour
     {
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForFixedUpdate();
 
-        player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedLadder.transform.position;
+        player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedTilePos;
 
-        switch (currentLadder.GetComponent<LadderConnect>().connectedLadder.layer)
+        switch (currentLadder.GetComponent<LadderConnect>().goToLayer)
         {
-            case 10:
+            case "ground":
                 foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
                 {
                     obj.GetComponent<DeskPickUp>().enabled = true;
@@ -110,7 +114,7 @@ public class LadderClimb : MonoBehaviour
                 }
                 EnableTags();
                 break;
-            case 12:
+            case "vents":
                 player.layer = 12;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
@@ -128,7 +132,7 @@ public class LadderClimb : MonoBehaviour
                 VentEnable();
                 DisableTags();
                 break;
-            case 13:
+            case "roof":
                 player.layer = 13;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 15;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
@@ -147,7 +151,7 @@ public class LadderClimb : MonoBehaviour
                 DisableTags();
                 break;
         }
-        player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedLadder.transform.position;
+        player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedTilePos;
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
