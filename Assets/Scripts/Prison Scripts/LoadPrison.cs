@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
+using UnityEngine.Tilemaps;
 
 public class LoadPrison : MonoBehaviour
 {
@@ -584,6 +586,7 @@ public class LoadPrison : MonoBehaviour
 
     private Transform tiles;
 
+
     [SerializeField]
     public Map currentMap;
     private void Start()
@@ -591,7 +594,6 @@ public class LoadPrison : MonoBehaviour
         givenDataScript = GetGivenData.instance;
         dataSenderScript = DataSender.instance;
         tiles = RootObjectCache.GetRoot("Tiles").transform;
-
         StartCoroutine(LoadWait());
     }
     private IEnumerator LoadWait()
@@ -674,7 +676,7 @@ public class LoadPrison : MonoBehaviour
         }
 
         SetGround();
-        StartCoroutine(SetTiles(currentTileDict));
+        SetTiles(currentTileDict);
         SetObjects();
         //set the zones when you need to
     }
@@ -750,7 +752,7 @@ public class LoadPrison : MonoBehaviour
         }
         tiles.Find("UndergroundPlane").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
     }
-    private IEnumerator SetTiles(Dictionary<int, string> tileDict)
+    private void SetTiles(Dictionary<int, string> tileDict)
     {
         int tilesetID = tilesetDict[currentMap.tilesetStr];
         List<Sprite> tileList = SliceAndDice(currentMap.tileset);
@@ -758,19 +760,24 @@ public class LoadPrison : MonoBehaviour
         {
             if (tileVars[0] == 100) //if its an empty tile
             {
-                GameObject emptyTile = new GameObject("Empty");
-                emptyTile.AddComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
-                emptyTile.GetComponent<BoxCollider2D>().isTrigger = true;
-                emptyTile.AddComponent<TileCollectionData>();
                 Vector3 emptyTilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
+                GameObject emptyTile = new GameObject("Empty");
                 emptyTile.transform.position = emptyTilePos;
+                emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
+                emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "outFloor";
+                emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                emptyTile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                emptyTile.AddComponent<NavMeshModifier>();
+                emptyTile.AddComponent<BoxCollider2D>().isTrigger = true;
+                emptyTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+                emptyTile.tag = "Digable";
                 emptyTile.layer = 10;
                 emptyTile.transform.parent = tiles.Find("Ground");
-
                 continue;
             }
             
             string tileType = tileDict[tileVars[0]];
+            Debug.Log("Tile ID: " + tileVars[0] + ", TileType: " + tileType);
             string tileLayer = layerDict[tileVars[3]];
 
             GameObject tile;
@@ -787,8 +794,11 @@ public class LoadPrison : MonoBehaviour
             Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
             tile.name = tileVars[0].ToString();
+            tile.AddComponent<TileCollectionData>();
+            tile.GetComponent<TileCollectionData>().tileData = new TileData();
             tile.GetComponent<TileCollectionData>().tileData.tileType = tileType;
-
+            tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            tile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
             tile.GetComponent<SpriteRenderer>().sprite = tileList[tileVars[0]];
 
             switch (tileLayer)
@@ -811,8 +821,6 @@ public class LoadPrison : MonoBehaviour
                     break;
             }
         }
-
-        yield return new WaitForEndOfFrame();
 
         //set tile tags
         foreach (Transform tile in tiles.Find("Ground"))
@@ -855,6 +863,7 @@ public class LoadPrison : MonoBehaviour
         }
         foreach (Transform tile in tiles.Find("Underground"))
         {
+
             switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
             {
                 case "inFloor":
@@ -893,6 +902,7 @@ public class LoadPrison : MonoBehaviour
         }
         foreach (Transform tile in tiles.Find("Vents"))
         {
+
             switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
             {
                 case "inFloor":

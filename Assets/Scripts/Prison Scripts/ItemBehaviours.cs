@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -42,6 +43,10 @@ public class ItemBehaviours : MonoBehaviour
     public Sprite holeUp49;
     public Sprite holeUp74;
     public Sprite holeUp99;
+    public Sprite emptyDirtSprite;
+    public Sprite holeUp100;
+    public Sprite hole100;
+    public Sprite rockSprite;
     private string whatAction;
     //general
     public bool isDigging;
@@ -67,7 +72,6 @@ public class ItemBehaviours : MonoBehaviour
     //roping/grapling
     public GameObject ropeTile;
     public GameObject touchedTileObject;
-    public GameObject emptyTile;
     public GameObject emptyVentCover;
     public int currentHeight;
     public int ropeTileHeight;
@@ -85,7 +89,7 @@ public class ItemBehaviours : MonoBehaviour
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
         oldPlayerTransform = RootObjectCache.GetRoot("OldPlayerTransformObject").transform;
         ActionTextBox = InventoryCanvas.transform.Find("ActionText").GetComponent<TextMeshProUGUI>();
-        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");        
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
@@ -722,6 +726,7 @@ public class ItemBehaviours : MonoBehaviour
         GameObject emptyDirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/DirtEmpty");
         GameObject halfHoleUpPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleUp");
         GameObject halfHoleDownPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/HalfHoleDown");
+        emptyDirtPrefab.GetComponent<SpriteRenderer>().sprite = emptyDirtSprite;
 
         Vector3 northOffset = new Vector3(0, 1.6f);
         Vector3 southOffset = new Vector3(0, -1.6f);
@@ -729,7 +734,11 @@ public class ItemBehaviours : MonoBehaviour
         Vector3 westOffset = new Vector3(-1.6f, 0);
         if (shouldMakeDirt)
         {
-            Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("Underground"));
+            GameObject emptyDirtObj = Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("Underground"));
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         GameObject halfHoleDownObject = Instantiate(halfHoleDownPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
         GameObject halfHoleUpObject = Instantiate(halfHoleUpPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
@@ -819,19 +828,35 @@ public class ItemBehaviours : MonoBehaviour
         }
         if (!northEmpty)
         {
-            Instantiate(dirtPrefab, touchedTileObject.transform.position + northOffset, Quaternion.identity, tiles.Find("Underground"));
+            GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + northOffset, Quaternion.identity, tiles.Find("Underground"));
+            dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!southEmpty)
         {
-            Instantiate(dirtPrefab, touchedTileObject.transform.position + southOffset, Quaternion.identity, tiles.Find("Underground"));
+            GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + southOffset, Quaternion.identity, tiles.Find("Underground"));
+            dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!eastEmpty)
         {
-            Instantiate(dirtPrefab, touchedTileObject.transform.position + eastOffset, Quaternion.identity, tiles.Find("Underground"));
+            GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + eastOffset, Quaternion.identity, tiles.Find("Underground"));
+            dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!westEmpty)
         {
-            Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, tiles.Find("Underground"));
+            GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, tiles.Find("Underground"));
+            dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
     }
     public IEnumerator DigUp(TileData touchedTileData)
@@ -912,7 +937,11 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 eastOffset = new Vector3(1.6f, 0);
             Vector3 westOffset = new Vector3(-1.6f, 0);
 
-            Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("Underground"));
+            GameObject emptyDirtObj = Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("Underground"));
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            emptyDirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
 
             bool northEmpty = false;
             bool southEmpty = false;
@@ -945,24 +974,43 @@ public class ItemBehaviours : MonoBehaviour
             }
             if (!northEmpty)
             {
-                Instantiate(dirtPrefab, touchedTileObject.transform.position + northOffset, Quaternion.identity, tiles.Find("Underground"));
+                GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + northOffset, Quaternion.identity, tiles.Find("Underground"));
+                dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!southEmpty)
             {
-                Instantiate(dirtPrefab, touchedTileObject.transform.position + southOffset, Quaternion.identity, tiles.Find("Underground"));
+                GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + southOffset, Quaternion.identity, tiles.Find("Underground"));
+                dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!eastEmpty)
             {
-                Instantiate(dirtPrefab, touchedTileObject.transform.position + eastOffset, Quaternion.identity, tiles.Find("Underground"));
+                GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + eastOffset, Quaternion.identity, tiles.Find("Underground"));
+                dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!westEmpty)
             {
-                Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, tiles.Find("Underground"));
+                GameObject dirtObj = Instantiate(dirtPrefab, touchedTileObject.transform.position + westOffset, Quaternion.identity, tiles.Find("Underground"));
+                dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
 
             foreach (Transform tile in tiles.Find("Underground"))
             {
-                tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                if (!tile.name.StartsWith("Dirt(Clone)"))
+                {
+                    tile.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                }
 
                 if (tile.name.StartsWith("Dirt(Clone)"))
                 {
@@ -997,6 +1045,11 @@ public class ItemBehaviours : MonoBehaviour
             {
                 GameObject rockPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rock");
                 GameObject rockObject = Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
+                rockObject.GetComponent<TileCollectionData>().tileData = new TileData();
+                rockObject.GetComponent<TileCollectionData>().tileData.tileType = "chip";
+                rockObject.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                rockObject.GetComponent<SpriteRenderer>().sprite = rockSprite;
+                rockObject.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                 //set percentage
                 int aRand = UnityEngine.Random.Range(1, 3);
                 if(aRand == 1)
@@ -1261,7 +1314,10 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
             GameObject holeObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleDown");
+            holeObject.GetComponent<SpriteRenderer>().sprite = hole100;
+            holeObject.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
             GameObject holeUpObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleUp");
+            holeUpObject.GetComponent<Light2D>().lightCookieSprite = holeUp100;
             Instantiate(holeObject, holePosition, holeRotation, tiles.Find("GroundObjects"));
             GameObject obj = Instantiate(holeUpObject, holePosition, holeRotation, tiles.Find("UndergroundObjects"));
             obj.GetComponent<Light2D>().intensity = 0;
@@ -1274,7 +1330,10 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
             GameObject holeObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleDown");
+            holeObject.GetComponent<SpriteRenderer>().sprite = hole100;
+            holeObject.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
             GameObject holeUpObject = Resources.Load<GameObject>("PrisonPrefabs/Objects/100%HoleUp");
+            holeUpObject.GetComponent<Light2D>().lightCookieSprite = holeUp100;
             Instantiate(holeObject, holePosition, holeRotation, tiles.Find("GroundObjects"));
             Instantiate(holeUpObject, holePosition, holeRotation, tiles.Find("UndergroundObjects"));
         }
@@ -1287,7 +1346,22 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 tilePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion rotation = Quaternion.identity;
             Destroy(touchedTileObject);
-            Instantiate(emptyTile, tilePosition, rotation, tiles.Find("Ground"));
+            GameObject emptyTile = new GameObject();
+            emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
+            emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "inFloor";
+            emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+            emptyTile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+            emptyTile.AddComponent<BoxCollider2D>().isTrigger = true;
+            emptyTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+            emptyTile.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("PrisonResources/Object Sprites/EmptyTileSprite");
+            emptyTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+            emptyTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+            emptyTile.AddComponent<NavMeshModifier>();
+            emptyTile.tag = "Digable";
+            emptyTile.layer = 10;
+            emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            emptyTile.transform.parent = tiles.Find("Ground");
+            emptyTile.transform.position = tilePosition;
         }
     }
 }

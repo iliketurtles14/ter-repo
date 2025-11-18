@@ -3664,6 +3664,7 @@ GameObject:
   - component: {fileID: 567059178}
   - component: {fileID: 567059179}
   - component: {fileID: 567059180}
+  - component: {fileID: 567059181}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -3759,6 +3760,10 @@ MonoBehaviour:
   holeUp49: {fileID: 0}
   holeUp74: {fileID: 0}
   holeUp99: {fileID: 0}
+  emptyDirtSprite: {fileID: 0}
+  holeUp100: {fileID: 0}
+  hole100: {fileID: 0}
+  rockSprite: {fileID: 0}
   isDigging: 0
   isChipping: 0
   isCutting: 0
@@ -3775,7 +3780,6 @@ MonoBehaviour:
   lastDugTile: {fileID: 0}
   ropeTile: {fileID: 0}
   touchedTileObject: {fileID: 0}
-  emptyTile: {fileID: 0}
   emptyVentCover: {fileID: 0}
   currentHeight: 0
   ropeTileHeight: 0
@@ -4437,6 +4441,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa941a483691b54d933ee0eec2c7f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemList
+--- !u!114 &567059181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e5ef2e2ebbc334589a8f56ea929e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetLadderConnections
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5562,6 +5578,7 @@ MonoBehaviour:
   invSlotNumber: 0
   deskSlotNumber: 0
   deskIsOpen: 0
+  invIsFull: 0
   deskInv: []
 --- !u!61 &694438576
 BoxCollider2D:

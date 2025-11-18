@@ -14,10 +14,5 @@ public class TileCollectionData : MonoBehaviour
     public void Start()
     {
         LoadAllAssets();
-        foreach(TileData data in tileDatas)
-        {
-            tileData = Instantiate(data);
-            data.currentDurability = 100;
-        }
     }
 }
