@@ -1136,6 +1136,10 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "Vent":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
+                        objInst.GetComponent<TileCollectionData>().tileData = new TileData();
+                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
+                        objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                        objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
                     case "SheetRope":
                         objInst.GetComponent<SpriteRenderer>().sprite = UISprites[162];
@@ -1168,9 +1172,17 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "SlatsHorizontal":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[139];
+                        objInst.GetComponent<TileCollectionData>().tileData = new TileData();
+                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
+                        objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                        objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
                     case "SlatsVertical":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[40];
+                        objInst.GetComponent<TileCollectionData>().tileData = new TileData();
+                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
+                        objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                        objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
 
                 }

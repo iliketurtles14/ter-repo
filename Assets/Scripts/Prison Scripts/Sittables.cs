@@ -8,6 +8,7 @@ public class Sittables : MonoBehaviour
     private VitalController vitalScript;
     private GameObject player;
     private Transform tiles;
+    private HPAChecker HPAScript;
     public bool onSittable = false;
     private Vector3 leaveVector;
     private bool clearTile;
@@ -16,16 +17,21 @@ public class Sittables : MonoBehaviour
     private Vector3 bedOffset;
     private bool onBed;
     private Vector3 climbOffset;
+    private bool isBusy;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player");
         vitalScript = player.GetComponent<VitalController>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        HPAScript = player.GetComponent<HPAChecker>();
     }
     public void Update()
     {
-        if (mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable)
+        HPAScript.isSeated = onSittable;
+        isBusy = HPAScript.isBusy;
+        
+        if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position);
             if(distance <= 2.4f)

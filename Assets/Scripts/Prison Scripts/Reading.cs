@@ -6,17 +6,23 @@ public class Reading : MonoBehaviour
 {
     private MouseCollisionOnItems mcs;
     private ItemBehaviours itemBehavioursScript;
+    private HPAChecker HPAScript;
     private Vector3 oldPos;
     private bool isReading = false;
     private bool stopReading = false;
+    private bool isBusy;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
+        HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
     }
     public void Update()
     {
-        if(Input.GetMouseButtonDown(0) && mcs.isTouchingReader && GetComponent<PlayerCollectionData>().playerData.energy < 100 && !isReading)
+        HPAScript.isReading = isReading;
+        isBusy = HPAScript.isBusy;
+
+        if(!isBusy && Input.GetMouseButtonDown(0) && mcs.isTouchingReader && GetComponent<PlayerCollectionData>().playerData.energy < 100 && !isReading)
         {
             float distance = Vector2.Distance(transform.position, mcs.touchedReader.transform.position);
             if (distance <= 2.4f)

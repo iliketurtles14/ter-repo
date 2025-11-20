@@ -52,6 +52,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -73,6 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
@@ -112,6 +115,7 @@ GameObject:
   - component: {fileID: 8760731824751955627}
   - component: {fileID: 8765659248090550360}
   - component: {fileID: 1420977299855339033}
+  - component: {fileID: 1447288593129445863}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -156,6 +160,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -177,6 +183,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
@@ -250,7 +257,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578911972997081704}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 973d0eba35960d84d9b38189c4caa1c1, type: 3}
   m_Name: 
@@ -348,12 +355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e0102abe89f3e4cb554c2536d7512f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prisonDataScript: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
   deskIsPickedUp: 0
   currentOutfitID: 0
   currentActionNum: 0
-  mc: {fileID: 0}
   outfit: 
 --- !u!114 &6111450604313583733
 MonoBehaviour:
@@ -367,8 +371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 192268da523bd7d4daaff4c48527f07d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prisonDataScript: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
   deskIsPickedUp: 0
   currentActionNum: 0
   character: 
@@ -421,14 +423,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253cbc75bc423ad4cbf289226dc7cb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
-  perksTiles: {fileID: 0}
-  ic: {fileID: 0}
-  applyPrisonDataScript: {fileID: 0}
-  actionBarPanel: {fileID: 0}
   currentEquipment: {fileID: 0}
   onEquipment: 0
+  clearTile: 0
   hasAdded: 0
 --- !u!114 &8760731824751955627
 MonoBehaviour:
@@ -442,7 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6860650146e91af4fa7ae66327919e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMenuPanel: {fileID: 0}
 --- !u!114 &8765659248090550360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,8 +451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1189f842976d9c04dbe2df5e61427969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mcs: {fileID: 0}
-  itemBehavioursScript: {fileID: 0}
 --- !u!114 &1420977299855339033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,7 +474,31 @@ MonoBehaviour:
   healthRate: 0
   energyRateAmount: 0
   healthRateAmount: 0
-  ic: {fileID: 0}
+--- !u!114 &1447288593129445863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578911972997081704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf035e96120c734b87894a84f4a2c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HPAChecker
+  isChipping: 0
+  isDigging: 0
+  isCutting: 0
+  isScrewing: 0
+  isRoping: 0
+  hasPickedUp: 0
+  isSearching: 0
+  isReading: 0
+  isExercising: 0
+  isSeated: 0
+  isZipping: 0
+  isPunching: 0
+  isBusy: 0
 --- !u!1 &4898695327835121047
 GameObject:
   m_ObjectHideFlags: 0

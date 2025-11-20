@@ -19,6 +19,7 @@ public class VentClimb : MonoBehaviour
     private bool deskIsUnder;
     private GameObject deskUnder;
     private bool hasDisabledTags;
+    private HPAChecker HPAScript;
     public void Start()
     {
         deskStandScript = GetComponent<DeskStand>();
@@ -27,6 +28,7 @@ public class VentClimb : MonoBehaviour
         selectionScript = GetComponent<InventorySelection>();
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        HPAScript = player.GetComponent<HPAChecker>();
         
         offsetVector.y = 1.6f;
 
@@ -40,7 +42,7 @@ public class VentClimb : MonoBehaviour
     }
     public void Update()
     {
-        if (deskStandScript.hasClimbed)//when the player is on a desk
+        if (!HPAScript.isBusy && deskStandScript.hasClimbed)//when the player is on a desk
         {
             if (mcs.isTouchingOpenVent)
             {
@@ -53,7 +55,7 @@ public class VentClimb : MonoBehaviour
                 }
             }
         }
-        else if (player.layer == 12) //when the player is in a vent
+        else if (!HPAScript.isBusy && player.layer == 12) //when the player is in a vent
         {
             if (mcs.isTouchingOpenVent)
             {                
@@ -81,6 +83,8 @@ public class VentClimb : MonoBehaviour
 
         if (player.layer == 12 && !hasDisabledTags)//no collision on walls, fences, etc (and desks and other menus (hopefully i remember that later into development))
         {
+            mcs.EnableAllTags();
+
             mcs.DisableTag("Bars");
             mcs.DisableTag("Fence");
             mcs.DisableTag("ElectricFence");

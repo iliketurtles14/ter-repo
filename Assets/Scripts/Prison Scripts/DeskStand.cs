@@ -19,13 +19,15 @@ public class DeskStand : MonoBehaviour
     private Vector2 colliderOffset = new Vector2();
     private Vector3 playerOffset = new Vector3();
     public bool shouldStepOff = true;
+    public HPAChecker HPAScript;
     private void Start()
     {
-        desks = GameObject.FindGameObjectsWithTag("Desk");
+        StartCoroutine(StartWait());
         deskPickUpScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskPickUp>();
         player = RootObjectCache.GetRoot("Player");
         inventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        HPAScript = player.GetComponent<HPAChecker>();
 
         colliderOffset.y = -.05f;
         colliderOffset.x = 0;
@@ -33,9 +35,19 @@ public class DeskStand : MonoBehaviour
         playerOffset.x = 0;
         playerOffset.z = 0;
     }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        desks = GameObject.FindGameObjectsWithTag("Desk");
+    }
     private void Update()
     {
-        if (!hasClimbed && !isClimbing && !isPickedUp)
+        if (!HPAScript.isBusy && !hasClimbed && !isClimbing && !isPickedUp)
         {
             foreach (GameObject desk in desks)
             {
@@ -60,6 +72,8 @@ public class DeskStand : MonoBehaviour
     }
     private IEnumerator ClimbDesk(GameObject desk)
     {
+        HPAScript.isBusy = true;
+
         player.GetComponent<PlayerCtrl>().enabled = false;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         desk.GetComponent<DeskPickUp>().enabled = false;
@@ -91,6 +105,7 @@ public class DeskStand : MonoBehaviour
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         isClimbing = false;
         hasClimbed = true;
+        HPAScript.isBusy = false;
     }
     private void StepOffDesk()
     {
