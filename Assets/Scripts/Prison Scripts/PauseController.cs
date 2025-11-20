@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using Pathfinding;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +11,8 @@ public class PauseController : MonoBehaviour
     private Transform aStar;
     private GameObject timeObject;
     private Transform ic;
+
+    private List<string> currentDisabledTags = new List<string>();
 
     private void Start()
     {
@@ -26,6 +30,11 @@ public class PauseController : MonoBehaviour
         player.GetComponent<PlayerAnimation>().enabled = false;
 
         //mouse collision stuff
+        foreach(string tag in mcs.disabledTags)
+        {
+            currentDisabledTags.Add(tag);
+        }
+
         mcs.DisableAllTags();
         mcs.EnableTag("DeskSlot");
         if (!disableInv)
@@ -75,9 +84,13 @@ public class PauseController : MonoBehaviour
             mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         }
         mcs.EnableAllTags();
+        foreach(string tag in currentDisabledTags)
+        {
+            mcs.DisableTag(tag);
+        }
 
         //npc movement
-        if(aStar == null)
+        if (aStar == null)
         {
             aStar = RootObjectCache.GetRoot("A*").transform;
         }

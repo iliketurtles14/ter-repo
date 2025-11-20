@@ -10,12 +10,14 @@ public class DeskPickUp : MonoBehaviour
     private OutfitController outfitControllerScript;
     private BodyController bodyControllerScript;
     private DeskStand deskStandScript;
+    private HPAChecker HPAScript;
     private float distance;
     private float distance2;
     public bool isPickedUp;
     private GameObject desk;
     private Vector3 deskVector;
     private List<GameObject> touchedFloors = new List<GameObject>();
+    private bool isBusy;
 
     private void Start()
     {
@@ -25,12 +27,16 @@ public class DeskPickUp : MonoBehaviour
         outfitControllerScript = player.GetComponent<OutfitController>();
         bodyControllerScript = player.GetComponent<BodyController>();
         deskStandScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<DeskStand>();
+        HPAScript = player.GetComponent<HPAChecker>();
 
         deskVector = new Vector3(0, .8f);
     }
     private void Update()
-    {        
-        if (mcs.isTouchingDesk && !isPickedUp)
+    {
+        HPAScript.hasPickedUp = isPickedUp;
+        isBusy = HPAScript.isBusy;
+        
+        if (!isBusy && mcs.isTouchingDesk && !isPickedUp)
         {
             distance = Vector2.Distance(player.position, mcs.touchedDesk.transform.position);
             if (distance <= 2.4f && Input.GetMouseButtonDown(1) && !deskScript.deskIsOpen)

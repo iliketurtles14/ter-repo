@@ -12,6 +12,7 @@ public class HoleClimb : MonoBehaviour
     private GameObject globalLight;
     private GameObject currentHole;
     private bool hasPickedUp;
+    private HPAChecker HPAScript;
     public void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -19,6 +20,7 @@ public class HoleClimb : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         undergroundLight = RootObjectCache.GetRoot("UndergroundLight");
         globalLight = RootObjectCache.GetRoot("GlobalLight");
+        HPAScript = player.GetComponent<HPAChecker>();
 
         undergroundLight.SetActive(false);
 
@@ -51,7 +53,7 @@ public class HoleClimb : MonoBehaviour
             }
         }
 
-        if (mcs.isTouchingHoleDown && player.layer == 3)
+        if (!HPAScript.isBusy && mcs.isTouchingHoleDown && player.layer == 3)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleDown.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
@@ -76,7 +78,7 @@ public class HoleClimb : MonoBehaviour
                 }
             }
         }
-        else if(mcs.isTouchingHoleUp && player.layer == 11)
+        else if(!HPAScript.isBusy && mcs.isTouchingHoleUp && player.layer == 11)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleUp.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
@@ -204,6 +206,8 @@ public class HoleClimb : MonoBehaviour
                 child.GetComponent<BoxCollider2D>().enabled = true;
             }
         }
+        mcs.EnableAllTags();
+
         mcs.DisableTag("Bars");
         mcs.DisableTag("Fence");
         mcs.DisableTag("ElectricFence");

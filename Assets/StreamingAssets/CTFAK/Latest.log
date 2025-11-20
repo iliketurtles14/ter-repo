@@ -1,159 +1,159 @@
-[22:26:22:16] Reading PackData
-[22:26:22:17] Found PAMU header
-[22:26:22:17] New packfile: mmfs2.dll, Compressed: False
-[22:26:22:21] New packfile: mmf2d3d9.dll, Compressed: True
-[22:26:22:21] New packfile: mmf2d3d8.dll, Compressed: True
-[22:26:22:21] New packfile: kclist.mfx, Compressed: True
-[22:26:22:21] New packfile: AdvDir.mfx, Compressed: True
-[22:26:22:21] New packfile: StringTokenizer.mfx, Compressed: True
-[22:26:22:21] New packfile: Select.mfx, Compressed: True
-[22:26:22:22] New packfile: nvar.mfx, Compressed: True
-[22:26:22:22] New packfile: KcArray.mfx, Compressed: True
-[22:26:22:22] New packfile: kcwctrl.mfx, Compressed: True
-[22:26:22:22] New packfile: Steamworks.mfx, Compressed: True
-[22:26:22:22] New packfile: steam_api.dll, Compressed: True
-[22:26:22:23] New packfile: MMKPathPlanner.mfx, Compressed: True
-[22:26:22:23] New packfile: ForEach.mfx, Compressed: True
-[22:26:22:23] New packfile: kcfile.mfx, Compressed: True
-[22:26:22:23] New packfile: Yaso.mfx, Compressed: True
-[22:26:22:23] New packfile: process.mfx, Compressed: True
-[22:26:22:23] New packfile: txtblt.mfx, Compressed: True
-[22:26:22:23] New packfile: Blowfish.mfx, Compressed: True
-[22:26:22:23] New packfile: INI++15.mfx, Compressed: True
-[22:26:22:23] New packfile: Layer.mfx, Compressed: True
-[22:26:22:23] New packfile: StringReplace.mfx, Compressed: True
-[22:26:22:23] New packfile: kcedit.mfx, Compressed: True
-[22:26:22:23] New packfile: KcBoxB.mfx, Compressed: True
-[22:26:22:24] New packfile: Get.mfx, Compressed: True
-[22:26:22:24] New packfile: ultimatefullscreen.mfx, Compressed: True
-[22:26:22:24] New packfile: MoveIt.mfx, Compressed: True
-[22:26:22:24] New packfile: parser.mfx, Compressed: True
-[22:26:22:24] New packfile: OpenURLs.mfx, Compressed: True
-[22:26:22:24] New packfile: kcclock.mfx, Compressed: True
-[22:26:22:24] New packfile: ctrlx.mfx, Compressed: True
-[22:26:22:24] New packfile: kcpica.mfx, Compressed: True
-[22:26:22:24] New packfile: kcpict.mfx, Compressed: True
-[22:26:22:24] New packfile: KcBoxA.mfx, Compressed: True
-[22:26:22:24] New packfile: CalcRect.mfx, Compressed: True
-[22:26:22:24] New packfile: kcini.mfx, Compressed: True
-[22:26:22:24] New packfile: SimpleActive.mfx, Compressed: True
-[22:26:22:24] New packfile: fontembed.mfx, Compressed: True
-[22:26:22:24] New packfile: fcFolder.mfx, Compressed: True
-[22:26:22:25] New packfile: cctrans.dll, Compressed: True
-[22:26:22:25] New packfile: tgaflt.ift, Compressed: True
-[22:26:22:25] New packfile: pngflt.ift, Compressed: True
-[22:26:22:25] New packfile: jpgflt.ift, Compressed: True
-[22:26:22:25] New packfile: gifflt.ift, Compressed: True
-[22:26:22:25] New packfile: fliflt.ift, Compressed: True
-[22:26:22:25] New packfile: bmpflt.ift, Compressed: True
-[22:26:22:25] New packfile: aviflt.ift, Compressed: True
-[22:26:22:25] New packfile: pcxflt.ift, Compressed: True
-[22:26:22:25] New packfile: waveflt.sft, Compressed: True
-[22:26:22:25] New packfile: oggflt.sft, Compressed: True
-[22:26:22:25] New packfile: aiffflt.sft, Compressed: True
-[22:26:22:25] New packfile: modflt.sft, Compressed: True
-[22:26:22:25] New packfile: mp3flt.sft, Compressed: True
-[22:26:22:26] Running 7/17/23 build.
-[22:26:22:26] Game Header: PAMU
-[22:26:22:26] Fusion Build: 286
-[22:26:22:26] Reading Chunk 8739 (Header)
-[22:26:22:26] Reading Chunk 8785
-[22:26:22:26] No Reader for Chunk 8785
-[22:26:22:26] Reading Chunk 8740 (Name)
-[22:26:22:26] Reading Chunk 8741 (Author)
-[22:26:22:26] Reading Chunk 8763 (Copyright)
-[22:26:22:26] Reading Chunk 8751 (App Target-Filename)
-[22:26:22:26] Reading Chunk 8750 (App Editor-Filename)
-[22:26:22:26] Reading Chunk 8762 (About Text)
-[22:26:22:26] No Reader for Chunk 8762
-[22:26:22:27] Reading Chunk 8757 (Icon 16x16)
-[22:26:22:27] Reading Chunk 8773 (Extended Header)
-[22:26:22:27] Skipping problematic chunk 8783 with flag Compressed
-[22:26:22:27] Skipping chunk 8783 due to null data
-[22:26:22:27] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:27] Error decompressing chunk 8754 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:28] Skipping chunk 8754 due to null data
-[22:26:22:29] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:29] Error decompressing chunk 8755 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:29] Skipping chunk 8755 due to null data
-[22:26:22:29] Reading Chunk 8742 (Menu)
-[22:26:22:29] Reading Chunk 8748 (Extension Data)
-[22:26:22:29] Found file , 3
-[22:26:22:29] Reading Chunk 8756 (Extension List)
-[22:26:22:30] Reading Chunk 8753 (Other Extensions)
-[22:26:22:30] No Reader for Chunk 8753
-[22:26:22:30] Reading Chunk 8771 (Shaders)
-[22:26:22:31] Reading Chunk 8745 (Frame Items)
-[22:26:22:31] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:31] Error decompressing chunk 17476 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:32] Error reading chunk 8745: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:33] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:33] Error decompressing chunk 8759 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:33] Skipping chunk 8759 due to null data
-[22:26:22:34] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:34] Error decompressing chunk 8747 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:34] Skipping chunk 8747 due to null data
-[22:26:22:34] Reading Chunk 8768 (Exe Only)
-[22:26:22:34] Reading Chunk 8781
-[22:26:22:34] No Reader for Chunk 8781
-[22:26:22:34] Reading Chunk 13107 (Frame)
-[22:26:22:36] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:36] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:36] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:36] Reading Chunk 13107 (Frame)
-[22:26:22:37] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:37] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:37] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:37] Reading Chunk 13107 (Frame)
-[22:26:22:38] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:38] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:39] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:39] Reading Chunk 13107 (Frame)
-[22:26:22:40] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:40] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:40] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:40] Reading Chunk 13107 (Frame)
-[22:26:22:41] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:41] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:41] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:42] Reading Chunk 13107 (Frame)
-[22:26:22:43] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:43] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:43] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:44] Reading Chunk 13107 (Frame)
-[22:26:22:44] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:44] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:44] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:44] Reading Chunk 13107 (Frame)
-[22:26:22:46] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:46] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:46] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:46] Reading Chunk 13107 (Frame)
-[22:26:22:47] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:47] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:47] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:47] Reading Chunk 13107 (Frame)
-[22:26:22:49] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:49] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:49] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:49] Reading Chunk 13107 (Frame)
-[22:26:22:50] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:50] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:50] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:51] Reading Chunk 13107 (Frame)
-[22:26:22:52] Error decompressing block: Bad state (unknown compression method (0xA2))
-[22:26:22:52] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
-[22:26:22:52] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
-[22:26:22:52] Reading Chunk 8770 (Protection)
-[22:26:22:52] No Reader for Chunk 8770
-[22:26:22:53] Reading Chunk 26214 (Images)
-[22:26:22:66] Reading Chunk 21845 (Image Handles)
-[22:26:22:67] No Reader for Chunk 21845
-[22:26:22:67] Reading Chunk 26215 (Fonts)
-[22:26:22:67] Reading Chunk 21846 (Font Handles)
-[22:26:22:67] No Reader for Chunk 21846
-[22:26:22:67] Reading Chunk 26216 (Sounds)
-[22:26:22:69] Reading Chunk 21847 (Sound Handles)
-[22:26:22:69] No Reader for Chunk 21847
-[22:26:22:69] Reading Chunk 32639 (Last Chunk)
-[22:26:22:69] No Reader for Chunk 32639
+[21:21:51:03] Reading PackData
+[21:21:51:03] Found PAMU header
+[21:21:51:04] New packfile: mmfs2.dll, Compressed: False
+[21:21:51:07] New packfile: mmf2d3d9.dll, Compressed: True
+[21:21:51:08] New packfile: mmf2d3d8.dll, Compressed: True
+[21:21:51:08] New packfile: kclist.mfx, Compressed: True
+[21:21:51:08] New packfile: AdvDir.mfx, Compressed: True
+[21:21:51:08] New packfile: StringTokenizer.mfx, Compressed: True
+[21:21:51:08] New packfile: Select.mfx, Compressed: True
+[21:21:51:08] New packfile: nvar.mfx, Compressed: True
+[21:21:51:08] New packfile: KcArray.mfx, Compressed: True
+[21:21:51:08] New packfile: kcwctrl.mfx, Compressed: True
+[21:21:51:09] New packfile: Steamworks.mfx, Compressed: True
+[21:21:51:09] New packfile: steam_api.dll, Compressed: True
+[21:21:51:09] New packfile: MMKPathPlanner.mfx, Compressed: True
+[21:21:51:09] New packfile: ForEach.mfx, Compressed: True
+[21:21:51:09] New packfile: kcfile.mfx, Compressed: True
+[21:21:51:09] New packfile: Yaso.mfx, Compressed: True
+[21:21:51:09] New packfile: process.mfx, Compressed: True
+[21:21:51:09] New packfile: txtblt.mfx, Compressed: True
+[21:21:51:09] New packfile: Blowfish.mfx, Compressed: True
+[21:21:51:10] New packfile: INI++15.mfx, Compressed: True
+[21:21:51:10] New packfile: Layer.mfx, Compressed: True
+[21:21:51:10] New packfile: StringReplace.mfx, Compressed: True
+[21:21:51:10] New packfile: kcedit.mfx, Compressed: True
+[21:21:51:10] New packfile: KcBoxB.mfx, Compressed: True
+[21:21:51:10] New packfile: Get.mfx, Compressed: True
+[21:21:51:10] New packfile: ultimatefullscreen.mfx, Compressed: True
+[21:21:51:10] New packfile: MoveIt.mfx, Compressed: True
+[21:21:51:10] New packfile: parser.mfx, Compressed: True
+[21:21:51:10] New packfile: OpenURLs.mfx, Compressed: True
+[21:21:51:11] New packfile: kcclock.mfx, Compressed: True
+[21:21:51:11] New packfile: ctrlx.mfx, Compressed: True
+[21:21:51:11] New packfile: kcpica.mfx, Compressed: True
+[21:21:51:11] New packfile: kcpict.mfx, Compressed: True
+[21:21:51:11] New packfile: KcBoxA.mfx, Compressed: True
+[21:21:51:11] New packfile: CalcRect.mfx, Compressed: True
+[21:21:51:11] New packfile: kcini.mfx, Compressed: True
+[21:21:51:11] New packfile: SimpleActive.mfx, Compressed: True
+[21:21:51:11] New packfile: fontembed.mfx, Compressed: True
+[21:21:51:11] New packfile: fcFolder.mfx, Compressed: True
+[21:21:51:11] New packfile: cctrans.dll, Compressed: True
+[21:21:51:11] New packfile: tgaflt.ift, Compressed: True
+[21:21:51:11] New packfile: pngflt.ift, Compressed: True
+[21:21:51:11] New packfile: jpgflt.ift, Compressed: True
+[21:21:51:11] New packfile: gifflt.ift, Compressed: True
+[21:21:51:11] New packfile: fliflt.ift, Compressed: True
+[21:21:51:11] New packfile: bmpflt.ift, Compressed: True
+[21:21:51:11] New packfile: aviflt.ift, Compressed: True
+[21:21:51:11] New packfile: pcxflt.ift, Compressed: True
+[21:21:51:11] New packfile: waveflt.sft, Compressed: True
+[21:21:51:11] New packfile: oggflt.sft, Compressed: True
+[21:21:51:11] New packfile: aiffflt.sft, Compressed: True
+[21:21:51:12] New packfile: modflt.sft, Compressed: True
+[21:21:51:12] New packfile: mp3flt.sft, Compressed: True
+[21:21:51:12] Running 7/17/23 build.
+[21:21:51:12] Game Header: PAMU
+[21:21:51:12] Fusion Build: 286
+[21:21:51:12] Reading Chunk 8739 (Header)
+[21:21:51:12] Reading Chunk 8785
+[21:21:51:12] No Reader for Chunk 8785
+[21:21:51:12] Reading Chunk 8740 (Name)
+[21:21:51:12] Reading Chunk 8741 (Author)
+[21:21:51:12] Reading Chunk 8763 (Copyright)
+[21:21:51:12] Reading Chunk 8751 (App Target-Filename)
+[21:21:51:12] Reading Chunk 8750 (App Editor-Filename)
+[21:21:51:13] Reading Chunk 8762 (About Text)
+[21:21:51:13] No Reader for Chunk 8762
+[21:21:51:13] Reading Chunk 8757 (Icon 16x16)
+[21:21:51:13] Reading Chunk 8773 (Extended Header)
+[21:21:51:13] Skipping problematic chunk 8783 with flag Compressed
+[21:21:51:13] Skipping chunk 8783 due to null data
+[21:21:51:14] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:14] Error decompressing chunk 8754 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:14] Skipping chunk 8754 due to null data
+[21:21:51:15] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:15] Error decompressing chunk 8755 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:15] Skipping chunk 8755 due to null data
+[21:21:51:15] Reading Chunk 8742 (Menu)
+[21:21:51:15] Reading Chunk 8748 (Extension Data)
+[21:21:51:16] Found file , 3
+[21:21:51:16] Reading Chunk 8756 (Extension List)
+[21:21:51:16] Reading Chunk 8753 (Other Extensions)
+[21:21:51:16] No Reader for Chunk 8753
+[21:21:51:16] Reading Chunk 8771 (Shaders)
+[21:21:51:17] Reading Chunk 8745 (Frame Items)
+[21:21:51:17] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:17] Error decompressing chunk 17476 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:17] Error reading chunk 8745: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:19] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:19] Error decompressing chunk 8759 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:19] Skipping chunk 8759 due to null data
+[21:21:51:20] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:20] Error decompressing chunk 8747 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:20] Skipping chunk 8747 due to null data
+[21:21:51:20] Reading Chunk 8768 (Exe Only)
+[21:21:51:20] Reading Chunk 8781
+[21:21:51:20] No Reader for Chunk 8781
+[21:21:51:20] Reading Chunk 13107 (Frame)
+[21:21:51:22] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:22] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:22] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:22] Reading Chunk 13107 (Frame)
+[21:21:51:23] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:23] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:23] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:23] Reading Chunk 13107 (Frame)
+[21:21:51:24] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:25] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:25] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:25] Reading Chunk 13107 (Frame)
+[21:21:51:26] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:26] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:26] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:26] Reading Chunk 13107 (Frame)
+[21:21:51:27] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:27] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:27] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:27] Reading Chunk 13107 (Frame)
+[21:21:51:28] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:28] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:28] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:29] Reading Chunk 13107 (Frame)
+[21:21:51:30] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:30] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:30] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:30] Reading Chunk 13107 (Frame)
+[21:21:51:31] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:31] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:31] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:31] Reading Chunk 13107 (Frame)
+[21:21:51:32] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:32] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:32] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:32] Reading Chunk 13107 (Frame)
+[21:21:51:33] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:33] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:34] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:34] Reading Chunk 13107 (Frame)
+[21:21:51:35] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:35] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:35] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:36] Reading Chunk 13107 (Frame)
+[21:21:51:36] Error decompressing block: Bad state (unknown compression method (0xA2))
+[21:21:51:36] Error decompressing chunk 13108 with flag CompressedAndEncrypted: Bad state (unknown compression method (0xA2))
+[21:21:51:36] Error reading chunk 13107: Buffer cannot be null. (Parameter 'buffer')
+[21:21:51:36] Reading Chunk 8770 (Protection)
+[21:21:51:36] No Reader for Chunk 8770
+[21:21:51:37] Reading Chunk 26214 (Images)
+[21:21:51:51] Reading Chunk 21845 (Image Handles)
+[21:21:51:51] No Reader for Chunk 21845
+[21:21:51:51] Reading Chunk 26215 (Fonts)
+[21:21:51:51] Reading Chunk 21846 (Font Handles)
+[21:21:51:51] No Reader for Chunk 21846
+[21:21:51:51] Reading Chunk 26216 (Sounds)
+[21:21:51:53] Reading Chunk 21847 (Sound Handles)
+[21:21:51:53] No Reader for Chunk 21847
+[21:21:51:53] Reading Chunk 32639 (Last Chunk)
+[21:21:51:53] No Reader for Chunk 32639

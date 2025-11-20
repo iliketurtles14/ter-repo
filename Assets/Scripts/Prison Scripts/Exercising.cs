@@ -12,6 +12,7 @@ public class Exercising : MonoBehaviour
     private GameObject ic;
     private Transform so;
     private ApplyPrisonData applyPrisonDataScript;
+    private HPAChecker HPAScript;
     private GameObject barLine;
     private GameObject actionBarPanel;
     public GameObject currentEquipment;
@@ -30,6 +31,7 @@ public class Exercising : MonoBehaviour
     private bool punching;
     private bool isGoingDown;
     private int subGain;
+    private bool isBusy;
     public void Start()
     {
         so = RootObjectCache.GetRoot("ScriptObject").transform;
@@ -39,6 +41,7 @@ public class Exercising : MonoBehaviour
         ic = RootObjectCache.GetRoot("InventoryCanvas");
         applyPrisonDataScript = so.GetComponent<ApplyPrisonData>();
         actionBarPanel = ic.transform.Find("ActionBarPanel").gameObject;
+        HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
 
         barLine = Resources.Load<GameObject>("BarLine");
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
@@ -46,7 +49,10 @@ public class Exercising : MonoBehaviour
     }
     public void Update()
     {
-        if (mcs.isTouchingEquipment && Input.GetMouseButtonDown(0) && !onEquipment)
+        HPAScript.isExercising = onEquipment;
+        isBusy = HPAScript.isBusy;
+        
+        if (!isBusy && mcs.isTouchingEquipment && Input.GetMouseButtonDown(0) && !onEquipment)
         {
             float distance = Vector2.Distance(transform.position, mcs.touchedEquipment.transform.position);
             if(distance <= 2.4f)

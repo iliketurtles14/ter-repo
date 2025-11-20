@@ -21,6 +21,7 @@ public class ItemBehaviours : MonoBehaviour
     private ItemData selectedItemData;
     private ItemData usedItemData;
     private GameObject InventoryCanvas;
+    private HPAChecker HPAScript;
     public int slotNumber;
     private int usedSlotNumber;
     private List<InventoryItem> inventoryList;
@@ -48,11 +49,12 @@ public class ItemBehaviours : MonoBehaviour
     public Sprite hole100;
     public Sprite rockSprite;
     private string whatAction;
+    private bool isBusy;
     //general
     public bool isDigging;
     public bool isChipping;
     public bool isCutting;
-
+    public bool isScrewing;
     //breaking
     public bool selectedChippingItem;
     public bool selectedCuttingItem;
@@ -89,7 +91,8 @@ public class ItemBehaviours : MonoBehaviour
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
         oldPlayerTransform = RootObjectCache.GetRoot("OldPlayerTransformObject").transform;
         ActionTextBox = InventoryCanvas.transform.Find("ActionText").GetComponent<TextMeshProUGUI>();
-        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");        
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        HPAScript = PlayerTransform.GetComponent<HPAChecker>();
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
@@ -112,6 +115,14 @@ public class ItemBehaviours : MonoBehaviour
         }
         else { selectedItemData = null; }
 
+        //HPA stuff
+        HPAScript.isChipping = isChipping;
+        HPAScript.isCutting = isCutting;
+        HPAScript.isDigging = isDigging;
+        HPAScript.isScrewing = isScrewing;
+        HPAScript.isRoping = isRoping;
+
+        isBusy = HPAScript.isBusy;
 
         ///BREAKING TILES
         //vars
@@ -133,8 +144,9 @@ public class ItemBehaviours : MonoBehaviour
         }
 
 
+
         //chipping
-        if (mcs.isTouchingWall && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
+        if (!isBusy && mcs.isTouchingWall && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedWall.transform.position);
             if (distance <= 2.4f)
@@ -152,7 +164,7 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //cutting fences
-        if(mcs.isTouchingFence && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if(!isBusy && mcs.isTouchingFence && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedFence.transform.position);
             if(distance <= 2.4f)
@@ -169,7 +181,7 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //cutting bars
-        if(mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if(!isBusy && mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedBars.transform.position);
             if(distance <= 2.4f)
@@ -186,13 +198,14 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
         //unscrewing vents
-        if(mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        if(!isBusy && mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
             if(distance <= 2.4f)
             {
                 whatAction = "unscrewing vent";
                 touchedTileObject = mcs.touchedVentCover.gameObject;
+                isScrewing = true;
                 StartCoroutine(DrawActionBar(true, true));
                 CreateActionText("Unscrewing");
                 Deselect();
@@ -204,7 +217,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //cutting vents
-        if (mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if (!isBusy && mcs.isTouchingVentCover && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
             if (distance <= 2.4f)
@@ -223,13 +236,14 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //unscrewing slats
-        if (mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
+        if (!isBusy && mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedVentBreakingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
             if (distance <= 2.4f)
             {
                 whatAction = "unscrewing slats";
                 touchedTileObject = mcs.touchedSlats.gameObject;
+                isScrewing = true;
                 StartCoroutine(DrawActionBar(true, true));
                 CreateActionText("Unscrewing");
                 Deselect();
@@ -241,7 +255,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         // cutting slats
-        if (mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        if (!isBusy && mcs.isTouchingSlats && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
             if (distance <= 2.4f)
@@ -260,7 +274,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         
         //digging down holes
-        if(PlayerTransform.gameObject.layer == 3 && mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if(!isBusy && PlayerTransform.gameObject.layer == 3 && mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
             if(distance <= 2.4f)
@@ -298,7 +312,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //digging up holes
-        if (PlayerTransform.gameObject.layer == 11 && mcs.isTouchingEmptyDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if (!isBusy && PlayerTransform.gameObject.layer == 11 && mcs.isTouchingEmptyDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
             if (distance <= 2.4f)
@@ -343,7 +357,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //digging normally
-        if (PlayerTransform.gameObject.layer == 11 && mcs.isTouchingDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if (!isBusy && PlayerTransform.gameObject.layer == 11 && mcs.isTouchingDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
             if (distance <= 2.4f)
@@ -365,7 +379,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //chipping rocks
-        if (mcs.isTouchingRock && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
+        if (!isBusy && mcs.isTouchingRock && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRock.transform.position);
             if (distance <= 2.4f)
@@ -384,7 +398,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         ///ROPES AND GRAPPLES
         //rope
-        if (selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        if (!isBusy && selectionScript.aSlotSelected && selectedItemData.id == 105 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
             if(distance <= 2.4f)
@@ -395,7 +409,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //sheetrope
-        if (selectionScript.aSlotSelected && selectedItemData.id == 131 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        if (!isBusy && selectionScript.aSlotSelected && selectedItemData.id == 131 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
             if (distance <= 2.4f)
@@ -406,7 +420,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //grapple
-        if (selectionScript.aSlotSelected && selectedItemData.id == 102 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
+        if (!isBusy && selectionScript.aSlotSelected && selectedItemData.id == 102 && Input.GetMouseButtonDown(0) && mcs.isTouchingRoofLedge && !isRoping)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedRoofLedge.transform.position);
             if (distance <= 2.4f)
@@ -1259,6 +1273,7 @@ public class ItemBehaviours : MonoBehaviour
         isDigging = false;
         isChipping = false;
         isCutting = false;
+        isScrewing = false;
     }
     public void BreakItem()
     {

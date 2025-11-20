@@ -8,7 +8,7 @@ using System.Diagnostics.Contracts;
 
 public class MouseCollisionOnItems : MonoBehaviour //this started as an item script and is now how i do collision for the whole game :skull:
 {
-    private List<string> disabledTags = new List<string>();
+    public List<string> disabledTags = new List<string>();
     private List<Collider2D> hitColliders = new List<Collider2D>();
     private List<GameObject> collidedObjects = new List<GameObject>();
     private List<string> priorityOrder = new List<string>();
@@ -285,6 +285,13 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
 
     public void DisableTag(string tag)
     {
+        foreach(string aTag in disabledTags)
+        {
+            if(aTag == tag)
+            {
+                return;
+            }
+        }
         disabledTags.Add(tag);
     }
 

@@ -15,6 +15,7 @@ public class DeskInv : MonoBehaviour
     private GameObject InventoryCanvas;
     private GameObject tiles;
     private Inventory inventoryScript;
+    private HPAChecker HPAScript;
     private GameObject aStar;
     private ItemBehaviours itemBehavioursScript;
     private List<InventoryItem> inventoryList;
@@ -49,6 +50,7 @@ public class DeskInv : MonoBehaviour
         ClearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         timeObject = InventoryCanvas.transform.Find("Time").gameObject;
         pauseController = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        HPAScript = player.GetComponent<HPAChecker>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -65,6 +67,8 @@ public class DeskInv : MonoBehaviour
     }
     public void Update()
     {
+        HPAScript.isSearching = isOpening;
+        
         if (!deskIsOpen)
         {
             if (mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))

@@ -15,6 +15,7 @@ public class LadderClimb : MonoBehaviour
     public bool hasPickedUp;
     private Vector3 offsetVector = new Vector3(); //only for ground-to-roof operations
     private float distance;
+    private HPAChecker HPAScript;
     public void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -23,12 +24,13 @@ public class LadderClimb : MonoBehaviour
         deskStandScript = GetComponent<DeskStand>();
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        HPAScript = player.GetComponent<HPAChecker>();
 
         offsetVector.y = 1.6f;
     }
     public void Update()
     {
-        if (mcs.isTouchingGroundLadder || mcs.isTouchingVentLadder || mcs.isTouchingRoofLadder)
+        if (!HPAScript.isBusy && mcs.isTouchingGroundLadder || mcs.isTouchingVentLadder || mcs.isTouchingRoofLadder)
         {
             ic.transform.Find("MouseOverlay").GetComponent<RectTransform>().sizeDelta = new Vector2(45, 50);
             if (mcs.isTouchingGroundLadder)
@@ -95,7 +97,10 @@ public class LadderClimb : MonoBehaviour
             case "ground":
                 foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
                 {
-                    obj.GetComponent<DeskPickUp>().enabled = true;
+                    if(obj.GetComponent<DeskPickUp>() != null)
+                    {
+                        obj.GetComponent<DeskPickUp>().enabled = true;
+                    }
                 }
                 player.layer = 3;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 6;
@@ -157,6 +162,8 @@ public class LadderClimb : MonoBehaviour
     }
     public void DisableTags()
     {
+        mcs.EnableAllTags();
+        
         mcs.DisableTag("Bars");
         mcs.DisableTag("Fence");
         mcs.DisableTag("ElectricFence");
