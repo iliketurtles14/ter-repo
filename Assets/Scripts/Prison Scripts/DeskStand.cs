@@ -14,12 +14,12 @@ public class DeskStand : MonoBehaviour
     public bool isClimbing;
     public bool hasJumped;
     public bool isPickedUp;
-    private GameObject[] desks;
-    public GameObject currentDesk;
+    public GameObject[] desks;
     private Vector2 colliderOffset = new Vector2();
     private Vector3 playerOffset = new Vector3();
     public bool shouldStepOff = true;
     public HPAChecker HPAScript;
+    private bool desksAreLoaded;
     private void Start()
     {
         StartCoroutine(StartWait());
@@ -44,16 +44,21 @@ public class DeskStand : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         desks = GameObject.FindGameObjectsWithTag("Desk");
+        desksAreLoaded = true;
     }
     private void Update()
     {
+        if (!desksAreLoaded)
+        {
+            return;
+        }
+        
         if (!HPAScript.isBusy && !hasClimbed && !isClimbing && !isPickedUp)
         {
             foreach (GameObject desk in desks)
             {
                 if (player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                 {
-                    currentDesk = desk;
                     isClimbing = true;
                     StartCoroutine(ClimbDesk(desk));
                     break;
@@ -62,7 +67,16 @@ public class DeskStand : MonoBehaviour
         }
         else if (hasClimbed && !isClimbing && shouldStepOff)
         {
-            if (!player.GetComponent<CapsuleCollider2D>().IsTouching(currentDesk.GetComponent<BoxCollider2D>()))
+            bool isOnADesk = false;
+            foreach(GameObject desk in desks)
+            {
+                if (player.GetComponent<CapsuleCollider2D>().IsTouching(desk.GetComponent<BoxCollider2D>()))
+                {
+                    isOnADesk = true;
+                    break;
+                }
+            }
+            if (!isOnADesk)
             {
                 hasClimbed = false;
                 hasJumped = false;
@@ -76,9 +90,15 @@ public class DeskStand : MonoBehaviour
 
         player.GetComponent<PlayerCtrl>().enabled = false;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        desk.GetComponent<DeskPickUp>().enabled = false;
-        yield return new WaitForEndOfFrame();
-        desk.GetComponent<BoxCollider2D>().isTrigger = true;
+        foreach(GameObject aDesk in desks)
+        {
+            aDesk.GetComponent<DeskPickUp>().enabled = false;
+        }
+        yield return new WaitForFixedUpdate();
+        foreach (GameObject aDesk in desks)
+        {
+            aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
+        }
 
         Vector3 deskVector = desk.transform.position;
         float speed = 5f;
@@ -111,11 +131,14 @@ public class DeskStand : MonoBehaviour
     {
         player.GetComponent<CapsuleCollider2D>().offset -= colliderOffset;
         player.GetComponent<Transform>().position -= playerOffset;
-        currentDesk.GetComponent<DeskPickUp>().enabled = true;
 
         HideVents();
 
-        currentDesk.GetComponent<BoxCollider2D>().isTrigger = false;
+        foreach (GameObject aDesk in desks)
+        {
+            aDesk.GetComponent<BoxCollider2D>().isTrigger = false;
+            aDesk.GetComponent<DeskPickUp>().enabled = true;
+        }
         player.layer = 3;
     }
     public void ShowVents()

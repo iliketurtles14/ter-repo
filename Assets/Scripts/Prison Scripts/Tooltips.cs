@@ -488,7 +488,7 @@ public class Tooltips : MonoBehaviour
             return;
         }
         //vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
-        if (mcs.isTouchingVentCover)
+        if (mcs.isTouchingVentCover && mcs.touchedVentCover != null)
         {
             ventCoverDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
         }

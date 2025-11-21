@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +22,7 @@ public class VentClimb : MonoBehaviour
     private GameObject deskUnder;
     private bool hasDisabledTags;
     private HPAChecker HPAScript;
+    private GameObject[] desks;
     public void Start()
     {
         deskStandScript = GetComponent<DeskStand>();
@@ -32,7 +35,7 @@ public class VentClimb : MonoBehaviour
         
         offsetVector.y = 1.6f;
 
-        colliderOffset.y = -.5f;
+        colliderOffset.y = -.05f;
         colliderOffset.x = 0;
         playerOffset.y = .5f;
         playerOffset.x = 0;
@@ -47,7 +50,17 @@ public class VentClimb : MonoBehaviour
             if (mcs.isTouchingOpenVent)
             {
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
-                if (Input.GetMouseButtonDown(0) && distance <= 2.4f && !deskStandScript.isClimbing && deskStandScript.currentDesk.transform.position + offsetVector == mcs.touchedOpenVent.transform.position)
+                desks = deskStandScript.desks;
+                bool deskIsUnderVent = false;
+                foreach(GameObject desk in desks)
+                {
+                    if(desk.transform.position + offsetVector == mcs.touchedOpenVent.transform.position)
+                    {
+                        deskIsUnderVent = true;
+                        break;
+                    }
+                }
+                if (Input.GetMouseButtonDown(0) && distance <= 2.4f && !deskStandScript.isClimbing && deskIsUnderVent)
                 {
                     currentOpenVent = mcs.touchedOpenVent;
                     cameFromDesk = true;
@@ -75,10 +88,16 @@ public class VentClimb : MonoBehaviour
             deskStandScript.hasClimbed = false;
             deskStandScript.hasJumped = false;
             
-            player.GetComponent<PolygonCollider2D>().offset -= colliderOffset;
+            player.GetComponent<CapsuleCollider2D>().offset -= colliderOffset;
             player.GetComponent<Transform>().position -= playerOffset;
 
-            deskStandScript.currentDesk.GetComponent<BoxCollider2D>().isTrigger = false;
+            desks = deskStandScript.desks;
+
+            foreach(GameObject desk in desks)
+            {
+                desk.GetComponent<BoxCollider2D>().isTrigger = false;
+                desk.GetComponent<DeskPickUp>().enabled = true;
+            }
         }
 
         if (player.layer == 12 && !hasDisabledTags)//no collision on walls, fences, etc (and desks and other menus (hopefully i remember that later into development))
@@ -176,13 +195,18 @@ public class VentClimb : MonoBehaviour
 
         if (deskIsUnder)//pulled from the deskstand script
         {
+            desks = deskStandScript.desks;
+            
             Debug.Log("Here");
             deskStandScript.shouldStepOff = false;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
             player.GetComponent<PlayerCtrl>().enabled = false;
-            deskUnder.GetComponent<BoxCollider2D>().isTrigger = true;
+            foreach(GameObject desk in desks)
+            {
+                desk.GetComponent<BoxCollider2D>().isTrigger = true;
+                desk.GetComponent<DeskPickUp>().enabled = false;
+            }
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            deskUnder.GetComponent<DeskPickUp>().enabled = false;
             deskStandScript.hasJumped = true;
             player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
             player.transform.position += playerOffset;
@@ -195,8 +219,7 @@ public class VentClimb : MonoBehaviour
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             deskStandScript.hasClimbed = true;
             deskStandScript.isClimbing = false;
-            deskStandScript.currentDesk = deskUnder;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
             deskStandScript.shouldStepOff = true;
         }
         else
@@ -217,7 +240,11 @@ public class VentClimb : MonoBehaviour
             player.GetComponent<SpriteRenderer>().sortingOrder = 6;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
 
-            deskStandScript.currentDesk.GetComponent<DeskPickUp>().enabled = true;
+            desks = deskStandScript.desks;
+            foreach(GameObject desk in desks)
+            {
+                desk.GetComponent<DeskPickUp>().enabled = true;
+            }
         }
     }
 }
