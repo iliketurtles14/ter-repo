@@ -562,6 +562,9 @@ public class ApplyPrisonData : MonoBehaviour
         itemBehavioursScript.emptyDirtSprite = PrisonObjectSprites[25];
         itemBehavioursScript.rockSprite = PrisonObjectSprites[41];
 
+        //vents
+        itemBehavioursScript.emptyVentSprite = PrisonObjectSprites[138];
+
         //vital sprites
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 145, 78, 8, 11));
         vitalControllerScript.energyList.Add(Cutter(UISprites[150], 154, 78, 6, 11));

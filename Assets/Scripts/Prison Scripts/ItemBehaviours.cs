@@ -48,6 +48,7 @@ public class ItemBehaviours : MonoBehaviour
     public Sprite holeUp100;
     public Sprite hole100;
     public Sprite rockSprite;
+    public Sprite emptyVentSprite;
     private string whatAction;
     private bool isBusy;
     //general
@@ -93,6 +94,7 @@ public class ItemBehaviours : MonoBehaviour
         ActionTextBox = InventoryCanvas.transform.Find("ActionText").GetComponent<TextMeshProUGUI>();
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         HPAScript = PlayerTransform.GetComponent<HPAChecker>();
+        emptyVentCover = Resources.Load<GameObject>("PrisonPrefabs/Objects/EmptyVentCover");
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
@@ -1296,7 +1298,8 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 ventPosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion ventRotation = Quaternion.identity;
             Destroy(touchedTileObject);
-            Instantiate(emptyVentCover, ventPosition, ventRotation, tiles.Find("VentObjects"));
+            GameObject emptyVentObj = Instantiate(emptyVentCover, ventPosition, ventRotation, tiles.Find("VentObjects"));
+            emptyVentObj.GetComponent<SpriteRenderer>().sprite = emptyVentSprite;
 
             if(PlayerTransform.gameObject.layer == 15)
             {

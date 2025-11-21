@@ -13,6 +13,7 @@ public class PlayerIDInv : MonoBehaviour
     private Inventory inventoryScript;
     private List<InventoryItem> inventoryList;
     private MouseCollisionOnItems mcs;
+    private PauseController pauseScript;
     public List<IDItem> idInv = new List<IDItem>();
     private GameObject player;
     private Sprite ClearSprite;
@@ -36,6 +37,7 @@ public class PlayerIDInv : MonoBehaviour
         outfitSlot = transform.Find("Outfit").gameObject;
         weaponSlot = transform.Find("Weapon").gameObject;
         timeObject = InventoryCanvas.transform.Find("Time").gameObject;
+        pauseScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         
         StartCoroutine(Wait());
         foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
@@ -172,35 +174,7 @@ public class PlayerIDInv : MonoBehaviour
                 //exiting the idmenu
                 CloseMenu();
 
-                ///what to enabled when having a menu close
-                mcs.EnableTag("Bars");
-                mcs.EnableTag("Fence");
-                mcs.EnableTag("ElectricFence");
-                mcs.EnableTag("Digable");
-                mcs.EnableTag("Wall");
-                mcs.EnableTag("Item");
-                mcs.EnableTag("Desk");
-
-                //player movement
-                player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                player.GetComponent<PlayerCtrl>().enabled = true;
-                player.GetComponent<PlayerAnimation>().enabled = true;
-
-                //NPC movement
-                foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
-                {
-                    guard.GetComponent<AILerp>().speed = 10;
-                    guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    guard.GetComponent<NPCAnimation>().enabled = true;
-                }
-                foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
-                {
-                    inmate.GetComponent<AILerp>().speed = 10;
-                    inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    inmate.GetComponent<NPCAnimation>().enabled = true;
-                }
-                //time
-                timeObject.GetComponent<Routine>().enabled = true;
+                pauseScript.Unpause();
 
                 return;
             }
@@ -224,39 +198,18 @@ public class PlayerIDInv : MonoBehaviour
         transform.Find("NameText").gameObject.SetActive(true);
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
-        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
-
-        ///what to disable when having a desk/menu open
-        //player movement
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        player.GetComponent<PlayerCtrl>().enabled = false;
-        player.GetComponent<PlayerAnimation>().enabled = false;
-
-        mcs.DisableTag("Bars");
-        mcs.DisableTag("Fence");
-        mcs.DisableTag("ElectricFence");
-        mcs.DisableTag("Digable");
-        mcs.DisableTag("Wall");
-        mcs.DisableTag("Item");
-        mcs.DisableTag("Desk");
-
-
-        //NPC movement
-        foreach (GameObject guard in GameObject.FindGameObjectsWithTag("Guard"))
+        if(name == "PlayerMenuPanel")
         {
-            guard.GetComponent<AILerp>().speed = 0;
-            guard.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            guard.GetComponent<NPCAnimation>().enabled = false;
+            transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
         }
-        foreach (GameObject inmate in GameObject.FindGameObjectsWithTag("Inmate"))
+        else if(name == "NPCMenuPanel")
         {
-            inmate.GetComponent<AILerp>().speed = 0;
-            inmate.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            inmate.GetComponent<NPCAnimation>().enabled = false;
+            transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = true;
         }
 
-        //time
-        timeObject.GetComponent<Routine>().enabled = false;
+        MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
+
+        pauseScript.Pause(false);
 
         yield return new WaitForEndOfFrame();
 
@@ -321,6 +274,7 @@ public class PlayerIDInv : MonoBehaviour
         }
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
+        MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
         idIsOpen = false;
     }
 }
