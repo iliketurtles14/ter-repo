@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OutfitController : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class OutfitController : MonoBehaviour
     public bool deskIsPickedUp;
     public int currentOutfitID;
     public int currentActionNum;
+    public bool isInmateAndSleeping;
     private GameObject currentIDPanel;
     private GameObject mc;
     public string outfit;
+    private Sprite clearSprite;
     public List<List<Sprite>> InmateOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> POWOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> GuardOutfitLists = new List<List<Sprite>>();
@@ -26,6 +29,7 @@ public class OutfitController : MonoBehaviour
         prisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
         mc = RootObjectCache.GetRoot("MenuCanvas");
+        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
 
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitSleepDeadSprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitDiggingSprites);
@@ -273,10 +277,19 @@ public class OutfitController : MonoBehaviour
         {
             transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
             GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
+            if(name == "Player")
+            {
+                mc.transform.Find("PlayerMenuPanel").Find("Player").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
+                mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+            }
         }
         else if(currentOutfitID == -1)
         {
-            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
+            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false; mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
+            if(name == "Player")
+            {
+                mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 0 / 255);
+            }
         }
     }
 }

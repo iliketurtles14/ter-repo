@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerIDAnimation : MonoBehaviour
 {
     private List<Sprite> bodyDirSprites;
-    private List<Sprite> outfitDirSprites;
+    public List<Sprite> outfitDirSprites;
     private int whichCycle = 0;
 
     private void OnEnable()
