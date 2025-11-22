@@ -9,11 +9,12 @@ public class Sittables : MonoBehaviour
     private GameObject player;
     private Transform tiles;
     private HPAChecker HPAScript;
+    private Transform mc;
     public bool onSittable = false;
     private Vector3 leaveVector;
     private bool clearTile;
     private GameObject goToTile;
-    private GameObject sittable;
+    public GameObject sittable;
     private Vector3 bedOffset;
     private bool onBed;
     private Vector3 climbOffset;
@@ -25,6 +26,7 @@ public class Sittables : MonoBehaviour
         vitalScript = player.GetComponent<VitalController>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         HPAScript = player.GetComponent<HPAChecker>();
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
     }
     public void Update()
     {
@@ -157,6 +159,12 @@ public class Sittables : MonoBehaviour
             if (player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
+                int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+                if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
+                {
+                    player.transform.Find("Outfit").position = new Vector3(0, -.025f, 0);
+                }
+
             }
         }
         else if (sittable.name.StartsWith("Seat"))
