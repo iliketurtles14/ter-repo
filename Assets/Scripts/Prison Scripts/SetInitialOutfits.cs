@@ -66,6 +66,5 @@ public class SetInitialOutfits : MonoBehaviour
         }
         playerIDInvScript.idInv[0].itemData = data;
         mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.icon;
-        mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().enabled = false; //idk why i have to do this, but i do so yeah.
     }
 }

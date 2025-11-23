@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 
 public class NPCRename : MonoBehaviour
 {
@@ -70,15 +71,20 @@ public class NPCRename : MonoBehaviour
         foreach (Transform child in transform.Find("NPCSelectionGrid"))
         {
             child.GetComponent<Image>().sprite = ClearSprite;
+            SpriteState spriteState = new SpriteState();
+            spriteState.highlightedSprite = SelectHoverSprite;
+            spriteState.pressedSprite = SelectPressedSprite;
+            child.GetComponent<Button>().spriteState = spriteState;
         }
         StartCoroutine(RandomizeWait());
     }
     private void OnDisable()
     {
         ClearPanel();
+        ResetNPCGrid();
     }
     private void Update()
-    {
+    {        
         if(mouseCollisionScript.isTouchingInmate || mouseCollisionScript.isTouchingGuard)
         {
             if (mouseCollisionScript.isTouchingInmate)
@@ -136,6 +142,14 @@ public class NPCRename : MonoBehaviour
                 lastPressedCharacter = null;
                 pressedCharacterAmount = 0;
                 pressedNum = 0;
+                foreach (Transform child in transform.Find("NPCSelectionGrid"))
+                {
+                    child.GetComponent<Image>().sprite = ClearSprite;
+                    SpriteState aSpriteState = new SpriteState();
+                    aSpriteState.highlightedSprite = SelectHoverSprite;
+                    aSpriteState.pressedSprite = SelectPressedSprite;
+                    child.GetComponent<Button>().spriteState = aSpriteState;
+                }
             }
         }
     }
@@ -147,6 +161,14 @@ public class NPCRename : MonoBehaviour
         pressedCharacterAmount++;
         NameText.text = lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName;
         SendData();
+        foreach(Transform child in transform.Find("NPCSelectionGrid"))
+        {
+            child.GetComponent<Image>().sprite = ClearSprite;
+            SpriteState aSpriteState = new SpriteState();
+            aSpriteState.highlightedSprite = SelectHoverSprite;
+            aSpriteState.pressedSprite = SelectPressedSprite;
+            child.GetComponent<Button>().spriteState = aSpriteState;
+        }
         transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Image>().sprite = SelectPressedSprite;
         SpriteState spriteState = transform.Find("NPCSelectionGrid").Find("Selection" + pressedNum).GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = SelectPressedSprite;
@@ -228,10 +250,14 @@ public class NPCRename : MonoBehaviour
         }
         for (int i = 1; i <= npcCount; i++)
         {
-            GameObject selection = Instantiate(Resources.Load<GameObject>("Main Menu Resources/Selection"));
+            GameObject selection = Instantiate(transform.Find("Selection").gameObject);
             selection.name = "Selection" + i;
             selection.transform.parent = transform.Find("NPCSelectionGrid");
             selection.transform.localScale = new Vector3(1, 1, 1);
+
+            selection.GetComponent<Image>().enabled = true;
+            selection.GetComponent<Button>().enabled = true;
+            selection.GetComponent<EventTrigger>().enabled = true;
         }
     }
     private void Randomize()
@@ -326,6 +352,8 @@ public class NPCRename : MonoBehaviour
     }
     public IEnumerator RandomizeWait()
     {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         Randomize();
     }

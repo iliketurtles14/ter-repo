@@ -42,9 +42,12 @@ public class NPCRenameAnim : MonoBehaviour
     {
         transform.Find("Outfit").position = transform.position;
 
-        GetComponent<Image>().sprite = bodyDirSprites[6 + whichCycle];
-        transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[6 + whichCycle];
-        
+        try //just so useless errors dont fill the console
+        {
+            GetComponent<Image>().sprite = bodyDirSprites[6 + whichCycle];
+            transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[6 + whichCycle];
+        }
+        catch { }        
     }
 
     public IEnumerator AnimCycle()

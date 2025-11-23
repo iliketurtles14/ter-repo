@@ -41,7 +41,7 @@ public class DeskRNG : MonoBehaviour
     {
         "Center Perks", "Stalag Flucht", "Shankton State Pen", "Jungle Compound",
         "San Pancho", "HMP Irongate", "Jingle Cells", "Banned Camp",
-        "London Tower", "Paris Central Pen", "Santas Sweatshop", "Duct Tapes Are Forever",
+        "London Tower", "Paris Central Pen", "Santa's Sweatshop", "Duct Tapes are Forever",
         "Escape Team", "Alcatraz", "Fhurst Peak Correctional", "Camp Epsilon",
         "Fort Bamford"
     };
@@ -85,31 +85,33 @@ public class DeskRNG : MonoBehaviour
         itemList = ItemList.itemList;
         deskInv = GetComponent<DeskData>().deskInv;
 
-        string currentMapName = loadPrisonScript.currentMap.mapName;
-        if (prisonNames.Contains(currentMapName))
+        if(name != "DevDesk" && name != "PlayerDesk")
         {
-            percentages = percentageDict[loadPrisonScript.currentMap.mapName];
-        }
-        else
-        {
-            percentages = percentageDict["Custom"];
-        }
-        Debug.Log("PLEASE DONT FORGET TO CHANGE THIS");
-        tokens = 20;
-
-        foreach (ItemData item in itemList)
-        {
-            switch (item.token)
+            string currentMapName = loadPrisonScript.currentMap.mapName;
+            if (prisonNames.Contains(currentMapName))
             {
-                case 1: tier1Items.Add(item.id); break;
-                case 2: tier2Items.Add(item.id); break;
-                case 3: tier3Items.Add(item.id); break;
-                case 4: tier4Items.Add(item.id); break;
-                case 5: tier5Items.Add(item.id); break;
-                case 6: tier6Items.Add(item.id); break;
+                percentages = percentageDict[loadPrisonScript.currentMap.mapName];
+            }
+            else
+            {
+                percentages = percentageDict["Custom"];
+            }
+            Debug.Log("PLEASE DONT FORGET TO CHANGE THIS");
+            tokens = 20;
+
+            foreach (ItemData item in itemList)
+            {
+                switch (item.token)
+                {
+                    case 1: tier1Items.Add(item.id); break;
+                    case 2: tier2Items.Add(item.id); break;
+                    case 3: tier3Items.Add(item.id); break;
+                    case 4: tier4Items.Add(item.id); break;
+                    case 5: tier5Items.Add(item.id); break;
+                    case 6: tier6Items.Add(item.id); break;
+                }
             }
         }
-
         RandomizeDesk();
     }
     public void RandomizeDesk()
@@ -156,7 +158,7 @@ public class DeskRNG : MonoBehaviour
             return;
         }
 
-        if (deskName == "PlayerDesk")
+        if (deskName == "PlayerDesk" || deskName == "DevDesk")
         {
             return;
         }
