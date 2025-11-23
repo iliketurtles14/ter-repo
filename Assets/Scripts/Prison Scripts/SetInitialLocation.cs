@@ -45,8 +45,16 @@ public class SetInitialLocation : MonoBehaviour
         sittablesScript.sittable.GetComponent<BoxCollider2D>().enabled = false;
         player.GetComponent<PlayerCtrl>().enabled = false;
         yield return new WaitForFixedUpdate();
-        player.position = bedLocation + new Vector3(0, .4f); //offset for beds. this is in Sittables.cs
+        if(NPCSave.instance.playerCharacter != 1)
+        {
+            player.position = bedLocation + new Vector3(0, .4f); //offset for beds. this is in Sittables.cs
+        }
+        else
+        {
+            player.position = bedLocation + new Vector3(0, .35f); //offset for beds. this is in Sittables.cs
+        }
         sittablesScript.onSittable = true;
+        sittablesScript.onBed = true;
 
         //stuff pulled from Sittables.cs
         BodyController bc = player.GetComponent<BodyController>();
@@ -60,7 +68,14 @@ public class SetInitialLocation : MonoBehaviour
         int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
         if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
         {
-            player.transform.Find("Outfit").position = new Vector3(0, -.025f, 0);
+            if(NPCSave.instance.playerCharacter != 1)
+            {
+                player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+            }
+            else
+            {
+                player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+            }
         }
     }
 }

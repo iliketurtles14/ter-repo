@@ -26,8 +26,11 @@ public class SmallMenu : MonoBehaviour
         npcName = name;
         npcType = type;
         npcCharacter = character;
+        characterNum = CharacterEnumClass.GetCharacterInt(npcCharacter);
 
         transform.Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = npcName;
+
+        transform.Find("SetButton").GetComponent<Image>().sprite = normalSetSprite;
 
         isOpen = true;
     }
@@ -38,8 +41,6 @@ public class SmallMenu : MonoBehaviour
             return;
         }
 
-        //get character num
-        characterNum = CharacterEnumClass.GetCharacterInt(npcCharacter);
         switch (characterNum)
         {
             case 0:

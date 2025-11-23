@@ -85,17 +85,21 @@ public class Exercising : MonoBehaviour
 
             clearTile = false;
 
+            Vector3 wantedTilePos = leaveVector + (transform.position - offset);
             foreach (Transform tile in tiles.Find("Ground"))
             {
-                if (tile.position == leaveVector + (transform.position - offset) && tile.gameObject.CompareTag("Digable"))
+                if (Vector2.Distance(tile.position, wantedTilePos) <= .01f)
                 {
-                    clearTile = true;
-                    goToTile = tile.gameObject;
-                }
-                else if(tile.position == leaveVector + (transform.position - offset) && !tile.gameObject.CompareTag("Digable"))
-                {
-                    clearTile = false;
-                    break;
+                    if (tile.gameObject.CompareTag("Digable"))
+                    {
+                        clearTile = true;
+                        goToTile = tile.gameObject;
+                    }
+                    else if (!tile.gameObject.CompareTag("Digable"))
+                    {
+                        clearTile = false;
+                        break;
+                    }
                 }
             }
 

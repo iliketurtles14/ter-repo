@@ -11,13 +11,10 @@ public class Sittables : MonoBehaviour
     private HPAChecker HPAScript;
     private Transform mc;
     public bool onSittable = false;
-    private Vector3 leaveVector;
-    private bool clearTile;
+    public bool clearTile;
     private GameObject goToTile;
     public GameObject sittable;
-    private Vector3 bedOffset;
-    private bool onBed;
-    private Vector3 climbOffset;
+    public bool onBed;
     private bool isBusy;
     private void Start()
     {
@@ -46,12 +43,20 @@ public class Sittables : MonoBehaviour
         if(onSittable && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)))
         {
             clearTile = false;
-
+            Vector3 bedOffset;
             if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
                 sittable.name.StartsWith("MedicBed"))
             {
-                bedOffset = new Vector3(0, .8f);
-                onBed = true;
+                if(NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
+                {
+                    bedOffset = new Vector3(0, .4f);
+                    onBed = true;
+                }
+                else
+                {
+                    bedOffset = new Vector3(0, .35f);
+                    onBed = true;
+                }
             }
             else
             {
@@ -59,6 +64,7 @@ public class Sittables : MonoBehaviour
                 onBed = false;
             }
 
+            Vector3 leaveVector = Vector3.zero;
             if (Input.GetKeyDown(KeyCode.W))
             {
                 leaveVector = new Vector3(0, 1.6f);
@@ -81,17 +87,21 @@ public class Sittables : MonoBehaviour
                 return;
             }
 
+            Vector3 wantedTilePos = leaveVector + bedOffset + player.transform.position;
             foreach (Transform tile in tiles.Find("Ground"))
             {
-                if (tile.position == leaveVector + bedOffset + player.transform.position - climbOffset&& tile.gameObject.CompareTag("Digable"))
+                if (Vector2.Distance(tile.position, wantedTilePos) <= .01f)
                 {
-                    clearTile = true;
-                    goToTile = tile.gameObject;
-                }
-                else if (tile.position == leaveVector + bedOffset + player.transform.position - climbOffset && !tile.gameObject.CompareTag("Digable"))
-                {
-                    clearTile = false;
-                    break;
+                    if (tile.gameObject.CompareTag("Digable"))
+                    {
+                        clearTile = true;
+                        goToTile = tile.gameObject;
+                    }
+                    else if (!tile.gameObject.CompareTag("Digable"))
+                    {
+                        clearTile = false;
+                        break;
+                    }
                 }
             }
 
@@ -125,10 +135,20 @@ public class Sittables : MonoBehaviour
     {
         sittable.GetComponent<BoxCollider2D>().enabled = false;
 
+        Vector3 climbOffset;
         if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
             sittable.name.StartsWith("MedicBed"))
         {
-            climbOffset = new Vector3(0, .4f);
+            if (NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
+            {
+                climbOffset = new Vector3(0, .4f);
+                onBed = true;
+            }
+            else
+            {
+                climbOffset = new Vector3(0, .35f);
+                onBed = true;
+            }
         }
         else
         {
@@ -162,9 +182,15 @@ public class Sittables : MonoBehaviour
                 int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
                 if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
                 {
-                    player.transform.Find("Outfit").position = new Vector3(0, -.025f, 0);
+                    if (NPCSave.instance.playerCharacter != 1)
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                    }
+                    else
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                    }
                 }
-
             }
         }
         else if (sittable.name.StartsWith("Seat"))
@@ -183,6 +209,17 @@ public class Sittables : MonoBehaviour
             if (player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
+                int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+                if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
+                {
+                    if (NPCSave.instance.playerCharacter != 1)
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                    }
+                    else
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                    }                }
             }
         }
         else if (sittable.name.StartsWith("SunChair"))
@@ -194,6 +231,18 @@ public class Sittables : MonoBehaviour
             if (player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
+                int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+                if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
+                {
+                    if (NPCSave.instance.playerCharacter != 1)
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                    }
+                    else
+                    {
+                        player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                    }
+                }
             }
         }
     }

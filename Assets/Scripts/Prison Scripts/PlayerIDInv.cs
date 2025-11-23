@@ -45,14 +45,17 @@ public class PlayerIDInv : MonoBehaviour
             invSlots.Add(child.gameObject);
         }
         inventoryList = inventoryScript.inventory;
-        //diable id menu
-        CloseMenu();
     }
     private IEnumerator Wait()
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = NPCSave.instance.playerName;
+        CloseMenu();
     }
     public void Update()
     {

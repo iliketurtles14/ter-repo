@@ -11,6 +11,7 @@ public class PauseController : MonoBehaviour
     private Transform aStar;
     private GameObject timeObject;
     private Transform ic;
+    private Sittables sittablesScript;
 
     private List<string> currentDisabledTags = new List<string>();
 
@@ -21,6 +22,8 @@ public class PauseController : MonoBehaviour
         aStar = RootObjectCache.GetRoot("A*").transform;
         timeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        sittablesScript = GetComponent<Sittables>();
+
     }
     public void Pause(bool disableInv)
     {
@@ -73,7 +76,8 @@ public class PauseController : MonoBehaviour
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         player.GetComponent<PlayerCtrl>().enabled = true;
         int actionNum = player.GetComponent<BodyController>().currentActionNum;
-        if(actionNum == 2 || actionNum == 15 || actionNum == 11 || actionNum == 4 || actionNum == 1)
+        if((actionNum == 2 || actionNum == 15 || actionNum == 11 || actionNum == 4 || actionNum == 1) &&
+            !(sittablesScript.onSittable && sittablesScript.onBed))
         {
             player.GetComponent<PlayerAnimation>().enabled = true;
         }
