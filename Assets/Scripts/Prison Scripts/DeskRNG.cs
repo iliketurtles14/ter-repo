@@ -247,12 +247,10 @@ public class DeskRNG : MonoBehaviour
     }
     public void AddItem(int id)
     {
-        Debug.Log("Attempting to add item");
         for (int i = 0; i < deskInv.Count; i++)
         {
             if (deskInv[i].itemData == null)
             {
-                Debug.Log("Adding item " + id + "in " + name + " at " + transform.position);
                 deskInv[i].itemData = itemList[id];
                 break;
             }

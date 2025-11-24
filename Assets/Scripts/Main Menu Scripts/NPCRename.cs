@@ -268,6 +268,7 @@ public class NPCRename : MonoBehaviour
         {
             animList.Add(child.gameObject.GetComponent<NPCRenameAnim>());
         }
+        Debug.Log(prisonSelectScript.currentPrisonInmateNum);
         for(int i = 0; i < (prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum); i++)
         {
             int rand = UnityEngine.Random.Range(1, 10);
@@ -315,9 +316,9 @@ public class NPCRename : MonoBehaviour
             {
                 transform.Find("NPCGrid").Find("Inmate" + (i + 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
-            else if(i >= prisonSelectScript.currentPrisonInmateNum)
+            else if(i >= prisonSelectScript.currentPrisonInmateNum - 1)
             {
-                transform.Find("NPCGrid").Find("Guard" + (i - (prisonSelectScript.currentPrisonInmateNum - 1))).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
+                transform.Find("NPCGrid").Find("Guard" + (i - (prisonSelectScript.currentPrisonInmateNum - 2))).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
             animList[i].bodyDirSprites = characterSprites;
         }
@@ -437,48 +438,12 @@ public class NPCRename : MonoBehaviour
     }
     public void Transfer()
     {
+        int i = 0;
         foreach(Transform npc in transform.Find("NPCGrid"))
-        {
+        {            
             setNames.Add(npc.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
-            switch (npc.GetComponent<CustomNPCCollectionData>().customNPCData.npcType)
-            {
-                case "Rabbit": setCharacters.Add(1); break;
-                case "BaldEagle": setCharacters.Add(2); break;
-                case "Lifer": setCharacters.Add(3); break;
-                case "YoungBuck": setCharacters.Add(4); break;
-                case "OldTimer": setCharacters.Add(5); break;
-                case "BillyGoat": setCharacters.Add(6); break;
-                case "Froseph": setCharacters.Add(7); break;
-                case "Tango": setCharacters.Add(8); break;
-                case "Maru": setCharacters.Add(9); break;
-                case "Buddy": setCharacters.Add(10); break;
-                case "IceElf": setCharacters.Add(11); break;
-                case "BlackElf": setCharacters.Add(12); break;
-                case "YellowElf": setCharacters.Add(13); break;
-                case "PinkElf": setCharacters.Add(14); break;
-                case "OrangeElf": setCharacters.Add(15); break;
-                case "BrownElf": setCharacters.Add(16); break;
-                case "WhiteElf": setCharacters.Add(17); break;
-                case "Genie": setCharacters.Add(18); break;
-                case "GuardElf": setCharacters.Add(19); break;
-                case "Connelly": setCharacters.Add(20); break;
-                case "Elbrah": setCharacters.Add(21); break;
-                case "Chen": setCharacters.Add(22); break;
-                case "Piers": setCharacters.Add(23); break;
-                case "Mourn": setCharacters.Add(24); break;
-                case "Lazeeboi": setCharacters.Add(25); break;
-                case "Blonde": setCharacters.Add(26); break;
-                case "Walton": setCharacters.Add(27); break;
-                case "Prowler": setCharacters.Add(28); break;
-                case "Crane": setCharacters.Add(29); break;
-                case "Henchman": setCharacters.Add(30); break;
-                case "Clint": setCharacters.Add(31); break;
-                case "Cage": setCharacters.Add(32); break;
-                case "Sean": setCharacters.Add(33); break;
-                case "Andy": setCharacters.Add(34); break;
-                case "Soldier": setCharacters.Add(35); break;
-
-            }
+            setCharacters.Add(CharacterEnumClass.GetCharacterInt(npc.GetComponent<CustomNPCCollectionData>().customNPCData.npcType));
+            i++;
         }
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript.SetNPC(setNames, setCharacters);

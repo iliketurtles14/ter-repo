@@ -5,58 +5,11 @@ using System.Collections;
 [HelpURL("http://arongranberg.com/astar/docs/class_partial1_1_1_astar_a_i.php")]
 public class AStar : MonoBehaviour
 {
-    
-    private Seeker seeker;
-
     public Path path;
-
     public float speed = 2;
-
     public float nextWaypointDistance = 3;
-
     private int currentWaypoint = 0;
-
     public bool reachedEndOfPath;
-
-
-    public void Start()
-    {
-    }
-    public void Initialize()
-    {
-
-        reachedEndOfPath = false;
-        seeker = GetComponent<Seeker>();
-
-        if (CompareTag("Inmate"))
-        {
-            // Start a new path to the targetPosition, call the the OnPathComplete function
-            // when the path has been calculated (which may take a few frames depending on the complexity)
-            seeker.StartPath(transform.position, GetComponent<InmateAI>().currentIWPos.position, OnPathComplete);
-        }
-        else if(CompareTag("Guard"))
-        {
-            // Start a new path to the targetPosition, call the the OnPathComplete function
-            // when the path has been calculated (which may take a few frames depending on the complexity)
-            seeker.StartPath(transform.position, GetComponent<GuardAI>().currentGWPos.position, OnPathComplete);
-        }
-    }
-    private void OnEnable()
-    {
-        Initialize();
-    }
-
-    public void OnPathComplete(Path p)
-    {
-        //Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
-
-        if (!p.error)
-        {
-            path = p;
-            // Reset the waypoint counter so that we start to move towards the first point in the path
-            currentWaypoint = 0;
-        }
-    }
 
     public void Update()
     {
