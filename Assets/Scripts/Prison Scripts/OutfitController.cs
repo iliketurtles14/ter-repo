@@ -193,10 +193,20 @@ public class OutfitController : MonoBehaviour
     }
     public void Update()
     {
-        currentIDPanel = mc.transform.Find("PlayerMenuPanel").gameObject;
+        if(name == "Player")
+        {
+            currentIDPanel = mc.transform.Find("PlayerMenuPanel").gameObject;
+        }
         try
         {
-            currentOutfitID = currentIDPanel.GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+            if(name == "Player")
+            {
+                currentOutfitID = currentIDPanel.GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+            }
+            else
+            {
+                currentOutfitID = GetComponent<NPCCollectionData>().npcData.inventory[7].itemData.id;
+            }
         }
         catch
         {
@@ -276,19 +286,29 @@ public class OutfitController : MonoBehaviour
         if(currentOutfitID != -1)
         {
             transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
-            GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
             if(name == "Player")
             {
+                GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
                 mc.transform.Find("PlayerMenuPanel").Find("Player").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
                 mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+            }
+            else
+            {
+                GetComponent<NPCAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
+                mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
+                mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
         }
         else if(currentOutfitID == -1)
         {
-            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false; mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
+            transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false; 
             if(name == "Player")
             {
                 mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 0 / 255);
+            }
+            else
+            {
+                mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 0);
             }
         }
     }
