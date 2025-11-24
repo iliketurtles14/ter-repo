@@ -27,7 +27,9 @@ The source code presented in the ```main``` branch is stuff pushed daily, and wi
 
 These can be found here: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-Python 3: https://www.python.org/downloads/
+Python 3.4+: https://www.python.org/downloads/
+
+PyPI blowfish Package: https://pypi.org/project/blowfish (Paste ```pip install blowfish``` into Command Prompt.)
 
 ## Setting The Escapists File Path
 
