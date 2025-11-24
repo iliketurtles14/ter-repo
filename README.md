@@ -23,6 +23,8 @@ The source code presented in the ```main``` branch is stuff pushed daily, and wi
 
 ## Dependencies
 
+The Escapists on Steam with all DLC: https://store.steampowered.com/app/298630/The_Escapists
+
 .NET 6.0 Desktop Runtime, .NET 6.0 Runtime, and ASP.NET Core Runtime 6.0
 
 These can be found here: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
