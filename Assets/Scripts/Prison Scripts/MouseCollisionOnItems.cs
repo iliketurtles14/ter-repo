@@ -77,6 +77,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedNPCInvSlot;
     public bool isTouchingNPCInvPanel;
     public GameObject touchedNPCInvPanel;
+    public bool isTouchingFoodTable;
+    public GameObject touchedFoodTable;
     void Update()
     {
         ClearCollisions();
@@ -114,6 +116,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Equipment", //workout stuff
             "Reader",
             "Sittable", //beds, chairs, anything that you can sit on
+            "FoodTable",
             "Digable",
             "Dirt",
             "Rock",
@@ -238,6 +241,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Sittable":
                     isTouchingSittable = true;
                     touchedSittable = highestPriorityObject;
+                    break;
+                case "FoodTable":
+                    isTouchingFoodTable = true;
+                    touchedFoodTable = highestPriorityObject;
                     break;
                 case "Digable":
                     isTouchingFloor = true;
@@ -382,5 +389,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedNPCInvSlot = null;
         isTouchingNPCInvPanel = false;
         touchedNPCInvPanel = null;
+        isTouchingFoodTable = false;
+        touchedFoodTable = null;
     }
 }

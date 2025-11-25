@@ -24,7 +24,7 @@ public class Schedule : MonoBehaviour
         if (time == "08:00")
         {
             period = "Morning Rollcall";
-            periodCode = "MR";
+            periodCode = "R";
         }
         else if (time == "09:00")
         {
@@ -49,7 +49,7 @@ public class Schedule : MonoBehaviour
         else if (time == "16:00")
         {
             period = "Exercise Period";
-            periodCode = "EP";
+            periodCode = "E";
         }
         else if (time == "17:00")
         {
@@ -64,12 +64,12 @@ public class Schedule : MonoBehaviour
         else if (time == "19:00")
         {
             period = "Evening Free Period";
-            periodCode = "EFP";
+            periodCode = "FP";
         }
         else if (time == "22:00")
         {
             period = "Evening Rollcall";
-            periodCode = "ER";
+            periodCode = "R";
         }
         else if (time == "23:00")
         {

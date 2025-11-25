@@ -1184,7 +1184,9 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                         objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
-
+                    case "Table":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[60];
+                        break;
                 }
             }
         }

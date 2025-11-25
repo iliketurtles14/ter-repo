@@ -5,6 +5,8 @@ using NavMeshPlus.Components;
 using NUnit.Framework;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Cinemachine;
 
 public class SetUpNPCs : MonoBehaviour
 {
@@ -34,6 +36,9 @@ public class SetUpNPCs : MonoBehaviour
     private void NPCSetUp()
     {
         //make navmesh surface and a* surface
+        GridGraph grid = AstarPath.active.data.graphs.OfType<GridGraph>().FirstOrDefault();
+        grid.center = new Vector3((map.sizeX * 1.6f / 2) - .8f, (map.sizeY * 1.6f / 2) - .8f);
+        grid.SetDimensions(map.sizeX, map.sizeY, 1.6f);
         AstarPath.active.Scan();
 
         surface.BuildNavMesh();
@@ -49,7 +54,7 @@ public class SetUpNPCs : MonoBehaviour
         {
             if (waypoint.CompareTag("Waypoint"))
             {
-                if(waypoint.name == "InmateWaypoint" || waypoint.name == "GuardWaypoint")
+                if(waypoint.name == "InmateWaypoint")
                 {
                     waypoints.Add(waypoint);
                 }
@@ -59,6 +64,8 @@ public class SetUpNPCs : MonoBehaviour
         for(int i = 0; i < npcAmount; i++)
         {
             GameObject npc = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/NPC"));
+            NPCData data = new NPCData();
+            npc.GetComponent<NPCCollectionData>().npcData = data;
             npc.transform.parent = aStar;
             if(i < inmateAmount)
             {

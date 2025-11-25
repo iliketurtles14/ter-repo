@@ -8,21 +8,22 @@ using UnityEngine;
 
 public class NPCAI : MonoBehaviour
 {
-    private string npcType;
-    private int npcNum;
-    private bool isImportantGuard;
+    public string npcType;
+    public int npcNum;
+    public bool isImportantGuard;
     private Seeker seeker;
-    private string period;
+    public string period;
     private Schedule scheduleScript;
     private Transform tiles;
-    private List<Transform> currentPossibleWaypoints;
-    private bool isMoving;
-    private Transform currentWaypoint;
-    private bool isFreeWalking;
+    public List<Transform> currentPossibleWaypoints;
+    public bool isMoving;
+    public Transform currentWaypoint;
+    public bool isFreeWalking;
+    private bool isFinishing;
     private void Start()
     {
         //get npctype and num
-        if (name.StartsWith("Inamte"))
+        if (name.StartsWith("Inmate"))
         {
             npcType = "Inmate";
 
@@ -61,9 +62,10 @@ public class NPCAI : MonoBehaviour
         }
         else
         {
-            float distance = Vector3.Distance(transform.position, currentWaypoint.position);
-            if(distance < .01f)
+            float distance = Vector2.Distance(transform.position, currentWaypoint.position);
+            if(distance < .01f && !isFinishing)
             {
+                isFinishing = true;
                 StartCoroutine(FinishMovement());
             }
         }
@@ -72,7 +74,6 @@ public class NPCAI : MonoBehaviour
     {
         currentPossibleWaypoints = new List<Transform>();
 
-        isFreeWalking = false;
         foreach (Transform waypoint in tiles.Find("GroundObjects"))
         {
             if (waypoint.CompareTag("Waypoint"))
@@ -81,13 +82,13 @@ public class NPCAI : MonoBehaviour
                 {
                     case "LO":
                     case "W":
-                    case "FT":
+                    case "FP":
                         if (npcType == "Inmate" && waypoint.name == "InmateWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
                         }
-                        else if (npcType == "Guard" && waypoint.name == "InmateWaypoint")
+                        else if (npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
@@ -96,10 +97,13 @@ public class NPCAI : MonoBehaviour
                     case "R":
                         if (npcType == "Inmate" && waypoint.name == "InmateRollcall")
                         {
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardRollcall" && isImportantGuard)
                         {
+
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardWaypoint" && !isImportantGuard)
@@ -113,10 +117,12 @@ public class NPCAI : MonoBehaviour
                     case "D":
                         if (npcType == "Inmate")
                         {
+                            isFreeWalking = false;
                             InmateCanteen();
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardCanteen" && isImportantGuard)
                         {
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardWaypoint" && !isImportantGuard)
@@ -128,10 +134,12 @@ public class NPCAI : MonoBehaviour
                     case "E":
                         if (npcType == "Inmate")
                         {
+                            isFreeWalking = false;
                             InmateExercise();
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardGym" && isImportantGuard)
                         {
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardWaypoint" && !isImportantGuard)
@@ -143,10 +151,12 @@ public class NPCAI : MonoBehaviour
                     case "S":
                         if (npcType == "Inmate" && waypoint.name == "InmateShower")
                         {
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardShower" && isImportantGuard)
                         {
+                            isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardWaypoint" && !isImportantGuard)
@@ -177,6 +187,7 @@ public class NPCAI : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, 4);
         yield return new WaitForSeconds(rand);
         isMoving = false;
+        isFinishing = false;
     }
     private void InmateCanteen()
     {

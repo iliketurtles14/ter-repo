@@ -14,9 +14,5 @@ public class NPCCollectionData : MonoBehaviour
     public void Start()
     {
         LoadAllAssets();
-        foreach(NPCData data in npcDatas)
-        {
-            npcData = Instantiate(data);
-        }
     }
 }
