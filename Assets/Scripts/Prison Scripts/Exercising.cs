@@ -133,7 +133,7 @@ public class Exercising : MonoBehaviour
     {
         currentEquipment.GetComponent<BoxCollider2D>().enabled = false;
 
-        if (currentEquipment.name.StartsWith("BenchPress"))
+        if (currentEquipment.name.StartsWith("Benchpress"))
         {
             offset = new Vector3(0, 0, 0);
         }
@@ -141,11 +141,11 @@ public class Exercising : MonoBehaviour
         {
             offset = new Vector3(0, .4f);
         }
-        else if (currentEquipment.name.StartsWith("RunningPad"))
+        else if (currentEquipment.name.StartsWith("RunningMat"))
         {
             offset = new Vector3(0, .4f);
         }
-        else if (currentEquipment.name.StartsWith("PushupPad"))
+        else if (currentEquipment.name.StartsWith("PushupMat"))
         {
             offset = new Vector3(0, 0, 0);
         }
@@ -153,15 +153,15 @@ public class Exercising : MonoBehaviour
         {
             offset = new Vector3(-.4f, .4f);
         }
-        else if (currentEquipment.name.StartsWith("PunchBag"))
+        else if (currentEquipment.name.StartsWith("PunchingMat"))
         {
             offset = new Vector3(-.6f, .6f);
         }
-        else if (currentEquipment.name.StartsWith("JumpRopePad"))
+        else if (currentEquipment.name.StartsWith("JumpropeMat"))
         {
             offset = new Vector3(0, .2f);
         }
-        else if (currentEquipment.name.StartsWith("PullUpBar"))
+        else if (currentEquipment.name.StartsWith("PullupBar"))
         {
             offset = new Vector3(0, .1f);
         }

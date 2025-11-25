@@ -36,12 +36,29 @@ public class SetUpNPCs : MonoBehaviour
     private void NPCSetUp()
     {
         //make navmesh surface and a* surface
+
+        foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
+        {
+            if(obj.name == "Seat" || obj.gameObject.CompareTag("Equipment"))
+            {
+                obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
+        }
+
         GridGraph grid = AstarPath.active.data.graphs.OfType<GridGraph>().FirstOrDefault();
         grid.center = new Vector3((map.sizeX * 1.6f / 2) - .8f, (map.sizeY * 1.6f / 2) - .8f);
         grid.SetDimensions(map.sizeX, map.sizeY, 1.6f);
         AstarPath.active.Scan();
 
         surface.BuildNavMesh();
+
+        foreach (Transform obj in tiles.Find("GroundObjects"))
+        {
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment"))
+            {
+                obj.GetComponent<BoxCollider2D>().isTrigger = false;
+            }
+        }
 
         //make npc property list
         int inmateAmount = map.inmateCount - 1; //without player

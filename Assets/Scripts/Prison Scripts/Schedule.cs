@@ -24,7 +24,7 @@ public class Schedule : MonoBehaviour
         if (time == "08:00")
         {
             period = "Morning Rollcall";
-            periodCode = "R";
+            periodCode = "E";
         }
         else if (time == "09:00")
         {
