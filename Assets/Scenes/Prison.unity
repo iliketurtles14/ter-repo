@@ -3820,6 +3820,8 @@ GameObject:
   - component: {fileID: 567059184}
   - component: {fileID: 567059185}
   - component: {fileID: 567059186}
+  - component: {fileID: 567059187}
+  - component: {fileID: 567059188}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4674,6 +4676,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0a93370e89eaa4fb5a0729035b11c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPickUp
+--- !u!114 &567059187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d17fa65a9d24048b50f7e9034e0864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeatNumberSet
+--- !u!114 &567059188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28dd9e1f417e69438854de2699a2969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentNumberSet
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0

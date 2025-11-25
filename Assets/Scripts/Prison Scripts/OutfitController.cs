@@ -280,7 +280,8 @@ public class OutfitController : MonoBehaviour
         {
             currentActionNum = 15;
         }
-        else if (player.GetComponent<PlayerCollectionData>().playerData.hasFood)
+        else if ((player.GetComponent<PlayerCollectionData>().playerData.hasFood && name == "Player") ||
+            ((name.StartsWith("Guard") || name.StartsWith("Inmate")) && GetComponent<NPCCollectionData>().npcData.hasFood))
         {
             currentActionNum = 13;
         }
