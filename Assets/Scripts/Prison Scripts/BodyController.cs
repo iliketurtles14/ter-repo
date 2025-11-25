@@ -8,6 +8,7 @@ public class BodyController : MonoBehaviour
 {
     private ApplyPrisonData prisonDataScript;
     private ItemBehaviours itemBehavioursScript;
+    private Transform player;
     public bool deskIsPickedUp;
     public int currentActionNum;
     public string character;
@@ -53,6 +54,7 @@ public class BodyController : MonoBehaviour
         Transform so = RootObjectCache.GetRoot("ScriptObject").transform;
         prisonDataScript = so.GetComponent<ApplyPrisonData>();
         itemBehavioursScript = so.GetComponent<ItemBehaviours>();
+        player = RootObjectCache.GetRoot("Player").transform;
 
         RabbitLists.Add(prisonDataScript.RabbitSleepDeadSprites);
         RabbitLists.Add(prisonDataScript.RabbitDiggingSprites);
@@ -413,7 +415,7 @@ public class BodyController : MonoBehaviour
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         
-        if (itemBehavioursScript.isChipping)
+        if (itemBehavioursScript.isChipping)//remember to chagne this stuff for the outfitcontroller too
         {
             currentActionNum = 11;
         }
@@ -428,6 +430,10 @@ public class BodyController : MonoBehaviour
         else if (deskIsPickedUp)
         {
             currentActionNum = 15;
+        }
+        else if (player.GetComponent<PlayerCollectionData>().playerData.hasFood)
+        {
+            currentActionNum = 13;
         }
         else
         {

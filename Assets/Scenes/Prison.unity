@@ -3819,6 +3819,7 @@ GameObject:
   - component: {fileID: 567059183}
   - component: {fileID: 567059184}
   - component: {fileID: 567059185}
+  - component: {fileID: 567059186}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4661,6 +4662,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39c2c41062ea8c40a7d5cdf9b46fe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetUpNPCs
+--- !u!114 &567059186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0a93370e89eaa4fb5a0729035b11c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodPickUp
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7478,7 +7491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACYn+vYRBfKdwIAADAFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1zmzAQ/SsenRsPODbYvbWO4/SQ2BOnkwsXWSxGYyExkvBXxv+9KwGGulMuiH379uPtii/CpSmBWaWXmqevKgXyfUDcmXwbdOALnOhOyQ2/QOvzyVObOyfqfd6p5QrtoaMZVYDVnP2QO+GcAzRWkmdKF4t0B3NlrEFzRoUBhLSyji3R9DUgJ3w9zBzljKdR7E4XPM2CwRWPDKQF3XMNx8NxgE/02FKCYTzDJ35smDWxkkzQooTUddHxw/FkGDXMcDwdTr2zxC4bv9DDTAnBTVMksefSi7Apc9DgVEg5xZ59YcFwNkVLDnyXW1dPn77KMgO20UTT8xPXqF4dl/xUtaQFNfu6wgMVlcs0mkS+rjro6z94HMUez7QqXtrEYeCS2Jyz/Ts9M2psT/S++akrPvRKHanY062Azxzkm1pqVckUQasrR60MjJ66z1tv8xzYvrPXtbbGNm9Vdtq3Q25H/BAOrlff/2kueLFtIPzcCOUV93sBGqfzC+v1W2MaL7S6In4b+KC7/no1wDPXxiLUNClddVtVaedKFl4y10xl50pL0P0IJUgq7HmNcez9DO+w/7OeqbtJTfYGay/IHcWbO/8guIPW6ngblsnV8RVMvqqs4BI6+R3whkLNlZT1ivVbammbSmeU9Wi7iqd/7xZhj9OIsmkIwSQcwSh6iKdsHAdROIlZPGNjRvzucYl9UrGuC23kwbHJLrjEPWt/MIOlpqVf91TT45JfCmU6Ty4ztWEaQK7qCLfCQWMSvJrpIuUo0Aas5dIPnHwlRCi2hzS5BUp8p4uT1TTpoiSk5AdlnSUhc/9HSYgz33Z5reHA4eiSt8Gu5PoHUEsDBBQAAAgIAACYn+s/SboCbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSsrGFWWKyhWGqgamhUaqRma65RbKJuYGZoal5srllskmyUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACYn+vYRBfKdwIAADAFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACYn+s/SboCbQAAAHgAAAAJACQAAAAAAAAAAAAAAMQCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAfAMAAAAA
+    dataString: UEsDBBQAAAgIAACYn+tgO446XwIAABoFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMziVjU4KhtxYI6YHAhHRy8UXIa6xBljySzOfw37uSbezSycnrfW93337YV8KlKYBZpReaJ0uVAPnRI84m33ot+AonulNywy/QcD55YjNHop7zTi1X6A9dmFE5WM3ZT7kTjhygs5Q8VTqfJzuYKmMNulMqDCCklXXREl3XHjnhoz9xIWe0BpGzLmhNgt4NTQbSgm6pDbGhVaxSMkHzAhInuSWHT6OajpYnSmyn5lQgU0JwU6sh9lz4bjdFBhpcuwmn2JxXEDxNxujJgO8y67R2w1dpasDWwjQ9z7jGMVV5yS9VzS6nZl+pO1BRehHBYOiFVVmX/xGiUeTxVKv8takcBq6KzTjbv9Mzo8Z2xtt1z1r1oR/TkYo93Qr4zEC+qYVWpUwQtLp0oaWBwax9vTc3zYDtW3+ltXE2dcvi6y31w97t5gdwmgqeb2sIXzdC+ZH7CwCN6/mNev19mJqFXifij4EPuuseUg28cG0sQnWT0qnbqlI7Kpn7kblmSjtVWoLuZihAUmHPa8xjH5f4gH0d9ULdN1NXr7HmU3gI8e6WHwQP0Fod78symTouwWSr0gouoR2/A95wUFMlZXVj3ZaasE2pU8o6YbuSJ//eFmHfxyPKxiEEz+EABqN+NGbDKBiFzxGLJmzIiL89LrFPKtaV0Ho8uDbZJpd4Z82vpLfQtPD3nmh6XPBLrkzL5DJVG6YB5KrKcBcOGovgt5nME44D2oC1XPqFk2tMhGJ7SOJ7oth3Oj9ZTeM2S0wKflDWeWIy9f+OmDj3/ZbXGg4cjq54k+xGbn8BUEsDBBQAAAgIAACYn+s/SboCbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrRSsrGFWWKyhWGqgamhUaqRma65RbKJuYGZoal5srllskmyUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACYn+tgO446XwIAABoFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACYn+s/SboCbQAAAHgAAAAJACQAAAAAAAAAAAAAAKwCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAZAMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -15905,6 +15918,8 @@ MonoBehaviour:
   touchedNPCInvSlot: {fileID: 0}
   isTouchingNPCInvPanel: 0
   touchedNPCInvPanel: {fileID: 0}
+  isTouchingFoodTable: 0
+  touchedFoodTable: {fileID: 0}
 --- !u!1 &1961851994
 GameObject:
   m_ObjectHideFlags: 0

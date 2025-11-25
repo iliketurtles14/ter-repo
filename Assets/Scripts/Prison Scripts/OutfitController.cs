@@ -13,6 +13,7 @@ public class OutfitController : MonoBehaviour
     private GameObject currentIDPanel;
     private GameObject mc;
     public string outfit;
+    private Transform player;
     private Sprite clearSprite;
     public List<List<Sprite>> InmateOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> POWOutfitLists = new List<List<Sprite>>();
@@ -30,6 +31,7 @@ public class OutfitController : MonoBehaviour
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
         mc = RootObjectCache.GetRoot("MenuCanvas");
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        player = RootObjectCache.GetRoot("Player").transform;
 
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitSleepDeadSprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitDiggingSprites);
@@ -277,6 +279,10 @@ public class OutfitController : MonoBehaviour
         else if (deskIsPickedUp)
         {
             currentActionNum = 15;
+        }
+        else if (player.GetComponent<PlayerCollectionData>().playerData.hasFood)
+        {
+            currentActionNum = 13;
         }
         else
         {

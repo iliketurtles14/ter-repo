@@ -91,8 +91,12 @@ public class NPCAnimation : MonoBehaviour
                 case "down": lookNum = 6; break;
             }
 
-            GetComponent<SpriteRenderer>().sprite = bodyDirSprites[lookNum + whichCycle];
-            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitDirSprites[lookNum + whichCycle];
+            try
+            {
+                GetComponent<SpriteRenderer>().sprite = bodyDirSprites[lookNum + whichCycle];
+                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitDirSprites[lookNum + whichCycle];
+            }
+            catch { }
         }
     }
      
