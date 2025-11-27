@@ -54,7 +54,7 @@ public class Sittables : MonoBehaviour
                 }
                 else
                 {
-                    bedOffset = new Vector3(0, .35f);
+                    bedOffset = new Vector3(0, .45f);
                     onBed = true;
                 }
             }

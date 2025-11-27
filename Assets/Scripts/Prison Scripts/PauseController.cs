@@ -12,6 +12,8 @@ public class PauseController : MonoBehaviour
     private GameObject timeObject;
     private Transform ic;
     private Sittables sittablesScript;
+    private bool npcsAreStopped;
+    private bool noAnimOnNPCs;
 
     private List<string> currentDisabledTags = new List<string>();
 
@@ -51,10 +53,26 @@ public class PauseController : MonoBehaviour
         mcs.EnableTag("Extra");
         
         //npc movement
-        foreach(GameObject npc in aStar)
+        foreach(Transform npc in aStar)
         {
-            npc.GetComponent<AILerp>().speed = 0;
-            npc.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            if (!npc.GetComponent<AILerp>().canMove)
+            {
+                npcsAreStopped = true;
+            }
+            else
+            {
+                npcsAreStopped = false;
+            }
+            if (!npc.GetComponent<NPCAnimation>().enabled)
+            {
+                noAnimOnNPCs = true;
+            }
+            else
+            {
+                noAnimOnNPCs = false;
+            }
+
+            npc.GetComponent<AILerp>().canMove = false;
             npc.GetComponent<NPCAnimation>().enabled = false;
             npc.GetComponent<NavMeshAgent>().speed = 0;
         }
@@ -98,11 +116,16 @@ public class PauseController : MonoBehaviour
         {
             aStar = RootObjectCache.GetRoot("A*").transform;
         }
-        foreach(GameObject npc in aStar)
+        foreach(Transform npc in aStar)
         {
-            npc.GetComponent<AILerp>().speed = 8;
-            npc.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-            npc.GetComponent<NPCAnimation>().enabled = true;
+            if (!npcsAreStopped)
+            {
+                npc.GetComponent<AILerp>().canMove = true;
+            }
+            if (!noAnimOnNPCs)
+            {
+                npc.GetComponent<NPCAnimation>().enabled = true;
+            }
             npc.GetComponent<NavMeshAgent>().speed = 8;
         }
 
