@@ -44,3 +44,27 @@ In this folder, go into the "config.ini" file to change the directory of your Th
 YOU MUST USE FORWARD SLASHES (/) INSTEAD OF BACK SLASHES (\\), AND YOU ALSO MUST PUT QUOTES AROUND THE PATH.
 
 Example path: "C:/Program Files (x86)/Steam/steamapps/common/The Escapists"
+
+# Troubleshooting
+
+## "The game loads, but all the assets are white."
+
+This happens because either CTFAK didn't open, or the game is having trouble loading the memory mapped file.
+
+If CTFAK did open, just re-open the game, and it should work. This is a known bug and will be fixed in subsequent releases.
+
+If CTFAK did *not* open, make sure you have installed all of the needed dependencies.
+
+## "The game seems to load fine, but prisons don't open."
+
+This is most likely caused due to the game not having all of the tilesets from The Escapists.
+
+This means you either don't have all of the DLC for The Escapists installed, or you haven't installed Python or the blowfish PyPI package.
+
+## "I can't find the TER executable."
+
+This is probably because you downloaded the source code of the project and not an actual release.
+
+## Unlisted Issues
+
+If you are having an issue that is not mentioned here, join the Discord server and ask for help there.
