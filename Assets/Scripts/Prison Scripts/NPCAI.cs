@@ -20,9 +20,10 @@ public class NPCAI : MonoBehaviour
     public bool isMoving;
     public Transform currentWaypoint;
     public bool isFreeWalking;
-    private bool isFinishing;
-    private bool isInCanteen;
-    private bool isInGym;
+    public bool isFinishing;
+    public bool isInCanteen;
+    public bool isInGym;
+    public bool shouldReset;
     private ApplyPrisonData applyPrisonDataScript;
     private void Start()
     {   
@@ -70,8 +71,16 @@ public class NPCAI : MonoBehaviour
         }
         else if (isMoving && !isInCanteen && !isInGym)
         {
-            float distance = Vector2.Distance(transform.position, currentWaypoint.position);
-            if(distance < .01f && !isFinishing)
+            try
+            {
+                float distance = Vector2.Distance(transform.position, currentWaypoint.position);
+                if (distance < .01f && !isFinishing)
+                {
+                    isFinishing = true;
+                    StartCoroutine(FinishMovement());
+                }
+            }
+            catch //force finish
             {
                 isFinishing = true;
                 StartCoroutine(FinishMovement());
@@ -83,7 +92,7 @@ public class NPCAI : MonoBehaviour
             isInCanteen = false;
             GetComponent<NPCCollectionData>().npcData.hasFood = false;
         }
-        if(period != "E")
+        if (period != "E")
         {
             isInGym = false;
         }
@@ -191,6 +200,8 @@ public class NPCAI : MonoBehaviour
     }
     private void SetCurrentWaypoint()
     {
+        seeker.CancelCurrentPathRequest(true);
+        
         if (isFreeWalking)
         {
             int rand = UnityEngine.Random.Range(0, currentPossibleWaypoints.Count);
@@ -210,7 +221,9 @@ public class NPCAI : MonoBehaviour
         isFinishing = false;
     }
     private IEnumerator InmateCanteen()
-    {   
+    {
+        Debug.Log("Is in canteen");
+        
         //get canteen postiions
         List<Vector3> canteenPositions = new List<Vector3>();
         Vector3 currentCanteenWaypointPos = Vector3.zero;
@@ -265,6 +278,7 @@ public class NPCAI : MonoBehaviour
                 if(aDistance == min)
                 {
                     foodTable.GetComponent<FoodTableCounter>().foodCount--;
+                    break;
                 }
             }
         }
@@ -336,254 +350,489 @@ public class NPCAI : MonoBehaviour
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
         GetComponent<NPCAnimation>().enabled = false;
-        switch (currentEquipment.name)
+        GetComponent<AILerp>().canMove = false;
+        try
         {
-            case "Benchpress":
-                offset = new Vector3(0, 0, 0);
-                transform.position += offset;
+            switch (currentEquipment.name)
+            {
+                case "Benchpress":
+                    offset = new Vector3(0, 0, 0);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][2];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][2];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][1];
-                    }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][2];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][2];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][8][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][8][1];
+                        }
 
-                    yield return new WaitForSeconds(.266f);
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "Treadmill":
-            case "RunningMat":
-                offset = new Vector3(0, .4f);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "Treadmill":
+                case "RunningMat":
+                    offset = new Vector3(0, .4f);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "PushupMat":
-                offset = new Vector3(0, 0, 0);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "PushupMat":
+                    offset = new Vector3(0, 0, 0);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][7][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][7][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "SpeedBag":
-                offset = new Vector3(-.4f, .4f);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "SpeedBag":
+                    offset = new Vector3(-.4f, .4f);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
-                    }
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[240];
-                    yield return new WaitForSeconds(.117f);
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[241];
-                    yield return new WaitForSeconds(.117f);
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[239];
-                    yield return new WaitForSeconds(.117f);
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[258];
-                    yield return new WaitForSeconds(.116f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[240];
+                        timer = 0f;
+                        while (timer < .117f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[241];
+                        timer = 0f;
+                        while (timer < .117f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[239];
+                        timer = 0f;
+                        while (timer < .117f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[258];
+                        timer = 0f;
+                        while (timer < .116f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "PunchingMat":
-                offset = new Vector3(-.6f, .6f);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "PunchingMat":
+                    offset = new Vector3(-.6f, .6f);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
-                    }
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[235];
-                    yield return new WaitForSeconds(.15f);
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[237];
-                    yield return new WaitForSeconds(.15f);
-                    currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[234];
-                    yield return new WaitForSeconds(.167f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][1];
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[235];
+                        timer = 0f;
+                        while (timer < .15f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[237];
+                        timer = 0f;
+                        while (timer < .15f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[234];
+                        timer = 0f;
+                        while (timer < .15f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "JumpropeMat":
-                offset = new Vector3(0, .2f);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "JumpropeMat":
+                    offset = new Vector3(0, .2f);
+                    transform.position = offset + currentEquipmentPos;
 
-                int i = 0;
-                while (true)
-                {
-                    if(i == 8)
+                    int i = 0;
+                    while (true)
                     {
-                        i = 0;
-                    }
+                        if (i == 8)
+                        {
+                            i = 0;
+                        }
 
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][9][i];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][i];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    i++;
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][9][i];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][i];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        i++;
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
-            case "PullupBar":
-                offset = new Vector3(0, .1f);
-                transform.position += offset;
+                        yield return null;
+                    }
+                    break;
+                case "PullupBar":
+                    offset = new Vector3(0, .1f);
+                    transform.position = offset + currentEquipmentPos;
 
-                while (true)
-                {
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][0];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                    while (true)
                     {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][0];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][2];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][2];
-                    }
-                    yield return new WaitForSeconds(.266f);
-                    GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][1];
-                    if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
-                    {
-                        transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][1];
-                    }
-                    yield return new WaitForSeconds(.266f);
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][0];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][0];
+                        }
+                        float timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][2];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][2];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
+                        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][10][1];
+                        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+                        {
+                            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][10][1];
+                        }
+                        timer = 0f;
+                        while (timer < .266f)
+                        {
+                            if (!isInGym)
+                            {
+                                yield break;
+                            }
+                            timer += Time.deltaTime;
+                            yield return null;
+                        }
 
-                    if (!isInGym)
-                    {
-                        break;
-                    }
+                        if (!isInGym)
+                        {
+                            break;
+                        }
 
-                    yield return null;
-                }
-                break;
+                        yield return null;
+                    }
+                    break;
+            }
         }
-        GetComponent<NPCAnimation>().enabled = true;
-
-        isMoving = false;
-        isFinishing = false;
+        finally
+        {
+            isInGym = false;
+            isMoving = true;
+            isFinishing = false;
+            GetComponent<NPCAnimation>().enabled = true;
+            GetComponent<AILerp>().canMove = true;
+            foreach(Transform equipment in tiles.Find("GroundObjects")) //reset bags
+            {
+                if(equipment.name == "PunchingMat")
+                {
+                    equipment.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[234];
+                }
+                else if(equipment.name == "SpeedBag")
+                {
+                    equipment.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[258];
+                }
+            }
+        }
     }
 }

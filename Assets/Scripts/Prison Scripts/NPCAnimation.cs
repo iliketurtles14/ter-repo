@@ -69,6 +69,11 @@ public class NPCAnimation : MonoBehaviour
             }
             outfitDirSprites = DataSender.instance.InmateOutfitSprites;
         }
+        oldPos = currentPos = transform.position;
+        if (string.IsNullOrEmpty(lookDir))
+        {
+            lookDir = "down";
+        }
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
     }
@@ -115,38 +120,34 @@ public class NPCAnimation : MonoBehaviour
         while (true)
         {
             oldPos = transform.position;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(.05f); //apparantly this is 20hz or something idk the ai said so
             currentPos = transform.position;
             DirGet();
-            yield return null;
         }
     }
     public void DirGet()
     {
-        // Calculate positional differences
         xDif = currentPos.x - oldPos.x;
         yDif = currentPos.y - oldPos.y;
 
-        // Threshold to determine movement
-        float threshold = 0.1f;
+        float threshold = 0.02f;
 
-        // Check if there's enough movement to update direction
-        if (Mathf.Abs(xDif) >= threshold || Mathf.Abs(yDif) >= threshold)
+        // If movement is below threshold, keep current lookDir (don't force "down")
+        if (Mathf.Abs(xDif) < threshold && Mathf.Abs(yDif) < threshold)
         {
-            // Always prioritize horizontal movement
-            if (Mathf.Abs(xDif) >= threshold)
-            {
-                lookDir = xDif > 0 ? "right" : "left";
-            }
-            else if (Mathf.Abs(yDif) >= threshold)
-            {
-                lookDir = yDif > 0 ? "up" : "down";
-            }
+            return;
         }
-        else
+
+        // Prefer horizontal movement (right/left). Use vertical only if horizontal movement is below threshold.
+        if (Mathf.Abs(xDif) >= threshold)
         {
-            // Default direction when no significant movement
-            lookDir = "down";
+            lookDir = xDif > 0 ? "right" : "left";
+            return;
+        }
+
+        if (Mathf.Abs(yDif) >= threshold)
+        {
+            lookDir = yDif > 0 ? "up" : "down";
         }
     }
 }
