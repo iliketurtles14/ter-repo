@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: -5819566632728713405}
   m_Layer: 0
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,6 +357,10 @@ MonoBehaviour:
   isMoving: 0
   currentWaypoint: {fileID: 0}
   isFreeWalking: 0
+  isFinishing: 0
+  isInCanteen: 0
+  isInGym: 0
+  shouldReset: 0
 --- !u!1 &8420860782307223736
 GameObject:
   m_ObjectHideFlags: 0
