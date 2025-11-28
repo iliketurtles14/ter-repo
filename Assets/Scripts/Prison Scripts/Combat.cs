@@ -1,135 +1,194 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using UnityEngine;
-using System;
 
 public class Combat : MonoBehaviour
 {
     public bool inAttackMode;
     private MouseCollisionOnItems mcs;
-    public bool hasLockedOn;
-    public GameObject currentNPC;
-    private GameObject player;
-    public bool inPunchCycle;
     private GameObject combatBox;
-    private Transform idPanel;
-    private NPCAggro npcAggroScript;
+    public bool isLockedOn;
+    public GameObject targetNPC;
+    public bool isPunching;
+    private Transform mc;
+    private GameObject combatHealth;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        player = RootObjectCache.GetRoot("Player");
         combatBox = RootObjectCache.GetRoot("CombatBox");
-        idPanel = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel");
-        npcAggroScript = GetComponent<NPCAggro>();
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        combatHealth = RootObjectCache.GetRoot("CombatHealth");
     }
-    public void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !inAttackMode)
+        if (Input.GetKeyDown(KeyCode.Space))//set inAttackMode
         {
-            inAttackMode = true;
-        }
-        else if(Input.GetKeyDown(KeyCode.Space) && inAttackMode)
-        {
-            inAttackMode = false;
-        }
-
-        if (mcs.isTouchingNPC && inAttackMode && Input.GetMouseButtonDown(0))
-        {
-            hasLockedOn = true;
-            currentNPC = mcs.touchedNPC;
-            LockOn(mcs.touchedNPC);
-        }
-
-        if (hasLockedOn)
-        {
-            combatBox.transform.position = currentNPC.transform.position;
-        }
-
-        if(inAttackMode && hasLockedOn && player.GetComponent<CapsuleCollider2D>().IsTouching(combatBox.GetComponent<BoxCollider2D>()) && !inPunchCycle)
-        {
-            if (!currentNPC.GetComponent<NPCCollectionData>().npcData.isAggro)//if not aggroed already
+            if (inAttackMode)
             {
-                AggroNPC(currentNPC);
+                inAttackMode = false;
             }
+            else
+            {
+                inAttackMode = true;
+            }
+        }
 
-            StartCoroutine(PunchCycle());
+        if (!inAttackMode)
+        {
+            LockOff();
+        }
+
+        if(inAttackMode && mcs.isTouchingNPC && Input.GetMouseButtonDown(0))
+        {
+            LockOn(mcs.touchedNPC);
+            return;
+        }
+
+        if(isLockedOn && !isPunching && GetComponent<CapsuleCollider2D>().IsTouching(combatBox.GetComponent<BoxCollider2D>()))
+        {
+            isPunching = true;
+            StartCoroutine(Punch(targetNPC));
+            return;
+        }
+
+        if (isLockedOn)
+        {
+            combatBox.transform.position = targetNPC.transform.position;
+            combatHealth.transform.position = combatBox.transform.position + new Vector3(0, -1.2f);
+            SetHealth(targetNPC);
         }
     }
-    public void AggroNPC(GameObject npc)
+    public IEnumerator Punch(GameObject npc)
     {
-        npc.GetComponent<NPCCollectionData>().npcData.isAggro = true;
-        npc.GetComponent<NPCCollectionData>().npcData.aggroTarget = player;
-        npcAggroScript.ActivateAggro(npc, player);
-    }
-    public void DeaggroNPC(GameObject npc)
-    {
-        npc.GetComponent<NPCCollectionData>().npcData.isAggro = false;
-        npc.GetComponent<NPCCollectionData>().npcData.aggroTarget = null;
-        npcAggroScript.DeactivateAggro(npc);
-    }
-    public IEnumerator PunchCycle()
-    {
-        float punchTime = (player.GetComponent<PlayerCollectionData>().playerData.speed * -.005f) + 1.15f;
-
-        //ADD THE NPC DEEFENSE WHEN THATS DONE
-        int str;
-        if (idPanel.GetComponent<PlayerIDInv>().idInv[1].itemData != null)
+        int netDamage;
+        int npcDef;
+        int playerStr;
+        int realPlayerStr;
+        int playerWeaponStr;
+        ItemData npcOutfitData;
+        ItemData playerWeaponData;
+        try
         {
-            str = (int)Math.Ceiling(player.GetComponent<PlayerCollectionData>().playerData.strength / 20.0) + idPanel.GetComponent<PlayerIDInv>().idInv[1].itemData.strength;
+            npcOutfitData = npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData;
+        }
+        catch
+        {
+            npcOutfitData = null;
+        }
+        try
+        {
+            playerWeaponData = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[1].itemData;
+        }
+        catch
+        {
+            playerWeaponData = null;
+        }
+        //take away npc health
+
+        if (npcOutfitData != null)
+        {
+            npcDef = npcOutfitData.defence;
         }
         else
         {
-            str = (int)Math.Ceiling(player.GetComponent<PlayerCollectionData>().playerData.strength / 20.0);
+            npcDef = 0;
         }
-
-        currentNPC.GetComponent<NPCCollectionData>().npcData.health -= str;
-        //if(currentNPC.GetComponent<NPCCollectionData>().npcData.health <= 0)
-        //{
-        //    KillNPC(currentNPC);
-        //}
-
-        int lookNum;
-        switch (player.GetComponent<PlayerAnimation>().lookDir)
+        if(playerWeaponData != null)
         {
-            case "right":
-                lookNum = 0;
-                break;
-            case "up":
-                lookNum = 1;
-                break;
-            case "left":
-                lookNum = 2;
-                break;
-            case "down":
-                lookNum = 3;
-                break;
-            default:
-                lookNum = 0;
-                break;
+            playerWeaponStr = playerWeaponData.strength;
         }
-        inPunchCycle = true;
-        StartCoroutine(PunchAnim(lookNum));
-        yield return new WaitForSeconds(punchTime);
-        inPunchCycle = false;
-    }
-    public IEnumerator PunchAnim(int lookNum)
-    {
-        BodyController bc = player.GetComponent<BodyController>();
-        player.GetComponent<PlayerCtrl>().enabled = false;
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        player.GetComponent<PlayerAnimation>().enabled = false;
-        player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][lookNum];
+        else
+        {
+            playerWeaponStr = 0;
+        }
+
+            playerStr = GetComponent<PlayerCollectionData>().playerData.strength;
+
+        realPlayerStr = Mathf.FloorToInt(playerStr / 10) - 1;
+
+        netDamage = realPlayerStr + playerWeaponStr - npcDef;
+        if(netDamage < 0)
+        {
+            netDamage = 0;
+        }
+
+        npc.GetComponent<NPCCollectionData>().npcData.health -= netDamage;
+        if(npc.GetComponent<NPCCollectionData>().npcData.health <= 0)
+        {
+            KillNPC(npc);
+        }
+
+        //punch animation plays
+
+        int lookNum = 0;
+        string lookDir = GetComponent<PlayerAnimation>().lookDir;
+        switch (lookDir)
+        {
+            case "right": lookNum = 0; break;
+            case "up": lookNum = 1; break;
+            case "left": lookNum = 2; break;
+            case "down": lookNum = 3; break;
+        }
+
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        GetComponent<PlayerCtrl>().canMove = false;
+        BodyController bc = GetComponent<BodyController>();
+        OutfitController oc = GetComponent<OutfitController>();
+        GetComponent<PlayerAnimation>().enabled = false;
+        GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][lookNum];
+        if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+        {
+            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][3][lookNum];
+        }
         yield return new WaitForSeconds(.45f);
-        player.GetComponent<PlayerCtrl>().enabled = true;
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.GetComponent<PlayerAnimation>().enabled = true;
+        GetComponent<PlayerAnimation>().enabled = true;
+        GetComponent<PlayerCtrl>().canMove = true;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        float timeBetweenPunches;
+        int speed = GetComponent<PlayerCollectionData>().playerData.speed;
+
+        timeBetweenPunches = ((-11f / 1500f) * speed) + .68f + (11f / 150f);
+
+        yield return new WaitForSeconds(timeBetweenPunches);
+
+        isPunching = false;
     }
     public void KillNPC(GameObject npc)
     {
-        Debug.Log("hes dead lol");
+        Debug.Log("Killed NPC: " + npc.name);
+        LockOff();
     }
     public void LockOn(GameObject npc)
     {
-        combatBox.SetActive(true);
+        isLockedOn = true;
+        targetNPC = npc;
+
         combatBox.transform.position = npc.transform.position;
+        combatHealth.transform.position = combatBox.transform.position + new Vector3(0, -1.2f);
+        combatBox.SetActive(true);
+        combatHealth.SetActive(true);
+    }
+    public void LockOff()
+    {
+        isLockedOn = false;
+        combatBox.SetActive(false);
+        combatHealth.SetActive(false);
+    }
+    public void SetHealth(GameObject npc)
+    {
+        int maxHealth;
+        int currentHealth = npc.GetComponent<NPCCollectionData>().npcData.health;
+        int npcStrength = npc.GetComponent<NPCCollectionData>().npcData.strength;
+        int healthPercent;
+        float barWidth;
+
+        maxHealth = Mathf.FloorToInt(npcStrength / 2);
+        healthPercent = Mathf.FloorToInt((currentHealth / maxHealth) * 100);
+
+        barWidth = healthPercent * .0022f;
+
+        combatHealth.transform.Find("Bar").GetComponent<SpriteRenderer>().size = new Vector2(barWidth, .02f);
+        combatHealth.transform.Find("Bar").transform.localPosition = new Vector3(-.11f + (barWidth / 2), 0);
     }
 }

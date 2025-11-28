@@ -102,8 +102,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPCInvPanel",
             "Extra",
             "Button",
-            "Inmate",
-            "Guard",
+            "NPC",
             "Desk",
             "Ladder(Roof)",
             "Ladder(Vent)",
@@ -189,8 +188,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingButton = true;
                     touchedButton = highestPriorityObject;
                     break;
-                case "Inmate":
-                case "Guard":
+                case "NPC":
                     isTouchingNPC = true;
                     touchedNPC = highestPriorityObject;
                     break;

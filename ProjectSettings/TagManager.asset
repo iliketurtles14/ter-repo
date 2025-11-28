@@ -30,16 +30,6 @@ TagManager:
   - MailroomZone
   - Guard
   - Inmate
-  - FreeTimeWaypoint(Guard)
-  - RollcallWaypoint(Guard)
-  - ShowerWaypoint(Inmate)
-  - ExerciseWaypoint(Inmate)
-  - CanteenWaypoint(Inmate)
-  - ShowerWaypoint(Guard)
-  - RollcallWaypoint(Inmate)
-  - ExerciseWaypoint(Guard)
-  - FreeTimeWaypoint(Inmate)
-  - CanteenWaypoint(Guard)
   - Bars
   - Obstacle
   - Fence
@@ -75,6 +65,7 @@ TagManager:
   - Mover
   - Tile
   - FoodTable
+  - NPC
   layers:
   - Default
   - TransparentFX

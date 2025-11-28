@@ -95,6 +95,24 @@ public class SetUpNPCs : MonoBehaviour
 
             npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i];
             npc.GetComponent<NPCCollectionData>().npcData.charNum = NPCSave.instance.npcCharacters[i];
+
+            //npc stats
+            if (npc.name.StartsWith("Inmate"))
+            {
+                npc.GetComponent<NPCCollectionData>().npcData.intellect = UnityEngine.Random.Range(10, 101);
+                npc.GetComponent<NPCCollectionData>().npcData.strength = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
+                npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
+                npc.GetComponent<NPCCollectionData>().npcData.opinion = 75 - (25 * map.npcLevel) + UnityEngine.Random.Range(0, 51);
+            }
+            else if (npc.name.StartsWith("Guard"))
+            {
+                npc.GetComponent<NPCCollectionData>().npcData.intellect = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
+                npc.GetComponent<NPCCollectionData>().npcData.strength = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
+                npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
+                npc.GetComponent<NPCCollectionData>().npcData.opinion = 15 + UnityEngine.Random.Range(0, 66);
+            }
+            npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
+
             npc.GetComponent<SpriteRenderer>().size = new Vector2(.16f, .16f);
             //set npc pos randomly
             int rand = UnityEngine.Random.Range(0, waypoints.Count);

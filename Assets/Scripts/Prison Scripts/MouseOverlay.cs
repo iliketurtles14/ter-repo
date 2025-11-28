@@ -30,7 +30,7 @@ public class MouseOverlay : MonoBehaviour
             parentCanvas = transform.parent.GetComponent<Canvas>();
             mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
             iss = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
-            combatScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Combat>();
+            combatScript = player.GetComponent<Combat>();
         }
         else
         {
