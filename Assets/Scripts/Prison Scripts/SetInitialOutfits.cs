@@ -8,6 +8,7 @@ public class SetInitialOutfits : MonoBehaviour
     private Map map;
     private PlayerIDInv playerIDInvScript;
     private Transform mc;
+    public ItemData outfitData;
 
     private void Start()
     {
@@ -66,5 +67,6 @@ public class SetInitialOutfits : MonoBehaviour
         }
         playerIDInvScript.idInv[0].itemData = data;
         mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.icon;
+        outfitData = data;
     }
 }

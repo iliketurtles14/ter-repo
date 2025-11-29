@@ -15,4 +15,5 @@ public class PlayerData : ScriptableObject
     public int intellect;
     public string displayName;
     public bool hasFood;
+    public bool isDead;
 }

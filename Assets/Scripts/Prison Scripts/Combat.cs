@@ -12,12 +12,14 @@ public class Combat : MonoBehaviour
     public bool isPunching;
     private Transform mc;
     private GameObject combatHealth;
+    private Death deathScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         combatBox = RootObjectCache.GetRoot("CombatBox");
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         combatHealth = RootObjectCache.GetRoot("CombatHealth");
+        deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
     }
     private void Update()
     {
@@ -102,7 +104,7 @@ public class Combat : MonoBehaviour
             playerWeaponStr = 0;
         }
 
-            playerStr = GetComponent<PlayerCollectionData>().playerData.strength;
+        playerStr = GetComponent<PlayerCollectionData>().playerData.strength;
 
         realPlayerStr = Mathf.FloorToInt(playerStr / 10) - 1;
 
@@ -113,10 +115,18 @@ public class Combat : MonoBehaviour
         }
 
         npc.GetComponent<NPCCollectionData>().npcData.health -= netDamage;
-        if(npc.GetComponent<NPCCollectionData>().npcData.health <= 0)
+        if(npc.GetComponent<NPCCollectionData>().npcData.health < 0)
+        {
+            npc.GetComponent<NPCCollectionData>().npcData.health = 0;
+        }
+        if(npc.GetComponent<NPCCollectionData>().npcData.health == 0)
         {
             KillNPC(npc);
         }
+
+        //aggro npc
+        npc.GetComponent<NPCCombat>().isAggro = true;
+        npc.GetComponent<NPCCombat>().target = gameObject;
 
         //punch animation plays
 
@@ -156,7 +166,7 @@ public class Combat : MonoBehaviour
     }
     public void KillNPC(GameObject npc)
     {
-        Debug.Log("Killed NPC: " + npc.name);
+        deathScript.KillNPC(npc);
         LockOff();
     }
     public void LockOn(GameObject npc)
@@ -177,16 +187,18 @@ public class Combat : MonoBehaviour
     }
     public void SetHealth(GameObject npc)
     {
-        int maxHealth;
-        int currentHealth = npc.GetComponent<NPCCollectionData>().npcData.health;
+        float maxHealth;
+        float currentHealth = npc.GetComponent<NPCCollectionData>().npcData.health;
         int npcStrength = npc.GetComponent<NPCCollectionData>().npcData.strength;
-        int healthPercent;
+        float healthPercent;
         float barWidth;
 
         maxHealth = Mathf.FloorToInt(npcStrength / 2);
-        healthPercent = Mathf.FloorToInt((currentHealth / maxHealth) * 100);
+        healthPercent = currentHealth / maxHealth;
 
-        barWidth = healthPercent * .0022f;
+        barWidth = healthPercent * .22f;
+
+        Debug.Log(" barWidth = " + barWidth + " healthPercent = " + healthPercent + " currentHealth = " + currentHealth + " maxHealth = " + maxHealth);
 
         combatHealth.transform.Find("Bar").GetComponent<SpriteRenderer>().size = new Vector2(barWidth, .02f);
         combatHealth.transform.Find("Bar").transform.localPosition = new Vector3(-.11f + (barWidth / 2), 0);

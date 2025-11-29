@@ -219,7 +219,8 @@ public class Sittables : MonoBehaviour
                     else
                     {
                         player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
-                    }                }
+                    }                
+                }
             }
         }
         else if (sittable.name.StartsWith("SunChair"))
