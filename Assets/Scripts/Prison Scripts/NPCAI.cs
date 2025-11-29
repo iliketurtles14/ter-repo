@@ -53,6 +53,14 @@ public class NPCAI : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         applyPrisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
     }
+    private void OnDisable()
+    {
+        isMoving = false;
+        isFinishing = false;
+        isInCanteen = false;
+        isInGym = false;
+        seeker.CancelCurrentPathRequest(true);
+    }
     private void Update()
     {
         //get period

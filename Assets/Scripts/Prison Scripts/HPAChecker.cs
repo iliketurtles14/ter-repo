@@ -16,6 +16,7 @@ public class HPAChecker : MonoBehaviour //HPA means High-Priority Action
     public bool isSeated; //or in bed or etc...
     public bool isZipping;
     public bool isPunching;
+    public bool isDead;
 
     public bool isBusy;
 
@@ -37,6 +38,7 @@ public class HPAChecker : MonoBehaviour //HPA means High-Priority Action
             isSeated,
             isZipping,
             isPunching,
+            isDead
         };
     }
     private void Update()

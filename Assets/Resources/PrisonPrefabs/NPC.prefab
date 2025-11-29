@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: -2081432632305678411}
   - component: {fileID: -2213999450044221461}
   - component: {fileID: -5819566632728713405}
-  m_Layer: 0
+  - component: {fileID: -5813940400225957718}
+  m_Layer: 10
   m_Name: NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -266,7 +267,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1.6
   m_BaseOffset: 0.8
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
 --- !u!70 &8317318510785715719
 CapsuleCollider2D:
@@ -361,6 +362,21 @@ MonoBehaviour:
   isInCanteen: 0
   isInGym: 0
   shouldReset: 0
+--- !u!114 &-5813940400225957718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d8202514d088848b4b4360d586732e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCCombat
+  isAggro: 0
+  target: {fileID: 0}
+  isPunching: 0
 --- !u!1 &8420860782307223736
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 859715106352561353}
   - component: {fileID: 117999588228691428}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Outfit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

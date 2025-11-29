@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
+using UnityEngine.AI;
 
 public class SetUpNPCs : MonoBehaviour
 {
@@ -114,6 +115,9 @@ public class SetUpNPCs : MonoBehaviour
             npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
 
             npc.GetComponent<SpriteRenderer>().size = new Vector2(.16f, .16f);
+
+            npc.GetComponent<NavMeshAgent>().updateRotation = false;
+            npc.GetComponent<NavMeshAgent>().updateUpAxis = false;
             //set npc pos randomly
             int rand = UnityEngine.Random.Range(0, waypoints.Count);
             npc.transform.position = waypoints[rand].position;
