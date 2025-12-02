@@ -66,6 +66,8 @@ TagManager:
   - Tile
   - FoodTable
   - NPC
+  - Weed
+  - Spill
   layers:
   - Default
   - TransparentFX
