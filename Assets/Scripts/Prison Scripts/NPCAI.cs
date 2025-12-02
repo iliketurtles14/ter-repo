@@ -3,6 +3,7 @@ using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class NPCAI : MonoBehaviour
     public bool isInCanteen;
     public bool isInGym;
     public bool shouldReset;
+    public bool isAtJob;
     private ApplyPrisonData applyPrisonDataScript;
     private void Start()
     {   
@@ -104,6 +106,10 @@ public class NPCAI : MonoBehaviour
         {
             isInGym = false;
         }
+        if(period != "W")
+        {
+            isAtJob = false;
+        }
     }
     private void SetCurrentPossibleWaypoints()
     {
@@ -116,7 +122,6 @@ public class NPCAI : MonoBehaviour
                 switch (period)
                 {
                     case "LO":
-                    case "W":
                     case "FP":
                         if (npcType == "Inmate" && waypoint.name == "InmateWaypoint")
                         {
@@ -124,6 +129,24 @@ public class NPCAI : MonoBehaviour
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if (npcType == "Guard" && waypoint.name == "GuardWaypoint")
+                        {
+                            isFreeWalking = true;
+                            currentPossibleWaypoints.Add(waypoint);
+                        }
+                        break;
+                    case "W":
+                        if(npcType == "Inmate" && !string.IsNullOrEmpty(GetComponent<NPCCollectionData>().npcData.job) && !isAtJob)
+                        {
+                            isFreeWalking = false;
+                            isAtJob = true;
+                            StartCoroutine(InmateJobs());
+                        }
+                        else if(npcType == "Inmate" && string.IsNullOrEmpty(GetComponent<NPCCollectionData>().npcData.job) && waypoint.name == "InmateWaypoint")
+                        {
+                            isFreeWalking = true;
+                            currentPossibleWaypoints.Add(waypoint);
+                        }
+                        else if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
@@ -150,7 +173,7 @@ public class NPCAI : MonoBehaviour
                     case "B":
                     case "L":
                     case "D":
-                        if (npcType == "Inmate")
+                        if (npcType == "Inmate" && !isInCanteen)
                         {
                             isFreeWalking = false;
                             isInCanteen = true;
@@ -168,7 +191,7 @@ public class NPCAI : MonoBehaviour
                         }
                         break;
                     case "E":
-                        if (npcType == "Inmate")
+                        if (npcType == "Inmate" && !isInGym)
                         {
                             isFreeWalking = false;
                             isInGym = true;
@@ -841,6 +864,237 @@ public class NPCAI : MonoBehaviour
                     equipment.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[258];
                 }
             }
+        }
+    }
+    private IEnumerator InmateJobs()
+    {
+        string job = GetComponent<NPCCollectionData>().npcData.job;
+
+        //get cycle for the certain job (only for jobs other than gardening, janitor, library, and mailman as they are more involved)
+        List<Vector3> positions = new List<Vector3>();
+        int timeBetweenPositions = 0;
+        bool hasNormalJob = false;
+        switch (job)
+        {
+            case "Tailorshop":
+                bool gotTailorBox = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "TailorBox" && !gotTailorBox)
+                    {
+                        positions.Add(obj.position);
+                        gotTailorBox = true;
+                    }
+                    else if(obj.name == "ClothesBox" && gotTailorBox)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Laundry":
+                bool gotDirtyLaundry = false;
+                bool gotWasher = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "DirtyLaundry" && !gotDirtyLaundry && !gotWasher)
+                    {
+                        positions.Add(obj.position);
+                        gotDirtyLaundry = true;
+                    }
+                    else if(obj.name == "Washer" && gotDirtyLaundry && !gotWasher)
+                    {
+                        positions.Add(obj.position);
+                        gotWasher = true;
+                    }
+                    else if(obj.name == "CleanLaundry" && gotDirtyLaundry && gotWasher)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Woodshop":
+                bool gotTimberBox = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "TimberBox" && !gotTimberBox)
+                    {
+                        positions.Add(obj.position);
+                        gotTimberBox = true;
+                    }
+                    else if(obj.name == "FurnitureBox" && gotTimberBox)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Deliveries":
+                bool gotDeliveryTruck1 = false;
+                bool gotRedBox = false;
+                bool gotDeliveryTruck2 = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.StartsWith("DeliveryTruck") && !gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(obj.position);
+                        gotDeliveryTruck1 = true;
+                    }
+                    else if(obj.name == "RedBox" && gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(obj.position);
+                        gotRedBox = true;
+                    }
+                    else if(gotDeliveryTruck1 && gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(positions[0]); //just get the first truck pos
+                        gotDeliveryTruck2 = true;
+                    }
+                    else if(obj.name == "BlueBox" && gotDeliveryTruck1 && gotRedBox && gotDeliveryTruck2)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Kitchen":
+                bool gotFreezer = false;
+                bool gotOven = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "Freezer" && !gotFreezer && !gotOven)
+                    {
+                        positions.Add(obj.position);
+                        gotFreezer = true;
+                    }
+                    else if(obj.name == "Oven" && gotFreezer && !gotOven)
+                    {
+                        positions.Add(obj.position);
+                        gotOven = true;
+                    }
+                    else if(obj.name == "FoodTable" && gotFreezer && gotOven)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Metalshop":
+                bool gotMetalBox = false;
+                bool gotLicensePress = false;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "MetalBox" && !gotMetalBox && !gotLicensePress)
+                    {
+                        positions.Add(obj.position);
+                        gotMetalBox = true;
+                    }
+                    else if(obj.name == "LicensePress" && gotMetalBox && !gotLicensePress)
+                    {
+                        positions.Add(obj.position);
+                        gotLicensePress = true;
+                    }
+                    else if(obj.name == "PlatesBox" && gotMetalBox && gotLicensePress)
+                    {
+                        positions.Add(obj.position);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+        }
+
+        if (hasNormalJob)
+        {
+            while (true)
+            {
+                Vector3 currentPos = Vector3.zero;
+
+            }
+        }
+        
+        switch (job)
+        {
+            case "Janitor":
+                while (true)
+                {
+                    Transform currentSpill = null;
+                    foreach(Transform obj in tiles.Find("GroundObjects"))
+                    {
+                        if(obj.name == "Spill")
+                        {
+                            currentSpill = obj;
+                            break;
+                        }
+                    }
+
+                    seeker.StartPath(transform.position, currentSpill.position);
+                    while (true)
+                    {
+                        float distance = Vector2.Distance(transform.position, currentSpill.position);
+                        if(distance < .8f)
+                        {
+                            seeker.CancelCurrentPathRequest(true);
+                            break;
+                        }
+                        yield return null;
+                    }
+                    yield return new WaitForSeconds(2);
+                    Destroy(currentSpill.gameObject);
+
+                    if (!isAtJob)
+                    {
+                        break;
+                    }
+                }
+                break;
+            case "Gardening":
+                while (true)
+                {
+                    Transform currentWeed = null;
+                    foreach(Transform obj in tiles.Find("GroundObjects"))
+                    {
+                        if(obj.name == "Weed")
+                        {
+                            currentWeed = obj;
+                            break;
+                        }
+                    }
+
+                    seeker.StartPath(transform.position, currentWeed.position);
+                    while (true)
+                    {
+                        float distance = Vector2.Distance(transform.position, currentWeed.position);
+                        if(distance < .8f)
+                        {
+                            seeker.CancelCurrentPathRequest(true);
+                            break;
+                        }
+                        yield return null;
+                    }
+                    yield return new WaitForSeconds(2);
+                    Destroy(currentWeed.gameObject);
+
+                    if (!isAtJob)
+                    {
+                        break;
+                    }
+                }
+                break;
+            case "Tailorshop":
+
         }
     }
 }
