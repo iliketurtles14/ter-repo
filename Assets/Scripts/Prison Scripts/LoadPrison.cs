@@ -1187,6 +1187,66 @@ public class LoadPrison : MonoBehaviour
                     case "Table":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[60];
                         break;
+                    case "BookBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[95];
+                        break;
+                    case "MailBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[204];
+                        break;
+                    case "TailorBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[200];
+                        break;
+                    case "ClothesBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[201];
+                        break;
+                    case "DirtyLaundry":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[75];
+                        break;
+                    case "Washer":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[82];
+                        break;
+                    case "CleanLaundry":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[76];
+                        break;
+                    case "TimberBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[87];
+                        break;
+                    case "FurnitureBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[186];
+                        break;
+                    case "DeliveryTruckUp":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[193];
+                        break;
+                    case "DeliveryTruckDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[194];
+                        break;
+                    case "DeliveryTruckRight":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[191];
+                        break;
+                    case "DeliveryTruckLeft":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[192];
+                        break;
+                    case "RedBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[202];
+                        break;
+                    case "BlueBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[203];
+                        break;
+                    case "Freezer":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[55];
+                        break;
+                    case "Oven":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[79];
+                        break;
+                    case "MetalBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[89];
+                        break;
+                    case "LicensePress":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[91];
+                        break;
+                    case "PlatesBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[90];
+                        break;
                 }
             }
         }
