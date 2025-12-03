@@ -27,6 +27,11 @@ public class NPCAI : MonoBehaviour
     public bool shouldReset;
     public bool isAtJob;
     private ApplyPrisonData applyPrisonDataScript;
+    private List<Transform> positions = new List<Transform>(); //job positions (didnt change the name)
+    private int timeBetweenPositions;
+    private bool hasNormalJob;
+    private string job;
+    private List<Transform> deskPositions = new List<Transform>();
     private void Start()
     {   
         //get npctype and num
@@ -54,6 +59,177 @@ public class NPCAI : MonoBehaviour
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         applyPrisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        LoadNormalJobPositions();
+        LoadDeskPositions();
+    }
+    private void LoadNormalJobPositions()
+    {
+        job = GetComponent<NPCCollectionData>().npcData.job;
+
+        //get cycle for the certain job (only for jobs other than gardening, janitor, library, and mailman as they are more involved)
+        switch (job)
+        {
+            case "Tailorshop":
+                bool gotTailorBox = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "TailorBox" && !gotTailorBox)
+                    {
+                        positions.Add(obj);
+                        gotTailorBox = true;
+                    }
+                    else if (obj.name == "ClothesBox" && gotTailorBox)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Laundry":
+                bool gotDirtyLaundry = false;
+                bool gotWasher = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "DirtyLaundry" && !gotDirtyLaundry && !gotWasher)
+                    {
+                        positions.Add(obj);
+                        gotDirtyLaundry = true;
+                    }
+                    else if (obj.name == "Washer" && gotDirtyLaundry && !gotWasher)
+                    {
+                        positions.Add(obj);
+                        gotWasher = true;
+                    }
+                    else if (obj.name == "CleanLaundry" && gotDirtyLaundry && gotWasher)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Woodshop":
+                bool gotTimberBox = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "TimberBox" && !gotTimberBox)
+                    {
+                        positions.Add(obj);
+                        gotTimberBox = true;
+                    }
+                    else if (obj.name == "FurnitureBox" && gotTimberBox)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Deliveries":
+                bool gotDeliveryTruck1 = false;
+                bool gotRedBox = false;
+                bool gotDeliveryTruck2 = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.StartsWith("DeliveryTruck") && !gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(obj);
+                        gotDeliveryTruck1 = true;
+                    }
+                    else if (obj.name == "RedBox" && gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(obj);
+                        gotRedBox = true;
+                    }
+                    else if (gotDeliveryTruck1 && gotRedBox && !gotDeliveryTruck2)
+                    {
+                        positions.Add(positions[0]); //just get the first truck pos
+                        gotDeliveryTruck2 = true;
+                    }
+                    else if (obj.name == "BlueBox" && gotDeliveryTruck1 && gotRedBox && gotDeliveryTruck2)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Kitchen":
+                bool gotFreezer = false;
+                bool gotOven = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "Freezer" && !gotFreezer && !gotOven)
+                    {
+                        positions.Add(obj);
+                        gotFreezer = true;
+                    }
+                    else if (obj.name == "Oven" && gotFreezer && !gotOven)
+                    {
+                        positions.Add(obj);
+                        gotOven = true;
+                    }
+                    else if (obj.name == "FoodTable" && gotFreezer && gotOven)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Metalshop":
+                bool gotMetalBox = false;
+                bool gotLicensePress = false;
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "MetalBox" && !gotMetalBox && !gotLicensePress)
+                    {
+                        positions.Add(obj);
+                        gotMetalBox = true;
+                    }
+                    else if (obj.name == "LicensePress" && gotMetalBox && !gotLicensePress)
+                    {
+                        positions.Add(obj);
+                        gotLicensePress = true;
+                    }
+                    else if (obj.name == "PlatesBox" && gotMetalBox && gotLicensePress)
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+        }
+    }
+    private void LoadDeskPositions()
+    {
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "NPCDesk" || obj.name == "PlayerDesk")
+            {
+                deskPositions.Add(obj);
+            }
+        }
     }
     private void OnDisable()
     {
@@ -868,233 +1044,217 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateJobs()
     {
-        string job = GetComponent<NPCCollectionData>().npcData.job;
-
-        //get cycle for the certain job (only for jobs other than gardening, janitor, library, and mailman as they are more involved)
-        List<Vector3> positions = new List<Vector3>();
-        int timeBetweenPositions = 0;
-        bool hasNormalJob = false;
-        switch (job)
-        {
-            case "Tailorshop":
-                bool gotTailorBox = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if(obj.name == "TailorBox" && !gotTailorBox)
-                    {
-                        positions.Add(obj.position);
-                        gotTailorBox = true;
-                    }
-                    else if(obj.name == "ClothesBox" && gotTailorBox)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-            case "Laundry":
-                bool gotDirtyLaundry = false;
-                bool gotWasher = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if(obj.name == "DirtyLaundry" && !gotDirtyLaundry && !gotWasher)
-                    {
-                        positions.Add(obj.position);
-                        gotDirtyLaundry = true;
-                    }
-                    else if(obj.name == "Washer" && gotDirtyLaundry && !gotWasher)
-                    {
-                        positions.Add(obj.position);
-                        gotWasher = true;
-                    }
-                    else if(obj.name == "CleanLaundry" && gotDirtyLaundry && gotWasher)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-            case "Woodshop":
-                bool gotTimberBox = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if(obj.name == "TimberBox" && !gotTimberBox)
-                    {
-                        positions.Add(obj.position);
-                        gotTimberBox = true;
-                    }
-                    else if(obj.name == "FurnitureBox" && gotTimberBox)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-            case "Deliveries":
-                bool gotDeliveryTruck1 = false;
-                bool gotRedBox = false;
-                bool gotDeliveryTruck2 = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if (obj.name.StartsWith("DeliveryTruck") && !gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
-                    {
-                        positions.Add(obj.position);
-                        gotDeliveryTruck1 = true;
-                    }
-                    else if(obj.name == "RedBox" && gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
-                    {
-                        positions.Add(obj.position);
-                        gotRedBox = true;
-                    }
-                    else if(gotDeliveryTruck1 && gotRedBox && !gotDeliveryTruck2)
-                    {
-                        positions.Add(positions[0]); //just get the first truck pos
-                        gotDeliveryTruck2 = true;
-                    }
-                    else if(obj.name == "BlueBox" && gotDeliveryTruck1 && gotRedBox && gotDeliveryTruck2)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-            case "Kitchen":
-                bool gotFreezer = false;
-                bool gotOven = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if(obj.name == "Freezer" && !gotFreezer && !gotOven)
-                    {
-                        positions.Add(obj.position);
-                        gotFreezer = true;
-                    }
-                    else if(obj.name == "Oven" && gotFreezer && !gotOven)
-                    {
-                        positions.Add(obj.position);
-                        gotOven = true;
-                    }
-                    else if(obj.name == "FoodTable" && gotFreezer && gotOven)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-            case "Metalshop":
-                bool gotMetalBox = false;
-                bool gotLicensePress = false;
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if(obj.name == "MetalBox" && !gotMetalBox && !gotLicensePress)
-                    {
-                        positions.Add(obj.position);
-                        gotMetalBox = true;
-                    }
-                    else if(obj.name == "LicensePress" && gotMetalBox && !gotLicensePress)
-                    {
-                        positions.Add(obj.position);
-                        gotLicensePress = true;
-                    }
-                    else if(obj.name == "PlatesBox" && gotMetalBox && gotLicensePress)
-                    {
-                        positions.Add(obj.position);
-                        break;
-                    }
-                }
-                timeBetweenPositions = 1;
-                hasNormalJob = true;
-                break;
-        }
-
+        BoxCollider2D outBoxCollider = transform.Find("OutBox").GetComponent<BoxCollider2D>();
         if (hasNormalJob)
         {
-            while (true)
+            for (int i = 0; i < positions.Count(); i++)
             {
-                Vector3 currentPos = Vector3.zero;
+                Transform currentObj = positions[i].transform;
 
+                BoxCollider2D currentObjCollider = currentObj.GetComponent<BoxCollider2D>();
+
+                seeker.StartPath(transform.position, currentObj.position);
+                while (true)
+                {
+                    if (outBoxCollider.IsTouching(currentObjCollider))
+                    {
+                        seeker.CancelCurrentPathRequest(true);
+                        break;
+                    }
+                    yield return null;
+                }
+
+                yield return new WaitForSeconds(timeBetweenPositions);
+
+                if (!isAtJob)
+                {
+                    break;
+                }
             }
         }
-        
-        switch (job)
+        else
         {
-            case "Janitor":
-                while (true)
-                {
-                    Transform currentSpill = null;
-                    foreach(Transform obj in tiles.Find("GroundObjects"))
-                    {
-                        if(obj.name == "Spill")
-                        {
-                            currentSpill = obj;
-                            break;
-                        }
-                    }
-
-                    seeker.StartPath(transform.position, currentSpill.position);
+            switch (job)
+            {
+                case "Janitor":
                     while (true)
                     {
-                        float distance = Vector2.Distance(transform.position, currentSpill.position);
-                        if(distance < .8f)
+                        Transform currentSpill = null;
+                        foreach (Transform obj in tiles.Find("GroundObjects"))
                         {
-                            seeker.CancelCurrentPathRequest(true);
+                            if (obj.name == "Spill")
+                            {
+                                currentSpill = obj;
+                                break;
+                            }
+                        }
+
+                        seeker.StartPath(transform.position, currentSpill.position);
+                        while (true)
+                        {
+                            float distance = Vector2.Distance(transform.position, currentSpill.position);
+                            if (distance < .8f)
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+                        yield return new WaitForSeconds(2);
+                        Destroy(currentSpill.gameObject);
+
+                        if (!isAtJob)
+                        {
                             break;
                         }
-                        yield return null;
                     }
-                    yield return new WaitForSeconds(2);
-                    Destroy(currentSpill.gameObject);
-
-                    if (!isAtJob)
-                    {
-                        break;
-                    }
-                }
-                break;
-            case "Gardening":
-                while (true)
-                {
-                    Transform currentWeed = null;
-                    foreach(Transform obj in tiles.Find("GroundObjects"))
-                    {
-                        if(obj.name == "Weed")
-                        {
-                            currentWeed = obj;
-                            break;
-                        }
-                    }
-
-                    seeker.StartPath(transform.position, currentWeed.position);
+                    break;
+                case "Gardening":
                     while (true)
                     {
-                        float distance = Vector2.Distance(transform.position, currentWeed.position);
-                        if(distance < .8f)
+                        Transform currentWeed = null;
+                        foreach (Transform obj in tiles.Find("GroundObjects"))
                         {
-                            seeker.CancelCurrentPathRequest(true);
+                            if (obj.name == "Weed")
+                            {
+                                currentWeed = obj;
+                                break;
+                            }
+                        }
+
+                        seeker.StartPath(transform.position, currentWeed.position);
+                        while (true)
+                        {
+                            float distance = Vector2.Distance(transform.position, currentWeed.position);
+                            if (distance < .8f)
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+                        yield return new WaitForSeconds(2);
+                        Destroy(currentWeed.gameObject);
+
+                        if (!isAtJob)
+                        {
                             break;
                         }
-                        yield return null;
                     }
-                    yield return new WaitForSeconds(2);
-                    Destroy(currentWeed.gameObject);
-
-                    if (!isAtJob)
+                    break;
+                case "Library":
+                    Transform bookBoxPos = null;
+                    foreach(Transform obj in tiles.Find("GroundObjects"))
                     {
-                        break;
+                        if(obj.name == "BookBox")
+                        {
+                            bookBoxPos = obj;
+                            break;
+                        }
                     }
-                }
-                break;
-            case "Tailorshop":
 
+                    BoxCollider2D bookBoxCollider = bookBoxPos.GetComponent<BoxCollider2D>();
+                    while (true)
+                    {
+                        Transform currentDesk = null;
+
+                        //get random desk pos
+                        int rand = UnityEngine.Random.Range(0, deskPositions.Count);
+                        currentDesk = deskPositions[rand];
+
+                        BoxCollider2D currentDeskCollider = currentDesk.GetComponent<BoxCollider2D>();
+
+                        //go to the bookBox first (use outBox for seeing when the npc gets to it)
+                        seeker.StartPath(transform.position, bookBoxPos.position);
+                        while (true)
+                        {
+                            if (outBoxCollider.IsTouching(bookBoxCollider))
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+
+                        yield return new WaitForSeconds(1);
+
+                        //go to the desk
+                        seeker.StartPath(transform.position, currentDesk.position);
+                        while (true)
+                        {
+                            if (outBoxCollider.IsTouching(currentDeskCollider))
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+
+                        yield return new WaitForSeconds(2);
+
+                        if (!isAtJob)
+                        {
+                            break;
+                        }
+                    }
+                    break;
+                case "Mailman":
+                    Transform mailBoxPos = null;
+                    foreach(Transform obj in tiles.Find("GroundObjects"))
+                    {
+                        if(obj.name == "MailBox")
+                        {
+                            mailBoxPos = obj;
+                            break;
+                        }
+                    }
+
+                    BoxCollider2D mailBoxCollider = mailBoxPos.GetComponent<BoxCollider2D>();
+                    while (true)
+                    {
+                        Transform currentDesk = null;
+
+                        //get random desk pos
+                        int rand = UnityEngine.Random.Range(0, deskPositions.Count);
+                        currentDesk = deskPositions[rand];
+
+                        BoxCollider2D currentDeskCollider = currentDesk.GetComponent<BoxCollider2D>();
+
+                        //go to the mailbox
+                        seeker.StartPath(transform.position, mailBoxPos.position);
+                        while (true)
+                        {
+                            if (outBoxCollider.IsTouching(mailBoxCollider))
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+
+                        yield return new WaitForSeconds(1);
+
+                        //go to the desk
+                        seeker.StartPath(transform.position, currentDesk.position);
+                        while (true)
+                        {
+                            if (outBoxCollider.IsTouching(currentDeskCollider))
+                            {
+                                seeker.CancelCurrentPathRequest(true);
+                                break;
+                            }
+                            yield return null;
+                        }
+
+                        yield return new WaitForSeconds(2);
+
+                        if (!isAtJob)
+                        {
+                            break;
+                        }
+                    }
+                    break;
+            }
         }
     }
 }
