@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4634564076267414187}
-  - component: {fileID: 5979165580726116636}
-  - component: {fileID: -9173364594171724644}
+  - component: {fileID: -7554797939521854778}
+  - component: {fileID: 2296506642781131983}
   m_Layer: 10
-  m_Name: DeliveryTruckLeft
+  m_Name: FurnitureBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5979165580726116636
+--- !u!212 &-7554797939521854778
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,13 +85,13 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 4.8, y: 3.2}
+  m_Size: {x: 1.6, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &-9173364594171724644
+--- !u!61 &2296506642781131983
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,10 +130,10 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.6, y: 1.6}
-    newSize: {x: 4.8, y: 3.2}
+    newSize: {x: 1.6, y: 3.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.8, y: 3.2}
+  m_Size: {x: 1.6, y: 3.2}
   m_EdgeRadius: 0

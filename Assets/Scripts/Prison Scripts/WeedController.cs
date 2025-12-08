@@ -3,17 +3,20 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 public class WeedController : MonoBehaviour //also for spills
 {
-    private int weedAmount;
-    private int spillAmount;
+    public int weedAmount;
+    public int spillAmount;
     private Transform tiles;
     private List<Vector3> weedLocations;
     private List<Vector3> spillLocations;
+    private ApplyPrisonData applyPrisonDataScript;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        applyPrisonDataScript = GetComponent<ApplyPrisonData>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -27,11 +30,11 @@ public class WeedController : MonoBehaviour //also for spills
     }
     private void Update()
     {
-        if(weedAmount < 2)
+        if(weedAmount < 2 && weedLocations.Count != 0)
         {
             CreateWeed();
         }
-        if(spillAmount < 2)
+        if(spillAmount < 2 && spillLocations.Count != 0)
         {
             CreateSpill();
         }
@@ -79,6 +82,8 @@ public class WeedController : MonoBehaviour //also for spills
         int rand = UnityEngine.Random.Range(0, weedLocations.Count);
         
         GameObject weed = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Weed"));
+        weed.name = "Weed";
+        weed.transform.parent = tiles.Find("GroundObjects");
         weed.transform.position = weedLocations[rand];
 
         weedAmount++;
@@ -88,7 +93,10 @@ public class WeedController : MonoBehaviour //also for spills
         int rand = UnityEngine.Random.Range(0, spillLocations.Count);
 
         GameObject spill = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Spill"));
+        spill.name = "Spill";
+        spill.transform.parent = tiles.Find("GroundObjects");
         spill.transform.position = spillLocations[rand];
+        spill.GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[33];
 
         spillAmount++;
     }

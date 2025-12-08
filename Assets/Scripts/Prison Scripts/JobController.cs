@@ -83,9 +83,16 @@ public class JobController : MonoBehaviour
 
         foreach(Transform npc in aStar)
         {
-            int rand = UnityEngine.Random.Range(0, availableJobs.Count);
-            npc.GetComponent<NPCCollectionData>().npcData.job = availableJobs[rand];
-            availableJobs.Remove(availableJobs[rand]);
+            if(availableJobs.Count > 0 && !npc.GetComponent<NPCCollectionData>().npcData.isGuard)
+            {
+                int rand = UnityEngine.Random.Range(0, availableJobs.Count);
+                npc.GetComponent<NPCCollectionData>().npcData.job = availableJobs[rand];
+                availableJobs.Remove(availableJobs[rand]);
+            }
+            else
+            {
+                break;
+            }
         }
 
         player.GetComponent<PlayerCollectionData>().playerData.job = map.startingJob;

@@ -111,6 +111,7 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.strength = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 15 + UnityEngine.Random.Range(0, 66);
+                npc.GetComponent<NPCCollectionData>().npcData.isGuard = true;
             }
             npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
 
