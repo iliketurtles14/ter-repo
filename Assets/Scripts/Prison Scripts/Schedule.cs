@@ -24,58 +24,63 @@ public class Schedule : MonoBehaviour
         if (time == "08:00")
         {
             period = "Morning Rollcall";
-            periodCode = "E";
-        }
-        else if (time == "09:00")
-        {
-            period = "Breakfast";
-            periodCode = "B";
-        }
-        else if (time == "10:00")
-        {
-            period = "Free Period";
-            periodCode = "FP";
-        }
-        else if (time == "12:00")
-        {
-            period = "Lunch";
-            periodCode = "L";
-        }
-        else if (time == "13:00")
-        {
-            period = "Leisure / Work Period";
-            periodCode = "W";
-        }
-        else if (time == "16:00")
-        {
-            period = "Exercise Period";
-            periodCode = "E";
-        }
-        else if (time == "17:00")
-        {
-            period = "Showers";
-            periodCode = "S";
-        }
-        else if (time == "18:00")
-        {
-            period = "Dinner";
-            periodCode = "D";
-        }
-        else if (time == "19:00")
-        {
-            period = "Evening Free Period";
-            periodCode = "FP";
-        }
-        else if (time == "22:00")
-        {
-            period = "Evening Rollcall";
             periodCode = "R";
         }
-        else if (time == "23:00")
+        else if(time == "08:30")
         {
-            period = "Lights Out";
-            periodCode = "LO";
+            period = "Work";
+            periodCode = "W";
         }
-        return;
+            //else if (time == "01:00")
+            //{
+            //    period = "Breakfast";
+            //    periodCode = "B";
+            //}
+            //else if (time == "10:00")
+            //{
+            //    period = "Free Period";
+            //    periodCode = "FP";
+            //}
+            //else if (time == "12:00")
+            //{
+            //    period = "Lunch";
+            //    periodCode = "L";
+            //}
+            //else if (time == "13:00")
+            //{
+            //    period = "Leisure / Work Period";
+            //    periodCode = "W";
+            //}
+            //else if (time == "16:00")
+            //{
+            //    period = "Exercise Period";
+            //    periodCode = "E";
+            //}
+            //else if (time == "17:00")
+            //{
+            //    period = "Showers";
+            //    periodCode = "S";
+            //}
+            //else if (time == "18:00")
+            //{
+            //    period = "Dinner";
+            //    periodCode = "D";
+            //}
+            //else if (time == "19:00")
+            //{
+            //    period = "Evening Free Period";
+            //    periodCode = "FP";
+            //}
+            //else if (time == "22:00")
+            //{
+            //    period = "Evening Rollcall";
+            //    periodCode = "R";
+            //}
+            //else if (time == "23:00")
+            //{
+            //    period = "Lights Out";
+            //    periodCode = "LO";
+            //}
+            return;
     }
 }

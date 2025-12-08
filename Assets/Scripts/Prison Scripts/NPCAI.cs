@@ -32,6 +32,7 @@ public class NPCAI : MonoBehaviour
     private bool hasNormalJob;
     private string job;
     private List<Transform> deskPositions = new List<Transform>();
+    private WeedController weedScript;
     private void Start()
     {   
         //get npctype and num
@@ -59,6 +60,7 @@ public class NPCAI : MonoBehaviour
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         applyPrisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+        weedScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WeedController>();
 
         StartCoroutine(StartWait());
     }
@@ -82,15 +84,17 @@ public class NPCAI : MonoBehaviour
         switch (job)
         {
             case "Tailorshop":
-                bool gotTailorBox = false;
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name == "TailorBox" && !gotTailorBox)
+                    if (obj.name == "TailorBox")
                     {
                         positions.Add(obj);
-                        gotTailorBox = true;
+                        break;
                     }
-                    else if (obj.name == "ClothesBox" && gotTailorBox)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "ClothesBox")
                     {
                         positions.Add(obj);
                         break;
@@ -100,21 +104,25 @@ public class NPCAI : MonoBehaviour
                 hasNormalJob = true;
                 break;
             case "Laundry":
-                bool gotDirtyLaundry = false;
-                bool gotWasher = false;
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name == "DirtyLaundry" && !gotDirtyLaundry && !gotWasher)
+                    if (obj.name == "DirtyLaundry")
                     {
                         positions.Add(obj);
-                        gotDirtyLaundry = true;
+                        break;
                     }
-                    else if (obj.name == "Washer" && gotDirtyLaundry && !gotWasher)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "Washer")
                     {
                         positions.Add(obj);
-                        gotWasher = true;
+                        break;
                     }
-                    else if (obj.name == "CleanLaundry" && gotDirtyLaundry && gotWasher)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "CleanLaundry")
                     {
                         positions.Add(obj);
                         break;
@@ -124,15 +132,17 @@ public class NPCAI : MonoBehaviour
                 hasNormalJob = true;
                 break;
             case "Woodshop":
-                bool gotTimberBox = false;
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name == "TimberBox" && !gotTimberBox)
+                    if (obj.name == "TimberBox")
                     {
                         positions.Add(obj);
-                        gotTimberBox = true;
+                        break;
                     }
-                    else if (obj.name == "FurnitureBox" && gotTimberBox)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "FurnitureBox")
                     {
                         positions.Add(obj);
                         break;
@@ -142,27 +152,25 @@ public class NPCAI : MonoBehaviour
                 hasNormalJob = true;
                 break;
             case "Deliveries":
-                bool gotDeliveryTruck1 = false;
-                bool gotRedBox = false;
-                bool gotDeliveryTruck2 = false;
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name.StartsWith("DeliveryTruck") && !gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                    if (obj.name.StartsWith("DeliveryTruck"))
                     {
                         positions.Add(obj);
-                        gotDeliveryTruck1 = true;
+                        break;
                     }
-                    else if (obj.name == "RedBox" && gotDeliveryTruck1 && !gotRedBox && !gotDeliveryTruck2)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "RedBox")
                     {
                         positions.Add(obj);
-                        gotRedBox = true;
+                        break;
                     }
-                    else if (gotDeliveryTruck1 && gotRedBox && !gotDeliveryTruck2)
-                    {
-                        positions.Add(positions[0]); //just get the first truck pos
-                        gotDeliveryTruck2 = true;
-                    }
-                    else if (obj.name == "BlueBox" && gotDeliveryTruck1 && gotRedBox && gotDeliveryTruck2)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "BlueBox")
                     {
                         positions.Add(obj);
                         break;
@@ -172,21 +180,25 @@ public class NPCAI : MonoBehaviour
                 hasNormalJob = true;
                 break;
             case "Kitchen":
-                bool gotFreezer = false;
-                bool gotOven = false;
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name == "Freezer" && !gotFreezer && !gotOven)
+                    if (obj.name == "Freezer")
                     {
                         positions.Add(obj);
-                        gotFreezer = true;
+                        break;
                     }
-                    else if (obj.name == "Oven" && gotFreezer && !gotOven)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "Oven")
                     {
                         positions.Add(obj);
-                        gotOven = true;
+                        break;
                     }
-                    else if (obj.name == "FoodTable" && gotFreezer && gotOven)
+                }
+                foreach (Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name == "FoodTable")
                     {
                         positions.Add(obj);
                         break;
@@ -196,21 +208,25 @@ public class NPCAI : MonoBehaviour
                 hasNormalJob = true;
                 break;
             case "Metalshop":
-                bool gotMetalBox = false;
-                bool gotLicensePress = false;
-                foreach (Transform obj in tiles.Find("GroundObjects"))
+                foreach(Transform obj in tiles.Find("GroundObjects"))
                 {
-                    if (obj.name == "MetalBox" && !gotMetalBox && !gotLicensePress)
+                    if(obj.name == "MetalBox")
                     {
                         positions.Add(obj);
-                        gotMetalBox = true;
+                        break;
                     }
-                    else if (obj.name == "LicensePress" && gotMetalBox && !gotLicensePress)
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "LicensePress")
                     {
                         positions.Add(obj);
-                        gotLicensePress = true;
+                        break;
                     }
-                    else if (obj.name == "PlatesBox" && gotMetalBox && gotLicensePress)
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "PlatesBox")
                     {
                         positions.Add(obj);
                         break;
@@ -237,6 +253,8 @@ public class NPCAI : MonoBehaviour
         isFinishing = false;
         isInCanteen = false;
         isInGym = false;
+        isAtJob = false;
+        StopAllCoroutines();
         seeker.CancelCurrentPathRequest(true);
     }
     private void Update()
@@ -244,18 +262,18 @@ public class NPCAI : MonoBehaviour
         //get period
         period = scheduleScript.periodCode;
 
-        if (!isMoving && !isInCanteen && !isInGym)
+        if (!isMoving && !isInCanteen && !isInGym && !isAtJob)
         {
             currentWaypoint = null;
             SetCurrentPossibleWaypoints();
-            if (!isInCanteen && !isInGym) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
+            if (!isInCanteen && !isInGym && !isAtJob) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
             {
                 SetCurrentWaypoint();
                 seeker.StartPath(transform.position, currentWaypoint.position);
                 isMoving = true;
             }
         }
-        else if (isMoving && !isInCanteen && !isInGym)
+        else if (isMoving && !isInCanteen && !isInGym && !isAtJob)
         {
             try
             {
@@ -463,7 +481,16 @@ public class NPCAI : MonoBehaviour
         }
         seeker.CancelCurrentPathRequest(true);
 
-        yield return new WaitForSeconds(1);
+        float timer = 0f;
+        while(timer < 1f)
+        {
+            if (!isInCanteen)
+            {
+                yield break;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
 
         //grab food
         GetComponent<NPCCollectionData>().npcData.hasFood = true;
@@ -1044,32 +1071,53 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateJobs()
     {
+        Debug.Log("In Job");
         BoxCollider2D outBoxCollider = transform.Find("OutBox").GetComponent<BoxCollider2D>();
         if (hasNormalJob)
         {
-            for (int i = 0; i < positions.Count(); i++)
+            Debug.Log(positions.Count);
+            int i = 0;
+            while (true)
             {
-                Transform currentObj = positions[i].transform;
-
-                BoxCollider2D currentObjCollider = currentObj.GetComponent<BoxCollider2D>();
-
-                seeker.StartPath(transform.position, currentObj.position);
-                while (true)
+                if(i == positions.Count)
                 {
-                    if (outBoxCollider.IsTouching(currentObjCollider))
-                    {
-                        seeker.CancelCurrentPathRequest(true);
-                        break;
-                    }
-                    yield return null;
+                    i = 0;
                 }
 
-                yield return new WaitForSeconds(timeBetweenPositions);
+                Transform currentObj = positions[i];
+                if(currentObj != null)
+                {
+                    BoxCollider2D currentObjCollider = currentObj.GetComponent<BoxCollider2D>();
+
+                    seeker.StartPath(transform.position, currentObj.position);
+                    while (true)
+                    {
+                        if (outBoxCollider.IsTouching(currentObjCollider))
+                        {
+                            seeker.CancelCurrentPathRequest(true);
+                            break;
+                        }
+                        yield return null;
+                    }
+
+                    float time = 0f;
+                    while(time < timeBetweenPositions)
+                    {
+                        if (!isAtJob)
+                        {
+                            yield break;
+                        }
+                        time += Time.deltaTime;
+                        yield return null;
+                    }
+                }
 
                 if (!isAtJob)
                 {
                     break;
                 }
+                i++;
+                yield return null;
             }
         }
         else
@@ -1089,24 +1137,38 @@ public class NPCAI : MonoBehaviour
                             }
                         }
 
-                        seeker.StartPath(transform.position, currentSpill.position);
-                        while (true)
+                        if(currentSpill != null)
                         {
-                            float distance = Vector2.Distance(transform.position, currentSpill.position);
-                            if (distance < .8f)
+                            seeker.StartPath(transform.position, currentSpill.position);
+                            while (true)
                             {
-                                seeker.CancelCurrentPathRequest(true);
-                                break;
+                                float distance = Vector2.Distance(transform.position, currentSpill.position);
+                                if (distance < .8f)
+                                {
+                                    seeker.CancelCurrentPathRequest(true);
+                                    break;
+                                }
+                                yield return null;
                             }
-                            yield return null;
+                            float time = 0f;
+                            while (time < 2f)
+                            {
+                                if (!isAtJob)
+                                {
+                                    yield break;
+                                }
+                                time += Time.deltaTime;
+                                yield return null;
+                            }
+                            Destroy(currentSpill.gameObject);
+                            weedScript.spillAmount--;
                         }
-                        yield return new WaitForSeconds(2);
-                        Destroy(currentSpill.gameObject);
 
                         if (!isAtJob)
                         {
                             break;
                         }
+                        yield return null;
                     }
                     break;
                 case "Gardening":
@@ -1122,24 +1184,38 @@ public class NPCAI : MonoBehaviour
                             }
                         }
 
-                        seeker.StartPath(transform.position, currentWeed.position);
-                        while (true)
+                        if(currentWeed != null)
                         {
-                            float distance = Vector2.Distance(transform.position, currentWeed.position);
-                            if (distance < .8f)
+                            seeker.StartPath(transform.position, currentWeed.position);
+                            while (true)
                             {
-                                seeker.CancelCurrentPathRequest(true);
-                                break;
+                                float distance = Vector2.Distance(transform.position, currentWeed.position);
+                                if (distance < .8f)
+                                {
+                                    seeker.CancelCurrentPathRequest(true);
+                                    break;
+                                }
+                                yield return null;
                             }
-                            yield return null;
+                            float time = 0f;
+                            while (time < 2f)
+                            {
+                                if (!isAtJob)
+                                {
+                                    yield break;
+                                }
+                                time += Time.deltaTime;
+                                yield return null;
+                            }
+                            Destroy(currentWeed.gameObject);
+                            weedScript.weedAmount--;
                         }
-                        yield return new WaitForSeconds(2);
-                        Destroy(currentWeed.gameObject);
 
                         if (!isAtJob)
                         {
                             break;
                         }
+                        yield return null;
                     }
                     break;
                 case "Library":
@@ -1176,7 +1252,16 @@ public class NPCAI : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return new WaitForSeconds(1);
+                        float time = 0f;
+                        while (time < 1f)
+                        {
+                            if (!isAtJob)
+                            {
+                                yield break;
+                            }
+                            time += Time.deltaTime;
+                            yield return null;
+                        }
 
                         //go to the desk
                         seeker.StartPath(transform.position, currentDesk.position);
@@ -1190,7 +1275,16 @@ public class NPCAI : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return new WaitForSeconds(2);
+                        time = 0f;
+                        while (time < 2f)
+                        {
+                            if (!isAtJob)
+                            {
+                                yield break;
+                            }
+                            time += Time.deltaTime;
+                            yield return null;
+                        }
 
                         if (!isAtJob)
                         {
@@ -1232,7 +1326,16 @@ public class NPCAI : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return new WaitForSeconds(1);
+                        float time = 0f;
+                        while (time < 1f)
+                        {
+                            if (!isAtJob)
+                            {
+                                yield break;
+                            }
+                            time += Time.deltaTime;
+                            yield return null;
+                        }
 
                         //go to the desk
                         seeker.StartPath(transform.position, currentDesk.position);
@@ -1246,7 +1349,16 @@ public class NPCAI : MonoBehaviour
                             yield return null;
                         }
 
-                        yield return new WaitForSeconds(2);
+                        time = 0f;
+                        while (time < 2f)
+                        {
+                            if (!isAtJob)
+                            {
+                                yield break;
+                            }
+                            time += Time.deltaTime;
+                            yield return null;
+                        }
 
                         if (!isAtJob)
                         {

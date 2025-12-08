@@ -3988,6 +3988,7 @@ GameObject:
   - component: {fileID: 567059188}
   - component: {fileID: 567059189}
   - component: {fileID: 567059190}
+  - component: {fileID: 567059191}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4863,6 +4864,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609ac4ff4abf0354785ad3b2ad859c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JobController
+--- !u!114 &567059191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16f510aeff01ad4abee0893ab499ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeedController
+  weedAmount: 0
+  spillAmount: 0
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
