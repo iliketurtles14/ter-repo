@@ -16,18 +16,17 @@ public class Routine : MonoBehaviour
     public int day;
     private string period;
     public string periodCode;
-    private string oldPeriod;
-    private string oldPeriodCode;
+    private Schedule scheduleScript;
     public void Start()
     {
+        scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
+        
         timeText = GetComponent<TMP_Text>();
         day = 1;
         sec = 50;
         min = 7;
         period = "Lights Out";
         periodCode = "LO";
-        oldPeriod = period;
-        oldPeriodCode = periodCode;
         timeText.text = "07:50 - Lights Out (Day 1)";
     }
     public void OnEnable()
@@ -38,11 +37,15 @@ public class Routine : MonoBehaviour
     {
         StopAllCoroutines();
     }
+    private void Update()
+    {
+        period = scheduleScript.period;
+        periodCode = scheduleScript.periodCode;
+    }
     public IEnumerator TimerCoroutine()
     {
         while (true)
         {
-
             yield return new WaitForSeconds(interval);
 
             sec++;
@@ -94,95 +97,10 @@ public class Routine : MonoBehaviour
             {
                 time = min + ":" + sec;
             }
-            if (time == "08:00")
-            {
-                period = "Morning Rollcall";
-                periodCode = "MR";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "09:00")
-            {
-                period = "Breakfast";
-                periodCode = "B";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "10:00")
-            {
-                period = "Free Period";
-                periodCode = "FP";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "12:00")
-            {
-                period = "Lunch";
-                periodCode = "L";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "13:00")
-            {
-                period = "Work Period";
-                periodCode = "W";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "16:00")
-            {
-                period = "Exercise Period";
-                periodCode = "EP";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "17:00")
-            {
-                period = "Showers";
-                periodCode = "S";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "18:00")
-            {
-                period = "Dinner";
-                periodCode = "D";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "19:00")
-            {
-                period = "Evening Free Period";
-                periodCode = "EFP";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "22:00")
-            {
-                period = "Evening Rollcall";
-                periodCode = "ER";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if (time == "23:00")
-            {
-                period = "Lights Out";
-                periodCode = "LO";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else if(time == "07:50")
-            {
-                period = "Lights Out";
-                periodCode = "LO";
-                oldPeriod = period;
-                oldPeriodCode = periodCode;
-            }
-            else
-            {
-                period = oldPeriod;
-                periodCode = oldPeriodCode;
-            }
+
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
 
             timeText.text = time + " - " + period + " (" + "Day " + day + ")";
         }

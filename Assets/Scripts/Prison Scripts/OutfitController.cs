@@ -209,6 +209,7 @@ public class OutfitController : MonoBehaviour
             {
                 currentOutfitID = GetComponent<NPCCollectionData>().npcData.inventory[7].itemData.id;
             }
+
         }
         catch
         {

@@ -11,29 +11,66 @@ public class NPCSpeech : MonoBehaviour
 {
     private Schedule scheduleScript;
     private string period;
-    private string messageType;
     public bool isTalking;
     private string[] speechFile;
+    private MouseCollisionOnItems mcs;
+    private bool isDestroying;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         speechFile = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "speech.ini"));
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
 
         DestroyTextBox(transform);
         StartCoroutine(SpeechLoop());
+    }
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && !isTalking && mcs.isTouchingNPC && mcs.touchedNPC == gameObject && (mcs.touchedNPC.name.StartsWith("Inmate") || mcs.touchedNPC.name.StartsWith("Guard")) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
+        {
+            isTalking = true;
+            Talk();
+        }
+    }
+    private void Talk()
+    {
+        string messageType = null;
+        if (name.StartsWith("Guard"))
+        {
+            messageType = "Guard_Talk";
+        }
+        else if (name.StartsWith("Inmate"))
+        {
+            int opn = GetComponent<NPCCollectionData>().npcData.opinion;
+            if(opn < 33)
+            {
+                messageType = "Rep_1";
+            }
+            else if(opn > 33 && opn < 66)
+            {
+                messageType = "Rep_2";
+            }
+            else if(opn > 66)
+            {
+                messageType = "Rep_3";
+            }
+        }
+        MakeTextBox(GetMessage(messageType), transform);
     }
     private IEnumerator SpeechLoop()
     {
         while (true)
         {
             Debug.Log("In Speech Loop");
-            if (isTalking)
+            if (isTalking && !isDestroying)
             {
+                isDestroying = true;
                 yield return new WaitForSeconds(3);
 
                 Debug.Log("Destroying Text Box");
                 DestroyTextBox(transform);
                 isTalking = false;
+                isDestroying = false;
 
                 yield return null;
                 continue;
@@ -44,29 +81,43 @@ public class NPCSpeech : MonoBehaviour
             float rand = UnityEngine.Random.Range(3f, 5f);
             yield return new WaitForSeconds(rand);
 
-            switch (period)
+            string messageType = null;
+
+            if (name.StartsWith("Inmate"))
             {
-                case "B":
-                case "L":
-                case "D":
-                    messageType = "Canteen";
-                    break;
-                case "E":
-                    messageType = "Gym";
-                    break;
-                case "FP":
-                case "W":
-                    messageType = "Banter";
-                    break;
-                case "S":
-                    messageType = "Shower";
-                    break;
-                //default:
-                //    messageType = null;
-                //    break;
+                switch (period)
+                {
+                    case "B":
+                    case "L":
+                    case "D":
+                        messageType = "Canteen";
+                        break;
+                    case "E":
+                        messageType = "Gym";
+                        break;
+                    case "FT":
+                    case "W":
+                        messageType = "Banter";
+                        break;
+                    case "S":
+                        messageType = "Shower";
+                        break;
+                }
+            }
+            else if(name == "JobOfficer")
+            {
+                messageType = "JobStaff";
+            }
+            else if(name == "Medic")
+            {
+                messageType = "MedStaff";
+            }
+            else if(name == "Warden")
+            {
+                messageType = "Warden";
             }
 
-            if(!isTalking && messageType != null)
+            if (!isTalking && messageType != null)
             {
                 Debug.Log("Making Text Box");
                 MakeTextBox(GetMessage(messageType), transform);

@@ -104,6 +104,31 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.strength = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 75 - (25 * map.npcLevel) + UnityEngine.Random.Range(0, 51);
+
+                string outfitID;
+
+                if(map.mapName == "Santa's SweatShop")
+                {
+                    outfitID = "040";
+                }
+                else if(map.mapName == "Duct Tapes are Forever")
+                {
+                    outfitID = "045";
+                }
+                else if(map.mapName == "Escape Team")
+                {
+                    outfitID = "050";
+                }
+                else if (map.powOutfits)
+                {
+                    outfitID = "033";
+                }
+                else
+                {
+                    outfitID = "029";
+                }
+                ItemData outfitData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/" + outfitID));
+                npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
             }
             else if (npc.name.StartsWith("Guard"))
             {
@@ -112,6 +137,33 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 15 + UnityEngine.Random.Range(0, 66);
                 npc.GetComponent<NPCCollectionData>().npcData.isGuard = true;
+
+                string outfitID;
+
+                if (map.mapName == "Santa's SweatShop")
+                {
+                    outfitID = "044";
+                }
+                else if (map.mapName == "Duct Tapes are Forever")
+                {
+                    outfitID = "049";
+                }
+                else if (map.mapName == "Escape Team")
+                {
+                    outfitID = "054";
+                }
+                else
+                {
+                    outfitID = "039";
+                }
+                ItemData outfitData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/" + outfitID));
+                ItemData batonData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/056"));
+                try
+                {
+                    npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
+                    npc.GetComponent<NPCCollectionData>().npcData.inventory[6].itemData = batonData;
+                }
+                catch { }
             }
             npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
 
