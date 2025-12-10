@@ -1,3 +1,4 @@
+using Ookii.Dialogs;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,8 +11,12 @@ public class SeeBadActions : MonoBehaviour
     private List<Vector2> leftVectors = new List<Vector2>();
     private List<Vector2> currentVectors;
     public float rangeOfSight = 6.4f;
+    private Transform player;
+    private Map map;
     private void Start()
     {
+        player = RootObjectCache.GetRoot("Player").transform;
+        map = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         MakeVetorLists();
     }
     private void MakeVetorLists()
@@ -77,27 +82,111 @@ public class SeeBadActions : MonoBehaviour
 
         foreach(Vector2 vector in currentVectors)
         {
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
+            RaycastHit2D[] wallHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
 
-            RaycastHit2D? hit = null;
-            foreach(RaycastHit2D aHit in hits)
+            RaycastHit2D? wallHit = null;
+            foreach(RaycastHit2D aHit in wallHits)
             {
                 if (aHit.collider.CompareTag("Wall"))
                 {
-                    hit = aHit;
+                    wallHit = aHit;
                     break;
                 }
             }
 
-            if (hit.HasValue)
+            if (wallHit.HasValue)
             {
-                Debug.DrawLine(transform.position, hit.Value.point, Color.red);
+                Debug.DrawLine(transform.position, wallHit.Value.point, Color.red);
             }
             else
             {
                 Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
             }
 
+            RaycastHit2D[] badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
+
+            RaycastHit2D? badHit = null;
+            foreach(RaycastHit2D aHit in badHits)
+            {
+                if (aHit.collider.CompareTag("BadObject"))
+                {
+                    SeeBadAction(aHit.transform.gameObject);
+                    break;
+                }
+            }
+        }
+    }
+    public void SeeBadAction(GameObject badObject)
+    {
+        BadObjectData data = badObject.GetComponent<BadObjectData>();
+        bool isGuard = GetComponent<NPCCollectionData>().npcData.isGuard;
+
+        //add heat
+        int heatToAdd = 0;
+        if (data.isMultiplied && isGuard)
+        {
+            heatToAdd = data.heatGain * map.npcLevel;
+        }
+        else if(!data.isMultiplied && isGuard)
+        {
+            heatToAdd = data.heatGain;
+        }
+        player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
+
+        //set heat
+        if(data.heatSet != -1 && isGuard)
+        {
+            player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
+        }
+
+        //should aggro
+        if (data.shouldAggro && !data.forInmate) //make this also work for searching inmate desks when the same inmate sees it
+        {
+            GetComponent<NPCCombat>().SetTarget(data.attachedObject);
+        }
+
+        //solitary
+        if (data.solitary && isGuard)
+        {
+            Debug.Log("solitary");
+        }
+
+        //item
+        if (data.item && isGuard)
+        {
+            Debug.Log("item");
+        }
+
+        //toilet
+        if (data.toilet && isGuard)
+        {
+            Debug.Log("toilet");
+        }
+
+        //untie
+        if (data.untie && isGuard)
+        {
+            Debug.Log("untie");
+        }
+
+        //sheets
+        if (data.sheets && isGuard)
+        {
+            Debug.Log("sheets");
+        }
+
+        //message type
+        if(data.messageType != null)
+        {
+            NPCSpeech speechScript = GetComponent<NPCSpeech>();
+            speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform);
+        }
+
+        //should call
+        if (data.shouldCall && !isGuard && data.forInmate)
+        {
+            Debug.Log("call");
+            //remember to add 30 heat
         }
     }
 }

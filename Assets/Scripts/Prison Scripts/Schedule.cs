@@ -9,78 +9,149 @@ public class Schedule : MonoBehaviour
     public string period;
     private GameObject TimeObject;
     public string periodCode;
+    private Map map;
+    private LoadPrison loadPrisonScript;
+    private bool canStart;
     void Start()
     {
         TimeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
         timeScript = TimeObject.GetComponent<Routine>();
         period = "Lights Out";
         periodCode = "LO";
+        loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
+
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        map = loadPrisonScript.currentMap;
+        canStart = true;
+
+        for(int i = 0; i < 24; i++)
+        {
+            Debug.Log(map.routineDict[i] + " --> " + i);
+        }
     }
 
     void Update()
     {
+        if (!canStart)
+        {
+            return;
+        }
+        
         time = timeScript.time;
 
-        if (time == "08:00")
+        switch (time)
         {
-            period = "Morning Rollcall";
-            periodCode = "R";
+            case "00:00":
+                periodCode = map.routineDict[0];
+                break;
+            case "01:00":
+                periodCode = map.routineDict[1];
+                break;
+            case "02:00":
+                periodCode = map.routineDict[2];
+                break;
+            case "03:00":
+                periodCode = map.routineDict[3];
+                break;
+            case "04:00":
+                periodCode = map.routineDict[4];
+                break;
+            case "05:00":
+                periodCode = map.routineDict[5];
+                break;
+            case "06:00":
+                periodCode = map.routineDict[6];
+                break;
+            case "07:00":
+                periodCode = map.routineDict[7];
+                break;
+            case "08:00":
+                periodCode = map.routineDict[8];
+                break;
+            case "09:00":
+                periodCode = map.routineDict[9];
+                break;
+            case "10:00":
+                periodCode = map.routineDict[10];
+                break;
+            case "11:00":
+                periodCode = map.routineDict[11];
+                break;
+            case "12:00":
+                periodCode = map.routineDict[12];
+                break;
+            case "13:00":
+                periodCode = map.routineDict[13];
+                break;
+            case "14:00":
+                periodCode = map.routineDict[14];
+                break;
+            case "15:00":
+                periodCode = map.routineDict[15];
+                break;
+            case "16:00":
+                periodCode = map.routineDict[16];
+                break;
+            case "17:00":
+                periodCode = map.routineDict[17];
+                break;
+            case "18:00":
+                periodCode = map.routineDict[18];
+                break;
+            case "19:00":
+                periodCode = map.routineDict[19];
+                break;
+            case "20:00":
+                periodCode = map.routineDict[20];
+                break;
+            case "21:00":
+                periodCode = map.routineDict[21];
+                break;
+            case "22:00":
+                periodCode = map.routineDict[22];
+                break;
+            case "23:00":
+                periodCode = map.routineDict[23];
+                break;
         }
-        else if(time == "08:30")
+
+        switch (periodCode)
         {
-            period = "Work";
-            periodCode = "W";
+            case "LO":
+                period = "Lights Out";
+                break;
+            case "R":
+                period = "Rollcall";
+                break;
+            case "B":
+                period = "Breakfast";
+                break;
+            case "L":
+                period = "Lunch";
+                break;
+            case "D":
+                period = "Dinner";
+                break;
+            case "W":
+                period = "Work";
+                break;
+            case "E":
+                period = "Gym";
+                break;
+            case "S":
+                period = "Showers";
+                break;
+            case "FT":
+                period = "Free Time";
+                break;
         }
-            //else if (time == "01:00")
-            //{
-            //    period = "Breakfast";
-            //    periodCode = "B";
-            //}
-            //else if (time == "10:00")
-            //{
-            //    period = "Free Period";
-            //    periodCode = "FP";
-            //}
-            //else if (time == "12:00")
-            //{
-            //    period = "Lunch";
-            //    periodCode = "L";
-            //}
-            //else if (time == "13:00")
-            //{
-            //    period = "Leisure / Work Period";
-            //    periodCode = "W";
-            //}
-            //else if (time == "16:00")
-            //{
-            //    period = "Exercise Period";
-            //    periodCode = "E";
-            //}
-            //else if (time == "17:00")
-            //{
-            //    period = "Showers";
-            //    periodCode = "S";
-            //}
-            //else if (time == "18:00")
-            //{
-            //    period = "Dinner";
-            //    periodCode = "D";
-            //}
-            //else if (time == "19:00")
-            //{
-            //    period = "Evening Free Period";
-            //    periodCode = "FP";
-            //}
-            //else if (time == "22:00")
-            //{
-            //    period = "Evening Rollcall";
-            //    periodCode = "R";
-            //}
-            //else if (time == "23:00")
-            //{
-            //    period = "Lights Out";
-            //    periodCode = "LO";
-            //}
-            return;
+
+        return;
     }
 }
