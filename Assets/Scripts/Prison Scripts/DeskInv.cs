@@ -33,7 +33,7 @@ public class DeskInv : MonoBehaviour
     public bool invIsFull;
     private GameObject desk;
     private string deskText;
-    private bool isOpening;
+    public bool isOpening;
     private PauseController pauseController;
     public List<DeskItem> deskInv;
     public void Start()
