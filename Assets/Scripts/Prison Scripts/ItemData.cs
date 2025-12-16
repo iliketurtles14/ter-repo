@@ -20,7 +20,7 @@ public class ItemData : ScriptableObject
     public int diggingPower;
     public int health;
     public int energy;
-    public int defence;
+    public int defense;
     public int strength;
     public int opinion;
     public int cameraBlock;

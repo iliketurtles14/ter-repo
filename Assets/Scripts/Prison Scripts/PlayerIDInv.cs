@@ -99,7 +99,7 @@ public class PlayerIDInv : MonoBehaviour
                 }
             }
 
-            if(mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.defence != -1 && Input.GetMouseButtonDown(0) && !outfitIsFull)
+            if(mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.defense != -1 && Input.GetMouseButtonDown(0) && !outfitIsFull)
             {
                 idInv[0].itemData = inventoryList[invSlotNumber].itemData;
                 outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;

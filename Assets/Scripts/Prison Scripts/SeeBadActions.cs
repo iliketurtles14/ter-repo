@@ -1,4 +1,5 @@
 using Ookii.Dialogs;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,9 +11,10 @@ public class SeeBadActions : MonoBehaviour
     private List<Vector2> downVectors = new List<Vector2>();
     private List<Vector2> leftVectors = new List<Vector2>();
     private List<Vector2> currentVectors;
-    public float rangeOfSight = 6.4f;
+    public float rangeOfSight = 8f;
     private Transform player;
     private Map map;
+    private bool canSee = true;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -103,16 +105,36 @@ public class SeeBadActions : MonoBehaviour
                 Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
             }
 
-            RaycastHit2D[] badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
+            RaycastHit2D[] badHits;
+            try
+            {
+                badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
+
+            }
+            catch 
+            {
+                badHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
+            }
 
             RaycastHit2D? badHit = null;
-            foreach(RaycastHit2D aHit in badHits)
+            foreach (RaycastHit2D aHit in badHits)
             {
-                if (aHit.collider.CompareTag("BadObject"))
+                if (aHit.collider.CompareTag("BadObject") && canSee)
                 {
+                    badHit = aHit;
+                    canSee = false;
                     SeeBadAction(aHit.transform.gameObject);
                     break;
                 }
+            }
+
+            if (badHit.HasValue)
+            {
+                Debug.DrawLine(transform.position, badHit.Value.point, Color.red);
+            }
+            else
+            {
+                Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
             }
         }
     }
@@ -142,7 +164,8 @@ public class SeeBadActions : MonoBehaviour
         //should aggro
         if (data.shouldAggro && !data.forInmate) //make this also work for searching inmate desks when the same inmate sees it
         {
-            GetComponent<NPCCombat>().SetTarget(data.attachedObject);
+            GetComponent<NPCCombat>().isAggro = true;
+            GetComponent<NPCCombat>().target = data.attachedObject;
         }
 
         //solitary
@@ -188,5 +211,21 @@ public class SeeBadActions : MonoBehaviour
             Debug.Log("call");
             //remember to add 30 heat
         }
+
+        //do timers
+        if (badObject.name != "guardNonInmateOutfit" && badObject.name != "inmateNonInmateOutfit")
+        {
+            StartCoroutine(SeeBadCooldown(5));
+        }
+        else if (badObject.name == "guardNonInmateOutfit" || badObject.name == "inmateNonInmateOutfit")
+        {
+            StartCoroutine(SeeBadCooldown(2));
+        }
+    }
+
+    private IEnumerator SeeBadCooldown(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canSee = true;
     }
 }

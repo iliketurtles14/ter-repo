@@ -461,10 +461,14 @@ public class ItemBehaviours : MonoBehaviour
             Deselect();
         }
 
-        if (barIsMoving && oldPlayerTransform.position != PlayerTransform.position)//keep at botom
+        if (barIsMoving)
         {
-            StopCoroutine(DrawActionBar(false, false));
-            DestroyActionBar();
+            float distance = Vector2.Distance(oldPlayerTransform.position, PlayerTransform.position);
+            if(distance > .01f)
+            {
+                StopCoroutine(DrawActionBar(false, false));
+                DestroyActionBar();
+            }
         }
     }
     public IEnumerator Rope(string identifier)

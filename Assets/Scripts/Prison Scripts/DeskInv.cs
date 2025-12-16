@@ -36,6 +36,7 @@ public class DeskInv : MonoBehaviour
     public bool isOpening;
     private PauseController pauseController;
     public List<DeskItem> deskInv;
+    public GameObject currentDesk;
     public void Start()
     {
         //get vars
@@ -71,6 +72,7 @@ public class DeskInv : MonoBehaviour
         
         if (!deskIsOpen)
         {
+            currentDesk = null;
             if (mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
                 desk = mouseCollisionScript.touchedDesk;
@@ -79,6 +81,7 @@ public class DeskInv : MonoBehaviour
                 {
                     deskText = GetDeskText(desk);
                     deskInv = desk.GetComponent<DeskData>().deskInv;
+                    currentDesk = desk;
                     StartCoroutine(OpenDesk());
                 }
             }

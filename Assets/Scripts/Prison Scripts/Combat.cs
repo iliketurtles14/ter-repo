@@ -89,7 +89,7 @@ public class Combat : MonoBehaviour
 
         if (npcOutfitData != null)
         {
-            npcDef = npcOutfitData.defence;
+            npcDef = npcOutfitData.defense;
         }
         else
         {

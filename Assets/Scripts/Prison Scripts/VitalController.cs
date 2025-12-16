@@ -74,6 +74,11 @@ public class VitalController : MonoBehaviour
             oldHeat = data.heat;
             SetVitals();
         }
+
+        if(data.heat > 99)
+        {
+            data.heat = 99;
+        }
     }
     public void SetVitals()
     {

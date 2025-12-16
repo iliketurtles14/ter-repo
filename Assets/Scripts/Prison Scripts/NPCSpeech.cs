@@ -65,7 +65,7 @@ public class NPCSpeech : MonoBehaviour
             if (isTalking && !isDestroying)
             {
                 isDestroying = true;
-                yield return new WaitForSeconds(3);
+                yield return new WaitForSeconds(2);
 
                 Debug.Log("Destroying Text Box");
                 DestroyTextBox(transform);
@@ -121,7 +121,6 @@ public class NPCSpeech : MonoBehaviour
             {
                 Debug.Log("Making Text Box");
                 MakeTextBox(GetMessage(messageType), transform);
-                isTalking = true;
             }
             yield return null;
         }
@@ -169,6 +168,7 @@ public class NPCSpeech : MonoBehaviour
         {
             obj.gameObject.SetActive(true);
         }
+        isTalking = true;
     }
     public void DestroyTextBox(Transform npc)
     {
