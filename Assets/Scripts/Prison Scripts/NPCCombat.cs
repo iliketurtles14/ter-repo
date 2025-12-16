@@ -97,7 +97,7 @@ public class NPCCombat : MonoBehaviour
         //take away target health
         if(targetOutfitData != null)
         {
-            targetDef = targetOutfitData.defence;
+            targetDef = targetOutfitData.defense;
         }
         else
         {

@@ -4020,6 +4020,7 @@ GameObject:
   - component: {fileID: 567059189}
   - component: {fileID: 567059190}
   - component: {fileID: 567059191}
+  - component: {fileID: 567059192}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4909,6 +4910,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeedController
   weedAmount: 0
   spillAmount: 0
+--- !u!114 &567059192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e29c4f99d976424792de71952cc85f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MakeBadObject
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6035,6 +6048,7 @@ MonoBehaviour:
   deskSlotNumber: 0
   deskIsOpen: 0
   invIsFull: 0
+  isOpening: 0
   deskInv: []
 --- !u!61 &694438576
 BoxCollider2D:
