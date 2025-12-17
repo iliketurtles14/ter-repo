@@ -316,7 +316,7 @@ public class NPCAI : MonoBehaviour
                 switch (period)
                 {
                     case "LO":
-                    case "FP":
+                    case "FT":
                         if (npcType == "Inmate" && waypoint.name == "InmateWaypoint")
                         {
                             isFreeWalking = true;

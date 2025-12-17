@@ -15,11 +15,13 @@ public class SeeBadActions : MonoBehaviour
     private Transform player;
     private Map map;
     private bool canSee = true;
+    public List<string> availableBadObjects = new List<string>();
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
         map = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         MakeVetorLists();
+        MakeBadObjectList();
     }
     private void MakeVetorLists()
     {
@@ -63,6 +65,23 @@ public class SeeBadActions : MonoBehaviour
         downVectors.Add(new Vector2(Mathf.Cos(Mathf.Deg2Rad * 306f), Mathf.Sin(Mathf.Deg2Rad * 306f)));
         downVectors.Add(new Vector2(Mathf.Cos(Mathf.Deg2Rad * 324f), Mathf.Sin(Mathf.Deg2Rad * 324f)));
         downVectors.Add(new Vector2(Mathf.Cos(Mathf.Deg2Rad * 342f), Mathf.Sin(Mathf.Deg2Rad * 342f)));
+    }
+    private void MakeBadObjectList()
+    {
+        availableBadObjects.Add("onDesk");
+        availableBadObjects.Add("guardSearchingDesk");
+        availableBadObjects.Add("inmateSearchingDesk");
+        availableBadObjects.Add("pickedUp");
+        availableBadObjects.Add("inWrongCell");
+        availableBadObjects.Add("playerPunching");
+        availableBadObjects.Add("wrongRoutine");
+        availableBadObjects.Add("notAtWork");
+        availableBadObjects.Add("noOutfit");
+        availableBadObjects.Add("guardNonInmateOutfit");
+        availableBadObjects.Add("inmateNonInmateOutfit");
+        availableBadObjects.Add("highHeat");
+        availableBadObjects.Add("inmateBreakingTile");
+        availableBadObjects.Add("guardBreakingTile");
     }
     private void Update()
     {
@@ -117,14 +136,27 @@ public class SeeBadActions : MonoBehaviour
             }
 
             RaycastHit2D? badHit = null;
+            foreach(RaycastHit2D aHit in badHits)
+            {
+                if (aHit.collider.CompareTag("BadObject"))
+                {
+                    Debug.Log(aHit.collider.name);
+                }
+            }
             foreach (RaycastHit2D aHit in badHits)
             {
-                if (aHit.collider.CompareTag("BadObject") && canSee)
+                if (aHit.collider.CompareTag("BadObject"))
                 {
-                    badHit = aHit;
-                    canSee = false;
-                    SeeBadAction(aHit.transform.gameObject);
-                    break;
+                    if (availableBadObjects.Contains(aHit.collider.name) && !GetComponent<NPCCombat>().isAggro && aHit.collider.name != "playerPunching")
+                    {
+                        badHit = aHit;
+                        SeeBadAction(aHit.transform.gameObject);
+                    }
+                    else if(availableBadObjects.Contains(aHit.collider.name) && aHit.collider.name == "playerPunching")
+                    {
+                        badHit = aHit;
+                        SeeBadAction(aHit.transform.gameObject);
+                    }
                 }
             }
 
@@ -140,6 +172,11 @@ public class SeeBadActions : MonoBehaviour
     }
     public void SeeBadAction(GameObject badObject)
     {
+        if(badObject.name != "highHeat") //add things here that shouldnt have a cooldown
+        {
+            availableBadObjects.Remove(badObject.name);
+        }
+
         BadObjectData data = badObject.GetComponent<BadObjectData>();
         bool isGuard = GetComponent<NPCCollectionData>().npcData.isGuard;
 
@@ -202,7 +239,7 @@ public class SeeBadActions : MonoBehaviour
         if(data.messageType != null)
         {
             NPCSpeech speechScript = GetComponent<NPCSpeech>();
-            speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform);
+            speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true);
         }
 
         //should call
@@ -215,17 +252,17 @@ public class SeeBadActions : MonoBehaviour
         //do timers
         if (badObject.name != "guardNonInmateOutfit" && badObject.name != "inmateNonInmateOutfit")
         {
-            StartCoroutine(SeeBadCooldown(5));
+            StartCoroutine(SeeBadCooldown(5, badObject.name));
         }
         else if (badObject.name == "guardNonInmateOutfit" || badObject.name == "inmateNonInmateOutfit")
         {
-            StartCoroutine(SeeBadCooldown(2));
+            StartCoroutine(SeeBadCooldown(2, badObject.name));
         }
     }
 
-    private IEnumerator SeeBadCooldown(float time)
+    private IEnumerator SeeBadCooldown(float time, string name)
     {
         yield return new WaitForSeconds(time);
-        canSee = true;
+        availableBadObjects.Add(name);
     }
 }
