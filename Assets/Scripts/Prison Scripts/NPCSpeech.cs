@@ -15,6 +15,9 @@ public class NPCSpeech : MonoBehaviour
     private string[] speechFile;
     private MouseCollisionOnItems mcs;
     private bool isDestroying;
+    private bool isWaiting;
+    private bool textBoxIsActive;
+    private bool madeTextBox;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -26,10 +29,26 @@ public class NPCSpeech : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !isTalking && mcs.isTouchingNPC && mcs.touchedNPC == gameObject && (mcs.touchedNPC.name.StartsWith("Inmate") || mcs.touchedNPC.name.StartsWith("Guard")) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
+        if(Input.GetMouseButtonDown(0) && !isTalking && !textBoxIsActive && mcs.isTouchingNPC && mcs.touchedNPC == gameObject && (mcs.touchedNPC.name.StartsWith("Inmate") || mcs.touchedNPC.name.StartsWith("Guard")) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
         {
             isTalking = true;
             Talk();
+        }
+
+        //check if the text box is actually active
+        if (transform.Find("SpeechCanvas").Find("SpeechBackground").gameObject.activeInHierarchy)
+        {
+            textBoxIsActive = true;
+        }
+        else
+        {
+            textBoxIsActive = false;
+        }
+
+        //destroy textbox every two seconds
+        if (textBoxIsActive && !isDestroying)
+        {
+            StartCoroutine(DestroyWait());
         }
     }
     private void Talk()
@@ -55,31 +74,26 @@ public class NPCSpeech : MonoBehaviour
                 messageType = "Rep_3";
             }
         }
-        MakeTextBox(GetMessage(messageType), transform);
+        MakeTextBox(GetMessage(messageType), transform, false);
     }
     private IEnumerator SpeechLoop()
     {
         while (true)
         {
-            Debug.Log("In Speech Loop");
-            if (isTalking && !isDestroying)
+            if (!isTalking && !isWaiting && !textBoxIsActive)
             {
-                isDestroying = true;
-                yield return new WaitForSeconds(2);
-
-                Debug.Log("Destroying Text Box");
-                DestroyTextBox(transform);
-                isTalking = false;
-                isDestroying = false;
-
+                isWaiting = true;
+                float rand = UnityEngine.Random.Range(3f, 5f);
+                yield return new WaitForSeconds(rand);
+                isWaiting = false;
+            }
+            else
+            {
                 yield return null;
                 continue;
             }
-            
-            period = scheduleScript.periodCode;
 
-            float rand = UnityEngine.Random.Range(3f, 5f);
-            yield return new WaitForSeconds(rand);
+            period = scheduleScript.periodCode;
 
             string messageType = null;
 
@@ -117,16 +131,18 @@ public class NPCSpeech : MonoBehaviour
                 messageType = "Warden";
             }
 
-            if (!isTalking && messageType != null)
+            if (!isTalking && messageType != null && !textBoxIsActive)
             {
                 Debug.Log("Making Text Box");
-                MakeTextBox(GetMessage(messageType), transform);
+                MakeTextBox(GetMessage(messageType), transform, false);
             }
             yield return null;
         }
     }
-    public void MakeTextBox(string msg, Transform npc)
+    public void MakeTextBox(string msg, Transform npc, bool isMad)
     {
+        madeTextBox = true;
+        
         float textWidth = GetLength(msg); //making this a float for the lineBreaks calculation
         int lineBreaks = Mathf.FloorToInt(textWidth / 115f);
         float borderWidth;
@@ -163,12 +179,39 @@ public class NPCSpeech : MonoBehaviour
         }
 
         npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().text = msg;
-
-        foreach(Transform obj in npc.Find("SpeechCanvas"))
+        if (isMad && npc.name.StartsWith("Guard"))
         {
-            obj.gameObject.SetActive(true);
+            npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = new Color(157f / 255f, 0f, 0f);
         }
+        else
+        {
+            npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
+
+            foreach (Transform obj in npc.Find("SpeechCanvas"))
+            {
+                obj.gameObject.SetActive(true);
+            }
         isTalking = true;
+    }
+    private IEnumerator DestroyWait()
+    {
+        isDestroying = true;
+        float timer = 0f;
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+
+            if(madeTextBox == true)
+            {
+                timer = 0f;
+                madeTextBox = false;
+            }
+            yield return null;
+        }
+        DestroyTextBox(transform);
+        isTalking = false;
+        isDestroying = false;
     }
     public void DestroyTextBox(Transform npc)
     {
