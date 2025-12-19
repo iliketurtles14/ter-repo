@@ -41,9 +41,7 @@ In the root of the The Escapists Reincarcerated directory, go to this folder: "T
 
 In this folder, go into the "config.ini" file to change the directory of your The Escapists folder path at "GameFolderPath" under "Settings" in that file. 
 
-YOU MUST USE FORWARD SLASHES (/) INSTEAD OF BACK SLASHES (\\), AND YOU ALSO MUST PUT QUOTES AROUND THE PATH.
-
-Example path: "C:/Program Files (x86)/Steam/steamapps/common/The Escapists"
+Example path: C:\Program Files (x86)\Steam\steamapps\common\The Escapists
 
 # Troubleshooting
 
