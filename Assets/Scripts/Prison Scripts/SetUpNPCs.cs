@@ -128,7 +128,11 @@ public class SetUpNPCs : MonoBehaviour
                     outfitID = "029";
                 }
                 ItemData outfitData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/" + outfitID));
-                npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
+                try
+                {
+                    npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
+                }
+                catch { }
             }
             else if (npc.name.StartsWith("Guard"))
             {
