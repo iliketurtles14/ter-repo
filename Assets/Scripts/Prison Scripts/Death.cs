@@ -125,7 +125,7 @@ public class Death : MonoBehaviour
         }
         foreach(int badNum in badItems)
         {
-            slots[badNum].GetComponent<SpriteRenderer>().sprite = clearSprite;
+            slots[badNum].GetComponent<Image>().sprite = clearSprite;
         }
 
         PlayerIDInv playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
