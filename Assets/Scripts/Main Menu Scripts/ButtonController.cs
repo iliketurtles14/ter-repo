@@ -17,6 +17,7 @@ public class ButtonController : MonoBehaviour
     public PlayerMenu PlayerMenuScript;
     public SmallMenu smallMenuScript;
     public NPCRename npcRenameScript;
+    public Warnings warningsScript;
     public void MainPlayGame()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
