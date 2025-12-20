@@ -8,6 +8,7 @@ public class DumperStartStop : MonoBehaviour
     private Process dumper;
     public LoadingPanel loadScript;
     public MemoryMappedFileReader mmfrScript; // Assign in Inspector
+    public CheckForDependencies dependenciesScript;
 
     private void OnEnable()
     {
@@ -16,6 +17,15 @@ public class DumperStartStop : MonoBehaviour
 
     private IEnumerator Wait()
     {
+        while (true)
+        {
+            if (dependenciesScript.hasChecked)
+            {
+                break;
+            }
+            yield return null;
+        }
+        
         StartDumper();
         loadScript.LogLoad("Starting Dumper");
         yield return new WaitForSecondsRealtime(5); // Wait for the process to initialize

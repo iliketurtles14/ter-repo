@@ -8,6 +8,7 @@ using System.Collections;
 using System.Net;
 using UnityEngine.Audio;
 using Unity.VisualScripting;
+using System.IO;
 public class MemoryMappedFileReader : MonoBehaviour
 {
     public string mapName = "ClickteamMemoryMap";
@@ -30,18 +31,35 @@ public class MemoryMappedFileReader : MonoBehaviour
 
     public void ReadDataFromMemory()
     {
-        using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
+        while (true)
         {
-            using (MemoryMappedViewStream stream = mmf.CreateViewStream())
+            try
             {
-                byte[] buffer = new byte[1024 * 1024 * 10]; // 10 MB buffer
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string jsonData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                loadScript.LogLoad("Received Data");
+                using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(mapName))
+                {
+                    using (MemoryMappedViewStream stream = mmf.CreateViewStream())
+                    {
+                        byte[] buffer = new byte[1024 * 1024 * 10]; // 10 MB buffer
+                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                        string jsonData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        loadScript.LogLoad("Received Data");
 
-                ParseData(jsonData);
+                        ParseData(jsonData);
+                    }
+                }
+                break;
+            }
+            catch(FileNotFoundException)
+            {
+                StartCoroutine(TryReadAgain());
             }
         }
+    }
+    private IEnumerator TryReadAgain()
+    {
+        loadScript.LogLoad("Couldn't receive the data. Trying again...");
+        yield return new WaitForEndOfFrame();
+        ReadDataFromMemory();
     }
 
     private void ParseData(string jsonData)

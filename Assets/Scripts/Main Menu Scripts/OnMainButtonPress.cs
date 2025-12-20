@@ -20,10 +20,6 @@ public class OnMainButtonPress : MonoBehaviour
     public bool isPrisonSelectPanelOpen;
     private bool hasPressedMap;
 
-    private void Start()
-    {
-        OnEnable();
-    }
     private void OnEnable()
     {
         lastTouchedButton = null;
@@ -50,94 +46,94 @@ public class OnMainButtonPress : MonoBehaviour
             NPCRenameScript.comingFromRename = false;
         }
     }
-    private void Update()
-    {
-        if (mouseCollisionScript.isTouchingButton)
-        {
-            switch (mouseCollisionScript.touchedButton.name)
-            {
-                case "PlayButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingPlayButton = true;
-                    break;
-                case "OptionsButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingOptionsButton = true;
-                    break;
-                case "MapEditorButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingMapEditorButton = true;
-                    break;
-                case "PatchNotesButton":
-                    mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = PatchNotesButtonPressedSprite;
-                    lastTouchedButton = mouseCollisionScript.touchedButton;
-                    touchingPatchNotesButton = true;
-                    break;
-            }
-        }
-        else
-        {
-            touchingPlayButton = false;
-            touchingOptionsButton = false;
-            touchingMapEditorButton = false;
-            touchingPatchNotesButton = false;
-            if (lastTouchedButton != null && lastTouchedButton.name != "PatchNotesButton") 
-            { 
-                lastTouchedButton.GetComponent<Image>().sprite = ButtonNormalSprite; 
-            }
-            else if(lastTouchedButton != null && lastTouchedButton.name == "PatchNotesButton")
-            {
-                lastTouchedButton.GetComponent<Image>().sprite = PatchNotesButtonNormalSprite;
-            }
-            lastTouchedButton = null;
+    //private void Update()
+    //{
+    //    if (mouseCollisionScript.isTouchingButton)
+    //    {
+    //        switch (mouseCollisionScript.touchedButton.name)
+    //        {
+    //            case "PlayButton":
+    //                mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
+    //                lastTouchedButton = mouseCollisionScript.touchedButton;
+    //                touchingPlayButton = true;
+    //                break;
+    //            case "OptionsButton":
+    //                mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
+    //                lastTouchedButton = mouseCollisionScript.touchedButton;
+    //                touchingOptionsButton = true;
+    //                break;
+    //            case "MapEditorButton":
+    //                mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = ButtonPressedSprite;
+    //                lastTouchedButton = mouseCollisionScript.touchedButton;
+    //                touchingMapEditorButton = true;
+    //                break;
+    //            case "PatchNotesButton":
+    //                mouseCollisionScript.touchedButton.GetComponent<Image>().sprite = PatchNotesButtonPressedSprite;
+    //                lastTouchedButton = mouseCollisionScript.touchedButton;
+    //                touchingPatchNotesButton = true;
+    //                break;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        touchingPlayButton = false;
+    //        touchingOptionsButton = false;
+    //        touchingMapEditorButton = false;
+    //        touchingPatchNotesButton = false;
+    //        if (lastTouchedButton != null && lastTouchedButton.name != "PatchNotesButton") 
+    //        { 
+    //            lastTouchedButton.GetComponent<Image>().sprite = ButtonNormalSprite; 
+    //        }
+    //        else if(lastTouchedButton != null && lastTouchedButton.name == "PatchNotesButton")
+    //        {
+    //            lastTouchedButton.GetComponent<Image>().sprite = PatchNotesButtonNormalSprite;
+    //        }
+    //        lastTouchedButton = null;
 
-        }
+    //    }
 
-        if (touchingPlayButton && Input.GetMouseButtonDown(0))
-        {
-            MainMenuCanvas.transform.Find("PrisonSelectPanel").gameObject.SetActive(true);
-            MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
-            isPrisonSelectPanelOpen = true;
-            foreach (Transform child in transform)
-            {
-                if (child.GetComponent<BoxCollider2D>() != null)
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = false;
-                }
-            }
-        }
-        else if (touchingPatchNotesButton && Input.GetMouseButtonDown(0))
-        {
-            MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(true);
-            MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
-            foreach(Transform child in transform)
-            {
-                if(child.GetComponent<BoxCollider2D>() != null)
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = false;
-                }
-            }
-        }
-        else if(touchingOptionsButton && Input.GetMouseButtonDown(0))
-        {
-            MainMenuCanvas.transform.Find("OptionsPanel").gameObject.SetActive(true);
-            MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
-            foreach (Transform child in transform)
-            {
-                if(child.GetComponent<BoxCollider2D>() != null)
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = false;
-                }
-            }
-        }
-        else if(touchingMapEditorButton && Input.GetMouseButtonDown(0) && !hasPressedMap)
-        {
-            hasPressedMap = true;
+    //    if (touchingPlayButton && Input.GetMouseButtonDown(0))
+    //    {
+    //        MainMenuCanvas.transform.Find("PrisonSelectPanel").gameObject.SetActive(true);
+    //        MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
+    //        isPrisonSelectPanelOpen = true;
+    //        foreach (Transform child in transform)
+    //        {
+    //            if (child.GetComponent<BoxCollider2D>() != null)
+    //            {
+    //                child.GetComponent<BoxCollider2D>().enabled = false;
+    //            }
+    //        }
+    //    }
+    //    else if (touchingPatchNotesButton && Input.GetMouseButtonDown(0))
+    //    {
+    //        MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(true);
+    //        MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
+    //        foreach(Transform child in transform)
+    //        {
+    //            if(child.GetComponent<BoxCollider2D>() != null)
+    //            {
+    //                child.GetComponent<BoxCollider2D>().enabled = false;
+    //            }
+    //        }
+    //    }
+    //    else if(touchingOptionsButton && Input.GetMouseButtonDown(0))
+    //    {
+    //        MainMenuCanvas.transform.Find("OptionsPanel").gameObject.SetActive(true);
+    //        MainMenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
+    //        foreach (Transform child in transform)
+    //        {
+    //            if(child.GetComponent<BoxCollider2D>() != null)
+    //            {
+    //                child.GetComponent<BoxCollider2D>().enabled = false;
+    //            }
+    //        }
+    //    }
+    //    else if(touchingMapEditorButton && Input.GetMouseButtonDown(0) && !hasPressedMap)
+    //    {
+    //        hasPressedMap = true;
 
-            Addressables.LoadSceneAsync("Map Editor");
-        }
-    }
+    //        Addressables.LoadSceneAsync("Map Editor");
+    //    }
+    //}
 }

@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -6,6 +8,11 @@ using UnityEngine;
 
 public class CheckForDependencies : MonoBehaviour
 {
+    public bool hasChecked = false;
+    private void Start()
+    {
+        CheckDependencies();
+    }
     public void CheckDependencies()
     {
         //.net 6.0 stuff
@@ -127,7 +134,7 @@ public class CheckForDependencies : MonoBehaviour
 
         string pathToConfig = Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini");
         string[] data = File.ReadAllLines(pathToConfig);
-        string pathToEscapistsFolder = GetINIVar("Settings", "GameFolderPath", data);
+        string pathToEscapistsFolder = GetINIVar("Settings", "GameFolderPath", data).Trim('\"').Replace('/', '\\');
         string pathToEscapistsEXE = Path.Combine(pathToEscapistsFolder, "TheEscapists_eur.exe");
         if (File.Exists(pathToEscapistsEXE))
         {
@@ -148,7 +155,77 @@ public class CheckForDependencies : MonoBehaviour
         }
 
         //make the warning message
+        string msg = "";
 
+        string desktopMsg = "";
+        string runtimeMsg = "";
+        string coreMsg = "";
+        string pythonMsg = "";
+        string blowfishMsg = "";
+
+        bool makeDependencyMsg = false;
+
+        if (!hasDesktop)
+        {
+            desktopMsg = ".NET 6.0 Desktop Runtime";
+            makeDependencyMsg = true;
+        }
+        if (!hasRuntime)
+        {
+            runtimeMsg = ".NET 6.0 Runtime";
+            makeDependencyMsg = true;
+        }
+        if (!hasCore)
+        {
+            coreMsg = "ASP.NET Core Runtime 6.0";
+            makeDependencyMsg = true;
+        }
+        if (!hasPython)
+        {
+            pythonMsg = "Python 3.4+";
+            makeDependencyMsg = true;
+        }
+        if (!hasBlowfish)
+        {
+            blowfishMsg = "PyPI blowfish Package";
+            makeDependencyMsg = true;
+        }
+
+        List<string> messages = new List<string>
+        {
+            desktopMsg, runtimeMsg, coreMsg, pythonMsg, blowfishMsg
+        };
+
+        if (makeDependencyMsg)
+        {
+            msg += "There are missing dependencies:\n";
+            foreach(string message in messages)
+            {
+                if (!string.IsNullOrEmpty(message))
+                {
+                    msg += "\t" + message + "\n";
+                }
+            }
+            msg += "The game will not work properly without these.\n\n";
+        }
+        if (!hasEscapists)
+        {
+            msg += "The path for The Escapists is invalid.\n";
+            msg += "The game will not work properly without this.\n\n";
+        }
+        if (!hasAllDLC && hasEscapists)
+        {
+            msg += "You do not have all DLC for The Escapists.\n";
+            msg += "This will cause certain prisons and features of the Map Editor to break.";
+        }
+        if(!makeDependencyMsg && hasEscapists && hasAllDLC)
+        {
+            hasChecked = true;
+        }
+        else
+        {
+            GetComponent<Warnings>().CreateWarning(msg, transform.parent.Find("LoadingPanel"));
+        }
     }
     public string GetINIVar(string header, string varName, string[] file)
     {

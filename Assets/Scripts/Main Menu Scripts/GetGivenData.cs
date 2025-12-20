@@ -14,6 +14,7 @@ public class GetGivenData : MonoBehaviour
     public DataSender senderScript;
     public LoadingPanel loadScript;
     public TileDecrypt tileDecryptScript;
+    public CheckForDependencies dependenciesScript;
 
     public List<Texture2D> groundTextureList = new List<Texture2D>();
     public List<Texture2D> tileTextureList = new List<Texture2D>();
@@ -28,8 +29,23 @@ public class GetGivenData : MonoBehaviour
     private bool doneWithTileLoad = false;
     public bool doneWithGivenLoad = false;
     public static GetGivenData instance { get; private set; }
-
-    public async void Start()
+    private void Start()
+    {
+        StartCoroutine(WaitForCheck());
+    }
+    private IEnumerator WaitForCheck()
+    {
+        while (true)
+        {
+            if (dependenciesScript.hasChecked)
+            {
+                break;
+            }
+            yield return null;
+        }
+        GetGivenDataStart();
+    }
+    public async void GetGivenDataStart()
     {
         //load from ini file
         string configPath = Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini");
