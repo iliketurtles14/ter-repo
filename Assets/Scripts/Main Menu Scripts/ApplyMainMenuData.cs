@@ -232,6 +232,13 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("NPCCustomizePanel").GetComponent<NPCRename>().RightArrowSprite = UISprites[200];
         bc.checkedBoxSprite = UISprites[216];
         bc.uncheckedBoxSprite = UISprites[215];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonsButtonNormal = UISprites[485];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonsButtonPressed = UISprites[441];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonsButtonNormal = UISprites[471];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonsButtonPressed = UISprites[472];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().customPrisonsButtonNormal = UISprites[443];
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().customPrisonsButtonPressed = UISprites[442];
+
         //npc lists
         BaldEagleSprites.Add(NPCSprites[92]);
         BaldEagleSprites.Add(NPCSprites[91]);

@@ -22,6 +22,8 @@ public class SeeBadActions : MonoBehaviour
         map = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         MakeVetorLists();
         MakeBadObjectList();
+
+        StartCoroutine(LookWait());
     }
     private void MakeVetorLists()
     {
@@ -83,91 +85,101 @@ public class SeeBadActions : MonoBehaviour
         availableBadObjects.Add("inmateBreakingTile");
         availableBadObjects.Add("guardBreakingTile");
     }
-    private void Update()
+    private IEnumerator LookWait()
     {
-        switch (GetComponent<NPCAnimation>().lookDir)
+        float rand = UnityEngine.Random.Range(0f, .1f);
+        yield return new WaitForSeconds(rand);
+        StartCoroutine(Look());
+    }
+    private IEnumerator Look()
+    {
+        while (true)
         {
-            case "up":
-                currentVectors = upVectors;
-                break;
-            case "right":
-                currentVectors = rightVectors;
-                break;
-            case "left":
-                currentVectors = leftVectors;
-                break;
-            case "down":
-                currentVectors = downVectors;
-                break;
-        }
-
-        foreach(Vector2 vector in currentVectors)
-        {
-            RaycastHit2D[] wallHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
-
-            RaycastHit2D? wallHit = null;
-            foreach(RaycastHit2D aHit in wallHits)
+            switch (GetComponent<NPCAnimation>().lookDir)
             {
-                if (aHit.collider.CompareTag("Wall"))
-                {
-                    wallHit = aHit;
+                case "up":
+                    currentVectors = upVectors;
                     break;
-                }
+                case "right":
+                    currentVectors = rightVectors;
+                    break;
+                case "left":
+                    currentVectors = leftVectors;
+                    break;
+                case "down":
+                    currentVectors = downVectors;
+                    break;
             }
 
-            if (wallHit.HasValue)
+            foreach (Vector2 vector in currentVectors)
             {
-                Debug.DrawLine(transform.position, wallHit.Value.point, Color.red);
-            }
-            else
-            {
-                Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
-            }
+                RaycastHit2D[] wallHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
 
-            RaycastHit2D[] badHits;
-            try
-            {
-                badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
-
-            }
-            catch 
-            {
-                badHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
-            }
-
-            RaycastHit2D? badHit = null;
-            foreach(RaycastHit2D aHit in badHits)
-            {
-                if (aHit.collider.CompareTag("BadObject"))
+                RaycastHit2D? wallHit = null;
+                foreach (RaycastHit2D aHit in wallHits)
                 {
-                    Debug.Log(aHit.collider.name);
-                }
-            }
-            foreach (RaycastHit2D aHit in badHits)
-            {
-                if (aHit.collider.CompareTag("BadObject"))
-                {
-                    if (availableBadObjects.Contains(aHit.collider.name) && !GetComponent<NPCCombat>().isAggro && aHit.collider.name != "playerPunching")
+                    if (aHit.collider.CompareTag("Wall"))
                     {
-                        badHit = aHit;
-                        SeeBadAction(aHit.transform.gameObject);
-                    }
-                    else if(availableBadObjects.Contains(aHit.collider.name) && aHit.collider.name == "playerPunching")
-                    {
-                        badHit = aHit;
-                        SeeBadAction(aHit.transform.gameObject);
+                        wallHit = aHit;
+                        break;
                     }
                 }
-            }
 
-            if (badHit.HasValue)
-            {
-                Debug.DrawLine(transform.position, badHit.Value.point, Color.red);
+                if (wallHit.HasValue)
+                {
+                    Debug.DrawLine(transform.position, wallHit.Value.point, Color.red);
+                }
+                else
+                {
+                    Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
+                }
+
+                RaycastHit2D[] badHits;
+                try
+                {
+                    badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
+
+                }
+                catch
+                {
+                    badHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
+                }
+
+                RaycastHit2D? badHit = null;
+                foreach (RaycastHit2D aHit in badHits)
+                {
+                    if (aHit.collider.CompareTag("BadObject"))
+                    {
+                        Debug.Log(aHit.collider.name);
+                    }
+                }
+                foreach (RaycastHit2D aHit in badHits)
+                {
+                    if (aHit.collider.CompareTag("BadObject"))
+                    {
+                        if (availableBadObjects.Contains(aHit.collider.name) && !GetComponent<NPCCombat>().isAggro && aHit.collider.name != "playerPunching")
+                        {
+                            badHit = aHit;
+                            SeeBadAction(aHit.transform.gameObject);
+                        }
+                        else if (availableBadObjects.Contains(aHit.collider.name) && aHit.collider.name == "playerPunching")
+                        {
+                            badHit = aHit;
+                            SeeBadAction(aHit.transform.gameObject);
+                        }
+                    }
+                }
+
+                if (badHit.HasValue)
+                {
+                    Debug.DrawLine(transform.position, badHit.Value.point, Color.red);
+                }
+                else
+                {
+                    Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
+                }
             }
-            else
-            {
-                Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
-            }
+            yield return new WaitForSeconds(.1f);
         }
     }
     public void SeeBadAction(GameObject badObject)
