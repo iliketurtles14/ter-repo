@@ -9,6 +9,7 @@ using UnityEngine;
 public class CheckForDependencies : MonoBehaviour
 {
     public bool hasChecked = false;
+    public string pythonType;
     private void Start()
     {
         CheckDependencies();
@@ -108,6 +109,7 @@ public class CheckForDependencies : MonoBehaviour
             }
             catch { }
         }
+        pythonType = whichPython; //just to see it in the inspector lol
 
         //blowfish python package
         bool hasBlowfish = false;

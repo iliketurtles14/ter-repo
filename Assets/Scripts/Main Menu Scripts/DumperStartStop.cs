@@ -9,6 +9,7 @@ public class DumperStartStop : MonoBehaviour
     public LoadingPanel loadScript;
     public MemoryMappedFileReader mmfrScript; // Assign in Inspector
     public CheckForDependencies dependenciesScript;
+    public PrisonSelect prisonSelectScript;
 
     private void OnEnable()
     {
@@ -28,11 +29,21 @@ public class DumperStartStop : MonoBehaviour
         
         StartDumper();
         loadScript.LogLoad("Starting Dumper");
-        yield return new WaitForSecondsRealtime(5); // Wait for the process to initialize
-        mmfrScript.ReadDataFromMemory();
-        yield return new WaitForSecondsRealtime(5);
+        StartCoroutine(mmfrScript.ReadDataFromMemory());
+
+        while (true)
+        {
+            if (mmfrScript.canStopDumper)
+            {
+                break;
+            }
+            yield return null;
+        }
+
         StopDumper();
         loadScript.LogLoad("Stopping Dumper");
+        loadScript.LogLoad("Loading Prisons");
+        prisonSelectScript.ReloadPrisons(false);
     }
 
     private void StartDumper()

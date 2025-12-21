@@ -14,6 +14,8 @@ public class LoadingPanel : MonoBehaviour
     public Sprite clearSprite;
     public Sprite barSprite;
     public GameObject titlePanel;
+
+    public PrisonSelect prisonSelectScript;
     public void Start()
     {
         titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = false;
@@ -25,9 +27,10 @@ public class LoadingPanel : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             GetGivenData.instance.doneWithGivenLoad = true;
+            prisonSelectScript.doneWithInitialLoad = true;
         }
 
-        if (GetGivenData.instance.doneWithGivenLoad)
+        if (GetGivenData.instance.doneWithGivenLoad && prisonSelectScript.doneWithInitialLoad)
         {
             titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = true;
             titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;

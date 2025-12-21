@@ -172,6 +172,22 @@ public class ButtonController : MonoBehaviour
         mmc.Find("PlayerPanel").gameObject.SetActive(true);
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
     }
+    public void PrisonSelectMainPrisons()
+    {
+        prisonSelectScript.whichTab = 0;
+    }
+    public void PrisonSelectBonusPrisons()
+    {
+        prisonSelectScript.whichTab = 1;
+    }
+    public void PrisonSelectCustomPrisons()
+    {
+        prisonSelectScript.whichTab = 2;
+    }
+    public void PrisonSelectReloadCustomPrisons()
+    {
+        prisonSelectScript.ReloadPrisons(true);
+    }
     public void PlayerMenuLeft()
     {
         PlayerMenuScript.characterNum--;

@@ -26,10 +26,11 @@ public class MemoryMappedFileReader : MonoBehaviour
     public List<Texture2D> UIImages = new List<Texture2D>();
     public ApplyMainMenuData applyScript;
     public bool canApply;
+    public bool canStopDumper;
 
 
 
-    public void ReadDataFromMemory()
+    public IEnumerator ReadDataFromMemory()
     {
         while (true)
         {
@@ -49,10 +50,11 @@ public class MemoryMappedFileReader : MonoBehaviour
                 }
                 break;
             }
-            catch(FileNotFoundException)
+            catch
             {
                 StartCoroutine(TryReadAgain());
             }
+            yield return null;
         }
     }
     private IEnumerator TryReadAgain()
@@ -89,6 +91,8 @@ public class MemoryMappedFileReader : MonoBehaviour
         loadScript.LogLoad("Sounds Processed");
         ConvertSounds();
         loadScript.LogLoad("Sounds Converted");
+
+        canStopDumper = true;
     }
     public void ConvertSounds()
     {
