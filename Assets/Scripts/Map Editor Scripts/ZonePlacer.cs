@@ -13,7 +13,7 @@ public class ZonePlacer : MonoBehaviour
     private GameObject grabbedHandle;
     private bool isGrabbingMover;
     private GameObject grabbedMover;
-    private bool inDeleteMode;
+    public bool inDeleteMode;
     public Transform zonesLayer;
     public Sprite deleteZoneSprite;
     public Sprite moveZoneSprite;
@@ -65,35 +65,6 @@ public class ZonePlacer : MonoBehaviour
         //    SetSystemCursor(IDC_ARROW);
         //}
 
-        if(mcs.isTouchingButton && mcs.touchedButton.name == "DeleteZoneButton" && Input.GetMouseButtonDown(0))
-        {
-            inDeleteMode = true;
-            
-            foreach(Transform zone in zonesLayer)
-            {
-                if(zone.name != "empty")
-                {
-                    zone.Find("Mover").GetComponent<SpriteRenderer>().sprite = deleteZoneSprite;
-                }
-            }
-        }
-        else if(mcs.isTouchingButton && mcs.touchedButton.name == "MoveZoneButton" && Input.GetMouseButtonDown(0))
-        {
-            inDeleteMode = false;
-
-            foreach(Transform zone in zonesLayer)
-            {
-                if(zone.name != "empty")
-                {
-                    zone.Find("Mover").GetComponent<SpriteRenderer>().sprite = moveZoneSprite;
-                }
-            }
-        }
-
-        if(mcs.isTouchingButton && zoneButtonNames.Contains(mcs.touchedButton.name) && Input.GetMouseButtonDown(0))
-        {
-            PlaceZone(mcs.touchedButton.name);
-        }
 
         if(inDeleteMode && mcs.isTouchingMover && Input.GetMouseButtonDown(0)) //delete zone
         {

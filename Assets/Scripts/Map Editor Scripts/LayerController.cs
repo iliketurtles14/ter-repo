@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class LayerController : MonoBehaviour
@@ -7,36 +8,24 @@ public class LayerController : MonoBehaviour
     public Transform tiles;
     public Transform grounds;
     private bool hasSwitched;
-    private void Update()
+    private void Start()
     {
-        int oldLayer = currentLayer;
-        if(mcs.isTouchingButton && Input.GetMouseButtonDown(0))
+        StartCoroutine(LayerLoop());
+    }
+    private IEnumerator LayerLoop()
+    {
+        while (true)
         {
-            switch (mcs.touchedButton.name)
+            int oldLayer = currentLayer;
+            yield return new WaitForEndOfFrame();
+            if (oldLayer != currentLayer)
             {
-                case "GroundButton":
-                    currentLayer = 1;
-                    break;
-                case "UndergroundButton":
-                    currentLayer = 0;
-                    break;
-                case "VentsButton":
-                    currentLayer = 2;
-                    break;
-                case "RoofButton":
-                    currentLayer = 3;
-                    break;
-                case "ZonesButton":
-                    currentLayer = 4;
-                    break;
+                hasSwitched = false;
             }
         }
-
-        if(oldLayer != currentLayer)
-        {
-            hasSwitched = false;
-        }
-
+    }
+    private void Update()
+    {
         if (!hasSwitched)
         {
             DisableAllLayers();
