@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,6 @@ public class TilePlacer : MonoBehaviour
     public Transform highlight;
     public MouseCollisionOnMap mcs;
     public Transform tiles;
-    public bool canPlace;
     public LayerController layerControllerScript;
     public bool inDeleteMode = false;
     public string layer;
@@ -46,23 +46,20 @@ public class TilePlacer : MonoBehaviour
 
         if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones")
         {
-            foreach(Transform tile in tiles.Find(layer))
-            {
-                if(tile.position == highlight.position)
-                {
-                    canPlace = false;
-                    break;
-                }
-                else
-                {
-                    canPlace = true;
-                }
-            }
+            //foreach(Transform tile in tiles.Find(layer))
+            //{
+            //    if(tile.position == highlight.position)
+            //    {
+            //        canPlace = false;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        canPlace = true;
+            //    }
+            //}
 
-            if (canPlace)
-            {
-                PlaceTile(layer, GetComponent<TileSelect>().selectedTile);
-            }
+            PlaceTile(layer, GetComponent<TileSelect>().selectedTile);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !inDeleteMode && (currentPanel == "TilesPanel" || currentPanel == "ObjectsPanel"))
@@ -99,6 +96,16 @@ public class TilePlacer : MonoBehaviour
     }
     private void PlaceTile(string layer, GameObject tileToPlace)
     {
+        foreach(Transform tile in tiles.Find(layer))
+        {
+            float distance = Vector2.Distance(tile.position, highlight.position);
+            if(distance < .01f)
+            {
+                Destroy(tile.gameObject);
+                break;
+            }
+        }
+        
         GameObject placedTile = new GameObject();
         placedTile.AddComponent<SpriteRenderer>();
         placedTile.AddComponent<BoxCollider2D>();

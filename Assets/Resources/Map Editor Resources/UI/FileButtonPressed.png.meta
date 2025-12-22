@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 77adadaa7035a9242b7f78581e562970
+guid: 361396ad2e37e5d4c8d89ece84166379
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1088945369878594183
-    second: Map Editor UI_0
-  - first:
-      213: -636628690192308393
-    second: Map Editor UI_1
+      213: -2830707902212942033
+    second: FileButtonPressed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,52 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Map Editor UI_0
+      name: FileButtonPressed_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 202
-        width: 384
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 97d7490a4f943e0f0800000000000000
-      internalID: -1088945369878594183
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Map Editor UI_1
-      rect:
-        serializedVersion: 2
-        x: 322
         y: 0
-        width: 62
-        height: 14
+        width: 24
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 757e34b449d3a27f0800000000000000
-      internalID: -636628690192308393
+      spriteID: f27d4b1292e47b8d0800000000000000
+      internalID: -2830707902212942033
       vertices: []
       indices: 
       edges: []
@@ -173,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Map Editor UI_0: -1088945369878594183
-      Map Editor UI_1: -636628690192308393
+      FileButtonPressed_0: -2830707902212942033
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

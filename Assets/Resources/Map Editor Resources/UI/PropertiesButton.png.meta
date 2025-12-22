@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0befc000328ba3b479c561ba29f2f9bd
+guid: b75fff357c9af1549be49a1cd0dd5deb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7461383729011308542
-    second: routineeditor 1_0
+      213: 4725784583325589716
+    second: PropertiesButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ZoneObjectsButton_0
+      name: PropertiesButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 71
+        width: 61
         height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e447f870e653c6de0800000000000000
-      internalID: -1338636242546363314
+      spriteID: 4d0a32e4a0c559140800000000000000
+      internalID: 4725784583325589716
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ZoneObjectsButton_0: -1338636242546363314
+      PropertiesButton_0: 4725784583325589716
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

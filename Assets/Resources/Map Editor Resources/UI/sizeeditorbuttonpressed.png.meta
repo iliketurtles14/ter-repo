@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0befc000328ba3b479c561ba29f2f9bd
+guid: 2e4860dd2d5e27843a77b30659cb6ea7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7461383729011308542
-    second: routineeditor 1_0
+      213: 8859111889499798938
+    second: sizeeditorbuttonpressed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
