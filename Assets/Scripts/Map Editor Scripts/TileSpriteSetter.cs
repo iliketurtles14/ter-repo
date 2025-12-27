@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class TileSpriteSetter : MonoBehaviour
     public GameObject tileObject;
     public Texture2D devTiles;
     public List<Sprite> sprites = new List<Sprite>();
+    public Transform tiles;
     private void Start()
     {
         SetSprites(devTiles);
@@ -31,6 +33,39 @@ public class TileSpriteSetter : MonoBehaviour
             tile.name = "tile" + i;
             tile.tag = "Button";
             i++;
+        }
+
+        foreach (Transform tile in tiles.Find("Ground"))
+        {
+            if (tile.name != "empty")
+            {
+                int num = Convert.ToInt32(tile.name.Split('e')[1]);
+                tile.GetComponent<SpriteRenderer>().sprite = sprites[num];
+            }
+        }
+        foreach (Transform tile in tiles.Find("Underground"))
+        {
+            if (tile.name != "empty")
+            {
+                int num = Convert.ToInt32(tile.name.Split('e')[1]);
+                tile.GetComponent<SpriteRenderer>().sprite = sprites[num];
+            }
+        }
+        foreach (Transform tile in tiles.Find("Vent"))
+        {
+            if (tile.name != "empty")
+            {
+                int num = Convert.ToInt32(tile.name.Split('e')[1]);
+                tile.GetComponent<SpriteRenderer>().sprite = sprites[num];
+            }
+        }
+        foreach (Transform tile in tiles.Find("Roof"))
+        {
+            if (tile.name != "empty")
+            {
+                int num = Convert.ToInt32(tile.name.Split('e')[1]);
+                tile.GetComponent<SpriteRenderer>().sprite = sprites[num];
+            }
         }
     }
     private void SplitTexture(Texture2D tileset)

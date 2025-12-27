@@ -69,6 +69,7 @@ TagManager:
   - Weed
   - Spill
   - BadObject
+  - ObjectPanel
   layers:
   - Default
   - TransparentFX
