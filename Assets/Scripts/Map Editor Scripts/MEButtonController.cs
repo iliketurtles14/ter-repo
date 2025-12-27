@@ -1,6 +1,8 @@
 using Ookii.Dialogs;
 using SFB;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
@@ -15,6 +17,30 @@ public class MEButtonController : MonoBehaviour
     private SubMenuController smc;
     private PanelSelect panelSelectScript;
     private LayerController layerControllerScript;
+    //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
+    //{
+    //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
+    //    { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
+    //    { "irongate", 12 }, { "jungle", 13 }, { "pcpen", 8 }, { "perks", 14 },
+    //    { "sanpancho", 15 }, { "shanktonstatepen", 16 }, { "SS", 9 }, { "stalagflucht", 17 },
+    //    { "TOL", 10 }, { "tutorial", 11 }
+    //};
+    private Dictionary<string, int> groundDict = new Dictionary<string, int>() //also for tilesets
+    {
+        { "alca", 14 }, { "BC", 8 }, { "campepsilon", 16 }, { "CCL", 7 },
+        { "DTAF", 12 }, { "EA", 15 }, { "escapeteam", 13 }, { "fortbamford", 17 },
+        { "irongate", 6 }, { "jungle", 4 }, { "pcpen", 10 }, { "perks", 1 },
+        { "sanpancho", 5 }, { "shanktonstatepen", 3 }, { "SS", 11 }, { "stalagflucht", 2 },
+        { "TOL", 9 }, { "tutorial", 0 }
+    };
+    private Dictionary<string, string> prisonDict = new Dictionary<string, string>() //this is for converting the result text to the real prison names
+    {
+        { "perks", "perks" }, { "stalag", "stalagflucht" }, { "shankton", "shanktonstatepen" },
+        { "jungle", "jungle" }, { "sanpancho", "sanpancho" }, { "irongate", "irongate" },
+        { "JC", "CCL" }, { "BC", "BC" }, { "london", "TOL" }, { "PCP", "pcpen" }, { "SS", "SS" },
+        { "DTAF", "DTAF" }, { "ET", "escapeteam" }, { "alca", "alca" }, { "fhurst", "EA" },
+        { "epsilon", "campepsilon" }, { "bamford", "fortbamford" }, { "tutorial", "tutorial" }
+    };
     private void Start()
     {
         pc = GetComponent<PropertiesController>();
@@ -329,10 +355,39 @@ public class MEButtonController : MonoBehaviour
                 case "tileset":
                     uic.Find("PropertiesPanel").Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text = smc.prisonDict[whatPrison];
                     smc.tilesPath = null;
+
+                    Texture2D tileset;
+                    string prison = prisonDict[smc.prisonDict[whatPrison]];
+                    GetGivenData getGivenDataScript = GetGivenData.instance;
+                    tileset = getGivenDataScript.tileTextureList[groundDict[prison]];
+
+                    GetComponent<TileSpriteSetter>().SetSprites(tileset);
                     break;
                 case "ground":
                     uic.Find("PropertiesPanel").Find("GroundResultText").GetComponent<TextMeshProUGUI>().text = smc.prisonDict[whatPrison];
                     smc.groundPath = null;
+
+                    Sprite groundSprite;
+                    string aPrison = prisonDict[smc.prisonDict[whatPrison]];
+                    GetGivenData aGetGivenDataScript = GetGivenData.instance;
+                    groundSprite = TextureToSprite(textureCornerGet(aGetGivenDataScript.groundTextureList[groundDict[aPrison]], 16, 16));
+
+                    bool isTiled = true;
+                    if(aPrison == "DTAF" || aPrison == "BC" || aPrison == "CCL")
+                    {
+                        isTiled = false;
+                    }
+
+                    if (isTiled)
+                    {
+                        groundSprite = TextureToSprite(textureCornerGet(aGetGivenDataScript.groundTextureList[groundDict[aPrison]], 16, 16));
+                    }
+                    else
+                    {
+                        groundSprite = TextureToSprite(aGetGivenDataScript.groundTextureList[groundDict[aPrison]]);
+                    }
+
+                        GetComponent<GroundSpriteSetter>().SetGround(groundSprite, isTiled);
                     break;
                 case "music":
                     uic.Find("PropertiesPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = smc.prisonDict[whatPrison];
@@ -355,30 +410,34 @@ public class MEButtonController : MonoBehaviour
                 case "tileset":
                     extensions = new[]
                     {
-                                new ExtensionFilter("Image Files", "png")
-                            };
+                        new ExtensionFilter("Image Files", "png")
+                    };
                     title = "Select a custom tileset.";
                     resultTextField = "TilesetResultText";
 
                     smc.tilesPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
 
+                    Texture2D tileset = ConvertPNGToSprite(smc.tilesPath[0]).texture;
+                    GetComponent<TileSpriteSetter>().SetSprites(tileset);
                     break;
                 case "ground":
                     extensions = new[]
                     {
-                                new ExtensionFilter("Image Files", "png")
-                            };
+                        new ExtensionFilter("Image Files", "png")
+                    };
                     title = "Select a custom ground.";
                     resultTextField = "GroundResultText";
 
                     smc.groundPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
 
+                    Sprite ground = ConvertPNGToSprite(smc.groundPath[0]);
+                    GetComponent<GroundSpriteSetter>().SetGround(ground, false);
                     break;
                 case "music":
                     extensions = new[]
                     {
-                                new ExtensionFilter("Sound Files", "mp3")
-                            };
+                        new ExtensionFilter("Sound Files", "mp3")
+                    };
                     title = "Select custom music.";
                     resultTextField = "MusicResultText";
 
@@ -430,19 +489,12 @@ public class MEButtonController : MonoBehaviour
         int x = Convert.ToInt32(rawX);
         int y = Convert.ToInt32(rawY);
 
-        if (x >= 25 && x <= 150 && y >= 25 && x <= 150) //check to see if the map will be too small or big
-        {
-            smc.gridScript.DrawGrid(x, y);
-            smc.groundSizeSetScript.SetSize();
-            uic.Find("PropertiesPanel").Find("SizeResultText").GetComponent<TextMeshProUGUI>().text = x + "x" + y;
-            uic.Find("Black").gameObject.SetActive(false);
-            uic.Find("SizePanel").gameObject.SetActive(false);
-            smc.ReactivateButtons();
-        }
-        else
-        {
-            Debug.Log("Map size is too big or too small.");
-        }
+        smc.gridScript.DrawGrid(x, y);
+        smc.groundSizeSetScript.SetSize();
+        uic.Find("PropertiesPanel").Find("SizeResultText").GetComponent<TextMeshProUGUI>().text = x + "x" + y;
+        uic.Find("Black").gameObject.SetActive(false);
+        uic.Find("SizePanel").gameObject.SetActive(false);
+        smc.ReactivateButtons();
     }
     public void SizeCancel()
     {
@@ -453,50 +505,55 @@ public class MEButtonController : MonoBehaviour
     public void PanelFile()
     {
         uic.Find("TilesPanel").gameObject.SetActive(false);
-        uic.Find("ObjectsPanel").gameObject.SetActive(false);
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(true);
+
+        GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "FilePanel";
     }
     public void PanelTiles()
     {
         uic.Find("TilesPanel").gameObject.SetActive(true);
-        uic.Find("ObjectsPanel").gameObject.SetActive(false);
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+
+        GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "TilesPanel";
     }
     public void PanelObjects()
     {
         uic.Find("TilesPanel").gameObject.SetActive(false);
-        uic.Find("ObjectsPanel").gameObject.SetActive(true);
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+
+        GetComponent<ObjectsPanelController>().canBeShown = true;
 
         panelSelectScript.currentPanel = "ObjectsPanel";
     }
     public void PanelZoneObjects()
     {
         uic.Find("TilesPanel").gameObject.SetActive(false);
-        uic.Find("ObjectsPanel").gameObject.SetActive(false);
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(true);
         uic.Find("FilePanel").gameObject.SetActive(false);
+
+        GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "ZonesPanel";
     }
     public void PanelProperties()
     {
         uic.Find("TilesPanel").gameObject.SetActive(false);
-        uic.Find("ObjectsPanel").gameObject.SetActive(false);
         uic.Find("PropertiesPanel").gameObject.SetActive(true);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+
+        GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "PropertiesPanel";
     }
@@ -519,5 +576,53 @@ public class MEButtonController : MonoBehaviour
     public void LayerZones()
     {
         layerControllerScript.currentLayer = 4;
+    }
+    public void ObjectsLeft()
+    {
+        GetComponent<ObjectsPanelController>().objectPanelNum--;
+        if(GetComponent<ObjectsPanelController>().objectPanelNum < 0)
+        {
+            GetComponent<ObjectsPanelController>().objectPanelNum = 13;
+        }
+    }
+    public void ObjectsRight()
+    {
+        GetComponent<ObjectsPanelController>().objectPanelNum++;
+        if(GetComponent<ObjectsPanelController>().objectPanelNum > 13)
+        {
+            GetComponent<ObjectsPanelController>().objectPanelNum = 0;
+        }
+    }
+    private Sprite ConvertPNGToSprite(string path)
+    {
+        byte[] pngBytes = File.ReadAllBytes(path);
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(pngBytes);
+
+        texture.filterMode = FilterMode.Point;
+
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100.0f);
+    }
+    private Sprite TextureToSprite(Texture2D texture)
+    {
+        return Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f), // pivot in the center
+            100f,                     // pixels per unit
+            0,
+            SpriteMeshType.FullRect
+        );
+    }
+    private Texture2D textureCornerGet(Texture2D source, int sizeX, int sizeY)
+    {
+        Color[] pixels = source.GetPixels(0, 0, sizeX, sizeY);
+
+        Texture2D cornerTex = new Texture2D(sizeX, sizeY, source.format, false);
+        cornerTex.SetPixels(pixels);
+        cornerTex.Apply();
+        cornerTex.filterMode = FilterMode.Point;
+
+        return cornerTex;
     }
 }

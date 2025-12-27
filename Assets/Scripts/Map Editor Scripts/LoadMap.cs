@@ -28,21 +28,13 @@ public class LoadMap : MonoBehaviour
     public Sprite icon = null;
     public string[] data = null;
 
-    private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
+    private Dictionary<string, int> groundDict = new Dictionary<string, int>() //also for tilesets
     {
-        { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
-        { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
-        { "irongate", 12 }, { "jungle", 13 }, { "pcpen", 8 }, { "perks", 14 },
-        { "sanpancho", 15 }, { "shanktonstatepen", 16 }, { "SS", 9 }, { "stalagflucht", 17 },
-        { "TOL", 10 }, { "tutorial", 11 }
-    };
-    private Dictionary<string, int> groundDict = new Dictionary<string, int>()
-    {
-        { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
-        { "DTAF", 4 }, { "EA", 5 }, { "escapeteam", 6 }, { "fortbamford", 7 },
-        { "irongate", 8 }, { "jungle", 9 }, { "pcpen", 10 }, { "perks", 11 },
-        { "sanpancho", 12 }, { "shanktonstatepen", 13 }, { "SS", 14 }, { "stalagflucht", 15 },
-        { "TOL", 16 }, { "tutorial", 17 }
+        { "alca", 14 }, { "BC", 8 }, { "campepsilon", 16 }, { "CCL", 7 },
+        { "DTAF", 12 }, { "EA", 15 }, { "escapeteam", 13 }, { "fortbamford", 17 },
+        { "irongate", 6 }, { "jungle", 4 }, { "pcpen", 10 }, { "perks", 1 },
+        { "sanpancho", 5 }, { "shanktonstatepen", 3 }, { "SS", 11 }, { "stalagflucht", 2 },
+        { "TOL", 9 }, { "tutorial", 0 }
     };
 
     private Dictionary<string, string> prisonDict = new Dictionary<string, string>() //this is for converting the result text to the real prison names
@@ -273,7 +265,7 @@ public class LoadMap : MonoBehaviour
 
         if(tilesetChoice != "Custom")
         {
-            int prisonIndex = tilesetDict[prisonDict[tilesetChoice]];
+            int prisonIndex = groundDict[prisonDict[tilesetChoice]];
             Debug.Log(prisonIndex);
             tileset = givenDataScript.tileTextureList[prisonIndex];
         }

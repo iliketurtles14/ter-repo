@@ -98,70 +98,109 @@ public class ApplyMapEditorData : MonoBehaviour
     }
     private void LoadImages()
     {
-        Transform objContent = uic.Find("ObjectsPanel").Find("ObjectsScrollRect").Find("Viewport").Find("Content");
-        foreach(Transform obj in objContent)
+        foreach(Transform obj in uic.Find("CellsPanel"))
         {
             switch (obj.name)
             {
-                case "Sink":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[32];
-                    break;
                 case "ToiletLeft":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[34];
                     break;
                 case "ToiletRight":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[35];
                     break;
-                case "SlatsVertical":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[40];
-                    break;
-                case "Washer":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[46];
-                    break;
-                case "Oven":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[48];
-                    break;
-                case "Bookshelf":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[50];
-                    break;
                 case "NPCDesk":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[51];
                     break;
-                case "Benchpress":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[52];
+                case "PlayerDesk":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[143];
                     break;
-                case "Treadmill":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[54];
+                case "TV":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[205];
                     break;
-                case "Freezer":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[55];
+                case "BedVertical":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[264];
                     break;
-                case "MedicBed":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[56];
+                case "BedHorizontal":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[265];
                     break;
-                case "Table":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[60];
+                case "PlayerBedVertical":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[262];
                     break;
-                case "FoodTable":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[61];
+                case "PlayerBedHorizontal":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[267];
                     break;
-                case "CutleryTable":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[67];
+                case "ToiletDown":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[253];
                     break;
+            }
+        }
+        foreach(Transform obj in uic.Find("CellsPanel"))
+        {
+            if (obj.name != "CellsText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("SecurityPanel"))
+        {
+            switch (obj.name)
+            {
                 case "DetectorVertical":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[68];
                     break;
                 case "Camera":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[72];
                     break;
+                case "GuardBed":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[144];
+                    break;
+                case "SolitaryBed":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[148];
+                    break;
+                case "DetectorHorizontal":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[155];
+                    break;
+                case "Generator":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[165];
+                    break;
+                case "CharlieGate":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[229];
+                    break;
+                case "Sniper":
+                    obj.GetComponent<Image>().sprite = NPCSprites[1449];
+                    break;
+                case "CheckpointCharlie":
+                    obj.GetComponent<Image>().sprite = NPCSprites[3];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("SecurityPanel"))
+        {
+            if (obj.name != "SecurityText" && obj.name != "Spotlight")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("JobsPanel"))
+        {
+            switch (obj.name)
+            {
+                case "Washer":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[46];
+                    break;
+                case "Oven":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[48];
+                    break;
+                case "Freezer":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[55];
+                    break;
                 case "DirtyLaundry":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[75];
                     break;
                 case "CleanLaundry":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[76];
-                    break;
-                case "Seat":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[78];
                     break;
                 case "TimberBox":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[87];
@@ -178,71 +217,11 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "JanitorDesk":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[93];
                     break;
-                case "MedicDesk":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[94];
-                    break;
-                case "BookBox":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[95];
-                    break;
-                case "Vent":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[137];
-                    break;
-                case "SlatsHorizontal":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[139];
-                    break;
-                case "LadderDown":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[140];
-                    break;
-                case "PlayerDesk":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[143];
-                    break;
-                case "GuardBed":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[144];
-                    break;
-                case "LadderUp":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[147];
-                    break;
-                case "SolitaryBed":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[148];
-                    break;
-                case "DetectorHorizontal":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[155];
-                    break;
-                case "Generator":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[165];
-                    break;
-                case "WorkDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[174];
-                    break;
-                case "UtilityDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[175];
-                    break;
-                case "StaffDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[176];
-                    break;
-                case "EnteranceDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[177];
-                    break;
-                case "CellDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[178];
-                    break;
                 case "JobBoard":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[184];
                     break;
                 case "FurnitureBox":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[186];
-                    break;
-                case "Locker":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[187];
-                    break;
-                case "ComputerTable":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[188];
-                    break;
-                case "Payphone":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[189];
-                    break;
-                case "WhiteDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[190];
                     break;
                 case "DeliveryTruckRight":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[191];
@@ -271,14 +250,31 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "MailBox":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[204];
                     break;
-                case "TV":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[205];
-                    break;
-                case "Lounger":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[206];
-                    break;
                 case "YardWorkBox":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[211];
+                    break;
+                case "BookBox":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[95];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("JobsPanel"))
+        {
+            if (obj.name != "JobsText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("GymPanel"))
+        {
+            switch (obj.name)
+            {
+                case "Benchpress":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[52];
+                    break;
+                case "Treadmill":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[54];
                     break;
                 case "RunningMat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[212];
@@ -286,18 +282,147 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "PushupMat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[213];
                     break;
-                case "Stash":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[224];
-                    break;
-                case "CharlieGate":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[229];
-                    break;
                 case "PunchingMat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[236];
                     break;
                 case "JumpropeMat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[238];
                     break;
+                case "PullupBar":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[250];
+                    break;
+                case "SpeedBag":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[259];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("GymPanel"))
+        {
+            if (obj.name != "GymText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("MiscPanel"))
+        {
+            switch (obj.name)
+            {
+                case "Sink":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[32];
+                    break;
+                case "SlatsVertical":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[40];
+                    break;
+                case "Bookshelf":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[50];
+                    break;
+                case "MedicBed":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[56];
+                    break;
+                case "Table":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[60];
+                    break;
+                case "FoodTable":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[61];
+                    break;
+                case "CutleryTable":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[67];
+                    break;
+                case "Seat":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[78];
+                    break;
+                case "MedicDesk":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[94];
+                    break;
+                case "Vent":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[137];
+                    break;
+                case "SlatsHorizontal":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[139];
+                    break;
+                case "LadderDown":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[140];
+                    break;
+                case "LadderUp":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[147];
+                    break;
+                case "Locker":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[187];
+                    break;
+                case "ComputerTable":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[188];
+                    break;
+                case "Payphone":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[189];
+                    break;
+                case "Lounger":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[206];
+                    break;
+                case "Stash":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[224];
+                    break;
+                case "ToiletDown":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[253];
+                    break;
+                case "VisitorPlayer":
+                    obj.GetComponent<Image>().sprite = NPCSprites[397];
+                    break;
+                case "VisitorNPC":
+                    obj.GetComponent<Image>().sprite = NPCSprites[557];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("MiscPanel"))
+        {
+            if (obj.name != "MiscText" && obj.name != "Light")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("DoorsPanel"))
+        {
+            switch (obj.name)
+            {
+                case "WorkDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[174];
+                    break;
+                case "UtilityDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[175];
+                    break;
+                case "StaffDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[176];
+                    break;
+                case "EnteranceDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[177];
+                    break;
+                case "CellDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[178];
+                    break;
+                case "WhiteDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[190];
+                    break;
+                case "BlankDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[260];
+                    break;
+                case "GuardDoor":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[327];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("DoorsPanel"))
+        {
+            if (obj.name != "DoorsText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("ZiplinePanel"))
+        {
+            switch (obj.name)
+            {
                 case "ZipUp":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[247];
                     break;
@@ -313,45 +438,37 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "ZipEnd":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[248];
                     break;
-                case "PullupBar":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[250];
-                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("ZiplinePanel"))
+        {
+            if (obj.name != "ZiplineText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("SpecialPanel"))
+        {
+            switch (obj.name)
+            {
                 case "AlcaBoat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[251];
                     break;
-                case "ToiletDown":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[253];
-                    break;
-                case "SpeedBag":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[259];
-                    break;
-                case "BlankDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[260];
-                    break;
-                case "BedVertical":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[264];
-                    break;
-                case "BedHorizontal":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[265];
-                    break;
-                case "PlayerBedVertical":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[262];
-                    break;
-                case "PlayerBedHorizontal":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[267];
-                    break;
-                case "Sniper":
-                    obj.GetComponent<Image>().sprite = NPCSprites[1449];
-                    break;
-                case "CheckpointCharlie":
-                    obj.GetComponent<Image>().sprite = NPCSprites[3];
-                    break;
-                case "VisitorPlayer":
-                    obj.GetComponent<Image>().sprite = NPCSprites[397];
-                    break;
-                case "VisitorNPC":
-                    obj.GetComponent<Image>().sprite = NPCSprites[557];
-                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("SpecialPanel"))
+        {
+            if(obj.name != "SpecialText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("ETPanel"))
+        {
+            switch (obj.name)
+            {
                 case "ETTank":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[268];
                     break;
@@ -385,6 +502,20 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "ETStatue":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[287];
                     break;
+            }
+        }
+        foreach(Transform obj in uic.Find("ETPanel"))
+        {
+            if (obj.name != "ETText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("DTAF1Panel"))
+        {
+            switch (obj.name)
+            {
                 case "DTAFCylindar":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[288];
                     break;
@@ -430,6 +561,20 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "DTAFSpecialChairDoubleUp":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[303];
                     break;
+            }
+        }
+        foreach(Transform obj in uic.Find("DTAF1Panel"))
+        {
+            if (obj.name != "DTAF1Text")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("DTAF2Panel"))
+        {
+            switch (obj.name)
+            {
                 case "DTAFCarpet":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[304];
                     break;
@@ -469,9 +614,20 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "DTAFComputer":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[326];
                     break;
-                case "GuardDoor":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[327];
-                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("DTAF2Panel"))
+        {
+            if (obj.name != "DTAF2Text")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("Christmas1Panel"))
+        {
+            switch (obj.name)
+            {
                 case "SSCandyCaneRightTop":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[328];
                     break;
@@ -532,6 +688,20 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "SSSign":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[353];
                     break;
+            }
+        }
+        foreach(Transform obj in uic.Find("Christmas1Panel"))
+        {
+            if (obj.name != "Christmas1Text")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
+        foreach (Transform obj in uic.Find("Christmas2Panel"))
+        {
+            switch (obj.name)
+            {
                 case "SSTree":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[356];
                     break;
@@ -557,19 +727,29 @@ public class ApplyMapEditorData : MonoBehaviour
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[378];
                     break;
             }
-            if(obj.name != "GuardCanteen" && obj.name != "GuardRollcall" && obj.name != "GuardGym" &&
-                obj.name != "GuardShower" && obj.name != "GuardWaypoint" && obj.name != "InmateRollcall" &&
-                obj.name != "InmateCanteen" && obj.name != "InmateWaypoint" && obj.name != "InmateShower" && 
-                !obj.name.StartsWith("Jeep") && obj.name != "JobWaypoint" && obj.name != "MedicWaypoint" &&
-                obj.name != "Mines" && obj.name != "NPCSpawnpoint" && obj.name != "Spotlight" && obj.name != "Light")
+        }
+        foreach(Transform obj in uic.Find("Christmas2Panel"))
+        {
+            if (obj.name != "Christmas2Text")
             {
                 obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
             }
         }
-
+        foreach(Transform obj in uic.Find("ObjectsArrowsPanel"))
+        {
+            switch (obj.name)
+            {
+                case "LeftArrow":
+                    obj.GetComponent<Image>().sprite = UISprites[203];
+                    break;
+                case "RightArrow":
+                    obj.GetComponent<Image>().sprite = UISprites[200];
+                    break;
+            }
+        }
         //job panel checkboxes
-        foreach(Transform child in uic.Find("JobPanel").Find("CheckBoxGrid1"))
+        foreach (Transform child in uic.Find("JobPanel").Find("CheckBoxGrid1"))
         {
             child.GetComponent<Image>().sprite = UISprites[447];
         }

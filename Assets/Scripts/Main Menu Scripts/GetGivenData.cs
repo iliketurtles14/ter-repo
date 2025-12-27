@@ -219,7 +219,27 @@ public class GetGivenData : MonoBehaviour
         }
 
         //reorder the texture list to fit with the list laid out in discord
-        List<Texture2D> tempList = tileTextureList;
+        List<Texture2D> tempList = new List<Texture2D>
+        {
+            tileTextureList[0],
+            tileTextureList[1],
+            tileTextureList[2],
+            tileTextureList[3],
+            tileTextureList[4],
+            tileTextureList[5],
+            tileTextureList[6],
+            tileTextureList[7],
+            tileTextureList[8],
+            tileTextureList[9],
+            tileTextureList[10],
+            tileTextureList[11],
+            tileTextureList[12],
+            tileTextureList[13],
+            tileTextureList[14],
+            tileTextureList[15],
+            tileTextureList[16],
+            tileTextureList[17]
+        };
         tileTextureList[0] = tempList[11];
         tileTextureList[1] = tempList[14];
         tileTextureList[2] = tempList[17];
