@@ -21,6 +21,8 @@ The source code presented in the ```main``` branch is stuff pushed daily, and wi
 
 # Installation
 
+Note: There is a warning screen that will appear at the start of the game if you do not have everything installed correctly.
+
 ## Dependencies
 
 The Escapists on Steam with all DLC: https://store.steampowered.com/app/298630/The_Escapists
