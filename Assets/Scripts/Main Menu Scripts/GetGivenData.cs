@@ -1,13 +1,14 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
-using UnityEngine.Networking;
-using System.Collections;
-using System;
 using ImageMagick;
+using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Networking;
+using static Unity.Burst.Intrinsics.X86;
 
 public class GetGivenData : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class GetGivenData : MonoBehaviour
     public List<Texture2D> tileTextureList = new List<Texture2D>();
     public List<AudioClip> musicList = new List<AudioClip>();
     private string groundPath;
-    //private string musicPath = "D:\\SteamLibrary\\steamapps\\common\\The Escapists\\Music\\alca.ogg";
+    private string musicPath;
     private string tilePath;
     private string mainPath;
     private string blackGroundPath;
@@ -28,6 +29,7 @@ public class GetGivenData : MonoBehaviour
     private bool doneWithGroundLoad = false;
     private bool doneWithTileLoad = false;
     public bool doneWithGivenLoad = false;
+    private bool doneWithMusicLoad = false;
     public static GetGivenData instance { get; private set; }
     private void Start()
     {
@@ -51,12 +53,14 @@ public class GetGivenData : MonoBehaviour
         string configPath = Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini");
         IniFile iniFile = new IniFile(configPath);
         mainPath = iniFile.Read("GameFolderPath", "Settings");
-        groundPath = mainPath + "/Data/images";
-        tilePath = mainPath + "/Data/images";
-        blackGroundPath = mainPath + "/Data/images/custom/ground_cus_black.gif";
+        groundPath = Path.Combine(mainPath, "Data", "images");
+        tilePath = Path.Combine(mainPath, "Data", "images");
+        blackGroundPath = Path.Combine(mainPath, "Data", "images", "custom", "ground_cus_black.gif");
+        musicPath = Path.Combine(mainPath, "Music");
 
         await LoadGroundTextures();
         await LoadTileTextures();
+        StartCoroutine(LoadMusicClips());
 
         //senderScript.SetMusicList(musicList);
 
@@ -71,7 +75,7 @@ public class GetGivenData : MonoBehaviour
     //}
     private void Update()
     {
-        if(doneWithGroundLoad && doneWithTileLoad)
+        if(doneWithGroundLoad && doneWithTileLoad && doneWithMusicLoad)
         {
             doneWithGivenLoad = true;
         }
@@ -260,6 +264,40 @@ public class GetGivenData : MonoBehaviour
         tileTextureList[17] = tempList[7];
 
         doneWithTileLoad = true;
+    }
+    private IEnumerator LoadMusicClips()
+    {
+        List<string> files = new List<string>
+        {
+            "alca.ogg", "chow.ogg", "DTAF.ogg", "DTAF_chow.ogg", "DTAF_lightsout.ogg",
+            "DTAF_lockdown.ogg", "DTAF_rollcall.ogg", "DTAF_shower.ogg", "DTAF_work.ogg",
+            "DTAF_workout.ogg", "escaped.ogg", "escapeteam.ogg", "escteam_chow.ogg",
+            "escteam_lightsout.ogg", "escteam_lockdown.ogg", "escteam_rollcall.ogg",
+            "escteam_shower.ogg", "escteam_trumpet.ogg", "escteam_work.ogg", "escteam_workout.ogg",
+            "irongate.ogg", "jungle.ogg", "lightsout.ogg", "perks.ogg", "rollcall.ogg", "sanpancho.ogg",
+            "shanktonstatepen.ogg", "shower.ogg", "SS.ogg", "SS_chow.ogg", "SS_lightsout.ogg",
+            "SS_lockdown.ogg", "SS_rollcall.ogg", "SS_shower.ogg", "SS_sign1.ogg", "SS_sign2.ogg",
+            "SS_work.ogg", "SS_workout.ogg", "stalagflucht.ogg", "theme.ogg", "tutorial.ogg",
+            "work.ogg", "workout.ogg"
+        };
+        foreach (string file in files)
+        {
+            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(System.IO.Path.Combine(musicPath, file), AudioType.OGGVORBIS))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    loadScript.LogLoad("Error loading " + file);
+                }
+                else
+                {
+                    loadScript.LogLoad("Successfully Converted " + file + " to AudioClip.");
+                    musicList.Add(DownloadHandlerAudioClip.GetContent(www));
+                }
+            }
+        }
+        doneWithMusicLoad = true;
     }
     private Texture2D LoadGifAsTexture2D(byte[] fileData)
     {

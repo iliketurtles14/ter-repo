@@ -1,0 +1,2 @@
+If you want to change the tooltips of an item, change the name of the item in its items file.
+

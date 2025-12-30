@@ -3,6 +3,7 @@ using SFB;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
@@ -13,10 +14,18 @@ using UnityEngine.UI;
 public class MEButtonController : MonoBehaviour
 {
     public Transform uic;
+    public Transform tiles;
+    public Transform camera;
     private PropertiesController pc;
     private SubMenuController smc;
     private PanelSelect panelSelectScript;
     private LayerController layerControllerScript;
+    public RuntimeGrid gridScript;
+    public string speechPath;
+    public string tooltipsPath;
+    public string musicPath;
+    public string itemsPath;
+    public Transform canvases;
     //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     //{
     //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
@@ -389,10 +398,6 @@ public class MEButtonController : MonoBehaviour
 
                         GetComponent<GroundSpriteSetter>().SetGround(groundSprite, isTiled);
                     break;
-                case "music":
-                    uic.Find("PropertiesPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = smc.prisonDict[whatPrison];
-                    smc.musicPath = null;
-                    break;
             }
 
             uic.Find("PrisonSelectMenu").gameObject.SetActive(false);
@@ -432,17 +437,6 @@ public class MEButtonController : MonoBehaviour
 
                     Sprite ground = ConvertPNGToSprite(smc.groundPath[0]);
                     GetComponent<GroundSpriteSetter>().SetGround(ground, false);
-                    break;
-                case "music":
-                    extensions = new[]
-                    {
-                        new ExtensionFilter("Sound Files", "mp3")
-                    };
-                    title = "Select custom music.";
-                    resultTextField = "MusicResultText";
-
-                    smc.musicPath = StandaloneFileBrowser.OpenFilePanel(title, "", extensions, false);
-
                     break;
             }
             uic.Find("PropertiesPanel").Find(resultTextField).GetComponent<TextMeshProUGUI>().text = "Custom";
@@ -508,6 +502,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(true);
+        uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -519,6 +514,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+        uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -530,6 +526,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+        uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = true;
 
@@ -541,6 +538,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("PropertiesPanel").gameObject.SetActive(false);
         uic.Find("ZonesPanel").gameObject.SetActive(true);
         uic.Find("FilePanel").gameObject.SetActive(false);
+        uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -552,10 +550,23 @@ public class MEButtonController : MonoBehaviour
         uic.Find("PropertiesPanel").gameObject.SetActive(true);
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
+        uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "PropertiesPanel";
+    }
+    public void PanelAdvanced()
+    {
+        uic.Find("TilesPanel").gameObject.SetActive(false);
+        uic.Find("PropertiesPanel").gameObject.SetActive(false);
+        uic.Find("ZonesPanel").gameObject.SetActive(false);
+        uic.Find("FilePanel").gameObject.SetActive(false);
+        uic.Find("AdvancedPanel").gameObject.SetActive(true);
+
+        GetComponent<ObjectsPanelController>().canBeShown = false;
+
+        panelSelectScript.currentPanel = "AdvancedPanel";
     }
     public void LayerGround()
     {
@@ -582,17 +593,363 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().objectPanelNum--;
         if(GetComponent<ObjectsPanelController>().objectPanelNum < 0)
         {
-            GetComponent<ObjectsPanelController>().objectPanelNum = 13;
+            GetComponent<ObjectsPanelController>().objectPanelNum = 14;
         }
     }
     public void ObjectsRight()
     {
         GetComponent<ObjectsPanelController>().objectPanelNum++;
-        if(GetComponent<ObjectsPanelController>().objectPanelNum > 13)
+        if(GetComponent<ObjectsPanelController>().objectPanelNum > 14)
         {
             GetComponent<ObjectsPanelController>().objectPanelNum = 0;
         }
     }
+    public void AdvancedHelp()
+    {
+        DeactivateAdvancedButtons();
+        uic.Find("Black").gameObject.SetActive(true);
+        uic.Find("AdvancedHelpPanel").gameObject.SetActive(true);
+    }
+    public void AdvancedButton(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        string msg = "";
+        switch (clicked.name)
+        {
+            case "SpeechButton":
+                msg = "Select a custom speech file.";
+                break;
+            case "TooltipsButton":
+                msg = "Select a custom tooltips file.";
+                break;
+            case "ItemsButton":
+                msg = "Select a custom items file.";
+                break;
+        }
+
+        ExtensionFilter[] extensions = new ExtensionFilter[]
+        {
+            new ExtensionFilter("Text Files", "ini")
+        };
+
+        switch (clicked.name)
+        {
+            case "SpeechButton":
+                try
+                {
+                    speechPath = StandaloneFileBrowser.OpenFilePanel(msg, "", extensions, false)[0];
+                }
+                catch
+                {
+                    speechPath = null;
+                }
+                if (!string.IsNullOrEmpty(speechPath))
+                {
+                    uic.Find("AdvancedPanel").Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+                }
+                else
+                {
+                    uic.Find("AdvancedPanel").Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                }
+                break;
+            case "TooltipsButton":
+                try
+                {
+                    tooltipsPath = StandaloneFileBrowser.OpenFilePanel(msg, "", extensions, false)[0];
+                }
+                catch
+                {
+                    tooltipsPath = null;
+                }
+                if (!string.IsNullOrEmpty(tooltipsPath))
+                {
+                    uic.Find("AdvancedPanel").Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+                }
+                else
+                {
+                    uic.Find("AdvancedPanel").Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                }
+                break;
+            case "Items":
+                try
+                {
+                    itemsPath = StandaloneFileBrowser.OpenFilePanel(msg, "", extensions, false)[0];
+                }
+                catch
+                {
+                    itemsPath = null;
+                }
+                if (!string.IsNullOrEmpty(itemsPath))
+                {
+                    uic.Find("AdvancedPanel").Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+                }
+                else
+                {
+                    uic.Find("AdvancedPanel").Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                }
+                break;
+        }
+    }
+    public void AdvancedCancel(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        switch (clicked.name)
+        {
+            case "SpeechCancel":
+                uic.Find("AdvancedPanel").Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                break;
+            case "TooltipsCancel":
+                uic.Find("AdvancedPanel").Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                break;
+            case "ItemsCancel":
+                uic.Find("AdvancedPanel").Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
+                break;
+        }
+    }
+    public void AdvancedAdd(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        switch (clicked.name)
+        {
+            case "SpeechAdd":
+                string content = Resources.Load<TextAsset>("Speech").text;
+
+                var extensions = new ExtensionFilter[]
+                {
+                    new ExtensionFilter("Text Files", "ini"),
+                    new ExtensionFilter("All Files", "*")
+                };
+
+                string path = StandaloneFileBrowser.SaveFilePanel(
+                    "Download Speech File",
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "Speech",
+                    extensions
+                );
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    File.WriteAllText(path, content, Encoding.UTF8);
+                }
+                break;
+            case "TooltipsAdd":
+                string content1 = Resources.Load<TextAsset>("Tooltips").text;
+
+                var extensions1 = new ExtensionFilter[]
+                {
+                    new ExtensionFilter("Text Files", "ini"),
+                    new ExtensionFilter("All Files", "*")
+                };
+
+                string path1 = StandaloneFileBrowser.SaveFilePanel(
+                    "Download Tooltips File",
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "Tooltips",
+                    extensions1
+                );
+
+                if (!string.IsNullOrEmpty(path1))
+                {
+                    File.WriteAllText(path1, content1, Encoding.UTF8);
+                }
+                break;
+            case "ItemsAdd":
+                string content2 = Resources.Load<TextAsset>("Items").text;
+
+                var extensions2 = new ExtensionFilter[]
+                {
+                    new ExtensionFilter("Text Files", "ini"),
+                    new ExtensionFilter("All Files", "*")
+                };
+
+                string path2 = StandaloneFileBrowser.SaveFilePanel(
+                    "Download Items File",
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "Items",
+                    extensions2
+                );
+
+                if (!string.IsNullOrEmpty(path2))
+                {
+                    File.WriteAllText(path2, content2, Encoding.UTF8);
+                }
+                break;
+        }
+    }
+    public void AdvancedMusic()
+    {
+        uic.Find("MusicSelectMenu").gameObject.SetActive(true);
+        DeactivateAdvancedButtons();
+        uic.Find("Black").gameObject.SetActive(true);
+    }
+    public void MusicSelect(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        if (clicked.name != "CustomButton")
+        {
+            string whatPrison = "";
+            foreach (Transform child in clicked.transform)
+            {
+                whatPrison = child.GetComponent<TextMeshProUGUI>().text;
+                break;
+            }
+
+            uic.Find("AdvancedPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = smc.prisonDict[whatPrison];
+        }
+        else
+        {
+            ExtensionFilter[] extensions = new ExtensionFilter[]
+            {
+                new ExtensionFilter("Zip Files", "zip")
+            };
+
+            try
+            {
+                musicPath = StandaloneFileBrowser.OpenFilePanel("Select a music pack.", "", extensions, false)[0];
+            }
+            catch 
+            { 
+                musicPath = null; 
+            }
+
+            if (!string.IsNullOrEmpty(musicPath))
+            {
+                uic.Find("AdvancedPanel").Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+            }
+        }
+
+        uic.Find("Black").gameObject.SetActive(false);
+        uic.Find("MusicSelectMenu").gameObject.SetActive(false);
+        ReactivateAdvancedButtons();
+    }
+    public void HelpClose()
+    {
+        ReactivateAdvancedButtons();
+        uic.Find("Black").gameObject.SetActive(false);
+        uic.Find("AdvancedHelpPanel").gameObject.SetActive(false);
+    }
+    public void Origin()
+    {
+        camera.position = new Vector3(((gridScript.sizeX * 1.6f) / 2f) - .8f, ((gridScript.sizeY * 1.6f) / 2f) - .8f, -1);
+    }
+    public void SpecialObject(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        string type = clicked.GetComponent<SpecialButtonTypeContainer>().type; //desk, blueSign, whiteSign, item
+
+        Transform currentObject = null;
+        Transform currentCanvas = clicked.transform.parent;
+
+        string layer = "";
+        switch (layerControllerScript.currentLayer)
+        {
+            case 0:
+                layer = "Underground";
+                break;
+            case 1:
+                layer = "Ground";
+                break;
+            case 2:
+                layer = "Vent";
+                break;
+            case 3:
+                layer = "Roof";
+                break;
+        }
+
+        foreach(Transform obj in tiles.Find(layer + "Objects"))
+        {
+            float distance = Vector2.Distance(obj.position, currentCanvas.position);
+            if(distance <= .01f)
+            {
+                currentObject = obj;
+                break;
+            }
+        }
+
+        switch (type)
+        {
+            case "item":
+                GetComponent<MEItemController>().currentItem = currentObject;
+                uic.Find("ItemSpecialPanel").gameObject.SetActive(true);
+                break;
+            case "desk":
+                GetComponent<MEDeskController>().currentDesk = currentObject;
+                GetComponent<MEDeskController>().SetIDs();
+                uic.Find("DeskPanel").gameObject.SetActive(true);
+                break;
+            case "blueSign":
+                GetComponent<MESignController>().currentSign = currentObject;
+                uic.Find("BlueSignPanel").gameObject.SetActive(true);
+                break;
+            case "whiteSign":
+                GetComponent<MESignController>().currentSign = currentObject;
+                uic.Find("WhiteSignPanel").gameObject.SetActive(true);
+                break;
+        }
+        uic.Find("Black").gameObject.SetActive(true);
+        DeactivateButtonsForSpecialObjects();
+    }
+    public void ItemSpecialChange()
+    {
+        GetComponent<MEItemController>().currentItem.GetComponent<MEItemIDContainer>().id = Convert.ToInt32(uic.Find("ItemSpecialPanel").Find("IDInput").GetComponent<TMP_InputField>().text);
+        ItemSpecialCancel();
+    }
+    public void ItemSpecialCancel()
+    {
+        uic.Find("ItemSpecialPanel").gameObject.SetActive(false);
+        uic.Find("Black").gameObject.SetActive(false);
+        ActivateButtonsForSpecialObjects();
+    }
+    public void DeskSlot(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        int slotNum = Convert.ToInt32(clicked.name);
+        GetComponent<MEDeskController>().SelectSlot(slotNum);
+    }
+
     private Sprite ConvertPNGToSprite(string path)
     {
         byte[] pngBytes = File.ReadAllBytes(path);
@@ -624,5 +981,161 @@ public class MEButtonController : MonoBehaviour
         cornerTex.filterMode = FilterMode.Point;
 
         return cornerTex;
+    }
+    private void DeactivateAdvancedButtons()
+    {
+        Transform advanced = uic.Find("AdvancedPanel");
+
+        advanced.Find("SpeechButton").GetComponent<Button>().enabled = false;
+        advanced.Find("SpeechCancel").GetComponent<Button>().enabled = false;
+        advanced.Find("SpeechAdd").GetComponent<Button>().enabled = false;
+        advanced.Find("TooltipsButton").GetComponent<Button>().enabled = false;
+        advanced.Find("TooltipsCancel").GetComponent<Button>().enabled = false;
+        advanced.Find("TooltipsAdd").GetComponent<Button>().enabled = false;
+        advanced.Find("MusicButton").GetComponent<Button>().enabled = false;
+        advanced.Find("ItemsButton").GetComponent<Button>().enabled = false;
+        advanced.Find("ItemsCancel").GetComponent<Button>().enabled = false;
+        advanced.Find("ItemsAdd").GetComponent<Button>().enabled = false;
+        advanced.Find("HelpButton").GetComponent<Button>().enabled = false;
+        advanced.Find("SpeechButton").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("SpeechCancel").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("SpeechAdd").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("TooltipsButton").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("TooltipsCancel").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("TooltipsAdd").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("MusicButton").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("ItemsButton").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("ItemsCancel").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("ItemsAdd").GetComponent<EventTrigger>().enabled = false;
+        advanced.Find("HelpButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("FileButton").GetComponent<Button>().enabled = false;
+        uic.Find("FileButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("TilesButton").GetComponent<Button>().enabled = false;
+        uic.Find("TilesButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("ObjectsButton").GetComponent<Button>().enabled = false;
+        uic.Find("ObjectsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("PropertiesButton").GetComponent<Button>().enabled = false;
+        uic.Find("PropertiesButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("GroundButton").GetComponent<Button>().enabled = false;
+        uic.Find("GroundButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("UndergroundButton").GetComponent<Button>().enabled = false;
+        uic.Find("UndergroundButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("VentsButton").GetComponent<Button>().enabled = false;
+        uic.Find("VentsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("RoofButton").GetComponent<Button>().enabled = false;
+        uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = false;
+        uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = false;
+        canvases.gameObject.SetActive(false);
+    }
+    private void ReactivateAdvancedButtons()
+    {
+        Transform advanced = uic.Find("AdvancedPanel");
+
+        advanced.Find("SpeechButton").GetComponent<Button>().enabled = true;
+        advanced.Find("SpeechCancel").GetComponent<Button>().enabled = true;
+        advanced.Find("SpeechAdd").GetComponent<Button>().enabled = true;
+        advanced.Find("TooltipsButton").GetComponent<Button>().enabled = true;
+        advanced.Find("TooltipsCancel").GetComponent<Button>().enabled = true;
+        advanced.Find("TooltipsAdd").GetComponent<Button>().enabled = true;
+        advanced.Find("MusicButton").GetComponent<Button>().enabled = true;
+        advanced.Find("ItemsButton").GetComponent<Button>().enabled = true;
+        advanced.Find("ItemsCancel").GetComponent<Button>().enabled = true;
+        advanced.Find("ItemsAdd").GetComponent<Button>().enabled = true;
+        advanced.Find("HelpButton").GetComponent<Button>().enabled = true;
+        advanced.Find("SpeechButton").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("SpeechCancel").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("SpeechAdd").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("TooltipsButton").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("TooltipsCancel").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("TooltipsAdd").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("MusicButton").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("ItemsButton").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("ItemsCancel").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("ItemsAdd").GetComponent<EventTrigger>().enabled = true;
+        advanced.Find("HelpButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("FileButton").GetComponent<Button>().enabled = true;
+        uic.Find("FileButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("TilesButton").GetComponent<Button>().enabled = true;
+        uic.Find("TilesButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("ObjectsButton").GetComponent<Button>().enabled = true;
+        uic.Find("ObjectsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("PropertiesButton").GetComponent<Button>().enabled = true;
+        uic.Find("PropertiesButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("GroundButton").GetComponent<Button>().enabled = true;
+        uic.Find("GroundButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("UndergroundButton").GetComponent<Button>().enabled = true;
+        uic.Find("UndergroundButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("VentsButton").GetComponent<Button>().enabled = true;
+        uic.Find("VentsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("RoofButton").GetComponent<Button>().enabled = true;
+        uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = true;
+        uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = true;
+        canvases.gameObject.SetActive(true);
+    }
+    private void DeactivateButtonsForSpecialObjects()
+    {
+        uic.Find("FileButton").GetComponent<Button>().enabled = false;
+        uic.Find("FileButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("TilesButton").GetComponent<Button>().enabled = false;
+        uic.Find("TilesButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("ObjectsButton").GetComponent<Button>().enabled = false;
+        uic.Find("ObjectsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("PropertiesButton").GetComponent<Button>().enabled = false;
+        uic.Find("PropertiesButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("GroundButton").GetComponent<Button>().enabled = false;
+        uic.Find("GroundButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("UndergroundButton").GetComponent<Button>().enabled = false;
+        uic.Find("UndergroundButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("VentsButton").GetComponent<Button>().enabled = false;
+        uic.Find("VentsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("RoofButton").GetComponent<Button>().enabled = false;
+        uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = false;
+        uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = false;
+        try
+        {
+            uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(false);
+        }
+        catch { }
+        GetComponent<ObjectsPanelController>().canBeShown = false;
+        canvases.gameObject.SetActive(false);
+    }
+    private void ActivateButtonsForSpecialObjects()
+    {
+        uic.Find("FileButton").GetComponent<Button>().enabled = true;
+        uic.Find("FileButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("TilesButton").GetComponent<Button>().enabled = true;
+        uic.Find("TilesButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("ObjectsButton").GetComponent<Button>().enabled = true;
+        uic.Find("ObjectsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("PropertiesButton").GetComponent<Button>().enabled = true;
+        uic.Find("PropertiesButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("GroundButton").GetComponent<Button>().enabled = true;
+        uic.Find("GroundButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("UndergroundButton").GetComponent<Button>().enabled = true;
+        uic.Find("UndergroundButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("VentsButton").GetComponent<Button>().enabled = true;
+        uic.Find("VentsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("RoofButton").GetComponent<Button>().enabled = true;
+        uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = true;
+        uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = true;
+        try
+        {
+            uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(true);
+        }
+        catch { }
+        GetComponent<ObjectsPanelController>().canBeShown = true;
+        canvases.gameObject.SetActive(true);
     }
 }

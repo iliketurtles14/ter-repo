@@ -70,6 +70,7 @@ TagManager:
   - Spill
   - BadObject
   - ObjectPanel
+  - Black
   layers:
   - Default
   - TransparentFX

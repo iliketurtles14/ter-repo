@@ -1,0 +1,9 @@
+﻿<Solution>
+  <Project Path="AstarPathfindingProject.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="PackageToolsEditor.csproj" />
+  <Project Path="NavMeshPlus.csproj" />
+  <Project Path="AstarPathfindingProjectEditor.csproj" />
+  <Project Path="NavMeshPlusEditor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+</Solution>

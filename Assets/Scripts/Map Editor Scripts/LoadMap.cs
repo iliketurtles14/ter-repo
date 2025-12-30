@@ -12,6 +12,7 @@ using Unity.VisualScripting;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System;
+using System.Runtime.CompilerServices;
 
 public class LoadMap : MonoBehaviour
 {
@@ -21,12 +22,22 @@ public class LoadMap : MonoBehaviour
     public Transform gridLines;
 
     private GetGivenData givenDataScript;
-    
-    public AudioClip music = null;
+
+    public List<AudioClip> music = null;
+    public Dictionary<int, Sprite> customItemSprites = null;
     public Sprite tiles = null;
     public Sprite ground = null;
     public Sprite icon = null;
     public string[] data = null;
+    public string[] speech = null;
+    public string[] items = null;
+    public string[] tooltips = null;
+
+    private List<string> musicNames = new List<string>
+    {
+        "chow.mp3", "escaped.mp3", "lightsout.mp3", "lockdown.mp3", "rollcall.mp3",
+        "shower.mp3", "work.mp3", "workout.mp3", "freetime.mp3"
+    };
 
     private Dictionary<string, int> groundDict = new Dictionary<string, int>() //also for tilesets
     {
@@ -72,7 +83,7 @@ public class LoadMap : MonoBehaviour
             }
 
             //unzip files
-            string extractPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons") + Path.DirectorySeparatorChar;
+            string extractPath = Path.Combine(Application.streamingAssetsPath, "temp") + Path.DirectorySeparatorChar;
 
             ZipFile.ExtractToDirectory(paths[0], extractPath);
 
@@ -96,10 +107,38 @@ public class LoadMap : MonoBehaviour
                 icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
                 File.Delete(Path.Combine(extractPath, "Icon.png"));
             }
-            if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
+            if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
             {
-                StartCoroutine(ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3")));
-                File.Delete(Path.Combine(extractPath, "Music.mp3"));
+                speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
+                File.Delete(Path.Combine(extractPath, "Speech.ini"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
+            {
+                tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
+                File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Items.ini")))
+            {
+                items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
+                File.Delete(Path.Combine(extractPath, "Items.ini"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Music.zip")))
+            {
+                ZipFile.ExtractToDirectory(Path.Combine(extractPath, "Music.zip"), extractPath);
+                StartCoroutine(ConvertMP3ToAudioClip("file://" + extractPath));
+                File.Delete(Path.Combine(extractPath, "Music.zip"));
+                //it deletes the files in the coroutine
+            }
+            if(Directory.Exists(Path.Combine(extractPath, "Items")))
+            {
+                foreach(string file in Directory.GetFiles(Path.Combine(extractPath, "Items")))
+                {
+                    int id = Convert.ToInt32(Path.GetFileName(file).Split('.')[0]);
+                    Sprite sprite = ConvertPNGToSprite(file);
+                    customItemSprites.Add(id, sprite);
+                }
+
+                Directory.Delete(Path.Combine(extractPath, "Items"));
             }
         }
 
@@ -137,23 +176,28 @@ public class LoadMap : MonoBehaviour
     }
     private IEnumerator ConvertMP3ToAudioClip(string path)
     {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
+        foreach(string name in musicNames)
         {
-            yield return www.SendWebRequest();
+            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(path, name), AudioType.MPEG))
+            {
+                yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error loading audio: " + www.error);
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Error loading audio: " + www.error);
+                }
+                else
+                {
+                    music.Add(DownloadHandlerAudioClip.GetContent(www));
+                }
             }
-            else
-            {
-                music = DownloadHandlerAudioClip.GetContent(www);
-            }
+            File.Delete(Path.Combine(path, name));
         }
     }
     private void LoadProperties()
     {
         Transform properties = uic.Find("PropertiesPanel");
+        Transform advanced = uic.Find("AdvancedPanel");
 
         properties.Find("NameInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "MapName", data);
         properties.Find("GuardsNum").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Guards", data);
@@ -161,10 +205,13 @@ public class LoadMap : MonoBehaviour
         properties.Find("NPCLevelNum").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "NPCLevel", data);
         properties.Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Tileset", data);
         properties.Find("GroundResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Ground", data);
-        properties.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Music", data);
         properties.Find("IconResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Icon", data);
         properties.Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Grounds", data);
         properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Size", data);
+        advanced.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Music", data);
+        advanced.Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Speech", data);
+        advanced.Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Tooltips", data);
+        advanced.Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Items", data);
         uic.Find("NotePanel").Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Note", data));
         uic.Find("NotePanel").Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Warden", data);
         Transform routineInputGrid1 = uic.Find("RoutinePanel").Find("RoutineInputGrid1");
@@ -266,7 +313,6 @@ public class LoadMap : MonoBehaviour
         if(tilesetChoice != "Custom")
         {
             int prisonIndex = groundDict[prisonDict[tilesetChoice]];
-            Debug.Log(prisonIndex);
             tileset = givenDataScript.tileTextureList[prisonIndex];
         }
         else

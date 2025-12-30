@@ -18,6 +18,8 @@ public class MouseCollisionOnMap : MonoBehaviour
     public GameObject touchedHandle;
     public bool isTouchingMover;
     public GameObject touchedMover;
+    public bool isTouchingBlack;
+    public GameObject touchedBlack;
 
     private void Update()
     {
@@ -33,6 +35,7 @@ public class MouseCollisionOnMap : MonoBehaviour
 
         priorityOrder = new List<string>()
         {
+            "Black",
             "Button",
             "Object",
             "Mover",
@@ -64,6 +67,10 @@ public class MouseCollisionOnMap : MonoBehaviour
         {
             switch (priorityOrder[highestPriorityIndex])
             {
+                case "Black":
+                    isTouchingBlack = true;
+                    touchedBlack = highestPriorityObject;
+                    break;
                 case "Button":
                     isTouchingButton = true;
                     touchedButton = highestPriorityObject;
@@ -125,5 +132,7 @@ public class MouseCollisionOnMap : MonoBehaviour
         touchedHandle = null;
         isTouchingMover = false;
         touchedMover = null;
+        isTouchingBlack = false;
+        touchedBlack = null;
     }
 }

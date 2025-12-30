@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class ApplyMapEditorData : MonoBehaviour
     public List<Sprite> UISprites = new List<Sprite>();
 
     public Transform uic;
+    public Transform grounds;
 
     private void Start()
     {
@@ -748,6 +750,14 @@ public class ApplyMapEditorData : MonoBehaviour
                     break;
             }
         }
+        //speical panel stuff
+        uic.Find("BlueSignPanel").GetComponent<Image>().sprite = UISprites[529];
+        uic.Find("WhiteSignPanel").GetComponent<Image>().sprite = UISprites[530];
+        uic.Find("DeskPanel").Find("DeskImage").GetComponent<Image>().sprite = UISprites[31];
+        //item panel item
+        uic.Find("ItemsPanel").Find("Item").GetComponent<Image>().sprite = AddPaddingToSprite(ItemSprites[6], 1);
+        uic.Find("ItemsPanel").Find("Item").GetComponent<RectTransform>().sizeDelta += new Vector2(10, 10);
+        
         //job panel checkboxes
         foreach (Transform child in uic.Find("JobPanel").Find("CheckBoxGrid1"))
         {
@@ -767,5 +777,13 @@ public class ApplyMapEditorData : MonoBehaviour
         //loadmap checkbox sprites
         GetComponent<LoadMap>().uncheckedBox = UISprites[447];
         GetComponent<LoadMap>().checkedBox = UISprites[448];
+        //close buttons
+        uic.Find("RoutinePanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("HintPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("JobPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("ExtrasPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("AdvancedHelpPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        //dirt
+        grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
     }
 }

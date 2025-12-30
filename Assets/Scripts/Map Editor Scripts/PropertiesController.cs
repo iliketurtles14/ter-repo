@@ -6,88 +6,9 @@ using UnityEngine.UI;
 public class PropertiesController : MonoBehaviour
 {
     public MouseCollisionOnMap mcs;
+    public Transform canvases;
     public Transform uic;
     public string buttonType;
-    private void Update()
-    {
-        if(mcs.isTouchingButton && Input.GetMouseButtonDown(0))
-        {
-            if (mcs.touchedButton.name == "TilesetButton")
-            {
-                buttonType = "tileset";
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "GroundButton" && mcs.touchedButton.transform.parent.name == "PropertiesPanel")
-            {
-                buttonType = "ground";
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "MusicButton")
-            {
-                buttonType = "music";
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "GroundsButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("GroundsSelectMenu").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "WardenNoteButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("NotePanel").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "RoutineButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("RoutinePanel").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "HintButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("HintPanel").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "JobButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("JobPanel").gameObject.SetActive(true);
-            }
-            else if (mcs.touchedButton.name == "ExtrasButton")
-            {
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                uic.Find("ExtrasPanel").gameObject.SetActive(true);
-            }
-            else if(mcs.touchedButton.name == "SizeButton")
-            {
-                Transform sizePanel = uic.Find("SizePanel");
-
-                DeactivateButtons();
-                uic.Find("Black").gameObject.SetActive(true);
-                sizePanel.gameObject.SetActive(true);
-
-                string currentResultText = uic.Find("PropertiesPanel").Find("SizeResultText").GetComponent<TextMeshProUGUI>().text;
-                string[] parts = currentResultText.Split('x');
-
-                int currentX = int.Parse(parts[0]);
-                int currentY = int.Parse(parts[1]);
-
-                sizePanel.Find("SizeX").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentX.ToString();
-                sizePanel.Find("SizeY").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentY.ToString();
-            }
-        }
-    }
     public void DeactivateButtons()
     {
         Transform propertiesPanel = uic.Find("PropertiesPanel");
@@ -106,8 +27,6 @@ public class PropertiesController : MonoBehaviour
         propertiesPanel.Find("TilesetButton").GetComponent<EventTrigger>().enabled = false;
         propertiesPanel.Find("GroundButton").GetComponent<Button>().enabled = false;
         propertiesPanel.Find("GroundButton").GetComponent<EventTrigger>().enabled = false;
-        propertiesPanel.Find("MusicButton").GetComponent<Button>().enabled = false;
-        propertiesPanel.Find("MusicButton").GetComponent<EventTrigger>().enabled = false;
         propertiesPanel.Find("IconButton").GetComponent<Button>().enabled = false;
         propertiesPanel.Find("IconButton").GetComponent<EventTrigger>().enabled = false;
         propertiesPanel.Find("GroundsButton").GetComponent<Button>().enabled = false;
@@ -127,6 +46,8 @@ public class PropertiesController : MonoBehaviour
         uic.Find("ObjectsButton").GetComponent<EventTrigger>().enabled = false;
         uic.Find("PropertiesButton").GetComponent<Button>().enabled = false;
         uic.Find("PropertiesButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = false;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = false;
         uic.Find("GroundButton").GetComponent<Button>().enabled = false;
         uic.Find("GroundButton").GetComponent<EventTrigger>().enabled = false;
         uic.Find("UndergroundButton").GetComponent<Button>().enabled = false;
@@ -137,5 +58,8 @@ public class PropertiesController : MonoBehaviour
         uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = false;
         uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = false;
         uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("OriginButton").GetComponent<Button>().enabled = false;
+        uic.Find("OriginButton").GetComponent<EventTrigger>().enabled = false;
+        canvases.gameObject.SetActive(false);
     }
 }

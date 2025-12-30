@@ -10,16 +10,21 @@ public class ObjectsPanelController : MonoBehaviour
         { 0, "WaypointsPanel" }, { 1, "CellsPanel" }, { 2, "SecurityPanel" },
         { 3, "JobsPanel" }, { 4, "GymPanel" }, { 5, "MiscPanel" }, { 6, "DoorsPanel" },
         { 7, "ZiplinePanel" }, { 8, "SpecialPanel" }, { 9, "ETPanel" }, { 10, "DTAF1Panel" },
-        { 11, "DTAF2Panel" }, { 12, "Christmas1Panel" }, { 13, "Christmas2Panel" }
+        { 11, "DTAF2Panel" }, { 12, "Christmas1Panel" }, { 13, "Christmas2Panel" }, { 14, "ItemsPanel" }
     };
     private List<Transform> panelList = new List<Transform>();
     public Transform uic;
     public int oldObjectPanelNum;
     public bool canBeShown = false;
     private bool hasHiddenPanels;
+    public string currentObjectPanel;
+    private void Update()
+    {
+        currentObjectPanel = panelNameDict[objectPanelNum];
+    }
     private void Start()
     {
-        for(int i = 0; i < 14; i++) //lol just didnt wanna code out adding all the panels
+        for(int i = 0; i < 15; i++) //lol just didnt wanna code out adding all the panels
         {
             panelList.Add(uic.Find(panelNameDict[i]));
         }

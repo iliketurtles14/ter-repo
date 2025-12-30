@@ -7,6 +7,7 @@ public class LayerController : MonoBehaviour
     public int currentLayer = 1;
     public Transform tiles;
     public Transform grounds;
+    public Transform canvases;
     private bool hasSwitched;
     private void Start()
     {
@@ -35,7 +36,7 @@ public class LayerController : MonoBehaviour
                     EnableUnderground();
                     break;
                 case 1:
-                    EnableGround();
+                    EnableGround(true);
                     break;
                 case 2:
                     EnableVents();
@@ -66,37 +67,48 @@ public class LayerController : MonoBehaviour
         grounds.Find("Vent").GetComponent<SpriteRenderer>().enabled = false;
         grounds.Find("Roof").GetComponent<SpriteRenderer>().enabled = false;
         grounds.Find("Zones").GetComponent<SpriteRenderer>().enabled = false;
+        canvases.Find("Ground").gameObject.SetActive(false);
+        canvases.Find("Underground").gameObject.SetActive(false);
+        canvases.Find("Vent").gameObject.SetActive(false);
+        canvases.Find("Roof").gameObject.SetActive(false);
     }
-    private void EnableGround()
+    private void EnableGround(bool withCanvases)
     {
         tiles.Find("Ground").gameObject.SetActive(true);
         tiles.Find("GroundObjects").gameObject.SetActive(true);
         grounds.Find("Ground").GetComponent<SpriteRenderer>().enabled = true;
+        if (withCanvases)
+        {
+            canvases.Find("Ground").gameObject.SetActive(true);
+        }
     }
     private void EnableUnderground()
     {
         tiles.Find("Underground").gameObject.SetActive(true);
         tiles.Find("UndergroundObjects").gameObject.SetActive(true);
         grounds.Find("Underground").GetComponent<SpriteRenderer>().enabled = true;
+        canvases.Find("Underground").gameObject.SetActive(true);
     }
     private void EnableVents()
     {
         tiles.Find("Vent").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true);
         grounds.Find("Vent").GetComponent<SpriteRenderer>().enabled = true;
-        EnableGround();
+        canvases.Find("Vent").gameObject.SetActive(true);
+        EnableGround(false);
     }
     private void EnableRoof()
     {
         tiles.Find("Roof").gameObject.SetActive(true);
         tiles.Find("RoofObjects").gameObject.SetActive(true);
         grounds.Find("Roof").GetComponent<SpriteRenderer>().enabled = true;
-        EnableGround();
+        canvases.Find("Roof").gameObject.SetActive(true);
+        EnableGround(false);
     }
     private void EnableZones()
     {
         tiles.Find("Zones").gameObject.SetActive(true);
         grounds.Find("Zones").GetComponent<SpriteRenderer>().enabled = true;
-        EnableGround();
+        EnableGround(false);
     }
 }

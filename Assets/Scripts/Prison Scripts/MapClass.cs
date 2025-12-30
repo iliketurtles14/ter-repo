@@ -14,10 +14,17 @@ public class Map
     public string tilesetStr;
     public string groundStr;
     public string musicStr;
+    public string speechStr;//
+    public string itemsStr;//
+    public string tooltipsStr;//
     public Sprite tileset;
     public Sprite ground;
-    public AudioClip music;
     public Sprite icon;
+    public string[] speech;//
+    public string[] items;//
+    public string[] tooltips;//
+    public List<AudioClip> music;//
+    public Dictionary<int, Sprite> customItemSpriteDict;//
     public int npcLevel;
     public string grounds;
     public int sizeX;
@@ -55,10 +62,17 @@ public class Map
         string tilesetStr,
         string groundStr,
         string musicStr,
+        string speechStr,
+        string itemsStr,
+        string tooltipsStr,
         Sprite tileset,
         Sprite ground,
-        AudioClip music,
         Sprite icon,
+        string[] speech,
+        string[] items,
+        string[] tooltips,
+        List<AudioClip> music,
+        Dictionary<int, Sprite> customItemSpriteDict,
         int npcLevel,
         string grounds,
         int sizeX,
@@ -96,10 +110,17 @@ public class Map
         this.tilesetStr = tilesetStr;
         this.groundStr = groundStr;
         this.musicStr = musicStr;
+        this.speechStr = speechStr;
+        this.itemsStr = itemsStr;
+        this.tooltipsStr = tooltipsStr;
         this.tileset = tileset;
         this.ground = ground;
-        this.music = music;
         this.icon = icon;
+        this.speech = speech;
+        this.items = items;
+        this.tooltips = tooltips;
+        this.music = music;
+        this.customItemSpriteDict = customItemSpriteDict;
         this.npcLevel = npcLevel;
         this.grounds = grounds;
         this.sizeX = sizeX;

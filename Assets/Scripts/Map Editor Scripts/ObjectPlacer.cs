@@ -7,6 +7,7 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                                           //Probably should've just made another script to control that stuff, but it's whatever.
 {
     public Transform tiles;
+    public Transform canvases;
     public MouseCollisionOnMap mcs;
     public Transform highlight;
     public bool inDeleteMode;
@@ -37,6 +38,14 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
             {
                 if (highlight.GetComponent<BoxCollider2D>().IsTouching(obj.GetComponent<BoxCollider2D>()) && layerDict[layer] == obj.GetComponent<SpriteRenderer>().sortingOrder)
                 {
+                    foreach (Transform canvas in canvases.Find(GetComponent<TilePlacer>().layer))
+                    {
+                        if (highlight.GetComponent<BoxCollider2D>().IsTouching(canvas.GetComponent<BoxCollider2D>()))
+                        {
+                            Destroy(canvas.gameObject);
+                            break;
+                        }
+                    }
                     Destroy(obj.gameObject);
                     break;
                 }
@@ -85,6 +94,55 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
             else
             {
                 placedObj.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            }
+
+            //special properties for certain objects
+            switch (objToPlace.name)
+            {
+                case "Item":
+                    GameObject canvas = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "item";
+                    canvas.transform.parent = canvases.Find(layer);
+                    canvas.transform.position = placedObj.transform.position;
+                    canvas.name = "SpecialObjectCanvas";
+                    placedObj.AddComponent<MEItemIDContainer>();
+                    break;
+                case "ChristmasDesk":
+                case "DTAFSpecialDesk":
+                case "ETSpecialDesk":
+                    GameObject canvas1 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas1.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "desk";
+                    canvas1.transform.parent = canvases.Find(layer);
+                    canvas1.transform.position = placedObj.transform.position;
+                    canvas1.name = "SpecialObjectCanvas";
+                    placedObj.AddComponent<MEDeskListContainer>();
+                    break;
+                case "DTAFSign":
+                    GameObject canvas2 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas2.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "whiteSign";
+                    canvas2.transform.parent = canvases.Find(layer);
+                    canvas2.transform.position = placedObj.transform.position;
+                    canvas2.name = "SpecialObjectCanvas";
+                    placedObj.AddComponent<MESignTextContainer>();
+                    break;
+                case "SSSign":
+                    GameObject canvas3 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas3.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "blueSign";
+                    canvas3.transform.parent = canvases.Find(layer);
+                    canvas3.transform.position = placedObj.transform.position;
+                    canvas3.name = "SpecialObjectCanvas";
+                    placedObj.AddComponent<MESignTextContainer>();
+                    break;
+                case "DTAFPlaque":
+                    GameObject canvas4 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas4.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "blueSign";
+                    canvas4.transform.parent = canvases.Find(layer);
+                    canvas4.transform.position = placedObj.transform.position;
+                    canvas4.name = "SpecialObjectCanvas";
+                    canvas4.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 3.2f);
+                    canvas4.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 3.2f);
+                    placedObj.AddComponent<MESignTextContainer>();
+                    break;
             }
         }
     }

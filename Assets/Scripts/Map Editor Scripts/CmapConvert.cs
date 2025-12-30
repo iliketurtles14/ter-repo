@@ -582,6 +582,9 @@ public class CmapConvert : MonoBehaviour
         convertedText += "Tileset=" + tileset + "\n";
         convertedText += "Ground=" + ground + "\n";
         convertedText += "Music=" + music + "\n";
+        convertedText += "Speech=Normal\n";
+        convertedText += "Tooltips=Normal\n";
+        convertedText += "Items=Normal";
         convertedText += "Icon=None\n";
         convertedText += "NPCLevel=" + npcLevel + "\n";
         convertedText += "Grounds=" + grounds + "\n";

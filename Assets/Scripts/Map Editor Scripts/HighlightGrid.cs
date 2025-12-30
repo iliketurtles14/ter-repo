@@ -7,6 +7,7 @@ public class HighlightGrid : MonoBehaviour
     private RuntimeGrid grid;
     public ObjectSelect objectSelectScript;
     public ObjectPlacer objectPlacerScript;
+    public MouseCollisionOnMap mcs;
     private void Awake()
     {
         grid = GetComponent<RuntimeGrid>();
@@ -56,6 +57,11 @@ public class HighlightGrid : MonoBehaviour
             }
 
             HighlightSquare(bottomLeft);
+        }
+
+        if (mcs.isTouchingBlack)
+        {
+            HighlightSquare(new Vector2(9999, 9999));
         }
     }
 

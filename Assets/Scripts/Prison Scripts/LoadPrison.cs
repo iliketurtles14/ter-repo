@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
+using System.Windows.Forms.VisualStyles;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -13,10 +14,14 @@ using UnityEngine.Tilemaps;
 
 public class LoadPrison : MonoBehaviour
 {
-    private AudioClip music;
     private Sprite tileset;
     private Sprite ground;
     private Sprite icon;
+    public List<AudioClip> music;
+    public Dictionary<int, Sprite> customItemSprites;
+    public string[] speech;
+    public string[] items;
+    public string[] tooltips;
 
     private List<Sprite> ItemSprites = new List<Sprite>();
     private List<Sprite> NPCSprites = new List<Sprite>();
@@ -25,6 +30,11 @@ public class LoadPrison : MonoBehaviour
 
     private ApplyPrisonData dataScript;
 
+    private List<string> musicNames = new List<string>
+    {
+        "chow.mp3", "escaped.mp3", "lightsout.mp3", "lockdown.mp3", "rollcall.mp3",
+        "shower.mp3", "work.mp3", "workout.mp3", "freetime.mp3"
+    };
     private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     {
         { "tutorial", 0 }, { "perks", 1 }, { "stalagflucht", 2 }, { "shanktonstatepen", 3 },
@@ -1254,7 +1264,7 @@ public class LoadPrison : MonoBehaviour
     public Map MakeMapObject(string path)
     {
         //unzip files
-        string extractPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons") + Path.DirectorySeparatorChar;
+        string extractPath = Path.Combine(Application.streamingAssetsPath, "temp") + Path.DirectorySeparatorChar;
 
         ZipFile.ExtractToDirectory(path, extractPath);
 
@@ -1278,10 +1288,38 @@ public class LoadPrison : MonoBehaviour
             icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
             File.Delete(Path.Combine(extractPath, "Icon.png"));
         }
-        if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
+        if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
         {
-            StartCoroutine(ConvertMP3ToAudioClip("file://" + Path.Combine(extractPath, "Music.mp3")));
-            File.Delete(Path.Combine(extractPath, "Music.mp3"));
+            speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
+            File.Delete(Path.Combine(extractPath, "Speech.ini"));
+        }
+        if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
+        {
+            tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
+            File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
+        }
+        if (File.Exists(Path.Combine(extractPath, "Items.ini")))
+        {
+            items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
+            File.Delete(Path.Combine(extractPath, "Items.ini"));
+        }
+        if (File.Exists(Path.Combine(extractPath, "Music.zip")))
+        {
+            ZipFile.ExtractToDirectory(Path.Combine(extractPath, "Music.zip"), extractPath);
+            StartCoroutine(ConvertMP3ToAudioClip("file://" + extractPath));
+            File.Delete(Path.Combine(extractPath, "Music.zip"));
+            //it deletes the files in the coroutine
+        }
+        if (Directory.Exists(Path.Combine(extractPath, "Items")))
+        {
+            foreach (string file in Directory.GetFiles(Path.Combine(extractPath, "Items")))
+            {
+                int id = Convert.ToInt32(Path.GetFileName(file).Split('.')[0]);
+                Sprite sprite = ConvertPNGToSprite(file);
+                customItemSprites.Add(id, sprite);
+            }
+
+            Directory.Delete(Path.Combine(extractPath, "Items"));
         }
 
         for (int i = 0; i < data.Length; i++)
@@ -1301,6 +1339,9 @@ public class LoadPrison : MonoBehaviour
         string groundStr = GetINIVar("Properties", "Ground", data);
         string iconStr = GetINIVar("Properties", "Icon", data);
         string musicStr = GetINIVar("Properties", "Music", data);
+        string speechStr = GetINIVar("Properties", "Speech", data);
+        string itemsStr = GetINIVar("Properties", "Items", data);
+        string tooltipsStr = GetINIVar("Properties", "Tooltips", data);
         if (tilesetStr != "Custom")
         {
             tileset = TextureToSprite(givenDataScript.tileTextureList[tilesetDict[prisonDict[tilesetStr]]]);
@@ -1316,7 +1357,92 @@ public class LoadPrison : MonoBehaviour
                 ground = TextureToSprite(givenDataScript.groundTextureList[tilesetDict[prisonDict[groundStr]]]);
             }
         }
-        //set music later. this still needs to be added to getgivendata (i think)
+
+        //music for non custom (custom was set before at the file place)
+        AudioClip freetime = null;
+        AudioClip chow = null;
+        AudioClip escaped = GetGivenData.instance.musicList[10];
+        AudioClip lightsout = null;
+        AudioClip lockdown = null;
+        AudioClip rollcall = null;
+        AudioClip shower = null;
+        AudioClip work = null;
+        AudioClip workout = null;
+        Dictionary<string, int> freetimeDict = new Dictionary<string, int>
+        {
+            { "perks", 23 }, { "stalag", 39 }, { "shankton", 27 }, {"jungle", 21 }, { "sanpancho", 26 },
+            { "irongate", 20 }, { "JC", 29 }, { "BC", 27 }, { "london", 27 }, { "PCP", 27 }, { "SS", 29 },
+            { "DTAF", 2 }, { "ET", 11 }, { "alca", 0 }, { "fhurst", 27 }, { "epsilon", 27 }, { "bamford", 27 }
+        };
+
+        if(musicStr != "Custom")
+        {
+            freetime = GetGivenData.instance.musicList[freetimeDict[musicStr]];
+        }
+
+        switch (musicStr)
+        {
+            case "perks":
+            case "stalag":
+            case "shankton":
+            case "jungle":
+            case "sanpancho":
+            case "irongate":
+            case "BC":
+            case "london":
+            case "PCP":
+            case "alca":
+            case "fhurst":
+            case "epsilon":
+            case "bamford":
+                chow = GetGivenData.instance.musicList[1];
+                lightsout = GetGivenData.instance.musicList[22];
+                lockdown = GetGivenData.instance.musicList[23];
+                rollcall = GetGivenData.instance.musicList[25];
+                shower = GetGivenData.instance.musicList[28];
+                work = GetGivenData.instance.musicList[42];
+                workout = GetGivenData.instance.musicList[43];
+                break;
+            case "JC":
+            case "SS":
+                chow = GetGivenData.instance.musicList[30];
+                lightsout = GetGivenData.instance.musicList[31];
+                lockdown = GetGivenData.instance.musicList[32];
+                rollcall = GetGivenData.instance.musicList[33];
+                shower = GetGivenData.instance.musicList[34];
+                work = GetGivenData.instance.musicList[37];
+                workout = GetGivenData.instance.musicList[38];
+                break;
+            case "ET":
+                chow = GetGivenData.instance.musicList[12];
+                lightsout = GetGivenData.instance.musicList[13];
+                lockdown = GetGivenData.instance.musicList[14];
+                rollcall = GetGivenData.instance.musicList[15];
+                shower = GetGivenData.instance.musicList[16];
+                work = GetGivenData.instance.musicList[18];
+                workout = GetGivenData.instance.musicList[19];
+                break;
+            case "DTAF":
+                chow = GetGivenData.instance.musicList[3];
+                lightsout = GetGivenData.instance.musicList[4];
+                lockdown = GetGivenData.instance.musicList[5];
+                rollcall = GetGivenData.instance.musicList[6];
+                shower = GetGivenData.instance.musicList[7];
+                work = GetGivenData.instance.musicList[8];
+                workout = GetGivenData.instance.musicList[9];
+                break;
+            case "Custom":
+                break;
+        }
+
+        if(musicStr != "Custom")
+        {
+            music = new List<AudioClip>
+            {
+                chow, escaped, lightsout, lockdown, rollcall, shower, work, workout, freetime
+            };
+        }
+
         if (iconStr == "None")
         {
             icon = Resources.Load<Sprite>("Map Editor Resources/UI Stuff/noicon");
@@ -1565,7 +1691,7 @@ public class LoadPrison : MonoBehaviour
             zoneVars.Add(vars);
         }
 
-        Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, tileset, ground, music, icon, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)
@@ -1580,18 +1706,22 @@ public class LoadPrison : MonoBehaviour
     }
     private IEnumerator ConvertMP3ToAudioClip(string path)
     {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
+        foreach (string name in musicNames)
         {
-            yield return www.SendWebRequest();
+            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(Path.Combine(path, name), AudioType.MPEG))
+            {
+                yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error loading audio: " + www.error);
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Error loading audio: " + www.error);
+                }
+                else
+                {
+                    music.Add(DownloadHandlerAudioClip.GetContent(www));
+                }
             }
-            else
-            {
-                music = DownloadHandlerAudioClip.GetContent(www);
-            }
+            File.Delete(Path.Combine(path, name));
         }
     }
     private Sprite TextureToSprite(Texture2D texture)

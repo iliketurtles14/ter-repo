@@ -15,6 +15,7 @@ public class SubMenuController : MonoBehaviour
     public Sprite checkedBoxSprite;
     public RuntimeGrid gridScript;
     public GroundSizeSet groundSizeSetScript;
+    public Transform canvases;
 
     public string[] tilesPath = null;
     public string[] groundPath = null;
@@ -63,8 +64,6 @@ public class SubMenuController : MonoBehaviour
         propertiesPanel.Find("TilesetButton").GetComponent<EventTrigger>().enabled = true;
         propertiesPanel.Find("GroundButton").GetComponent<Button>().enabled = true;
         propertiesPanel.Find("GroundButton").GetComponent<EventTrigger>().enabled = true;
-        propertiesPanel.Find("MusicButton").GetComponent<Button>().enabled = true;
-        propertiesPanel.Find("MusicButton").GetComponent<EventTrigger>().enabled = true;
         propertiesPanel.Find("IconButton").GetComponent<Button>().enabled = true;
         propertiesPanel.Find("IconButton").GetComponent<EventTrigger>().enabled = true;
         propertiesPanel.Find("GroundsButton").GetComponent<Button>().enabled = true;
@@ -94,6 +93,11 @@ public class SubMenuController : MonoBehaviour
         uic.Find("RoofButton").GetComponent<EventTrigger>().enabled = true;
         uic.Find("ZoneObjectsButton").GetComponent<Button>().enabled = true;
         uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<Button>().enabled = true;
+        uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("OriginButton").GetComponent<Button>().enabled = true;
+        uic.Find("OriginButton").GetComponent<EventTrigger>().enabled = true;
+        canvases.gameObject.SetActive(true);
     }
 
 }

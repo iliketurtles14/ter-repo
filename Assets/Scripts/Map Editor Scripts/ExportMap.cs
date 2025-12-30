@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Rendering.UI;
 
 public class ExportMap : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class ExportMap : MonoBehaviour
     private void SetProperties()
     {
         Transform properties = uic.Find("PropertiesPanel");
+        Transform advanced = uic.Find("AdvancedPanel");
         SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
 
         text += "[Properties]\n";
@@ -39,7 +41,10 @@ public class ExportMap : MonoBehaviour
         text += "Inmates=" + properties.Find("InmatesNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Tileset=" + properties.Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Ground=" + properties.Find("GroundResultText").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Music=" + properties.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Music=" + advanced.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Speech=" + advanced.Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Tooltips=" + advanced.Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "Items=" + advanced.Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Icon=" + properties.Find("IconResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "NPCLevel=" + properties.Find("NPCLevelNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Grounds=" + properties.Find("GroundsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
