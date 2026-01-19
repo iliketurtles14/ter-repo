@@ -4021,6 +4021,7 @@ GameObject:
   - component: {fileID: 567059190}
   - component: {fileID: 567059191}
   - component: {fileID: 567059192}
+  - component: {fileID: 567059193}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4750,6 +4751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31fe7347264ebb428cc37574add35cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: []
+  speech: []
+  items: []
+  tooltips: []
 --- !u!114 &567059179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4922,6 +4927,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e29c4f99d976424792de71952cc85f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MakeBadObject
+--- !u!114 &567059193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c9de8bdd492934793880160ef15438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetInmateCorrelations
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6050,6 +6067,7 @@ MonoBehaviour:
   invIsFull: 0
   isOpening: 0
   deskInv: []
+  currentDesk: {fileID: 0}
 --- !u!61 &694438576
 BoxCollider2D:
   m_ObjectHideFlags: 0

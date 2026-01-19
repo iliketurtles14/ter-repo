@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public class CmapConvert : MonoBehaviour
@@ -75,6 +76,10 @@ public class CmapConvert : MonoBehaviour
             cmapFile[i] = cmapFile[i].Replace("\n", "").Replace("\r", "");
         }
 
+        foreach(char c in GetINIVar("Jobs", "Janitor", cmapFile))
+        {
+            Debug.Log(c);
+        }
         GetProperties();
         GetZones();
         GetTiles();
@@ -197,6 +202,7 @@ public class CmapConvert : MonoBehaviour
         {
             library = true;
         }
+        Debug.Log(janitor);
 
         startingJob = GetINIVar("Jobs", "StartingJob", cmapFile);
     }
@@ -378,6 +384,13 @@ public class CmapConvert : MonoBehaviour
             { 109, "BlankDoor" }, { 110, "BedHorizontal" }, { 111, "PlayerBedHorizontal" }
         };
 
+        List<string> objectPanels = new List<string>
+        {
+            "WaypointsPanel", "CellsPanel", "SecurityPanel", "JobsPanel", "GymPanel",
+            "MiscPanel", "DoorsPanel", "ZiplinePanel", "SpecialPanel", "ETPanel", "DTAF1Panel",
+            "DTAF2Panel", "Christmas1Panel", "Christmas2Panel", "ItemsPanel"
+        };
+
         List<string> objectSet = GetINISet("Objects", cmapFile);
 
         foreach (string objectStr in objectSet)
@@ -414,11 +427,14 @@ public class CmapConvert : MonoBehaviour
                 string objName = objectDict[objID];
 
                 Vector2 objSize = new Vector2(0f, 0f);
-                foreach(Transform obj in uic.Find("ObjectsPanel").Find("ObjectsScrollRect").Find("Viewport").Find("Content"))
+                foreach(string panel in objectPanels)
                 {
-                    if(obj.name == objName)
+                    foreach (Transform obj in uic.Find(panel))
                     {
-                        objSize = obj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
+                        if (obj.name == objName)
+                        {
+                            objSize = obj.GetComponent<BoxCollider2D>().size / new Vector2(50f, 50f);
+                        }
                     }
                 }
 
@@ -584,7 +600,7 @@ public class CmapConvert : MonoBehaviour
         convertedText += "Music=" + music + "\n";
         convertedText += "Speech=Normal\n";
         convertedText += "Tooltips=Normal\n";
-        convertedText += "Items=Normal";
+        convertedText += "Items=Normal\n";
         convertedText += "Icon=None\n";
         convertedText += "NPCLevel=" + npcLevel + "\n";
         convertedText += "Grounds=" + grounds + "\n";

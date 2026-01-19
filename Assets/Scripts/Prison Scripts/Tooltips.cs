@@ -611,18 +611,24 @@ public class Tooltips : MonoBehaviour
             }
             else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
             {
-                int num = 0;
-                Match match = Regex.Match(mcs.touchedDesk.name, @"\d+");
-                if (match.Success)
-                {
-                    num = int.Parse(match.Value);
-                }
+                int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
-                foreach (Transform child in aStar.transform)
+                if (num == -1)
                 {
-                    if (child.name == "Inmate" + num)
+                    toPrint = "Desk";
+                }
+                else
+                {
+                    foreach (Transform child in aStar.transform)
                     {
-                        toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                        if (child.name.StartsWith("Inmate"))
+                        {
+                            if (child.GetComponent<NPCCollectionData>().npcData.order == num)
+                            {
+                                toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -650,18 +656,24 @@ public class Tooltips : MonoBehaviour
             }
             else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
             {
-                int num = 0;
-                Match match = Regex.Match(mcs.touchedDesk.name, @"\d+");
-                if (match.Success)
-                {
-                    num = int.Parse(match.Value);
-                }
+                int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
-                foreach (Transform child in aStar.transform)
+                if (num == -1)
                 {
-                    if (child.name == "Inmate" + num)
+                    toPrint = "Desk";
+                }
+                else
+                {
+                    foreach (Transform child in aStar.transform)
                     {
-                        str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                        if (child.name.StartsWith("Inmate"))
+                        {
+                            if(child.GetComponent<NPCCollectionData>().npcData.order == num)
+                            {
+                                toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                                break;
+                            }
+                        }
                     }
                 }
             }

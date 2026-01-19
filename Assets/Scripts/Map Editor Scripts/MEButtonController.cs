@@ -1105,7 +1105,10 @@ public class MEButtonController : MonoBehaviour
             uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(false);
         }
         catch { }
-        GetComponent<ObjectsPanelController>().canBeShown = false;
+        if(panelSelectScript.currentPanel == "ObjectsPanel")
+        {
+            GetComponent<ObjectsPanelController>().canBeShown = false;
+        }
         canvases.gameObject.SetActive(false);
     }
     private void ActivateButtonsForSpecialObjects()
@@ -1135,7 +1138,10 @@ public class MEButtonController : MonoBehaviour
             uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(true);
         }
         catch { }
-        GetComponent<ObjectsPanelController>().canBeShown = true;
+        if (panelSelectScript.currentPanel == "ObjectsPanel")
+        {
+            GetComponent<ObjectsPanelController>().canBeShown = true;
+        }
         canvases.gameObject.SetActive(true);
     }
 }

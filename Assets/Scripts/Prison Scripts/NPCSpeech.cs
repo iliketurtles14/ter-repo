@@ -21,7 +21,7 @@ public class NPCSpeech : MonoBehaviour
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
-        speechFile = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "speech.ini"));
+        speechFile = Resources.Load<TextAsset>("Speech").text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); ;
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
 
         DestroyTextBox(transform);

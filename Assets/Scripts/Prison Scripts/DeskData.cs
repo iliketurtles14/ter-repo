@@ -7,7 +7,7 @@ using UnityEngine;
 public class DeskData : MonoBehaviour
 {
     public List<DeskItem> deskInv = new List<DeskItem>();
-    public int inmateCorrelationNumber;
+    public int inmateCorrelationNumber = -1;
 
     private void Start()
     {

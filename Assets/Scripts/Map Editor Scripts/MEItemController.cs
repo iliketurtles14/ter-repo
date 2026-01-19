@@ -4,6 +4,7 @@ using UnityEngine;
 public class MEItemController : MonoBehaviour
 {
     public Transform tiles;
+    public Transform canvases;
     private Dictionary<int, int> itemSpriteDict = new Dictionary<int, int>() //this was even more of a bitch to code
     {
         { 0, 6 }, { 1, 7 }, { 2, 64 }, { 3, 4 }, { 4, 113 }, { 5, 68 }, { 6, 67 }, { 7, 66 },
@@ -48,9 +49,9 @@ public class MEItemController : MonoBehaviour
     public Transform currentItem;
     private void Update()
     {
-        foreach(Transform obj in tiles.Find("GroundObjects"))
+        foreach (Transform obj in tiles.Find("GroundObjects"))
         {
-            if(obj.name == "Item")
+            if (obj.name == "Item")
             {
                 try
                 {
@@ -58,6 +59,98 @@ public class MEItemController : MonoBehaviour
                     if (id < 0 || id > 273)
                     {
                         Destroy(obj.gameObject);
+                        foreach (Transform canvas in canvases.Find("Ground"))
+                        {
+                            float distance = Vector2.Distance(obj.position, canvas.position);
+                            if (distance < .01f)
+                            {
+                                Destroy(canvas.gameObject);
+                            }
+                        }
+                        Debug.Log("An item had an invalid ID and has been destroyed.");
+                    }
+                    else
+                    {
+                        obj.GetComponent<SpriteRenderer>().sprite = DataSender.instance.ItemImages[itemSpriteDict[id]];
+                    }
+                }
+                catch { }
+            }
+        }
+        foreach (Transform obj in tiles.Find("UndergroundObjects"))
+        {
+            if (obj.name == "Item")
+            {
+                try
+                {
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    if (id < 0 || id > 273)
+                    {
+                        Destroy(obj.gameObject);
+                        foreach (Transform canvas in canvases.Find("Underground"))
+                        {
+                            float distance = Vector2.Distance(obj.position, canvas.position);
+                            if (distance < .01f)
+                            {
+                                Destroy(canvas.gameObject);
+                            }
+                        }
+                        Debug.Log("An item had an invalid ID and has been destroyed.");
+                    }
+                    else
+                    {
+                        obj.GetComponent<SpriteRenderer>().sprite = DataSender.instance.ItemImages[itemSpriteDict[id]];
+                    }
+                }
+                catch { }
+            }
+        }
+        foreach (Transform obj in tiles.Find("VentObjects"))
+        {
+            if (obj.name == "Item")
+            {
+                try
+                {
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    if (id < 0 || id > 273)
+                    {
+                        Destroy(obj.gameObject);
+                        foreach (Transform canvas in canvases.Find("Vent"))
+                        {
+                            float distance = Vector2.Distance(obj.position, canvas.position);
+                            if (distance < .01f)
+                            {
+                                Destroy(canvas.gameObject);
+                            }
+                        }
+                        Debug.Log("An item had an invalid ID and has been destroyed.");
+                    }
+                    else
+                    {
+                        obj.GetComponent<SpriteRenderer>().sprite = DataSender.instance.ItemImages[itemSpriteDict[id]];
+                    }
+                }
+                catch { }
+            }
+        }
+        foreach (Transform obj in tiles.Find("RoofObjects"))
+        {
+            if (obj.name == "Item")
+            {
+                try
+                {
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    if (id < 0 || id > 273)
+                    {
+                        Destroy(obj.gameObject);
+                        foreach (Transform canvas in canvases.Find("Roof"))
+                        {
+                            float distance = Vector2.Distance(obj.position, canvas.position);
+                            if (distance < .01f)
+                            {
+                                Destroy(canvas.gameObject);
+                            }
+                        }
                         Debug.Log("An item had an invalid ID and has been destroyed.");
                     }
                     else

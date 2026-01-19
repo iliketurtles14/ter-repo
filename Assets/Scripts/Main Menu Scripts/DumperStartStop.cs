@@ -10,13 +10,17 @@ public class DumperStartStop : MonoBehaviour
     public MemoryMappedFileReader mmfrScript; // Assign in Inspector
     public CheckForDependencies dependenciesScript;
     public PrisonSelect prisonSelectScript;
+    private bool hasLoaded; //this is for the initial load at the start of the game. if you are coming back to the main menu, this is why this is here.
 
     private void OnEnable()
     {
-        StartCoroutine(Wait());
+        if (!hasLoaded)
+        {
+            StartCoroutine(LoadAll());
+        }
     }
 
-    private IEnumerator Wait()
+    public IEnumerator LoadAll() //this is where it all starts...
     {
         while (true)
         {
@@ -44,6 +48,7 @@ public class DumperStartStop : MonoBehaviour
         loadScript.LogLoad("Stopping Dumper");
         loadScript.LogLoad("Loading Prisons");
         prisonSelectScript.ReloadPrisons(false);
+        hasLoaded = true;
     }
 
     private void StartDumper()

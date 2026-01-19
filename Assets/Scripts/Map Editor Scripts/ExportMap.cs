@@ -24,6 +24,7 @@ public class ExportMap : MonoBehaviour
         SetJobs();
         SetTiles();
         SetZones();
+        SetObjectProperties();
         ZipFiles();
     }
     private void SetProperties()
@@ -71,30 +72,23 @@ public class ExportMap : MonoBehaviour
 
         text += "\n";
         text += "[Routine]\n";
-        text += "00=" + routineGrid1.Find("00:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "01=" + routineGrid1.Find("01:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "02=" + routineGrid1.Find("02:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "03=" + routineGrid1.Find("03:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "04=" + routineGrid1.Find("04:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "05=" + routineGrid1.Find("05:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "06=" + routineGrid1.Find("06:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "07=" + routineGrid1.Find("07:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "08=" + routineGrid1.Find("08:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "09=" + routineGrid1.Find("09:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "10=" + routineGrid1.Find("10:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "11=" + routineGrid1.Find("11:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "12=" + routineGrid2.Find("12:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "13=" + routineGrid2.Find("13:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "14=" + routineGrid2.Find("14:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "15=" + routineGrid2.Find("15:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "16=" + routineGrid2.Find("16:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "17=" + routineGrid2.Find("17:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "18=" + routineGrid2.Find("18:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "19=" + routineGrid2.Find("19:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "20=" + routineGrid2.Find("20:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "21=" + routineGrid2.Find("21:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "22=" + routineGrid2.Find("22:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "23=" + routineGrid2.Find("23:00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        for(int i = 0; i < 24; i++)
+        {
+            string str = i.ToString();
+            if(str.Length < 2)
+            {
+                str = "0" + str;
+            }
+            if(i < 12)
+            {
+                text += str + "=" + routineGrid1.Find(str + ":00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+            }
+            else
+            {
+                text += str + "=" + routineGrid2.Find(str + ":00Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+            }
+
+        }
     }
     private void SetJobs()
     {
@@ -188,7 +182,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
+                text += tile.name + "=" + ((tile.position.x + 1.6f) / 1.6f) + "," + ((tile.position.y + 1.6f) / 1.6f) + "\n";
             }
         }
         text += "\n";
@@ -197,7 +191,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
+                text += tile.name + "=" + ((tile.position.x + 1.6f) / 1.6f) + "," + ((tile.position.y + 1.6f) / 1.6f) + "\n";
             }
         }
         text += "\n";
@@ -206,7 +200,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
+                text += tile.name + "=" + ((tile.position.x + 1.6f) / 1.6f) + "," + ((tile.position.y + 1.6f) / 1.6f) + "\n";
             }
         }
         text += "\n";
@@ -215,7 +209,7 @@ public class ExportMap : MonoBehaviour
         {
             if(tile.name != "empty")
             {
-                text += tile.name + "=" + Math.Round((tile.position.x + 1.6f) / 1.6f, 1) + "," + Math.Round((tile.position.y + 1.6f) / 1.6f, 1) + "\n";
+                text += tile.name + "=" + ((tile.position.x + 1.6f) / 1.6f) + "," + ((tile.position.y + 1.6f) / 1.6f) + "\n";
             }
         }
 
@@ -236,6 +230,141 @@ public class ExportMap : MonoBehaviour
                 float sizeY = Convert.ToSingle(Math.Round(zone.GetComponent<SpriteRenderer>().size.y / .16f, 1));
                 
                 text += zone.name + "=" + posX + "," + posY + ";" + sizeX + "x" + sizeY + "\n";
+            }
+        }
+    }
+    private void SetObjectProperties()
+    {
+        text += "\n";
+        text += "[GroundObjectProperties]\n";
+        foreach (Transform obj in tiles.Find("GroundObjects"))
+        {
+            float posX = (obj.position.x + 1.6f) / 1.6f;
+            float posY = (obj.position.y + 1.6f) / 1.6f;
+            switch (obj.name)
+            {
+                case "Item":
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item=" + posX + "," + posY + ";" + id + "\n";
+                    break;
+                case "ChristmasDesk":
+                case "DTAFSpecialDesk":
+                case "ETSpecialDesk":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    foreach (int num in obj.GetComponent<MEDeskListContainer>().ids)
+                    {
+                        text += num + ",";
+                    }
+                    text = text.Substring(0, text.Length - 1); //remove last comma
+                    text += "\n";
+                    break;
+                case "DTAFSign":
+                case "SSSign":
+                case "DTAFPlaque":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string header = obj.GetComponent<MESignTextContainer>().header;
+                    string body = obj.GetComponent<MESignTextContainer>().body;
+                    text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
+            }
+        }
+        text += "\n";
+        text += "[UndergroundObjectProperties]\n";
+        foreach (Transform obj in tiles.Find("UndergroundObjects"))
+        {
+            float posX = (obj.position.x + 1.6f) / 1.6f;
+            float posY = (obj.position.y + 1.6f) / 1.6f;
+            switch (obj.name)
+            {
+                case "Item":
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item=" + posX + "," + posY + ";" + id + "\n";
+                    break;
+                case "ChristmasDesk":
+                case "DTAFSpecialDesk":
+                case "ETSpecialDesk":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    foreach (int num in obj.GetComponent<MEDeskListContainer>().ids)
+                    {
+                        text += num + ",";
+                    }
+                    text = text.Substring(0, text.Length - 1); //remove last comma
+                    text += "\n";
+                    break;
+                case "DTAFSign":
+                case "SSSign":
+                case "DTAFPlaque":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string header = obj.GetComponent<MESignTextContainer>().header;
+                    string body = obj.GetComponent<MESignTextContainer>().body;
+                    text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
+            }
+        }
+        text += "\n";
+        text += "[VentObjectProperties]\n";
+        foreach (Transform obj in tiles.Find("VentObjects"))
+        {
+            float posX = (obj.position.x + 1.6f) / 1.6f;
+            float posY = (obj.position.y + 1.6f) / 1.6f;
+            switch (obj.name)
+            {
+                case "Item":
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item=" + posX + "," + posY + ";" + id + "\n";
+                    break;
+                case "ChristmasDesk":
+                case "DTAFSpecialDesk":
+                case "ETSpecialDesk":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    foreach (int num in obj.GetComponent<MEDeskListContainer>().ids)
+                    {
+                        text += num + ",";
+                    }
+                    text = text.Substring(0, text.Length - 1); //remove last comma
+                    text += "\n";
+                    break;
+                case "DTAFSign":
+                case "SSSign":
+                case "DTAFPlaque":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string header = obj.GetComponent<MESignTextContainer>().header;
+                    string body = obj.GetComponent<MESignTextContainer>().body;
+                    text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
+            }
+        }
+        text += "\n";
+        text += "[RoofObjectProperties]\n";
+        foreach (Transform obj in tiles.Find("RoofObjects"))
+        {
+            float posX = (obj.position.x + 1.6f) / 1.6f;
+            float posY = (obj.position.y + 1.6f) / 1.6f;
+            switch (obj.name)
+            {
+                case "Item":
+                    int id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item=" + posX + "," + posY + ";" + id + "\n";
+                    break;
+                case "ChristmasDesk":
+                case "DTAFSpecialDesk":
+                case "ETSpecialDesk":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    foreach (int num in obj.GetComponent<MEDeskListContainer>().ids)
+                    {
+                        text += num + ",";
+                    }
+                    text = text.Substring(0, text.Length - 1); //remove last comma
+                    text += "\n";
+                    break;
+                case "DTAFSign":
+                case "SSSign":
+                case "DTAFPlaque":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string header = obj.GetComponent<MESignTextContainer>().header;
+                    string body = obj.GetComponent<MESignTextContainer>().body;
+                    text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
             }
         }
     }

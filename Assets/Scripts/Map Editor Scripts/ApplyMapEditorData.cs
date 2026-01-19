@@ -767,6 +767,8 @@ public class ApplyMapEditorData : MonoBehaviour
         {
             child.GetComponent<Image>().sprite = UISprites[447];
         }
+        GetComponent<JobPanelController>().checkedSprite = UISprites[448];
+        GetComponent<JobPanelController>().uncheckedSprite = UISprites[447];
         //extras panel checkboxes
         uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("POWCheckbox").GetComponent<Image>().sprite = UISprites[447];

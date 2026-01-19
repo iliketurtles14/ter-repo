@@ -62,14 +62,14 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
     private void PlaceObject(string layer, GameObject objToPlace)
     {
         bool canPlace = true;
-        foreach(Transform obj in tiles.Find(layer + "Objects"))
-        {
-            if (highlight.GetComponent<BoxCollider2D>().IsTouching(obj.GetComponent<BoxCollider2D>()))
-            {
-                canPlace = false;
-                break;
-            }
-        }
+        //foreach(Transform obj in tiles.Find(layer + "Objects"))
+        //{
+        //    if (highlight.GetComponent<BoxCollider2D>().IsTouching(obj.GetComponent<BoxCollider2D>()))
+        //    {
+        //        canPlace = false;
+        //        break;
+        //    }
+        //}
         if(GetComponent<TilePlacer>().layer == "Zones")
         {
             canPlace = false;

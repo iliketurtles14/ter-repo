@@ -1,6 +1,7 @@
 using Pathfinding;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -51,11 +52,7 @@ public class Pause : MonoBehaviour
                 else if(lastTouchedButton.name == "QuitButton" && !isQuitting)
                 {
                     isQuitting = true;
-                    AsyncOperation loadOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
-                    loadOperation.completed += (AsyncOperation op) =>
-                    {
-                        SceneManager.UnloadSceneAsync(1);
-                    };
+                    Addressables.LoadSceneAsync("Main Menu");
                 }
             }
         }

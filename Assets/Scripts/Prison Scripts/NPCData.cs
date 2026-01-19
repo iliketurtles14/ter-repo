@@ -24,4 +24,6 @@ public class NPCData : ScriptableObject
     public GameObject aggroTarget;
     public bool isDead;
     public bool hasFood;
+    public GameObject bed;
+    public GameObject desk;
 }

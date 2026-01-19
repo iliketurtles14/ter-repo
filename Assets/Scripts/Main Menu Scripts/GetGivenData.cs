@@ -274,7 +274,7 @@ public class GetGivenData : MonoBehaviour
             "DTAF_workout.ogg", "escaped.ogg", "escapeteam.ogg", "escteam_chow.ogg",
             "escteam_lightsout.ogg", "escteam_lockdown.ogg", "escteam_rollcall.ogg",
             "escteam_shower.ogg", "escteam_trumpet.ogg", "escteam_work.ogg", "escteam_workout.ogg",
-            "irongate.ogg", "jungle.ogg", "lightsout.ogg", "perks.ogg", "rollcall.ogg", "sanpancho.ogg",
+            "irongate.ogg", "jungle.ogg", "lightsout.ogg", "lockdown.ogg", "perks.ogg", "rollcall.ogg", "sanpancho.ogg",
             "shanktonstatepen.ogg", "shower.ogg", "SS.ogg", "SS_chow.ogg", "SS_lightsout.ogg",
             "SS_lockdown.ogg", "SS_rollcall.ogg", "SS_shower.ogg", "SS_sign1.ogg", "SS_sign2.ogg",
             "SS_work.ogg", "SS_workout.ogg", "stalagflucht.ogg", "theme.ogg", "tutorial.ogg",

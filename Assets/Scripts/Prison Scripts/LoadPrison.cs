@@ -764,7 +764,6 @@ public class LoadPrison : MonoBehaviour
     }
     private void SetTiles(Dictionary<int, string> tileDict)
     {
-        int tilesetID = tilesetDict[currentMap.tilesetStr];
         List<Sprite> tileList = SliceAndDice(currentMap.tileset);
         foreach (int[] tileVars in currentMap.tilesList)
         {
@@ -1256,6 +1255,9 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "PlatesBox":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[90];
+                        break;
+                    case "BedVertical":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[264];
                         break;
                 }
             }

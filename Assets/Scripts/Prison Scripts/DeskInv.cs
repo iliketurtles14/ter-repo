@@ -202,10 +202,10 @@ public class DeskInv : MonoBehaviour
             {
                 if (npc.name.StartsWith("Inmate"))
                 {
-                    int inmateNumber = Convert.ToInt32(npc.name.Replace("Inmate", ""));
+                    int inmateNumber = npc.GetComponent<NPCCollectionData>().npcData.order;
                     if (inmateNumber == deskNumber)
                     {
-                        return npc.GetComponent<NPCCollectionData>().npcData.displayName + "'s Desk";
+                        return npc.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
                     }
                 }
             }
