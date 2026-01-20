@@ -597,7 +597,6 @@ public class LoadPrison : MonoBehaviour
     private Transform tiles;
 
 
-    [SerializeField]
     public Map currentMap;
     private void Start()
     {

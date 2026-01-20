@@ -102,14 +102,14 @@ public class PlayerIDInv : MonoBehaviour
             if(mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.defense != -1 && Input.GetMouseButtonDown(0) && !outfitIsFull)
             {
                 idInv[0].itemData = inventoryList[invSlotNumber].itemData;
-                outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
+                outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
             }
             else if (mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.strength != -1 && Input.GetMouseButtonDown(0) && !weaponIsFull)
             {
                 idInv[1].itemData = inventoryList[invSlotNumber].itemData;
-                weaponSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
+                weaponSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
             }
@@ -143,7 +143,7 @@ public class PlayerIDInv : MonoBehaviour
                 {
                     if(slot.GetComponent<Image>().sprite == ClearSprite)
                     {
-                        slot.GetComponent<Image>().sprite = idInv[0].itemData.icon;
+                        slot.GetComponent<Image>().sprite = idInv[0].itemData.sprite;
                         break;
                     }
                 }
@@ -164,7 +164,7 @@ public class PlayerIDInv : MonoBehaviour
                 {
                     if (slot.GetComponent<Image>().sprite == ClearSprite)
                     {
-                        slot.GetComponent<Image>().sprite = idInv[1].itemData.icon;
+                        slot.GetComponent<Image>().sprite = idInv[1].itemData.sprite;
                         break;
                     }
                 }

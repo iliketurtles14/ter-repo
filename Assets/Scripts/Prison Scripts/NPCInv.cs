@@ -105,7 +105,7 @@ public class NPCInv : MonoBehaviour
                     if (npcInv[i].itemData == null)
                     {
                         npcInv[i].itemData = inventoryList[invSlotNumber].itemData;
-                        npcInvSlots[i].GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
+                        npcInvSlots[i].GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                         break;
                     }
                 }
@@ -153,7 +153,7 @@ public class NPCInv : MonoBehaviour
                 {
                     if(slot.GetComponent<Image>().sprite == clearSprite)
                     {
-                        slot.GetComponent<Image>().sprite = npcInv[npcInvSlotNumber].itemData.icon;
+                        slot.GetComponent<Image>().sprite = npcInv[npcInvSlotNumber].itemData.sprite;
                         break;
                     }
                 }
@@ -187,7 +187,7 @@ public class NPCInv : MonoBehaviour
                 {
                     if(slot.GetComponent<Image>().sprite == clearSprite)
                     {
-                        slot.GetComponent<Image>().sprite = item.itemData.icon;
+                        slot.GetComponent<Image>().sprite = item.itemData.sprite;
                         break;
                     }
                 }
@@ -215,7 +215,7 @@ public class NPCInv : MonoBehaviour
         {
             if (npcInv[i].itemData != null)
             {
-                npcInvSlots[i].GetComponent<Image>().sprite = npcInv[i].itemData.icon;
+                npcInvSlots[i].GetComponent<Image>().sprite = npcInv[i].itemData.sprite;
             }
         }
 

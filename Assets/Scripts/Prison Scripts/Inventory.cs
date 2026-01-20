@@ -153,32 +153,32 @@ public class Inventory : MonoBehaviour
 
         if (slot1Image.sprite == ClearSprite)
         {
-            slot1Image.sprite = itemData.icon;
+            slot1Image.sprite = itemData.sprite;
             inventory[0].itemData = itemData;
             return;
         } else if(slot2Image.sprite == ClearSprite)
         {
-            slot2Image.sprite = itemData.icon;
+            slot2Image.sprite = itemData.sprite;
             inventory[1].itemData = itemData;
             return;
         } else if(slot3Image.sprite == ClearSprite)
         {
-            slot3Image.sprite = itemData.icon;
+            slot3Image.sprite = itemData.sprite;
             inventory[2].itemData = itemData;
             return;
         } else if(slot4Image.sprite == ClearSprite)
         {
-            slot4Image.sprite = itemData.icon;
+            slot4Image.sprite = itemData.sprite;
             inventory[3].itemData = itemData;
             return;
         } else if(slot5Image.sprite == ClearSprite)
         {
-            slot5Image.sprite = itemData.icon;
+            slot5Image.sprite = itemData.sprite;
             inventory[4].itemData = itemData;
             return;
         } else if( slot6Image.sprite == ClearSprite)
         {
-            slot6Image.sprite = itemData.icon;
+            slot6Image.sprite = itemData.sprite;
             inventory[5].itemData = itemData;
             return;
         } else
@@ -204,7 +204,7 @@ public class Inventory : MonoBehaviour
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
-                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
                 droppedItem.layer = 3;
             }
@@ -213,7 +213,7 @@ public class Inventory : MonoBehaviour
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("VentObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
-                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 10;
                 droppedItem.layer = 12;
             }
@@ -222,7 +222,7 @@ public class Inventory : MonoBehaviour
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("RoofObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
-                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 14;
                 droppedItem.layer = 13;
             }
@@ -231,7 +231,7 @@ public class Inventory : MonoBehaviour
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
-                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.icon;
+                droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 droppedItem.layer = 11;
             }

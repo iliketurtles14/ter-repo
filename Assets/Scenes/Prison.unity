@@ -4008,7 +4008,6 @@ GameObject:
   - component: {fileID: 567059177}
   - component: {fileID: 567059178}
   - component: {fileID: 567059179}
-  - component: {fileID: 567059180}
   - component: {fileID: 567059181}
   - component: {fileID: 567059182}
   - component: {fileID: 567059183}
@@ -4022,6 +4021,7 @@ GameObject:
   - component: {fileID: 567059191}
   - component: {fileID: 567059192}
   - component: {fileID: 567059193}
+  - component: {fileID: 567059194}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4707,10 +4707,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcInv: []
-  weapon:
-    itemData: {fileID: 0}
-  outfit:
-    itemData: {fileID: 0}
   inmateCorrelationNumber: -1
   guardCorrelationNumber: -1
 --- !u!114 &567059176
@@ -4768,18 +4764,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetDeskNum
   isReadyForRNG: 0
---- !u!114 &567059180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567059157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fa941a483691b54d933ee0eec2c7f78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemList
 --- !u!114 &567059181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4804,7 +4788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e0779419a20564d9fa920226bd7d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetInitialOutfits
-  outfitData: {fileID: 0}
 --- !u!114 &567059183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4939,6 +4922,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9de8bdd492934793880160ef15438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetInmateCorrelations
+--- !u!114 &567059194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d9acdc17b148a43998732a666a0da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDataCreator
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9902,9 +9897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682dc6ce8a4071b42b2861abdb205eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idInv:
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
+  idInv: []
   invSlotNumber: 0
   idIsOpen: 0
 --- !u!61 &1184720342
@@ -10057,9 +10050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682dc6ce8a4071b42b2861abdb205eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idInv:
-  - itemData: {fileID: 0}
-  - itemData: {fileID: 0}
+  idInv: []
   invSlotNumber: 0
   idIsOpen: 0
 --- !u!61 &1187447688

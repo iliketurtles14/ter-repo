@@ -9,11 +9,13 @@ public class SetInitialOutfits : MonoBehaviour
     private PlayerIDInv playerIDInvScript;
     private Transform mc;
     public ItemData outfitData;
+    private ItemDataCreator itemDataCreatorScript;
 
     private void Start()
     {
         playerIDInvScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        itemDataCreatorScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -57,16 +59,9 @@ public class SetInitialOutfits : MonoBehaviour
         }
 
         //find the right itemData and set the stuff to the outfit slot
-        ItemData data = null;
-        foreach(ItemData aData in Resources.LoadAll<ItemData>("Item Scriptable Objects"))
-        {
-            if(aData.id == outfitItemID)
-            {
-                data = Instantiate(aData);
-            }
-        }
+        ItemData data = itemDataCreatorScript.CreateItemData(outfitItemID);
         playerIDInvScript.idInv[0].itemData = data;
-        mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.icon;
+        mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.sprite;
         outfitData = data;
     }
 }

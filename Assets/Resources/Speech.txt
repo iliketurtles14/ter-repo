@@ -1419,6 +1419,88 @@ Count=20
 19=Do your thing
 20=Hit this guy
 
+[Missions_StealInmate]
+Count=11
+1=That thieving rat $inmate stole my $item! I want it back ASAP!
+2=A lil' birdie told me that $inmate's been seen with my missing $item. Mind retrieving it?
+3=Somehow $inmate got his grubby paws on my $item! I need it back!
+4=$inmate relieved me of my $item! Could you get it back?
+5=My lucky $item has found its way into the pilfering palm of $inmate. Get it back and I'll see you right.
+6=It seems $inmate's acts of friendship lately were just a cover to get his hands on my $item. Fancy getting it back for me?
+7=I paid $inmate good money for a $item and he never delivered. Get it for me and I'll pay you for the trouble.
+8=$inmate and his pals jumped me and took my $item. Get me it back and I'll give you a little reward.
+9=My $item's done a vanishing act and I suspect $inmate is to blame. I'd like it back.
+10=$inmate and his pals extorted a $item off me. Thing is, I want it back. How about it?
+11=$inmate jacked my $item! Get it back and I'll see you right bro'.
+
+[Missions_StealGuard]
+Count=5
+1=$guard saw fit to relieve me of my $item. I'd appreciate it if you could get it back.
+2=$guard raided my cell yesterday and took my $item. Could you get me it back?
+3=Yesterday my $item vanished, now I'm hearing that $guard has it. Could you get it back for me?
+4=$guard jacked my $item earlier- I want it back!
+5=I gave $guard my $item in good faith he'd watch my back. He failed to deliver so I want my payment back.
+
+[Missions_InmateBeat]
+Count=16
+1=That punk $inmate's been disrespecting me. Knock him about the place a bit and I'll pay you
+2=$inmate's trying to muscle me out of my group with some shady tactics. He's definitely due a beating, you up for it
+3=That $inmate's resumed his career as a petty thief. Show him the error of his ways with a beatdown and I'll pay you.
+4=I need $inmate laid out on the floor. I'd do it myself but the guards have me in their scopes. How about it?
+5=You're not friends with $inmate are you? It'd be in everyones best interests if he took a beating.
+6=That lowlife $inmate's earned himself a beating. How'd you feel about dishing one out?
+7=$inmate's been snitching me out to the guards. Perhaps a beating will shut his mouth. You up to the task?
+8=It seems $inmate's been running his mouth off about me yet again. Give him a beating and I'll make it worth your while.
+9=$inmate is plotting something- i can smell it. Go knock him down and remind him who's in charge.
+10=I suspect the recent heat on me is coming from $inmate. Give him a good hidin' and I'll see you right.
+11=$inmate's had his crew on the outside harrass my family. I need him laid out on the floor. How about it?
+12=That moron $inmate blocked my cell transfer request with some well timed snitchery. Drop a beatdown on him for me.
+13=I don't know who started these rumours about me, but $inmate can be the first to recieve a beating. Want the job?
+14=$inmate spilled all my dirty little secrets to the warden to cut his sentence. Worth a beating I'd say.
+15=$inmate seems to be drawn to the inside of my desk. Introduce him to your fists.
+16=$inmate's curiosity has landed him at the top of my beatdown list. Wanna earn some cash?
+
+[Missions_GuardBeat]
+Count=7
+1=$guard thinks he has VIP access to my cell desk. Go lay him out for me and I'll pay you.
+2=$guard kindly escorted me into an ambush the other day and I took a pretty hard beating. I'd like to return the favor, you up for it?
+3=$guard's trying to extort my earnings again! Last time a beatdown solved that, maybe it will again. You wanna do it?
+4=My parole was rejected thanks to $guard. I want him bruised.
+5=$guard failed to honour his side of our little 'look the other way' deal. Fancy laying a beatdown on him?
+6=Pretty sure $guard fancies me. Go break his face.
+7=That $guard is worse than the crooks in here. Someone should give him a good hidin'.
+
+[Missions_Give]
+Count=6
+1=I need a $item, can you hook me up with one?
+2=I'm on the lookout for a $item, could you get me one?
+3=Find me a $item and I'll make it worth your while.
+4=Desperately in need of a $item! Help me out?
+5=Got a $item? I have a buyer lined up!
+6=Someone jacked my $item, so I'm looking for a replacement.
+
+[Missions_Distract]
+Count=7
+1=I plan to teach someone a lesson during next $routine. Get the guards attention so I can do my thing
+2=At next $routine, distract the guards for me while I slip away- I've got a cell to shakedown!
+3=Grab the guards attention at next $routine for me, I have a debt to settle!
+4=Finally found out who's been snitching on me to the warden! Distract the guards at next $routine for me so I can reward him.
+5=It's all cracking off next $routine! If you could distract the guards I'll see you right...
+6=I've been tailing a thieving rat for days and worked out his routine. Distract the guards at next $routine for me so I can check his stash.
+7=If you can divert the guards attention next $routine for me I can dish out some justice using this screwdriver!
+
+[Job_Descrip]
+Janitor=Clean up your act and clean up our floors whilst you’re at it! I want you to make those floors, the foundations of YOUR reform, look their best.#Collect a mop or broom from the janitor office and use it to remove patches of dirt you find around the prison.
+Laundry=Your criminal attitude stinks, and so do your overalls! The only thing I want to smell on you inmates is the fresh scent of justice.#Take dirty outfits from the container in the laundry room and place them into the washers. Once spun, take them out and put them into the clean laundry container.
+Kitchen=The inspectors call it hazardous, I call it ‘Rustic’. A sense of taste andor smell is not essential. Don’t worry about washing your hands.#Take uncooked food from the freezer in the kitchen and place them in the ovens. Once cooked, take them out and put them on the serving trays in the canteen.
+Woodshop=Responsibly sourced by us, irresponsibly hammered together by you lot. Our wood shop has found quite the market for our ‘vintage inspired’ furniture. No craftsmanship required, the prison is NOT responsible for splinters.#Take three timbers from the container in the woodshop and craft them into furniture. Place the finished product in the furniture container.
+Library=You lot accuse the library of being understocked, but I assure you it’s a ‘modest’ collection of the finest literary works available. Not the inane jumble of expletives and filth you rabble are used to on the outside.#Collect books from the library and deliver them to the inmates they’re addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
+Tailor=As a prison, we are proud of our contract with famous clothing brand ‘Adidoodoo’ and are determined to meet their need for high quality, hand crafted garments.#Take three pieces of fabric from the container in the tailorshop and craft them into an item of clothing. Place the finished product in the clothing container.
+Gardening=Dream of working in the great outdoors Being at one with nature and all that Then introduce yourself to the weeds plaguing our courtyards.#Collect a hoe from the gardening office and use it to remove weeds around the prison grounds.
+Mailman=I hate to be the bearer of bad news, which is why I’m asking you to do it for me.#Collect mail from the mailroom and deliver it to the inmates it’s addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
+Metalshop=The automotive industry is booming! The only booming you will hear is the sound of licence plates being pressed. The harder you work, the sooner I get my sporty little convertible.#Take metal sheets from the container in the metalshop and use them on the presses to create license plates. Put the finished plates in the relevant container.
+Deliveries=What’s inside those boxes isn’t of concern to you. I just want them moving UNTAMPERED to where they need to go. #Take packages from the delivery truck and place them in the relevant storage containers.
+
 -----------DLC---------------------------------------------------
 
 [Vis_Greet_LAcops]

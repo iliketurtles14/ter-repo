@@ -123,7 +123,7 @@ public class DeskInv : MonoBehaviour
                     if (deskInv[i].itemData == null)
                     {
                         deskInv[i].itemData = inventoryList[invSlotNumber].itemData;
-                        deskSlots[i].GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.icon;
+                        deskSlots[i].GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                         break;
                     }
                 }
@@ -171,7 +171,7 @@ public class DeskInv : MonoBehaviour
                 {
                     if (slot.GetComponent<Image>().sprite == ClearSprite)
                     {
-                        slot.GetComponent<Image>().sprite = deskInv[deskSlotNumber].itemData.icon;
+                        slot.GetComponent<Image>().sprite = deskInv[deskSlotNumber].itemData.sprite;
                         break;
                     }
                 }
@@ -260,7 +260,7 @@ public class DeskInv : MonoBehaviour
         {
             if (deskInv[i].itemData != null)
             {
-                deskSlots[i].GetComponent<Image>().sprite = deskInv[i].itemData.icon;
+                deskSlots[i].GetComponent<Image>().sprite = deskInv[i].itemData.sprite;
             }
         }
 

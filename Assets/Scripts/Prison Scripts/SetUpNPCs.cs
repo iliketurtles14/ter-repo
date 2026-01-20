@@ -15,11 +15,13 @@ public class SetUpNPCs : MonoBehaviour
     private Map map;
     private Transform aStar;
     private Transform tiles;
+    private ItemDataCreator creator;
     private void Start()
     {
         surface = RootObjectCache.GetRoot("NavMesh").GetComponent<NavMeshSurface>();
         aStar = RootObjectCache.GetRoot("A*").transform;
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
 
         StartCoroutine(StartWait());
     }
@@ -105,29 +107,29 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 75 - (25 * map.npcLevel) + UnityEngine.Random.Range(0, 51);
 
-                string outfitID;
+                int outfitID;
 
                 if(map.mapName == "Santa's SweatShop")
                 {
-                    outfitID = "040";
+                    outfitID = 40;
                 }
                 else if(map.mapName == "Duct Tapes are Forever")
                 {
-                    outfitID = "045";
+                    outfitID = 45;
                 }
                 else if(map.mapName == "Escape Team")
                 {
-                    outfitID = "050";
+                    outfitID = 50;
                 }
                 else if (map.powOutfits)
                 {
-                    outfitID = "033";
+                    outfitID = 33;
                 }
                 else
                 {
-                    outfitID = "029";
+                    outfitID = 29;
                 }
-                ItemData outfitData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/" + outfitID));
+                ItemData outfitData = creator.CreateItemData(outfitID);
                 try
                 {
                     npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
@@ -142,26 +144,26 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 15 + UnityEngine.Random.Range(0, 66);
                 npc.GetComponent<NPCCollectionData>().npcData.isGuard = true;
 
-                string outfitID;
+                int outfitID;
 
                 if (map.mapName == "Santa's SweatShop")
                 {
-                    outfitID = "044";
+                    outfitID = 44;
                 }
                 else if (map.mapName == "Duct Tapes are Forever")
                 {
-                    outfitID = "049";
+                    outfitID = 49;
                 }
                 else if (map.mapName == "Escape Team")
                 {
-                    outfitID = "054";
+                    outfitID = 54;
                 }
                 else
                 {
-                    outfitID = "039";
+                    outfitID = 39;
                 }
-                ItemData outfitData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/" + outfitID));
-                ItemData batonData = Instantiate(Resources.Load<ItemData>("Item Scriptable Objects/056"));
+                ItemData outfitData = creator.CreateItemData(outfitID);
+                ItemData batonData = creator.CreateItemData(56);
                 try
                 {
                     npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;

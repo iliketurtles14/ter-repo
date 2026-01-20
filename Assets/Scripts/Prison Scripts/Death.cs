@@ -131,7 +131,7 @@ public class Death : MonoBehaviour
         PlayerIDInv playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
         
         playerIDInvScript.idInv[0].itemData = setInitialOutfitsScript.outfitData;
-        mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = setInitialOutfitsScript.outfitData.icon;
+        mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = setInitialOutfitsScript.outfitData.sprite;
 
         if (playerIDInvScript.idInv[1].itemData != null)
         {
