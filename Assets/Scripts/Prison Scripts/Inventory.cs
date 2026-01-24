@@ -65,6 +65,18 @@ public class Inventory : MonoBehaviour
         Image slot6Image = slot6.GetComponent<Image>();
         GameObject itemObject = mouseCollisionScript.touchedItem;
 
+        for(int i = 0; i < 6; i++)
+        {
+            try
+            {
+                if (inventory[i].itemData.sprite == null)
+                {
+                    inventory[i] = new InventoryItem();
+                }
+            }
+            catch { }
+        }
+
         if(inventory[0].itemData == null || 
             inventory[1].itemData == null || 
             inventory[2].itemData == null || 

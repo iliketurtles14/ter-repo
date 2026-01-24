@@ -13,6 +13,7 @@ public class WeedController : MonoBehaviour //also for spills
     private List<Vector3> weedLocations;
     private List<Vector3> spillLocations;
     private ApplyPrisonData applyPrisonDataScript;
+    private bool ready;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
@@ -26,10 +27,16 @@ public class WeedController : MonoBehaviour //also for spills
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        ready = true;
         MakeLists();
     }
     private void Update()
     {
+        if (!ready)
+        {
+            return;
+        }
+        
         if(weedAmount < 2 && weedLocations.Count != 0)
         {
             CreateWeed();

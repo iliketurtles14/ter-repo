@@ -1299,11 +1299,12 @@ public class LoadPrison : MonoBehaviour
             tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
             File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
         }
-        if (File.Exists(Path.Combine(extractPath, "Items.ini")))
-        {
-            items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
-            File.Delete(Path.Combine(extractPath, "Items.ini"));
-        }
+        //if (File.Exists(Path.Combine(extractPath, "Items.ini")))
+        //{
+        //    items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
+        //    File.Delete(Path.Combine(extractPath, "Items.ini"));
+        //}
+        items = Resources.Load<TextAsset>("Items").text.Split("\n");
         if (File.Exists(Path.Combine(extractPath, "Music.zip")))
         {
             ZipFile.ExtractToDirectory(Path.Combine(extractPath, "Music.zip"), extractPath);

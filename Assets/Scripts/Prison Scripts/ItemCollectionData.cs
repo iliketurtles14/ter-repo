@@ -17,7 +17,17 @@ public class ItemCollectionData : MonoBehaviour
     }
     private void SetData()
     {
-        int id = Convert.ToInt32(name);
+        string str;
+        if (name.Contains("(Clone)"))
+        {
+            str = name.Replace("(Clone)", "");
+        }
+        else
+        {
+            str = name;
+        }
+
+        int id = Convert.ToInt32(str);
         itemData = creator.CreateItemData(id);
     }
     private IEnumerator Wait()

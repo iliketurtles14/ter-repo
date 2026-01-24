@@ -92,7 +92,7 @@ public class ItemDataCreator : MonoBehaviour
         int strength = Convert.ToInt32(GetINIVar(str, "Strength", itemsFile));
         int opinion = Convert.ToInt32(GetINIVar(str, "Opinion", itemsFile));
         int cameraBlock = Convert.ToInt32(GetINIVar(str, "CameraBlock", itemsFile));
-        Sprite sprite = applyScript.ItemSprites[itemSpriteDict[Convert.ToInt32(GetINIVar(str, "Sprite", itemsFile))]];
+        Sprite sprite = applyScript.ItemSprites[Convert.ToInt32(GetINIVar(str, "Sprite", itemsFile))];
         Debug.Log("WHEN YOU MAKE IT POSSIBLE FOR CUSTOM SPRITES, MAKE SURE TO CHANGE AddItem() IN DeskRNG.cs!!!!!");
         int currentDurability = 100;
         GameObject prefab = Resources.Load<GameObject>("Item Basic Prefabs/" + str);

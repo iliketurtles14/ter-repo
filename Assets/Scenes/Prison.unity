@@ -4022,6 +4022,7 @@ GameObject:
   - component: {fileID: 567059192}
   - component: {fileID: 567059193}
   - component: {fileID: 567059194}
+  - component: {fileID: 567059195}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -4707,6 +4708,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcInv: []
+  weapon:
+    itemData:
+      displayName: 
+      deskTier: 0
+      inInmateInv: 0
+      cost: 0
+      inItemFetchFavors: 0
+      inStolenItemFavors: 0
+      inmateWeapon: 0
+      isContraband: 0
+      causeSolitary: 0
+      durability: 0
+      chippingPower: 0
+      cuttingPower: 0
+      ventBreakingPower: 0
+      diggingPower: 0
+      health: 0
+      energy: 0
+      defense: 0
+      strength: 0
+      opinion: 0
+      cameraBlock: 0
+      sprite: {fileID: 0}
+      currentDurability: 0
+      id: 0
+      prefab: {fileID: 0}
+  outfit:
+    itemData:
+      displayName: 
+      deskTier: 0
+      inInmateInv: 0
+      cost: 0
+      inItemFetchFavors: 0
+      inStolenItemFavors: 0
+      inmateWeapon: 0
+      isContraband: 0
+      causeSolitary: 0
+      durability: 0
+      chippingPower: 0
+      cuttingPower: 0
+      ventBreakingPower: 0
+      diggingPower: 0
+      health: 0
+      energy: 0
+      defense: 0
+      strength: 0
+      opinion: 0
+      cameraBlock: 0
+      sprite: {fileID: 0}
+      currentDurability: 0
+      id: 0
+      prefab: {fileID: 0}
   inmateCorrelationNumber: -1
   guardCorrelationNumber: -1
 --- !u!114 &567059176
@@ -4788,6 +4841,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e0779419a20564d9fa920226bd7d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetInitialOutfits
+  outfitData:
+    displayName: 
+    deskTier: 0
+    inInmateInv: 0
+    cost: 0
+    inItemFetchFavors: 0
+    inStolenItemFavors: 0
+    inmateWeapon: 0
+    isContraband: 0
+    causeSolitary: 0
+    durability: 0
+    chippingPower: 0
+    cuttingPower: 0
+    ventBreakingPower: 0
+    diggingPower: 0
+    health: 0
+    energy: 0
+    defense: 0
+    strength: 0
+    opinion: 0
+    cameraBlock: 0
+    sprite: {fileID: 0}
+    currentDurability: 0
+    id: 0
+    prefab: {fileID: 0}
 --- !u!114 &567059183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4934,6 +5012,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73d9acdc17b148a43998732a666a0da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDataCreator
+--- !u!114 &567059195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbacfa8d96246a648966781d3e6d50d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Missions
 --- !u!1001 &581507639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9900,6 +9990,8 @@ MonoBehaviour:
   idInv: []
   invSlotNumber: 0
   idIsOpen: 0
+  outfitIsFull: 0
+  weaponIsFull: 0
 --- !u!61 &1184720342
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10053,6 +10145,8 @@ MonoBehaviour:
   idInv: []
   invSlotNumber: 0
   idIsOpen: 0
+  outfitIsFull: 0
+  weaponIsFull: 0
 --- !u!61 &1187447688
 BoxCollider2D:
   m_ObjectHideFlags: 0

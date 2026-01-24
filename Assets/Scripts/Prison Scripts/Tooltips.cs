@@ -660,7 +660,7 @@ public class Tooltips : MonoBehaviour
 
                 if (num == -1)
                 {
-                    toPrint = "Desk";
+                    str = "Desk";
                 }
                 else
                 {
@@ -670,7 +670,7 @@ public class Tooltips : MonoBehaviour
                         {
                             if(child.GetComponent<NPCCollectionData>().npcData.order == num)
                             {
-                                toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                                str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
                                 break;
                             }
                         }

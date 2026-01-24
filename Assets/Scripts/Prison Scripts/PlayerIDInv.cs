@@ -23,8 +23,8 @@ public class PlayerIDInv : MonoBehaviour
     public int invSlotNumber;
     public bool idIsOpen;
     private GameObject timeObject;
-    private bool outfitIsFull;
-    private bool weaponIsFull;
+    public bool outfitIsFull;
+    public bool weaponIsFull;
     private bool invIsFull;
     public void Start()
     {
@@ -38,7 +38,13 @@ public class PlayerIDInv : MonoBehaviour
         weaponSlot = transform.Find("Weapon").gameObject;
         timeObject = InventoryCanvas.transform.Find("Time").gameObject;
         pauseScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
-        
+
+        for(int i = 0; i < 2; i++)
+        {
+            IDItem blankItem = new IDItem();
+            idInv.Add(blankItem);
+        }
+
         StartCoroutine(Wait());
         foreach(Transform child in InventoryCanvas.transform.Find("GUIPanel"))
         {
@@ -59,6 +65,8 @@ public class PlayerIDInv : MonoBehaviour
     }
     public void Update()
     {
+        inventoryList = inventoryScript.inventory;
+        
         if (!idIsOpen)
         {
             if(mcs.isTouchingButton && mcs.touchedButton.name == "PlayerIDButton" && Input.GetMouseButtonDown(0))
@@ -70,21 +78,21 @@ public class PlayerIDInv : MonoBehaviour
         {
             ///continue
             //putting items in slots
-            if (idInv[0].itemData != null)
-            {
-                outfitIsFull = true;
-            }
-            else
+            if (idInv[0].itemData == null)
             {
                 outfitIsFull = false;
             }
-            if (idInv[1].itemData != null)
+            else
             {
-                weaponIsFull = true;
+                outfitIsFull = true;
+            }
+            if (idInv[1].itemData == null)
+            {
+                weaponIsFull = false;
             }
             else
             {
-                weaponIsFull = false;
+                weaponIsFull = true;
             }
 
             if (mcs.isTouchingInvSlot)
@@ -99,8 +107,17 @@ public class PlayerIDInv : MonoBehaviour
                 }
             }
 
-            if(mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.defense != -1 && Input.GetMouseButtonDown(0) && !outfitIsFull)
+            try
             {
+                Debug.Log(Input.GetMouseButtonDown(0) + " " +  mcs.isTouchingInvSlot + " " + (inventoryList[invSlotNumber].itemData != null) + " " + inventoryList[invSlotNumber].itemData.defense + " " + !outfitIsFull);
+            }
+            catch { }
+
+            if (mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && 
+                inventoryList[invSlotNumber].itemData.defense != -1 && 
+                Input.GetMouseButtonDown(0) && !outfitIsFull)
+            {
+                Debug.Log("here");
                 idInv[0].itemData = inventoryList[invSlotNumber].itemData;
                 outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;
@@ -147,7 +164,7 @@ public class PlayerIDInv : MonoBehaviour
                         break;
                     }
                 }
-                idInv[0].itemData = null;
+                idInv[0] = new IDItem();
                 outfitSlot.GetComponent<Image>().sprite = ClearSprite;
             }
             else if(mcs.isTouchingIDSlot && mcs.touchedIDSlot.name == "Weapon" && idInv[1].itemData != null && Input.GetMouseButtonDown(0) && !invIsFull)
@@ -168,7 +185,7 @@ public class PlayerIDInv : MonoBehaviour
                         break;
                     }
                 }
-                idInv[1].itemData = null;
+                idInv[1] = new IDItem();
                 weaponSlot.GetComponent<Image>().sprite = ClearSprite;
             }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using NUnit.Framework;
 using System.Collections.Generic;
-[Serializable]
+[System.Serializable]
 [CreateAssetMenu(menuName = "NPC Data")]
 
 public class NPCData : ScriptableObject
@@ -26,4 +26,5 @@ public class NPCData : ScriptableObject
     public bool hasFood;
     public GameObject bed;
     public GameObject desk;
+    public Mission mission;
 }

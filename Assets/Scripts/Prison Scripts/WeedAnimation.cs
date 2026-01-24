@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeedAnimation : MonoBehaviour
 {
     private ApplyPrisonData applyScript;
-    private void Start()
+    private void Awake()
     {
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
     }

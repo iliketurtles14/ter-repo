@@ -30,6 +30,7 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
         SetInmateBed();
         ConnectDeskToBed();
         SetInmateDesk();
+        CheckForWeirdStuff();
     }
     private void GetLists()
     {
@@ -104,6 +105,19 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
                 npc.GetComponent<NPCCollectionData>().npcData.desk = desks[npc.GetComponent<NPCCollectionData>().npcData.order].gameObject;
             }
             catch { }
+        }
+    }
+    private void CheckForWeirdStuff() //checks for stuff like too many inmates for desks and stuff like that
+    {
+        if(inmates.Count < desks.Count)
+        {
+            int max = inmates.Count;
+            int leftOver = desks.Count - inmates.Count;
+
+            for(int i = 0; i < leftOver; i++)
+            {
+                desks[i + max].GetComponent<DeskData>().inmateCorrelationNumber = -1;
+            }
         }
     }
 }

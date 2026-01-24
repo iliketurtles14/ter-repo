@@ -294,18 +294,22 @@ public class OutfitController : MonoBehaviour
         if(currentOutfitID != -1)
         {
             transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
-            if(name == "Player")
+            try //putting this try catch here because for a few frames it doesnt have outfit data at the start of a game
             {
-                GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
-                mc.transform.Find("PlayerMenuPanel").Find("Player").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
-                mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+                if (name == "Player")
+                {
+                    GetComponent<PlayerAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
+                    mc.transform.Find("PlayerMenuPanel").Find("Player").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
+                    mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 255 / 255);
+                }
+                else
+                {
+                    GetComponent<NPCAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
+                    mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
+                    mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                }
             }
-            else
-            {
-                GetComponent<NPCAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
-                mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
-                mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            }
+            catch { }
         }
         else if(currentOutfitID == -1)
         {

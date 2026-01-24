@@ -2,13 +2,19 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Missions : MonoBehaviour
 {
     private string[] speechFile;
     private Map currentMap;
     private Transform aStar;
+    private ApplyPrisonData applyScript;
+    private List<int> guardItems = new List<int>();
+    private List<int> stolenItems = new List<int>();
+    private List<int> giveItems = new List<int>();
     private List<string> missions = new List<string>
     {
         "inmateBeat",
@@ -22,6 +28,7 @@ public class Missions : MonoBehaviour
     private void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
+        applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
 
         StartCoroutine(StartWait());
     }
@@ -35,8 +42,53 @@ public class Missions : MonoBehaviour
 
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         speechFile = currentMap.speech;
+
+        foreach(Transform npc in aStar)
+        {
+            npc.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(false);
+        }
+
+        MakeItemLists();
+        StartCoroutine(MissionsLoop());
     }
-    private void MakeMission(GameObject inmate)
+    private IEnumerator MissionsLoop()
+    {
+        List<GameObject> availableInmates = new List<GameObject>();
+        foreach(Transform npc in aStar)
+        {
+            if (npc.name.Contains("Inmate"))
+            {
+                npc.GetComponent<NPCCollectionData>().npcData.mission = new Mission("", -1, "", "", "", "");
+                availableInmates.Add(npc.gameObject);
+            }
+        }
+        while (true) //a bunch of gross magic numbers. sorryyyy
+        {
+            int available = 0;
+            int amountOfMissions = 0;
+            foreach(GameObject npc in availableInmates)
+            {
+                if(String.IsNullOrEmpty(npc.GetComponent<NPCCollectionData>().npcData.mission.type))
+                {
+                    available++;
+                }
+                else
+                {
+                    amountOfMissions++;
+                }
+            }
+            if (available > 0 && amountOfMissions < 4)
+            {
+                float rand = UnityEngine.Random.Range(30f, 80f);
+                yield return new WaitForSeconds(rand * .75f);
+                int randInt = UnityEngine.Random.Range(0, availableInmates.Count);
+                MakeMission(availableInmates[randInt]);
+                availableInmates.RemoveAt(randInt);
+            }
+            yield return null;
+        }
+    }
+    public Mission MakeMission(GameObject inmate)
     {
         string type = null;
         int item = -1;
@@ -62,7 +114,7 @@ public class Missions : MonoBehaviour
             case "guardBeat":
                 count = Convert.ToInt32(GetINIVar("Missions_GuardBeat", "Count", speechFile));
                 rand = UnityEngine.Random.Range(1, count + 1);
-                message = GetINIVar("Missions_InmateBeat", rand.ToString(), speechFile);
+                message = GetINIVar("Missions_GuardBeat", rand.ToString(), speechFile);
                 List<string> remainingGuards = GetRemainingNPCs(giver, "Guard");
                 rand = UnityEngine.Random.Range(0, remainingGuards.Count);
                 target = remainingGuards[rand];
@@ -75,13 +127,73 @@ public class Missions : MonoBehaviour
                 rand = UnityEngine.Random.Range(0, periods.Count);
                 period = periods[rand];
                 break;
-            //case "give":
-            //    count = Convert.ToInt32(GetINIVar("Missions_Give", "Count", speechFile));
-            //    rand = UnityEngine.Random.Range(1, count + 1);
-            //    message = GetINIVar("Missions_Give", rand.ToString(), speechFile);
-
+            case "give":
+                count = Convert.ToInt32(GetINIVar("Missions_Give", "Count", speechFile));
+                rand = UnityEngine.Random.Range(1, count + 1);
+                message = GetINIVar("Missions_Give", rand.ToString(), speechFile);
+                rand = UnityEngine.Random.Range(0, giveItems.Count);
+                item = giveItems[rand];
+                break;
+            case "stealDesk":
+            case "stealInmateBody":
+                count = Convert.ToInt32(GetINIVar("Missions_StealInmate", "Count", speechFile));
+                rand = UnityEngine.Random.Range(1, count + 1);
+                message = GetINIVar("Missions_StealInmate", rand.ToString(), speechFile);
+                rand = UnityEngine.Random.Range(0, stolenItems.Count);
+                item = stolenItems[rand];
+                remainingInmates = GetRemainingNPCs(giver, "Inmate");
+                rand = UnityEngine.Random.Range(0, remainingInmates.Count);
+                target = remainingInmates[rand];
+                break;
+            case "stealGuardBody":
+                count = Convert.ToInt32(GetINIVar("Missions_StealGuard", "Count", speechFile));
+                rand = UnityEngine.Random.Range(1, count + 1);
+                message = GetINIVar("Missions_StealGuard", rand.ToString(), speechFile);
+                rand = UnityEngine.Random.Range(0, guardItems.Count);
+                item = guardItems[rand];
+                remainingGuards = GetRemainingNPCs(giver, "Guard");
+                rand = UnityEngine.Random.Range(0, remainingGuards.Count);
+                target = remainingGuards[rand];
+                break;
         }
         Mission mission = new Mission(type, item, giver, target, message, period);
+
+        SetMissionIcon(inmate);
+
+        return mission;
+    }
+    private void SetMissionIcon(GameObject inmate)
+    {
+        inmate.transform.Find("IconCanvas").Find("MissionIcon").GetComponent<Image>().sprite = applyScript.UISprites[188];
+        inmate.transform.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(true);
+    }
+    private void MakeItemLists()
+    {
+        for(int i = 0; i < 273; i++)
+        {
+            string str = i.ToString();
+            if(str.Length == 1)
+            {
+                str = "00" + str;
+            }
+            else if(str.Length == 2)
+            {
+                str = "0" + str;
+            }
+
+            if(GetINIVar(str, "InItemFetchFavors", currentMap.items) == "True")
+            {
+                giveItems.Add(i);
+            }
+            if(GetINIVar(str, "InGuardStolenFavors", currentMap.items) == "True")
+            {
+                guardItems.Add(i);
+            }
+            if(GetINIVar(str, "InStolenItemFavors", currentMap.items) == "True")
+            {
+                stolenItems.Add(i);
+            }
+        }
     }
     private List<string> GetRemainingNPCs(string inmateName, string type) //gets DISPLAYNAME!!!!
     {
