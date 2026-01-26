@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class SetInitialOutfits : MonoBehaviour
     private Transform mc;
     public ItemData outfitData;
     private ItemDataCreator itemDataCreatorScript;
+    private Transform aStar;
 
     private void Start()
     {
@@ -25,14 +27,13 @@ public class SetInitialOutfits : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        aStar = RootObjectCache.GetRoot("A*").transform;
 
         map = GetComponent<LoadPrison>().currentMap;
         SetOutfits();
     }
     private void SetOutfits()
     {
-        //just doing the player for now since npc's arent in the game anymore
-
         int outfitItemID;
 
         if (!map.powOutfits)
@@ -45,17 +46,17 @@ public class SetInitialOutfits : MonoBehaviour
         }
 
         //check if special prison (DTAF, SS, etc...)
-        if(map.mapName == "Duct Tapes are Forever")
+        switch (map.mapName)
         {
-            outfitItemID = 45;
-        }
-        else if(map.mapName == "Santa's Sweatshop")
-        {
-            outfitItemID = 40;
-        }
-        else if(map.mapName == "Escape Team")
-        {
-            outfitItemID = 50;
+            case "Duct Tapes are Forever":
+                outfitItemID = 45;
+                break;
+            case "Santa's Sweatshop":
+                outfitItemID = 40;
+                break;
+            case "Escape Team":
+                outfitItemID = 50;
+                break;
         }
 
         //find the right itemData and set the stuff to the outfit slot
@@ -63,5 +64,74 @@ public class SetInitialOutfits : MonoBehaviour
         playerIDInvScript.idInv[0].itemData = data;
         mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.sprite;
         outfitData = data;
+
+        Debug.Log($"Setting outfits for {aStar.childCount} NPCs");
+
+        foreach(Transform npc in aStar)
+        {
+            NPCData npcData = npc.GetComponent<NPCCollectionData>().npcData;
+            
+            Debug.Log($"Processing {npc.name}, inventory is null? {npcData.inventory == null}");
+            
+            npcData.inventory = new List<NPCInvItem>();
+            
+            // Ensure inventory has 8 slots
+            for(int i = 0; i < 8; i++)
+            {
+                npcData.inventory.Add(new NPCInvItem());
+            }
+            
+            Debug.Log($"{npc.name} inventory count: {npcData.inventory.Count}");
+            
+            if (npc.name.Contains("Guard"))
+            {
+                outfitItemID = 39;
+                switch (map.mapName)
+                {
+                    case "Duct Tapes are Forever":
+                        outfitItemID = 49;
+                        break;
+                    case "Santa's Sweatshop":
+                        outfitItemID = 44;
+                        break;
+                    case "Escape Team":
+                        outfitItemID = 54;
+                        break;
+                }
+
+                data = itemDataCreatorScript.CreateItemData(outfitItemID);
+                npcData.inventory[7].itemData = data;
+                Debug.Log($"Set guard outfit for {npc.name}, itemData is null? {npcData.inventory[7].itemData == null}");
+
+            }
+            else if (npc.name.Contains("Inmate"))
+            {
+                if (!map.powOutfits)
+                {
+                    outfitItemID = 29;
+                }
+                else
+                {
+                    outfitItemID = 33;
+                }
+                switch (map.mapName)
+                {
+                    case "Duct Tapes are Forever":
+                        outfitItemID = 45;
+                        break;
+                    case "Santa's Sweatshop":
+                        outfitItemID = 40;
+                        break;
+                    case "Escape Team":
+                        outfitItemID = 50;
+                        break;
+                }
+
+                npcData.inventory[7].itemData = itemDataCreatorScript.CreateItemData(outfitItemID);
+                Debug.Log($"Set inmate outfit for {npc.name}, itemData is null? {npcData.inventory[7].itemData == null}");
+            }
+        }
+        
+        Debug.Log("SetOutfits complete");
     }
 }

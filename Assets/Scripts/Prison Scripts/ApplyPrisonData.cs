@@ -541,6 +541,15 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("PauseMenuPanel").Find("QuitButton").GetComponent<Image>().sprite = UISprites[359];
         pauseScript.buttonNormalSprite = UISprites[359];
         pauseScript.buttonPressedSprite = UISprites[360];
+        //npcmenu stuff
+        mc.Find("NPCMenuPanel").Find("StrengthIcon").GetComponent<Image>().sprite = UISprites[450];
+        mc.Find("NPCMenuPanel").Find("SpeedIcon").GetComponent<Image>().sprite = UISprites[449];
+        mc.Find("NPCMenuPanel").Find("IntellectIcon").GetComponent<Image>().sprite = UISprites[451];
+        mc.Find("NPCMenuPanel").Find("OpinionIcon").GetComponent<Image>().sprite = UISprites[345];
+        mc.Find("NPCMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
+        mc.Find("NPCMenuPanel").Find("PlayerBackdrop").GetComponent<Image>().sprite = UISprites[255];
+        mc.Find("NPCMenuPanel").Find("OutfitBackdrop").GetComponent<Image>().sprite = UISprites[33];
+        mc.Find("NPCMenuPanel").Find("WeaponBackdrop").GetComponent<Image>().sprite = UISprites[33];
 
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];

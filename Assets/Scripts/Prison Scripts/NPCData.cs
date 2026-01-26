@@ -12,7 +12,7 @@ public class NPCData : ScriptableObject
     public int speed;
     public int intellect;
     public int opinion;
-    public List<InventoryItem> inventory; //indexes 6 and 7 are the weapon and outfit respectively
+    public List<NPCInvItem> inventory; //indexes 6 and 7 are the weapon and outfit respectively
     public string displayName; // not including the "Officer" in guards
     public bool isGuard;
     public int charNum;

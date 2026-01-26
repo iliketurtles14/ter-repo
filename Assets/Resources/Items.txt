@@ -975,7 +975,7 @@ Defense=2
 Strength=-1
 Opinion=1
 CameraBlock=-1
-Sprite=235
+Sprite=8
 
 [040]
 Name=Elf Outfit
@@ -2500,14 +2500,14 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=10
+Durability=-1
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
 DiggingPower=-1
 Health=-1
 Energy=-1
-Defense=-1
+Defense=1
 Strength=-1
 Opinion=2
 CameraBlock=-1

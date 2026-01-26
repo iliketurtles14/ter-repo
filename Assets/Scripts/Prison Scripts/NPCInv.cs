@@ -20,7 +20,7 @@ public class NPCInv : MonoBehaviour
     private MouseCollisionOnItems mcs;
     private GameObject player;
     private int invSlotNumber;
-    public List<NPCInvItem> npcInv = new List<NPCInvItem>();
+    public List<NPCInvItem> npcInv;
     private bool npcInvIsFull;
     private Sprite clearSprite;
     private bool invIsFull;
@@ -28,19 +28,21 @@ public class NPCInv : MonoBehaviour
     private PauseController pauseController;
     private NPCInvItem weapon;
     private NPCInvItem outfit;
+    private Transform npcInvMenu;
     public void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
-        mc = RootObjectCache.GetRoot("MainCanvas").transform;
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
-        mcs = mc.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = ic.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player");
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         pauseController = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        npcInvMenu = mc.Find("NPCInvMenu");
 
         //make slot list
-        foreach(Transform child in transform.Find("ItemPanel"))
+        foreach (Transform child in npcInvMenu.Find("ItemPanel"))
         {
             npcInvSlots.Add(child.gameObject);
         }
@@ -53,19 +55,20 @@ public class NPCInv : MonoBehaviour
         CloseNPCInv();
     }
     public void Update()
-    {
+    {        
         if (!menuIsOpen)
         {
             if(mcs.isTouchingNPC && mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
-                float distance = Vector2.Distance(player.transform.position, mcs.touchedNPC.transform.position);
+                npc = mcs.touchedNPC;
+                float distance = Vector2.Distance(player.transform.position, npc.transform.position);
                 if(distance <= 2.4f && Input.GetMouseButtonDown(0))
                 {
                     npc = mcs.touchedNPC;
                     menuText = npc.GetComponent<NPCCollectionData>().npcData.displayName + "'s Pockets";
-                    npcInv = npc.GetComponent<NPCInvData>().npcInv;
-                    weapon = npc.GetComponent<NPCInvData>().weapon;
-                    outfit = npc.GetComponent<NPCInvData>().outfit;
+                    npcInv = npc.GetComponent<NPCCollectionData>().npcData.inventory;
+                    weapon = npcInv[6];
+                    outfit = npcInv[7];
                     StartCoroutine(OpenNPCInv());
                 }
             }
@@ -218,9 +221,36 @@ public class NPCInv : MonoBehaviour
                 npcInvSlots[i].GetComponent<Image>().sprite = npcInv[i].itemData.sprite;
             }
         }
-
+        foreach(Transform child in transform)
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = true;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+        foreach(Transform child in transform.Find("ItemPanel"))
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = true;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+        transform.Find("Outfit").GetComponent<BoxCollider2D>().enabled = true;
+        transform.Find("Weapon").GetComponent<BoxCollider2D>().enabled = true;
+        transform.Find("Outfit").GetComponent<Image>().enabled = true;
+        transform.Find("Weapon").GetComponent<Image>().enabled = true;
+        transform.Find("NameText").gameObject.SetActive(true);
         mc.Find("Black").GetComponent<Image>().enabled = true;
-        mc.Find("NPCInvMenu").gameObject.SetActive(true);
+        GetComponent<Image>().enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
 
         pauseController.Pause(false);
 
@@ -230,14 +260,36 @@ public class NPCInv : MonoBehaviour
     }
     public void CloseNPCInv()
     {
-        foreach (GameObject slot in npcInvSlots)
+        foreach (Transform child in transform)
         {
-            slot.GetComponent<Image>().sprite = clearSprite;
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
         }
-
+        foreach (Transform child in transform.Find("ItemPanel"))
+        {
+            if (child.GetComponent<Image>() != null)
+            {
+                child.GetComponent<Image>().enabled = false;
+            }
+            if (child.GetComponent<BoxCollider2D>() != null)
+            {
+                child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        transform.Find("Outfit").GetComponent<BoxCollider2D>().enabled = false;
+        transform.Find("Weapon").GetComponent<BoxCollider2D>().enabled = false;
+        transform.Find("Outfit").GetComponent<Image>().enabled = false;
+        transform.Find("Weapon").GetComponent<Image>().enabled = false;
+        transform.Find("NameText").gameObject.SetActive(false);
         mc.Find("Black").GetComponent<Image>().enabled = false;
-        mc.Find("NPCInvMenu").gameObject.SetActive(false);
-
+        GetComponent<Image>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
         menuIsOpen = false;
 
         pauseController.Unpause();

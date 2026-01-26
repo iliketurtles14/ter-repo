@@ -14,8 +14,21 @@ public class DeskData : MonoBehaviour
         for (int i = 0; i < 20; i++)
         {
             DeskItem nullItem = new DeskItem();
-            nullItem.itemData = null;
             deskInv.Add(nullItem);
+        }
+    }
+    private void Update()
+    {
+        for(int i = 0; i < 20; i++)
+        {
+            try
+            {
+                if (deskInv[i].itemData.sprite == null)
+                {
+                    deskInv[i] = new DeskItem();
+                }
+            }
+            catch { }
         }
     }
 }

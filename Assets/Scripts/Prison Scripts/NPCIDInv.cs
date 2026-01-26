@@ -9,7 +9,6 @@ public class NPCIDInv : MonoBehaviour
 {
     private GameObject mc;
     private MouseCollisionOnItems mcs;
-    public List<IDItem> idInv = new List<IDItem>();
     public GameObject outfitSlot;
     public GameObject weaponSlot;
     public int invSlotNumber;
@@ -19,7 +18,7 @@ public class NPCIDInv : MonoBehaviour
     public void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas");
-        mcs = mc.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
 
         StartCoroutine(Wait());
@@ -29,7 +28,11 @@ public class NPCIDInv : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = NPCSave.instance.playerName;
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        CloseMenu();
     }
     public void Update()
     {
@@ -37,7 +40,7 @@ public class NPCIDInv : MonoBehaviour
         {
             if(mcs.isTouchingNPC && Input.GetMouseButtonDown(1))
             {
-                StartCoroutine(OpenMenu());
+                StartCoroutine(OpenMenu(mcs.touchedNPC));
             }
         }
         if (idIsOpen)
@@ -49,8 +52,18 @@ public class NPCIDInv : MonoBehaviour
             }
         }
     }
-    public IEnumerator OpenMenu()
+    private void SetNPCSpecifics(GameObject npc)
     {
+        string npcName = npc.GetComponent<NPCCollectionData>().npcData.displayName;
+        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = npcName;
+
+        transform.Find("NPC").GetComponent<NPCIDAnimation>().bodyDirSprites = npc.GetComponent<NPCAnimation>().bodyDirSprites;
+        transform.Find("NPC").GetComponent<NPCIDAnimation>().outfitDirSprites = npc.GetComponent<NPCAnimation>().outfitDirSprites;
+    }
+    public IEnumerator OpenMenu(GameObject npc)
+    {
+        SetNPCSpecifics(npc);
+        
         foreach(Transform child in transform)
         {
             if(child.GetComponent<Image>() != null)
@@ -68,6 +81,8 @@ public class NPCIDInv : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
         transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = true;
+
+        mc.transform.Find("Black").GetComponent<Image>().enabled = true;
 
         pc.Pause(true);
 
@@ -138,6 +153,7 @@ public class NPCIDInv : MonoBehaviour
         transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
+        mc.transform.Find("Black").GetComponent<Image>().enabled = false;
         idIsOpen = false;
     }
 }

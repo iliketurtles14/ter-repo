@@ -65,6 +65,18 @@ public class PlayerIDInv : MonoBehaviour
     }
     public void Update()
     {
+        for (int i = 0; i < 2; i++)
+        {
+            try
+            {
+                if (idInv[i].itemData.sprite == null)
+                {
+                    idInv[i] = new IDItem();
+                }
+            }
+            catch { }
+        }
+
         inventoryList = inventoryScript.inventory;
         
         if (!idIsOpen)
@@ -218,14 +230,7 @@ public class PlayerIDInv : MonoBehaviour
         transform.Find("NameText").gameObject.SetActive(true);
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
-        if(name == "PlayerMenuPanel")
-        {
-            transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
-        }
-        else if(name == "NPCMenuPanel")
-        {
-            transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = true;
-        }
+        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
 
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
 
@@ -284,14 +289,7 @@ public class PlayerIDInv : MonoBehaviour
         transform.Find("WeaponText").gameObject.SetActive(false);
         transform.Find("OutfitText").gameObject.SetActive(false);
         transform.Find("NameText").gameObject.SetActive(false);
-        if(name == "NPCMenuPanel")
-        {
-            transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = false;
-        }
-        else if(name == "PlayerMenuPanel")
-        {
-            transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
-        }
+        transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;

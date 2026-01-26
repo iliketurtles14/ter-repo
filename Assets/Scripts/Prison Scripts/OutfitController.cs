@@ -305,7 +305,7 @@ public class OutfitController : MonoBehaviour
                 else
                 {
                     GetComponent<NPCAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
-                    mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<PlayerIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
+                    mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<NPCIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
                     mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 }
             }

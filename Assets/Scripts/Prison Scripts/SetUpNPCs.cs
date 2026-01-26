@@ -31,7 +31,6 @@ public class SetUpNPCs : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
         map = GetComponent<LoadPrison>().currentMap;
 
         NPCSetUp();
@@ -106,35 +105,6 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.strength = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 75 - (25 * map.npcLevel) + UnityEngine.Random.Range(0, 51);
-
-                int outfitID;
-
-                if(map.mapName == "Santa's SweatShop")
-                {
-                    outfitID = 40;
-                }
-                else if(map.mapName == "Duct Tapes are Forever")
-                {
-                    outfitID = 45;
-                }
-                else if(map.mapName == "Escape Team")
-                {
-                    outfitID = 50;
-                }
-                else if (map.powOutfits)
-                {
-                    outfitID = 33;
-                }
-                else
-                {
-                    outfitID = 29;
-                }
-                ItemData outfitData = creator.CreateItemData(outfitID);
-                try
-                {
-                    npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
-                }
-                catch { }
             }
             else if (npc.name.StartsWith("Guard"))
             {
@@ -143,33 +113,6 @@ public class SetUpNPCs : MonoBehaviour
                 npc.GetComponent<NPCCollectionData>().npcData.speed = UnityEngine.Random.Range(0, 26) + (map.npcLevel * 25);
                 npc.GetComponent<NPCCollectionData>().npcData.opinion = 15 + UnityEngine.Random.Range(0, 66);
                 npc.GetComponent<NPCCollectionData>().npcData.isGuard = true;
-
-                int outfitID;
-
-                if (map.mapName == "Santa's SweatShop")
-                {
-                    outfitID = 44;
-                }
-                else if (map.mapName == "Duct Tapes are Forever")
-                {
-                    outfitID = 49;
-                }
-                else if (map.mapName == "Escape Team")
-                {
-                    outfitID = 54;
-                }
-                else
-                {
-                    outfitID = 39;
-                }
-                ItemData outfitData = creator.CreateItemData(outfitID);
-                ItemData batonData = creator.CreateItemData(56);
-                try
-                {
-                    npc.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData = outfitData;
-                    npc.GetComponent<NPCCollectionData>().npcData.inventory[6].itemData = batonData;
-                }
-                catch { }
             }
             npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
 

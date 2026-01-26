@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: -5813940400225957718}
   - component: {fileID: 3022241687264094852}
   - component: {fileID: 5341286191016631086}
+  - component: {fileID: 6680145677854381454}
   m_Layer: 10
   m_Name: NPC
   m_TagString: NPC
@@ -410,6 +411,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCSpeech
   isTalking: 0
+--- !u!114 &6680145677854381454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735fa4045c8ee4b4ab45149c17efdf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MakeNPCInv
 --- !u!1 &347473100117320719
 GameObject:
   m_ObjectHideFlags: 0
