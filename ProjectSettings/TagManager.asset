@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Wall
+  - Item
+  - Desk
+  - InvSlot
+  - DeskSlot
+  - DeskPanel
+  - Waypoint
+  - CellsZone
+  - PlayerCell
+  - RollcallZone
+  - CanteenZone
+  - GymZone
+  - ShowersZone
+  - SolitaryZone
+  - JanitorZone
+  - GardeningZone
+  - WoodshopZone
+  - MetalshopZone
+  - DeliveriesZone
+  - KitchenZone
+  - LaundryZone
+  - TailershopZone
+  - SafeZone
+  - MailroomZone
+  - Guard
+  - Inmate
+  - FreeTimeWaypoint(Guard)
+  - RollcallWaypoint(Guard)
+  - ShowerWaypoint(Inmate)
+  - ExerciseWaypoint(Inmate)
+  - CanteenWaypoint(Inmate)
+  - ShowerWaypoint(Guard)
+  - RollcallWaypoint(Inmate)
+  - ExerciseWaypoint(Guard)
+  - FreeTimeWaypoint(Inmate)
+  - CanteenWaypoint(Guard)
+  - Bars
+  - Obstacle
+  - Fence
+  - ElectricFence
+  - Digable
+  - Button
+  - SmallMenuPanel
+  - StatBar
+  - IDPanel
+  - IDSlot
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Items
+  - DeskUI
+  - Walls
+  - Zones
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1972456887
+    locked: 0
+  m_RenderingLayers:
+  - Default

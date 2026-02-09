@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 85adf3971ae4a17409d5c9bf1aea9d13
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MouseOverlayObject: {fileID: 2596914293841807097, guid: 7ea2b9ceb2ce7094d878cd735e2c3c87, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

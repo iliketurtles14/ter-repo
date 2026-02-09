@@ -1,0 +1,2626 @@
+fileFormatVersion: 2
+guid: 0116d7bcae9e34849b41a73858c57383
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3060321711676011137
+    second: Reincarcerated Outline Atlas 1_0
+  - first:
+      213: 6442046911689860010
+    second: Reincarcerated Outline Atlas 1_1
+  - first:
+      213: 1810335661104062757
+    second: Reincarcerated Outline Atlas 1_2
+  - first:
+      213: -4856792636879507657
+    second: Reincarcerated Outline Atlas 1_3
+  - first:
+      213: 6082077592230500639
+    second: Reincarcerated Outline Atlas 1_4
+  - first:
+      213: 3873090809576738413
+    second: Reincarcerated Outline Atlas 1_5
+  - first:
+      213: -6234563790998319858
+    second: Reincarcerated Outline Atlas 1_6
+  - first:
+      213: 7012383113938970176
+    second: Reincarcerated Outline Atlas 1_7
+  - first:
+      213: -6837165979047586357
+    second: Reincarcerated Outline Atlas 1_8
+  - first:
+      213: 3938694756269840079
+    second: Reincarcerated Outline Atlas 1_9
+  - first:
+      213: 2864028583158173003
+    second: Reincarcerated Outline Atlas 1_10
+  - first:
+      213: -3118949837672693064
+    second: Reincarcerated Outline Atlas 1_11
+  - first:
+      213: 6728311672708404985
+    second: Reincarcerated Outline Atlas 1_12
+  - first:
+      213: -6658244589802805191
+    second: Reincarcerated Outline Atlas 1_13
+  - first:
+      213: -2408647136526133987
+    second: Reincarcerated Outline Atlas 1_14
+  - first:
+      213: -2789105493498596466
+    second: Reincarcerated Outline Atlas 1_15
+  - first:
+      213: 5919656545002492880
+    second: Reincarcerated Outline Atlas 1_16
+  - first:
+      213: 6666624263323142529
+    second: Reincarcerated Outline Atlas 1_17
+  - first:
+      213: 2826834475624396192
+    second: Reincarcerated Outline Atlas 1_18
+  - first:
+      213: -6080588372767391791
+    second: Reincarcerated Outline Atlas 1_19
+  - first:
+      213: -8032613980146793635
+    second: Reincarcerated Outline Atlas 1_20
+  - first:
+      213: -117576651707677321
+    second: Reincarcerated Outline Atlas 1_21
+  - first:
+      213: 8694948714608190271
+    second: Reincarcerated Outline Atlas 1_22
+  - first:
+      213: 8000359943146368515
+    second: Reincarcerated Outline Atlas 1_23
+  - first:
+      213: 484182920409801629
+    second: Reincarcerated Outline Atlas 1_24
+  - first:
+      213: 7159156556533696756
+    second: Reincarcerated Outline Atlas 1_25
+  - first:
+      213: -5231019552151249191
+    second: Reincarcerated Outline Atlas 1_26
+  - first:
+      213: -5854208031252622530
+    second: Reincarcerated Outline Atlas 1_27
+  - first:
+      213: 3959082061134185537
+    second: Reincarcerated Outline Atlas 1_28
+  - first:
+      213: -1815738148030677710
+    second: Reincarcerated Outline Atlas 1_29
+  - first:
+      213: -7097917826853463376
+    second: Reincarcerated Outline Atlas 1_30
+  - first:
+      213: -332277337265673192
+    second: Reincarcerated Outline Atlas 1_31
+  - first:
+      213: -3652444779377471703
+    second: Reincarcerated Outline Atlas 1_32
+  - first:
+      213: -4403540484992601894
+    second: Reincarcerated Outline Atlas 1_33
+  - first:
+      213: -7404871577322644154
+    second: Reincarcerated Outline Atlas 1_34
+  - first:
+      213: -2137472469910015682
+    second: Reincarcerated Outline Atlas 1_35
+  - first:
+      213: -2087755071159108871
+    second: Reincarcerated Outline Atlas 1_36
+  - first:
+      213: 4560516290795571935
+    second: Reincarcerated Outline Atlas 1_37
+  - first:
+      213: -1982572264544271552
+    second: Reincarcerated Outline Atlas 1_38
+  - first:
+      213: 7906878424023149183
+    second: Reincarcerated Outline Atlas 1_39
+  - first:
+      213: 4391819222237189524
+    second: Reincarcerated Outline Atlas 1_40
+  - first:
+      213: -8448130718629717184
+    second: Reincarcerated Outline Atlas 1_41
+  - first:
+      213: -5882379867223150158
+    second: Reincarcerated Outline Atlas 1_42
+  - first:
+      213: 4370314909406985367
+    second: Reincarcerated Outline Atlas 1_43
+  - first:
+      213: -4128265277464985727
+    second: Reincarcerated Outline Atlas 1_44
+  - first:
+      213: -7738012852251647983
+    second: Reincarcerated Outline Atlas 1_45
+  - first:
+      213: -8266720524957379557
+    second: Reincarcerated Outline Atlas 1_46
+  - first:
+      213: -2352935648741805136
+    second: Reincarcerated Outline Atlas 1_47
+  - first:
+      213: -7024813164619360411
+    second: Reincarcerated Outline Atlas 1_48
+  - first:
+      213: -2165697803859921090
+    second: Reincarcerated Outline Atlas 1_49
+  - first:
+      213: 8789843129005650615
+    second: Reincarcerated Outline Atlas 1_50
+  - first:
+      213: 51993848760947574
+    second: Reincarcerated Outline Atlas 1_51
+  - first:
+      213: 289328423510889015
+    second: Reincarcerated Outline Atlas 1_52
+  - first:
+      213: -3607762640822227802
+    second: Reincarcerated Outline Atlas 1_53
+  - first:
+      213: 5530745821770488702
+    second: Reincarcerated Outline Atlas 1_54
+  - first:
+      213: 3275073052398866838
+    second: Reincarcerated Outline Atlas 1_55
+  - first:
+      213: -5100322250176152128
+    second: Reincarcerated Outline Atlas 1_56
+  - first:
+      213: 584990515907141554
+    second: Reincarcerated Outline Atlas 1_57
+  - first:
+      213: -1303988050470123855
+    second: Reincarcerated Outline Atlas 1_58
+  - first:
+      213: -2627751036091461641
+    second: Reincarcerated Outline Atlas 1_59
+  - first:
+      213: -5816133123621034314
+    second: Reincarcerated Outline Atlas 1_60
+  - first:
+      213: -5063519403160125413
+    second: Reincarcerated Outline Atlas 1_61
+  - first:
+      213: 7544908245029967618
+    second: Reincarcerated Outline Atlas 1_62
+  - first:
+      213: 8907918304277749775
+    second: Reincarcerated Outline Atlas 1_63
+  - first:
+      213: 3564213966667433134
+    second: Reincarcerated Outline Atlas 1_64
+  - first:
+      213: 4371984083349707272
+    second: Reincarcerated Outline Atlas 1_65
+  - first:
+      213: 9158024659180138465
+    second: Reincarcerated Outline Atlas 1_66
+  - first:
+      213: -6153005467762322921
+    second: Reincarcerated Outline Atlas 1_67
+  - first:
+      213: -7897105467088842132
+    second: Reincarcerated Outline Atlas 1_68
+  - first:
+      213: -8157400142630445133
+    second: Reincarcerated Outline Atlas 1_69
+  - first:
+      213: 8818057904598721716
+    second: Reincarcerated Outline Atlas 1_70
+  - first:
+      213: 561574555964826847
+    second: Reincarcerated Outline Atlas 1_71
+  - first:
+      213: -733461075398825395
+    second: Reincarcerated Outline Atlas 1_72
+  - first:
+      213: -1621082228868681023
+    second: Reincarcerated Outline Atlas 1_73
+  - first:
+      213: 4519573252336401253
+    second: Reincarcerated Outline Atlas 1_74
+  - first:
+      213: -6374783720232502567
+    second: Reincarcerated Outline Atlas 1_75
+  - first:
+      213: -7154647109652169224
+    second: Reincarcerated Outline Atlas 1_76
+  - first:
+      213: 8789668742500492686
+    second: Reincarcerated Outline Atlas 1_77
+  - first:
+      213: 3773278597648842071
+    second: Reincarcerated Outline Atlas 1_78
+  - first:
+      213: -4662502672793393084
+    second: Reincarcerated Outline Atlas 1_79
+  - first:
+      213: -7830022937064353298
+    second: Reincarcerated Outline Atlas 1_80
+  - first:
+      213: -148816910391439912
+    second: Reincarcerated Outline Atlas 1_81
+  - first:
+      213: 3324734205180888613
+    second: Reincarcerated Outline Atlas 1_82
+  - first:
+      213: 6489320332446927813
+    second: Reincarcerated Outline Atlas 1_83
+  - first:
+      213: -6920754780174227770
+    second: Reincarcerated Outline Atlas 1_84
+  - first:
+      213: 8132521740617747300
+    second: Reincarcerated Outline Atlas 1_85
+  - first:
+      213: 5379449400603585661
+    second: Reincarcerated Outline Atlas 1_86
+  - first:
+      213: -8538594979295368093
+    second: Reincarcerated Outline Atlas 1_87
+  - first:
+      213: 4567383853122734127
+    second: Reincarcerated Outline Atlas 1_88
+  - first:
+      213: -937549425094452955
+    second: Reincarcerated Outline Atlas 1_89
+  - first:
+      213: 1924405372817986212
+    second: Reincarcerated Outline Atlas 1_90
+  - first:
+      213: -2437744797742465978
+    second: Reincarcerated Outline Atlas 1_91
+  - first:
+      213: -2696607297292482121
+    second: Reincarcerated Outline Atlas 1_92
+  - first:
+      213: 2903494947749920835
+    second: Reincarcerated Outline Atlas 1_93
+  - first:
+      213: -1520104002327248106
+    second: Reincarcerated Outline Atlas 1_94
+  - first:
+      213: -7132131326611246064
+    second: Reincarcerated Outline Atlas 1_95
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 246
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1823ddae162787a20800000000000000
+      internalID: 3060321711676011137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 226
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa32da5e88fb66950800000000000000
+      internalID: 6442046911689860010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 246
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 521645431ba9f1910800000000000000
+      internalID: 1810335661104062757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 226
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73f601344d4399cb0800000000000000
+      internalID: -4856792636879507657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_4
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 246
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f19134d8851e76450800000000000000
+      internalID: 6082077592230500639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 246
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6ec6af129bffb530800000000000000
+      internalID: 3873090809576738413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 226
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0d4804a3416a79a0800000000000000
+      internalID: -6234563790998319858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_7
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 246
+        width: 20
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 046a747f94df05160800000000000000
+      internalID: 7012383113938970176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_8
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 244
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc59b7454c18d11a0800000000000000
+      internalID: -6837165979047586357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_9
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 244
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc65822430e09a630800000000000000
+      internalID: 3938694756269840079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_10
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 242
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4d45b572d21fb720800000000000000
+      internalID: 2864028583158173003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b2c145c5a347b4d0800000000000000
+      internalID: -3118949837672693064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_12
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 224
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f616e571d3cf5d50800000000000000
+      internalID: 6728311672708404985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_13
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 228
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 938232d82d92993a0800000000000000
+      internalID: -6658244589802805191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_14
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 212
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d15191ed034c29ed0800000000000000
+      internalID: -2408647136526133987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_15
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 226
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e83fceab45b1b49d0800000000000000
+      internalID: -2789105493498596466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 206
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d390359348d62250800000000000000
+      internalID: 5919656545002492880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_17
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 206
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 189406a327b948c50800000000000000
+      internalID: 6666624263323142529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_18
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 206
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a57b667afeea3720800000000000000
+      internalID: 2826834475624396192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 204
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df34df57196d9ba0800000000000000
+      internalID: -6080588372767391791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 200
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d538387c42c668090800000000000000
+      internalID: -8032613980146793635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_21
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 196
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 775851188a84e5ef0800000000000000
+      internalID: -117576651707677321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_22
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 210
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f33e572c9c9aaa870800000000000000
+      internalID: 8694948714608190271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_23
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 194
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30ee0860bfcf60f60800000000000000
+      internalID: 8000359943146368515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 186
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9366510dc928b600800000000000000
+      internalID: 484182920409801629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 166
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f8899315fe6a5360800000000000000
+      internalID: 7159156556533696756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_26
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 186
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ded6e4be6fa767b0800000000000000
+      internalID: -5231019552151249191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_27
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 166
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e33d2ffffcca1cea0800000000000000
+      internalID: -5854208031252622530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_28
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 186
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1444682982c71f630800000000000000
+      internalID: 3959082061134185537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_29
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 166
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23d718946c33dc6e0800000000000000
+      internalID: -1815738148030677710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_30
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 184
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba9c75c7512f7d90800000000000000
+      internalID: -7097917826853463376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_31
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 180
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81ced51b583836bf0800000000000000
+      internalID: -332277337265673192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_32
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 180
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92fc97b13d8ef4dc0800000000000000
+      internalID: -3652444779377471703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_33
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 178
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad0f6f5824b73e2c0800000000000000
+      internalID: -4403540484992601894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_34
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 164
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d1c4a788c9c3990800000000000000
+      internalID: -7404871577322644154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_35
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3136d90d1c2652e0800000000000000
+      internalID: -2137472469910015682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_36
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 160
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa7a8df2ddc603e0800000000000000
+      internalID: -2087755071159108871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_37
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 170
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fda804167653a4f30800000000000000
+      internalID: 4560516290795571935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_38
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 154
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0430c4e870d7c74e0800000000000000
+      internalID: -1982572264544271552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 146
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7aa912c800eabd60800000000000000
+      internalID: 7906878424023149183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 126
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4951e235050e2fc30800000000000000
+      internalID: 4391819222237189524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_41
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 146
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04b920c1fd532ca80800000000000000
+      internalID: -8448130718629717184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_42
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 126
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b1314c4da69d5ea0800000000000000
+      internalID: -5882379867223150158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_43
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 146
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79cfbc3514a76ac30800000000000000
+      internalID: 4370314909406985367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_44
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18fbe164a9475b6c0800000000000000
+      internalID: -4128265277464985727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_45
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 140
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11022220f4e0d9490800000000000000
+      internalID: -7738012852251647983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_46
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 138
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b141c744b75b64d80800000000000000
+      internalID: -8266720524957379557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_47
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 124
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b3346d6e71b85fd0800000000000000
+      internalID: -2352935648741805136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_48
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 120
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567106555a9d28e90800000000000000
+      internalID: -7024813164619360411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_49
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 120
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e37f51e5255e1f1e0800000000000000
+      internalID: -2165697803859921090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_50
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 120
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b23ac751cbcbf970800000000000000
+      internalID: 8789843129005650615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_51
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 673d6e54128b8b000800000000000000
+      internalID: 51993848760947574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_52
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 106
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7325ac21ba6e30400800000000000000
+      internalID: 289328423510889015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_53
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 106
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6acaddf2ef6aeedc0800000000000000
+      internalID: -3607762640822227802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_54
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 104
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7b1b91950821cc40800000000000000
+      internalID: 5530745821770488702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_55
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 100
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69150bdc695637d20800000000000000
+      internalID: 3275073052398866838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_56
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 100
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cdba36afe30839b0800000000000000
+      internalID: -5100322250176152128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_57
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 100
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf1e9956cd4e1800800000000000000
+      internalID: 584990515907141554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_58
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 108
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b6cf54e6cd47ede0800000000000000
+      internalID: -1303988050470123855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_59
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 100
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ff8a97ea5a588bd0800000000000000
+      internalID: -2627751036091461641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 86
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b66f204db1f84fa0800000000000000
+      internalID: -5816133123621034314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_61
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 86
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b10c7553ee3cab9b0800000000000000
+      internalID: -5063519403160125413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_62
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 84
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2075deff216e4b860800000000000000
+      internalID: 7544908245029967618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_63
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 80
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f00eca660884f9b70800000000000000
+      internalID: 8907918304277749775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_64
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 80
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea4c2baf7b1a67130800000000000000
+      internalID: 3564213966667433134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_65
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80a98bb2c586cac30800000000000000
+      internalID: 4371984083349707272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_66
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 92
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ef23bef7e6d71f70800000000000000
+      internalID: 9158024659180138465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_67
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 76
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7129df880222c9aa0800000000000000
+      internalID: -6153005467762322921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_68
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c62df581b68d76290800000000000000
+      internalID: -7897105467088842132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_69
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 46
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bf9acf3ac71bce80800000000000000
+      internalID: -8157400142630445133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_70
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 64
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b4ae64b1f8006a70800000000000000
+      internalID: 8818057904598721716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_71
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 60
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd46e23551d1bc700800000000000000
+      internalID: 561574555964826847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_72
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 60
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ae648b90932d5f0800000000000000
+      internalID: -733461075398825395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_73
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 60
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c2759c3d42c089e0800000000000000
+      internalID: -1621082228868681023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_74
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 60
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b3ed16defb8be30800000000000000
+      internalID: 4519573252336401253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_75
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 60
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da39934bf73887a0800000000000000
+      internalID: -6374783720232502567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_76
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 12
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fd38e75c5695bc90800000000000000
+      internalID: -7154647109652169224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_77
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 24
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e85a812d62d2bf970800000000000000
+      internalID: 8789668742500492686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_78
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 44
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d717394e06d5430800000000000000
+      internalID: 3773278597648842071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_79
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 40
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44827d7a5867b4fb0800000000000000
+      internalID: -4662502672793393084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_80
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 40
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee15e1dbf9b265390800000000000000
+      internalID: -7830022937064353298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_81
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 40
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dd0c87fecb4fedf0800000000000000
+      internalID: -148816910391439912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_82
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 40
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 526c568f424d32e20800000000000000
+      internalID: 3324734205180888613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_83
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 40
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cb0831e572be0a50800000000000000
+      internalID: 6489320332446927813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c6e026f13a84ff90800000000000000
+      internalID: -6920754780174227770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_85
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46b89a56f658cd070800000000000000
+      internalID: 8132521740617747300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_86
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 20
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7c2a227ab4a7aa40800000000000000
+      internalID: 5379449400603585661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_87
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36c6a221b11d08980800000000000000
+      internalID: -8538594979295368093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_88
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 20
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f284c365a6b926f30800000000000000
+      internalID: 4567383853122734127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_89
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5299fd5e3c72df2f0800000000000000
+      internalID: -937549425094452955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_90
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 20
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a25baa9d7cd4ba10800000000000000
+      internalID: 1924405372817986212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_91
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cf08da5046b2ed0800000000000000
+      internalID: -2437744797742465978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_92
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 20
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b9c72a43f9b39ad0800000000000000
+      internalID: -2696607297292482121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_93
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34086c785494b4820800000000000000
+      internalID: 2903494947749920835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_94
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 20
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61382a7b67187eae0800000000000000
+      internalID: -1520104002327248106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Reincarcerated Outline Atlas 1_95
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 014b6e99854950d90800000000000000
+      internalID: -7132131326611246064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Reincarcerated Outline Atlas 1_0: 3060321711676011137
+      Reincarcerated Outline Atlas 1_1: 6442046911689860010
+      Reincarcerated Outline Atlas 1_10: 2864028583158173003
+      Reincarcerated Outline Atlas 1_11: -3118949837672693064
+      Reincarcerated Outline Atlas 1_12: 6728311672708404985
+      Reincarcerated Outline Atlas 1_13: -6658244589802805191
+      Reincarcerated Outline Atlas 1_14: -2408647136526133987
+      Reincarcerated Outline Atlas 1_15: -2789105493498596466
+      Reincarcerated Outline Atlas 1_16: 5919656545002492880
+      Reincarcerated Outline Atlas 1_17: 6666624263323142529
+      Reincarcerated Outline Atlas 1_18: 2826834475624396192
+      Reincarcerated Outline Atlas 1_19: -6080588372767391791
+      Reincarcerated Outline Atlas 1_2: 1810335661104062757
+      Reincarcerated Outline Atlas 1_20: -8032613980146793635
+      Reincarcerated Outline Atlas 1_21: -117576651707677321
+      Reincarcerated Outline Atlas 1_22: 8694948714608190271
+      Reincarcerated Outline Atlas 1_23: 8000359943146368515
+      Reincarcerated Outline Atlas 1_24: 484182920409801629
+      Reincarcerated Outline Atlas 1_25: 7159156556533696756
+      Reincarcerated Outline Atlas 1_26: -5231019552151249191
+      Reincarcerated Outline Atlas 1_27: -5854208031252622530
+      Reincarcerated Outline Atlas 1_28: 3959082061134185537
+      Reincarcerated Outline Atlas 1_29: -1815738148030677710
+      Reincarcerated Outline Atlas 1_3: -4856792636879507657
+      Reincarcerated Outline Atlas 1_30: -7097917826853463376
+      Reincarcerated Outline Atlas 1_31: -332277337265673192
+      Reincarcerated Outline Atlas 1_32: -3652444779377471703
+      Reincarcerated Outline Atlas 1_33: -4403540484992601894
+      Reincarcerated Outline Atlas 1_34: -7404871577322644154
+      Reincarcerated Outline Atlas 1_35: -2137472469910015682
+      Reincarcerated Outline Atlas 1_36: -2087755071159108871
+      Reincarcerated Outline Atlas 1_37: 4560516290795571935
+      Reincarcerated Outline Atlas 1_38: -1982572264544271552
+      Reincarcerated Outline Atlas 1_39: 7906878424023149183
+      Reincarcerated Outline Atlas 1_4: 6082077592230500639
+      Reincarcerated Outline Atlas 1_40: 4391819222237189524
+      Reincarcerated Outline Atlas 1_41: -8448130718629717184
+      Reincarcerated Outline Atlas 1_42: -5882379867223150158
+      Reincarcerated Outline Atlas 1_43: 4370314909406985367
+      Reincarcerated Outline Atlas 1_44: -4128265277464985727
+      Reincarcerated Outline Atlas 1_45: -7738012852251647983
+      Reincarcerated Outline Atlas 1_46: -8266720524957379557
+      Reincarcerated Outline Atlas 1_47: -2352935648741805136
+      Reincarcerated Outline Atlas 1_48: -7024813164619360411
+      Reincarcerated Outline Atlas 1_49: -2165697803859921090
+      Reincarcerated Outline Atlas 1_5: 3873090809576738413
+      Reincarcerated Outline Atlas 1_50: 8789843129005650615
+      Reincarcerated Outline Atlas 1_51: 51993848760947574
+      Reincarcerated Outline Atlas 1_52: 289328423510889015
+      Reincarcerated Outline Atlas 1_53: -3607762640822227802
+      Reincarcerated Outline Atlas 1_54: 5530745821770488702
+      Reincarcerated Outline Atlas 1_55: 3275073052398866838
+      Reincarcerated Outline Atlas 1_56: -5100322250176152128
+      Reincarcerated Outline Atlas 1_57: 584990515907141554
+      Reincarcerated Outline Atlas 1_58: -1303988050470123855
+      Reincarcerated Outline Atlas 1_59: -2627751036091461641
+      Reincarcerated Outline Atlas 1_6: -6234563790998319858
+      Reincarcerated Outline Atlas 1_60: -5816133123621034314
+      Reincarcerated Outline Atlas 1_61: -5063519403160125413
+      Reincarcerated Outline Atlas 1_62: 7544908245029967618
+      Reincarcerated Outline Atlas 1_63: 8907918304277749775
+      Reincarcerated Outline Atlas 1_64: 3564213966667433134
+      Reincarcerated Outline Atlas 1_65: 4371984083349707272
+      Reincarcerated Outline Atlas 1_66: 9158024659180138465
+      Reincarcerated Outline Atlas 1_67: -6153005467762322921
+      Reincarcerated Outline Atlas 1_68: -7897105467088842132
+      Reincarcerated Outline Atlas 1_69: -8157400142630445133
+      Reincarcerated Outline Atlas 1_7: 7012383113938970176
+      Reincarcerated Outline Atlas 1_70: 8818057904598721716
+      Reincarcerated Outline Atlas 1_71: 561574555964826847
+      Reincarcerated Outline Atlas 1_72: -733461075398825395
+      Reincarcerated Outline Atlas 1_73: -1621082228868681023
+      Reincarcerated Outline Atlas 1_74: 4519573252336401253
+      Reincarcerated Outline Atlas 1_75: -6374783720232502567
+      Reincarcerated Outline Atlas 1_76: -7154647109652169224
+      Reincarcerated Outline Atlas 1_77: 8789668742500492686
+      Reincarcerated Outline Atlas 1_78: 3773278597648842071
+      Reincarcerated Outline Atlas 1_79: -4662502672793393084
+      Reincarcerated Outline Atlas 1_8: -6837165979047586357
+      Reincarcerated Outline Atlas 1_80: -7830022937064353298
+      Reincarcerated Outline Atlas 1_81: -148816910391439912
+      Reincarcerated Outline Atlas 1_82: 3324734205180888613
+      Reincarcerated Outline Atlas 1_83: 6489320332446927813
+      Reincarcerated Outline Atlas 1_84: -6920754780174227770
+      Reincarcerated Outline Atlas 1_85: 8132521740617747300
+      Reincarcerated Outline Atlas 1_86: 5379449400603585661
+      Reincarcerated Outline Atlas 1_87: -8538594979295368093
+      Reincarcerated Outline Atlas 1_88: 4567383853122734127
+      Reincarcerated Outline Atlas 1_89: -937549425094452955
+      Reincarcerated Outline Atlas 1_9: 3938694756269840079
+      Reincarcerated Outline Atlas 1_90: 1924405372817986212
+      Reincarcerated Outline Atlas 1_91: -2437744797742465978
+      Reincarcerated Outline Atlas 1_92: -2696607297292482121
+      Reincarcerated Outline Atlas 1_93: 2903494947749920835
+      Reincarcerated Outline Atlas 1_94: -1520104002327248106
+      Reincarcerated Outline Atlas 1_95: -7132131326611246064
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

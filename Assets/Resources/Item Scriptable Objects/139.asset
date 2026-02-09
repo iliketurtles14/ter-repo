@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3447e085eed36f4cb508fa127640465, type: 3}
+  m_Name: 139
+  m_EditorClassIdentifier: 
+  displayName: Timber
+  id: 139
+  currentDurability: 100
+  isContraband: 1
+  causeSolitary: 0
+  durability: -1
+  chippingPower: -1
+  cuttingPower: -1
+  ventBreakingPower: -1
+  diggingPower: -1
+  health: -1
+  energy: -1
+  defence: -1
+  strength: -1
+  opinion: 1
+  cameraBlock: -1
+  icon: {fileID: 0}
+  prefab: {fileID: 176320872902523559, guid: c5e5739760af45446938f59d62058166, type: 3}
