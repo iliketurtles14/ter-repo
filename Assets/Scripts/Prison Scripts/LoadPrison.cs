@@ -687,7 +687,26 @@ public class LoadPrison : MonoBehaviour
         SetGround();
         SetTiles(currentTileDict);
         SetObjects();
-        //set the zones when you need to
+        //doing zones now !!! >:3
+        SetZones();
+    }
+    private void SetZones()
+    {
+        List<string> zoneNames = currentMap.zoneNames;
+        List<float[]> zoneVars = currentMap.zoneVars;
+
+        for(int i = 0; i < zoneNames.Count; i++)
+        {
+            Vector2 zonePos = new Vector2(zoneVars[i][0] * 1.6f, zoneVars[i][1] * 1.6f);
+            zonePos += new Vector2(-1.6f, -1.6f);
+            Vector2 zoneSize = new Vector2(zoneVars[i][2] * 1.6f, zoneVars[i][3] * 1.6f);
+            GameObject zone = new GameObject();
+            zone.transform.position = zonePos;
+            zone.AddComponent<BoxCollider2D>().isTrigger = true;
+            zone.GetComponent<BoxCollider2D>().size = zoneSize;
+            zone.name = zoneNames[i];
+            zone.transform.parent = tiles.Find("Zones");
+        }
     }
     private void SetGround()
     {
@@ -1289,11 +1308,11 @@ public class LoadPrison : MonoBehaviour
             icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
             File.Delete(Path.Combine(extractPath, "Icon.png"));
         }
-        if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
-        {
-            speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
-            File.Delete(Path.Combine(extractPath, "Speech.ini"));
-        }
+        //if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
+        //{
+        //    speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
+        //    File.Delete(Path.Combine(extractPath, "Speech.ini"));
+        //}
         if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
         {
             tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
@@ -1304,6 +1323,7 @@ public class LoadPrison : MonoBehaviour
         //    items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
         //    File.Delete(Path.Combine(extractPath, "Items.ini"));
         //}
+        speech = Resources.Load<TextAsset>("Speech").text.Split("\n");
         items = Resources.Load<TextAsset>("Items").text.Split("\n");
         if (File.Exists(Path.Combine(extractPath, "Music.zip")))
         {

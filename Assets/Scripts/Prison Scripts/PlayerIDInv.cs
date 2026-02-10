@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerIDInv : MonoBehaviour
@@ -83,7 +84,7 @@ public class PlayerIDInv : MonoBehaviour
         {
             if(mcs.isTouchingButton && mcs.touchedButton.name == "PlayerIDButton" && Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(OpenMenu());
+                StartCoroutine(OpenMenu(false));
             }
         }
         if (idIsOpen)
@@ -212,7 +213,7 @@ public class PlayerIDInv : MonoBehaviour
             }
         }
     }
-    public IEnumerator OpenMenu()
+    public IEnumerator OpenMenu(bool fromFavor)
     {
         foreach(Transform child in transform)
         {
@@ -224,6 +225,10 @@ public class PlayerIDInv : MonoBehaviour
             {
                 child.GetComponent<BoxCollider2D>().enabled = true;
             }
+            if (child.GetComponent<EventTrigger>() != null)
+            {
+                child.GetComponent<EventTrigger>().enabled = true;
+            }
         }
         transform.Find("WeaponText").gameObject.SetActive(true);
         transform.Find("OutfitText").gameObject.SetActive(true);
@@ -234,7 +239,10 @@ public class PlayerIDInv : MonoBehaviour
 
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
 
-        pauseScript.Pause(false);
+        if (!fromFavor)
+        {
+            pauseScript.Pause(false);
+        }
 
         yield return new WaitForEndOfFrame();
 
@@ -251,6 +259,10 @@ public class PlayerIDInv : MonoBehaviour
             if (child.GetComponent<BoxCollider2D>() != null)
             {
                 child.GetComponent<BoxCollider2D>().enabled = false;
+            }
+            if(child.GetComponent<EventTrigger>() != null)
+            {
+                child.GetComponent<EventTrigger>().enabled = false;
             }
         }
         foreach (Transform child in transform.Find("StrengthPanel"))

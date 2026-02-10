@@ -98,13 +98,21 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
     }
     private void SetInmateDesk()
     {
-        foreach(Transform npc in inmates)
+        foreach(Transform obj in tiles.Find("GroundObjects"))
         {
-            try
+            if(obj.name == "NPCDesk")
             {
-                npc.GetComponent<NPCCollectionData>().npcData.desk = desks[npc.GetComponent<NPCCollectionData>().npcData.order].gameObject;
+                int deskNum = obj.GetComponent<DeskData>().inmateCorrelationNumber;
+
+                foreach(Transform npc in inmates)
+                {
+                    if(npc.GetComponent<NPCCollectionData>().npcData.order == deskNum)
+                    {
+                        npc.GetComponent<NPCCollectionData>().npcData.desk = obj.gameObject;
+                        break;
+                    }
+                }
             }
-            catch { }
         }
     }
     private void CheckForWeirdStuff() //checks for stuff like too many inmates for desks and stuff like that

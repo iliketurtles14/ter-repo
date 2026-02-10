@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Missions : MonoBehaviour
@@ -25,12 +26,31 @@ public class Missions : MonoBehaviour
         "stealDesk",
         "stealGuardBody"
     };
+    private bool ready;
     private void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
 
         StartCoroutine(StartWait());
+    }
+    private void Update()
+    {
+        if (!ready)
+        {
+            return;
+        }
+        
+        foreach(Transform npc in aStar)
+        {
+            if (npc.name.Contains("Inmate"))
+            {
+                if (String.IsNullOrEmpty(npc.GetComponent<NPCCollectionData>().npcData.mission.type))
+                {
+                    npc.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(false);
+                }
+            }
+        }
     }
     private IEnumerator StartWait()
     {
@@ -39,9 +59,13 @@ public class Missions : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        ready = true;
 
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         speechFile = currentMap.speech;
+
+        Debug.Log(speechFile.Length + " is the length of the speech file.");
 
         foreach(Transform npc in aStar)
         {
@@ -58,7 +82,7 @@ public class Missions : MonoBehaviour
         {
             if (npc.name.Contains("Inmate"))
             {
-                npc.GetComponent<NPCCollectionData>().npcData.mission = new Mission("", -1, "", "", "", "");
+                npc.GetComponent<NPCCollectionData>().npcData.mission = new Mission("", -1, "", "", "", "", -1);
                 availableInmates.Add(npc.gameObject);
             }
         }
@@ -79,7 +103,7 @@ public class Missions : MonoBehaviour
             }
             if (available > 0 && amountOfMissions < 4)
             {
-                float rand = UnityEngine.Random.Range(30f, 80f);
+                float rand = UnityEngine.Random.Range(30f, 60f);
                 yield return new WaitForSeconds(rand * .75f);
                 int randInt = UnityEngine.Random.Range(0, availableInmates.Count);
                 MakeMission(availableInmates[randInt]);
@@ -88,7 +112,7 @@ public class Missions : MonoBehaviour
             yield return null;
         }
     }
-    public Mission MakeMission(GameObject inmate)
+    public void MakeMission(GameObject inmate)
     {
         string type = null;
         int item = -1;
@@ -100,6 +124,9 @@ public class Missions : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, 7);
 
         type = missions[rand];
+
+        type = "stealDesk"; //for debug stuff
+        Debug.Log("CHANGE THIS");
 
         switch (type)
         {
@@ -156,11 +183,43 @@ public class Missions : MonoBehaviour
                 target = remainingGuards[rand];
                 break;
         }
-        Mission mission = new Mission(type, item, giver, target, message, period);
+
+        //get payout price
+        int basePrice = 0;
+        bool isDoubled = false;
+        switch (type)
+        {
+            case "stealInmateBody":
+            case "stealDesk":
+            case "give":
+                basePrice = 15;
+                break;
+            case "inmateBeat":
+                basePrice = 10;
+                break;
+            case "distract":
+                basePrice = 20;
+                break;
+            case "stealGuardBody":
+                basePrice = 15;
+                isDoubled = true;
+                break;
+            case "guardBeat":
+                basePrice = 10;
+                isDoubled = true;
+                break;
+        }
+
+        int payout = Mathf.FloorToInt(inmate.GetComponent<NPCCollectionData>().npcData.opinion / 10f) + basePrice;
+        if (isDoubled)
+        {
+            payout *= 2;
+        }
+
+        Mission mission = new Mission(type, item, giver, target, message, period, payout);
+        inmate.GetComponent<NPCCollectionData>().npcData.mission = mission;
 
         SetMissionIcon(inmate);
-
-        return mission;
     }
     private void SetMissionIcon(GameObject inmate)
     {

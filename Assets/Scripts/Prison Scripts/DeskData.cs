@@ -28,7 +28,10 @@ public class DeskData : MonoBehaviour
                     deskInv[i] = new DeskItem();
                 }
             }
-            catch { }
+            catch 
+            {
+                deskInv[i] = new DeskItem();
+            }
         }
     }
 }

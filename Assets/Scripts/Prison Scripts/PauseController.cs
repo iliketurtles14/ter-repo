@@ -37,7 +37,10 @@ public class PauseController : MonoBehaviour
         //mouse collision stuff
         foreach(string tag in mcs.disabledTags)
         {
-            currentDisabledTags.Add(tag);
+            if (!currentDisabledTags.Contains(tag))
+            {
+                currentDisabledTags.Add(tag);
+            }
         }
 
         mcs.DisableAllTags();
@@ -51,6 +54,8 @@ public class PauseController : MonoBehaviour
         mcs.EnableTag("IDPanel");
         mcs.EnableTag("Button");
         mcs.EnableTag("Extra");
+        mcs.EnableTag("NPCInvSlot");
+        mcs.EnableTag("NPCInvPanel");
         
         //npc movement
         foreach(Transform npc in aStar)

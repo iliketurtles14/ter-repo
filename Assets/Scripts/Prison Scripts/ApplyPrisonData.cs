@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine.Rendering.Universal;
 using System.Linq;
+using UnityEditor.U2D.Animation;
 
 public class ApplyPrisonData : MonoBehaviour
 {
@@ -504,6 +505,8 @@ public class ApplyPrisonData : MonoBehaviour
     }
     private void LoadImages()
     {
+        SpriteState spriteState;
+        
         //tooltip panel
         ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[283];
         ic.Find("ActionBarHitBox").GetComponent<Image>().sprite = UISprites[349];
@@ -550,6 +553,21 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("NPCMenuPanel").Find("PlayerBackdrop").GetComponent<Image>().sprite = UISprites[255];
         mc.Find("NPCMenuPanel").Find("OutfitBackdrop").GetComponent<Image>().sprite = UISprites[33];
         mc.Find("NPCMenuPanel").Find("WeaponBackdrop").GetComponent<Image>().sprite = UISprites[33];
+        //mission request
+        mc.Find("MissionPanel").GetComponent<Image>().sprite = UISprites[148];
+        mc.Find("MissionPanel").Find("YesButton").GetComponent<Image>().sprite = UISprites[373];
+        mc.Find("MissionPanel").Find("NoButton").GetComponent<Image>().sprite = UISprites[373];
+        mc.Find("MissionPanel").Find("MaybeButton").GetComponent<Image>().sprite = UISprites[373];
+        spriteState = mc.Find("MissionPanel").Find("YesButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[374];
+        mc.Find("MissionPanel").Find("YesButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("MissionPanel").Find("NoButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("MissionPanel").Find("MaybeButton").GetComponent<Button>().spriteState = spriteState;
+        //zone arrow
+        ic.Find("ZoneArrow").GetComponent<Image>().sprite = UISprites[240];
+
+        //special message
+        ic.Find("SpecialMessagePanel").Find("MissionImage").GetComponent<Image>().sprite = UISprites[188];
 
         //barline
         Resources.Load("BarLine").GetComponent<Image>().sprite = UISprites[44];

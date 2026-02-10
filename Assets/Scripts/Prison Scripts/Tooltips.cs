@@ -26,16 +26,19 @@ public class Tooltips : MonoBehaviour
     private List<InventoryItem> inventoryList;
     private List<DeskItem> deskInvList;
     private List<IDItem> idInvList;
+    private List<NPCInvItem> npcInvList;
     private Inventory inventoryScript;
     private DeskInv deskInvScript;
     private MouseCollisionOnItems mcs;
     private InventorySelection selectionScript;
     private ItemBehaviours itemBehavioursScript;
+    private NPCIDInv npcIDInvScript;
     private GameObject touchedInvSlot;
     private bool isTouchingInvSlot;
     private int invSlotNumber; //starts at 0
     private int deskSlotNumber;
     private int idSlotNumber;
+    private int npcInvSlotNumber;
     private bool isTouchingItem;
     private GameObject touchedItem;
     private float wallDistance;
@@ -50,6 +53,7 @@ public class Tooltips : MonoBehaviour
     private int printedInvSlotNumber;
     private int printedDeskSlotNumber;
     private int printedIDSlotNumber;
+    private int printedNPCInvSlotNumber;
     private TileData printedTileData;
     private int printedTileDurability;
     private int printedItemDurability;
@@ -59,6 +63,8 @@ public class Tooltips : MonoBehaviour
     private bool isScrewingSlats;
     private GameObject deskMenu;
     private Sprite clearSprite;
+    private List<IDItem> currentIDList;
+    private NPCInv npcInvScript;
     public void Start()
     {
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
@@ -75,6 +81,8 @@ public class Tooltips : MonoBehaviour
         deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;
         deskInvScript = deskMenu.GetComponent<DeskInv>();
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+        npcIDInvScript = menuCanvas.transform.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
+        npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
     }
     public void Update()
     {
@@ -191,11 +199,26 @@ public class Tooltips : MonoBehaviour
         //for ID items
         if (mcs.isTouchingIDSlot)
         {
-            if(mcs.touchedIDSlot.name == "Outfit")
+            if (mcs.touchedIDSlot.transform.parent.name == "NPCMenuPanel")
+            {
+                IDItem outfitItem = new IDItem();
+                outfitItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData;
+                IDItem weaponItem = new IDItem();
+                weaponItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[6].itemData;
+                currentIDList = new List<IDItem>()
+                {
+                    outfitItem, weaponItem
+                };
+            }
+            else
+            {
+                currentIDList = idInvList;
+            }
+            if (mcs.touchedIDSlot.name == "Outfit")
             {
                 idSlotNumber = 0;
             }
-            else if(mcs.touchedIDSlot.name == "Weapon")
+            else if (mcs.touchedIDSlot.name == "Weapon")
             {
                 idSlotNumber = 1;
             }
@@ -204,19 +227,19 @@ public class Tooltips : MonoBehaviour
                 idSlotNumber = -1;
             }
         }
-        if (mcs.isTouchingIDSlot && idInvList[idSlotNumber].itemData != null && !showingTooltip)
+        if (mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData != null && !showingTooltip)
         {
-            if (idInvList[idSlotNumber].itemData.durability != -1)
+            if (currentIDList[idSlotNumber].itemData.durability != -1)
             {
                 printedIDSlotNumber = idSlotNumber;
-                toPrint = idInvList[idSlotNumber].itemData.displayName;
-                printedItemDurability = idInvList[idSlotNumber].itemData.currentDurability;
-                printDurability = " (" + idInvList[idSlotNumber].itemData.currentDurability + "%)";
+                toPrint = currentIDList[idSlotNumber].itemData.displayName;
+                printedItemDurability = currentIDList[idSlotNumber].itemData.currentDurability;
+                printDurability = " (" + currentIDList[idSlotNumber].itemData.currentDurability + "%)";
             }
-            else if (idInvList[idSlotNumber].itemData.durability == -1)
+            else if (currentIDList[idSlotNumber].itemData.durability == -1)
             {
                 printedIDSlotNumber = idSlotNumber;
-                toPrint = idInvList[idSlotNumber].itemData.displayName;
+                toPrint = currentIDList[idSlotNumber].itemData.displayName;
                 printDurability = "";
             }
             tooltipType = "idItem";
@@ -228,19 +251,76 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        else if ((showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && idInvList[idSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && idInvList[idSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && idInvList[idSlotNumber].itemData.currentDurability != idInvList[printedIDSlotNumber].itemData.currentDurability))
+        else if ((showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData == null) ||
+            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.displayName != toPrint) ||
+            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.currentDurability != currentIDList[printedIDSlotNumber].itemData.currentDurability))
         {
             DestroyTooltip();
             return;
         }
-        else if (mcs.isTouchingIDSlot && showingTooltip && idInvList[idSlotNumber].itemData == null)
+        else if (mcs.isTouchingIDSlot && showingTooltip && currentIDList[idSlotNumber].itemData == null)
         {
             DestroyTooltip();
             return;
         }
 
+        //for npcInv items
+        if (mcs.isTouchingNPCInvSlot)
+        {
+            npcInvList = npcInvScript.npc.GetComponent<NPCCollectionData>().npcData.inventory;
+            for(int i = 1; i <= 6; i++)
+            {
+                if(mcs.touchedNPCInvSlot.name == "Slot" + i)
+                {
+                    npcInvSlotNumber = i - 1;
+                    break;
+                }
+            }
+            if(mcs.touchedNPCInvSlot.name == "Outfit")
+            {
+                npcInvSlotNumber = 7;
+            }
+            else if(mcs.touchedNPCInvSlot.name == "Weapon")
+            {
+                npcInvSlotNumber = 6;
+            }
+        }
+        if(mcs.isTouchingNPCInvSlot && mcs.touchedNPCInvSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+        {
+            if (npcInvList[npcInvSlotNumber].itemData.durability != -1)
+            {
+                printedNPCInvSlotNumber = npcInvSlotNumber;
+                toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
+                printedItemDurability = npcInvList[npcInvSlotNumber].itemData.currentDurability;
+                printDurability = " (" + npcInvList[npcInvSlotNumber].itemData.currentDurability + "%)";
+            }
+            else if (npcInvList[npcInvSlotNumber].itemData.durability == -1)
+            {
+                printedNPCInvSlotNumber = npcInvSlotNumber;
+                toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
+                printDurability = "";
+            }
+            tooltipType = "npcItem";
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "npcItem" && !mcs.isTouchingNPCInvSlot)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if ((showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData == null) ||
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingDeskSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingDeskSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(mcs.isTouchingNPCInvSlot && showingTooltip && npcInvList[npcInvSlotNumber].itemData == null)
+        {
+            DestroyTooltip();
+            return;
+        }
 
         //for ground items
         if (isTouchingItem && !showingTooltip)
@@ -250,7 +330,8 @@ public class Tooltips : MonoBehaviour
             tooltipType = "groundItem";
             DrawTooltip(GetWidth(toPrint), toPrint);
             return;
-        }else if(showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
+        }
+        else if (showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
         {
             DestroyTooltip();
             return;

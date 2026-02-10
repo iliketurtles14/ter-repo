@@ -27,8 +27,9 @@ public class ItemData
     public int currentDurability;
     public int id;
     public GameObject prefab;
+    public bool forFavor;
 
-    public ItemData(string displayName, int deskTier, bool inInmateInv, int cost, bool inItemFetchFavors, bool inStolenItemFavors, bool inmateWeapon, bool isContraband, bool causeSolitary, int durability, int chippingPower, int cuttingPower, int ventBreakingPower, int diggingPower, int health, int energy, int defense, int strength, int opinion, int cameraBlock, Sprite sprite, int currentDurability, int id, GameObject prefab)
+    public ItemData(string displayName, int deskTier, bool inInmateInv, int cost, bool inItemFetchFavors, bool inStolenItemFavors, bool inmateWeapon, bool isContraband, bool causeSolitary, int durability, int chippingPower, int cuttingPower, int ventBreakingPower, int diggingPower, int health, int energy, int defense, int strength, int opinion, int cameraBlock, Sprite sprite, int currentDurability, int id, GameObject prefab, bool forFavor)
     {
         this.displayName = displayName;
         this.deskTier = deskTier;
@@ -54,5 +55,6 @@ public class ItemData
         this.currentDurability = currentDurability;
         this.id = id;
         this.prefab = prefab;
+        this.forFavor = forFavor;
     }
 }

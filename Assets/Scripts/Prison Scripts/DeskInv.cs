@@ -11,6 +11,9 @@ using System;
 
 public class DeskInv : MonoBehaviour
 {
+    private float speed = 4f;
+    private float amplitude = .15f;
+    private float baseNum = 1.1f;
     private GameObject MenuCanvas;
     private GameObject InventoryCanvas;
     private GameObject tiles;
@@ -29,7 +32,7 @@ public class DeskInv : MonoBehaviour
     private float distance;
     public bool deskIsOpen;
     private GameObject timeObject;
-    private bool deskIsFull;
+    public bool deskIsFull;
     public bool invIsFull;
     private GameObject desk;
     private string deskText;
@@ -37,6 +40,9 @@ public class DeskInv : MonoBehaviour
     private PauseController pauseController;
     public List<DeskItem> deskInv;
     public GameObject currentDesk;
+    private List<GameObject> currentAnimatingSlots = new List<GameObject>();
+    private SpecialMessages specialMessagesScript;
+    private MissionAsk missionAskScript;
     public void Start()
     {
         //get vars
@@ -52,6 +58,8 @@ public class DeskInv : MonoBehaviour
         timeObject = InventoryCanvas.transform.Find("Time").gameObject;
         pauseController = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         HPAScript = player.GetComponent<HPAChecker>();
+        specialMessagesScript = InventoryCanvas.transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
+        missionAskScript = MenuCanvas.transform.Find("MissionPanel").GetComponent<MissionAsk>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -68,6 +76,7 @@ public class DeskInv : MonoBehaviour
     }
     public void Update()
     {
+        
         HPAScript.isSearching = isOpening;
         
         if (!deskIsOpen)
@@ -91,19 +100,26 @@ public class DeskInv : MonoBehaviour
         {
             ///continue
             //putting items in the desk
-            for (int i = 0; i <= 19; i++)
+            deskIsFull = true;
+            for (int i = 0; i < deskInv.Count; i++)
             {
-                if (deskInv[i].itemData != null)
+                try
                 {
-                    deskIsFull = true;
+                    if (!deskInv[i].itemData.forFavor)//this messes with sprite stuff
+                    {
+                        if (deskInv[i].itemData.sprite == null)
+                        {
+                            deskIsFull = false;
+                            break;
+                        }
+                    }
                 }
-                else if (deskInv[i].itemData == null)
+                catch //if it fails, that means the itemData is null and therefore the desk is not full123123123123
                 {
                     deskIsFull = false;
                     break;
                 }
             }
-
             if (mouseCollisionScript.isTouchingInvSlot)
             {
                 for (int i = 1; i <= 6; i++)
@@ -159,21 +175,56 @@ public class DeskInv : MonoBehaviour
 
             if (mouseCollisionScript.isTouchingDeskSlot && deskInv[deskSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !invIsFull)
             {
-                foreach (InventoryItem slot in inventoryList)
+                if (!deskInv[deskSlotNumber].itemData.forFavor)
                 {
-                    if (slot.itemData == null)
+                    foreach (InventoryItem slot in inventoryList)
                     {
-                        slot.itemData = deskInv[deskSlotNumber].itemData;
-                        break;
+                        if (slot.itemData == null)
+                        {
+                            slot.itemData = deskInv[deskSlotNumber].itemData;
+                            break;
+                        }
+                    }
+                    foreach (GameObject slot in invSlots)
+                    {
+                        if (slot.GetComponent<Image>().sprite == ClearSprite)
+                        {
+                            slot.GetComponent<Image>().sprite = deskInv[deskSlotNumber].itemData.sprite;
+                            break;
+                        }
                     }
                 }
-                foreach (GameObject slot in invSlots)
+                else
                 {
-                    if (slot.GetComponent<Image>().sprite == ClearSprite)
+                    int id = deskInv[deskSlotNumber].itemData.id;
+                    string npcName = "";
+                    foreach (Transform npc in aStar.transform)
                     {
-                        slot.GetComponent<Image>().sprite = deskInv[deskSlotNumber].itemData.sprite;
-                        break;
+                        if (npc.name.Contains("Inmate"))
+                        {
+                            if(npc.GetComponent<NPCCollectionData>().npcData.desk == desk)
+                            {
+                                npcName = npc.GetComponent<NPCCollectionData>().npcData.displayName;
+                                Debug.Log(npcName);
+                                break;
+                            }
+                        }
                     }
+                    int cost = 0;
+
+                    foreach(Mission mission in missionAskScript.savedMissions)
+                    {
+                        if(mission.target == npcName && mission.item == id)
+                        {
+                            Debug.Log("here");
+                            cost = mission.pay;
+                            missionAskScript.savedMissions.Remove(mission);
+                            break;
+                        }
+                    }
+
+                    StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + cost, "favor"));
+                    player.GetComponent<PlayerCollectionData>().playerData.money += cost;
                 }
                 deskInv[deskSlotNumber].itemData = null;
                 mouseCollisionScript.touchedDeskSlot.GetComponent<Image>().sprite = ClearSprite;
@@ -182,6 +233,17 @@ public class DeskInv : MonoBehaviour
             if (!mouseCollisionScript.isTouchingInvSlot && !mouseCollisionScript.isTouchingDeskPanel && !mouseCollisionScript.isTouchingDeskSlot && !mouseCollisionScript.isTouchingExtra && !mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
                 CloseDesk();
+            }
+        }
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (deskIsOpen && deskInv[i].itemData != null && deskInv[i].itemData.forFavor && !currentAnimatingSlots.Contains(deskSlots[i]))
+            {
+                deskSlots[i].GetComponent<Image>().sprite = AddPaddingToSprite(deskSlots[i].GetComponent<Image>().sprite, 1);
+                deskSlots[i].GetComponent<Image>().material = new Material(Resources.Load<Material>("PrisonResources/PulseMaterial"));
+                currentAnimatingSlots.Add(deskSlots[i]);
+                StartCoroutine(AnimateSlot(deskSlots[i]));
             }
         }
     }
@@ -215,9 +277,13 @@ public class DeskInv : MonoBehaviour
     }
     private void CloseDesk()
     {
+        StopAllCoroutines();
+        currentAnimatingSlots = new List<GameObject>();
+
         foreach(GameObject slot in deskSlots)
         {
             slot.GetComponent<Image>().sprite = ClearSprite;
+            slot.GetComponent<Image>().material = null;
             slot.GetComponent<BoxCollider2D>().enabled = false;
         }
 
@@ -280,5 +346,81 @@ public class DeskInv : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         deskIsOpen = true;
+    }
+
+    private IEnumerator AnimateSlot(GameObject slot)
+    {
+        float pulse = 1;
+        while (deskIsOpen)
+        {
+            pulse = baseNum + Mathf.Sin(Time.time * speed) * amplitude;
+            
+            slot.GetComponent<Image>().material.SetFloat("_PulseScale", pulse);
+            yield return null;
+        }
+    }
+    public static Sprite AddPaddingToSprite(Sprite originalSprite, int padding)
+    {
+        // Get original texture and rect
+        Texture2D originalTexture = originalSprite.texture;
+        Rect spriteRect = originalSprite.rect;
+
+        int originalWidth = (int)spriteRect.width;
+        int originalHeight = (int)spriteRect.height;
+
+        // Copy only sprite area (in case of atlas)
+        Texture2D spriteTexture = new Texture2D(originalWidth, originalHeight, TextureFormat.RGBA32, false);
+        spriteTexture.filterMode = originalTexture.filterMode; // match original
+        spriteTexture.wrapMode = TextureWrapMode.Clamp;
+
+        Color[] pixels = originalTexture.GetPixels(
+            (int)spriteRect.x,
+            (int)spriteRect.y,
+            originalWidth,
+            originalHeight
+        );
+        spriteTexture.SetPixels(0, 0, originalWidth, originalHeight, pixels);
+        spriteTexture.Apply();
+
+        // Create padded texture
+        int newWidth = originalWidth + padding * 2;
+        int newHeight = originalHeight + padding * 2;
+
+        Texture2D paddedTexture = new Texture2D(newWidth, newHeight, originalTexture.format, false);
+
+        // FIX: No blur
+        paddedTexture.filterMode = originalTexture.filterMode; // or FilterMode.Point for pixel art
+        paddedTexture.wrapMode = TextureWrapMode.Clamp;
+
+        // Fill with transparent
+        Color32[] clearPixels = new Color32[newWidth * newHeight];
+        for (int i = 0; i < clearPixels.Length; i++)
+        {
+            clearPixels[i] = new Color32(0, 0, 0, 0);
+        }
+        paddedTexture.SetPixels32(clearPixels);
+
+        // Copy original into center
+        Color32[] originalPixels = spriteTexture.GetPixels32();
+        for (int y = 0; y < originalHeight; y++)
+        {
+            for (int x = 0; x < originalWidth; x++)
+            {
+                Color32 pixel = originalPixels[y * originalWidth + x];
+                paddedTexture.SetPixel(x + padding, y + padding, pixel);
+            }
+        }
+
+        paddedTexture.Apply();
+
+        // Create new sprite from padded texture
+        Sprite paddedSprite = Sprite.Create(
+            paddedTexture,
+            new Rect(0, 0, newWidth, newHeight),
+            new Vector2(0.5f, 0.5f), // pivot
+            originalSprite.pixelsPerUnit
+        );
+
+        return paddedSprite;
     }
 }

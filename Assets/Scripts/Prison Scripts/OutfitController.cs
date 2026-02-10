@@ -216,6 +216,11 @@ public class OutfitController : MonoBehaviour
             currentOutfitID = -1;
         }
 
+        if(currentOutfitID == 0) // putting this here because sometimes the outfit's item data's id is 0 when the item is null. this corrects itself after some time however
+        {
+            currentOutfitID = -1;
+        }
+
         switch (currentOutfitID)
         {
             case 29:
@@ -305,8 +310,6 @@ public class OutfitController : MonoBehaviour
                 else
                 {
                     GetComponent<NPCAnimation>().outfitDirSprites = outfitDict[outfit][currentActionNum];
-                    mc.transform.Find("NPCMenuPanel").Find("NPC").GetComponent<NPCIDAnimation>().outfitDirSprites = outfitDict[outfit][2];
-                    mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 }
             }
             catch { }
@@ -317,10 +320,6 @@ public class OutfitController : MonoBehaviour
             if(name == "Player")
             {
                 mc.transform.Find("PlayerMenuPanel").Find("Player").Find("Outfit").GetComponent<Image>().color = new Color(255 / 255, 255 / 255, 255 / 255, 0 / 255);
-            }
-            else
-            {
-                mc.transform.Find("NPCMenuPanel").Find("NPC").Find("Outfit").GetComponent<Image>().color = new Color(1, 1, 1, 0);
             }
         }
     }

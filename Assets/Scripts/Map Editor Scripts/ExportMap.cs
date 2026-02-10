@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System;
 using UnityEngine.Rendering.UI;
+using System.Collections;
 
 public class ExportMap : MonoBehaviour
 {
@@ -445,6 +446,27 @@ public class ExportMap : MonoBehaviour
 
         //rename zip to zmap
         string newPath = Path.ChangeExtension(path + mapName + ".zip", ".zmap");
-        File.Move(path + mapName + ".zip", newPath);
+
+        int num = 1;
+        try
+        {
+            File.Move(path + mapName + ".zip", newPath);
+        }
+        catch
+        {
+            while (true)
+            {
+                try
+                {
+                    File.Move(path + mapName + " " + num.ToString() + ".zip", newPath);
+                    break;
+                }
+                catch
+                {
+                    num++;
+                }
+            }
+        }
+
     }
 }

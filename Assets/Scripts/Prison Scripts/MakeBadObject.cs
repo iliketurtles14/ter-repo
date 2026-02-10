@@ -157,31 +157,31 @@ public class MakeBadObject : MonoBehaviour
         }
 
         //in the wrong cell
-        if (!inWrongCell && player.GetComponent<ZoneCollision>().isTouchingCellsZone)
-        {
-            //check if mailman or librarian
-            string job = player.GetComponent<PlayerCollectionData>().playerData.job;
-            string period = scheduleScript.periodCode;
-            if (!((job == "Mailman" || job == "Library") && period == "W"))
-            {
-                inWrongCell = true;
+        //if (!inWrongCell && player.GetComponent<ZoneCollision>().isTouchingCellsZone)
+        //{
+        //    //check if mailman or librarian
+        //    string job = player.GetComponent<PlayerCollectionData>().playerData.job;
+        //    string period = scheduleScript.periodCode;
+        //    if (!((job == "Mailman" || job == "Library") && period == "W"))
+        //    {
+        //        inWrongCell = true;
 
-                BadObjectData data = new BadObjectData
-                {
-                    isMultiplied = true,
-                    heatGain = 10,
-                    messageType = "Guards_Cell",
-                    attachedObject = player
-                };
+        //        BadObjectData data = new BadObjectData
+        //        {
+        //            isMultiplied = true,
+        //            heatGain = 10,
+        //            messageType = "Guards_Cell",
+        //            attachedObject = player
+        //        };
 
-                CreateBadObject(data, "inWrongCell");
-            }
-        }
-        else if (inWrongCell && !player.GetComponent<ZoneCollision>().isTouchingCellsZone)
-        {
-            inWrongCell = false;
-            DestroyBadObject("inWrongCell");
-        }
+        //        CreateBadObject(data, "inWrongCell");
+        //    }
+        //}
+        //else if (inWrongCell && !player.GetComponent<ZoneCollision>().isTouchingCellsZone)
+        //{
+        //    inWrongCell = false;
+        //    DestroyBadObject("inWrongCell");
+        //}
 
 
         //if player is punching
@@ -209,42 +209,42 @@ public class MakeBadObject : MonoBehaviour
         //MAKE INMATE INVENTORIES
 
         //not at the right routine (not work)
-        if (!wrongRoutine && !AtRightRoutine(false))
-        {
-            wrongRoutine = true;
+        //if (!wrongRoutine && !AtRightRoutine(false))
+        //{
+        //    wrongRoutine = true;
 
-            BadObjectData data = new BadObjectData
-            {
-                heatGain = 10,
-                messageType = "Guards_Move",
-                attachedObject = player
-            };
-            CreateBadObject(data, "wrongRoutine");
-        }
-        else if(wrongRoutine && AtRightRoutine(false))
-        {
-            wrongRoutine = false;
-            DestroyBadObject("wrongRoutine");
-        }
+        //    BadObjectData data = new BadObjectData
+        //    {
+        //        heatGain = 10,
+        //        messageType = "Guards_Move",
+        //        attachedObject = player
+        //    };
+        //    CreateBadObject(data, "wrongRoutine");
+        //}
+        //else if(wrongRoutine && AtRightRoutine(false))
+        //{
+        //    wrongRoutine = false;
+        //    DestroyBadObject("wrongRoutine");
+        //}
 
-        //not at work
-        if (!notAtWork && !AtRightRoutine(true))
-        {
-            notAtWork = true;
+        ////not at work
+        //if (!notAtWork && !AtRightRoutine(true))
+        //{
+        //    notAtWork = true;
 
-            BadObjectData data = new BadObjectData
-            {
-                heatGain = 10,
-                messageType = "Guards_Move_Work",
-                attachedObject = player
-            };
-            CreateBadObject(data, "notAtWork");
-        }
-        else if(notAtWork && AtRightRoutine(true))
-        {
-            notAtWork = false;
-            DestroyBadObject("notAtWork");
-        }
+        //    BadObjectData data = new BadObjectData
+        //    {
+        //        heatGain = 10,
+        //        messageType = "Guards_Move_Work",
+        //        attachedObject = player
+        //    };
+        //    CreateBadObject(data, "notAtWork");
+        //}
+        //else if(notAtWork && AtRightRoutine(true))
+        //{
+        //    notAtWork = false;
+        //    DestroyBadObject("notAtWork");
+        //}
 
         //no outfit
         if (!noOutfit && mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData == null)
@@ -370,71 +370,71 @@ public class MakeBadObject : MonoBehaviour
             return false;
         }
     }
-    private bool AtRightRoutine(bool checkForWork)
-    {
-        if(routineScript.sec < 25)
-        {
-            return true;
-        }
+    //private bool AtRightRoutine(bool checkForWork)
+    //{
+    //    if(routineScript.sec < 25)
+    //    {
+    //        return true;
+    //    }
         
-        if (!checkForWork)
-        {
-            string period = scheduleScript.periodCode;
+    //    if (!checkForWork)
+    //    {
+    //        string period = scheduleScript.periodCode;
 
-            switch (period)
-            {
-                case "LO":
-                    return player.GetComponent<ZoneCollision>().isTouchingPlayerCell;
-                case "R":
-                    return player.GetComponent<ZoneCollision>().isTouchingRollcallZone;
-                case "B":
-                case "L":
-                case "D":
-                    return player.GetComponent<ZoneCollision>().isTouchingCanteenZone;
-                case "E":
-                    return player.GetComponent<ZoneCollision>().isTouchingGymZone;
-                case "S":
-                    return player.GetComponent<ZoneCollision>().isTouchingShowersZone;
-                default:
-                    return true;
-            }
-        }
-        else
-        {
-            if(scheduleScript.periodCode != "W")
-            {
-                return true;
-            }
+    //        switch (period)
+    //        {
+    //            case "LO":
+    //                return player.GetComponent<ZoneCollision>().isTouchingPlayerCell;
+    //            case "R":
+    //                return player.GetComponent<ZoneCollision>().isTouchingRollcallZone;
+    //            case "B":
+    //            case "L":
+    //            case "D":
+    //                return player.GetComponent<ZoneCollision>().isTouchingCanteenZone;
+    //            case "E":
+    //                return player.GetComponent<ZoneCollision>().isTouchingGymZone;
+    //            case "S":
+    //                return player.GetComponent<ZoneCollision>().isTouchingShowersZone;
+    //            default:
+    //                return true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if(scheduleScript.periodCode != "W")
+    //        {
+    //            return true;
+    //        }
             
-            string job = player.GetComponent<PlayerCollectionData>().playerData.job;
+    //        string job = player.GetComponent<PlayerCollectionData>().playerData.job;
 
-            switch (job)
-            {
-                case "Tailorshop":
-                    return player.GetComponent<ZoneCollision>().isTouchingTailorshopZone;
-                case "Laundry":
-                    return player.GetComponent<ZoneCollision>().isTouchingLaundryZone;
-                case "Woodshop":
-                    return player.GetComponent<ZoneCollision>().isTouchingWoodshopZone;
-                case "Library":
-                    return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
-                case "Deliveries":
-                    return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
-                case "Janitor":
-                    return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
-                case "Gardening":
-                    return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
-                case "Mailman":
-                    return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
-                case "Kitchen":
-                    return player.GetComponent<ZoneCollision>().isTouchingKitchenZone;
-                case "Metalshop":
-                    return player.GetComponent<ZoneCollision>().isTouchingMetalshopZone;
-            }
+    //        switch (job)
+    //        {
+    //            case "Tailorshop":
+    //                return player.GetComponent<ZoneCollision>().isTouchingTailorshopZone;
+    //            case "Laundry":
+    //                return player.GetComponent<ZoneCollision>().isTouchingLaundryZone;
+    //            case "Woodshop":
+    //                return player.GetComponent<ZoneCollision>().isTouchingWoodshopZone;
+    //            case "Library":
+    //                return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
+    //            case "Deliveries":
+    //                return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
+    //            case "Janitor":
+    //                return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
+    //            case "Gardening":
+    //                return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
+    //            case "Mailman":
+    //                return player.GetComponent<ZoneCollision>().hasArrivedToCurrentPeriod;
+    //            case "Kitchen":
+    //                return player.GetComponent<ZoneCollision>().isTouchingKitchenZone;
+    //            case "Metalshop":
+    //                return player.GetComponent<ZoneCollision>().isTouchingMetalshopZone;
+    //        }
 
-            return true;
-        }
-    }
+    //        return true;
+    //    }
+    //}
     public void CreateBadObject(BadObjectData data, string objName)
     {
         GameObject badObject = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/BadObject"));

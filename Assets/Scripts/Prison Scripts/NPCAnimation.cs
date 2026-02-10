@@ -25,50 +25,6 @@ public class NPCAnimation : MonoBehaviour
 
     public void OnEnable()
     {
-        if (CompareTag("Guard"))
-        {
-            for (int i = 1; i <= 5; i++)
-            {
-                if (name == "Guard" + i)
-                {
-                    switch(NPCSave.instance.npcCharacters[i + 8])
-                    {
-                        case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
-                        case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
-                        case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
-                        case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
-                        case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
-                        case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
-                        case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
-                        case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
-                        case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
-                    }
-                }
-            }
-            outfitDirSprites = DataSender.instance.GuardOutfitSprites;
-        }
-        else if(CompareTag("Inmate"))
-        {
-            for(int i = 1; i <= 9; i++)
-            {
-                if(name == "Inmate" + i)
-                {
-                    switch (NPCSave.instance.npcCharacters[i - 1])
-                    {
-                        case 1: bodyDirSprites = DataSender.instance.RabbitSprites; break;
-                        case 2: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
-                        case 3: bodyDirSprites = DataSender.instance.LiferSprites; break;
-                        case 4: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
-                        case 5: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
-                        case 6: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
-                        case 7: bodyDirSprites = DataSender.instance.FrosephSprites; break;
-                        case 8: bodyDirSprites = DataSender.instance.TangoSprites; break;
-                        case 9: bodyDirSprites = DataSender.instance.MaruSprites; break;
-                    }
-                }
-            }
-            outfitDirSprites = DataSender.instance.InmateOutfitSprites;
-        }
         oldPos = currentPos = transform.position;
         if (string.IsNullOrEmpty(lookDir))
         {
