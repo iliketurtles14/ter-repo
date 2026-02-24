@@ -74,7 +74,7 @@ public class NPCSpeech : MonoBehaviour
                 messageType = "Rep_3";
             }
         }
-        MakeTextBox(GetMessage(messageType), transform, false);
+        StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
     }
     private IEnumerator SpeechLoop()
     {
@@ -134,51 +134,76 @@ public class NPCSpeech : MonoBehaviour
             if (!isTalking && messageType != null && !textBoxIsActive)
             {
                 Debug.Log("Making Text Box");
-                MakeTextBox(GetMessage(messageType), transform, false);
+                StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
             }
             yield return null;
         }
     }
-    public void MakeTextBox(string msg, Transform npc, bool isMad)
+    public IEnumerator MakeTextBox(string msg, Transform npc, bool isMad)
     {
         madeTextBox = true;
-        
-        float textWidth = GetLength(msg); //making this a float for the lineBreaks calculation
-        int lineBreaks = Mathf.FloorToInt(textWidth / 115f);
-        float borderWidth;
-        if (lineBreaks > 0)
+        isTalking = true;
+
+        List<int> breakPoints = new List<int>();
+        int loopBreakNum = 0;
+        for(int i = 0; i < msg.Length; i++)
         {
-            borderWidth = 120;
+            if (msg[i] == ' ')
+            {
+                loopBreakNum++;
+                if(loopBreakNum % 8 == 0)
+                {
+                    breakPoints.Add(i);
+                }
+            }
         }
-        else
+        string newMsg = "";
+        for(int i = 0; i < breakPoints.Count; i++)
         {
-            borderWidth = Convert.ToInt32(textWidth) + 4;
+            breakPoints[i] += i;
         }
-        float borderHeight = (lineBreaks * 12) + 13;
+        for(int i = 0; i < msg.Length; i++)
+        {
+            if (breakPoints.Contains(i))
+            {
+                newMsg += "\n";
+            }
+            newMsg += msg[i];
+        }
+
+        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().text = newMsg;
+        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.clear;
+        npc.Find("SpeechCanvas").Find("Text").gameObject.SetActive(true);
+        yield return new WaitForFixedUpdate();
+
+        float borderWidth = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.x;
+        float borderHeight = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.y;
 
         RectTransform bottomRT = npc.Find("SpeechCanvas").Find("BottomSpeechBorder").GetComponent<RectTransform>();
-        bottomRT.sizeDelta = new Vector2(borderWidth * .1f, .1f);
+        bottomRT.sizeDelta = new Vector2(borderWidth, .1f);
         bottomRT.anchoredPosition = new Vector2(0, .05f);
         RectTransform topRT = npc.Find("SpeechCanvas").Find("TopSpeechBorder").GetComponent<RectTransform>();
-        topRT.sizeDelta = new Vector2(borderWidth * .1f, .1f);
-        topRT.anchoredPosition = new Vector2(0, (borderHeight * .1f) + .05f);
+        topRT.sizeDelta = new Vector2(borderWidth, .1f);
+        topRT.anchoredPosition = new Vector2(0, (borderHeight) + .05f);
         RectTransform leftRT = npc.Find("SpeechCanvas").Find("LeftSpeechBorder").GetComponent<RectTransform>();
-        leftRT.sizeDelta = new Vector2(.1f, (borderHeight * .1f) + .1f);
-        leftRT.anchoredPosition = new Vector2(((-borderWidth * .1f) / 2f) - .05f, ((borderHeight * .1f) / 2f) + .05f);
+        leftRT.sizeDelta = new Vector2(.1f, (borderHeight) + .1f);
+        leftRT.anchoredPosition = new Vector2(((-borderWidth) / 2f) - .05f, ((borderHeight) / 2f) + .05f);
         RectTransform rightRT = npc.Find("SpeechCanvas").Find("RightSpeechBorder").GetComponent<RectTransform>();
-        rightRT.sizeDelta = new Vector2(.1f, (borderHeight * .1f) + .1f);
-        rightRT.anchoredPosition = new Vector2(((borderWidth * .1f) / 2f) + .05f, ((borderHeight * .1f) / 2f) + .05f);
+        rightRT.sizeDelta = new Vector2(.1f, (borderHeight) + .1f);
+        rightRT.anchoredPosition = new Vector2(((borderWidth) / 2f) + .05f, ((borderHeight) / 2f) + .05f);
 
         RectTransform backgroundRT = npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<RectTransform>();
-        backgroundRT.sizeDelta = new Vector2(borderWidth * .1f, borderHeight * .1f);
-        backgroundRT.anchoredPosition = new Vector2(0, (borderHeight * .1f) / 2f);
+        backgroundRT.sizeDelta = new Vector2(borderWidth, borderHeight);
+        backgroundRT.anchoredPosition = new Vector2(0, (borderHeight    ) / 2f);
+
+        RectTransform textRT = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>();
+        textRT.anchoredPosition = backgroundRT.anchoredPosition;
 
         if (npc.name.StartsWith("Guard"))
         {
             npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/GuardSpeechBackground");
         }
 
-        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().text = msg;
         if (isMad && npc.name.StartsWith("Guard"))
         {
             npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = new Color(157f / 255f, 0f, 0f);
@@ -188,11 +213,11 @@ public class NPCSpeech : MonoBehaviour
             npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
         }
 
-            foreach (Transform obj in npc.Find("SpeechCanvas"))
-            {
-                obj.gameObject.SetActive(true);
-            }
-        isTalking = true;
+        foreach (Transform obj in npc.Find("SpeechCanvas"))
+        {
+            obj.gameObject.SetActive(true);
+        }
+        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
     }
     private IEnumerator DestroyWait()
     {

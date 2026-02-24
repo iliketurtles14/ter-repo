@@ -262,7 +262,7 @@ public class SeeBadActions : MonoBehaviour
             !isGuard && data.forInmate))
         {
             NPCSpeech speechScript = GetComponent<NPCSpeech>();
-            speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true);
+            StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true));
         }
 
         //should call
