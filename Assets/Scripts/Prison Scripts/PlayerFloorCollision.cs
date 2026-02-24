@@ -7,7 +7,7 @@ public class PlayerFloorCollision : MonoBehaviour
     public GameObject touchedRoofFloor;
     private Vector2 position = new Vector2();
     private Collider2D[] hitColliders;
-    private void FixedUpdate()// 9 - vent, 13 - roof, 2 - ground
+    private void FixedUpdate()// 12 - vent, 13 - roof, 10 - ground
     {
         if(gameObject.layer == 12)
         {
@@ -19,7 +19,7 @@ public class PlayerFloorCollision : MonoBehaviour
                 if ((collider.gameObject.CompareTag("Digable") ||
                     collider.gameObject.name.StartsWith("VentCover") ||
                     collider.gameObject.name.StartsWith("EmptyVentCover")) &&
-                    collider.gameObject.layer == 9)
+                    collider.gameObject.layer == 12)
                 {
                     playerFloor = collider.gameObject;
                 }
@@ -53,22 +53,24 @@ public class PlayerFloorCollision : MonoBehaviour
                 if((collider.gameObject.name.StartsWith("DirtEmpty") ||
                     collider.gameObject.name.StartsWith("100%HoleUp") ||
                     collider.gameObject.name.StartsWith("Brace")) &&
-                    collider.gameObject.layer == 10)
+                    collider.gameObject.layer == 11)
                 {
                     playerFloor = collider.gameObject;
                     break;
                 }
             }
         }
-        else
+        else if(gameObject.layer == 3)
         {
             touchedRoofFloor = null;
             position = transform.position;
             hitColliders = Physics2D.OverlapPointAll(position);
+            Debug.Log(hitColliders.Length);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == 2)
+                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == 10)
                 {
+                    Debug.Log("here");
                     playerFloor = collider.gameObject;
                 }
             }

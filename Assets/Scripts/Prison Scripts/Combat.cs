@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Combat : MonoBehaviour
@@ -13,6 +15,8 @@ public class Combat : MonoBehaviour
     private Transform mc;
     private GameObject combatHealth;
     private Death deathScript;
+    private MissionAsk missionAskScript;
+    private SpecialMessages specialMessagesScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -20,6 +24,8 @@ public class Combat : MonoBehaviour
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         combatHealth = RootObjectCache.GetRoot("CombatHealth");
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
+        missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
+        specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
     }
     private void Update()
     {
@@ -167,6 +173,7 @@ public class Combat : MonoBehaviour
     public void KillNPC(GameObject npc)
     {
         deathScript.KillNPC(npc);
+        KillFavor(npc);
         LockOff();
     }
     public void LockOn(GameObject npc)
@@ -202,5 +209,31 @@ public class Combat : MonoBehaviour
 
         combatHealth.transform.Find("Bar").GetComponent<SpriteRenderer>().size = new Vector2(barWidth, .02f);
         combatHealth.transform.Find("Bar").transform.localPosition = new Vector3(-.11f + (barWidth / 2), 0);
+    }
+    private void KillFavor(GameObject npc)
+    {
+        List<Mission> killMissions = new List<Mission>();
+        foreach(Mission mission in missionAskScript.savedMissions)
+        {
+            if(mission.type == "guardBeat" || mission.type == "inmateBeat")
+            {
+                killMissions.Add(mission);
+            }
+        }
+
+        if(killMissions.Count == 0)
+        {
+            return;
+        }
+
+        foreach(Mission mission in killMissions)
+        {
+            if(mission.target == npc.GetComponent<NPCCollectionData>().npcData.displayName)
+            {
+                StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
+                GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
+                missionAskScript.savedMissions.Remove(mission);
+            }
+        }
     }
 }

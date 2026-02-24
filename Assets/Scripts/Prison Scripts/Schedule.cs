@@ -12,6 +12,9 @@ public class Schedule : MonoBehaviour
     private Map map;
     private LoadPrison loadPrisonScript;
     private bool canStart;
+    private MissionAsk missionAskScript;
+    private bool isOnFavorPeriod;
+    private string favorPeriod;
     void Start()
     {
         TimeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
@@ -19,6 +22,7 @@ public class Schedule : MonoBehaviour
         period = "Lights Out";
         periodCode = "LO";
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
+        missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
 
         StartCoroutine(StartWait());
     }
@@ -41,6 +45,17 @@ public class Schedule : MonoBehaviour
         if (!canStart)
         {
             return;
+        }
+        
+        //favor stuff
+        foreach(Mission mission in missionAskScript.savedMissions)
+        {
+            if(mission.type == "distract" && mission.period == period)
+            {
+                isOnFavorPeriod = true;
+                favorPeriod = mission.period;
+                break;
+            }
         }
         
         time = timeScript.time;
@@ -152,6 +167,19 @@ public class Schedule : MonoBehaviour
                 break;
         }
 
-        return;
+        if(period != favorPeriod && isOnFavorPeriod)
+        {
+            List<Mission> missions = new List<Mission>(missionAskScript.savedMissions);
+            foreach(Mission mission in missions)
+            {
+                if(mission.type == "distract" && mission.period == favorPeriod)
+                {
+                    Debug.Log("Removing distraction mission.");
+                    missionAskScript.savedMissions.Remove(mission);
+                }
+            }
+            isOnFavorPeriod = false;
+        }
+
     }
 }

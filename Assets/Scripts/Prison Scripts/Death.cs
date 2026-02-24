@@ -140,6 +140,10 @@ public class Death : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2);//waits for the animation to stop and for the game to allow the player to get off the bed
+        player.GetComponent<PlayerCollectionData>().playerData.heat = 0;
+        player.GetComponent<PlayerCollectionData>().playerData.energy -= 50;
+        player.GetComponent<PlayerCollectionData>().playerData.health = Mathf.FloorToInt((player.GetComponent<PlayerCollectionData>().playerData.strength / 2) * .75f);
+        player.GetComponent<PlayerCollectionData>().playerData.money -= Mathf.FloorToInt(player.GetComponent<PlayerCollectionData>().playerData.money * .1f);
         sittablesScript.onSittable = true;
         deathCanvas.gameObject.SetActive(false);
     }
@@ -182,5 +186,6 @@ public class Death : MonoBehaviour
         npc.GetComponent<NPCAI>().enabled = true;
         npc.GetComponent<NPCCollectionData>().npcData.isDead = false;
         npc.GetComponent<NPCAnimation>().enabled = true;
+        npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2f);
     }
 }

@@ -1,6 +1,7 @@
 using Ookii.Dialogs;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -16,16 +17,22 @@ public class SeeBadActions : MonoBehaviour
     private Map map;
     private bool canSee = true;
     public List<string> availableBadObjects = new List<string>();
+    private MissionAsk missionAskScript;
+    private Schedule scheduleScript;
+    private SpecialMessages specialMessagesScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
         map = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
-        MakeVetorLists();
+        missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
+        scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
+        specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
+        MakeVectorLists();
         MakeBadObjectList();
 
         StartCoroutine(LookWait());
     }
-    private void MakeVetorLists()
+    private void MakeVectorLists()
     {
         //upVectors
         upVectors.Add(new Vector2(Mathf.Cos(Mathf.Deg2Rad * 162f), Mathf.Sin(Mathf.Deg2Rad * 162f)));
@@ -215,6 +222,8 @@ public class SeeBadActions : MonoBehaviour
         {
             GetComponent<NPCCombat>().isAggro = true;
             GetComponent<NPCCombat>().target = data.attachedObject;
+
+            DistractionFavor();
         }
 
         //solitary
@@ -248,7 +257,9 @@ public class SeeBadActions : MonoBehaviour
         }
 
         //message type
-        if(data.messageType != null)
+        if(data.messageType != null &&
+            (isGuard && !data.forInmate ||
+            !isGuard && data.forInmate))
         {
             NPCSpeech speechScript = GetComponent<NPCSpeech>();
             speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true);
@@ -269,6 +280,36 @@ public class SeeBadActions : MonoBehaviour
         else if (badObject.name == "guardNonInmateOutfit" || badObject.name == "inmateNonInmateOutfit")
         {
             StartCoroutine(SeeBadCooldown(2, badObject.name));
+        }
+    }
+    private void DistractionFavor()
+    {
+        List<Mission> distractionMissions = new List<Mission>();
+        foreach(Mission mission in missionAskScript.savedMissions)
+        {
+            if(mission.type == "distract")
+            {
+                distractionMissions.Add(mission);
+            }
+        }
+
+        Debug.Log(distractionMissions.Count);
+
+        if(distractionMissions.Count == 0)
+        {
+            return;
+        }
+
+        string currentPeriod = scheduleScript.period;
+        foreach(Mission mission in distractionMissions)
+        {
+            Debug.Log(currentPeriod + ", " + mission.period);
+            if(mission.period == currentPeriod)
+            {
+                StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
+                player.GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
+                missionAskScript.savedMissions.Remove(mission);
+            }
         }
     }
 

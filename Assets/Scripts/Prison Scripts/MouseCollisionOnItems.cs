@@ -79,6 +79,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedNPCInvPanel;
     public bool isTouchingFoodTable;
     public GameObject touchedFoodTable;
+    public bool isTouchingGiveSlot;
+    public GameObject touchedGiveSlot;
+    public bool isTouchingShopSlot;
+    public GameObject touchedShopSlot;
     void Update()
     {
         ClearCollisions();
@@ -97,11 +101,13 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "InvSlot",
             "IDSlot",
             "NPCInvSlot",
+            "GiveSlot",
+            "ShopSlot", //REMEMBER WHEN ADDING NEW SLOTS TO ALSO ADD THEM TO THE PAUSECONTROLLER
+            "Button",
             "DeskPanel",
             "IDPanel",
             "NPCInvPanel",
             "Extra",
-            "Button",
             "NPC",
             "Desk",
             "Ladder(Roof)",
@@ -167,6 +173,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "NPCInvSlot":
                     isTouchingNPCInvSlot = true;
                     touchedNPCInvSlot = highestPriorityObject;
+                    break;
+                case "GiveSlot":
+                    isTouchingGiveSlot = true;
+                    touchedGiveSlot = highestPriorityObject;
+                    break;
+                case "ShopSlot":
+                    isTouchingShopSlot = true;
+                    touchedShopSlot = highestPriorityObject;
                     break;
                 case "DeskPanel":
                     isTouchingDeskPanel = true;
@@ -389,5 +403,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedNPCInvPanel = null;
         isTouchingFoodTable = false;
         touchedFoodTable = null;
+        isTouchingGiveSlot = false;
+        touchedGiveSlot = null;
+        isTouchingShopSlot = false;
+        touchedShopSlot = null;
     }
 }

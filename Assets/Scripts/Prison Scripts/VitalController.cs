@@ -66,6 +66,23 @@ public class VitalController : MonoBehaviour
             return;
         }
         
+        if(data.health < 0)
+        {
+            data.health = 0;
+        }
+        if(data.energy < 0)
+        {
+            data.energy = 0;
+        }
+        if(data.heat < 0)
+        {
+            data.heat = 0;
+        }
+        if(data.money < 0)
+        {
+            data.money = 0;
+        }
+
         if(oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat)
         {
             oldHealth = data.health;

@@ -187,7 +187,7 @@ public class NPCInv : MonoBehaviour
             }
 
             //putting items in the player inv
-            for(int i = 0; i <= 5; i++)
+            for(int i = 0; i < 6; i++)
             {
                 if (inventoryList[i].itemData != null)
                 {
@@ -378,6 +378,16 @@ public class NPCInv : MonoBehaviour
     }
     public void CloseNPCInv()
     {
+        StopAllCoroutines();
+        currentAnimatingSlots = new List<GameObject>();
+
+        foreach(GameObject slot in npcInvSlots)
+        {
+            slot.GetComponent<Image>().sprite = clearSprite;
+            slot.GetComponent<Image>().material = null;
+            slot.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Image>() != null)

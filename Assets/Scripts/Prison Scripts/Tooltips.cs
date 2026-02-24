@@ -39,6 +39,7 @@ public class Tooltips : MonoBehaviour
     private int deskSlotNumber;
     private int idSlotNumber;
     private int npcInvSlotNumber;
+    private int npcShopSlotNumber;
     private bool isTouchingItem;
     private GameObject touchedItem;
     private float wallDistance;
@@ -54,6 +55,8 @@ public class Tooltips : MonoBehaviour
     private int printedDeskSlotNumber;
     private int printedIDSlotNumber;
     private int printedNPCInvSlotNumber;
+    private int printedShopSlotNumber;
+
     private TileData printedTileData;
     private int printedTileDurability;
     private int printedItemDurability;
@@ -65,6 +68,8 @@ public class Tooltips : MonoBehaviour
     private Sprite clearSprite;
     private List<IDItem> currentIDList;
     private NPCInv npcInvScript;
+    private Giving givingScript;
+    private ShopMenu shopMenuScript;
     public void Start()
     {
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
@@ -83,6 +88,8 @@ public class Tooltips : MonoBehaviour
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         npcIDInvScript = menuCanvas.transform.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
         npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
+        givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
+        shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
     }
     public void Update()
     {
@@ -310,8 +317,8 @@ public class Tooltips : MonoBehaviour
             return;
         }
         else if ((showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingDeskSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingDeskSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability))
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability))
         {
             DestroyTooltip();
             return;
@@ -322,8 +329,87 @@ public class Tooltips : MonoBehaviour
             return;
         }
 
-        //for ground items
-        if (isTouchingItem && !showingTooltip)
+        //for shop items
+        if (mcs.isTouchingShopSlot)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (mcs.touchedShopSlot.transform.parent.name == "Slot" + i)
+                {
+                    npcShopSlotNumber = i;
+                    break;
+                }
+            }
+        }
+        if(mcs.isTouchingShopSlot && mcs.touchedShopSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+        {
+            if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability != -1)
+            {
+                printedShopSlotNumber = npcShopSlotNumber;
+                toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
+                printedItemDurability = shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability;
+                printDurability = " (" + shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability + "%)";
+            }
+            else if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability == -1)
+            {
+                printedShopSlotNumber = npcShopSlotNumber;
+                toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
+                printDurability = "";
+            }
+            tooltipType = "shopItem";
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if(showingTooltip && tooltipType == "shopItem" && !mcs.isTouchingShopSlot)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if ((showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null) ||
+            (showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName != toPrint) ||
+            (showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability != shopMenuScript.shopItems[printedShopSlotNumber].itemData.currentDurability))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(mcs.isTouchingShopSlot && showingTooltip && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null)
+        {
+            DestroyTooltip();
+            return;
+        }
+
+        //for give items
+        if (mcs.isTouchingGiveSlot && mcs.touchedGiveSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+        {
+            if (givingScript.item.itemData.durability != -1)
+            {
+                toPrint = givingScript.item.itemData.displayName;
+                printedItemDurability = givingScript.item.itemData.currentDurability;
+                printDurability = " (" + givingScript.item.itemData.currentDurability + "%)";
+            }
+            else if (givingScript.item.itemData.durability == -1)
+            {
+                toPrint = givingScript.item.itemData.displayName;
+                printDurability = "";
+            }
+            tooltipType = "giveItem";
+            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            return;
+        }
+        else if (showingTooltip && tooltipType == "giveItem" && !mcs.isTouchingGiveSlot)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if ((showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData == null) ||
+            (showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData.displayName != toPrint)) //DONT USE THIS AS A TEMPLATE. USE NCPINVSLOTS
+        {
+            DestroyTooltip();
+            return;
+        }
+
+            //for ground items
+            if (isTouchingItem && !showingTooltip)
         {
             currentTouchedItem = mcs.touchedItem;
             toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
@@ -401,7 +487,12 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingEmptyDirt && showingTooltip && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingEmptyDirt && tooltipType == "emptyDirt" && showingTooltip && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mcs.isTouchingEmptyDirt && showingTooltip && emptyDirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
         {
             DestroyTooltip();
             return;
@@ -433,7 +524,12 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingDirt && showingTooltip && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingDirt && tooltipType == "dirt" && showingTooltip && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mcs.isTouchingDirt && showingTooltip && dirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
         {
             DestroyTooltip();
             return;
@@ -453,7 +549,8 @@ public class Tooltips : MonoBehaviour
             printedTileData = mcs.touchedWall.GetComponent<TileCollectionData>().tileData;
             DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
             return;
-        }else if((showingTooltip && tooltipType == "wall") && 
+        }
+        else if(showingTooltip && tooltipType == "wall" && 
             (!mcs.isTouchingWall || !itemBehavioursScript.selectedChippingItem))
         {
             DestroyTooltip();
@@ -464,10 +561,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if(mcs.isTouchingWall && showingTooltip && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingWall && tooltipType == "wall" && showingTooltip && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if(mcs.isTouchingWall && showingTooltip && wallDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
+        {
+            DestroyTooltip();
             return;
         }
         //fences
@@ -496,10 +598,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingFence && showingTooltip && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingFence && tooltipType == "fence" && showingTooltip && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingFence && showingTooltip && fenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+        {
+            DestroyTooltip();
             return;
         }
 
@@ -529,10 +636,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingBars && showingTooltip && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingBars && tooltipType == "bars" && showingTooltip && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingBars && showingTooltip && barsDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+        {
+            DestroyTooltip();
             return;
         }
 
@@ -562,10 +674,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if(mcs.isTouchingRock && showingTooltip && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if(mcs.isTouchingRock && tooltipType == "rock" && showingTooltip && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingRock && showingTooltip && rockDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
+        {
+            DestroyTooltip();
             return;
         }
         //vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
@@ -618,10 +735,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingVentCover && showingTooltip && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingVentCover && tooltipType == "ventCover" && showingTooltip && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingVentCover && showingTooltip && ventCoverDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
+        {
+            DestroyTooltip();
             return;
         }
 
@@ -675,10 +797,15 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-        if (mcs.isTouchingSlats && showingTooltip && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        if (mcs.isTouchingSlats && tooltipType == "slats" && showingTooltip && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
         {
             changeType = "tileDurability";
             ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingSlats && showingTooltip && slatsDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
+        {
+            DestroyTooltip();
             return;
         }
 
@@ -913,12 +1040,12 @@ public class Tooltips : MonoBehaviour
             DrawTooltip(GetWidth(toPrint), toPrint);
             return;
         }
-        else if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
+        if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
         {
             DestroyTooltip();
             return;
         }
-        else if(showingTooltip && tooltipType == "sittable")
+        if(showingTooltip && tooltipType == "sittable")
         {
             string str = null;
 

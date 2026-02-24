@@ -17,6 +17,8 @@ public class NPCIDInv : MonoBehaviour
     private PauseController pc;
     private Sprite clearSprite;
     public GameObject currentNPC;
+    private Giving givingScript;
+    private ShopMenu shopMenuScript;
 
     public void Start()
     {
@@ -24,9 +26,11 @@ public class NPCIDInv : MonoBehaviour
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         clearSprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/clear");
+        givingScript = mc.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
+        shopMenuScript = mc.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
 
         StartCoroutine(Wait());
-        CloseMenu();
+        StartCoroutine(CloseMenu(false, false));
     }
     private IEnumerator Wait()
     {
@@ -36,25 +40,26 @@ public class NPCIDInv : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        CloseMenu();
     }
     public void Update()
     {
-        if (!idIsOpen)
+        givingScript.currentNPC = currentNPC;
+        shopMenuScript.currentNPC = currentNPC;
+
+        if (!idIsOpen && !givingScript.menuIsOpen && !shopMenuScript.menuIsOpen)
         {
             currentNPC = null;
             if(mcs.isTouchingNPC && Input.GetMouseButtonDown(1))
             {
                 currentNPC = mcs.touchedNPC;
-                StartCoroutine(OpenMenu(mcs.touchedNPC));
+                OpenMenu();
             }
         }
         if (idIsOpen)
         {
             if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
             {
-                CloseMenu();
-                pc.Unpause();
+                StartCoroutine(CloseMenu(false, false));
             }
         }
     }
@@ -100,10 +105,12 @@ public class NPCIDInv : MonoBehaviour
         transform.Find("Weapon").GetComponent<Image>().sprite = weaponSprite;
         transform.Find("Outfit").GetComponent<Image>().sprite = outfitSprite;
     }
-    public IEnumerator OpenMenu(GameObject npc)
+    public void OpenMenu()
     {
-        SetNPCSpecifics(npc);
-        
+        SetNPCSpecifics(currentNPC);
+
+        idIsOpen = true;
+
         foreach(Transform child in transform)
         {
             if(child.GetComponent<Image>() != null)
@@ -121,17 +128,25 @@ public class NPCIDInv : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
         transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = true;
-
         mc.transform.Find("Black").GetComponent<Image>().enabled = true;
-
-        pc.Pause(true);
-
-        yield return new WaitForEndOfFrame();
-
-        idIsOpen = true;
+        pc.Pause(false);
     }
-    public void CloseMenu()
+    public IEnumerator CloseMenu(bool goToGive, bool goToShop)
     {
+        if (goToGive)
+        {
+            givingScript.OpenMenu();
+        }
+        else if (goToShop)
+        {
+            shopMenuScript.OpenMenu();
+        }
+        else
+        {
+            mc.transform.Find("Black").GetComponent<Image>().enabled = false;
+            pc.Unpause();
+        }
+        
         foreach(Transform child in transform)
         {
             if(child.GetComponent<Image>() != null)
@@ -193,7 +208,7 @@ public class NPCIDInv : MonoBehaviour
         transform.Find("NPC").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
-        mc.transform.Find("Black").GetComponent<Image>().enabled = false;
+        yield return new WaitForEndOfFrame();
         idIsOpen = false;
     }
 }

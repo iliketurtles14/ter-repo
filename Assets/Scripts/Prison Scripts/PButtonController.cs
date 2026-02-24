@@ -5,10 +5,18 @@ public class PButtonController : MonoBehaviour
 {
     private MissionAsk missionAskScript;
     private FavorMenu favorMenuScript;
+    private Giving givingScript;
+    private Transform mc;
+    private NPCIDInv npcIDInvScript;
+    private ShopMenu shopMenuScript;
     private void Start()
     {
-        favorMenuScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("FavorMenuPanel").GetComponent<FavorMenu>();
-        missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        favorMenuScript = mc.Find("FavorMenuPanel").GetComponent<FavorMenu>();
+        missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
+        givingScript = mc.Find("NPCGiveMenuPanel").GetComponent<Giving>();
+        npcIDInvScript = mc.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
+        shopMenuScript = mc.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
     }
     public void MissionYes()
     {
@@ -61,5 +69,33 @@ public class PButtonController : MonoBehaviour
     public void FavorPlayerID()
     {
         favorMenuScript.CloseMenu(true);
+    }
+    public void Give()
+    {
+        givingScript.Give();
+    }
+    public void NPCIDGive()
+    {
+        StartCoroutine(npcIDInvScript.CloseMenu(true, false));
+    }
+    public void GiveNPCID()
+    {
+        StartCoroutine(givingScript.CloseMenu(true, false));
+    }
+    public void NPCIDShop()
+    {
+        StartCoroutine(npcIDInvScript.CloseMenu(false, true));
+    }
+    public void GiveShop()
+    {
+        StartCoroutine(givingScript.CloseMenu(false, true));
+    }
+    public void ShopNPCID()
+    {
+        StartCoroutine(shopMenuScript.CloseMenu(true, false));
+    }
+    public void ShopGive()
+    {
+        StartCoroutine(shopMenuScript.CloseMenu(false, true));
     }
 }

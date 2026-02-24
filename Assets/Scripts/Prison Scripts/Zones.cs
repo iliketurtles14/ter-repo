@@ -98,11 +98,15 @@ public class Zones : MonoBehaviour
             GameObject currentZone = null;
             foreach(Transform zone in tiles.Find("Zones"))
             {
-                if(zone.name == zoneDict[scheduleScript.periodCode])
+                try
                 {
-                    currentZone = zone.gameObject;
-                    break;
+                    if (zone.name == zoneDict[scheduleScript.periodCode])
+                    {
+                        currentZone = zone.gameObject;
+                        break;
+                    }
                 }
+                catch { }
             }
             if(currentZone == null)
             {

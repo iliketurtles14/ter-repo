@@ -71,6 +71,8 @@ TagManager:
   - BadObject
   - ObjectPanel
   - Black
+  - GiveSlot
+  - ShopSlot
   layers:
   - Default
   - TransparentFX

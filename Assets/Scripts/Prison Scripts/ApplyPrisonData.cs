@@ -25,6 +25,9 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> NPCSprites = new List<Sprite>();
     public List<Sprite> PrisonObjectSprites = new List<Sprite>();
     public List<Sprite> UISprites = new List<Sprite>();
+    private SniperAnimation sniperAnimationScript;
+
+    public List<Sprite> sniperSprites = new List<Sprite>();
 
 
     ///NPC SPRITE RULES:
@@ -564,7 +567,7 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("MissionPanel").Find("NoButton").GetComponent<Button>().spriteState = spriteState;
         mc.Find("MissionPanel").Find("MaybeButton").GetComponent<Button>().spriteState = spriteState;
         //zone arrow
-        ic.Find("ZoneArrow").GetComponent<Image>().sprite = UISprites[240];
+        mc.Find("ZoneArrow").GetComponent<Image>().sprite = UISprites[240];
 
         //special message
         ic.Find("SpecialMessagePanel").Find("MissionImage").GetComponent<Image>().sprite = UISprites[188];
@@ -574,6 +577,28 @@ public class ApplyPrisonData : MonoBehaviour
         Resources.Load("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
         ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
         mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
+
+        //give menu7
+        mc.Find("NPCGiveMenuPanel").Find("GiveSlot").GetComponent<Image>().sprite = UISprites[33];
+        mc.Find("NPCGiveMenuPanel").Find("MoneyBox").GetComponent<Image>().sprite = UISprites[59];
+        mc.Find("NPCGiveMenuPanel").Find("AddButton").GetComponent<Image>().sprite = UISprites[57];
+        mc.Find("NPCGiveMenuPanel").Find("SubtractButton").GetComponent<Image>().sprite = UISprites[58];
+
+        //shop menu
+        foreach(Transform slot in mc.Find("NPCShopMenuPanel").Find("SlotGrid"))
+        {
+            slot.GetComponent<Image>().sprite = UISprites[33];
+        }
+
+        //snipers
+        sniperSprites.Add(NPCSprites[1445]);
+        sniperSprites.Add(NPCSprites[1446]);
+        sniperSprites.Add(NPCSprites[1444]);
+        sniperSprites.Add(NPCSprites[1451]);
+        sniperSprites.Add(NPCSprites[1447]);
+        sniperSprites.Add(NPCSprites[1448]);
+        sniperSprites.Add(NPCSprites[1449]);
+        sniperSprites.Add(NPCSprites[1450]);
 
         //dirt and holes
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];

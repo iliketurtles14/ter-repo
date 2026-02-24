@@ -14,6 +14,7 @@ public class PauseController : MonoBehaviour
     private Sittables sittablesScript;
     private bool npcsAreStopped;
     private bool noAnimOnNPCs;
+    private bool isPaused = false;
 
     private List<string> currentDisabledTags = new List<string>();
 
@@ -34,15 +35,38 @@ public class PauseController : MonoBehaviour
         player.GetComponent<PlayerCtrl>().enabled = false;
         player.GetComponent<PlayerAnimation>().enabled = false;
 
-        //mouse collision stuff
-        foreach(string tag in mcs.disabledTags)
+        // Only capture state if not already paused
+        if (!isPaused)
         {
-            if (!currentDisabledTags.Contains(tag))
+            //mouse collision stuff - save disabled tags
+            foreach(string tag in mcs.disabledTags)
             {
-                currentDisabledTags.Add(tag);
+                if (!currentDisabledTags.Contains(tag))
+                {
+                    currentDisabledTags.Add(tag);
+                }
             }
+            
+            //npc movement - capture state
+            bool anyNPCMoving = false;
+            bool anyNPCAnim = false;
+            foreach(Transform npc in aStar)
+            {
+                if (npc.GetComponent<AILerp>().canMove)
+                {
+                    anyNPCMoving = true;
+                }
+                if (npc.GetComponent<NPCAnimation>().enabled)
+                {
+                    anyNPCAnim = true;
+                }
+            }
+
+            npcsAreStopped = !anyNPCMoving;
+            noAnimOnNPCs = !anyNPCAnim;
         }
 
+        // Always set these when pausing
         mcs.DisableAllTags();
         mcs.EnableTag("DeskSlot");
         if (!disableInv)
@@ -56,27 +80,12 @@ public class PauseController : MonoBehaviour
         mcs.EnableTag("Extra");
         mcs.EnableTag("NPCInvSlot");
         mcs.EnableTag("NPCInvPanel");
+        mcs.EnableTag("GiveSlot");
+        mcs.EnableTag("ShopSlot");
         
-        //npc movement
+        // Always freeze NPCs
         foreach(Transform npc in aStar)
         {
-            if (!npc.GetComponent<AILerp>().canMove)
-            {
-                npcsAreStopped = true;
-            }
-            else
-            {
-                npcsAreStopped = false;
-            }
-            if (!npc.GetComponent<NPCAnimation>().enabled)
-            {
-                noAnimOnNPCs = true;
-            }
-            else
-            {
-                noAnimOnNPCs = false;
-            }
-
             npc.GetComponent<AILerp>().canMove = false;
             npc.GetComponent<NPCAnimation>().enabled = false;
             npc.GetComponent<NavMeshAgent>().speed = 0;
@@ -87,6 +96,8 @@ public class PauseController : MonoBehaviour
 
         //disable id button
         ic.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = false;
+        
+        isPaused = true;
     }
 
     public void Unpause()
@@ -115,6 +126,7 @@ public class PauseController : MonoBehaviour
         {
             mcs.DisableTag(tag);
         }
+        currentDisabledTags.Clear();
 
         //npc movement
         if (aStar == null)
@@ -147,5 +159,7 @@ public class PauseController : MonoBehaviour
             ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         }
         ic.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = true;
+        
+        isPaused = false;
     }
 }

@@ -51,6 +51,31 @@ public class Missions : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            GameObject inmate = null;
+            foreach (Transform npc in aStar)
+            {
+                if (npc.name.Contains("Inmate"))
+                {
+                    inmate = npc.gameObject;
+                }
+            }
+            MakeMission(inmate, "distract");
+        }
+        else if (Input.GetKeyDown(KeyCode.F4))
+        {
+            GameObject inmate = null;
+            foreach (Transform npc in aStar)
+            {
+                if (npc.name.Contains("Inmate"))
+                {
+                    inmate = npc.gameObject;
+                }
+            }
+            MakeMission(inmate, "stealInmateBody");
+        }
     }
     private IEnumerator StartWait()
     {
@@ -106,13 +131,13 @@ public class Missions : MonoBehaviour
                 float rand = UnityEngine.Random.Range(30f, 60f);
                 yield return new WaitForSeconds(rand * .75f);
                 int randInt = UnityEngine.Random.Range(0, availableInmates.Count);
-                MakeMission(availableInmates[randInt]);
+                MakeMission(availableInmates[randInt], "");
                 availableInmates.RemoveAt(randInt);
             }
             yield return null;
         }
     }
-    public void MakeMission(GameObject inmate)
+    public void MakeMission(GameObject inmate, string debugStr)
     {
         string type = null;
         int item = -1;
@@ -125,7 +150,10 @@ public class Missions : MonoBehaviour
 
         type = missions[rand];
 
-        type = "stealDesk"; //for debug stuff
+        if (!String.IsNullOrEmpty(debugStr))
+        {
+            type = debugStr; //for debug stuff
+        }
         Debug.Log("CHANGE THIS");
 
         switch (type)
@@ -284,9 +312,6 @@ public class Missions : MonoBehaviour
             string period = null;
             switch (periodCode)
             {
-                case "LO":
-                    period = "Lights Out";
-                    break;
                 case "R":
                     period = "Rollcall";
                     break;
@@ -299,21 +324,15 @@ public class Missions : MonoBehaviour
                 case "D":
                     period = "Dinner";
                     break;
-                case "W":
-                    period = "Work";
-                    break;
                 case "E":
                     period = "Gym";
                     break;
                 case "S":
                     period = "Showers";
                     break;
-                case "FT":
-                    period = "Free Time";
-                    break;
             }
 
-            if (!periods.Contains(period))
+            if (!periods.Contains(period) && !String.IsNullOrEmpty(period))
             {
                 periods.Add(period);
             }
