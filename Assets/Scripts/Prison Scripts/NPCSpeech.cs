@@ -174,7 +174,9 @@ public class NPCSpeech : MonoBehaviour
         npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().text = newMsg;
         npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.clear;
         npc.Find("SpeechCanvas").Find("Text").gameObject.SetActive(true);
-        yield return new WaitForFixedUpdate();
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>());
+        yield return null;
 
         float borderWidth = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.x;
         float borderHeight = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.y;

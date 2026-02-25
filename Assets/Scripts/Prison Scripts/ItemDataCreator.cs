@@ -1,5 +1,6 @@
 using NUnit.Framework.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,10 +49,21 @@ public class ItemDataCreator : MonoBehaviour
         { 265, 161 }, { 266, 162 }, { 267, 156 }, { 268, 154 }, { 269, 153 }, { 270, 155 }, { 271, 272 },
         { 272, 271 }, { 273, 214 }, { 274, 165 }
     };
+    private Map currentMap;
     private void Start()
     {
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
     }
     public ItemData CreateItemData(int id)
     {
@@ -92,8 +104,16 @@ public class ItemDataCreator : MonoBehaviour
         int strength = Convert.ToInt32(GetINIVar(str, "Strength", itemsFile));
         int opinion = Convert.ToInt32(GetINIVar(str, "Opinion", itemsFile));
         int cameraBlock = Convert.ToInt32(GetINIVar(str, "CameraBlock", itemsFile));
-        Sprite sprite = applyScript.ItemSprites[Convert.ToInt32(GetINIVar(str, "Sprite", itemsFile))];
-        Debug.Log("WHEN YOU MAKE IT POSSIBLE FOR CUSTOM SPRITES, MAKE SURE TO CHANGE AddItem() IN DeskRNG.cs!!!!!");
+        Sprite sprite = null;
+        try
+        {
+            sprite = applyScript.ItemSprites[Convert.ToInt32(GetINIVar(str, "Sprite", itemsFile))];
+        }
+        catch { }
+        if (GetINIVar(str, "Sprite", itemsFile) == "Custom")
+        {
+            sprite = currentMap.customItemSpriteDict[id];
+        }
         int currentDurability = 100;
         GameObject prefab = Resources.Load<GameObject>("Item Basic Prefabs/" + str);
 

@@ -50,6 +50,7 @@ public class MakeBadObject : MonoBehaviour
     private bool emptyBed;
     private void Start()
     {
+        ready = false;
         Transform scriptObject = RootObjectCache.GetRoot("ScriptObject").transform;
 
         player = RootObjectCache.GetRoot("Player");

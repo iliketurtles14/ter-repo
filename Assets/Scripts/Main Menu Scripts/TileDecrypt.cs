@@ -208,8 +208,8 @@ if __name__ == ""__main__"":
 
         var psi = new ProcessStartInfo
         {
-            FileName = "python",
-            Arguments = $"\"{tempScriptPath}\" dec \"{path}\"",
+            FileName = "py",
+            Arguments = $"-3 \"{tempScriptPath}\" dec \"{path}\"",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -221,6 +221,10 @@ if __name__ == ""__main__"":
             string output = process.StandardOutput.ReadToEnd();
             string errors = process.StandardError.ReadToEnd();
             process.WaitForExit();
+
+            UnityEngine.Debug.Log(output);
+            if (!string.IsNullOrEmpty(errors))
+                UnityEngine.Debug.LogError(errors);
         }
     }
 }

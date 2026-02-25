@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms.VisualStyles;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
@@ -18,7 +19,7 @@ public class LoadPrison : MonoBehaviour
     private Sprite ground;
     private Sprite icon;
     public List<AudioClip> music;
-    public Dictionary<int, Sprite> customItemSprites;
+    public Dictionary<int, Sprite> customItemSprites = new Dictionary<int, Sprite>();
     public string[] speech;
     public string[] items;
     public string[] tooltips;
@@ -29,6 +30,7 @@ public class LoadPrison : MonoBehaviour
     private List<Sprite> UISprites = new List<Sprite>();
 
     private ApplyPrisonData dataScript;
+    private ItemDataCreator creatorScript;
 
     private List<string> musicNames = new List<string>
     {
@@ -602,6 +604,7 @@ public class LoadPrison : MonoBehaviour
     {
         givenDataScript = GetGivenData.instance;
         dataSenderScript = DataSender.instance;
+        creatorScript = GetComponent<ItemDataCreator>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         StartCoroutine(LoadWait());
     }
@@ -1308,23 +1311,29 @@ public class LoadPrison : MonoBehaviour
             icon = ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png"));
             File.Delete(Path.Combine(extractPath, "Icon.png"));
         }
-        //if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
-        //{
-        //    speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
-        //    File.Delete(Path.Combine(extractPath, "Speech.ini"));
-        //}
+        if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
+        {
+            speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
+            File.Delete(Path.Combine(extractPath, "Speech.ini"));
+        }
+        else
+        {
+            speech = Resources.Load<TextAsset>("Speech").text.Split("\n");
+        }
         if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
         {
             tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
             File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
         }
-        //if (File.Exists(Path.Combine(extractPath, "Items.ini")))
-        //{
-        //    items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
-        //    File.Delete(Path.Combine(extractPath, "Items.ini"));
-        //}
-        speech = Resources.Load<TextAsset>("Speech").text.Split("\n");
-        items = Resources.Load<TextAsset>("Items").text.Split("\n");
+        if (File.Exists(Path.Combine(extractPath, "Items.ini")))
+        {
+            items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
+            File.Delete(Path.Combine(extractPath, "Items.ini"));
+        }
+        else
+        {
+            items = Resources.Load<TextAsset>("Items").text.Split("\n");
+        }
         if (File.Exists(Path.Combine(extractPath, "Music.zip")))
         {
             ZipFile.ExtractToDirectory(Path.Combine(extractPath, "Music.zip"), extractPath);
@@ -1337,11 +1346,11 @@ public class LoadPrison : MonoBehaviour
             foreach (string file in Directory.GetFiles(Path.Combine(extractPath, "Items")))
             {
                 int id = Convert.ToInt32(Path.GetFileName(file).Split('.')[0]);
-                Sprite sprite = ConvertPNGToSprite(file);
+                Sprite sprite = ConvertPNGToSprite(Path.Combine(extractPath, "Items", file));
                 customItemSprites.Add(id, sprite);
             }
 
-            Directory.Delete(Path.Combine(extractPath, "Items"));
+            Directory.Delete(Path.Combine(extractPath, "Items"), true);
         }
 
         for (int i = 0; i < data.Length; i++)

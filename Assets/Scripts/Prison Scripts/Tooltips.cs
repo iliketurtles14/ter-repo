@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 public class Tooltips : MonoBehaviour
 {
@@ -134,7 +135,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "invItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if ((showingTooltip && tooltipType == "invItem" && !isTouchingInvSlot))
@@ -183,7 +184,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "deskItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "deskItem" && !mcs.isTouchingDeskSlot)
@@ -250,7 +251,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "idItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if (showingTooltip && tooltipType == "idItem" && !mcs.isTouchingIDSlot)
@@ -308,7 +309,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "npcItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "npcItem" && !mcs.isTouchingNPCInvSlot)
@@ -357,7 +358,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "shopItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "shopItem" && !mcs.isTouchingShopSlot)
@@ -393,7 +394,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "giveItem";
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if (showingTooltip && tooltipType == "giveItem" && !mcs.isTouchingGiveSlot)
@@ -414,7 +415,7 @@ public class Tooltips : MonoBehaviour
             currentTouchedItem = mcs.touchedItem;
             toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
             tooltipType = "groundItem";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         else if (showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
@@ -441,7 +442,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "floor";
             printedTileData = mcs.touchedFloor.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if (showingTooltip && tooltipType == "floor" &&
@@ -473,7 +474,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "emptyDirt";
             printedTileData = mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if (showingTooltip && tooltipType == "emptyDirt" &&
@@ -510,7 +511,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "dirt";
             printedTileData = mcs.touchedDirt.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if (showingTooltip && tooltipType == "dirt" &&
@@ -547,7 +548,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "wall";
             printedTileData = mcs.touchedWall.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "wall" && 
@@ -584,7 +585,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "fence";
             printedTileData = mcs.touchedFence.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "fence" && 
@@ -622,7 +623,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "bars";
             printedTileData = mcs.touchedBars.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "bars" &&
@@ -660,7 +661,7 @@ public class Tooltips : MonoBehaviour
             printDurability = " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
             tooltipType = "rock";
             printedTileData = mcs.touchedRock.GetComponent<TileCollectionData>().tileData;
-            DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
         else if(showingTooltip && tooltipType == "rock" &&
@@ -708,7 +709,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
                 tooltipType = "ventCover";
                 printedTileData = mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData;
-                DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
                 return;
             }
         }
@@ -770,7 +771,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
                 tooltipType = "slats";
                 printedTileData = mcs.touchedSlats.GetComponent<TileCollectionData>().tileData;
-                DrawTooltip(GetWidth(toPrint + printDurability), toPrint + printDurability);
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
                 return;
             }
         }
@@ -845,7 +846,7 @@ public class Tooltips : MonoBehaviour
                 toPrint = "Dev Desk";
             }
             tooltipType = "desk";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         else if (showingTooltip && tooltipType == "desk" &&
@@ -933,7 +934,7 @@ public class Tooltips : MonoBehaviour
                 toPrint = "Train (speed bag)";
             }
             tooltipType = "equipment";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         else if(showingTooltip && tooltipType == "equipment" && !mcs.isTouchingEquipment)
@@ -993,7 +994,7 @@ public class Tooltips : MonoBehaviour
                 toPrint = "Internet";
             }
             tooltipType = "reader";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         else if(showingTooltip && tooltipType == "reader" && !mcs.isTouchingReader)
@@ -1037,7 +1038,7 @@ public class Tooltips : MonoBehaviour
                 toPrint = "Sit Down";
             }
             tooltipType = "sittable";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
@@ -1079,7 +1080,7 @@ public class Tooltips : MonoBehaviour
         {
             toPrint = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
             tooltipType = "inmates/guards";
-            DrawTooltip(GetWidth(toPrint), toPrint);
+            StartCoroutine(DrawTooltip(toPrint));
             return;
         }
         else if(showingTooltip && tooltipType == "inmates/guards" && !mcs.isTouchingNPC)
@@ -1099,27 +1100,31 @@ public class Tooltips : MonoBehaviour
         }
     }
 
-    public void DrawTooltip(int width, string text)
+    public IEnumerator DrawTooltip(string text)
     {
-        TooltipPanelTransform = InventoryCanvas.transform.Find("TooltipPanel");
-        //draw the tooltip
-        Instantiate(TooltipSide, TooltipPanelTransform);
-        for(int i = 1; i <= width - 2; i++)
-        {
-            Instantiate(TooltipMid, TooltipPanelTransform);
-        }
-        Instantiate(TooltipSide, TooltipPanelTransform);
-
-        TooltipPanelTransform.position = InventoryCanvas.transform.Find("MouseOverlay").position;
-
-        //make the textbox
-        TooltipTextBox.GetComponent<RectTransform>().sizeDelta = new Vector2(width * 5, 80);
-        TooltipTextBox.GetComponent<TextMeshProUGUI>().text = text;
-        GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
-
-        textBox.transform.position = InventoryCanvas.transform.Find("MouseOverlay").position + new Vector3(1.46f, -.9f); //this is just an offset
-
         showingTooltip = true;
+        TooltipPanelTransform = InventoryCanvas.transform.Find("TooltipPanel");
+        TooltipPanelTransform.gameObject.SetActive(false);
+        //make the textbox
+        GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
+        textBox.GetComponent<TextMeshProUGUI>().color = UnityEngine.Color.clear;
+        textBox.GetComponent<TextMeshProUGUI>().text = text;
+
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textBox.GetComponent<RectTransform>());
+        yield return new WaitForEndOfFrame();
+
+        textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
+
+        //draw the tooltip
+        GameObject side1 = Instantiate(TooltipSide, TooltipPanelTransform);
+        GameObject mid = Instantiate(TooltipMid, TooltipPanelTransform);
+        GameObject side2 = Instantiate(TooltipSide, TooltipPanelTransform);
+        mid.GetComponent<RectTransform>().sizeDelta = new Vector2(textBox.GetComponent<RectTransform>().sizeDelta.x, 80);
+        side1.transform.localPosition = new Vector2((-mid.GetComponent<RectTransform>().sizeDelta.x / 2f) - 2f, 0);
+        side2.transform.localPosition = new Vector2((mid.GetComponent<RectTransform>().sizeDelta.x / 2f) + 2f, 0);
+        mid.transform.localPosition = new Vector2(0, 0);
+        TooltipPanelTransform.gameObject.SetActive(true);
     }
     public void DestroyTooltip()
     {
@@ -1132,35 +1137,6 @@ public class Tooltips : MonoBehaviour
         tooltipType = null;
     }
 
-    public int GetWidth(string text)
-    {
-        textWidth = 0;
-        int characterAmount;
-        characterAmount = text.Length;
-        List<char> charList = new List<char>(text);
-
-        Dictionary<char, int> charWidths = new Dictionary<char, int>
-        {
-            {'A', 5}, {'B', 5}, {'C', 5}, {'D', 5}, {'E', 5}, {'F', 5}, {'G', 5}, {'H', 5}, {'I', 5}, {'J', 5}, {'K', 5}, {'L', 5}, {'M', 7}, {'N', 5}, {'O', 5}, {'P', 5}, {'Q', 5}, {'R', 5}, {'S', 5}, {'T', 5}, {'U', 5}, {'V', 5}, {'W', 7}, {'X', 5}, {'Y', 5}, {'Z', 5},
-            {'a', 5}, {'b', 5}, {'c', 5}, {'d', 5}, {'e', 5}, {'f', 4}, {'g', 5}, {'h', 5}, {'i', 1}, {'j', 3}, {'k', 5}, {'l', 2}, {'m', 5}, {'n', 5}, {'o', 5}, {'p', 5}, {'q', 5}, {'r', 5}, {'s', 5}, {'t', 3}, {'u', 5}, {'v', 5}, {'w', 5}, {'x', 5}, {'y', 5}, {'z', 5},
-            {'0', 5}, {'1', 3}, {'2', 5}, {'3', 5}, {'4', 5}, {'5', 5}, {'6', 5}, {'7', 5}, {'8', 5}, {'9', 5},
-            {',', 2}, {':', 1}, {';', 2}, {'\'', 1}, {'"', 3}, {'!', 1}, {'?', 5}, {'(', 3}, {')', 3}, {'+', 5}, {'-', 5}, {'_', 7}, {'*', 5}, {'/', 3}, {'=', 5}, {'@', 7}, {'#', 5}, {'$', 5}, {'%', 7}, {'^', 5}, {'&', 5}, {'`', 2}, {'~', 5},
-            {'[', 3}, {']', 3}, {'{', 4}, {'}', 4}, {'\\', 3}, {'|', 1}, {'<', 5}, {'>', 5}, {' ', 1}
-        };
-
-        foreach (char c in charList)
-        {
-            if(charWidths.TryGetValue(c, out int width))
-            {
-                textWidth += width;
-            }
-        }
-
-        textWidth += (text.Length - 1);
-        textWidth += 6;
-
-        return textWidth;
-    }
     public void ChangeTooltipText(string changeType)
     {
         switch (changeType)

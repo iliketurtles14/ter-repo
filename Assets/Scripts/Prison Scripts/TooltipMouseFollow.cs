@@ -11,6 +11,8 @@ public class TooltipMouseFollow : MonoBehaviour
     private GameObject MouseOverlayObject;
     private bool showingTooltip;
     private Tooltips tooltipScript;
+    public float yOffset;
+    public float xOffset;
 
     public void Start()
     {
@@ -36,9 +38,13 @@ public class TooltipMouseFollow : MonoBehaviour
             TooltipPanelRectTransform = TooltipPanel.GetComponent<RectTransform>();
             TooltipTextBoxRectTransform = TooltipTextBox.GetComponent<RectTransform>();
 
-            Vector3 offset = new Vector3(1.46f, -.9f); //offset for the textbox
-            TooltipPanelRectTransform.position = MouseOverlayRectTransform.position;
-            TooltipTextBoxRectTransform.position = MouseOverlayRectTransform.position + offset;
+            try
+            {
+                Vector3 offset = new Vector3((TooltipPanel.transform.Find("TooltipMid(Clone)").GetComponent<RectTransform>().sizeDelta.x / 2f) - 5, -48); //offset for the textbox
+                TooltipPanelRectTransform.localPosition = MouseOverlayRectTransform.localPosition + offset;
+                TooltipTextBoxRectTransform.localPosition = MouseOverlayRectTransform.localPosition + offset;
+            }
+            catch { }
         }
     }
 }

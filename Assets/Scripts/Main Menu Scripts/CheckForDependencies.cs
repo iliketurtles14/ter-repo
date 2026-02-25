@@ -43,45 +43,17 @@ public class CheckForDependencies : MonoBehaviour
         //python 3
         bool hasPython = false;
         string whichPython = null;
-        try
-        {
-            var process = new Process();
-            process.StartInfo.FileName = "python";
-            process.StartInfo.Arguments = "--version";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
 
-            process.Start();
+        string[] candidates = { "py -3", "python", "python3" };
 
-            string output = process.StandardOutput.ReadToEnd() + process.StandardError.ReadToEnd(); //sometimes it writes to stderr
-
-            process.WaitForExit(1000);
-
-            var match = Regex.Match(output, @"Python\s+(\d+)\.(\d+)");
-            if (match.Success)
-            {
-                int major = int.Parse(match.Groups[1].Value);
-                int minor = int.Parse(match.Groups[2].Value);
-
-                hasPython = major > 3 || (major == 3 && minor >= 4);
-
-                if (hasPython)
-                {
-                    whichPython = "python";
-                }
-            }
-        }
-        catch { }
-
-        if (!hasPython)
+        foreach (var candidate in candidates)
         {
             try
             {
+                var parts = candidate.Split(' ');
                 var process = new Process();
-                process.StartInfo.FileName = "python3";
-                process.StartInfo.Arguments = "--version";
+                process.StartInfo.FileName = parts[0];
+                process.StartInfo.Arguments = parts.Length > 1 ? parts[1] + " --version" : "--version";
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
@@ -89,7 +61,8 @@ public class CheckForDependencies : MonoBehaviour
 
                 process.Start();
 
-                string output = process.StandardOutput.ReadToEnd() + process.StandardError.ReadToEnd(); //sometimes it writes to stderr
+                string output = process.StandardOutput.ReadToEnd() +
+                                process.StandardError.ReadToEnd();
 
                 process.WaitForExit(1000);
 
@@ -99,18 +72,18 @@ public class CheckForDependencies : MonoBehaviour
                     int major = int.Parse(match.Groups[1].Value);
                     int minor = int.Parse(match.Groups[2].Value);
 
-                    hasPython = major > 3 || (major == 3 && minor >= 4);
-
-                    if (hasPython)
+                    if (major > 3 || (major == 3 && minor >= 4))
                     {
-                        whichPython = "python3";
+                        hasPython = true;
+                        whichPython = candidate;
+                        break;
                     }
                 }
             }
             catch { }
         }
-        pythonType = whichPython; //just to see it in the inspector lol
 
+        pythonType = whichPython;
         //blowfish python package
         bool hasBlowfish = false;
         if (hasPython)
@@ -118,7 +91,7 @@ public class CheckForDependencies : MonoBehaviour
             try
             {
                 var process = new Process();
-                process.StartInfo.FileName = whichPython;
+                process.StartInfo.FileName = "py";
                 process.StartInfo.Arguments = "-c \"import blowfish\"";
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;

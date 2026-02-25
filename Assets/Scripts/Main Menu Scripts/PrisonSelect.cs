@@ -241,10 +241,6 @@ public class PrisonSelect : MonoBehaviour
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
                 }
-                if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
-                {
-                    File.Delete(Path.Combine(extractPath, "Music.mp3"));
-                }
                 if (GetINIVar("Properties", "POWOutfits", data) == "True")
                 {
                     mainPrisonHasPOWBools.Add(true);
@@ -286,10 +282,6 @@ public class PrisonSelect : MonoBehaviour
                 if (File.Exists(Path.Combine(extractPath, "Ground.png")))
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
-                }
-                if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
-                {
-                    File.Delete(Path.Combine(extractPath, "Music.mp3"));
                 }
                 if (GetINIVar("Properties", "POWOutfits", data) == "True")
                 {
@@ -338,6 +330,22 @@ public class PrisonSelect : MonoBehaviour
             if (File.Exists(Path.Combine(extractPath, "Music.mp3")))
             {
                 File.Delete(Path.Combine(extractPath, "Music.mp3"));
+            }
+            if(File.Exists(Path.Combine(extractPath, "Items.ini")))
+            {
+                File.Delete(Path.Combine(extractPath, "Items.ini"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
+            {
+                File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
+            }
+            if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
+            {
+                File.Delete(Path.Combine(extractPath, "Speech.ini"));
+            }
+            if(Directory.Exists(Path.Combine(extractPath, "Items")))
+            {
+                Directory.Delete(Path.Combine(extractPath, "Items"), true);
             }
             if (GetINIVar("Properties", "POWOutfits", data) == "True")
             {
