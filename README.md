@@ -15,7 +15,7 @@ Discord: https://discord.gg/PEzv5ECNgR
 
 For fully built and "stable" releases, go to the "Releases" section.
 
-TER uses Unity 6000.2.7f2 as of October 11, 2025. This is not expected to change, however, there have been multiple older versions of Unity used throughout this project in older commits. Don't ask me which ones at what time, because you can check for yourself! :)
+TER uses Unity 6000.3.9f1 as of October 11, 2025. This is not expected to change, however, there have been multiple older versions of Unity used throughout this project in older commits. Don't ask me which ones at what time, because you can check for yourself! :)
 
 The source code presented in the ```main``` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
 
