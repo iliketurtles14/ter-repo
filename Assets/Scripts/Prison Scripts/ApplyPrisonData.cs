@@ -1,12 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.Rendering;
-using JetBrains.Annotations;
 using Unity.VisualScripting;
-using UnityEngine.Rendering.Universal;
-using System.Linq;
-using UnityEditor.U2D.Animation;
 
 public class ApplyPrisonData : MonoBehaviour
 {
