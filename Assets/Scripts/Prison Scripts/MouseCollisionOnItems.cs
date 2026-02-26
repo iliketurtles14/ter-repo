@@ -83,6 +83,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedGiveSlot;
     public bool isTouchingShopSlot;
     public GameObject touchedShopSlot;
+    public bool isTouchingItemBox;
+    public GameObject touchedItemBox;
     void Update()
     {
         ClearCollisions();
@@ -110,6 +112,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Extra",
             "NPC",
             "Desk",
+            "ItemBox",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -205,6 +208,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "NPC":
                     isTouchingNPC = true;
                     touchedNPC = highestPriorityObject;
+                    break;
+                case "ItemBox":
+                    isTouchingItemBox = true;
+                    touchedItemBox = highestPriorityObject;
                     break;
                 case "Desk":
                     isTouchingDesk = true;
@@ -407,5 +414,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedGiveSlot = null;
         isTouchingShopSlot = false;
         touchedShopSlot = null;
+        isTouchingItem = false;
+        touchedItemBox = null;
     }
 }

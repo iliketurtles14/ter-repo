@@ -9,11 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4634564076267414187}
-  - component: {fileID: 786490892139712546}
-  - component: {fileID: 4956017254806146441}
+  - component: {fileID: 6700652296652914650}
+  - component: {fileID: 326255243113999685}
+  - component: {fileID: -8748461774981436302}
+  - component: {fileID: -4119036797257456684}
   m_Layer: 10
-  m_Name: TailorBox
-  m_TagString: ItemBox
+  m_Name: YardWorkBox
+  m_TagString: Desk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +35,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &786490892139712546
+--- !u!212 &6700652296652914650
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -92,7 +94,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &4956017254806146441
+--- !u!61 &326255243113999685
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,3 +140,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 3.2}
   m_EdgeRadius: 0
+--- !u!114 &-8748461774981436302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4104488947152850935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dccf549e6abb514bb9bbf4245b5a0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskData
+  deskInv: []
+  inmateCorrelationNumber: -1
+--- !u!114 &-4119036797257456684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4104488947152850935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c26af5b0ac1742840dd57dd5ee113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskRNG

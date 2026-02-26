@@ -104,13 +104,20 @@ public class MakeBadObject : MonoBehaviour
 
         ///bool management
         //bad outfit
-        if (badOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
+        try
         {
-            hasBadOutfit = true;
+            if (badOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
+            {
+                hasBadOutfit = true;
+            }
         }
-        
+        catch
+        {
+            hasBadOutfit = false;
+        }
+
         //outside
-        if(player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor" &&
+        if (player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor" &&
             player.layer == 3)
         {
             isOutside = true;

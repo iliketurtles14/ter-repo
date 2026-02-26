@@ -249,30 +249,32 @@ public class DeskInv : MonoBehaviour
     }
     private string GetDeskText(GameObject aDesk)
     {
-        if(aDesk.name == "PlayerDesk")
+        switch (aDesk.name)
         {
-            return "Your Desk";
-        }
-        else if(aDesk.name == "DevDesk")
-        {
-            return "Dev Desk";
-        }
-        else
-        {
-            int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;
-            foreach(Transform npc in aStar.transform)
-            {
-                if (npc.name.StartsWith("Inmate"))
+            case "PlayerDesk":
+                return "Your Desk";
+            case "DevDesk":
+                return "Dev Desk";
+            case "YardWorkBox":
+                return "Gardening Tools";
+            case "JanitorDesk":
+                return "Cleaning Supplies";
+            default:
                 {
-                    int inmateNumber = npc.GetComponent<NPCCollectionData>().npcData.order;
-                    if (inmateNumber == deskNumber)
+                    int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;
+                    foreach (Transform npc in aStar.transform)
                     {
-                        return npc.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                        if (npc.name.StartsWith("Inmate"))
+                        {
+                            int inmateNumber = npc.GetComponent<NPCCollectionData>().npcData.order;
+                            if (inmateNumber == deskNumber)
+                            {
+                                return npc.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+                            }
+                        }
                     }
+                    return "Desk";
                 }
-            }
-            return "Desk";
-
         }
     }
     private void CloseDesk()

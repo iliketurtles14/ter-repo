@@ -73,6 +73,8 @@ TagManager:
   - Black
   - GiveSlot
   - ShopSlot
+  - ItemBox
+  - JobBox
   layers:
   - Default
   - TransparentFX

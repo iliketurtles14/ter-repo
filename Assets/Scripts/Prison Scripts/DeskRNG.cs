@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -210,6 +211,11 @@ public class DeskRNG : MonoBehaviour
             return;
         }
 
+        if(deskName == "YardWorkBox" || deskName == "JanitorDesk")
+        {
+            RandomizeJobDesks();
+        }
+
         if (deskName == "PlayerDesk" || deskName == "DevDesk")
         {
             return;
@@ -294,6 +300,36 @@ public class DeskRNG : MonoBehaviour
             {
                 int rand = UnityEngine.Random.Range(0, tier6Items.Count - 1);
                 AddItem(tier6Items[rand]);
+            }
+        }
+    }
+    public void RandomizeJobDesks()
+    {
+        if(name == "YardWorkBox")
+        {
+            for(int i = 0; i < deskInv.Count; i++)
+            {
+                AddItem(61);
+            }
+            int randAmount = UnityEngine.Random.Range(0, 15);
+            for(int i = 0; i < randAmount; i++)
+            {
+                deskInv[i].itemData = null;
+            }
+        }
+        else if(name == "JanitorDesk")
+        {
+            //plunger: 122
+            //bleach: 143
+            //broom: 57
+            //mop: 63
+            List<int> items = new List<int>()
+            {
+                122, 143, 57, 63
+            };
+            for(int i = 0; i < deskInv.Count; i++)
+            {
+                AddItem(items[UnityEngine.Random.Range(0, 4)]);
             }
         }
     }
