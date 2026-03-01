@@ -134,6 +134,10 @@ public class Tooltips : MonoBehaviour
                 toPrint = inventoryList[invSlotNumber].itemData.displayName;
                 printDurability = "";
             }
+            if (inventoryList[invSlotNumber].itemData.inmateGiveName != null)
+            {
+                toPrint = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
+            }
             tooltipType = "invItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
@@ -182,6 +186,10 @@ public class Tooltips : MonoBehaviour
                 printedDeskSlotNumber = deskSlotNumber;
                 toPrint = deskInvList[deskSlotNumber].itemData.displayName;
                 printDurability = "";
+            }
+            if (deskInvList[deskSlotNumber].itemData.inmateGiveName != null)
+            {
+                toPrint = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
             }
             tooltipType = "deskItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
@@ -250,6 +258,10 @@ public class Tooltips : MonoBehaviour
                 toPrint = currentIDList[idSlotNumber].itemData.displayName;
                 printDurability = "";
             }
+            if (currentIDList[idSlotNumber].itemData.inmateGiveName != null)
+            {
+                toPrint = currentIDList[idSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
+            }
             tooltipType = "idItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
@@ -307,6 +319,10 @@ public class Tooltips : MonoBehaviour
                 printedNPCInvSlotNumber = npcInvSlotNumber;
                 toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
                 printDurability = "";
+            }
+            if (npcInvList[npcInvSlotNumber].itemData.inmateGiveName != null)
+            {
+                toPrint = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
             }
             tooltipType = "npcItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
@@ -393,6 +409,10 @@ public class Tooltips : MonoBehaviour
                 toPrint = givingScript.item.itemData.displayName;
                 printDurability = "";
             }
+            if (givingScript.item.itemData.inmateGiveName != null)
+            {
+                toPrint = givingScript.item.itemData.inmateGiveName + "'s " + toPrint;
+            }
             tooltipType = "giveItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
@@ -410,10 +430,14 @@ public class Tooltips : MonoBehaviour
         }
 
             //for ground items
-            if (isTouchingItem && !showingTooltip)
+        if (isTouchingItem && !showingTooltip)
         {
             currentTouchedItem = mcs.touchedItem;
             toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
+            if (touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName != null)
+            {
+                toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName + "'s " + toPrint;
+            }
             tooltipType = "groundItem";
             StartCoroutine(DrawTooltip(toPrint));
             return;

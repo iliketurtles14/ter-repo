@@ -57,7 +57,7 @@ public class DeskStand : MonoBehaviour
         {
             foreach (GameObject desk in desks)
             {
-                if (player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                if (desk.name != "YardWorkBox" && player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                 {
                     isClimbing = true;
                     StartCoroutine(ClimbDesk(desk));
@@ -92,7 +92,10 @@ public class DeskStand : MonoBehaviour
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         foreach(GameObject aDesk in desks)
         {
-            aDesk.GetComponent<DeskPickUp>().enabled = false;
+            if (aDesk.GetComponent<DeskPickUp>())
+            {
+                aDesk.GetComponent<DeskPickUp>().enabled = false;
+            }
         }
         yield return new WaitForFixedUpdate();
         foreach (GameObject aDesk in desks)
@@ -137,7 +140,10 @@ public class DeskStand : MonoBehaviour
         foreach (GameObject aDesk in desks)
         {
             aDesk.GetComponent<BoxCollider2D>().isTrigger = false;
-            aDesk.GetComponent<DeskPickUp>().enabled = true;
+            if (aDesk.GetComponent<DeskPickUp>())
+            {
+                aDesk.GetComponent<DeskPickUp>().enabled = true;
+            }
         }
         player.layer = 3;
     }

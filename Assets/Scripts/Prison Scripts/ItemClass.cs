@@ -28,8 +28,9 @@ public class ItemData
     public int id;
     public GameObject prefab;
     public bool forFavor;
+    public string inmateGiveName; //this is for jobs like mailman and library
 
-    public ItemData(string displayName, int deskTier, bool inInmateInv, int cost, bool inItemFetchFavors, bool inStolenItemFavors, bool inmateWeapon, bool isContraband, bool causeSolitary, int durability, int chippingPower, int cuttingPower, int ventBreakingPower, int diggingPower, int health, int energy, int defense, int strength, int opinion, int cameraBlock, Sprite sprite, int currentDurability, int id, GameObject prefab, bool forFavor)
+    public ItemData(string displayName, int deskTier, bool inInmateInv, int cost, bool inItemFetchFavors, bool inStolenItemFavors, bool inmateWeapon, bool isContraband, bool causeSolitary, int durability, int chippingPower, int cuttingPower, int ventBreakingPower, int diggingPower, int health, int energy, int defense, int strength, int opinion, int cameraBlock, Sprite sprite, int currentDurability, int id, GameObject prefab, bool forFavor, string inmateGiveName)
     {
         this.displayName = displayName;
         this.deskTier = deskTier;
@@ -56,5 +57,6 @@ public class ItemData
         this.id = id;
         this.prefab = prefab;
         this.forFavor = forFavor;
+        this.inmateGiveName = inmateGiveName;
     }
 }

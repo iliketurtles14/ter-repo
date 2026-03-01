@@ -56,11 +56,15 @@ public class ItemBehaviours : MonoBehaviour
     public bool isChipping;
     public bool isCutting;
     public bool isScrewing;
+    public bool isWeeding;
+    public bool isCleaning;
     //breaking
     public bool selectedChippingItem;
     public bool selectedCuttingItem;
     public bool selectedDiggingItem;
     public bool selectedVentBreakingItem;
+    public bool selectedCleaningItem;
+    public bool selectedGardeningItem;
     public bool goodForDig;
     public bool goodForDig1;
     public bool goodForDig2;
@@ -139,6 +143,10 @@ public class ItemBehaviours : MonoBehaviour
             else { selectedDiggingItem = false; }
             if (selectedItemData.ventBreakingPower != -1) { selectedVentBreakingItem = true; }
             else { selectedVentBreakingItem = false; }
+            if(selectedItemData.id == 57 || selectedItemData.id == 63) { selectedCleaningItem = true; }
+            else { selectedCleaningItem = false; }
+            if (selectedItemData.id == 61) { selectedGardeningItem = true; }
+            else { selectedGardeningItem = false; }
         }
         else if (!selectionScript.aSlotSelected) 
         {
@@ -146,7 +154,41 @@ public class ItemBehaviours : MonoBehaviour
         }
 
 
-
+        //gardening
+        if(!isBusy && mcs.isTouchingWeed && Input.GetMouseButtonDown(0) && selectedGardeningItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedWeed.transform.position);
+            if(distance <= 2.4f)
+            {
+                whatAction = "weeding";
+                touchedTileObject = mcs.touchedWeed.gameObject;
+                StartCoroutine(DrawActionBar(false, true));
+                CreateActionText("Weeding");
+                Deselect();
+            }
+        }
+        else if(Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
+        //clearning
+        if(!isBusy && mcs.isTouchingSpill && Input.GetMouseButtonDown(0) && selectedCleaningItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSpill.transform.position);
+            if(distance <= 2.4f)
+            {
+                whatAction = "cleaning";
+                touchedTileObject = mcs.touchedSpill.gameObject;
+                isCleaning = true;
+                StartCoroutine(DrawActionBar(false, true));
+                CreateActionText("Cleaning");
+                Deselect();
+            }
+        }
+        else if(Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
         //chipping
         if (!isBusy && mcs.isTouchingWall && Input.GetMouseButtonDown(0) && selectedChippingItem && !barIsMoving)
         {

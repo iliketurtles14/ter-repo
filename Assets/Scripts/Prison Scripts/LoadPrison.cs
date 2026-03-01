@@ -1280,6 +1280,12 @@ public class LoadPrison : MonoBehaviour
                     case "BedVertical":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[264];
                         break;
+                    case "JanitorDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[93];
+                        break;
+                    case "YardWorkBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[211];
+                        break;
                 }
             }
         }

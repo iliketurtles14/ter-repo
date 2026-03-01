@@ -188,7 +188,7 @@ public class MakeBadObject : MonoBehaviour
             {
                 if (desk.CompareTag("Desk"))
                 {
-                    if (desk.GetComponent<DeskPickUp>().isPickedUp)
+                    if (desk.GetComponent<DeskPickUp>() && desk.GetComponent<DeskPickUp>().isPickedUp)
                     {
                         pickedUp = true;
 
@@ -212,12 +212,19 @@ public class MakeBadObject : MonoBehaviour
             {
                 if (desk.CompareTag("Desk"))
                 {
-                    if (desk.GetComponent<DeskPickUp>().isPickedUp)
+                    try
                     {
-                        shouldDestroy = false;
-                        break;
+                        if (desk.GetComponent<DeskPickUp>() && desk.GetComponent<DeskPickUp>().isPickedUp)
+                        {
+                            shouldDestroy = false;
+                            break;
+                        }
+                        else
+                        {
+                            shouldDestroy = true;
+                        }
                     }
-                    else
+                    catch
                     {
                         shouldDestroy = true;
                     }

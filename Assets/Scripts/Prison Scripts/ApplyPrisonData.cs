@@ -573,6 +573,10 @@ public class ApplyPrisonData : MonoBehaviour
         ic.Find("ActionBarPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
         mc.Find("PlayerMenuPanel").Find("IntellectPanel").Find("IntellectBar").GetComponent<Image>().sprite = UISprites[44];
 
+        //job quota box
+        ic.Find("QuotaPanel").Find("BarLine").GetComponent<Image>().sprite = UISprites[44];
+        ic.Find("QuotaPanel").GetComponent<Image>().sprite = UISprites[193];
+
         //give menu7
         mc.Find("NPCGiveMenuPanel").Find("GiveSlot").GetComponent<Image>().sprite = UISprites[33];
         mc.Find("NPCGiveMenuPanel").Find("MoneyBox").GetComponent<Image>().sprite = UISprites[59];

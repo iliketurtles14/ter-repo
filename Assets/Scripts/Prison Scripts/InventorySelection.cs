@@ -31,6 +31,7 @@ public class InventorySelection : MonoBehaviour
     private bool hasItem;
     private Inventory inventoryScript;
     private List<InventoryItem> inventoryList;
+    public int selectedSlotNum; //starts at 0
 
     public void Start()
     {
@@ -62,6 +63,38 @@ public class InventorySelection : MonoBehaviour
     }
     public void Update()
     {
+        if (aSlotSelected)
+        {
+            if (slot1Selected)
+            {
+                selectedSlotNum = 0;
+            }
+            else if (slot2Selected)
+            {
+                selectedSlotNum = 1;
+            }
+            else if (slot3Selected)
+            {
+                selectedSlotNum = 2;
+            }
+            else if (slot4Selected)
+            {
+                selectedSlotNum = 3;
+            }
+            else if (slot5Selected)
+            {
+                selectedSlotNum = 4;
+            }
+            else if (slot6Selected)
+            {
+                selectedSlotNum = 5;
+            }
+            else
+            {
+                selectedSlotNum = -1;
+            }
+        }
+        
         //check
         isTouchingSlot = mouseCollisionScript.isTouchingInvSlot;
         inventoryList = inventoryScript.inventory;

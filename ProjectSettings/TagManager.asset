@@ -75,6 +75,7 @@ TagManager:
   - ShopSlot
   - ItemBox
   - JobBox
+  - ItemTransformer
   layers:
   - Default
   - TransparentFX

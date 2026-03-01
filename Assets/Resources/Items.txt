@@ -3594,7 +3594,7 @@ CameraBlock=-1
 Sprite=119
 
 [149]
-Name=Unvarnished Pair
+Name=Unvarnished Chair
 DeskTier=0
 InInmateInv=False
 Cost=-1

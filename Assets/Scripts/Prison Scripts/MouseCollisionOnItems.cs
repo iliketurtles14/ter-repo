@@ -85,6 +85,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedShopSlot;
     public bool isTouchingItemBox;
     public GameObject touchedItemBox;
+    public bool isTouchingJobBox;
+    public GameObject touchedJobBox;
+    public bool isTouchingWeed;
+    public GameObject touchedWeed;
+    public bool isTouchingSpill;
+    public GameObject touchedSpill;
+    public bool isTouchingItemTransformer;
+    public GameObject touchedItemTransformer;
     void Update()
     {
         ClearCollisions();
@@ -113,6 +121,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPC",
             "Desk",
             "ItemBox",
+            "JobBox",
+            "ItemTransformer",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -125,6 +135,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Reader",
             "Sittable", //beds, chairs, anything that you can sit on
             "FoodTable",
+            "Weed",
+            "Spill",
             "Digable",
             "Dirt",
             "Rock",
@@ -209,13 +221,21 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingNPC = true;
                     touchedNPC = highestPriorityObject;
                     break;
+                case "Desk":
+                    isTouchingDesk = true;
+                    touchedDesk = highestPriorityObject;
+                    break;
                 case "ItemBox":
                     isTouchingItemBox = true;
                     touchedItemBox = highestPriorityObject;
                     break;
-                case "Desk":
-                    isTouchingDesk = true;
-                    touchedDesk = highestPriorityObject;
+                case "JobBox":
+                    isTouchingJobBox = true;
+                    touchedJobBox = highestPriorityObject;
+                    break;
+                case "ItemTransformer":
+                    isTouchingItemTransformer = true;
+                    touchedItemTransformer = highestPriorityObject;
                     break;
                 case "Ladder(Roof)":
                     isTouchingRoofLadder = true;
@@ -264,6 +284,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "FoodTable":
                     isTouchingFoodTable = true;
                     touchedFoodTable = highestPriorityObject;
+                    break;
+                case "Weed":
+                    isTouchingWeed = true;
+                    touchedWeed = highestPriorityObject;
+                    break;
+                case "Spill":
+                    isTouchingSpill = true;
+                    touchedSpill = highestPriorityObject;
                     break;
                 case "Digable":
                     isTouchingFloor = true;
@@ -416,5 +444,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedShopSlot = null;
         isTouchingItem = false;
         touchedItemBox = null;
+        isTouchingJobBox = false;
+        touchedJobBox = null;
+        isTouchingWeed = false;
+        touchedWeed = null;
+        isTouchingItemTransformer = false;
+        touchedItemTransformer = null;
     }
 }

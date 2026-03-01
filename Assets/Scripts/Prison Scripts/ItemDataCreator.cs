@@ -122,7 +122,7 @@ public class ItemDataCreator : MonoBehaviour
             displayName, deskTier, inInmateInv, cost, inItemFetchFavors, inStolenItemFavors, inmateWeapon,
             isContraband, causeSolitary, durability, chippingPower, cuttingPower, ventBreakingPower,
             diggingPower, health, energy, defense, strength, opinion, cameraBlock, sprite, currentDurability,
-            id, prefab, false
+            id, prefab, false, null
         );
 
         return itemData;

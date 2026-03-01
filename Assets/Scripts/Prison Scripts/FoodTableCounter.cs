@@ -24,9 +24,8 @@ public class FoodTableCounter : MonoBehaviour
             foodCount = 5;
         }
 
-        if(period != "L" && period != "B" && period != "D")
+        if(period != "L" && period != "B" && period != "D" && !shouldMakeFood)
         {
-            foodCount = 0;
             shouldMakeFood = true;
         }
         else if((period == "L" ||  period == "B" || period == "D") && shouldMakeFood)

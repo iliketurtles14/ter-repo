@@ -132,6 +132,7 @@ public class MissionAsk : MonoBehaviour
             case "stealInmateBody":
             case "stealGuardBody":
                 ItemData data = creator.CreateItemData(mission.item);
+                data.inmateGiveName = mission.giver;
                 data.forFavor = true;
                 GameObject targetNPC = null;
 
@@ -167,6 +168,7 @@ public class MissionAsk : MonoBehaviour
                 break;
             case "stealDesk":
                 data = creator.CreateItemData(mission.item);
+                data.inmateGiveName = mission.giver;
                 data.forFavor = true;
                 targetNPC = null;
 

@@ -30,6 +30,8 @@ public class Giving : MonoBehaviour
     private SpecialMessages specialMessagesScript;
     private MissionAsk missionAskScript;
     private ShopMenu shopMenuScript;
+    private Schedule scheduleScript;
+    private Jobs jobsScript;
     private void Start()
     {
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
@@ -44,6 +46,8 @@ public class Giving : MonoBehaviour
         specialMessagesScript = ic.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
         shopMenuScript = mc.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
+        scheduleScript = ic.Find("Period").GetComponent<Schedule>();
+        jobsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Jobs>();
 
         canChangeMoney = true;
 
@@ -309,10 +313,25 @@ public class Giving : MonoBehaviour
             }
 
             GiftFavor();
+            GiftJob();
         }
 
         item = null;
         money = 0;
+    }
+    private void GiftJob()
+    {
+        if(item.itemData.inmateGiveName == null)
+        {
+            return;
+        }
+
+        string job = player.GetComponent<PlayerCollectionData>().playerData.job;//1.5/7
+        if(scheduleScript.periodCode == "W" && (job == "Mailman" || job == "Library") &&
+            item.itemData.inmateGiveName == currentNPC.GetComponent<NPCCollectionData>().npcData.displayName)
+        {
+            jobsScript.AddToQuota(1.5f, 7);
+        }
     }
     private void GiftFavor()
     {
