@@ -96,6 +96,7 @@
     <type fullname="OutfitController" preserve="all" />
     <type fullname="PanelSelect" preserve="all" />
     <type fullname="PatchNotes" preserve="all" />
+    <type fullname="PatchNotesSet" preserve="all" />
     <type fullname="Pause" preserve="all" />
     <type fullname="PauseController" preserve="all" />
     <type fullname="PButtonController" preserve="all" />
