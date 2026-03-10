@@ -11,6 +11,7 @@ public class ItemBoxes : MonoBehaviour
     Inventory inventoryScript;
     Transform aStar;
     Transform ic;
+    Transform player;
     List<GameObject> invSlots = new List<GameObject>();
     List<string> inmateNames = new List<string>();
     private void Start()
@@ -18,6 +19,8 @@ public class ItemBoxes : MonoBehaviour
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         creator = GetComponent<ItemDataCreator>();
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        inventoryScript = GetComponent<Inventory>();
+        player = RootObjectCache.GetRoot("Player").transform;
         aStar = RootObjectCache.GetRoot("A*").transform;
         foreach(Transform child in ic.Find("GUIPanel"))
         {
@@ -44,51 +47,55 @@ public class ItemBoxes : MonoBehaviour
     {
         if(mcs.isTouchingItemBox && Input.GetMouseButtonDown(0))
         {
-            switch (mcs.touchedItemBox.name)
+            float distance = Vector2.Distance(player.position, mcs.touchedItemBox.transform.position);
+            if(distance <= 2.4f)
             {
-                case "BookBox":
-                    AddItem(77, true);
-                    break;
-                case "DeliveryTruckDown":
-                case "DeliveryTruckUp":
-                case "DeliveryTruckLeft":
-                case "DeliveryTruckRight":
-                    int rand = UnityEngine.Random.Range(0, 2);
-                    if(rand == 0)
-                    {
-                        AddItem(116, false);
-                    }
-                    else
-                    {
-                        AddItem(117, false);
-                    }
-                    break;
-                case "DirtyLaundry":
-                    rand = UnityEngine.Random.Range(0, 2);
-                    if(rand == 0)
-                    {
-                        AddItem(37, false);
-                    }
-                    else
-                    {
-                        AddItem(38, false);
-                    }
-                    break;
-                case "Freezer":
-                    AddItem(147, false);
-                    break;
-                case "MailBox":
-                    AddItem(107, true);
-                    break;
-                case "MetalBox":
-                    AddItem(130, false);
-                    break;
-                case "TailorBox":
-                    AddItem(94, false);
-                    break;
-                case "TimberBox":
-                    AddItem(139, false);
-                    break;
+                switch (mcs.touchedItemBox.name)
+                {
+                    case "BookBox":
+                        AddItem(77, true);
+                        break;
+                    case "DeliveryTruckDown":
+                    case "DeliveryTruckUp":
+                    case "DeliveryTruckLeft":
+                    case "DeliveryTruckRight":
+                        int rand = UnityEngine.Random.Range(0, 2);
+                        if (rand == 0)
+                        {
+                            AddItem(116, false);
+                        }
+                        else
+                        {
+                            AddItem(117, false);
+                        }
+                        break;
+                    case "DirtyLaundry":
+                        rand = UnityEngine.Random.Range(0, 2);
+                        if (rand == 0)
+                        {
+                            AddItem(37, false);
+                        }
+                        else
+                        {
+                            AddItem(38, false);
+                        }
+                        break;
+                    case "Freezer":
+                        AddItem(147, false);
+                        break;
+                    case "MailBox":
+                        AddItem(107, true);
+                        break;
+                    case "MetalBox":
+                        AddItem(130, false);
+                        break;
+                    case "TailorBox":
+                        AddItem(94, false);
+                        break;
+                    case "TimberBox":
+                        AddItem(139, false);
+                        break;
+                }
             }
         }
     }
@@ -117,22 +124,13 @@ public class ItemBoxes : MonoBehaviour
         {
             int rand = UnityEngine.Random.Range(0, inmateNames.Count);
             string randName = inmateNames[rand];
-            data.inmateGiveName = randName;
+            data.inmateGiveName = randName.Replace("\n", "").Replace("\r", "");
         }
         if (!invIsFull)
         {
             for(int i = 0; i < 6; i++)
             {
-                try
-                {
-                    if (inventoryScript.inventory[i].itemData == null)
-                    {
-                        inventoryScript.inventory[i].itemData = data;
-                        invSlots[i].GetComponent<Image>().sprite = data.sprite;
-                        break;
-                    }
-                }
-                catch
+                if (inventoryScript.inventory[i].itemData == null)
                 {
                     inventoryScript.inventory[i].itemData = data;
                     invSlots[i].GetComponent<Image>().sprite = data.sprite;

@@ -785,6 +785,7 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("JobPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         uic.Find("ExtrasPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         uic.Find("AdvancedHelpPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("WorkDoorPanel").Find("ExitButton").GetComponent<Image>().sprite = UISprites[542];
         //dirt
         grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
     }

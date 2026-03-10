@@ -65,6 +65,11 @@ public class Inventory : MonoBehaviour
         Image slot6Image = slot6.GetComponent<Image>();
         GameObject itemObject = mouseCollisionScript.touchedItem;
 
+        List<Transform> slots = new List<Transform>()
+        {
+            slot1, slot2, slot3, slot4, slot5, slot6
+        };
+
         for(int i = 0; i < 6; i++)
         {
             try
@@ -72,9 +77,14 @@ public class Inventory : MonoBehaviour
                 if (inventory[i].itemData.sprite == null)
                 {
                     inventory[i] = new InventoryItem();
+                    slots[i].GetComponent<Image>().sprite = ClearSprite;
                 }
             }
-            catch { }
+            catch 
+            {
+                inventory[i] = new InventoryItem();
+                slots[i].GetComponent<Image>().sprite = ClearSprite;
+            }
         }
 
         if(inventory[0].itemData == null || 

@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -152,7 +151,7 @@ public class DeskRNG : MonoBehaviour
             Debug.Log("PLEASE DONT FORGET TO CHANGE THIS");
             tokens = 20;
 
-            for(int i = 0; i < 274; i++)
+            for(int i = 0; i < loadPrisonScript.currentMap.itemAmount; i++)
             {
                 switch (itemDeskTierDict[i])
                 {
@@ -346,7 +345,7 @@ public class DeskRNG : MonoBehaviour
     }
     private void MakeItemDeskTierDict()
     {
-        for(int i = 0; i < 274; i++)
+        for(int i = 0; i < loadPrisonScript.currentMap.itemAmount; i++)
         {
             string str;
             if(i.ToString().Length == 1)

@@ -94,7 +94,10 @@ public class Missions : MonoBehaviour
 
         foreach(Transform npc in aStar)
         {
-            npc.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(false);
+            if (npc.name.StartsWith("Inmate"))
+            {
+                npc.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(false);
+            }
         }
 
         MakeItemLists();

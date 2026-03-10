@@ -1286,6 +1286,30 @@ public class LoadPrison : MonoBehaviour
                     case "YardWorkBox":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[211];
                         break;
+                    case "BlankDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[179];
+                        break;
+                    case "StaffDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[176];
+                        break;
+                    case "WhiteDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[190];
+                        break;
+                    case "GuardDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[327];
+                        break;
+                    case "EnteranceDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[177];
+                        break;
+                    case "WorkDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[174];
+                        break;
+                    case "CellDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[178];
+                        break;
+                    case "UtilityDoor":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[175];
+                        break;
                 }
             }
         }
@@ -1728,7 +1752,22 @@ public class LoadPrison : MonoBehaviour
             zoneVars.Add(vars);
         }
 
-        Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        //get amount of items
+        int amountOfItems = 0;
+        foreach(string str in items)
+        {
+            if(str.Contains("[") && str.Contains("]"))
+            {
+                try
+                {
+                    Convert.ToInt32(str.Replace("[", "").Replace("]", "").Replace("\n", "").Replace("\r", ""));
+                    amountOfItems++;
+                }
+                catch { }
+            }
+        }
+
+        Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

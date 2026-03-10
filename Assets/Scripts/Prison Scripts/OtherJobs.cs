@@ -38,12 +38,14 @@ public class OtherJobs : MonoBehaviour //this is for all jobs that arent tied to
                         id = 77;
                     }
 
+                    Debug.Log("here");
                     if(selectionScript.aSlotSelected && inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id == id &&
                         mcs.isTouchingDesk && Input.GetMouseButtonDown(0))
                     {
                         ItemData selectedItem = inventoryScript.inventory[selectionScript.selectedSlotNum].itemData;
                         string targetNPC = selectedItem.inmateGiveName;
-                        if(targetNPC == null)
+                        Debug.Log("here1");
+                        if(string.IsNullOrEmpty(targetNPC))
                         {
                             return;
                         }
@@ -62,6 +64,7 @@ public class OtherJobs : MonoBehaviour //this is for all jobs that arent tied to
                         {
                             return;
                         }
+                        Debug.Log("here2");
 
                         inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
                         jobsScript.AddToQuota(1, 7);

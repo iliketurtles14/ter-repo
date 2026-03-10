@@ -93,6 +93,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedSpill;
     public bool isTouchingItemTransformer;
     public GameObject touchedItemTransformer;
+    public bool isTouchingJobBoard;
+    public GameObject touchedJobBoard;
+    public bool isTouchingExtraNPC;
+    public GameObject touchedExtraNPC;
     void Update()
     {
         ClearCollisions();
@@ -119,10 +123,12 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPCInvPanel",
             "Extra",
             "NPC",
+            "ExtraNPC",
             "Desk",
             "ItemBox",
             "JobBox",
             "ItemTransformer",
+            "JobBoard",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -221,6 +227,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingNPC = true;
                     touchedNPC = highestPriorityObject;
                     break;
+                case "ExtraNPC":
+                    isTouchingExtraNPC = true;
+                    touchedExtraNPC = highestPriorityObject;
+                    break;
                 case "Desk":
                     isTouchingDesk = true;
                     touchedDesk = highestPriorityObject;
@@ -236,6 +246,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "ItemTransformer":
                     isTouchingItemTransformer = true;
                     touchedItemTransformer = highestPriorityObject;
+                    break;
+                case "JobBoard":
+                    isTouchingJobBoard = true;
+                    touchedJobBoard = highestPriorityObject;
                     break;
                 case "Ladder(Roof)":
                     isTouchingRoofLadder = true;
@@ -442,13 +456,19 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedGiveSlot = null;
         isTouchingShopSlot = false;
         touchedShopSlot = null;
-        isTouchingItem = false;
+        isTouchingItemBox = false;
         touchedItemBox = null;
         isTouchingJobBox = false;
         touchedJobBox = null;
         isTouchingWeed = false;
         touchedWeed = null;
+        isTouchingSpill = false;
+        touchedSpill = null;
         isTouchingItemTransformer = false;
         touchedItemTransformer = null;
+        isTouchingJobBoard = false;
+        touchedJobBoard = null;
+        isTouchingExtraNPC = false;
+        touchedExtraNPC = null;
     }
 }

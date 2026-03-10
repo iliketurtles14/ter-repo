@@ -23,7 +23,7 @@ public class InventorySelection : MonoBehaviour
     public bool slot6Selected;
     public bool aSlotSelected;
     private GameObject InventoryCanvas;
-    private MouseCollisionOnItems mouseCollisionScript;
+    private MouseCollisionOnItems mcs;
     private bool isTouchingSlotWithItem;
     private bool isTouchingSlot;
     private GameObject touchedSlot;
@@ -36,7 +36,7 @@ public class InventorySelection : MonoBehaviour
     public void Start()
     {
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
-        mouseCollisionScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         inventoryScript = GetComponent<Inventory>();
 
         //define the Images
@@ -96,11 +96,11 @@ public class InventorySelection : MonoBehaviour
         }
         
         //check
-        isTouchingSlot = mouseCollisionScript.isTouchingInvSlot;
+        isTouchingSlot = mcs.isTouchingInvSlot;
         inventoryList = inventoryScript.inventory;
         if (isTouchingSlot)
         {
-            touchedSlot = mouseCollisionScript.touchedInvSlot;
+            touchedSlot = mcs.touchedInvSlot;
             slotName = touchedSlot.name;
         }
         else { slotName = null; }
@@ -162,7 +162,7 @@ public class InventorySelection : MonoBehaviour
         //when clicking an item in the slot
         if (Input.GetMouseButtonDown(0) && isTouchingSlotWithItem)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
 
             switch (slotName)
             {
@@ -184,13 +184,13 @@ public class InventorySelection : MonoBehaviour
             (slot5Selected && inventoryList[4].itemData == null) ||
             (slot6Selected && inventoryList[5].itemData == null))
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
         }
 
         //if you click on screen not on another slot
         if (!isTouchingSlot && Input.GetMouseButtonDown(0))
         {
-            ClearAllSelections();
+            ClearAllSelections(true);
         }
         
         //if you click on an empty slot
@@ -201,49 +201,77 @@ public class InventorySelection : MonoBehaviour
             (isTouchingSlot && !isTouchingSlotWithItem && Input.GetMouseButtonDown(0) && slot5Selected && slotName != "Slot5") ||
             (isTouchingSlot && !isTouchingSlotWithItem && Input.GetMouseButtonDown(0) && slot6Selected && slotName != "Slot6"))
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
         }
 
         //keybind version (1-6)
         if (Input.GetKeyDown(KeyCode.Alpha1) && inventoryList[0].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot1Selected = true;
             slot1SelectionImage.enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && inventoryList[1].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot2Selected = true;
             slot2SelectionImage.enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && inventoryList[2].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot3Selected = true;
             slot3SelectionImage.enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && inventoryList[3].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot4Selected = true;
             slot4SelectionImage.enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5) && inventoryList[4].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot5Selected = true;
             slot5SelectionImage.enabled = true;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6) && inventoryList[5].itemData != null)
         {
-            ClearAllSelections();
+            ClearAllSelections(false);
             slot6Selected = true;
             slot6SelectionImage.enabled = true;
         }
     }
-    public void ClearAllSelections()
+    public void ClearAllSelections(bool wait)
     {
+        if (wait)
+        {
+            StartCoroutine(ClearWait());
+        }
+        else
+        {
+            ClearNoWait();
+        }
+    }
+    private void ClearNoWait()
+    {
+        slot1SelectionImage.enabled = false;
+        slot2SelectionImage.enabled = false;
+        slot3SelectionImage.enabled = false;
+        slot4SelectionImage.enabled = false;
+        slot5SelectionImage.enabled = false;
+        slot6SelectionImage.enabled = false;
+        slot1Selected = false;
+        slot2Selected = false;
+        slot3Selected = false;
+        slot4Selected = false;
+        slot5Selected = false;
+        slot6Selected = false;
+        aSlotSelected = false;
+    }
+    private IEnumerator ClearWait()
+    {
+        yield return new WaitForEndOfFrame();
         slot1SelectionImage.enabled = false;
         slot2SelectionImage.enabled = false;
         slot3SelectionImage.enabled = false;

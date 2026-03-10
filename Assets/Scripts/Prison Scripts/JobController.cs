@@ -41,7 +41,7 @@ public class JobController : MonoBehaviour
         }
         if (map.tailor)
         {
-            availableJobs.Add("Tailorshop");
+            availableJobs.Add("Tailor");
         }
         if (map.laundry)
         {

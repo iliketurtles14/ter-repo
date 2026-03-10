@@ -821,6 +821,16 @@ public class LoadMap : MonoBehaviour
                 canvas4.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 3.2f);
                 placedObj.AddComponent<MESignTextContainer>();
                 break;
+            case "WorkDoor":
+                GameObject canvas5 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                canvas5.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "workDoor";
+                canvas5.transform.parent = canvases.Find(layer);
+                canvas5.transform.position = placedObj.transform.position;
+                canvas5.name = "SpecialObjectCanvas";
+                canvas5.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);
+                canvas5.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+                placedObj.AddComponent<MEJobContainer>();
+                break;
         }
     }
     public List<string> GetINISet(string header, string[] file)

@@ -76,6 +76,9 @@ TagManager:
   - ItemBox
   - JobBox
   - ItemTransformer
+  - Door
+  - JobBoard
+  - ExtraNPC
   layers:
   - Default
   - TransparentFX

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine.AI;
+using JetBrains.Annotations;
 
 public class SetUpNPCs : MonoBehaviour
 {
@@ -79,8 +80,56 @@ public class SetUpNPCs : MonoBehaviour
                 }
             }
         }
-        
-        for(int i = 0; i < npcAmount; i++)
+
+        //list of available jobs
+        List<string> availableJobs = new List<string>();
+        if (map.janitor)
+        {
+            availableJobs.Add("Janitor");
+        }
+        if (map.gardening)
+        {
+            availableJobs.Add("Gardening");
+        }
+        if (map.library)
+        {
+            availableJobs.Add("Library");
+        }
+        if (map.mailman)
+        {
+            availableJobs.Add("Mailman");
+        }
+        if (map.deliveries)
+        {
+            availableJobs.Add("Deliveries");
+        }
+        if (map.metalshop)
+        {
+            availableJobs.Add("Metalshop");
+        }
+        if (map.woodshop)
+        {
+            availableJobs.Add("Woodshop");
+        }
+        if (map.tailor)
+        {
+            availableJobs.Add("Tailor");
+        }
+        if (map.laundry)
+        {
+            availableJobs.Add("Laundry");
+        }
+        if (map.kitchen)
+        {
+            availableJobs.Add("Kitchen");
+        }
+        if (availableJobs.Contains(map.startingJob))
+        {
+            availableJobs.Remove(map.startingJob);
+        }
+
+
+        for (int i = 0; i < npcAmount; i++)
         {
             GameObject npc = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/NPC"));
             NPCData data = new NPCData();
@@ -116,13 +165,67 @@ public class SetUpNPCs : MonoBehaviour
             }
             npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2);
 
+            //npc jobs
+            int rand;
+            if(availableJobs.Count > 0)
+            {
+                rand = UnityEngine.Random.Range(0, availableJobs.Count);
+                npc.GetComponent<NPCCollectionData>().npcData.job = availableJobs[rand];
+                availableJobs.RemoveAt(rand);
+            }
             npc.GetComponent<SpriteRenderer>().size = new Vector2(.16f, .16f);
 
             npc.GetComponent<NavMeshAgent>().updateRotation = false;
             npc.GetComponent<NavMeshAgent>().updateUpAxis = false;
             //set npc pos randomly
-            int rand = UnityEngine.Random.Range(0, waypoints.Count);
+            rand = UnityEngine.Random.Range(0, waypoints.Count);
             npc.transform.position = waypoints[rand].position;
+        }
+
+        //extra npc stuff
+        bool spawnExists = false;
+        bool jobExists = false;
+        bool medicExists = false;
+        bool wardenExists = false;
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            switch (obj.name)
+            {
+                case "NPCSpawnpoint":
+                    spawnExists = true;
+                    break;
+                case "JobWaypoint":
+                    jobExists = true;
+                    break;
+                case "MedicWaypoint":
+                    medicExists = true;
+                    break;
+                case "GuardWaypoint":
+                    wardenExists = true;
+                    break;
+            }
+        }
+
+        if (spawnExists)
+        {
+            if (jobExists)
+            {
+                GameObject jobOfficer = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/ExtraNPC"));
+                jobOfficer.name = "JobOfficer";
+                jobOfficer.transform.parent = aStar;
+            }
+            if (medicExists)
+            {
+                GameObject medic = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/ExtraNPC"));
+                medic.name = "Medic";
+                medic.transform.parent = aStar;
+            }
+            if (wardenExists)
+            {
+                GameObject warden = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/ExtraNPC"));
+                warden.name = "Warden";
+                warden.transform.parent = aStar;
+            }
         }
     }
 }

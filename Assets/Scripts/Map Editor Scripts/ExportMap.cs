@@ -267,6 +267,10 @@ public class ExportMap : MonoBehaviour
                     string body = obj.GetComponent<MESignTextContainer>().body;
                     text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
                     break;
+                case "WorkDoor":
+                    string job = obj.GetComponent<MEJobContainer>().job;
+                    text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
             }
         }
         text += "\n";
@@ -299,6 +303,10 @@ public class ExportMap : MonoBehaviour
                     string header = obj.GetComponent<MESignTextContainer>().header;
                     string body = obj.GetComponent<MESignTextContainer>().body;
                     text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
+                case "WorkDoor":
+                    string job = obj.GetComponent<MEJobContainer>().job;
+                    text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
                     break;
             }
         }
@@ -333,6 +341,10 @@ public class ExportMap : MonoBehaviour
                     string body = obj.GetComponent<MESignTextContainer>().body;
                     text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
                     break;
+                case "WorkDoor":
+                    string job = obj.GetComponent<MEJobContainer>().job;
+                    text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
             }
         }
         text += "\n";
@@ -365,6 +377,10 @@ public class ExportMap : MonoBehaviour
                     string header = obj.GetComponent<MESignTextContainer>().header;
                     string body = obj.GetComponent<MESignTextContainer>().body;
                     text += "{HEADER}:" + Regex.Escape(header) + "{BODY}:" + Regex.Escape(body) + "\n";
+                    break;
+                case "WorkDoor":
+                    string job = obj.GetComponent<MEJobContainer>().job;
+                    text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
                     break;
             }
         }

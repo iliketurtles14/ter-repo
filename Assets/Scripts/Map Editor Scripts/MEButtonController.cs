@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using Ookii.Dialogs;
 using SFB;
 using System;
@@ -921,6 +922,11 @@ public class MEButtonController : MonoBehaviour
                 GetComponent<MESignController>().currentSign = currentObject;
                 uic.Find("WhiteSignPanel").gameObject.SetActive(true);
                 break;
+            case "workDoor":
+                GetComponent<MEJobController>().currentDoor = currentObject;
+                uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text = currentObject.GetComponent<MEJobContainer>().job;
+                uic.Find("WorkDoorPanel").gameObject.SetActive(true);
+                break;
         }
         uic.Find("Black").gameObject.SetActive(true);
         DeactivateButtonsForSpecialObjects();
@@ -948,6 +954,13 @@ public class MEButtonController : MonoBehaviour
 
         int slotNum = Convert.ToInt32(clicked.name);
         GetComponent<MEDeskController>().SelectSlot(slotNum);
+    }
+    public void WorkDoorClose()
+    {
+        GetComponent<MEJobController>().currentDoor.GetComponent<MEJobContainer>().job = uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text;
+        uic.Find("WorkDoorPanel").gameObject.SetActive(false);
+        uic.Find("Black").gameObject.SetActive(false);
+        ActivateButtonsForSpecialObjects();
     }
 
     private Sprite ConvertPNGToSprite(string path)

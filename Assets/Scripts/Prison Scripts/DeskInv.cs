@@ -43,6 +43,7 @@ public class DeskInv : MonoBehaviour
     private List<GameObject> currentAnimatingSlots = new List<GameObject>();
     private SpecialMessages specialMessagesScript;
     private MissionAsk missionAskScript;
+    private InventorySelection selectionScript;
     public void Start()
     {
         //get vars
@@ -60,6 +61,7 @@ public class DeskInv : MonoBehaviour
         HPAScript = player.GetComponent<HPAChecker>();
         specialMessagesScript = InventoryCanvas.transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         missionAskScript = MenuCanvas.transform.Find("MissionPanel").GetComponent<MissionAsk>();
+        selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -301,7 +303,7 @@ public class DeskInv : MonoBehaviour
     }
     public IEnumerator OpenDesk()
     {
-        if (isOpening)
+        if (isOpening || selectionScript.aSlotSelected)
         {
             yield break;
         }

@@ -17,6 +17,7 @@ public class Routine : MonoBehaviour
     private string period;
     public string periodCode;
     private Schedule scheduleScript;
+    private bool isSpeedingUp;
     public void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -41,6 +42,24 @@ public class Routine : MonoBehaviour
     {
         period = scheduleScript.period;
         periodCode = scheduleScript.periodCode;
+
+        if (Input.GetKeyDown(KeyCode.F1) && !isSpeedingUp)
+        {
+            isSpeedingUp = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.F1) && isSpeedingUp)
+        {
+            isSpeedingUp = false;
+        }
+
+        if (isSpeedingUp)
+        {
+            interval = .01f;
+        }
+        else
+        {
+            interval = .75f;
+        }
     }
     public IEnumerator TimerCoroutine()
     {

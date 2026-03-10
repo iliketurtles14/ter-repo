@@ -1,4 +1,3 @@
-using Ookii.Dialogs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,6 +79,13 @@ public class NPCSpeech : MonoBehaviour
     {
         while (true)
         {
+            if((name == "Warden" || name == "Medic" || name == "JobOfficer") &&
+                GetComponent<SpriteRenderer>().enabled == false)
+            {
+                yield return null;
+                continue;
+            }
+            
             if (!isTalking && !isWaiting && !textBoxIsActive)
             {
                 isWaiting = true;
@@ -204,6 +210,18 @@ public class NPCSpeech : MonoBehaviour
         if (npc.name.StartsWith("Guard"))
         {
             npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/GuardSpeechBackground");
+        }
+        switch (npc.name)
+        {
+            case "Warden":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/WardenSpeechBackground");
+                break;
+            case "JobOfficer":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/JobOfficerSpeechBackground");
+                break;
+            case "Medic":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/MedicSpeechBackground");
+                break;
         }
 
         if (isMad && npc.name.StartsWith("Guard"))

@@ -26,6 +26,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
     private Sprite washerWashing3;
     private Sprite washerWashing4;
     private Sprite washerDone;
+    private Transform player;
     private void Start()
     {
         selectionScript = GetComponent<InventorySelection>();
@@ -34,6 +35,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
         applyScript = GetComponent<ApplyPrisonData>();
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         creator = GetComponent<ItemDataCreator>();
+        player = RootObjectCache.GetRoot("Player").transform;
 
         foreach(Transform child in ic.Find("GUIPanel"))
         {
@@ -79,81 +81,90 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
             }
         }
 
+
         if (mcs.isTouchingItemTransformer && selectionScript.aSlotSelected && Input.GetMouseButtonDown(0) &&
             !busyTransformers.Contains(mcs.touchedItemTransformer) && !doneTransformers.Contains(mcs.touchedItemTransformer))
         {
-            string transName = mcs.touchedItemTransformer.name;
-            int id = inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id;
-
-            if (transName == "Oven" && (id == 147 || id == 203))
+            float distance = Vector2.Distance(player.position, mcs.touchedItemTransformer.transform.position);
+            if(distance <= 2.4f)
             {
-                inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
-                busyTransformers.Add(mcs.touchedItemTransformer);
-                StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
+                string transName = mcs.touchedItemTransformer.name;
+                int id = inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id;
 
-                switch (id)
+                if (transName == "Oven" && (id == 147 || id == 203))
                 {
-                    case 147:
-                        mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 84;
-                        break;
-                    case 203:
-                        mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 180;
-                        break;
-                }
-            }
-            else if (transName == "Washer" && (id == 38 || id == 37))
-            {
-                inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
-                busyTransformers.Add(mcs.touchedItemTransformer);
-                StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
+                    inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
+                    busyTransformers.Add(mcs.touchedItemTransformer);
+                    StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
 
-                switch (id)
-                {
-                    case 38:
-                        mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 39;
-                        break;
-                    case 37:
-                        mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 29;
-                        break;
+                    switch (id)
+                    {
+                        case 147:
+                            mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 84;
+                            break;
+                        case 203:
+                            mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 180;
+                            break;
+                    }
                 }
-            }
-            else if(transName == "LicensePress" && id == 130)
-            {
-                inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = creator.CreateItemData(182);
-                invSlots[selectionScript.selectedSlotNum].GetComponent<Image>().sprite = creator.CreateItemData(182).sprite;
+                else if (transName == "Washer" && (id == 38 || id == 37))
+                {
+                    inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
+                    busyTransformers.Add(mcs.touchedItemTransformer);
+                    StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
+
+                    switch (id)
+                    {
+                        case 38:
+                            mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 39;
+                            break;
+                        case 37:
+                            mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = 29;
+                            break;
+                    }
+                }
+                else if (transName == "LicensePress" && id == 130)
+                {
+                    inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = creator.CreateItemData(182);
+                    invSlots[selectionScript.selectedSlotNum].GetComponent<Image>().sprite = creator.CreateItemData(182).sprite;
+                }
             }
         }
         else if (mcs.isTouchingItemTransformer && doneTransformers.Contains(mcs.touchedItemTransformer) &&
-            !invIsFull)
+            !invIsFull && Input.GetMouseButtonDown(0))
         {
-            for (int i = 0; i < 6; i++)
+            float distance = Vector2.Distance(player.position, mcs.touchedItemTransformer.transform.position);
+            if (distance <= 2.4f)
             {
-                bool canPutIn = false;
-                try
+                for (int i = 0; i < 6; i++)
                 {
-                    canPutIn = inventoryScript.inventory[i].itemData == null;
-                }
-                catch
-                {
-                    canPutIn = true;
-                }
-                if (canPutIn)
-                {
-                    inventoryScript.inventory[i].itemData = creator.CreateItemData(mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID);
-                    invSlots[i].GetComponent<Image>().sprite = inventoryScript.inventory[i].itemData.sprite;
-                    doneTransformers.Remove(mcs.touchedItemTransformer);
-                    busyTransformers.Remove(mcs.touchedItemTransformer);
-                    mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = -1;
-                    switch (mcs.touchedItemTransformer.name)
+                    bool canPutIn = false;
+                    try
                     {
-                        case "Washer":
-                            mcs.touchedItemTransformer.GetComponent<SpriteRenderer>().sprite = washerEmpty;
-                            break;
-                        case "Oven":
-                            mcs.touchedItemTransformer.GetComponent<SpriteRenderer>().sprite = ovenEmpty;
-                            break;
+                        canPutIn = inventoryScript.inventory[i].itemData == null;
                     }
-                    break;
+                    catch
+                    {
+                        canPutIn = true;
+                    }
+                    if (canPutIn)
+                    {
+                        inventoryScript.inventory[i].itemData = creator.CreateItemData(mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID);
+                        invSlots[i].GetComponent<Image>().sprite = inventoryScript.inventory[i].itemData.sprite;
+                        doneTransformers.Remove(mcs.touchedItemTransformer);
+                        busyTransformers.Remove(mcs.touchedItemTransformer);
+                        mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = -1;
+                        switch (mcs.touchedItemTransformer.name)
+                        {
+                            case "Washer":
+                                mcs.touchedItemTransformer.GetComponent<SpriteRenderer>().sprite = washerEmpty;
+                                break;
+                            case "Oven":
+                                mcs.touchedItemTransformer.GetComponent<SpriteRenderer>().sprite = ovenEmpty;
+                                break;
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -191,6 +202,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
                 }
                 break;
         }
+        busyTransformers.Remove(obj);
         doneTransformers.Add(obj);
         while (doneTransformers.Contains(obj))
         {

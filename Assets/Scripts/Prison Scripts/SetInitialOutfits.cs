@@ -69,6 +69,11 @@ public class SetInitialOutfits : MonoBehaviour
 
         foreach(Transform npc in aStar)
         {
+            if(!npc.name.Contains("Inmate") && !npc.name.Contains("Guard"))
+            {
+                continue;
+            }
+            
             NPCData npcData = npc.GetComponent<NPCCollectionData>().npcData;
             
             Debug.Log($"Processing {npc.name}, inventory is null? {npcData.inventory == null}");

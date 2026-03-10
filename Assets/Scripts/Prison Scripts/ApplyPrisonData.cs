@@ -463,6 +463,10 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> GuardElfOutfitZippingSprites = new List<Sprite>();
     public List<Sprite> GuardElfOutfitHoldingSprites = new List<Sprite>();
 
+    public List<Sprite> MedicSprites = new List<Sprite>();
+    public List<Sprite> JobOfficerSprites = new List<Sprite>();
+    public List<Sprite> WardenSprites = new List<Sprite>();
+
     private void Start()
     {
         senderScript = DataSender.instance;
@@ -588,6 +592,17 @@ public class ApplyPrisonData : MonoBehaviour
         {
             slot.GetComponent<Image>().sprite = UISprites[33];
         }
+
+        //job menu
+        mc.Find("JobMenuPanel").GetComponent<Image>().sprite = UISprites[65];
+        mc.Find("JobMenuPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[377];
+        spriteState = mc.Find("JobMenuPanel").Find("BackButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[378];
+        mc.Find("JobMenuPanel").Find("ApplyButton").GetComponent<Image>().sprite = UISprites[377];
+        mc.Find("JobMenuPanel").Find("ResignButton").GetComponent<Image>().sprite = UISprites[377];
+        mc.Find("JobMenuPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("JobMenuPanel").Find("ApplyButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("JobMenuPanel").Find("ResignButton").GetComponent<Button>().spriteState = spriteState;
 
         //snipers
         sniperSprites.Add(NPCSprites[1445]);
@@ -2724,5 +2739,32 @@ public class ApplyPrisonData : MonoBehaviour
         GuardElfOutfitHoldingSprites.Add(NPCSprites[2453]);
 
         //medic sprites are in prison objects
+        //10, 9, 15, 16, 11, 12, 14, 13
+        MedicSprites.Add(PrisonObjectSprites[10]);
+        MedicSprites.Add(PrisonObjectSprites[9]);
+        MedicSprites.Add(PrisonObjectSprites[15]);
+        MedicSprites.Add(PrisonObjectSprites[16]);
+        MedicSprites.Add(PrisonObjectSprites[11]);
+        MedicSprites.Add(PrisonObjectSprites[12]);
+        MedicSprites.Add(PrisonObjectSprites[14]);
+        MedicSprites.Add(PrisonObjectSprites[13]);
+        //558, 559, 564, 565, 560, 561, 563, 562
+        WardenSprites.Add(NPCSprites[558]);
+        WardenSprites.Add(NPCSprites[559]);
+        WardenSprites.Add(NPCSprites[564]);
+        WardenSprites.Add(NPCSprites[565]);
+        WardenSprites.Add(NPCSprites[560]);
+        WardenSprites.Add(NPCSprites[561]);
+        WardenSprites.Add(NPCSprites[563]);
+        WardenSprites.Add(NPCSprites[562]);
+        //566, 559, 571, 570, 568, 569, 573, 572
+        JobOfficerSprites.Add(NPCSprites[566]);
+        JobOfficerSprites.Add(NPCSprites[567]);
+        JobOfficerSprites.Add(NPCSprites[571]);
+        JobOfficerSprites.Add(NPCSprites[570]);
+        JobOfficerSprites.Add(NPCSprites[568]);
+        JobOfficerSprites.Add(NPCSprites[569]);
+        JobOfficerSprites.Add(NPCSprites[573]);
+        JobOfficerSprites.Add(NPCSprites[572]);
     }
 }

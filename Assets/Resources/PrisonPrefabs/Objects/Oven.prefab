@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: 5693458902486959858}
   - component: {fileID: -4119594485901968387}
-  - component: {fileID: -1752503226687683450}
+  - component: {fileID: -7465870853846698334}
   m_Layer: 10
   m_Name: Oven
   m_TagString: ItemTransformer
@@ -139,7 +139,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 3.2}
   m_EdgeRadius: 0
---- !u!114 &-1752503226687683450
+--- !u!114 &-7465870853846698334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4104488947152850935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faffff7c73758d049bf5f4faf70d9bc9, type: 3}
+  m_Script: {fileID: 11500000, guid: ad0dedb42e59ed74c9406c34d107392b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MEDeskItemIDContainer
-  id: -1
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTransformerData
+  heldID: -1

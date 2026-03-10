@@ -1,18 +1,20 @@
 using NUnit.Framework;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Tooltips : MonoBehaviour
 {
     private Transform PlayerTransform;
     private GameObject InventoryCanvas;
+    private Map currentMap;
     private GameObject menuCanvas;
     private GameObject aStar;
     private Transform TooltipPanelTransform;
@@ -21,6 +23,7 @@ public class Tooltips : MonoBehaviour
     private GameObject TooltipTextBox;
     private string toPrint;
     private string printDurability;
+    private string printInmateName;
     private int textWidth;
     public bool showingTooltip;
     public string tooltipType; //invItem, groundItem, deskItem, wall, 
@@ -91,6 +94,16 @@ public class Tooltips : MonoBehaviour
         npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
         givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
         shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
     }
     public void Update()
     {
@@ -136,10 +149,16 @@ public class Tooltips : MonoBehaviour
             }
             if (inventoryList[invSlotNumber].itemData.inmateGiveName != null)
             {
-                toPrint = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
+                printInmateName = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s ";
+                tooltipType = "invItem";
+                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
-            tooltipType = "invItem";
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            else
+            {
+                printInmateName = "'s ";
+                tooltipType = "invItem";
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
+            }
             return;
         }
         else if ((showingTooltip && tooltipType == "invItem" && !isTouchingInvSlot))
@@ -149,7 +168,8 @@ public class Tooltips : MonoBehaviour
         } 
         else if ((showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData == null) ||
             (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.currentDurability != inventoryList[printedInvSlotNumber].itemData.currentDurability))
+            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.currentDurability != inventoryList[printedInvSlotNumber].itemData.currentDurability) ||
+            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
         {
             DestroyTooltip();
             return;
@@ -189,10 +209,16 @@ public class Tooltips : MonoBehaviour
             }
             if (deskInvList[deskSlotNumber].itemData.inmateGiveName != null)
             {
-                toPrint = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
+                printInmateName = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s ";
+                tooltipType = "deskItem";
+                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
-            tooltipType = "deskItem";
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            else
+            {
+                printInmateName = "'s ";
+                tooltipType = "deskItem";
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
+            }
             return;
         }
         else if(showingTooltip && tooltipType == "deskItem" && !mcs.isTouchingDeskSlot)
@@ -202,7 +228,8 @@ public class Tooltips : MonoBehaviour
         }
         else if ((showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData == null) ||
             (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.currentDurability != deskInvList[printedDeskSlotNumber].itemData.currentDurability))
+            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.currentDurability != deskInvList[printedDeskSlotNumber].itemData.currentDurability) ||
+            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
         {
             DestroyTooltip();
             return;
@@ -257,10 +284,6 @@ public class Tooltips : MonoBehaviour
                 printedIDSlotNumber = idSlotNumber;
                 toPrint = currentIDList[idSlotNumber].itemData.displayName;
                 printDurability = "";
-            }
-            if (currentIDList[idSlotNumber].itemData.inmateGiveName != null)
-            {
-                toPrint = currentIDList[idSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
             }
             tooltipType = "idItem";
             StartCoroutine(DrawTooltip(toPrint + printDurability));
@@ -322,10 +345,16 @@ public class Tooltips : MonoBehaviour
             }
             if (npcInvList[npcInvSlotNumber].itemData.inmateGiveName != null)
             {
-                toPrint = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s " + toPrint;
+                printInmateName = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s ";
+                tooltipType = "npcItem";
+                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
-            tooltipType = "npcItem";
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            else
+            {
+                printInmateName = "'s ";
+                tooltipType = "npcItem";
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
+            }
             return;
         }
         else if(showingTooltip && tooltipType == "npcItem" && !mcs.isTouchingNPCInvSlot)
@@ -335,7 +364,8 @@ public class Tooltips : MonoBehaviour
         }
         else if ((showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData == null) ||
             (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability))
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability) ||
+            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
         {
             DestroyTooltip();
             return;
@@ -411,10 +441,16 @@ public class Tooltips : MonoBehaviour
             }
             if (givingScript.item.itemData.inmateGiveName != null)
             {
-                toPrint = givingScript.item.itemData.inmateGiveName + "'s " + toPrint;
+                printInmateName = givingScript.item.itemData.inmateGiveName + "'s ";
+                tooltipType = "giveItem";
+                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
-            tooltipType = "giveItem";
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            else
+            {
+                printInmateName = "'s ";
+                tooltipType = "giveItem";
+                StartCoroutine(DrawTooltip(toPrint + printDurability));
+            }
             return;
         }
         else if (showingTooltip && tooltipType == "giveItem" && !mcs.isTouchingGiveSlot)
@@ -869,6 +905,14 @@ public class Tooltips : MonoBehaviour
             {
                 toPrint = "Dev Desk";
             }
+            else if(mcs.touchedDesk.name == "YardWorkBox")
+            {
+                toPrint = "Gardening Tools";
+            }
+            else if(mcs.touchedDesk.name == "JanitorDesk")
+            {
+                toPrint = "Cleaning Supplies";
+            }
             tooltipType = "desk";
             StartCoroutine(DrawTooltip(toPrint));
             return;
@@ -913,6 +957,14 @@ public class Tooltips : MonoBehaviour
             else if(mcs.touchedDesk.name == "DevDesk")
             {
                 str = "Dev Desk";
+            }
+            else if (mcs.touchedDesk.name == "YardWorkBox")
+            {
+                str = "Gardening Tools";
+            }
+            else if (mcs.touchedDesk.name == "JanitorDesk")
+            {
+                str = "Cleaning Supplies";
             }
 
             if (str != toPrint)
@@ -1098,6 +1150,218 @@ public class Tooltips : MonoBehaviour
             }
         }
 
+        //item boxes
+        if(mcs.isTouchingItemBox && !showingTooltip)
+        {
+            switch (mcs.touchedItemBox.name)
+            {
+                case "TailorBox":
+                    toPrint = "Fabric Chest";
+                    break;
+                case "TimberBox":
+                    toPrint = "Timber Supplies";
+                    break;
+                case "MetalBox":
+                    toPrint = "Metal Supplies";
+                    break;
+                case "DirtyLaundry":
+                    toPrint = "Dirty Laundry";
+                    break;
+                case "BookBox":
+                    toPrint = "Book Chest";
+                    break;
+                case "MailBox":
+                    toPrint = "Mailroom File";
+                    break;
+                case "Freezer":
+                    toPrint = "Freezer";
+                    break;
+                default:
+                    if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
+                    {
+                        toPrint = "Delivery Truck";
+                    }
+                    break;
+            }
+            tooltipType = "itemBox";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if (showingTooltip && tooltipType == "itemBox" && !mcs.isTouchingItemBox)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if(showingTooltip && tooltipType == "itemBox")
+        {
+            string str = null;
+
+            switch (mcs.touchedItemBox.name)
+            {
+                case "TailorBox":
+                    str = "Fabric Chest";
+                    break;
+                case "TimberBox":
+                    str = "Timber Supplies";
+                    break;
+                case "MetalBox":
+                    str = "Metal Supplies";
+                    break;
+                case "DirtyLaundry":
+                    str = "Dirty Laundry";
+                    break;
+                case "BookBox":
+                    str = "Book Chest";
+                    break;
+                case "MailBox":
+                    str = "Mailroom File";
+                    break;
+                case "Freezer":
+                    str = "Freezer";
+                    break;
+                default:
+                    if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
+                    {
+                        str = "Delivery Truck";
+                    }
+                    break;
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //item transformers
+        if(mcs.isTouchingItemTransformer && !showingTooltip)
+        {
+            switch (mcs.touchedItemTransformer.name)
+            {
+                case "Oven":
+                    toPrint = "Oven";
+                    break;
+                case "Washer":
+                    toPrint = "Washing Machine";
+                    break;
+                case "LicensePress":
+                    toPrint = "License Press";
+                    break;
+            }
+            tooltipType = "itemTransformer";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if(showingTooltip && tooltipType == "itemTransformer" && !mcs.isTouchingItemTransformer)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if(showingTooltip && tooltipType == "itemTransformer")
+        {
+            string str = null;
+
+            switch (mcs.touchedItemTransformer.name)
+            {
+                case "Oven":
+                    str = "Oven";
+                    break;
+                case "Washer":
+                    str = "Washing Machine";
+                    break;
+                case "LicensePress":
+                    str = "License Press";
+                    break;
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //job boxes
+        if(mcs.isTouchingJobBox && !showingTooltip)
+        {
+            switch (mcs.touchedJobBox.name)
+            {
+                case "RedBox":
+                    toPrint = "Red Package Container";
+                    break;
+                case "BlueBox":
+                    toPrint = "Blue Package Container";
+                    break;
+                case "ClothesBox":
+                    toPrint = "Clothing Container";
+                    break;
+                case "CleanLaundry":
+                    toPrint = "Clean Laundry";
+                    break;
+                case "FurnitureBox":
+                    toPrint = "Furniture Container";
+                    break;
+                case "PlatesBox":
+                    toPrint = "License Container";
+                    break;
+            }
+            tooltipType = "jobBox";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if(showingTooltip && tooltipType == "jobBox" && !mcs.isTouchingJobBox)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if(showingTooltip && tooltipType == "jobBox")
+        {
+            string str = null;
+
+            switch (mcs.touchedJobBox.name)
+            {
+                case "RedBox":
+                    str = "Red Package Container";
+                    break;
+                case "BlueBox":
+                    str = "Blue Package Container";
+                    break;
+                case "ClothesBox":
+                    str = "Clothing Container";
+                    break;
+                case "CleanLaundry":
+                    str = "Clean Laundry";
+                    break;
+                case "FurnitureBox":
+                    str = "Furniture Container";
+                    break;
+                case "PlatesBox":
+                    str = "License Container";
+                    break;
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //job board
+        if(mcs.isTouchingJobBoard && !showingTooltip)
+        {
+            toPrint = "Job Board";
+            tooltipType = "jobBoard";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if(showingTooltip && tooltipType == "jobBoard" && !mcs.isTouchingJobBoard)
+        {
+            DestroyTooltip();
+            return;
+        }
+
         ///NPCS
         //inmates/guards
         if (mcs.isTouchingNPC && !showingTooltip)
@@ -1116,6 +1380,59 @@ public class Tooltips : MonoBehaviour
         {
             string str = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
 
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
+
+        //extra NPCs
+        if(mcs.isTouchingExtraNPC && !showingTooltip)
+        {
+            switch (mcs.touchedExtraNPC.name)
+            {
+                case "Warden":
+                    if (!string.IsNullOrEmpty(currentMap.warden))
+                    {
+                        toPrint = "Warden " + currentMap.warden;
+                    }
+                    else
+                    {
+                        toPrint = "Warden";
+                    }
+                    break;
+                case "JobOfficer":
+                    toPrint = "Employment Staff";
+                    break;
+                case "Medic":
+                    toPrint = "Infirmary Staff";
+                    break;
+            }
+            tooltipType = "extraNPC";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        else if(showingTooltip && tooltipType == "extraNPC" && !mcs.isTouchingExtraNPC)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if(showingTooltip && tooltipType == "extraNPC")
+        {
+            string str = null;
+            switch (mcs.touchedExtraNPC.name)
+            {
+                case "Warden":
+                    str = "Warden" + currentMap.warden;
+                    break;
+                case "JobOfficer":
+                    str = "Employment Staff";
+                    break;
+                case "Medic":
+                    str = "Infirmary Staff";
+                    break;
+            }
             if(str != toPrint)
             {
                 DestroyTooltip();

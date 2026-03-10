@@ -47,7 +47,7 @@ public class Shops : MonoBehaviour
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
 
         string[] itemsFile = currentMap.items;
-        for(int i = 0; i < 274; i++)
+        for(int i = 0; i < currentMap.itemAmount; i++)
         {
             string str = i.ToString();
             if(str.Length == 1)

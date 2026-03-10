@@ -132,7 +132,7 @@ public class NPCInvRNG : MonoBehaviour
     }
     private void GetItemList()
     {
-        for(int i = 0; i < 274; i++)
+        for(int i = 0; i < currentMap.itemAmount; i++)
         {
             string str = i.ToString();
             if(str.Length == 1)

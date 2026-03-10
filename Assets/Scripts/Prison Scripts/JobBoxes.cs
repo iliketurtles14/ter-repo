@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class JobBoxes : MonoBehaviour
@@ -37,7 +36,11 @@ public class JobBoxes : MonoBehaviour
     {
         if(mcs.isTouchingJobBox && selectionScript.aSlotSelected && Input.GetMouseButtonDown(0))
         {
-            PutInBox(mcs.touchedJobBox, selectionScript.selectedSlotNum);
+            float distance = Vector2.Distance(player.position, mcs.touchedJobBox.transform.position);
+            if(distance <= 2.4f)
+            {
+                PutInBox(mcs.touchedJobBox, selectionScript.selectedSlotNum);
+            }
         }
     }
     private void PutInBox(GameObject box, int invIndex)

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Jobs : MonoBehaviour
 {
+    public float xOffset;
+    public float yOffset;
     private bool hasJob;
     private Schedule scheduleScript;
     private Transform ic;
@@ -73,7 +75,7 @@ public class Jobs : MonoBehaviour
         doneWithJob = false;
 
         //reset bar
-        ic.Find("QuotaPanel").Find("BarLine").localPosition = new Vector2(50, 37.5f);
+        ic.Find("QuotaPanel").Find("BarLine").localPosition = new Vector2(-140, -25);
         ic.Find("QuotaPanel").Find("BarLine").GetComponent<RectTransform>().sizeDelta = new Vector2(0, 25);
     }
     public void AddToQuota(float num, float denom)
@@ -96,7 +98,7 @@ public class Jobs : MonoBehaviour
         {
             bar.GetComponent<RectTransform>().sizeDelta += new Vector2(size, 0);
         }
-        bar.transform.localPosition = new Vector2((bar.GetComponent<RectTransform>().sizeDelta.x / 2f) + 50f, 37.5f);
+        bar.transform.localPosition = new Vector2((bar.GetComponent<RectTransform>().sizeDelta.x / 2f) - 140, -25);
 
         if (bar.GetComponent<RectTransform>().sizeDelta.x == maxWidth && !doneWithJob)
         {
@@ -124,7 +126,7 @@ public class Jobs : MonoBehaviour
                 break;
         }
 
-        player.GetComponent<PlayerCollectionData>().playerData.money += mult * basePay;
+        player.GetComponent<PlayerCollectionData>().playerData.money += basePay + (5 * mult);
     }
     private IEnumerator FlashQuotaBar()
     {

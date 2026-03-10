@@ -9,6 +9,7 @@ public class PButtonController : MonoBehaviour
     private Transform mc;
     private NPCIDInv npcIDInvScript;
     private ShopMenu shopMenuScript;
+    private JobMenu jobMenuScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -17,6 +18,7 @@ public class PButtonController : MonoBehaviour
         givingScript = mc.Find("NPCGiveMenuPanel").GetComponent<Giving>();
         npcIDInvScript = mc.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
         shopMenuScript = mc.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
+        jobMenuScript = mc.Find("JobMenuPanel").GetComponent<JobMenu>();
     }
     public void MissionYes()
     {
@@ -97,5 +99,47 @@ public class PButtonController : MonoBehaviour
     public void ShopGive()
     {
         StartCoroutine(shopMenuScript.CloseMenu(false, true));
+    }
+    public void JobApply(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        string job = clicked.name;
+        jobMenuScript.Apply(job);
+    }
+    public void JobResign(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        string job = clicked.name;
+        jobMenuScript.Resign(job);
+    }
+    public void JobBack()
+    {
+        jobMenuScript.GoToAllJobView();
+    }
+    public void JobView(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+        string job = clicked.name;
+        jobMenuScript.OpenJobDescription(job);
     }
 }

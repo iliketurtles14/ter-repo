@@ -282,6 +282,14 @@ public class OutfitController : MonoBehaviour
         {
             currentActionNum = 1;
         }
+        else if (itemBehavioursScript.isWeeding)
+        {
+            currentActionNum = 5;
+        }
+        else if (itemBehavioursScript.isCleaning)
+        {
+            currentActionNum = 6;
+        }
         else if (deskIsPickedUp)
         {
             currentActionNum = 15;

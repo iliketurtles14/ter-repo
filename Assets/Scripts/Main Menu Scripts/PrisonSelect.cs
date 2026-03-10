@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -50,6 +51,10 @@ public class PrisonSelect : MonoBehaviour
     private List<int> customPrisonGuardNums = new List<int>();
     private List<bool> customPrisonHasPOWBools = new List<bool>();
     public List<string> customPrisonNames = new List<string>();
+    public List<string> mainPrisonNamesNormal = new List<string>();
+    public List<string> bonusPrisonNamesNormal = new List<string>();
+    public List<string> customPrisonNamesNormal = new List<string>();
+    public List<string> currentPrisonNamesNormal = new List<string>();
     public int amountOfMainPrisons;
     public int amountOfBonusPrisons;
     public int amountOfCustomPrisons;
@@ -71,6 +76,7 @@ public class PrisonSelect : MonoBehaviour
     public Sprite clearSprite;
     public Sprite continueButtonMad;
     public Sprite continueButtonGood;
+    public bool showGrid;
 
 
     public void Update()
@@ -80,38 +86,70 @@ public class PrisonSelect : MonoBehaviour
             case 0:
                 amountOfCurrentPrisons = amountOfMainPrisons;
                 transform.Find("ReloadPrisonsButton").gameObject.SetActive(false);
+                transform.Find("FileButton").gameObject.SetActive(false);
                 break;
             case 1:
                 amountOfCurrentPrisons = amountOfBonusPrisons;
                 transform.Find("ReloadPrisonsButton").gameObject.SetActive(false);
+                transform.Find("FileButton").gameObject.SetActive(false);
                 break;
             case 2:
                 amountOfCurrentPrisons = amountOfCustomPrisons;
                 transform.Find("ReloadPrisonsButton").gameObject.SetActive(true);
+                transform.Find("FileButton").gameObject.SetActive(true);
                 break;
         }
 
+        if (!showGrid)
+        {
+            if (whichPrison == 0)
+            {
+                LeftArrow.GetComponent<Image>().enabled = false;
+                LeftArrow.GetComponent<Button>().enabled = false;
+            }
+            else
+            {
+                LeftArrow.GetComponent<Image>().enabled = true;
+                LeftArrow.GetComponent<Button>().enabled = true;
+            }
 
-        if(whichPrison == 0)
-        {
-            LeftArrow.GetComponent<Image>().enabled = false;
-            LeftArrow.GetComponent<Button>().enabled = false;
-        }
-        else
-        {
-            LeftArrow.GetComponent<Image>().enabled = true;
-            LeftArrow.GetComponent<Button>().enabled = true;
+            if (whichPrison + 1 == amountOfCurrentPrisons)
+            {
+                RightArrow.GetComponent<Image>().enabled = false;
+                RightArrow.GetComponent<Button>().enabled = false;
+            }
+            else
+            {
+                RightArrow.GetComponent<Image>().enabled = true;
+                RightArrow.GetComponent<Button>().enabled = true;
+            }
         }
 
-        if (whichPrison + 1 == amountOfCurrentPrisons)
+        if (showGrid)
         {
-            RightArrow.GetComponent<Image>().enabled = false;
-            RightArrow.GetComponent<Button>().enabled = false;
-        }
-        else
-        {
-            RightArrow.GetComponent<Image>().enabled = true;
-            RightArrow.GetComponent<Button>().enabled = true;
+            bool shouldSelect = true;
+            foreach(Transform prison in transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content"))
+            {
+                if (prison.GetComponent<Animator>().enabled)
+                {
+                    shouldSelect = false;
+                    break;
+                }
+            }
+            if (shouldSelect)
+            {
+                int i = -1;
+                foreach (Transform prison in transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content"))
+                {
+                    if (i == whichPrison)
+                    {
+                        SelectGridPrison(prison.gameObject);
+                        break;
+                    }
+
+                    i++;
+                }
+            }
         }
 
         switch (whichTab)
@@ -124,6 +162,7 @@ public class PrisonSelect : MonoBehaviour
                 currentPrisonIcons = mainPrisonIcons;
                 currentPrisonNames = mainPrisonNames;
                 currentPrisonInmateNums = mainPrisonInmateNums;
+                currentPrisonNamesNormal = mainPrisonNamesNormal;
                 currentPrisonGuardNums = mainPrisonGuardNums;
                 currentPrisonHasPOWBools = mainPrisonHasPOWBools;
                 currentPrisonPaths = mainPrisonPaths;
@@ -135,6 +174,7 @@ public class PrisonSelect : MonoBehaviour
 
                 currentPrisonIcons = bonusPrisonIcons;
                 currentPrisonNames = bonusPrisonNames;
+                currentPrisonNamesNormal = bonusPrisonNamesNormal;
                 currentPrisonInmateNums = bonusPrisonInmateNums;
                 currentPrisonGuardNums = bonusPrisonGuardNums;
                 currentPrisonHasPOWBools = bonusPrisonHasPOWBools;
@@ -147,6 +187,7 @@ public class PrisonSelect : MonoBehaviour
 
                 currentPrisonIcons = customPrisonIcons;
                 currentPrisonNames = customPrisonNames;
+                currentPrisonNamesNormal = customPrisonNamesNormal;
                 currentPrisonInmateNums = customPrisonInmateNums;
                 currentPrisonGuardNums = customPrisonGuardNums;
                 currentPrisonHasPOWBools = customPrisonHasPOWBools;
@@ -154,7 +195,7 @@ public class PrisonSelect : MonoBehaviour
                 break;
         }
 
-        if(amountOfCurrentPrisons == 0)
+        if (amountOfCurrentPrisons == 0)
         {
             prisonText.text = "";
             CurrentPrisonObject.GetComponent<Image>().sprite = clearSprite;
@@ -167,8 +208,11 @@ public class PrisonSelect : MonoBehaviour
             transform.Find("ContinueButton").GetComponent<Button>().enabled = false;
             transform.Find("ContinueButton").GetComponent<EventTrigger>().enabled = false;
 
-            LeftArrow.SetActive(false);
-            RightArrow.SetActive(false);
+            if (!showGrid)
+            {
+                LeftArrow.SetActive(false);
+                RightArrow.SetActive(false);
+            }
         }
         else
         {
@@ -183,12 +227,103 @@ public class PrisonSelect : MonoBehaviour
             transform.Find("ContinueButton").GetComponent<Button>().enabled = true;
             transform.Find("ContinueButton").GetComponent<EventTrigger>().enabled = true;
 
-            LeftArrow.SetActive(true);
-            RightArrow.SetActive(true);
+            if (!showGrid)
+            {
+                LeftArrow.SetActive(true);
+                RightArrow.SetActive(true);
+            }
+        }
+    }
+    public void SelectGridPrison(GameObject touchedButton)
+    {
+        int i = -1;
+        int index = 0;
+        foreach (Transform prison in transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content"))
+        {
+            prison.GetComponent<Animator>().enabled = false;
+            prison.GetComponent<Animator>().ResetControllerState();
+            prison.GetComponent<Image>().color = new Color(0, 1, 0, 0);
+            if (prison.gameObject == touchedButton)
+            {
+                index = i;
+            }
+            i++;
+        }
+        whichPrison = index;
+        touchedButton.GetComponent<Image>().color = new Color(0, 1, 0, 45f/255f);
+        touchedButton.GetComponent<Animator>().enabled = true;
+    }
+    public IEnumerator ShowGrid()
+    {
+        showGrid = true;
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(ReloadGrid());
+
+        transform.Find("PrisonGridBackdrop").gameObject.SetActive(true);
+        transform.Find("PrisonGridScrollview").gameObject.SetActive(true);
+        transform.Find("LeftArrow").gameObject.SetActive(false);
+        transform.Find("RightArrow").gameObject.SetActive(false);
+
+        transform.Find("SingleViewButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/BigViewButton");
+        transform.Find("SingleViewButton").GetComponent<EventTrigger>().enabled = true;
+        transform.Find("SingleViewButton").GetComponent<Button>().enabled = true;
+        transform.Find("MultiViewButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/SmallViewButtonSad");
+        transform.Find("MultiViewButton").GetComponent<EventTrigger>().enabled = false;
+        transform.Find("MultiViewButton").GetComponent<Button>().enabled = false;
+    }
+    public IEnumerator HideGrid()
+    {
+        showGrid = false;
+        yield return new WaitForEndOfFrame();
+        transform.Find("PrisonGridBackdrop").gameObject.SetActive(false);
+        transform.Find("PrisonGridScrollview").gameObject.SetActive(false);
+        transform.Find("LeftArrow").gameObject.SetActive(true);
+        transform.Find("RightArrow").gameObject.SetActive(true);
+
+        transform.Find("SingleViewButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/BigViewButtonSad");
+        transform.Find("SingleViewButton").GetComponent<EventTrigger>().enabled = false;
+        transform.Find("SingleViewButton").GetComponent<Button>().enabled = false;
+        transform.Find("MultiViewButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/SmallViewButton");
+        transform.Find("MultiViewButton").GetComponent<EventTrigger>().enabled = true;
+        transform.Find("MultiViewButton").GetComponent<Button>().enabled = true;
+    }
+    public IEnumerator ReloadGrid()
+    {
+        yield return new WaitForEndOfFrame(); //waiting for the tab to switch
+
+        foreach(Transform prison in transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content"))
+        {
+            if(prison.name != "PlaceholderPrison")
+            {
+                Destroy(prison.gameObject);
+            }
+        }
+        GameObject prisonObj = transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content").Find("PlaceholderPrison").gameObject;
+        foreach(string prisonName in currentPrisonNamesNormal)
+        {
+            GameObject aPrisonObj = Instantiate(prisonObj);
+            aPrisonObj.name = prisonName;
+            aPrisonObj.transform.Find("PrisonText").GetComponent<TextMeshProUGUI>().text = prisonName;
+            aPrisonObj.transform.parent = transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content");
+            aPrisonObj.GetComponent<RectTransform>().localScale = Vector3.one;
+            aPrisonObj.SetActive(true);
+        }
+
+        int i = -1;
+        foreach (Transform prison in transform.Find("PrisonGridScrollview").Find("Viewport").Find("Content"))
+        {
+            if (i == whichPrison)
+            {
+                SelectGridPrison(prison.gameObject);
+                break;
+            }
+
+            i++;
         }
     }
     public void ReloadPrisons(bool onlyCustom)
     {
+        whichPrison = 0;
         ResetLists(onlyCustom);
 
         if (!onlyCustom)
@@ -259,6 +394,7 @@ public class PrisonSelect : MonoBehaviour
                 mainPrisonInmateNums.Add(Convert.ToInt32(GetINIVar("Properties", "Inmates", data)));
                 mainPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
                 mainPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
+                mainPrisonNamesNormal.Add(GetINIVar("Properties", "MapName", data));
             }
             for (int i = 0; i < bonusPrisonPaths.Count; i++)
             {
@@ -301,6 +437,7 @@ public class PrisonSelect : MonoBehaviour
                 bonusPrisonInmateNums.Add(Convert.ToInt32(GetINIVar("Properties", "Inmates", data)));
                 bonusPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
                 bonusPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
+                bonusPrisonNamesNormal.Add(GetINIVar("Properties", "MapName", data));
             }
 
         }
@@ -365,6 +502,7 @@ public class PrisonSelect : MonoBehaviour
             customPrisonInmateNums.Add(Convert.ToInt32(GetINIVar("Properties", "Inmates", data)));
             customPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
             customPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
+            customPrisonNamesNormal.Add(GetINIVar("Properties", "MapName", data));
         }
 
         if (!onlyCustom)
@@ -377,6 +515,11 @@ public class PrisonSelect : MonoBehaviour
         if (!doneWithInitialLoad)
         {
             doneWithInitialLoad = true;
+        }
+
+        if (onlyCustom)
+        {
+            StartCoroutine(ReloadGrid());
         }
     }
 
@@ -398,6 +541,8 @@ public class PrisonSelect : MonoBehaviour
             bonusPrisonHasPOWBools.Clear();
             bonusPrisonNames.Clear();
             amountOfBonusPrisons = 0;
+            mainPrisonNamesNormal.Clear();
+            bonusPrisonNamesNormal.Clear();
         }
         customPrisonPaths.Clear();
         customPrisonIcons.Clear();
@@ -406,6 +551,7 @@ public class PrisonSelect : MonoBehaviour
         customPrisonHasPOWBools.Clear();
         customPrisonNames.Clear();
         amountOfCustomPrisons = 0;
+        customPrisonNamesNormal.Clear();
     }
     public string GetINIVar(string header, string varName, string[] file)
     {

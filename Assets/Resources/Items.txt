@@ -12,10 +12,11 @@ MyMap.zmap
 		-019.png
 		(etc.)
 		
-Note that you cannot make new items. You can only replace the data within an item.
-This can include the name, so you can replace an existing item with a new one.
+You can add new items to this file, but make sure to include all of the properties that the other items have.
+Note that "-1" means that that property does not apply to an item (similarly to "False").
 
-Crafting Recipes are at the bottom of this file.
+Crafting Recipes are at the bottom of this file. 
+You can add custom Crafting Recipes as well.
 
 [000]
 Name=Cell Key
@@ -148,7 +149,7 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=20
+Durability=10
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
@@ -172,7 +173,7 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=20
+Durability=10
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
@@ -196,7 +197,7 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=20
+Durability=10
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
@@ -220,7 +221,7 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=20
+Durability=10
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
@@ -244,7 +245,7 @@ InStolenItemFavors=False
 InmateWeapon=False
 IsContraband=True
 CauseSolitary=False
-Durability=20
+Durability=10
 ChippingPower=-1
 CuttingPower=-1
 VentBreakingPower=-1
@@ -2847,7 +2848,7 @@ Defense=-1
 Strength=-1
 Opinion=0
 CameraBlock=-1
-Sprite=125
+Sprite=126
 
 [118]
 Name=Green Package

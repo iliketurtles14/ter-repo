@@ -83,7 +83,7 @@ public class NPCAI : MonoBehaviour
         //get cycle for the certain job (only for jobs other than gardening, janitor, library, and mailman as they are more involved)
         switch (job)
         {
-            case "Tailorshop":
+            case "Tailor":
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
                     if (obj.name == "TailorBox")

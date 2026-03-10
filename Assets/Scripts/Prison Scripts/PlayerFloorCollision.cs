@@ -70,7 +70,6 @@ public class PlayerFloorCollision : MonoBehaviour
             {
                 if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == 10)
                 {
-                    Debug.Log("here");
                     playerFloor = collider.gameObject;
                 }
             }

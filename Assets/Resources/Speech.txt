@@ -1490,16 +1490,16 @@ Count=7
 7=If you can divert the guards attention next $routine for me I can dish out some justice using this screwdriver!
 
 [Job_Descrip]
-Janitor=Clean up your act and clean up our floors whilst you’re at it! I want you to make those floors, the foundations of YOUR reform, look their best.#Collect a mop or broom from the janitor office and use it to remove patches of dirt you find around the prison.
+Janitor=Clean up your act and clean up our floors whilst you're at it! I want you to make those floors, the foundations of YOUR reform, look their best.#Collect a mop or broom from the janitor office and use it to remove patches of dirt you find around the prison.
 Laundry=Your criminal attitude stinks, and so do your overalls! The only thing I want to smell on you inmates is the fresh scent of justice.#Take dirty outfits from the container in the laundry room and place them into the washers. Once spun, take them out and put them into the clean laundry container.
-Kitchen=The inspectors call it hazardous, I call it ‘Rustic’. A sense of taste andor smell is not essential. Don’t worry about washing your hands.#Take uncooked food from the freezer in the kitchen and place them in the ovens. Once cooked, take them out and put them on the serving trays in the canteen.
-Woodshop=Responsibly sourced by us, irresponsibly hammered together by you lot. Our wood shop has found quite the market for our ‘vintage inspired’ furniture. No craftsmanship required, the prison is NOT responsible for splinters.#Take three timbers from the container in the woodshop and craft them into furniture. Place the finished product in the furniture container.
-Library=You lot accuse the library of being understocked, but I assure you it’s a ‘modest’ collection of the finest literary works available. Not the inane jumble of expletives and filth you rabble are used to on the outside.#Collect books from the library and deliver them to the inmates they’re addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
-Tailor=As a prison, we are proud of our contract with famous clothing brand ‘Adidoodoo’ and are determined to meet their need for high quality, hand crafted garments.#Take three pieces of fabric from the container in the tailorshop and craft them into an item of clothing. Place the finished product in the clothing container.
+Kitchen=The inspectors call it hazardous, I call it 'Rustic'. A sense of taste andor smell is not essential. Don't worry about washing your hands.#Take uncooked food from the freezer in the kitchen and place them in the ovens. Once cooked, take them out and put them on the serving trays in the canteen.
+Woodshop=Responsibly sourced by us, irresponsibly hammered together by you lot. Our wood shop has found quite the market for our 'vintage inspired' furniture. No craftsmanship required, the prison is NOT responsible for splinters.#Take three timbers from the container in the woodshop and craft them into furniture. Place the finished product in the furniture container.
+Library=You lot accuse the library of being understocked, but I assure you it's a 'modest' collection of the finest literary works available. Not the inane jumble of expletives and filth you rabble are used to on the outside.#Collect books from the library and deliver them to the inmates they're addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
+Tailor=As a prison, we are proud of our contract with famous clothing brand 'Adidoodoo' and are determined to meet their need for high quality, hand crafted garments.#Take three pieces of fabric from the container in the tailorshop and craft them into an item of clothing. Place the finished product in the clothing container.
 Gardening=Dream of working in the great outdoors Being at one with nature and all that Then introduce yourself to the weeds plaguing our courtyards.#Collect a hoe from the gardening office and use it to remove weeds around the prison grounds.
-Mailman=I hate to be the bearer of bad news, which is why I’m asking you to do it for me.#Collect mail from the mailroom and deliver it to the inmates it’s addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
+Mailman=I hate to be the bearer of bad news, which is why I'm asking you to do it for me.#Collect mail from the mailroom and deliver it to the inmates it's addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
 Metalshop=The automotive industry is booming! The only booming you will hear is the sound of licence plates being pressed. The harder you work, the sooner I get my sporty little convertible.#Take metal sheets from the container in the metalshop and use them on the presses to create license plates. Put the finished plates in the relevant container.
-Deliveries=What’s inside those boxes isn’t of concern to you. I just want them moving UNTAMPERED to where they need to go. #Take packages from the delivery truck and place them in the relevant storage containers.
+Deliveries=What's inside those boxes isn't of concern to you. I just want them moving UNTAMPERED to where they need to go. #Take packages from the delivery truck and place them in the relevant storage containers.
 
 -----------DLC---------------------------------------------------
 
@@ -1512,14 +1512,14 @@ Count=4
 
 [Vis_Banter_LAcops]
 Count=4
-1=Because of what you’ve done, Hawaiian Mo is coming for us. . .
+1=Because of what you've done, Hawaiian Mo is coming for us. . .
 2=This seems out of the blue but have you played L.A. Cops yet? 
 3=I heard you got banged up with only two days left to retirement. . .
-4=I heard one of your boys took out Hawaiian Mo’s son. . .
+4=I heard one of your boys took out Hawaiian Mo's son. . .
 
 [Vis_Leave_LAcops]
 Count=3
-1=Anyway - *if* we get through this, one day, we’ll play some L.A. Cops together.
+1=Anyway - *if* we get through this, one day, we'll play some L.A. Cops together.
 2=Right, I'm gonna go *cough* play some L.A. Cops. Ciao!
 3=Ok. Gonna grab me some coffee and some DoDo Donuts. Later, pal.
 
@@ -1900,50 +1900,50 @@ Count=25
 1=The tree looks magnificent!
 2=I found a sleigh in the woods…
 3=Free the reindeers!
-4=Elves aren’t real
-5=Those pointy ears don’t even look real!
+4=Elves aren't real
+5=Those pointy ears don't even look real!
 6=Killer boots man!
 7=Love the meggings!
-8=Where’d he get that hat?
-9=Be careful not to step on the lil’ fella
-10=He’s a trip hazard
+8=Where'd he get that hat?
+9=Be careful not to step on the lil' fella
+10=He's a trip hazard
 11=Those green pants are way too tight!
 12=That costume looks ridiculous!
-13=Don’t believe his lies
-14=He’s too fat for an elf
-15=Who’d escape Santas Grotto?
-16=I’m willing to play along with it...
-17=There’s a hit out on the lil’ green fella
-18=All we talk of is the lil’ green fella
-19=The lil’ green fella is hilarious!
-20=He must think we’re as stupid as he is...
+13=Don't believe his lies
+14=He's too fat for an elf
+15=Who'd escape Santas Grotto?
+16=I'm willing to play along with it...
+17=There's a hit out on the lil' green fella
+18=All we talk of is the lil' green fella
+19=The lil' green fella is hilarious!
+20=He must think we're as stupid as he is...
 21=Is there a pantomime on?
-22=...and I’m the Tooth Fairy!
+22=...and I'm the Tooth Fairy!
 23=Chestnuts roasting on an open fire
 24=Jack Frost nipping at your nose?
 25=Folks dressed up like Elves…
 
 [CCL_Shower]
 Count=15
-1=He’s shrinking in the wash!
+1=He's shrinking in the wash!
 2=Meet me under the mistletoe
 3=Tis' the season to be frothy
 4=I need to *wrap* up 
 5=Best. Christmas. Ever!
-6=Here’s your Christmas present!
+6=Here's your Christmas present!
 7=Be my Christmas present
 8=Nice speedos!
 9=The little dude is seriously packing!
 10=Get a stool and do my back
-11=The little guy’s been short changed!
+11=The little guy's been short changed!
 12=Little guy, big plans?
-13=Don’t drown in that puddle
-14=Don’t fall down the plughole
+13=Don't drown in that puddle
+14=Don't fall down the plughole
 15=Hurry down my chimney tonight!
 
 [CCL_Gym]
 Count=16
-1=Go easy there lil’ fella!
+1=Go easy there lil' fella!
 2=Check out the small dude!
 3=When you grow up you can compete with us
 4=Keep up small fry!
@@ -1955,25 +1955,25 @@ Count=16
 10=How low can he go?
 11=Who let that child on the equipment?
 12=No kids allowed in here!
-13=Tis’ the season to be jealous
+13=Tis' the season to be jealous
 14=Bet I could bench press the elf
 15=Almost trampled over the little dude there!
 16=Green with envy huh?
 
 [CCL_Canteen]
 Count=15
-1=So where’s the turkey?
+1=So where's the turkey?
 2=The mince pies?
 3=Bring forth the Christmas pudding!
 4=The little one needs a chair boost
 5=Where does he put it all?
 6=Little guy. BIG appetite!
-7=He’d work in the kitchen but the steaks are too high!
+7=He'd work in the kitchen but the steaks are too high!
 8=He only gets a kids portion right? 
-9=Does his parents know he’s eating with us today?
-10=Sorry, the kid’s table is over there
+9=Does his parents know he's eating with us today?
+10=Sorry, the kid's table is over there
 11=Quick, stuff this under your hat
 12=Yamma yamma yamma!
-13=It’s beginning to taste a lot like Christmas
-14=Where’s the Christmas spirit?
+13=It's beginning to taste a lot like Christmas
+14=Where's the Christmas spirit?
 15=Lump of coal, yum!

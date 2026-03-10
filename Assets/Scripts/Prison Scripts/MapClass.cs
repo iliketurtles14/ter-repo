@@ -25,6 +25,7 @@ public class Map
     public string[] tooltips;//
     public List<AudioClip> music;//
     public Dictionary<int, Sprite> customItemSpriteDict;//
+    public int itemAmount;
     public int npcLevel;
     public string grounds;
     public int sizeX;
@@ -73,6 +74,7 @@ public class Map
         string[] tooltips,
         List<AudioClip> music,
         Dictionary<int, Sprite> customItemSpriteDict,
+        int itemAmount,
         int npcLevel,
         string grounds,
         int sizeX,
@@ -148,5 +150,6 @@ public class Map
         this.objVars = objVars;
         this.zoneNames = zoneNames;
         this.zoneVars = zoneVars;
+        this.itemAmount = itemAmount;
     }
 }

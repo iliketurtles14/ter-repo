@@ -175,18 +175,74 @@ public class ButtonController : MonoBehaviour
     public void PrisonSelectMainPrisons()
     {
         prisonSelectScript.whichTab = 0;
+        StartCoroutine(prisonSelectScript.ReloadGrid());
     }
     public void PrisonSelectBonusPrisons()
     {
         prisonSelectScript.whichTab = 1;
+        StartCoroutine(prisonSelectScript.ReloadGrid());
     }
     public void PrisonSelectCustomPrisons()
     {
         prisonSelectScript.whichTab = 2;
+        StartCoroutine(prisonSelectScript.ReloadGrid());
     }
     public void PrisonSelectReloadCustomPrisons()
     {
         prisonSelectScript.ReloadPrisons(true);
+    }
+    public void PrisonSelectFile()
+    {
+        string customPrisonsPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "CustomPrisons");
+
+        if (!Directory.Exists(customPrisonsPath))
+        {
+            Directory.CreateDirectory(customPrisonsPath);
+        }
+
+        try
+        {
+            if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = customPrisonsPath,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(startInfo);
+            }
+            else if (Application.platform == RuntimePlatform.LinuxPlayer || Application.platform == RuntimePlatform.LinuxEditor)
+            {
+                System.Diagnostics.Process.Start("xdg-open", customPrisonsPath);
+            }
+            else
+            {
+                Debug.LogWarning("Opening file explorer is not supported on this platform.");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to open file explorer: " + e.Message);
+        }
+    }
+    public void PrisonSelectSingleView()
+    {
+        StartCoroutine(prisonSelectScript.HideGrid());
+    }
+    public void PrisonSelectMultiView()
+    {
+        StartCoroutine(prisonSelectScript.ShowGrid());
+    }
+    public void PrisonSelectGridPrisonSelect(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if(pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+        prisonSelectScript.SelectGridPrison(clicked);
     }
     public void PlayerMenuLeft()
     {
