@@ -82,6 +82,7 @@ public class PauseController : MonoBehaviour
         mcs.EnableTag("NPCInvPanel");
         mcs.EnableTag("GiveSlot");
         mcs.EnableTag("ShopSlot");
+        mcs.EnableTag("CraftSlot");
         
         // Always freeze NPCs
         foreach(Transform npc in aStar)

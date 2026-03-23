@@ -48,15 +48,17 @@ public class ItemSpawn : MonoBehaviour
         else if(inEnterMode && Input.GetKeyDown(KeyCode.Return))
         {
             int id = Convert.ToInt32(idStr);
-            if(id > 273)
-            {
-                Debug.Log("Invalid ID.");
-                return;
-            }
 
             Debug.Log("Creating item: " + id);
-            ItemData data = creatorScript.CreateItemData(id);
-            inventoryScript.Add(data);
+            try
+            {
+                ItemData data = creatorScript.CreateItemData(id);
+                inventoryScript.Add(data);
+            }
+            catch
+            {
+                Debug.Log("Invalid ID.");
+            }
 
             inEnterMode = false;
             idStr = "";

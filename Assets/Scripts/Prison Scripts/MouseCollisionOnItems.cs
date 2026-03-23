@@ -97,6 +97,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedJobBoard;
     public bool isTouchingExtraNPC;
     public GameObject touchedExtraNPC;
+    public bool isTouchingCraftSlot;
+    public GameObject touchedCraftSlot;
     void Update()
     {
         ClearCollisions();
@@ -116,6 +118,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "IDSlot",
             "NPCInvSlot",
             "GiveSlot",
+            "CraftSlot",
             "ShopSlot", //REMEMBER WHEN ADDING NEW SLOTS TO ALSO ADD THEM TO THE PAUSECONTROLLER
             "Button",
             "DeskPanel",
@@ -198,6 +201,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "GiveSlot":
                     isTouchingGiveSlot = true;
                     touchedGiveSlot = highestPriorityObject;
+                    break;
+                case "CraftSlot":
+                    isTouchingCraftSlot = true;
+                    touchedCraftSlot = highestPriorityObject;
                     break;
                 case "ShopSlot":
                     isTouchingShopSlot = true;
@@ -470,5 +477,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedJobBoard = null;
         isTouchingExtraNPC = false;
         touchedExtraNPC = null;
+        isTouchingCraftSlot = false;
+        touchedCraftSlot = null;
     }
 }

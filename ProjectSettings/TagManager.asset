@@ -79,6 +79,7 @@ TagManager:
   - Door
   - JobBoard
   - ExtraNPC
+  - CraftSlot
   layers:
   - Default
   - TransparentFX

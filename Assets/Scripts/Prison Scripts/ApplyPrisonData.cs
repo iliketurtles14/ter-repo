@@ -593,6 +593,14 @@ public class ApplyPrisonData : MonoBehaviour
             slot.GetComponent<Image>().sprite = UISprites[33];
         }
 
+        //craft menu
+        //409
+        mc.Find("CraftMenuPanel").GetComponent<Image>().sprite = UISprites[409];
+        mc.Find("CraftMenuPanel").Find("CraftButton").GetComponent<Image>().sprite = UISprites[410];
+        spriteState = mc.Find("CraftMenuPanel").Find("CraftButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[411];
+        mc.Find("CraftMenuPanel").Find("CraftButton").GetComponent<Button>().spriteState = spriteState;
+
         //job menu
         mc.Find("JobMenuPanel").GetComponent<Image>().sprite = UISprites[65];
         mc.Find("JobMenuPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[377];
