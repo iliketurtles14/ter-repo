@@ -25,6 +25,11 @@ public class PlayerMenuAnim : MonoBehaviour
     }
     public void Update()
     {
+        if(dataScript == null)
+        {
+            dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+        
         if(playerMenuScript.playerCharacter != null)
         {
             switch (playerMenuScript.playerCharacter)

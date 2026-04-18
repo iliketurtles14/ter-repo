@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ApplyMainMenuData : MonoBehaviour
@@ -13,6 +14,7 @@ public class ApplyMainMenuData : MonoBehaviour
     private List<Sprite> NPCSprites;
     private List<Sprite> PrisonObjectSprites;
     private List<Sprite> UISprites;
+    private bool isReloading; //for quitting from a prison
     public Transform mmc;
     private bool hasApplied;
     public List<Sprite> InmateOutiftSprites = new List<Sprite>();
@@ -103,6 +105,24 @@ public class ApplyMainMenuData : MonoBehaviour
     }
     public void LoadImages()
     {
+        if(mmc == null)
+        {
+            isReloading = true;
+            
+            Scene mainMenuScene = SceneManager.GetSceneByName("Main Menu");
+            foreach (var root in mainMenuScene.GetRootGameObjects())
+            {
+                if (root.name == "MainMenuCanvas")
+                {
+                    mmc = root.transform;
+                }
+                else if(root.name == "ButtonController")
+                {
+                    bc = root.GetComponent<ButtonController>();
+                }
+            }
+        }
+
         SpriteState spriteState; //sprite state for buttons
         
         //mouse
@@ -238,6 +258,12 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonsButtonPressed = UISprites[472];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().customPrisonsButtonNormal = UISprites[443];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().customPrisonsButtonPressed = UISprites[442];
+
+        if (isReloading)
+        {
+            isReloading = false;
+            return;
+        }
 
         //npc lists
         BaldEagleSprites.Add(NPCSprites[92]);

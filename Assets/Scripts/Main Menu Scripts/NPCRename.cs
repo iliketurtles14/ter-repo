@@ -452,7 +452,10 @@ public class NPCRename : MonoBehaviour
             i++;
         }
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
+        saveScript = NPCSave.instance;
         saveScript.SetNPC(setNames, setCharacters);
+        Debug.Log(prisonSelectScript.currentPrisonPath);
+        dataSenderScript = DataSender.instance;
         dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
 
         Addressables.LoadSceneAsync("Prison");

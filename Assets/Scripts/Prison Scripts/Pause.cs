@@ -53,6 +53,7 @@ public class Pause : MonoBehaviour
                 {
                     isQuitting = true;
                     Addressables.LoadSceneAsync("Main Menu");
+                    GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
                 }
             }
         }

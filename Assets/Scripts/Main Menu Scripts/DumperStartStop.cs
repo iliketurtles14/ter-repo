@@ -2,24 +2,80 @@ using UnityEngine;
 using System.Diagnostics;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
+using System.Net;
+using UnityEngine.UI;
 
 public class DumperStartStop : MonoBehaviour
 {
     private Process dumper;
     public LoadingPanel loadScript;
-    public MemoryMappedFileReader mmfrScript; // Assign in Inspector
+    public MemoryMappedFileReader mmfrScript;
     public CheckForDependencies dependenciesScript;
     public PrisonSelect prisonSelectScript;
-    private bool hasLoaded; //this is for the initial load at the start of the game. if you are coming back to the main menu, this is why this is here.
+    private ApplyMainMenuData applyScript;
+    public Transform mmc;
+    public bool isGoingToMainMenu; //for quitting from a prison (this is set in Pause.cs when quitting a prison)
 
-    private void OnEnable()
+    private void Awake()
     {
-        if (!hasLoaded)
+        applyScript = GetComponent<ApplyMainMenuData>();
+        
+        StartCoroutine(LoadAll());
+    }
+    private void Update()
+    {
+        if (isGoingToMainMenu)
         {
-            StartCoroutine(LoadAll());
+            isGoingToMainMenu = false;
+            StartCoroutine(ReloadMainMenu());
         }
     }
 
+    private IEnumerator ReloadMainMenu() //for quitting from a prison
+    {
+        //get mmc (waiting until the main menu scene is actually loaded
+        while (true)
+        {
+            yield return null;
+
+            Scene mainMenuScene = SceneManager.GetSceneByName("Main Menu");
+            foreach (var root in mainMenuScene.GetRootGameObjects())
+            {
+                if (root.name == "MainMenuCanvas")
+                {
+                    mmc = root.transform;
+                    break;
+                }
+            }
+
+            if (mmc == null)
+            {
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        prisonSelectScript = mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>();
+
+        //disable opening sequences
+        mmc.Find("LoadingPanel").gameObject.SetActive(false);
+        mmc.Find("WarningPanel").gameObject.SetActive(false);
+        mmc.Find("WarningBlack").gameObject.SetActive(false);
+        mmc.Find("LogoPanel").gameObject.SetActive(false);
+
+        //enable titlescreen buttons
+        mmc.Find("TitlePanel").Find("PlayButton").GetComponent<Button>().enabled = true;
+        mmc.Find("TitlePanel").Find("OptionsButton").GetComponent<Button>().enabled = true;
+        mmc.Find("TitlePanel").Find("MapEditorButton").GetComponent<Button>().enabled = true;
+
+        //do textures and prisons
+        applyScript.LoadImages();
+        prisonSelectScript.ReloadPrisons(false);
+    }
     public IEnumerator LoadAll() //this is where it all starts...
     {
         while (true)
@@ -48,7 +104,6 @@ public class DumperStartStop : MonoBehaviour
         loadScript.LogLoad("Stopping Dumper");
         loadScript.LogLoad("Loading Prisons");
         prisonSelectScript.ReloadPrisons(false);
-        hasLoaded = true;
     }
 
     private void StartDumper()

@@ -617,6 +617,9 @@ public class LoadPrison : MonoBehaviour
     }
     public void StartLoad()
     {
+        givenDataScript = GetGivenData.instance;
+        dataSenderScript = DataSender.instance;
+        
         currentMap = MakeMapObject(dataSenderScript.currentMapPath);
 
         foreach(char c in currentMap.tilesetStr)

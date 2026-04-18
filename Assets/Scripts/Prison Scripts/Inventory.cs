@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     private string slotName;
     public int droppedDurability = 100;
     public bool isDropped = false;
+    private ItemSwell swellScript;
     public void Start()
     {
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
@@ -36,7 +37,8 @@ public class Inventory : MonoBehaviour
         playerCollisionScript = Player.GetComponent<PlayerFloorCollision>();
         PlayerTransform = Player.transform;
         mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        
+        swellScript = GetComponent<ItemSwell>();
+
         for (int i = 0; i < 6; i++)
         {
             InventoryItem blankItem = new InventoryItem();
@@ -175,31 +177,37 @@ public class Inventory : MonoBehaviour
 
         if (slot1Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot1Image.sprite = itemData.sprite;
             inventory[0].itemData = itemData;
             return;
         } else if(slot2Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot2Image.sprite = itemData.sprite;
             inventory[1].itemData = itemData;
             return;
         } else if(slot3Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot3Image.sprite = itemData.sprite;
             inventory[2].itemData = itemData;
             return;
         } else if(slot4Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot4Image.sprite = itemData.sprite;
             inventory[3].itemData = itemData;
             return;
         } else if(slot5Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot5Image.sprite = itemData.sprite;
             inventory[4].itemData = itemData;
             return;
         } else if( slot6Image.sprite == ClearSprite)
         {
+            StartCoroutine(swellScript.Swell(slot1.gameObject));
             slot6Image.sprite = itemData.sprite;
             inventory[5].itemData = itemData;
             return;

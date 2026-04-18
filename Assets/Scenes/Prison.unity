@@ -6759,6 +6759,7 @@ GameObject:
   - component: {fileID: 567059201}
   - component: {fileID: 567059206}
   - component: {fileID: 567059207}
+  - component: {fileID: 567059208}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -7932,6 +7933,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a3ca3c915389441974a974b0c34565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Doors
+--- !u!114 &567059208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1dbea5157821c84e8ccf8dbb86f7adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSwell
 --- !u!1 &573429759
 GameObject:
   m_ObjectHideFlags: 0

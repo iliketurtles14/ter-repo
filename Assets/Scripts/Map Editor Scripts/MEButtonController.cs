@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -860,6 +861,21 @@ public class MEButtonController : MonoBehaviour
     public void Origin()
     {
         camera.position = new Vector3(((gridScript.sizeX * 1.6f) / 2f) - .8f, ((gridScript.sizeY * 1.6f) / 2f) - .8f, -1);
+    }
+    public void Quit()
+    {
+        uic.Find("Black").gameObject.SetActive(true);
+        uic.Find("ExitPanel").gameObject.SetActive(true);
+    }
+    public void ExitYes()
+    {
+        Addressables.LoadSceneAsync("Main Menu");
+        GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
+    }
+    public void ExitNo()
+    {
+        uic.Find("Black").gameObject.SetActive(false);
+        uic.Find("ExitPanel").gameObject.SetActive(false);
     }
     public void SpecialObject(BaseEventData data)
     {

@@ -9,10 +9,8 @@ public class RootObjectCache : MonoBehaviour
 
     void Awake()
     {
-        if (rootCache != null) return; // Already initialized
-
         rootCache = new Dictionary<string, GameObject>();
-        GameObject[] roots = SceneManager.GetActiveScene().GetRootGameObjects();
+        GameObject[] roots = SceneManager.GetSceneByName("Prison").GetRootGameObjects();
 
         foreach (GameObject root in roots)
         {
@@ -35,7 +33,7 @@ public class RootObjectCache : MonoBehaviour
         if (rootCache.TryGetValue(name, out GameObject obj))
             return obj;
 
-        Debug.LogWarning($"Root object '{name}' not found.");
+        Debug.LogError($"Root object '{name}' not found.");
         return null;
     }
 }

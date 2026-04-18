@@ -106,9 +106,16 @@ public class Doors : MonoBehaviour
             case "WhiteDoor":
                 return false;
             case "GuardDoor":
-                if (guardOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
+                try
                 {
-                    return true;
+                    if (guardOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
                 }
                 break;
         }

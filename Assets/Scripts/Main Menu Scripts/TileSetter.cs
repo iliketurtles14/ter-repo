@@ -21,6 +21,15 @@ public class TileSetter : MonoBehaviour
 
     public void SetTiles(int whatPrison)
     {
+        if(givenDataScript == null)
+        {
+            givenDataScript = GetGivenData.instance;
+        }
+        if(senderScript == null)
+        {
+            senderScript = DataSender.instance;
+        }
+        
         tileTextureList = givenDataScript.tileTextureList;
         groundTextureList = givenDataScript.groundTextureList;
 

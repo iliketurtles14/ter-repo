@@ -24,6 +24,11 @@ public class PlayerMenu : MonoBehaviour
     }
     public void Update()
     {
+        if(saveScript == null)
+        {
+            saveScript = NPCSave.instance;
+        }
+        
         playerCharacter = CharacterEnumClass.GetCharacterString(characterNum);
         characterNum = CharacterEnumClass.GetCharacterInt(playerCharacter);
         if (characterNum == 0)
