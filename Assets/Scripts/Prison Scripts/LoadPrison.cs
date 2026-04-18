@@ -1767,7 +1767,9 @@ public class LoadPrison : MonoBehaviour
             }
         }
 
-        Map map = new Map(mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        string fileName = Path.GetFileNameWithoutExtension(path);
+
+        Map map = new Map(fileName, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

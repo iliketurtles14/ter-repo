@@ -17,6 +17,7 @@ Note that "-1" means that that property does not apply to an item (similarly to 
 
 Crafting Recipes are at the bottom of this file. 
 You can add custom Crafting Recipes as well.
+Note that if you change the Crafting Recipes, the player's Crafting Notes will not transfer over to this prison.
 
 [000]
 Name=Cell Key

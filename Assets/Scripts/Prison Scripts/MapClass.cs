@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public class Map
 {
+    public string fileName; //no extension
     public string mapName;
     public string note;
     public string warden;
@@ -55,6 +56,7 @@ public class Map
     public List<float[]> zoneVars; //[posx],[posy],[sizex],[sizey]
 
     public Map(
+        string fileName,
         string mapName,
         string note,
         string warden,
@@ -104,6 +106,7 @@ public class Map
         List<float[]> zoneVars
     )
     {
+        this.fileName = fileName;
         this.mapName = mapName;
         this.note = note;
         this.warden = warden;

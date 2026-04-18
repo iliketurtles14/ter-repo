@@ -37,6 +37,7 @@ public class Tooltips : MonoBehaviour
     private InventorySelection selectionScript;
     private ItemBehaviours itemBehavioursScript;
     private NPCIDInv npcIDInvScript;
+    private CraftMenu craftMenuScript;
     private GameObject touchedInvSlot;
     private bool isTouchingInvSlot;
     private int invSlotNumber; //starts at 0
@@ -44,6 +45,7 @@ public class Tooltips : MonoBehaviour
     private int idSlotNumber;
     private int npcInvSlotNumber;
     private int npcShopSlotNumber;
+    private ItemData craftItemData;
     private bool isTouchingItem;
     private GameObject touchedItem;
     private float wallDistance;
@@ -94,6 +96,7 @@ public class Tooltips : MonoBehaviour
         npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
         givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
         shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
+        craftMenuScript = menuCanvas.transform.Find("CraftMenuPanel").GetComponent<CraftMenu>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -464,8 +467,62 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-
-            //for ground items
+        //for craft items (DONT USE THIS AS AN EXAMPLE)
+        if (mcs.isTouchingCraftSlot)
+        {
+            switch (mcs.touchedCraftSlot.name)
+            {
+                case "Item0":
+                    craftItemData = craftMenuScript.item0;
+                    break;
+                case "Item1":
+                    craftItemData = craftMenuScript.item1;
+                    break;
+                case "Item2":
+                    craftItemData = craftMenuScript.item2;
+                    break;
+                case "CraftedItem":
+                    craftItemData = craftMenuScript.craftedItem;
+                    break;
+                default:
+                    craftItemData = null;
+                    break;
+            }
+        }
+        if (mcs.isTouchingCraftSlot && mcs.touchedCraftSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+        {
+            if (craftItemData.durability != -1)
+            {
+                toPrint = craftItemData.displayName;
+                printedItemDurability = craftItemData.currentDurability;
+                printDurability = " (" + craftItemData.currentDurability + "%)";
+            }
+            else if (craftItemData.durability == -1)
+            {
+                toPrint = craftItemData.displayName;
+                printDurability = "";
+            }
+            tooltipType = "craftItem";
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            return;
+        }
+        else if (showingTooltip && tooltipType == "craftItem" && !mcs.isTouchingCraftSlot)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if ((showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData == null) ||
+            (showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData.displayName != toPrint))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (mcs.isTouchingCraftSlot && showingTooltip && craftItemData == null)
+        {
+            DestroyTooltip();
+            return;
+        }
+        //for ground items
         if (isTouchingItem && !showingTooltip)
         {
             currentTouchedItem = mcs.touchedItem;

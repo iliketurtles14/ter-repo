@@ -3,6 +3,7 @@ using Pathfinding;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PauseController : MonoBehaviour
 {
@@ -56,7 +57,8 @@ public class PauseController : MonoBehaviour
                 {
                     anyNPCMoving = true;
                 }
-                if (npc.GetComponent<NPCAnimation>().enabled)
+                if ((npc.CompareTag("NPC") && npc.GetComponent<NPCAnimation>().enabled) ||
+                    npc.GetComponent<ExtraNPCAnimation>().enabled)
                 {
                     anyNPCAnim = true;
                 }
@@ -88,16 +90,24 @@ public class PauseController : MonoBehaviour
         foreach(Transform npc in aStar)
         {
             npc.GetComponent<AILerp>().canMove = false;
-            npc.GetComponent<NPCAnimation>().enabled = false;
-            npc.GetComponent<NavMeshAgent>().speed = 0;
+            if (npc.CompareTag("NPC"))
+            {
+                npc.GetComponent<NPCAnimation>().enabled = false;
+                npc.GetComponent<NavMeshAgent>().speed = 0;
+            }
+            else
+            {
+                npc.GetComponent<ExtraNPCAnimation>().enabled = false;
+            }
         }
 
         //time freeze
         timeObject.GetComponent<Routine>().enabled = false;
 
-        //disable id button
-        ic.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = false;
-        
+        //disable id button and craft button
+        ic.Find("PlayerIDButton").GetComponent<EventTrigger>().enabled = false;
+        ic.Find("CraftButton").GetComponent<EventTrigger>().enabled = false;
+
         isPaused = true;
     }
 
@@ -142,9 +152,19 @@ public class PauseController : MonoBehaviour
             }
             if (!noAnimOnNPCs)
             {
-                npc.GetComponent<NPCAnimation>().enabled = true;
+                if (npc.CompareTag("ExtraNPC"))
+                {
+                    npc.GetComponent<ExtraNPCAnimation>().enabled = true;
+                }
+                else
+                {
+                    npc.GetComponent<NPCAnimation>().enabled = true;
+                }
             }
-            npc.GetComponent<NavMeshAgent>().speed = 8;
+            if (!npc.CompareTag("ExtraNPC"))
+            {
+                npc.GetComponent<NavMeshAgent>().speed = 8;
+            }
         }
 
         //time unfreeze
@@ -154,13 +174,14 @@ public class PauseController : MonoBehaviour
         }
         timeObject.GetComponent<Routine>().enabled = true;
 
-        //enable id button
+        //enable id button and craft button
         if(ic == null)
         {
             ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         }
-        ic.Find("PlayerIDButton").GetComponent<BoxCollider2D>().enabled = true;
-        
+        ic.Find("PlayerIDButton").GetComponent<EventTrigger>().enabled = true;
+        ic.Find("CraftButton").GetComponent<EventTrigger>().enabled = true;
+
         isPaused = false;
     }
 }

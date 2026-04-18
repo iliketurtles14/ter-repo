@@ -17,13 +17,13 @@ public class Options : MonoBehaviour
     private IniFile iniFile;
     public void OnEnable()
     {
-        iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini"));
+        iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "UserData.ini"));
 
-        if (iniFile.Read("NormalizePlayerMovement", "Settings") == "true")
+        if (iniFile.Read("NormalizePlayerMovement", "Settings") == "True")
         {
             normalizePlayerMovement = true;
         }
-        else if (iniFile.Read("NormalizePlayerMovement", "Settings") == "false")
+        else if (iniFile.Read("NormalizePlayerMovement", "Settings") == "False")
         {
             normalizePlayerMovement = false;
         }

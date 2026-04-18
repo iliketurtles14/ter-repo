@@ -297,6 +297,7 @@ public class GetGivenData : MonoBehaviour
                 }
             }
         }
+        DataSender.instance.SetMusicList(musicList);
         doneWithMusicLoad = true;
     }
     private Texture2D LoadGifAsTexture2D(byte[] fileData)

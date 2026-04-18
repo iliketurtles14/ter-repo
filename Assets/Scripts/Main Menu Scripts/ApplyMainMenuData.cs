@@ -121,15 +121,15 @@ public class ApplyMainMenuData : MonoBehaviour
         spriteState.highlightedSprite = UISprites[329];
         mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Button>().spriteState = spriteState;
         //options stuff
-        mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
-        mmc.Find("OptionsPanel").Find("NormalizeCheckBox").GetComponent<Image>().sprite = UISprites[215];
-        mmc.Find("OptionsPanel").Find("OptionsTextBackdrop").GetComponent<Image>().sprite = UISprites[186];
-        mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
-        spriteState = mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState;
-        spriteState.highlightedSprite = UISprites[327];
-        mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
-        mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
-        mmc.Find("OptionsPanel").GetComponent<Image>().sprite = UISprites[184];
+        //mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
+        //mmc.Find("OptionsPanel").Find("NormalizeCheckBox").GetComponent<Image>().sprite = UISprites[215];
+        //mmc.Find("OptionsPanel").Find("OptionsTextBackdrop").GetComponent<Image>().sprite = UISprites[186];
+        //mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
+        //spriteState = mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState;
+        //spriteState.highlightedSprite = UISprites[327];
+        //mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        //mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
+        //mmc.Find("OptionsPanel").GetComponent<Image>().sprite = UISprites[184];
         //patch notes buttosns
         mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[248];
         spriteState = mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Button>().spriteState;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
+using System.Windows.Forms.VisualStyles;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
@@ -468,10 +469,6 @@ public class PrisonSelect : MonoBehaviour
             {
                 File.Delete(Path.Combine(extractPath, "Music.mp3"));
             }
-            if(File.Exists(Path.Combine(extractPath, "Items.ini")))
-            {
-                File.Delete(Path.Combine(extractPath, "Items.ini"));
-            }
             if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
             {
                 File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
@@ -503,6 +500,39 @@ public class PrisonSelect : MonoBehaviour
             customPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
             customPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
             customPrisonNamesNormal.Add(GetINIVar("Properties", "MapName", data));
+
+            //crafting note stuff
+
+            if(File.Exists(Path.Combine(extractPath, "Items.ini")))
+            {
+                string[] items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
+                List<string> customCraftNotes = new List<string>();
+                foreach(string line in GetINISet("CraftingNotes", items))
+                {
+                    if (line.Contains('='))
+                    {
+                        customCraftNotes.Add(line);
+                    }
+                }
+                string[] normalItems = Resources.Load<TextAsset>("Items").text.Split('\n');
+                List<string> normalCraftNotes = new List<string>();
+                foreach(string line in GetINISet("CraftingNotes", normalItems))
+                {
+                    if (line.Contains('='))
+                    {
+                        normalCraftNotes.Add(line);
+                    }
+                }
+                if (normalCraftNotes != customCraftNotes)
+                {
+                    if(!File.Exists(Path.Combine(Application.streamingAssetsPath, "CraftingNotes", Path.GetFileNameWithoutExtension(customPrisonPaths[i]) + " Crafting Notes.ini")))
+                    {
+                        File.WriteAllText(Path.Combine(Application.streamingAssetsPath, "CraftingNotes", Path.GetFileNameWithoutExtension(customPrisonPaths[i]) + " Crafting Notes.ini"), "[CraftingNotes]\n");
+                    }
+                }
+
+                File.Delete(Path.Combine(extractPath, "Items.ini"));
+            }
         }
 
         if (!onlyCustom)
@@ -591,5 +621,44 @@ public class PrisonSelect : MonoBehaviour
         texture.filterMode = FilterMode.Point;
 
         return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100.0f);
+    }
+    public List<string> GetINISet(string header, string[] file)
+    {
+        int startLine = -1;
+        int endLine = file.Length;
+
+        // Find the header line
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains($"[{header}]"))
+            {
+                startLine = i + 1; // Start after the header
+                break;
+            }
+        }
+
+        if (startLine == -1)
+            return new List<string>(); // Header not found
+
+        // Find the next header or end of file
+        for (int i = startLine; i < file.Length; i++)
+        {
+            if (file[i].StartsWith("[") && file[i].EndsWith("]"))
+            {
+                endLine = i;
+                break;
+            }
+        }
+
+        List<string> setList = new List<string>();
+        for (int i = startLine; i < endLine; i++)
+        {
+            if (file[i].Contains('='))
+            {
+                setList.Add(file[i]);
+            }
+        }
+
+        return setList;
     }
 }

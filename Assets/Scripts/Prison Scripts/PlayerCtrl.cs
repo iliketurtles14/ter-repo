@@ -17,7 +17,7 @@ public class PlayerCtrl : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
 
-        iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini"));
+        iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "UserData.ini"));
     }
     void Update()
     {
@@ -26,12 +26,12 @@ public class PlayerCtrl : MonoBehaviour
             speedX = Input.GetAxisRaw("Horizontal");
             speedY = Input.GetAxisRaw("Vertical");
 
-            if (iniFile.Read("NormalizePlayerMovement", "Settings") == "true")
+            if (iniFile.Read("NormalizePlayerMovement", "Settings") == "True")
             {
                 Vector2 movement = new Vector2(speedX, speedY).normalized * movSpeed;
                 rb.linearVelocity = movement;
             }
-            else if (iniFile.Read("NormalizePlayerMovement", "Settings") == "false")
+            else if (iniFile.Read("NormalizePlayerMovement", "Settings") == "False")
             {
                 Vector2 movement = new Vector2(speedX, speedY) * movSpeed;
                 rb.linearVelocity = movement;

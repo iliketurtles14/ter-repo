@@ -59,6 +59,7 @@ public class NPCRename : MonoBehaviour
     private List<int> setCharacters = new List<int>();
     private string setCharacter;
     public bool isStarting;
+    public MMSoundController sc;
 
     private void OnEnable()
     {
@@ -138,6 +139,11 @@ public class NPCRename : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0) && !mouseCollisionScript.isTouchingSmallMenuPanel && !mouseCollisionScript.isTouchingGuard && !mouseCollisionScript.isTouchingInmate)
             {
+                if(!mouseCollisionScript.isTouchingButton && lastPressedCharacter != null)
+                {
+                    sc.PlaySound("close");
+                }
+
                 hasPressedCharacter = false;
                 lastPressedCharacter = null;
                 pressedCharacterAmount = 0;

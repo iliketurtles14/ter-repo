@@ -14,6 +14,8 @@ public class LoadingPanel : MonoBehaviour
     public Sprite clearSprite;
     public Sprite barSprite;
     public GameObject titlePanel;
+    public LogoMenu logoMenuScript;
+    public MMMusicController musicController;
 
     public PrisonSelect prisonSelectScript;
     public void Start()
@@ -32,9 +34,6 @@ public class LoadingPanel : MonoBehaviour
 
         if (GetGivenData.instance.doneWithGivenLoad && prisonSelectScript.doneWithInitialLoad)
         {
-            titlePanel.transform.Find("PlayButton").GetComponent<Button>().enabled = true;
-            titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;
-            titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = true;
             GetComponent<Animator>().Play("LoadingScreenAnim");
             StartCoroutine(WaitLoop());
         }
@@ -56,6 +55,7 @@ public class LoadingPanel : MonoBehaviour
             yield return null;
         }
         Debug.Log("amount of loads: " + loadCount);
+        logoMenuScript.canStart = true;
         gameObject.SetActive(false);
     }
 }

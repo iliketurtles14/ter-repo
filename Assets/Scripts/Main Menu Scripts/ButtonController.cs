@@ -18,6 +18,7 @@ public class ButtonController : MonoBehaviour
     public SmallMenu smallMenuScript;
     public NPCRename npcRenameScript;
     public Warnings warningsScript;
+    public MMSoundController sc;
     public void MainPlayGame()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
@@ -30,6 +31,8 @@ public class ButtonController : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = false;
             }
         }
+
+        sc.PlaySound("open");
     }
     public void MainPatchNotes()
     {
@@ -43,6 +46,8 @@ public class ButtonController : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = false;
             }
         }
+
+        sc.PlaySound("open");
     }
     public void MainOptions()
     {
@@ -76,6 +81,8 @@ public class ButtonController : MonoBehaviour
                 }
             }
         }
+
+        sc.PlaySound("open");
     }
     public void MainMapEditor()
     {
@@ -87,6 +94,8 @@ public class ButtonController : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = false;
             }
         }
+
+        sc.PlaySound("rumble");
 
         Addressables.LoadSceneAsync("Map Editor");
     }
@@ -102,6 +111,7 @@ public class ButtonController : MonoBehaviour
         }
         mmc.Find("Black").GetComponent<Image>().enabled = false;
         mmc.Find("PatchNotesPanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
     }
     public void OptionsNormalize()
     {
@@ -115,6 +125,8 @@ public class ButtonController : MonoBehaviour
         {
             normalizeBox.GetComponent<Image>().sprite = checkedBoxSprite;
         }
+
+        sc.PlaySound("plip");
     }
     public void OptionsSave()
     {
@@ -132,6 +144,7 @@ public class ButtonController : MonoBehaviour
                 }
             }
         }
+        sc.PlaySound("plip");
     }
     public void OptionsBack()
     {
@@ -145,14 +158,18 @@ public class ButtonController : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = true;
             }
         }
+
+        sc.PlaySound("close");
     }
     public void PrisonSelectLeft()
     {
         prisonSelectScript.whichPrison--;
+        sc.PlaySound("plip");
     }
     public void PrisonSelectRight()
     {
         prisonSelectScript.whichPrison++;
+        sc.PlaySound("plip");
     }
     public void PrisonSelectBack()
     {
@@ -166,30 +183,37 @@ public class ButtonController : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = true;
             }
         }
+
+        sc.PlaySound("close");
     }
     public void PrisonSelectContinue()
     {
         mmc.Find("PlayerPanel").gameObject.SetActive(true);
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
+        sc.PlaySound("open");
     }
     public void PrisonSelectMainPrisons()
     {
         prisonSelectScript.whichTab = 0;
         StartCoroutine(prisonSelectScript.ReloadGrid());
+        sc.PlaySound("plip");
     }
     public void PrisonSelectBonusPrisons()
     {
         prisonSelectScript.whichTab = 1;
         StartCoroutine(prisonSelectScript.ReloadGrid());
+        sc.PlaySound("plip");
     }
     public void PrisonSelectCustomPrisons()
     {
         prisonSelectScript.whichTab = 2;
         StartCoroutine(prisonSelectScript.ReloadGrid());
+        sc.PlaySound("plip");
     }
     public void PrisonSelectReloadCustomPrisons()
     {
         prisonSelectScript.ReloadPrisons(true);
+        sc.PlaySound("plip");
     }
     public void PrisonSelectFile()
     {
@@ -224,14 +248,17 @@ public class ButtonController : MonoBehaviour
         {
             Debug.LogError("Failed to open file explorer: " + e.Message);
         }
+        sc.PlaySound("plip");
     }
     public void PrisonSelectSingleView()
     {
         StartCoroutine(prisonSelectScript.HideGrid());
+        sc.PlaySound("plip");
     }
     public void PrisonSelectMultiView()
     {
         StartCoroutine(prisonSelectScript.ShowGrid());
+        sc.PlaySound("plip");
     }
     public void PrisonSelectGridPrisonSelect(BaseEventData data)
     {
@@ -243,23 +270,28 @@ public class ButtonController : MonoBehaviour
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
         prisonSelectScript.SelectGridPrison(clicked);
+        sc.PlaySound("plip");
     }
     public void PlayerMenuLeft()
     {
         PlayerMenuScript.characterNum--;
         mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
         mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
+
+        sc.PlaySound("plip");
     }
     public void PlayerMenuRight()
     {
         PlayerMenuScript.characterNum++;
         mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
         mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
+        sc.PlaySound("plip");
     }
     public void PlayerMenuBack()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
         mmc.Find("PlayerPanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
     }
     public void PlayerMenuContinue()
     {
@@ -270,14 +302,17 @@ public class ButtonController : MonoBehaviour
         mmc.Find("NPCCustomizePanel").gameObject.SetActive(true);
         mmc.Find("SmallMenuPanel").gameObject.SetActive(true);
         mmc.Find("PlayerPanel").gameObject.SetActive(false);
+        sc.PlaySound("open");
     }
     public void SmallMenuLeft()
     {
         smallMenuScript.characterNum--;
+        sc.PlaySound("plip");
     }
     public void SmallMenuRight()
     {
         smallMenuScript.characterNum++;
+        sc.PlaySound("plip");
     }
     public void SmallMenuSet()
     {
@@ -286,12 +321,14 @@ public class ButtonController : MonoBehaviour
         string character = smallMenuScript.npcCharacter;
 
         smallMenuScript.SetNPC(name, displayName, character);
+        sc.PlaySound("plip");
     }
     public void NPCRenameBack()
     {
         mmc.Find("PlayerPanel").gameObject.SetActive(true);
         mmc.Find("SmallMenuPanel").gameObject.SetActive(false);
         mmc.Find("NPCCustomizePanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
     }
     public void NPCRenameStart()
     {
@@ -299,14 +336,17 @@ public class ButtonController : MonoBehaviour
         {
             npcRenameScript.isStarting = true;
             npcRenameScript.Transfer();
+            sc.PlaySound("rumble");
         }
     }
     public void NPCRenameRandom()
     {
         StartCoroutine(npcRenameScript.RandomizeWait());
+        sc.PlaySound("plip");
     }
     public void NPCRenameNPC()
     {
         npcRenameScript.OnNPCClick();
+        sc.PlaySound("plip");
     }
 }

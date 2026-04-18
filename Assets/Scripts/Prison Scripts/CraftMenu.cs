@@ -2,22 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class CraftMenu : MonoBehaviour
 {
     private bool menuIsOpen;
     private bool menuIsFull;
     private bool invIsFull;
-    private ItemData item0;
-    private ItemData item1;
-    private ItemData item2;
+    public ItemData item0;
+    public ItemData item1;
+    public ItemData item2;
     private GameObject slot0;
     private GameObject slot1;
     private GameObject slot2;
     private GameObject craftedSlot;
-    private ItemData craftedItem;
+    public ItemData craftedItem;
     private MouseCollisionOnItems mcs;
     private Sprite clear;
     private int invSlotNumber;
@@ -30,6 +32,7 @@ public class CraftMenu : MonoBehaviour
     private ItemDataCreator creator;
     private PauseController pc;
     private Transform mc;
+    private NotesMenu notesMenuScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -40,6 +43,7 @@ public class CraftMenu : MonoBehaviour
         creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        notesMenuScript = mc.Find("NotesMenuPanel").GetComponent<NotesMenu>();
 
         slot0 = transform.Find("ItemGrid").Find("Item0").gameObject;
         slot1 = transform.Find("ItemGrid").Find("Item1").gameObject;
@@ -63,7 +67,7 @@ public class CraftMenu : MonoBehaviour
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
 
         GetCraftingRecipes();
-        CloseMenu();
+        CloseMenu(false);
     }
     private void Update()
     {
@@ -158,13 +162,27 @@ public class CraftMenu : MonoBehaviour
                 }
             }
 
-            touchedItem = null;
+            switch (mcs.touchedCraftSlot.name)
+            {
+                case "Item0":
+                    item0 = null;
+                    break;
+                case "Item1":
+                    item1 = null;
+                    break;
+                case "Item2":
+                    item2 = null;
+                    break;
+                case "CraftedItem":
+                    craftedItem = null;
+                    break;
+            }
             mcs.touchedCraftSlot.GetComponent<Image>().sprite = clear;
         }
 
-        if (!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingCraftSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
+        if (!mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingCraftSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
         {
-            CloseMenu();
+            CloseMenu(false);
         }
     }
     private void GetCraftingRecipes()
@@ -187,9 +205,11 @@ public class CraftMenu : MonoBehaviour
     }
     public void Craft()
     {
+        Debug.Log("Trying to craft...");
+
         List<string> crSet = GetINISet("Crafting Recipes", currentMap.items);
         List<string> tempList = new List<string>();
-        foreach(string str in crSet)
+        foreach (string str in crSet)
         {
             if (str.Contains('='))
             {
@@ -199,27 +219,27 @@ public class CraftMenu : MonoBehaviour
         crSet = new List<string>(tempList);
 
         List<int> currentIDs = new List<int>();//ids that are in the menu
-        if(item0 != null)
+        if (item0 != null)
         {
             currentIDs.Add(item0.id);
         }
-        if(item1 != null)
+        if (item1 != null)
         {
             currentIDs.Add(item1.id);
         }
-        if(item2 != null)
+        if (item2 != null)
         {
             currentIDs.Add(item2.id);
         }
 
         int i = 0;
         bool matches = false;
-        foreach(List<int> lists in craftingRecipes)
+        foreach (List<int> lists in craftingRecipes)
         {
             bool same = currentIDs.OrderBy(x => x).SequenceEqual(lists.OrderBy(x => x));
             if (same)
             {
-                matches = false;
+                matches = true;
                 break;
             }
             i++;
@@ -227,6 +247,7 @@ public class CraftMenu : MonoBehaviour
 
         if (!matches)
         {
+            Debug.Log("No crafting recipes match the given crafting input. Returning...");
             return;
         }
 
@@ -250,7 +271,7 @@ public class CraftMenu : MonoBehaviour
         }
 
         string[] individualResults = rawResults.Split(',');
-        foreach(string result in individualResults)
+        foreach (string result in individualResults)
         {
             results.Add(Convert.ToInt32(result));
         }
@@ -266,8 +287,12 @@ public class CraftMenu : MonoBehaviour
 
         if (reqInt > player.GetComponent<PlayerCollectionData>().playerData.intellect)
         {
+            Debug.Log("Player is too stupid to craft this. Returning...");
             return;
         }
+
+        AddCraftNote(currentIDs, results, reqInt);
+        StartCoroutine(CraftMenuAnim());
 
         item0 = null;
         item1 = null;
@@ -277,12 +302,58 @@ public class CraftMenu : MonoBehaviour
         slot2.GetComponent<Image>().sprite = clear;
         craftedItem = creator.CreateItemData(results[UnityEngine.Random.Range(0, results.Count)]);
         craftedSlot.GetComponent<Image>().sprite = craftedItem.sprite;
-        
-        if(returnID != -1)
+
+        if (returnID != -1)
         {
             item0 = creator.CreateItemData(returnID);
             slot0.GetComponent<Image>().sprite = item0.sprite;
+            Debug.Log("Returning an item...");
         }
+        Debug.Log("Finished crafting.");
+    }
+    public void AddCraftNote(List<int> ingredients, List<int> results, int intellect)
+    {
+        string[] paths = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "CraftingNotes"));
+        string cnPath = "";
+        foreach(string path in paths)
+        {
+            if(Path.GetFileNameWithoutExtension(path) == currentMap.fileName)
+            {
+                cnPath = path;
+                break;
+            }
+        }
+        if (string.IsNullOrEmpty(cnPath))
+        {
+            cnPath = Path.Combine(Application.streamingAssetsPath, "GlobalCraftingNotes.ini");
+        }
+
+        string cnFile = File.ReadAllText(cnPath);
+
+        string cnToAdd = "";
+        foreach(int ingredient in ingredients)
+        {
+            cnToAdd += ingredient.ToString() + "+";
+        }
+        cnToAdd = cnToAdd.Substring(0, cnToAdd.Length - 1);
+        cnToAdd += "=";
+        string recipe = cnToAdd;
+        cnToAdd = "";
+        foreach(int result in results)
+        {
+            cnToAdd += recipe + result.ToString() + "_" + intellect.ToString() + "\n";
+        }
+        cnToAdd = cnToAdd.Substring(0, cnToAdd.Length - 1);
+
+        if (!cnFile.Contains(cnToAdd))
+        {
+            File.AppendAllText(cnPath, "\n" + cnToAdd);
+        }
+    }
+    private IEnumerator CraftMenuAnim()
+    {
+        Debug.Log("DO THISSSSSSSSS");
+        yield break;
     }
     public void OpenMenu()
     {
@@ -292,13 +363,23 @@ public class CraftMenu : MonoBehaviour
         transform.Find("CraftedItem").gameObject.SetActive(true);
         transform.Find("NotesButton").gameObject.SetActive(true);
         transform.Find("CraftingText").gameObject.SetActive(true);
+        transform.Find("CraftDarkCover").gameObject.SetActive(true);
         transform.GetComponent<Image>().enabled = true;
         transform.GetComponent<BoxCollider2D>().enabled = true;
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(false);
     }
-    public void CloseMenu()
+    public void CloseMenu(bool goToNotes)
     {
+        if (goToNotes)
+        {
+            notesMenuScript.OpenMenu();
+        }
+        else
+        {
+            mc.Find("Black").GetComponent<Image>().enabled = false;
+            pc.Unpause();
+        }
         GiveBackItems();
         menuIsOpen = false;
         transform.Find("CraftButton").gameObject.SetActive(false);
@@ -306,10 +387,9 @@ public class CraftMenu : MonoBehaviour
         transform.Find("CraftedItem").gameObject.SetActive(false);
         transform.Find("NotesButton").gameObject.SetActive(false);
         transform.Find("CraftingText").gameObject.SetActive(false);
-        transform.GetComponent<Image>().enabled = false;
-        transform.GetComponent<BoxCollider2D>().enabled = false;
-        mc.Find("Black").GetComponent<Image>().enabled = false;
-        pc.Unpause();
+        transform.Find("CraftDarkCover").gameObject.SetActive(false);
+        GetComponent<Image>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
     }
     private void GiveBackItems()
     {

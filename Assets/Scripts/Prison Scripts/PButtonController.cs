@@ -10,6 +10,8 @@ public class PButtonController : MonoBehaviour
     private NPCIDInv npcIDInvScript;
     private ShopMenu shopMenuScript;
     private JobMenu jobMenuScript;
+    private CraftMenu craftMenuScript;
+    private PlayerIDInv playerIDInvScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -19,6 +21,8 @@ public class PButtonController : MonoBehaviour
         npcIDInvScript = mc.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
         shopMenuScript = mc.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
         jobMenuScript = mc.Find("JobMenuPanel").GetComponent<JobMenu>();
+        craftMenuScript = mc.Find("CraftMenuPanel").GetComponent<CraftMenu>();
+        playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
     }
     public void MissionYes()
     {
@@ -141,5 +145,21 @@ public class PButtonController : MonoBehaviour
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
         string job = clicked.name;
         jobMenuScript.OpenJobDescription(job);
+    }
+    public void InvCraft()
+    {
+        craftMenuScript.OpenMenu();
+    }
+    public void InvID()
+    {
+        StartCoroutine(playerIDInvScript.OpenMenu(false));
+    }
+    public void CraftCraft()
+    {
+        craftMenuScript.Craft();
+    }
+    public void CraftNotes()
+    {
+        Debug.Log("go to notes");
     }
 }
