@@ -84,7 +84,7 @@ public class CraftMenu : MonoBehaviour
         {
             if (inventoryScript.inventory[i].itemData != null)
             {
-                invIsFull = false;
+                invIsFull = true;
             }
             else if (inventoryScript.inventory[i].itemData == null)
             {
@@ -180,7 +180,7 @@ public class CraftMenu : MonoBehaviour
             mcs.touchedCraftSlot.GetComponent<Image>().sprite = clear;
         }
 
-        if (!mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingCraftSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
+        if (menuIsOpen && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingCraftSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
         {
             CloseMenu(false);
         }

@@ -13,11 +13,10 @@ public class ZonePlacer : MonoBehaviour
     private GameObject grabbedHandle;
     private bool isGrabbingMover;
     private GameObject grabbedMover;
-    public bool inDeleteMode;
     public Transform zonesLayer;
-    public Sprite deleteZoneSprite;
     public Sprite moveZoneSprite;
     public Transform gridLines;
+    public MESoundController sc;
 
     private List<string> zoneButtonNames = new List<string>
     {
@@ -25,52 +24,19 @@ public class ZonePlacer : MonoBehaviour
         "Gym", "Showers", "Janitor", "Gardening", "Woodshop", "Metalshop",
         "Deliveries", "Kitchen", "Laundry", "Tailorshop"
     };
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr SetCursor(IntPtr hCursor);
-
-    // Predefined cursor IDs
-    public const int IDC_ARROW = 32512;
-    public const int IDC_IBEAM = 32513;
-    public const int IDC_WAIT = 32514;
-    public const int IDC_CROSS = 32515;
-    public const int IDC_UPARROW = 32516;
-    public const int IDC_SIZE = 32640;
-    public const int IDC_ICON = 32641;
-    public const int IDC_SIZENWSE = 32642;
-    public const int IDC_SIZENESW = 32643;
-    public const int IDC_SIZEWE = 32644;
-    public const int IDC_SIZENS = 32645;
-    public const int IDC_SIZEALL = 32646;
-    public const int IDC_NO = 32648;
-    public const int IDC_HAND = 32649;
-    public const int IDC_APPSTARTING = 32650;
-    public const int IDC_HELP = 32651;
-
     private void Start()
     {
         mcs = GetComponent<MouseCollisionOnMap>();
     }
     private void Update()
     {
-        //if (mcs.isTouchingHandle)
-        //{
-        //    SetSystemCursor(IDC_HAND);
-        //}
-        //else
-        //{
-        //    SetSystemCursor(IDC_ARROW);
-        //}
 
-
-        if(inDeleteMode && mcs.isTouchingMover && Input.GetMouseButtonDown(0)) //delete zone
+        if(mcs.isTouchingZone && Input.GetMouseButtonDown(1))
         {
-            Destroy(mcs.touchedMover.transform.parent.gameObject);
+            Destroy(mcs.touchedZone);
+            sc.PlaySound("hit2");
         }
-
+        
         if(mcs.isTouchingHandle && Input.GetMouseButtonDown(0))
         {
             isGrabbingHandle = true;
@@ -83,7 +49,7 @@ public class ZonePlacer : MonoBehaviour
             grabbedHandle = null;
         }
 
-        if(!inDeleteMode && mcs.isTouchingMover && Input.GetMouseButtonDown(0))
+        if(mcs.isTouchingMover && Input.GetMouseButtonDown(0))
         {
             isGrabbingMover = true;
             grabbedMover = mcs.touchedMover;
@@ -125,6 +91,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, .16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + posY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -143,6 +110,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + negX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -162,6 +130,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, -.16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + negY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -180,6 +149,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(-.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + posX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -200,6 +170,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, .16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + posY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -218,6 +189,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SE").position + posX;
                         zoneObj.Find("SE").position = newHandlePos;
@@ -237,6 +209,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, -.16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + negY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -255,6 +228,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(-.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + posX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -275,6 +249,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, .16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + posY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -293,6 +268,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + negX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -312,6 +288,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, -.16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + negY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -330,6 +307,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(-.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + posX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -350,6 +328,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, .16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + posY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -368,6 +347,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SE").position + posX;
                         zoneObj.Find("SE").position = newHandlePos;
@@ -387,6 +367,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(0, -.16f);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("NW").position + negY;
                         zoneObj.Find("NW").position = newHandlePos;
@@ -405,6 +386,7 @@ public class ZonePlacer : MonoBehaviour
                         //change scale
                         newScale = zoneObj.GetComponent<SpriteRenderer>().size + new Vector2(-.16f, 0);
                         zoneObj.GetComponent<SpriteRenderer>().size = newScale;
+                        zoneObj.GetComponent<BoxCollider2D>().size = newScale;
                         //change handle pos
                         newHandlePos = zoneObj.Find("SW").position + posX;
                         zoneObj.Find("SW").position = newHandlePos;
@@ -457,15 +439,5 @@ public class ZonePlacer : MonoBehaviour
         newZone.name = name;
         newZone.transform.Find("NameText").GetComponent<TextMeshPro>().text = name;
         newZone.transform.Find("NameText").GetComponent<MeshRenderer>().sortingOrder = 10;
-
-        if (inDeleteMode)
-        {
-            newZone.transform.Find("Mover").GetComponent<SpriteRenderer>().sprite = deleteZoneSprite;
-        }
-    }
-    public void SetSystemCursor(int cursorId)
-    {
-        IntPtr cursor = LoadCursor(IntPtr.Zero, cursorId);
-        SetCursor(cursor);
     }
 }

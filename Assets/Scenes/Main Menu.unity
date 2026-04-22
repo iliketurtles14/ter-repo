@@ -5269,6 +5269,7 @@ MonoBehaviour:
   dependenciesScript: {fileID: 1733689723}
   prisonSelectScript: {fileID: 1665980459}
   mmc: {fileID: 256175214}
+  isGoingToMainMenu: 0
 --- !u!114 &574071296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16594,7 +16595,7 @@ Transform:
   m_GameObject: {fileID: 1710997091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960.30176, y: 535.2516, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16829,7 +16830,7 @@ Transform:
   m_GameObject: {fileID: 1738218528}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 964.7378, y: 538.6405, z: 8.471612}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

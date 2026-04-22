@@ -612,6 +612,17 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("JobMenuPanel").Find("ApplyButton").GetComponent<Button>().spriteState = spriteState;
         mc.Find("JobMenuPanel").Find("ResignButton").GetComponent<Button>().spriteState = spriteState;
 
+        //toilet menu
+        mc.Find("ToiletMenuPanel").GetComponent<Image>().sprite = UISprites[70];
+        foreach(Transform slot in mc.Find("ToiletMenuPanel").Find("Slots"))
+        {
+            slot.GetComponent<Image>().sprite = UISprites[33];
+        }
+        spriteState = mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[428];
+        mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Image>().sprite = UISprites[427];
+        mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Button>().spriteState = spriteState;
+
         //snipers
         sniperSprites.Add(NPCSprites[1445]);
         sniperSprites.Add(NPCSprites[1446]);

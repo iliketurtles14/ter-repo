@@ -54,6 +54,7 @@ public class MEDeskController : MonoBehaviour
     public Transform currentDesk;
     public Transform canvases;
     public PanelSelect panelSelectScript;
+    public MESoundController sc;
     private void OnDisable()
     {
         DeselectSlots();
@@ -125,6 +126,7 @@ public class MEDeskController : MonoBehaviour
                 DeselectSlots();
                 SetDeskList();
                 ActivateButtonsForSpecialObjects();
+                sc.PlaySound("close");
             }
         }
     }

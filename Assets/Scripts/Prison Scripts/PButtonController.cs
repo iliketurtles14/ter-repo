@@ -12,6 +12,7 @@ public class PButtonController : MonoBehaviour
     private JobMenu jobMenuScript;
     private CraftMenu craftMenuScript;
     private PlayerIDInv playerIDInvScript;
+    private ToiletMenu toiletMenuScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -23,6 +24,7 @@ public class PButtonController : MonoBehaviour
         jobMenuScript = mc.Find("JobMenuPanel").GetComponent<JobMenu>();
         craftMenuScript = mc.Find("CraftMenuPanel").GetComponent<CraftMenu>();
         playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
+        toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
     }
     public void MissionYes()
     {
@@ -161,5 +163,9 @@ public class PButtonController : MonoBehaviour
     public void CraftNotes()
     {
         Debug.Log("go to notes");
+    }
+    public void ToiletFlush()
+    {
+        toiletMenuScript.Flush();
     }
 }

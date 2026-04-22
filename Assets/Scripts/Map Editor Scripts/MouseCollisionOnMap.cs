@@ -20,6 +20,8 @@ public class MouseCollisionOnMap : MonoBehaviour
     public GameObject touchedMover;
     public bool isTouchingBlack;
     public GameObject touchedBlack;
+    public bool isTouchingZone;
+    public GameObject touchedZone;
 
     private void Update()
     {
@@ -40,6 +42,7 @@ public class MouseCollisionOnMap : MonoBehaviour
             "Object",
             "Mover",
             "Handle",
+            "Zone",
             "Menu"
         };
 
@@ -86,6 +89,10 @@ public class MouseCollisionOnMap : MonoBehaviour
                 case "Handle":
                     isTouchingHandle = true;
                     touchedHandle = highestPriorityObject;
+                    break;
+                case "Zone":
+                    isTouchingZone = true;
+                    touchedZone = highestPriorityObject;
                     break;
                 case "Menu":
                     isTouchingMenu = true;
@@ -134,5 +141,7 @@ public class MouseCollisionOnMap : MonoBehaviour
         touchedMover = null;
         isTouchingBlack = false;
         touchedBlack = null;
+        isTouchingZone = false;
+        touchedZone = null;
     }
 }

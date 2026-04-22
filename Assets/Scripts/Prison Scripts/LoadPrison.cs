@@ -1096,6 +1096,10 @@ public class LoadPrison : MonoBehaviour
                     case "Ground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 3;
                         objInst.layer = 10;
+                        if (objInst.name.StartsWith("Detector"))
+                        {
+                            objInst.GetComponent<SpriteRenderer>().sortingOrder = 8;
+                        }
                         break;
                     case "Vents":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 10;
@@ -1312,6 +1316,15 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "UtilityDoor":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[175];
+                        break;
+                    case "ToiletDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[253];
+                        break;
+                    case "ToiletLeft":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[34];
+                        break;
+                    case "ToiletRight":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[35];
                         break;
                 }
             }

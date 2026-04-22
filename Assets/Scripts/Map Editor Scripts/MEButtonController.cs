@@ -28,6 +28,7 @@ public class MEButtonController : MonoBehaviour
     public string musicPath;
     public string itemsPath;
     public Transform canvases;
+    public MESoundController sc;
     //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     //{
     //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
@@ -61,18 +62,22 @@ public class MEButtonController : MonoBehaviour
     }
     public void FileLoad()
     {
+        sc.PlaySound("plip");
         GetComponent<LoadMap>().StartLoad(false);
     }
     public void FileExport()
     {
+        sc.PlaySound("plip");
         GetComponent<ExportMap>().Export();
     }
     public void FileNew()
     {
+        sc.PlaySound("plip");
         GetComponent<LoadMap>().StartLoad(true);
     }
     public void FileConvert()
     {
+        sc.PlaySound("plip");
         GetComponent<CmapConvert>().ConvertCmap();
     }
     public void PlaceZone(BaseEventData data)
@@ -87,34 +92,7 @@ public class MEButtonController : MonoBehaviour
         string name = clicked.name;
 
         GetComponent<ZonePlacer>().PlaceZone(name);
-    }
-    public void ZoneDelete()
-    {
-        ZonePlacer zonePlacerScript = GetComponent<ZonePlacer>();
-
-        zonePlacerScript.inDeleteMode = true;
-
-        foreach(Transform zone in zonePlacerScript.zonesLayer)
-        {
-            if(zone.name != "empty")
-            {
-                zone.Find("Mover").GetComponent<SpriteRenderer>().sprite = zonePlacerScript.deleteZoneSprite;
-            }
-        }
-    }
-    public void ZoneMove()
-    {
-        ZonePlacer zonePlacerScript = GetComponent<ZonePlacer>();
-
-        zonePlacerScript.inDeleteMode = true;
-
-        foreach (Transform zone in zonePlacerScript.zonesLayer)
-        {
-            if (zone.name != "empty")
-            {
-                zone.Find("Mover").GetComponent<SpriteRenderer>().sprite = zonePlacerScript.moveZoneSprite;
-            }
-        }
+        sc.PlaySound("plip");
     }
     public void PropertiesTileset()
     {
@@ -122,6 +100,7 @@ public class MEButtonController : MonoBehaviour
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesGround()
     {
@@ -129,6 +108,7 @@ public class MEButtonController : MonoBehaviour
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesMusic()
     {
@@ -136,42 +116,49 @@ public class MEButtonController : MonoBehaviour
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("PrisonSelectMenu").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesGrounds()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("GroundsSelectMenu").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesNote()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("NotePanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesRoutine()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("RoutinePanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesHint()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("HintPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesJob()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("JobPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesExtras()
     {
         pc.DeactivateButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("ExtrasPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void PropertiesSize()
     {
@@ -189,7 +176,7 @@ public class MEButtonController : MonoBehaviour
 
         sizePanel.Find("SizeX").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentX.ToString();
         sizePanel.Find("SizeY").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = currentY.ToString();
-
+        sc.PlaySound("open");
     }
     public void PropertiesIcon()
     {
@@ -200,29 +187,35 @@ public class MEButtonController : MonoBehaviour
         smc.iconPath = StandaloneFileBrowser.OpenFilePanel("Select a custom icon.", "", extensions, false);
 
         uic.Find("PropertiesPanel").Find("IconResultText").GetComponent<TextMeshProUGUI>().text = "Custom";
+        sc.PlaySound("plip");
     }
     public void PropertiesIconCancel()
     {
         smc.iconPath = null;
         uic.Find("PropertiesPanel").Find("IconResultText").GetComponent<TextMeshProUGUI>().text = "None";
+        sc.PlaySound("plip");
+
     }
     public void NoteContinue()
     {
         uic.Find("NotePanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void RoutineClose()
     {
         uic.Find("RoutinePanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void HintClose()
     {
         uic.Find("HintPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void Checkbox(BaseEventData data)
     {
@@ -328,18 +321,21 @@ public class MEButtonController : MonoBehaviour
                     break;
             }
         }
+        sc.PlaySound("plip");
     }
     public void JobClose()
     {
         uic.Find("JobPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void ExtrasClose()
     {
         uic.Find("ExtrasPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void PrisonSelect(BaseEventData data)
     {
@@ -446,6 +442,7 @@ public class MEButtonController : MonoBehaviour
             uic.Find("Black").gameObject.SetActive(false);
             smc.ReactivateButtons();
         }
+        sc.PlaySound("plip");
     }
     public void GroundsSelect(BaseEventData data)
     {
@@ -472,6 +469,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("GroundsSelectMenu").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("plip");
     }
     public void SizeSet()
     {
@@ -491,12 +489,14 @@ public class MEButtonController : MonoBehaviour
         uic.Find("Black").gameObject.SetActive(false);
         uic.Find("SizePanel").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("plip");
     }
     public void SizeCancel()
     {
         uic.Find("Black").gameObject.SetActive(false);
         uic.Find("SizePanel").gameObject.SetActive(false);
         smc.ReactivateButtons();
+        sc.PlaySound("close");
     }
     public void PanelFile()
     {
@@ -509,6 +509,7 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "FilePanel";
+        sc.PlaySound("plip");
     }
     public void PanelTiles()
     {
@@ -521,6 +522,7 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "TilesPanel";
+        sc.PlaySound("plip");
     }
     public void PanelObjects()
     {
@@ -533,6 +535,7 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = true;
 
         panelSelectScript.currentPanel = "ObjectsPanel";
+        sc.PlaySound("plip");
     }
     public void PanelZoneObjects()
     {
@@ -545,6 +548,7 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "ZonesPanel";
+        sc.PlaySound("plip");
     }
     public void PanelProperties()
     {
@@ -557,6 +561,7 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "PropertiesPanel";
+        sc.PlaySound("plip");
     }
     public void PanelAdvanced()
     {
@@ -569,26 +574,32 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "AdvancedPanel";
+        sc.PlaySound("plip");
     }
     public void LayerGround()
     {
         layerControllerScript.currentLayer = 1;
+        sc.PlaySound("plip");
     }
     public void LayerUnderground()
     {
         layerControllerScript.currentLayer = 0;
+        sc.PlaySound("plip");
     }
     public void LayerVents()
     {
         layerControllerScript.currentLayer = 2;
+        sc.PlaySound("plip");
     }
     public void LayerRoof()
     {
         layerControllerScript.currentLayer = 3;
+        sc.PlaySound("plip");
     }
     public void LayerZones()
     {
         layerControllerScript.currentLayer = 4;
+        sc.PlaySound("plip");
     }
     public void ObjectsLeft()
     {
@@ -597,6 +608,7 @@ public class MEButtonController : MonoBehaviour
         {
             GetComponent<ObjectsPanelController>().objectPanelNum = 14;
         }
+        sc.PlaySound("plip");
     }
     public void ObjectsRight()
     {
@@ -605,12 +617,14 @@ public class MEButtonController : MonoBehaviour
         {
             GetComponent<ObjectsPanelController>().objectPanelNum = 0;
         }
+        sc.PlaySound("plip");
     }
     public void AdvancedHelp()
     {
         DeactivateAdvancedButtons();
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("AdvancedHelpPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void AdvancedButton(BaseEventData data)
     {
@@ -621,6 +635,8 @@ public class MEButtonController : MonoBehaviour
         }
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        sc.PlaySound("plip");
 
         string msg = "";
         switch (clicked.name)
@@ -721,6 +737,7 @@ public class MEButtonController : MonoBehaviour
                 uic.Find("AdvancedPanel").Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
                 break;
         }
+        sc.PlaySound("plip");
     }
     public void AdvancedAdd(BaseEventData data)
     {
@@ -731,6 +748,8 @@ public class MEButtonController : MonoBehaviour
         }
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        sc.PlaySound("plip");
 
         switch (clicked.name)
         {
@@ -804,6 +823,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("MusicSelectMenu").gameObject.SetActive(true);
         DeactivateAdvancedButtons();
         uic.Find("Black").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void MusicSelect(BaseEventData data)
     {
@@ -814,6 +834,8 @@ public class MEButtonController : MonoBehaviour
         }
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        sc.PlaySound("plip");
 
         if (clicked.name != "CustomButton")
         {
@@ -857,25 +879,30 @@ public class MEButtonController : MonoBehaviour
         ReactivateAdvancedButtons();
         uic.Find("Black").gameObject.SetActive(false);
         uic.Find("AdvancedHelpPanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
     }
     public void Origin()
     {
         camera.position = new Vector3(((gridScript.sizeX * 1.6f) / 2f) - .8f, ((gridScript.sizeY * 1.6f) / 2f) - .8f, -1);
+        sc.PlaySound("plip");
     }
     public void Quit()
     {
         uic.Find("Black").gameObject.SetActive(true);
         uic.Find("ExitPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
     }
     public void ExitYes()
     {
         Addressables.LoadSceneAsync("Main Menu");
         GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
+        sc.PlaySound("rumble");
     }
     public void ExitNo()
     {
         uic.Find("Black").gameObject.SetActive(false);
         uic.Find("ExitPanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
     }
     public void SpecialObject(BaseEventData data)
     {
@@ -946,17 +973,20 @@ public class MEButtonController : MonoBehaviour
         }
         uic.Find("Black").gameObject.SetActive(true);
         DeactivateButtonsForSpecialObjects();
+        sc.PlaySound("open");
     }
     public void ItemSpecialChange()
     {
         GetComponent<MEItemController>().currentItem.GetComponent<MEItemIDContainer>().id = Convert.ToInt32(uic.Find("ItemSpecialPanel").Find("IDInput").GetComponent<TMP_InputField>().text);
         ItemSpecialCancel();
+        sc.PlaySound("plip");
     }
     public void ItemSpecialCancel()
     {
         uic.Find("ItemSpecialPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         ActivateButtonsForSpecialObjects();
+        sc.PlaySound("close");
     }
     public void DeskSlot(BaseEventData data)
     {
@@ -970,6 +1000,7 @@ public class MEButtonController : MonoBehaviour
 
         int slotNum = Convert.ToInt32(clicked.name);
         GetComponent<MEDeskController>().SelectSlot(slotNum);
+        sc.PlaySound("plip");
     }
     public void WorkDoorClose()
     {
@@ -977,6 +1008,7 @@ public class MEButtonController : MonoBehaviour
         uic.Find("WorkDoorPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         ActivateButtonsForSpecialObjects();
+        sc.PlaySound("close");
     }
 
     private Sprite ConvertPNGToSprite(string path)

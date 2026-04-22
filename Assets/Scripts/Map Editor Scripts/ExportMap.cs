@@ -460,28 +460,33 @@ public class ExportMap : MonoBehaviour
         }
         File.Delete(path + "Data.ini");
 
-        //rename zip to zmap
-        string newPath = Path.ChangeExtension(path + mapName + ".zip", ".zmap");
+        //rename zip to zmap (ensure unique name if file exists)
+        string originalZip = Path.Combine(path, mapName + ".zip");
+        string targetZmap = Path.ChangeExtension(originalZip, ".zmap");
 
-        int num = 1;
         try
         {
-            File.Move(path + mapName + ".zip", newPath);
-        }
-        catch
-        {
-            while (true)
+            if (!File.Exists(targetZmap))
             {
-                try
-                {
-                    File.Move(path + mapName + " " + num.ToString() + ".zip", newPath);
-                    break;
-                }
-                catch
-                {
-                    num++;
-                }
+                File.Move(originalZip, targetZmap);
             }
+            else
+            {
+                // find an available numbered filename
+                int num = 1;
+                string candidate;
+                do
+                {
+                    candidate = Path.Combine(path, mapName + " " + num.ToString() + ".zmap");
+                    num++;
+                } while (File.Exists(candidate));
+
+                File.Move(originalZip, candidate);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to rename map archive: " + ex.Message);
         }
 
     }

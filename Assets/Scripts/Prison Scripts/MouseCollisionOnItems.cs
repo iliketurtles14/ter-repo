@@ -99,6 +99,12 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedExtraNPC;
     public bool isTouchingCraftSlot;
     public GameObject touchedCraftSlot;
+    public bool isTouchingTV;
+    public GameObject touchedTV;
+    public bool isTouchingToilet;
+    public GameObject touchedToilet;
+    public bool isTouchingToiletSlot;
+    public GameObject touchedToiletSlot;
     void Update()
     {
         ClearCollisions();
@@ -119,6 +125,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPCInvSlot",
             "GiveSlot",
             "CraftSlot",
+            "ToiletSlot",
             "ShopSlot", //REMEMBER WHEN ADDING NEW SLOTS TO ALSO ADD THEM TO THE PAUSECONTROLLER
             "Button",
             "DeskPanel",
@@ -132,6 +139,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "JobBox",
             "ItemTransformer",
             "JobBoard",
+            "TV",
+            "Toilet",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -206,6 +215,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingCraftSlot = true;
                     touchedCraftSlot = highestPriorityObject;
                     break;
+                case "ToiletSlot":
+                    isTouchingToiletSlot = true;
+                    touchedToiletSlot = highestPriorityObject;
+                    break;
                 case "ShopSlot":
                     isTouchingShopSlot = true;
                     touchedShopSlot = highestPriorityObject;
@@ -257,6 +270,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "JobBoard":
                     isTouchingJobBoard = true;
                     touchedJobBoard = highestPriorityObject;
+                    break;
+                case "TV":
+                    isTouchingTV = true;
+                    touchedTV = highestPriorityObject;
+                    break;
+                case "Toilet":
+                    isTouchingToilet = true;
+                    touchedToilet = highestPriorityObject;
                     break;
                 case "Ladder(Roof)":
                     isTouchingRoofLadder = true;
@@ -479,5 +500,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedExtraNPC = null;
         isTouchingCraftSlot = false;
         touchedCraftSlot = null;
+        isTouchingTV = false;
+        touchedTV = null;
+        isTouchingToilet = false;
+        touchedToilet = null;
+        isTouchingToiletSlot = false;
+        touchedToiletSlot = null;
     }
 }

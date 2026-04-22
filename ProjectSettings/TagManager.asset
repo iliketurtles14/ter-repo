@@ -80,6 +80,20 @@ TagManager:
   - JobBoard
   - ExtraNPC
   - CraftSlot
+  - Zone
+  - CanteenWaypoint(Guard)
+  - ShowerWaypoint(Inmate)
+  - CanteenWaypoint(Inmate)
+  - FreeTimeWaypoint(Guard)
+  - RollcallWaypoint(Inmate)
+  - FreeTimeWaypoint(Inmate)
+  - ExerciseWaypoint(Guard)
+  - RollcallWaypoint(Guard)
+  - ExerciseWaypoint(Inmate)
+  - ShowerWaypoint(Guard)
+  - TV
+  - ToiletSlot
+  - Toilet
   layers:
   - Default
   - TransparentFX
