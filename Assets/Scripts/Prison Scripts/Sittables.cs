@@ -16,6 +16,7 @@ public class Sittables : MonoBehaviour
     public GameObject sittable;
     public bool onBed;
     private bool isBusy;
+    private InventorySelection selectionScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -24,13 +25,14 @@ public class Sittables : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         HPAScript = player.GetComponent<HPAChecker>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        selectionScript = GetComponent<InventorySelection>();
     }
     public void Update()
     {
         HPAScript.isSeated = onSittable;
         isBusy = HPAScript.isBusy;
         
-        if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable)
+        if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable && !selectionScript.aSlotSelected)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position);
             if(distance <= 2.4f)

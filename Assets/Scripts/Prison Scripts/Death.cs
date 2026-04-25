@@ -98,10 +98,6 @@ public class Death : MonoBehaviour
         vitalScript.healthRateAmount = 1;
 
         player.GetComponent<PlayerCollectionData>().playerData.energy -= 50;
-        if(player.GetComponent<PlayerCollectionData>().playerData.energy < 0)
-        {
-            player.GetComponent<PlayerCollectionData>().playerData.energy = 0;
-        }
 
         //lose bad items and reset outfit and weapon
         int i = 0;

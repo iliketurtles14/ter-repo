@@ -7,6 +7,7 @@ using UnityEngine;
 public class ToiletWater : MonoBehaviour
 {
     public int waterLevel;
+    public Vector2 toiletPos;
     private void OnEnable()
     {
         StartCoroutine(SpreadWater());
@@ -24,12 +25,13 @@ public class ToiletWater : MonoBehaviour
             yield break;
         }
 
-        float rand = UnityEngine.Random.Range(2f, 3f);
-        yield return new WaitForSeconds(rand);
 
         //check for open spots
         for(int i = 0; i < 4; i++) //N,S,E,W
         {
+            float rand = UnityEngine.Random.Range(0.5f, 1.5f);
+            yield return new WaitForSeconds(rand);
+
             Vector2 pos = new Vector2(transform.position.x, transform.position.y);
             switch (i)
             {
@@ -82,6 +84,7 @@ public class ToiletWater : MonoBehaviour
                 toiletWater.GetComponent<SpriteRenderer>().enabled = true;
                 toiletWater.GetComponent<ToiletWater>().enabled = true;
                 toiletWater.GetComponent<ToiletWater>().waterLevel = waterLevel - 1;
+                toiletWater.GetComponent<ToiletWater>().toiletPos = toiletPos;
             }
         }
         if(GetComponent<Rigidbody2D>() != null)

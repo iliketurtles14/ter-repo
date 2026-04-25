@@ -1406,14 +1406,40 @@ public class Tooltips : MonoBehaviour
         }
 
         //job board
-        if(mcs.isTouchingJobBoard && !showingTooltip)
+        if (mcs.isTouchingJobBoard && !showingTooltip)
         {
             toPrint = "Job Board";
             tooltipType = "jobBoard";
             StartCoroutine(DrawTooltip(toPrint));
             return;
         }
-        if(showingTooltip && tooltipType == "jobBoard" && !mcs.isTouchingJobBoard)
+        if (showingTooltip && tooltipType == "jobBoard" && !mcs.isTouchingJobBoard)
+        {
+            DestroyTooltip();
+            return;
+        }
+        //toilet
+        if (mcs.isTouchingToilet && !showingTooltip)
+        {
+            toPrint = "Dispose Items";
+            tooltipType = "toilet";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if (showingTooltip && tooltipType == "toilet" && !mcs.isTouchingToilet)
+        {
+            DestroyTooltip();
+            return;
+        }
+        //tv
+        if (mcs.isTouchingTV && !showingTooltip)
+        {
+            toPrint = "Cable TV";
+            tooltipType = "tv";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if (showingTooltip && tooltipType == "tv" && !mcs.isTouchingTV)
         {
             DestroyTooltip();
             return;

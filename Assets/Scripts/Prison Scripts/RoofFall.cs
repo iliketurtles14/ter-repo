@@ -8,6 +8,7 @@ public class RoofFall : MonoBehaviour
     private ItemBehaviours itemBehavioursScript;
     private MouseCollisionOnItems mcs;
     private PlayerFloorCollision floorCollisionScript;
+    private Ziplines ziplinesScript;
     Vector3 offset;
 
     public void Start()
@@ -16,7 +17,8 @@ public class RoofFall : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         itemBehavioursScript = GetComponent<ItemBehaviours>();
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        
+        ziplinesScript = GetComponent<Ziplines>();
+
         floorCollisionScript = player.GetComponent<PlayerFloorCollision>();
         offset = new Vector3(0, 1.6f, 0);
 
@@ -26,7 +28,7 @@ public class RoofFall : MonoBehaviour
     {
         while (true)
         {
-            if(player.layer == 13 && !itemBehavioursScript.isRoping)
+            if(player.layer == 13 && !itemBehavioursScript.isRoping && !ziplinesScript.isZipping && false)
             {
                 yield return new WaitForFixedUpdate();
                 if (floorCollisionScript.touchedRoofFloor == null)

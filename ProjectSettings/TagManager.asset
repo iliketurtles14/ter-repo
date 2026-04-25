@@ -94,6 +94,10 @@ TagManager:
   - TV
   - ToiletSlot
   - Toilet
+  - Sheet
+  - Dummy
+  - Stepladder
+  - Zipline
   layers:
   - Default
   - TransparentFX

@@ -82,8 +82,13 @@ public class VitalController : MonoBehaviour
         {
             data.money = 0;
         }
+        int maxHealth = Mathf.FloorToInt((data.strength / 2) * .75f);
+        if(data.health > maxHealth)
+        {
+            data.health = maxHealth;
+        }
 
-        if(oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat)
+        if (oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat)
         {
             oldHealth = data.health;
             oldEnergy = data.energy;

@@ -22,6 +22,20 @@ public class ToiletMenu : MonoBehaviour
     private InventorySelection selectionScript;
     private Transform mc;
     private PauseController pc;
+
+    private Sprite toiletLeftClogged;
+    private Sprite toiletRightClogged;
+    private Sprite toiletDownClogged;
+    private Sprite toiletLeftNormal;
+    private Sprite toiletLeftFlush1;
+    private Sprite toiletLeftFlush2;
+    private Sprite toiletLeftFlushed;
+    private Sprite toiletRightNormal;
+    private Sprite toiletRightFlush1;
+    private Sprite toiletRightFlush2;
+    private Sprite toiletRightFlushed;
+    private Sprite toiletDownNormal;
+    private Sprite toiletDownFlushed;
     private void Start()
     {
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
@@ -44,6 +58,31 @@ public class ToiletMenu : MonoBehaviour
         }
 
         CloseMenu();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        DataSender ds = DataSender.instance;
+        toiletLeftClogged = ds.PrisonObjectImages[43];
+        toiletRightClogged = ds.PrisonObjectImages[42];
+        toiletDownClogged = ds.PrisonObjectImages[255];
+        toiletLeftNormal = ds.PrisonObjectImages[34];
+        toiletLeftFlush1 = ds.PrisonObjectImages[39];
+        toiletLeftFlush2 = ds.PrisonObjectImages[38];
+        toiletLeftFlushed = ds.PrisonObjectImages[29];
+        toiletRightNormal = ds.PrisonObjectImages[35];
+        toiletRightFlush1 = ds.PrisonObjectImages[36];
+        toiletRightFlush2 = ds.PrisonObjectImages[37];
+        toiletRightFlushed = ds.PrisonObjectImages[28];
+        toiletDownNormal = ds.PrisonObjectImages[253];
+        toiletDownFlushed = ds.PrisonObjectImages[254];
+
     }
     private void Update()
     {
@@ -224,10 +263,23 @@ public class ToiletMenu : MonoBehaviour
             }
             StartCoroutine(FlushWait(currentToilet));
         }
+        CloseMenu();
     }
     private void ClogToilet(GameObject toilet)
     {
         toilet.GetComponent<ToiletInv>().isClogged = true;
+        switch (toilet.name)
+        {
+            case "ToiletLeft":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftClogged;
+                break;
+            case "ToiletRight":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightClogged;
+                break;
+            case "ToiletDown":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletDownClogged;
+                break;
+        }
         Debug.Log("Toilet got clogged");
         //do water animation stuff
         for(int i = 0; i < 4; i++)
@@ -254,6 +306,7 @@ public class ToiletMenu : MonoBehaviour
             toiletWater.transform.position = pos;
             toiletWater.transform.position += new Vector3(0, 0, -1);
             toiletWater.GetComponent<ToiletWater>().waterLevel = 4;
+            toiletWater.GetComponent<ToiletWater>().toiletPos = toilet.transform.position;
         }
     }
     private void UnclogToilet(GameObject toilet)
@@ -263,10 +316,61 @@ public class ToiletMenu : MonoBehaviour
             return;
         }
 
-        //make toilet normal and destroy all water tiles DONT BREAK THE PLUNGER
+        List<GameObject> waterToDestroy = new List<GameObject>();
+        foreach(Transform toiletWater in tiles.Find("GroundObjects"))
+        {
+            if(toiletWater.name == "ToiletWater")
+            {
+                Vector2 toiletPos = toilet.transform.position;
+                if (toiletWater.GetComponent<ToiletWater>().toiletPos == toiletPos)
+                {
+                    waterToDestroy.Add(toiletWater.gameObject);
+                }
+            }
+        }
+        for(int i = 0; i< waterToDestroy.Count; i++)
+        {
+            Destroy(waterToDestroy[i]);
+        }
+
+        switch (toilet.name)
+        {
+            case "ToiletLeft":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftNormal;
+                break;
+            case "ToiletRight":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightNormal;
+                break;
+            case "ToiletDown":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletDownNormal;
+                break;
+        }
+
+        toilet.GetComponent<ToiletInv>().isClogged = false;
     }
     private IEnumerator FlushWait(GameObject toilet)
     {
+        switch (toilet.name)
+        {
+            case "ToiletLeft":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftFlush1;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftFlush2;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftFlushed;
+                break;
+            case "ToiletRight":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightFlush1;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightFlush2;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightFlushed;
+                break;
+            case "ToiletDown":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletDownFlushed;
+                break;
+        }
+
         toilet.GetComponent<ToiletInv>().flushTimer = 50;
         
         while (true)
@@ -278,6 +382,27 @@ public class ToiletMenu : MonoBehaviour
             {
                 break;
             }
+        }//.55
+
+        switch (toilet.name)
+        {
+            case "ToiletLeft":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftFlush2;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftFlush1;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletLeftNormal;
+                break;
+            case "ToiletRight":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightFlush2;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightFlush1;
+                yield return new WaitForSeconds(.55f);
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletRightNormal;
+                break;
+            case "ToiletDown":
+                toilet.GetComponent<SpriteRenderer>().sprite = toiletDownNormal;
+                break;
         }
     }
 }

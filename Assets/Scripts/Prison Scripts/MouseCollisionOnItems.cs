@@ -105,6 +105,16 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedToilet;
     public bool isTouchingToiletSlot;
     public GameObject touchedToiletSlot;
+    public bool isTouchingSheet;
+    public GameObject touchedSheet;
+    public bool isTouchingDummy;
+    public GameObject touchedDummy;
+    public bool isTouchingStepladder;
+    public GameObject touchedStepladder;
+    public bool isTouchingPlayer;
+    public GameObject touchedPlayer;
+    public bool isTouchingZipline;
+    public GameObject touchedZipline;
     void Update()
     {
         ClearCollisions();
@@ -133,6 +143,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPCInvPanel",
             "Extra",
             "NPC",
+            "Player",
             "ExtraNPC",
             "Desk",
             "ItemBox",
@@ -141,6 +152,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "JobBoard",
             "TV",
             "Toilet",
+            "Stepladder",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -151,6 +163,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "OpenVent",
             "Equipment", //workout stuff
             "Reader",
+            "Zipline",
+            "Dummy",
             "Sittable", //beds, chairs, anything that you can sit on
             "FoodTable",
             "Weed",
@@ -160,6 +174,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Rock",
             "EmptyDirt",
             "Wall",
+            "Sheet",
             "Bars",
             "Fence",
             "ElectricFence",
@@ -247,6 +262,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingNPC = true;
                     touchedNPC = highestPriorityObject;
                     break;
+                case "Player":
+                    isTouchingPlayer = true;
+                    touchedPlayer = highestPriorityObject;
+                    break;
                 case "ExtraNPC":
                     isTouchingExtraNPC = true;
                     touchedExtraNPC = highestPriorityObject;
@@ -278,6 +297,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Toilet":
                     isTouchingToilet = true;
                     touchedToilet = highestPriorityObject;
+                    break;
+                case "Stepladder":
+                    isTouchingStepladder = true;
+                    touchedStepladder = highestPriorityObject;
                     break;
                 case "Ladder(Roof)":
                     isTouchingRoofLadder = true;
@@ -319,6 +342,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingReader = true;
                     touchedReader = highestPriorityObject;
                     break;
+                case "Zipline":
+                    isTouchingZipline = true;
+                    touchedZipline = highestPriorityObject;
+                    break;
+                case "Dummy":
+                    isTouchingDummy = true;
+                    touchedDummy = highestPriorityObject;
+                    break;
                 case "Sittable":
                     isTouchingSittable = true;
                     touchedSittable = highestPriorityObject;
@@ -354,6 +385,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Wall":
                     isTouchingWall = true;
                     touchedWall = highestPriorityObject;
+                    break;
+                case "Sheet":
+                    isTouchingSheet = true;
+                    touchedSheet = highestPriorityObject;
                     break;
                 case "Bars":
                     isTouchingBars = true;
@@ -506,5 +541,15 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedToilet = null;
         isTouchingToiletSlot = false;
         touchedToiletSlot = null;
+        isTouchingPlayer = false;
+        touchedPlayer = null;
+        isTouchingStepladder = false;
+        touchedStepladder = null;
+        isTouchingSheet = false;
+        touchedSheet = null;
+        isTouchingDummy = false;
+        touchedDummy = null;
+        isTouchingZipline = false;
+        touchedZipline = null;
     }
 }

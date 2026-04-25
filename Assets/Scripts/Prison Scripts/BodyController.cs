@@ -8,6 +8,7 @@ public class BodyController : MonoBehaviour
 {
     private ApplyPrisonData prisonDataScript;
     private ItemBehaviours itemBehavioursScript;
+    private Ziplines ziplinesScript;
     private Transform player;
     public bool deskIsPickedUp;
     public int currentActionNum;
@@ -55,6 +56,7 @@ public class BodyController : MonoBehaviour
         prisonDataScript = so.GetComponent<ApplyPrisonData>();
         itemBehavioursScript = so.GetComponent<ItemBehaviours>();
         player = RootObjectCache.GetRoot("Player").transform;
+        ziplinesScript = so.GetComponent<Ziplines>();
 
         RabbitLists.Add(prisonDataScript.RabbitSleepDeadSprites);
         RabbitLists.Add(prisonDataScript.RabbitDiggingSprites);
@@ -415,27 +417,27 @@ public class BodyController : MonoBehaviour
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         
-        if (itemBehavioursScript.isChipping)//remember to chagne this stuff for the outfitcontroller too
+        if (itemBehavioursScript.isChipping && name == "Player")//remember to chagne this stuff for the outfitcontroller too
         {
             currentActionNum = 11;
         }
-        else if (itemBehavioursScript.isCutting)
+        else if (itemBehavioursScript.isCutting && name == "Player")
         {
             currentActionNum = 4;
         }
-        else if (itemBehavioursScript.isDigging)
+        else if (itemBehavioursScript.isDigging && name == "Player")
         {
             currentActionNum = 1;
         }
-        else if (itemBehavioursScript.isWeeding)
+        else if (itemBehavioursScript.isWeeding && name == "Player")
         {
             currentActionNum = 5;
         }
-        else if (itemBehavioursScript.isCleaning)
+        else if (itemBehavioursScript.isCleaning && name == "Player")
         {
             currentActionNum = 6;
         }
-        else if (deskIsPickedUp)
+        else if (deskIsPickedUp && name == "Player")
         {
             currentActionNum = 15;
         }

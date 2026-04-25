@@ -33,13 +33,13 @@ public class TileSetter : MonoBehaviour
         tileTextureList = givenDataScript.tileTextureList;
         groundTextureList = givenDataScript.groundTextureList;
 
-        convertedTileSprite = Texture2DToSprite(tileTextureList[whatPrison]);
-        convertedGroundSprite = Texture2DToSprite(groundTextureList[whatPrison]);
+        //convertedTileSprite = Texture2DToSprite(tileTextureList[whatPrison]);
+        //convertedGroundSprite = Texture2DToSprite(groundTextureList[whatPrison]);
 
         convertedUndergroundSprite = Texture2DToSprite(groundTextureList[18]);
-        SliceAndDice();
+        //SliceAndDice();
 
-        senderScript.SetKnownLists(tileList, convertedGroundSprite, convertedUndergroundSprite);
+        //senderScript.SetKnownLists(tileList, convertedGroundSprite, convertedUndergroundSprite);
     }
 
     private Sprite Texture2DToSprite(Texture2D texture)

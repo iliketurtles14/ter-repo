@@ -1326,6 +1326,15 @@ public class LoadPrison : MonoBehaviour
                     case "ToiletRight":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[35];
                         break;
+                    case "ZipUp":
+                    case "ZipRight":
+                    case "ZipLeft":
+                    case "ZipDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[247];
+                        break;
+                    case "ZipEnd":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[248];
+                        break;
                 }
             }
         }

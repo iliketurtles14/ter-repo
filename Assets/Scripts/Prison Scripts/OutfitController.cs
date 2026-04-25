@@ -6,6 +6,7 @@ public class OutfitController : MonoBehaviour
 {
     private ApplyPrisonData prisonDataScript;
     private ItemBehaviours itemBehavioursScript;
+    private Ziplines ziplinesScript;
     public bool deskIsPickedUp;
     public int currentOutfitID;
     public int currentActionNum;
@@ -32,6 +33,7 @@ public class OutfitController : MonoBehaviour
         mc = RootObjectCache.GetRoot("MenuCanvas");
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         player = RootObjectCache.GetRoot("Player").transform;
+        ziplinesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Ziplines>();
 
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitSleepDeadSprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitDiggingSprites);
@@ -270,27 +272,27 @@ public class OutfitController : MonoBehaviour
                 break;
         }
 
-        if (itemBehavioursScript.isChipping)
+        if (itemBehavioursScript.isChipping && name == "Player")
         {
             currentActionNum = 11;
         }
-        else if (itemBehavioursScript.isCutting)
+        else if (itemBehavioursScript.isCutting && name == "Player")
         {
             currentActionNum = 4;
         }
-        else if (itemBehavioursScript.isDigging)
+        else if (itemBehavioursScript.isDigging && name == "Player")
         {
             currentActionNum = 1;
         }
-        else if (itemBehavioursScript.isWeeding)
+        else if (itemBehavioursScript.isWeeding && name == "Player")
         {
             currentActionNum = 5;
         }
-        else if (itemBehavioursScript.isCleaning)
+        else if (itemBehavioursScript.isCleaning && name == "Player")
         {
             currentActionNum = 6;
         }
-        else if (deskIsPickedUp)
+        else if (deskIsPickedUp && name == "Player")
         {
             currentActionNum = 15;
         }

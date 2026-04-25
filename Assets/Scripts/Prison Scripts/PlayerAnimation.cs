@@ -77,6 +77,11 @@ public class PlayerAnimation : MonoBehaviour
     }
     public void DirGet()
     {
+        if (!GetComponent<PlayerCtrl>().enabled)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeyCode.D))
         {
             lookDir = "right";
