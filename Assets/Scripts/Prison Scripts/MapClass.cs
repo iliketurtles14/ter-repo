@@ -26,6 +26,10 @@ public class Map
     public string[] tooltips;//
     public List<AudioClip> music;//
     public Dictionary<int, Sprite> customItemSpriteDict;//
+    public string[] groundObjectProperties;       //these are just the INISet of those headers in the
+    public string[] undergroundObjectProperties;  //data.ini file.
+    public string[] ventObjectProperties;
+    public string[] roofObjectProperties;
     public int itemAmount;
     public int npcLevel;
     public string grounds;
@@ -76,6 +80,10 @@ public class Map
         string[] tooltips,
         List<AudioClip> music,
         Dictionary<int, Sprite> customItemSpriteDict,
+        string[] groundObjectProperties,
+        string[] undergroundObjectProperties,
+        string[] ventObjectProperties,
+        string[] roofObjectProperties,
         int itemAmount,
         int npcLevel,
         string grounds,
@@ -126,6 +134,10 @@ public class Map
         this.tooltips = tooltips;
         this.music = music;
         this.customItemSpriteDict = customItemSpriteDict;
+        this.groundObjectProperties = groundObjectProperties;
+        this.undergroundObjectProperties = undergroundObjectProperties;
+        this.ventObjectProperties = ventObjectProperties;
+        this.roofObjectProperties = roofObjectProperties;
         this.npcLevel = npcLevel;
         this.grounds = grounds;
         this.sizeX = sizeX;

@@ -12,7 +12,7 @@ public class PlayerAnimation : MonoBehaviour
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
     private int whichCycle;
-
+    public bool shouldRestartCycle;
     public void OnEnable()
     {
         switch (NPCSave.instance.playerCharacter)
@@ -55,15 +55,34 @@ public class PlayerAnimation : MonoBehaviour
 
         }
     }
-
     public IEnumerator AnimCycle()
     {
         while (true)
         {
             whichCycle = 0;
-            yield return new WaitForSeconds(.266f);
+            float time = 0;
+            while(time < .266f && !shouldRestartCycle)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+            if (shouldRestartCycle)
+            {
+                shouldRestartCycle = false;
+                continue;
+            }
             whichCycle = 1;
-            yield return new WaitForSeconds(.266f);
+            time = 0;
+            while (time < .266f && !shouldRestartCycle)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+            if (shouldRestartCycle)
+            {
+                shouldRestartCycle = false;
+                continue;
+            }
         }
     }
     public IEnumerator DirWait()

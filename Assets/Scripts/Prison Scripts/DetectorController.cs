@@ -56,15 +56,19 @@ public class DetectorController : MonoBehaviour
     {
         foreach(InventoryItem item in inventoryScript.inventory)
         {
-            if (item.itemData.isContraband)
+            try
             {
-                hasContraband = true;
-                break;
+                if (item.itemData.isContraband)
+                {
+                    hasContraband = true;
+                    break;
+                }
+                else
+                {
+                    hasContraband = false;
+                }
             }
-            else
-            {
-                hasContraband = false;
-            }
+            catch { }
         }
     }
     private IEnumerator TriggerDetector()

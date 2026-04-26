@@ -115,6 +115,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedPlayer;
     public bool isTouchingZipline;
     public GameObject touchedZipline;
+    public bool isTouchingSign;
+    public GameObject touchedSign;
     void Update()
     {
         ClearCollisions();
@@ -151,6 +153,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "ItemTransformer",
             "JobBoard",
             "TV",
+            "Sign",
             "Toilet",
             "Stepladder",
             "Ladder(Roof)",
@@ -293,6 +296,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "TV":
                     isTouchingTV = true;
                     touchedTV = highestPriorityObject;
+                    break;
+                case "Sign":
+                    isTouchingSign = true;
+                    touchedSign = highestPriorityObject;
                     break;
                 case "Toilet":
                     isTouchingToilet = true;
@@ -551,5 +558,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedDummy = null;
         isTouchingZipline = false;
         touchedZipline = null;
+        isTouchingSign = false;
+        touchedSign = null;
     }
 }

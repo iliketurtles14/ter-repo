@@ -107,6 +107,27 @@ public class Ziplines : MonoBehaviour
                 width = height;
             }
 
+            width *= 10f;
+
+            //get zip specific widths and spacing or whatever
+            switch (zip.name)
+            {
+                case "ZipRight":
+                case "ZipLeft":
+                    midPoint += new Vector2(.05f, .15f);
+                    width += -9f;
+                    break;
+                case "ZipUp":
+                    width += -10f;
+                    midPoint += new Vector2(.05f, .3f);
+                    break;
+                case "ZipDown":
+                    width += -2f;
+                    midPoint += new Vector2(.05f, .3f);
+                    break;
+                
+            }
+
             //get rotation
             int angle;
             if(zip.name == "ZipLeft" || zip.name == "ZipRight")
@@ -125,7 +146,8 @@ public class Ziplines : MonoBehaviour
             line.transform.parent = tiles.Find("RoofObjects");
             line.transform.position = midPoint;
             line.transform.rotation = rot;
-            line.GetComponent<SpriteRenderer>().size = new Vector2(width * .3f, .1f);
+            line.GetComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[339];
+            line.GetComponent<SpriteRenderer>().size = new Vector2(.3f, width * .1f);
         }
     }
     private void Update()

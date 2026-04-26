@@ -587,6 +587,10 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("NPCGiveMenuPanel").Find("AddButton").GetComponent<Image>().sprite = UISprites[57];
         mc.Find("NPCGiveMenuPanel").Find("SubtractButton").GetComponent<Image>().sprite = UISprites[58];
 
+        //sign menus
+        mc.Find("BlueSignMenuPanel").GetComponent<Image>().sprite = UISprites[529];
+        mc.Find("WhiteSignMenuPanel").GetComponent<Image>().sprite = UISprites[530];
+
         //shop menu
         foreach(Transform slot in mc.Find("NPCShopMenuPanel").Find("SlotGrid"))
         {

@@ -16,6 +16,8 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     private InventorySelection selectionScript;
+    private Transform player;
+    private Particles particlesScript;
     private HoleClimb holeClimbScript; //for sprites
     private Transform tiles;
     private ItemData selectedItemData;
@@ -99,6 +101,8 @@ public class ItemBehaviours : MonoBehaviour
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         HPAScript = PlayerTransform.GetComponent<HPAChecker>();
         emptyVentCover = Resources.Load<GameObject>("PrisonPrefabs/Objects/EmptyVentCover");
+        player = RootObjectCache.GetRoot("Player").transform;
+        particlesScript = GetComponent<Particles>();
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
@@ -1269,6 +1273,8 @@ public class ItemBehaviours : MonoBehaviour
         usedItemData = selectedItemData;
         usedSlotNumber = slotNumber;
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = true;
+        player.GetComponent<PlayerAnimation>().shouldRestartCycle = true;
+        StartCoroutine(ParticleLoop());
         yield return new WaitForSeconds(.045f);
         if (cancelBar) { yield break; }
         if (normal)
@@ -1305,6 +1311,49 @@ public class ItemBehaviours : MonoBehaviour
                 case "chipping rock": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
                 default: break;
             }
+        }
+    }
+    private IEnumerator ParticleLoop()
+    {
+        yield return new WaitForSeconds(.266f);
+        switch (whatAction)
+        {
+            case "chipping":
+            case "cutting fence":
+            case "cutting bars":
+            case "unscrewing vent":
+            case "cutting vent":
+            case "unscrewing slats":
+            case "cutting slats":
+            case "chipping rock":
+            case "weeding":
+            case "cleaning":
+                while (barIsMoving)
+                {
+                    StartCoroutine(particlesScript.CreateDust(touchedTileObject.transform.position, 1));
+                    float time = 0;
+                    while(time < .532f && barIsMoving)
+                    {
+                        time += Time.deltaTime;
+                        yield return null;
+                    }
+                }
+                break;
+            case "digging down":
+            case "digging up":
+            case "digging":
+                while (barIsMoving)
+                {
+                    StartCoroutine(particlesScript.CreateDust(touchedTileObject.transform.position, 1));
+                    StartCoroutine(particlesScript.CreateDirtParticles(touchedTileObject.transform.position));
+                    float time = 0;
+                    while (time < .532f && barIsMoving)
+                    {
+                        time += Time.deltaTime;
+                        yield return null;
+                    }
+                }
+                break;
         }
     }
     public void CreateActionText(string text)

@@ -58,7 +58,7 @@ public class PauseController : MonoBehaviour
                     anyNPCMoving = true;
                 }
                 if ((npc.CompareTag("NPC") && npc.GetComponent<NPCAnimation>().enabled) ||
-                    npc.GetComponent<ExtraNPCAnimation>().enabled)
+                    (npc.CompareTag("ExtraNPC") && npc.GetComponent<ExtraNPCAnimation>().enabled))
                 {
                     anyNPCAnim = true;
                 }

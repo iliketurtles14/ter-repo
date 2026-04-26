@@ -150,6 +150,19 @@ public class NPCSpeech : MonoBehaviour
         madeTextBox = true;
         isTalking = true;
 
+        while (true)
+        {
+            if (msg.EndsWith(' '))
+            {
+                msg = msg.Substring(0, msg.Length - 1);
+            }
+            else
+            {
+                break;
+            }
+            yield return null;
+        }
+
         List<int> breakPoints = new List<int>();
         int loopBreakNum = 0;
         for(int i = 0; i < msg.Length; i++)

@@ -12,7 +12,7 @@ public class PlayerFloorCollision : MonoBehaviour
         if(gameObject.layer == 12)
         {
             touchedRoofFloor = null;
-            position = transform.position;
+            position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
@@ -27,7 +27,7 @@ public class PlayerFloorCollision : MonoBehaviour
         }
         else if(gameObject.layer == 13)
         {
-            position = transform.position;
+            position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
@@ -46,7 +46,7 @@ public class PlayerFloorCollision : MonoBehaviour
         }
         else if(gameObject.layer == 11)
         {
-            position = transform.position;
+            position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach(Collider2D collider in hitColliders)
             {
@@ -63,7 +63,7 @@ public class PlayerFloorCollision : MonoBehaviour
         else if(gameObject.layer == 3)
         {
             touchedRoofFloor = null;
-            position = transform.position;
+            position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
             Debug.Log(hitColliders.Length);
             foreach (Collider2D collider in hitColliders)

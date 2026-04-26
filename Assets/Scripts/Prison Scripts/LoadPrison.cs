@@ -1335,6 +1335,262 @@ public class LoadPrison : MonoBehaviour
                     case "ZipEnd":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[248];
                         break;
+                    case "Sink":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[32];
+                        break;
+                    case "SSTree":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[356];
+                        break;
+                    case "ChristmasDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[359];
+                        break;
+                    case "GreenCar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[367];
+                        break;
+                    case "BlueCar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[368];
+                        break;
+                    case "BrownCar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[369];
+                        break;
+                    case "JingleTruck":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[370];
+                        break;
+                    case "SSSantaSleigh":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[372];
+                        break;
+                    case "JingleSantaSleigh":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[378];
+                        break;
+                    case "SSCandyCaneRightTop":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[328];
+                        break;
+                    case "SSCandyCaneLeftTop":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[329];
+                        break;
+                    case "SSCandyCaneRightBottom":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[330];
+                        break;
+                    case "SSCandyCaneLeftBottom":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[331];
+                        break;
+                    case "SSBoxVertical":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[332];
+                        break;
+                    case "SSBoxHorizontal":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[333];
+                        break;
+                    case "SSLetterBags":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[334];
+                        break;
+                    case "SSPresent1":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[335];
+                        break;
+                    case "SSPresent2":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[336];
+                        break;
+                    case "SSPresent3":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[337];
+                        break;
+                    case "SSLetterBasket":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[339];
+                        break;
+                    case "SSLetterShredder":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[340];
+                        break;
+                    case "SSGuardBedDouble":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[343];
+                        break;
+                    case "SSLamp":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[344];
+                        break;
+                    case "SSSpecialChair":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[346];
+                        break;
+                    case "SSCouch":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[347];
+                        break;
+                    case "SSCarpet":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[348];
+                        break;
+                    case "SSToyWoodBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[351];
+                        break;
+                    case "SSSleigh":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[352];
+                        break;
+                    case "SSSign":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[353];
+                        break;
+                    case "DTAFCarpet":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[304];
+                        break;
+                    case "DTAFWorldMap":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[305];
+                        break;
+                    case "DTAFSharkWalkway":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[306];
+                        break;
+                    case "DTAFSpecialDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[307];
+                        break;
+                    case "DTAFComputerLeft":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[308];
+                        break;
+                    case "DTAFComputerRight":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[309];
+                        break;
+                    case "DTAFComputerDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[310];
+                        break;
+                    case "DTAFShark":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[317];
+                        break;
+                    case "DTAFPlaque":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[320];
+                        break;
+                    case "DTAFSign":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[323];
+                        break;
+                    case "DTAFRocket":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[324];
+                        break;
+                    case "DTAFWardenChair":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[325];
+                        break;
+                    case "DTAFComputer":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[326];
+                        break;
+                    case "DTAFCylindar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[288];
+                        break;
+                    case "DTAFSpecialChairRight":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[290];
+                        break;
+                    case "DTAFSpecialChairLeft":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[291];
+                        break;
+                    case "DTAFComputerStair":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[292];
+                        break;
+                    case "DTAFComputerBox":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[293];
+                        break;
+                    case "DTAFComputerCylindar":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[294];
+                        break;
+                    case "DTAFSpecialChairUp":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[295];
+                        break;
+                    case "DTAFTableLong":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[296];
+                        break;
+                    case "DTAFPlantTop":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[297];
+                        break;
+                    case "DTAFPlantBottom":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[298];
+                        break;
+                    case "DTAFTruckVertical":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[299];
+                        break;
+                    case "DTAFTruckHorizontal":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[300];
+                        break;
+                    case "DTAFSpecialChairDoubleDown":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[301];
+                        break;
+                    case "DTAFSpecialChairDoubleRight":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[302];
+                        break;
+                    case "DTAFSpecialChairDoubleUp":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[303];
+                        break;
+                    case "ETTank":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[268];
+                        break;
+                    case "ETStatueWalkway":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[269];
+                        break;
+                    case "ETSpecialDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[270];
+                        break;
+                    case "ETPlayerDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[271];
+                        break;
+                    case "ETNPCDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[272];
+                        break;
+                    case "ETTable":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[273];
+                        break;
+                    case "ETStatuePlaque":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[278];
+                        break;
+                    case "ETChair":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[283];
+                        break;
+                    case "ETLocker":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[285];
+                        break;
+                    case "ETPhone":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[286];
+                        break;
+                    case "ETStatue":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[287];
+                        break;
+                    case "AlcaBoat":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[251];
+                        break;
+                    case "Bookshelf":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[50];
+                        break;
+                    case "CutleryTable":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[67];
+                        break;
+                    case "MedicDesk":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[94];
+                        break;
+                    case "Locker":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[187];
+                        break;
+                    case "Payphone":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[189];
+                        break;
+                    case "Stash":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[224];
+                        break;
+                    case "VisitorPlayer":
+                        objInst.GetComponent<SpriteRenderer>().sprite = NPCSprites[78];
+                        break;
+                    case "VisitorNPC":
+                        objInst.GetComponent<SpriteRenderer>().sprite = NPCSprites[78];
+                        break;
+                    case "Camera":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[72];
+                        break;
+                    case "GuardBed":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[144];
+                        break;
+                    case "SolitaryBed":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[148];
+                        break;
+                    case "Generator":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[165];
+                        break;
+                    case "CharlieGate":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[229];
+                        break;
+                    case "CheckpointCharlie":
+                        objInst.GetComponent<SpriteRenderer>().sprite = NPCSprites[3];
+                        break;
+                    case "BedHorizontal":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[265];
+                        break;
+                    case "PlayerBedHorizontal":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[267];
+                        break;
+
                 }
             }
         }
@@ -1794,7 +2050,12 @@ public class LoadPrison : MonoBehaviour
 
         string fileName = Path.GetFileNameWithoutExtension(path);
 
-        Map map = new Map(fileName, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        string[] groundObjectProperties = GetINISet("GroundObjectProperties", data).ToArray();
+        string[] undergroundObjectProperties = GetINISet("UndergroundObjectProperties", data).ToArray();
+        string[] ventObjectProperties = GetINISet("VentObjectProperties", data).ToArray();
+        string[] roofObjectProperties = GetINISet("RoofObjectProperties", data).ToArray();
+
+        Map map = new Map(fileName, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)
