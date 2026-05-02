@@ -117,6 +117,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedZipline;
     public bool isTouchingSign;
     public GameObject touchedSign;
+    public bool isTouchingGenerator;
+    public GameObject touchedGenerator;
+    public bool isTouchingPayphone;
+    public GameObject touchedPayphone;
     void Update()
     {
         ClearCollisions();
@@ -153,6 +157,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "ItemTransformer",
             "JobBoard",
             "TV",
+            "Payphone",
+            "Generator",
             "Sign",
             "Toilet",
             "Stepladder",
@@ -296,6 +302,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "TV":
                     isTouchingTV = true;
                     touchedTV = highestPriorityObject;
+                    break;
+                case "Payphone":
+                    isTouchingPayphone = true;
+                    touchedPayphone = highestPriorityObject;
+                    break;
+                case "Generator":
+                    isTouchingGenerator = true;
+                    touchedGenerator = highestPriorityObject;
                     break;
                 case "Sign":
                     isTouchingSign = true;
@@ -560,5 +574,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedZipline = null;
         isTouchingSign = false;
         touchedSign = null;
+        isTouchingGenerator = false;
+        touchedGenerator = null;
+        isTouchingPayphone = false;
+        touchedPayphone = null;
     }
 }

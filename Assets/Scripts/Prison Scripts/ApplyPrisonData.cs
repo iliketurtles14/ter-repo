@@ -591,8 +591,23 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("BlueSignMenuPanel").GetComponent<Image>().sprite = UISprites[529];
         mc.Find("WhiteSignMenuPanel").GetComponent<Image>().sprite = UISprites[530];
 
+        //payphone menu
+        mc.Find("PayphoneMenuPanel").GetComponent<Image>().sprite = UISprites[267];
+        mc.Find("PayphoneMenuPanel").Find("Tip1Button").GetComponent<Image>().sprite = UISprites[265];
+        mc.Find("PayphoneMenuPanel").Find("Tip2Button").GetComponent<Image>().sprite = UISprites[265];
+        mc.Find("PayphoneMenuPanel").Find("Tip3Button").GetComponent<Image>().sprite = UISprites[265];
+        spriteState = mc.Find("PayphoneMenuPanel").Find("Tip1Button").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[266];
+        mc.Find("PayphoneMenuPanel").Find("Tip1Button").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PayphoneMenuPanel").Find("Tip2Button").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PayphoneMenuPanel").Find("Tip3Button").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PayphoneMenuPanel").Find("ReturnButton").GetComponent<Image>().sprite = UISprites[377];
+        spriteState = mc.Find("PayphoneMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[378];
+        mc.Find("PayphoneMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState = spriteState;
+
         //shop menu
-        foreach(Transform slot in mc.Find("NPCShopMenuPanel").Find("SlotGrid"))
+        foreach (Transform slot in mc.Find("NPCShopMenuPanel").Find("SlotGrid"))
         {
             slot.GetComponent<Image>().sprite = UISprites[33];
         }

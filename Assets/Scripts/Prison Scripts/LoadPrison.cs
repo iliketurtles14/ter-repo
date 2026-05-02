@@ -1561,10 +1561,10 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[224];
                         break;
                     case "VisitorPlayer":
-                        objInst.GetComponent<SpriteRenderer>().sprite = NPCSprites[78];
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[78];
                         break;
                     case "VisitorNPC":
-                        objInst.GetComponent<SpriteRenderer>().sprite = NPCSprites[78];
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[78];
                         break;
                     case "Camera":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[72];
@@ -2049,6 +2049,7 @@ public class LoadPrison : MonoBehaviour
         }
 
         string fileName = Path.GetFileNameWithoutExtension(path);
+        Debug.Log("Prison Path: " + fileName);
 
         string[] groundObjectProperties = GetINISet("GroundObjectProperties", data).ToArray();
         string[] undergroundObjectProperties = GetINISet("UndergroundObjectProperties", data).ToArray();

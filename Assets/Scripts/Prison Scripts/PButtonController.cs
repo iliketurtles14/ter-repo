@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +15,7 @@ public class PButtonController : MonoBehaviour
     private CraftMenu craftMenuScript;
     private PlayerIDInv playerIDInvScript;
     private ToiletMenu toiletMenuScript;
+    private PayphoneMenu payphoneMenuScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -25,6 +28,7 @@ public class PButtonController : MonoBehaviour
         craftMenuScript = mc.Find("CraftMenuPanel").GetComponent<CraftMenu>();
         playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
         toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
+        payphoneMenuScript = mc.Find("PayphoneMenuPanel").GetComponent<PayphoneMenu>();
     }
     public void MissionYes()
     {
@@ -167,5 +171,64 @@ public class PButtonController : MonoBehaviour
     public void ToiletFlush()
     {
         toiletMenuScript.Flush();
+    }
+    public void PayphoneTip(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        Debug.Log("(before): " + clicked.name);
+        
+        if (clicked.name != "Tip1Button" && clicked.name != "Tip2Button" && clicked.name != "Tip3Button") //actual button (ts would hit the text object and not the button)
+        {
+            clicked = clicked.transform.parent.gameObject;
+        }
+
+        Debug.Log(clicked.name);
+
+        string buttonText = clicked.transform.Find("Text").GetComponent<TextMeshProUGUI>().text;
+        if(buttonText == "Unlocked")
+        {
+            string hint = null;
+            switch (clicked.name)
+            {
+                case "Tip1Button":
+                    hint = payphoneMenuScript.tip1;
+                    break;
+                case "Tip2Button":
+                    hint = payphoneMenuScript.tip2;
+                    break;
+                case "Tip3Button":
+                    hint = payphoneMenuScript.tip3;
+                    break;
+            }
+            payphoneMenuScript.GoToTip(hint);
+        }
+        else
+        {
+            int hintNum = -1;
+            switch (clicked.name)
+            {
+                case "Tip1Button":
+                    hintNum = 1;
+                    break;
+                case "Tip2Button":
+                    hintNum = 2;
+                    break;
+                case "Tip3Button":
+                    hintNum = 3;
+                    break;
+            }
+            payphoneMenuScript.BuyTip(hintNum);
+        }
+    }
+    public void PayphoneReturn()
+    {
+        payphoneMenuScript.ReturnFromTip();
     }
 }

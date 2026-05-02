@@ -99,6 +99,8 @@ TagManager:
   - Stepladder
   - Zipline
   - Sign
+  - Generator
+  - Payphone
   layers:
   - Default
   - TransparentFX

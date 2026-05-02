@@ -290,11 +290,14 @@ public class Missions : MonoBehaviour
         List<string> list = new List<string>();
         foreach(Transform npc in aStar)
         {
-            string name = npc.GetComponent<NPCCollectionData>().npcData.displayName;
-            string objName = npc.name;
-            if(objName.StartsWith(type) && name != inmateName)
+            if (!npc.CompareTag("ExtraNPC"))
             {
-                list.Add(name);
+                string name = npc.GetComponent<NPCCollectionData>().npcData.displayName;
+                string objName = npc.name;
+                if (objName.StartsWith(type) && name != inmateName)
+                {
+                    list.Add(name);
+                }
             }
         }
         return list;

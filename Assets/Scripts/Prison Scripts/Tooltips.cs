@@ -1457,6 +1457,19 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
+        //generators
+        if(mcs.isTouchingGenerator && !showingTooltip)
+        {
+            toPrint = "Generator";
+            tooltipType = "generator";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if(showingTooltip && tooltipType == "generator" && !mcs.isTouchingGenerator)
+        {
+            DestroyTooltip();
+            return;
+        }
 
         ///NPCS
         //inmates/guards
