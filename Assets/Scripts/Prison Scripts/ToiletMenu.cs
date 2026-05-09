@@ -13,7 +13,7 @@ public class ToiletMenu : MonoBehaviour
     private bool inMenu;
     private bool invIsFull;
     private bool toiletIsFull;
-    private GameObject currentToilet;
+    public GameObject currentToilet;
     private Inventory inventoryScript;
     private Sprite clear;
     private List<GameObject> invSlots = new List<GameObject>();

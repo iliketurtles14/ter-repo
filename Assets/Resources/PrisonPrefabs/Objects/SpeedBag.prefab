@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -272741666713526426}
   - component: {fileID: 969703874362524952}
   - component: {fileID: -6028003385426399803}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: SpeedBag
   m_TagString: Equipment
   m_Icon: {fileID: 0}
@@ -83,6 +83,7 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!212 &969703874362524952
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,6 +129,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d38717e9246b91f43aac06a5ac66ed02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -137,7 +139,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &-6028003385426399803
 MonoBehaviour:
@@ -162,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964829237872583789}
   - component: {fileID: 1887256364397733173}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Bag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +187,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1887256364397733173
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -231,6 +233,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 8
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -240,5 +243,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8635220627665545109}
   - component: {fileID: 5706310949869531778}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFPlantTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8778787008837161793}
   - component: {fileID: 167148707535915454}
   - component: {fileID: 3124819760221514121}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: CutleryTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}

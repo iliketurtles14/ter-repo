@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6700652296652914650}
   - component: {fileID: 326255243113999685}
   - component: {fileID: -5490863942493511319}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Washer
   m_TagString: ItemTransformer
   m_Icon: {fileID: 0}

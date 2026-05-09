@@ -116,6 +116,9 @@ public class SeeBadActions : MonoBehaviour
                 case "down":
                     currentVectors = downVectors;
                     break;
+                case "any":
+                    currentVectors = upVectors;
+                    break;
             }
 
             foreach (Vector2 vector in currentVectors)

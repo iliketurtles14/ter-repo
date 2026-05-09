@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5210040903244409321}
   - component: {fileID: -5526957387835530354}
   - component: {fileID: -2851813652309475626}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ToiletLeft
   m_TagString: Toilet
   m_Icon: {fileID: 0}

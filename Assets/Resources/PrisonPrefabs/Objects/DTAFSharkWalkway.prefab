@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2203012758251578210}
   - component: {fileID: 708066264073879629}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFSharkWalkway
   m_TagString: Untagged
   m_Icon: {fileID: 0}

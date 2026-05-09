@@ -28,6 +28,8 @@ public class MakeBadObject : MonoBehaviour
     private bool hasBadOutfit;
     private bool isOutside;
     private Death deathScript;
+    private int playerLayer;
+    private int groundLayer;
     
     private List<int> badOutfitIDs = new List<int>()
     {
@@ -64,6 +66,8 @@ public class MakeBadObject : MonoBehaviour
         zonesScript = scriptObject.GetComponent<Zones>();
         applyScript = GetComponent<ApplyPrisonData>();
         deathScript = scriptObject.GetComponent<Death>();
+        playerLayer = LayerMask.NameToLayer("Player");
+        groundLayer = LayerMask.NameToLayer("Ground");
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -118,7 +122,7 @@ public class MakeBadObject : MonoBehaviour
 
         //outside
         if (player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor" &&
-            player.layer == 3)
+            !Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
         {
             isOutside = true;
         }

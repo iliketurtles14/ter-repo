@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6583994315493892344}
   - component: {fileID: 8813258754161067754}
   - component: {fileID: -2466452604548107876}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: SSSign
   m_TagString: Sign
   m_Icon: {fileID: 0}

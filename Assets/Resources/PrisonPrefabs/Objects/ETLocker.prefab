@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8733227006897805177}
   - component: {fileID: 2697999205358690975}
   - component: {fileID: 2658344625402973971}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ETLocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}

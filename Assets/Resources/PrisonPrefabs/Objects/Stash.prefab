@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3094140413776619050}
   - component: {fileID: -1531251184749803844}
   - component: {fileID: 6701838848230567472}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Stash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

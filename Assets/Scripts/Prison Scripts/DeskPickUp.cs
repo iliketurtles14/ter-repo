@@ -69,8 +69,7 @@ public class DeskPickUp : MonoBehaviour
     }
     private void PickUpDesk(GameObject aDesk)
     {
-        int pickedUpLayer = LayerMask.NameToLayer("PickedUpDesk");
-        aDesk.layer = pickedUpLayer;
+        aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
         aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
         deskStandScript.isPickedUp = true;
 
@@ -91,8 +90,8 @@ public class DeskPickUp : MonoBehaviour
     }
     private void DropDesk(GameObject floor)
     {
+        desk.GetComponent<BoxCollider2D>().isTrigger = false;
         desk.transform.position = floor.transform.position;
-        desk.layer = 10;
         desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
         deskStandScript.isPickedUp = false;
 

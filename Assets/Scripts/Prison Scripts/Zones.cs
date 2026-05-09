@@ -144,7 +144,7 @@ public class Zones : MonoBehaviour
                 continue;
             }
             
-            if(player.gameObject.layer != 3) //if not on ground layer
+            if(player.gameObject.layer != LayerMask.NameToLayer("Ground")) //if not on ground layer
             {
                 isTouchingCurrentZone = true;
                 yield return new WaitForSeconds(.1f);

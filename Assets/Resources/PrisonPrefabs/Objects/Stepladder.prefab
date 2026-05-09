@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1524725922694347661}
   - component: {fileID: 1901663162464165176}
   - component: {fileID: 8312162741584317453}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Stepladder
   m_TagString: Stepladder
   m_Icon: {fileID: 0}

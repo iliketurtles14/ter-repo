@@ -304,6 +304,22 @@ public class CmapConvert : MonoBehaviour
             for (int i = 0; i < 108; i++) //searches rows
             {
                 string currentLine = GetINIVar(layer, i.ToString(), cmapFile);
+                bool isEmptyRow = currentLine == null; //this happens when there is absolutely nothign in that row. i think in remec's map editor, it exports cmaps using this
+
+                if (isEmptyRow)
+                {
+                    Debug.Log("Row " + i.ToString() + " on layer " + layer + " is empty.");
+                    if (layer == "[Tiles]")
+                    {
+                        for(int j = 0; j < 108; j++)
+                        {
+                            int posX = j + 1;
+                            int posY = 108 - i;
+                            groundTileText += "tile100=" + posX + "," + posY + "\n";
+                        }
+                    }
+                    continue;
+                }
                 currentLine = currentLine.Substring(0, currentLine.Length - 1);
                 string[] tileArray = currentLine.Split('_');
 
@@ -709,8 +725,12 @@ public class CmapConvert : MonoBehaviour
         {
             if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
             {
-                for (int j = i; j < file.Length; j++)
+                for (int j = i + 1; j < file.Length; j++)
                 {
+                    if (file[j].StartsWith("[") && file[j].EndsWith("]"))
+                    {
+                        break;
+                    }
                     if (file[j].Split('=')[0] == varName)
                     {
                         line = file[j];

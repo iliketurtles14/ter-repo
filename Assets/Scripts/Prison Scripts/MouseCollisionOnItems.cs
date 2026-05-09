@@ -12,6 +12,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     private List<Collider2D> hitColliders = new List<Collider2D>();
     private List<GameObject> collidedObjects = new List<GameObject>();
     private List<string> priorityOrder = new List<string>();
+    private int uiLayerNum;
 
     public bool isTouchingDeskSlot;
     public GameObject touchedDeskSlot;
@@ -121,7 +122,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedGenerator;
     public bool isTouchingPayphone;
     public GameObject touchedPayphone;
-    void Update()
+    private void Start()
+    {
+        uiLayerNum = LayerMask.NameToLayer("UI");
+    }
+    private void Update()
     {
         ClearCollisions();
 
@@ -130,7 +135,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         hitColliders = System.Linq.Enumerable.ToList(Physics2D.OverlapPointAll(mousePosition));
         foreach (var obj in hitColliders)
         {
-            collidedObjects.Add(obj.gameObject);
+            bool canCollide = !Physics2D.GetIgnoreLayerCollision(uiLayerNum, obj.gameObject.layer);
+            if (canCollide)
+            {
+                collidedObjects.Add(obj.gameObject);
+            }
         }
 
         priorityOrder = new List<string>

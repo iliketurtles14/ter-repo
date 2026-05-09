@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: 2186875087052017284}
   - component: {fileID: 9194148706516157701}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: BlueBox
   m_TagString: JobBox
   m_Icon: {fileID: 0}

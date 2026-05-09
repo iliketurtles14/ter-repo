@@ -40,7 +40,7 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
             {
                 beds.Add(obj);
             }
-            else if(obj.name == "NPCDesk")
+            else if(obj.name == "NPCDesk" || obj.name == "ETNPCDesk")
             {
                 desks.Add(obj);
             }
@@ -100,7 +100,7 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
     {
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
-            if(obj.name == "NPCDesk")
+            if(obj.name == "NPCDesk" || obj.name == "ETNPCDesk")
             {
                 int deskNum = obj.GetComponent<DeskData>().inmateCorrelationNumber;
 

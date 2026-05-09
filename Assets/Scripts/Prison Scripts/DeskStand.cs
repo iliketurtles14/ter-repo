@@ -117,7 +117,6 @@ public class DeskStand : MonoBehaviour
 
                 player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
                 player.transform.position += playerOffset;
-                player.layer = 15;
                 ShowVents();
             }
 
@@ -129,6 +128,10 @@ public class DeskStand : MonoBehaviour
         isClimbing = false;
         hasClimbed = true;
         HPAScript.isBusy = false;
+
+        int uiLayer = LayerMask.NameToLayer("UI");
+        int ventCoverLayer = LayerMask.NameToLayer("VentCovers");
+        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
     }
     private void StepOffDesk()
     {
@@ -145,7 +148,9 @@ public class DeskStand : MonoBehaviour
                 aDesk.GetComponent<DeskPickUp>().enabled = true;
             }
         }
-        player.layer = 3;
+        int uiLayer = LayerMask.NameToLayer("UI");
+        int ventCoverLayer = LayerMask.NameToLayer("VentCovers");
+        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, true);
     }
     public void ShowVents()
     {
@@ -153,45 +158,33 @@ public class DeskStand : MonoBehaviour
         Color aColor = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
         aColor.a = 170f / 256f;
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = aColor;
-        tiles.Find("Vents").gameObject.SetActive(true); //enable vent tiles
+        tiles.Find("VentTiles").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true); //enable vent objects
 
-        //set transparency of vents
-        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
         SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sr in ventSpriteRenderers)
-        {
-            Color color = sr.color;
-            color.a = .75f;
-            sr.color = color;
-        }
+        ventTilesSpriteRenderer.color = new Color(ventTilesSpriteRenderer.color.r, ventTilesSpriteRenderer.color.g, ventTilesSpriteRenderer.color.b, .75f);
         foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
         {
-            Color color = sr.color;
-            color.a = .75f;
-            sr.color = color;
+            aColor = sr.color;
+            aColor.a = .75f;
+            sr.color = aColor;
         }
     }
     private void HideVents()
     {
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false; //diable backdrop
         tiles.Find("VentObjects").gameObject.SetActive(false); //disable vent objects
-        tiles.Find("Vents").gameObject.SetActive(false); //disable vent tiles
+        tiles.Find("VentTiles").gameObject.SetActive(false); //disable vent tiles
 
-        //undo transparency setting of vents
-        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
         SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-        foreach(SpriteRenderer sr in ventSpriteRenderers)
+        ventTilesSpriteRenderer.color = new Color(ventTilesSpriteRenderer.color.r, ventTilesSpriteRenderer.color.g, ventTilesSpriteRenderer.color.b, 1);
+        foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
         {
-            Color color = sr.color;
-            color.a = 1;
-            sr.color = color;
-        }
-        foreach(SpriteRenderer sr in ventObjectSpriteRenderers)
-        {
-            Color color = sr.color;
-            color.a = 1;
-            sr.color = color;
+            Color aColor = sr.color;
+            aColor.a = 1;
+            sr.color = aColor;
         }
     }
 }

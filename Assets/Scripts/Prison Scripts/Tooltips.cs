@@ -31,6 +31,7 @@ public class Tooltips : MonoBehaviour
     private List<DeskItem> deskInvList;
     private List<IDItem> idInvList;
     private List<NPCInvItem> npcInvList;
+    private List<ItemData> toiletInv;
     private Inventory inventoryScript;
     private DeskInv deskInvScript;
     private MouseCollisionOnItems mcs;
@@ -45,6 +46,7 @@ public class Tooltips : MonoBehaviour
     private int idSlotNumber;
     private int npcInvSlotNumber;
     private int npcShopSlotNumber;
+    private int toiletSlotNumber;
     private ItemData craftItemData;
     private bool isTouchingItem;
     private GameObject touchedItem;
@@ -62,6 +64,7 @@ public class Tooltips : MonoBehaviour
     private int printedIDSlotNumber;
     private int printedNPCInvSlotNumber;
     private int printedShopSlotNumber;
+    private int printedToiletSlotNumber;
 
     private TileData printedTileData;
     private int printedTileDurability;
@@ -76,6 +79,7 @@ public class Tooltips : MonoBehaviour
     private NPCInv npcInvScript;
     private Giving givingScript;
     private ShopMenu shopMenuScript;
+    private ToiletMenu toiletMenuScript;
     public void Start()
     {
         PlayerTransform = RootObjectCache.GetRoot("Player").transform;
@@ -97,6 +101,7 @@ public class Tooltips : MonoBehaviour
         givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
         shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
         craftMenuScript = menuCanvas.transform.Find("CraftMenuPanel").GetComponent<CraftMenu>();
+        toiletMenuScript = menuCanvas.transform.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -522,6 +527,53 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
+        //for toilet items
+        if (mcs.isTouchingToiletSlot && mcs.touchedToiletSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+        {
+            toiletInv = toiletMenuScript.currentToilet.GetComponent<ToiletInv>().toiletInv;
+            for(int i = 0; i < 3; i++)
+            {
+                if(mcs.touchedToiletSlot.name == "Item" + i)
+                {
+                    toiletSlotNumber = i;
+                    break;
+                }
+            }
+            
+            if (toiletInv[toiletSlotNumber].durability != -1)
+            {
+                printedToiletSlotNumber = toiletSlotNumber;
+                toPrint = toiletInv[toiletSlotNumber].displayName;
+                printedItemDurability = toiletInv[toiletSlotNumber].currentDurability;
+                printDurability = " (" + toiletInv[toiletSlotNumber].currentDurability + "%)";
+            }
+            else if (toiletInv[toiletSlotNumber].durability == -1)
+            {
+                printedToiletSlotNumber = toiletSlotNumber;
+                toPrint = toiletInv[toiletSlotNumber].displayName;
+                printDurability = "";
+            }
+            tooltipType = "toiletItem";
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            return;
+        }
+        else if (showingTooltip && tooltipType == "toiletItem" && !mcs.isTouchingToiletSlot)
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if ((showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber] == null) ||
+            (showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].displayName != toPrint) ||
+            (showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].currentDurability != toiletInv[printedToiletSlotNumber].currentDurability))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (mcs.isTouchingToiletSlot && showingTooltip && toiletInv[toiletSlotNumber] == null)
+        {
+            DestroyTooltip();
+            return;
+        }
         //for ground items
         if (isTouchingItem && !showingTooltip)
         {
@@ -931,11 +983,11 @@ public class Tooltips : MonoBehaviour
         //desks
         if (mcs.isTouchingDesk && !showingTooltip)
         {
-            if (mcs.touchedDesk.name == "PlayerDesk")
+            if (mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
             {
                 toPrint = "Your Desk";
             }
-            else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
+            else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
             {
                 int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
@@ -970,6 +1022,10 @@ public class Tooltips : MonoBehaviour
             {
                 toPrint = "Cleaning Supplies";
             }
+            else if(mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
+            {
+                toPrint = "Desk";
+            }
             tooltipType = "desk";
             StartCoroutine(DrawTooltip(toPrint));
             return;
@@ -984,11 +1040,11 @@ public class Tooltips : MonoBehaviour
         {
             string str = null;
 
-            if(mcs.touchedDesk.name == "PlayerDesk")
+            if(mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
             {
                 str = "Your Desk";
             }
-            else if (mcs.touchedDesk.name.StartsWith("NPCDesk"))
+            else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
             {
                 int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
@@ -1022,6 +1078,10 @@ public class Tooltips : MonoBehaviour
             else if (mcs.touchedDesk.name == "JanitorDesk")
             {
                 str = "Cleaning Supplies";
+            }
+            else if (mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
+            {
+                str = "Desk";
             }
 
             if (str != toPrint)

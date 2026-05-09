@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: 3550132125567819268}
   - component: {fileID: -3951416752688825104}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ClothesBox
   m_TagString: JobBox
   m_Icon: {fileID: 0}

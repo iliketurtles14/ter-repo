@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9117668915196446706}
   - component: {fileID: -7685775202116151073}
   - component: {fileID: 5211655884579952548}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: BedHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

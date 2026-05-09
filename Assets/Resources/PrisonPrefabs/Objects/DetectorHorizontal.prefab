@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5210040903244409321}
   - component: {fileID: -5526957387835530354}
   - component: {fileID: 1922173190813818875}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DetectorHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

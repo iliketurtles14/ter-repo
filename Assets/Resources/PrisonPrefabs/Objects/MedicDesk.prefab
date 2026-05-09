@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1383132487111033111}
   - component: {fileID: 7709154431553806631}
   - component: {fileID: 4972276051785558612}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: MedicDesk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

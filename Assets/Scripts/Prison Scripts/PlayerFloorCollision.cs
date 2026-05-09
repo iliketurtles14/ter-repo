@@ -7,9 +7,22 @@ public class PlayerFloorCollision : MonoBehaviour
     public GameObject touchedRoofFloor;
     private Vector2 position = new Vector2();
     private Collider2D[] hitColliders;
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private void Start()
+    {
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+    }
     private void FixedUpdate()// 12 - vent, 13 - roof, 10 - ground
     {
-        if(gameObject.layer == 12)
+        if(!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
         {
             touchedRoofFloor = null;
             position = transform.position - new Vector3(0, .4f, 0);
@@ -19,19 +32,19 @@ public class PlayerFloorCollision : MonoBehaviour
                 if ((collider.gameObject.CompareTag("Digable") ||
                     collider.gameObject.name.StartsWith("VentCover") ||
                     collider.gameObject.name.StartsWith("EmptyVentCover")) &&
-                    collider.gameObject.layer == 12)
+                    collider.gameObject.layer == ventLayer)
                 {
                     playerFloor = collider.gameObject;
                 }
             }
         }
-        else if(gameObject.layer == 13)
+        else if(!Physics2D.GetIgnoreLayerCollision(playerLayer, roofLayer))
         {
             position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == 13)
+                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == roofLayer)
                 {
                     playerFloor = collider.gameObject;
                     touchedRoofFloor = collider.gameObject;
@@ -44,7 +57,7 @@ public class PlayerFloorCollision : MonoBehaviour
                 }
             }
         }
-        else if(gameObject.layer == 11)
+        else if(!Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer))
         {
             position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
@@ -53,14 +66,14 @@ public class PlayerFloorCollision : MonoBehaviour
                 if((collider.gameObject.name.StartsWith("DirtEmpty") ||
                     collider.gameObject.name.StartsWith("100%HoleUp") ||
                     collider.gameObject.name.StartsWith("Brace")) &&
-                    collider.gameObject.layer == 11)
+                    collider.gameObject.layer == undergroundLayer)
                 {
                     playerFloor = collider.gameObject;
                     break;
                 }
             }
         }
-        else if(gameObject.layer == 3)
+        else if(!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
         {
             touchedRoofFloor = null;
             position = transform.position - new Vector3(0, .4f, 0);
@@ -68,7 +81,7 @@ public class PlayerFloorCollision : MonoBehaviour
             Debug.Log(hitColliders.Length);
             foreach (Collider2D collider in hitColliders)
             {
-                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == 10)
+                if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == groundLayer)
                 {
                     playerFloor = collider.gameObject;
                 }

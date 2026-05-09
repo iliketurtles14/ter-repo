@@ -137,7 +137,7 @@ public class DeskRNG : MonoBehaviour
         MakeItemDeskTierDict();
         deskInv = GetComponent<DeskData>().deskInv;
 
-        if(name != "DevDesk" && name != "PlayerDesk")
+        if(name == "NPCDesk" || name == "ETNPCDesk")
         {
             string currentMapName = loadPrisonScript.currentMap.mapName;
             if (prisonNames.Contains(currentMapName))
@@ -177,7 +177,7 @@ public class DeskRNG : MonoBehaviour
         }
 
         // Add predefined items
-        if(deskName == "PlayerDesk" || deskName == "NPCDesk")
+        if(deskName == "PlayerDesk" || deskName == "NPCDesk" || deskName == "ETNPCDesk" || deskName == "ETPlayerDesk")
         {
             AddItem(82);
             AddItem(146);
@@ -213,10 +213,17 @@ public class DeskRNG : MonoBehaviour
         if(deskName == "YardWorkBox" || deskName == "JanitorDesk")
         {
             RandomizeJobDesks();
+            return;
         }
 
-        if (deskName == "PlayerDesk" || deskName == "DevDesk")
+        if (deskName == "PlayerDesk" || deskName == "DevDesk" || deskName == "ETPlayerDesk") //dont need randomization
         {
+            return;
+        }
+
+        if (deskName.Contains("Special") || deskName == "ChristmasDesk")
+        {
+            SetCustomDesk();
             return;
         }
 
@@ -299,6 +306,70 @@ public class DeskRNG : MonoBehaviour
             {
                 int rand = UnityEngine.Random.Range(0, tier6Items.Count - 1);
                 AddItem(tier6Items[rand]);
+            }
+        }
+    }
+    private void SetCustomDesk()
+    {
+        string[] layer = null;
+        int groundLayer = LayerMask.NameToLayer("Ground");
+        int undergroundLayer = LayerMask.NameToLayer("Underground");
+        int ventLayer = LayerMask.NameToLayer("Vents");
+        int roofLayer = LayerMask.NameToLayer("Roof");
+        if(gameObject.layer == groundLayer)
+        {
+            layer = loadPrisonScript.currentMap.groundObjectProperties;
+        }
+        else if(gameObject.layer == undergroundLayer)
+        {
+            layer = loadPrisonScript.currentMap.undergroundObjectProperties;
+        }
+        else if(gameObject.layer == ventLayer)
+        {
+            layer = loadPrisonScript.currentMap.ventObjectProperties;
+        }
+        else if(gameObject.layer == roofLayer)
+        {
+            layer = loadPrisonScript.currentMap.roofObjectProperties;
+        }
+        foreach(string line in layer)
+        {
+            string objName = line.Split("=")[0];
+            if(objName == name)
+            {
+                string deskData = line.Split("=")[1];
+                string rawPos = deskData.Split(";")[0];
+                string rawItems = deskData.Split(";")[1];
+
+                Vector3 deskPos = new Vector2(Convert.ToSingle(rawPos.Split(",")[0]), Convert.ToSingle(rawPos.Split(",")[1]));
+                deskPos = new Vector2((deskPos.x * 1.6f) - 1.6f, (deskPos.y * 1.6f) - 1.6f); 
+                if(deskPos != transform.position)
+                {
+                    continue;
+                }
+                Debug.Log(objName + " pos: " + deskPos.x + ", " + deskPos.y + ", " + deskPos.z);
+                List<int> itemIDs = new List<int>();
+                string[] rawItemIDs = rawItems.Split(",");
+                for(int j = 0; j < 20; j++)
+                {
+                    itemIDs.Add(Convert.ToInt32(rawItemIDs[j]));
+                }
+                List<ItemData> itemDatas = new List<ItemData>();
+                foreach(int id in itemIDs)
+                {
+                    if(id == -1)
+                    {
+                        itemDatas.Add(null);
+                    }
+                    else
+                    {
+                        itemDatas.Add(creator.CreateItemData(id));
+                    }
+                }
+                for (int j = 0; j < 20; j++)
+                {
+                    deskInv[j].itemData = itemDatas[j];
+                }
             }
         }
     }
@@ -393,5 +464,44 @@ public class DeskRNG : MonoBehaviour
 
         string[] parts = line.Split('=');
         return parts[1];
+    }
+    public List<string> GetINISet(string header, string[] file)
+    {
+        int startLine = -1;
+        int endLine = file.Length;
+
+        // Find the header line
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains($"[{header}]"))
+            {
+                startLine = i + 1; // Start after the header
+                break;
+            }
+        }
+
+        if (startLine == -1)
+            return new List<string>(); // Header not found
+
+        // Find the next header or end of file
+        for (int i = startLine; i < file.Length; i++)
+        {
+            if (file[i].StartsWith("[") && file[i].EndsWith("]"))
+            {
+                endLine = i;
+                break;
+            }
+        }
+
+        List<string> setList = new List<string>();
+        for (int i = startLine; i < endLine; i++)
+        {
+            if (file[i].Contains('='))
+            {
+                setList.Add(file[i]);
+            }
+        }
+
+        return setList;
     }
 }

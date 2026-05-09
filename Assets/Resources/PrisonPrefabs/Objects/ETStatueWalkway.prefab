@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 738074611618544897}
   - component: {fileID: 8203486248546761665}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ETStatueWalkway
   m_TagString: Untagged
   m_Icon: {fileID: 0}

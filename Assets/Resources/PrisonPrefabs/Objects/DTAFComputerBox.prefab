@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8235499621006906430}
   - component: {fileID: -3214200258235227782}
   - component: {fileID: 2167307470773954857}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFComputerBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

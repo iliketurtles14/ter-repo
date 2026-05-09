@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8022368382909832604}
   - component: {fileID: -4584486805471693245}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: HalfHoleUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

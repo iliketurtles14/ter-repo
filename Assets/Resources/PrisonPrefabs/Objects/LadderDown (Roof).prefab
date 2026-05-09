@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5322703529256288205}
   - component: {fileID: 1525021039310880832}
   - component: {fileID: 4743345409188822587}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: LadderDown (Roof)
   m_TagString: Ladder(Roof)
   m_Icon: {fileID: 0}
@@ -36,6 +36,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &-5322703529256288205
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -54,6 +55,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -75,9 +78,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 14
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: d38717e9246b91f43aac06a5ac66ed02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -87,7 +92,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &1525021039310880832
 BoxCollider2D:
@@ -147,4 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba88f819f8c72e442b9c1360440a35f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedLadder: {fileID: 0}
+  connectedTilePos: {x: 0, y: 0, z: 0}
+  goToLayer: 
+  fall: 0

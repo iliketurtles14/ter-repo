@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 326255243113999685}
   - component: {fileID: -8748461774981436302}
   - component: {fileID: -4119036797257456684}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: YardWorkBox
   m_TagString: Desk
   m_Icon: {fileID: 0}

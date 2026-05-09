@@ -20,9 +20,15 @@ public class VentClimb : MonoBehaviour
     private bool cameFromDesk;
     private bool deskIsUnder;
     private GameObject deskUnder;
-    private bool hasDisabledTags;
     private HPAChecker HPAScript;
     private GameObject[] desks;
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private int uiLayer;
+    private int ventCoverLayer;
     public void Start()
     {
         deskStandScript = GetComponent<DeskStand>();
@@ -40,6 +46,14 @@ public class VentClimb : MonoBehaviour
         playerOffset.y = .5f;
         playerOffset.x = 0;
         playerOffset.z = 0;
+
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+        uiLayer = LayerMask.NameToLayer("UI");
+        ventCoverLayer = LayerMask.NameToLayer("VentCovers");
 
         cameFromDesk = false;
     }
@@ -90,101 +104,42 @@ public class VentClimb : MonoBehaviour
             
             player.GetComponent<CapsuleCollider2D>().offset -= colliderOffset;
             player.GetComponent<Transform>().position -= playerOffset;
-
-            desks = deskStandScript.desks;
-
-            foreach(GameObject desk in desks)
-            {
-                desk.GetComponent<BoxCollider2D>().isTrigger = false;
-                desk.GetComponent<DeskPickUp>().enabled = true;
-            }
         }
 
-        if (player.layer == 12 && !hasDisabledTags)//no collision on walls, fences, etc (and desks and other menus (hopefully i remember that later into development))
-        {
-            mcs.EnableAllTags();
-
-            mcs.DisableTag("Bars");
-            mcs.DisableTag("Fence");
-            mcs.DisableTag("ElectricFence");
-            mcs.DisableTag("Digable");
-            mcs.DisableTag("Wall");
-            mcs.DisableTag("Ladder(Ground)");
-            mcs.DisableTag("Desk");//currently the only menu
-            foreach(Transform child in tiles.Find("GroundObjects"))
-            {
-                if (child.CompareTag("Item"))
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = false;
-                }
-            }
-            hasDisabledTags = true;
-        }
-        else if(player.layer != 12 && player.layer != 13 && player.layer != 11 && hasDisabledTags)//renable tags when out of vent
-        {
-            mcs.EnableTag("Bars");
-            mcs.EnableTag("Fence");
-            mcs.EnableTag("ElectricFence");
-            mcs.EnableTag("Digable");
-            mcs.EnableTag("Wall");
-            mcs.EnableTag("Ladder(Ground)");
-            mcs.EnableTag("Desk");//currently the only menu
-            foreach (Transform child in tiles.Find("GroundObjects"))
-            {
-                if (child.CompareTag("Item"))
-                {
-                    child.GetComponent<BoxCollider2D>().enabled = true;
-                }
-            }
-            hasDisabledTags = false;
-        }
     }
     public IEnumerator ClimbVentUp()
     {
-        yield return new WaitForEndOfFrame();
-
-
-        deskStandScript.hasClimbed = false;
-
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForFixedUpdate();
         player.transform.position = currentOpenVent.transform.position;
-
-        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
-        Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
-        color.a = 235f / 256f;
-        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
-
-        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sr in ventSpriteRenderers)
-        {
-            Color aColor = sr.color;
-            aColor.a = 1;
-            sr.color = aColor;
-        }
-        foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
-        {
-            Color aColor = sr.color;
-            aColor.a = 1;
-            sr.color = aColor;
-        }
-
-        player.layer = 12;
-
+        deskStandScript.hasClimbed = false;
+        VentEnable();
+        DisableAllLayerCollisions();
+        Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, false);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
+        Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, false);
+        tiles.Find("VentTiles").gameObject.SetActive(true);
+        tiles.Find("VentObjects").gameObject.SetActive(true);
         player.GetComponent<SpriteRenderer>().sortingOrder = 11;
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
-
-
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     public IEnumerator ClimbVentDown()
     {
         yield return new WaitForEndOfFrame();
 
-        foreach(GameObject desk in GameObject.FindGameObjectsWithTag("Desk"))
+        foreach(Transform desk in tiles.Find("GroundObjects"))
         {
-            if(desk.transform.position + offsetVector == currentOpenVent.transform.position)
+            if (!desk.CompareTag("Desk"))
+            {
+                continue;
+            }
+
+            float distance = Vector2.Distance(desk.position + offsetVector, currentOpenVent.transform.position);
+            if(distance < .01f)
             {
                 deskIsUnder = true;
-                deskUnder = desk;
+                deskUnder = desk.gameObject;
                 break;
             }
             else
@@ -192,25 +147,20 @@ public class VentClimb : MonoBehaviour
                 deskIsUnder = false;
             }
         }
+        DisableAllLayerCollisions();
+        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
+        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
 
         if (deskIsUnder)//pulled from the deskstand script
-        {
-            desks = deskStandScript.desks;
-            
-            Debug.Log("Here");
+        {            
             deskStandScript.shouldStepOff = false;
             yield return new WaitForFixedUpdate();
             player.GetComponent<PlayerCtrl>().enabled = false;
-            foreach(GameObject desk in desks)
-            {
-                desk.GetComponent<BoxCollider2D>().isTrigger = true;
-                desk.GetComponent<DeskPickUp>().enabled = false;
-            }
             player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             deskStandScript.hasJumped = true;
+            yield return new WaitForFixedUpdate();
             player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
             player.transform.position += playerOffset;
-            player.layer = 15;
             player.GetComponent<SpriteRenderer>().sortingOrder = 6;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
             deskStandScript.ShowVents();
@@ -224,6 +174,7 @@ public class VentClimb : MonoBehaviour
         }
         else
         {
+            Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
             Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
             color.a = 170f / 256f;
             tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
@@ -232,10 +183,8 @@ public class VentClimb : MonoBehaviour
 
             tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
 
-            tiles.Find("Vents").gameObject.SetActive(false);
+            tiles.Find("VentTiles").gameObject.SetActive(false);
             tiles.Find("VentObjects").gameObject.SetActive(false);
-
-            player.layer = 3;
 
             player.GetComponent<SpriteRenderer>().sortingOrder = 6;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
@@ -245,6 +194,34 @@ public class VentClimb : MonoBehaviour
             {
                 desk.GetComponent<DeskPickUp>().enabled = true;
             }
+        }
+    }
+    private void DisableAllLayerCollisions()
+    {
+        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
+    }
+    public void VentEnable()
+    {
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = true;
+        Color color = tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color;
+        color.a = 235f / 256f;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
+
+        SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
+        SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTilesSpriteRenderer.color.r, ventTilesSpriteRenderer.color.g, ventTilesSpriteRenderer.color.b, 1);
+        foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
+        {
+            Color aColor = sr.color;
+            aColor.a = 1;
+            sr.color = aColor;
         }
     }
 }

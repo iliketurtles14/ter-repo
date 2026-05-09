@@ -62,17 +62,17 @@ public class LoadPrison : MonoBehaviour
     //these dictionaries compare the tile ID to what tile it should be based on the prison
     private Dictionary<int, string> perksDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -83,24 +83,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "inFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "inFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> stalagDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstacle" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "inFloor" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "inFloor" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -111,24 +111,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "outFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstacle" }, { 79, "outFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "outFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "outFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "outFloor" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "outFloor" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "outFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "outFloor" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "outFloor" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> shanktonDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstacle" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstNoShad" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -139,27 +139,27 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "inFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "inFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> jungleDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "nw" }, { 43, "obstacle" },
-        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "ne" }, { 47, "obstacle" },
-        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "se" }, { 51, "obstacle" },
-        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "sw" }, { 55, "obstacle" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstacle" }, { 43, "obstacle" },
+        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstacle" }, { 47, "obstacle" },
+        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
+        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "obstNoShad" }, { 58, "outFloor" }, { 59, "elec" },
         { 60, "chip" }, { 61, "obstacle" }, { 62, "outFloor" }, { 63, "elec" },
         { 64, "chip" }, { 65, "obstacle" }, { 66, "outFloor" }, { 67, "obstacle" },
@@ -167,24 +167,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "outFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "outFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "outFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstacle" }, { 87, "outFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstacle" }, { 91, "outFloor" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "outFloor" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstacle" }, { 87, "outFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstacle" }, { 91, "outFloor" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "outFloor" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> panchoDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -195,24 +195,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstacle" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstacle" }, { 83, "obstNoShad" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "obstNoShad" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "obstNoShad" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> hmpDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstacle" }, { 55, "obstacle" },
@@ -223,24 +223,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "inFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "inFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> tutorialDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -251,24 +251,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> jingleDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "chip" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "chip" }, { 43, "chip" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "chip" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "chip" }, { 43, "chip" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "outFloor" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -279,27 +279,27 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "box" }, { 94, "box" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "inFloor" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "obstacle" }, { 94, "obstacle" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "inFloor" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> bcDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "inFloor" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "inFloor" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "nw" }, { 43, "obstacle" },
-        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "ne" }, { 47, "obstacle" },
-        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "se" }, { 51, "obstacle" },
-        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "sw" }, { 55, "obstacle" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstacle" }, { 43, "obstacle" },
+        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstacle" }, { 47, "obstacle" },
+        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
+        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "obstNoShad" }, { 58, "outFloor" }, { 59, "elec" },
         { 60, "chip" }, { 61, "obstacle" }, { 62, "outFloor" }, { 63, "elec" },
         { 64, "chip" }, { 65, "obstacle" }, { 66, "outFloor" }, { 67, "obstacle" },
@@ -307,52 +307,52 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "obstNoShad" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "obstNoShad" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "obstNoShad" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> tolDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "outFloor" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "outFloor" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "box" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "outFloor" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstNoShad" }, { 22, "obstNoShad" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "outFloor" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstacle" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstacle" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "outFloor" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "outFloor" }, { 58, "outFloor" }, { 59, "elec" },
         { 60, "obstacle" }, { 61, "obstacle" }, { 62, "obstNoShad" }, { 63, "elec" },
-        { 64, "outFloor" }, { 65, "obstacle" }, { 66, "sw" }, { 67, "obstacle" },
+        { 64, "outFloor" }, { 65, "obstacle" }, { 66, "obstacle" }, { 67, "obstacle" },
         { 68, "inFloor" }, { 69, "lowFloor" }, { 70, "obstacle" }, { 71, "inFloor" },
-        { 72, "outFloor" }, { 73, "medFloor" }, { 74, "se" }, { 75, "outFloor" },
+        { 72, "outFloor" }, { 73, "medFloor" }, { 74, "obstacle" }, { 75, "outFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "outFloor" }, { 79, "inFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "outFloor" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "outFloor" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "outFloor" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstacle" }, { 95, "outFloor" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "outFloor" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "outFloor" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstacle" }, { 95, "outFloor" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> pcpDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "inFloor" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "inFloor" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "inFloor" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "inFloor" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "inFloor" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "inFloor" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "inFloor" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "inFloor" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "inFloor" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -363,55 +363,55 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "inFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "inFloor" }, { 79, "inFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "inFloor" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "outFloor" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "inFloor" }, { 90, "outFloor" }, { 91, "outFloor" },
-        { 92, "ne" }, { 93, "inFloor" }, { 94, "outFloor" }, { 95, "outFloor" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "outFloor" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "outFloor" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "inFloor" }, { 90, "outFloor" }, { 91, "outFloor" },
+        { 92, "obstacle" }, { 93, "inFloor" }, { 94, "outFloor" }, { 95, "outFloor" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "outFloor" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> ssDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstNoShad" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstacle" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "chip" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "chip" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "chip" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "inFloor" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "inFloor" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "inFloor" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstNoShad" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "obstacle" }, { 58, "obstNoShad" }, { 59, "elec" },
         { 60, "chip" }, { 61, "obstacle" }, { 62, "outFloor" }, { 63, "elec" },
-        { 64, "se" }, { 65, "obstacle" }, { 66, "outFloor" }, { 67, "obstacle" },
+        { 64, "obstacle" }, { 65, "obstacle" }, { 66, "outFloor" }, { 67, "obstacle" },
         { 68, "inFloor" }, { 69, "lowFloor" }, { 70, "outFloor" }, { 71, "obstNoShad" },
         { 72, "outFloor" }, { 73, "obstacle" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "inFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
-        { 80, "cut" }, { 81, "outFloor" }, { 82, "sw" }, { 83, "obstNoShad" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "inFloor" }, { 87, "obstNoShad" },
-        { 88, "sw" }, { 89, "obstacle" }, { 90, "obstacle" }, { 91, "obstacle" },
-        { 92, "ne" }, { 93, "obstacle" }, { 94, "nw" }, { 95, "ne" },
-        { 96, "nw" }, { 97, "inFloor" }, { 98, "sw" }, { 99, "se" }
+        { 80, "cut" }, { 81, "outFloor" }, { 82, "obstacle" }, { 83, "obstNoShad" },
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "inFloor" }, { 87, "obstNoShad" },
+        { 88, "obstacle" }, { 89, "obstacle" }, { 90, "obstacle" }, { 91, "obstacle" },
+        { 92, "obstacle" }, { 93, "obstacle" }, { 94, "obstacle" }, { 95, "obstacle" },
+        { 96, "obstacle" }, { 97, "inFloor" }, { 98, "obstacle" }, { 99, "obstacle" }
     };
     private Dictionary<int, string> dtafDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "sw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "nw" }, { 14, "obstacle" }, { 15, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
         { 16, "inFloor" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
-        { 20, "chip" }, { 21, "sw" }, { 22, "obstacle" }, { 23, "se" },
+        { 20, "chip" }, { 21, "obstacle" }, { 22, "obstacle" }, { 23, "obstacle" },
         { 24, "chip" }, { 25, "obstNoShad" }, { 26, "obstNoShad" }, { 27, "obstNoShad" },
-        { 28, "obstacle" }, { 29, "obstacle" }, { 30, "ne" }, { 31, "se" },
-        { 32, "nw" }, { 33, "obstacle" }, { 34, "ne" }, { 35, "ne" },
-        { 36, "obstNoShad" }, { 37, "obstacle" }, { 38, "chip" }, { 39, "nw" },
-        { 40, "sw" }, { 41, "obstacle" }, { 42, "se" }, { 43, "nw" },
-        { 44, "nw" }, { 45, "obstacle" }, { 46, "ne" }, { 47, "ne" },
-        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "se" },
-        { 52, "sw" }, { 53, "obstacle" }, { 54, "se" }, { 55, "sw" },
+        { 28, "obstacle" }, { 29, "obstacle" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstNoShad" }, { 37, "obstacle" }, { 38, "chip" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstacle" }, { 43, "obstacle" },
+        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstacle" }, { 47, "obstacle" },
+        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
+        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstNoShad" }, { 57, "obstNoShad" }, { 58, "obstNoShad" }, { 59, "inFloor" },
         { 60, "obstNoShad" }, { 61, "obstacle" }, { 62, "obstNoShad" }, { 63, "inFloor" },
         { 64, "obstNoShad" }, { 65, "obstNoShad" }, { 66, "obstNoShad" }, { 67, "obstacle" },
@@ -421,25 +421,25 @@ public class LoadPrison : MonoBehaviour
         { 80, "obstNoShad" }, { 81, "obstNoShad" }, { 82, "obstacle" }, { 83, "obstacle" },
         { 84, "obstacle" }, { 85, "inFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
         { 88, "obstNoShad" }, { 89, "obstacle" }, { 90, "inFloor" }, { 91, "obstNoShad" },
-        { 92, "se" }, { 93, "obstacle" }, { 94, "obstacle" }, { 95, "obstacle" },
-        { 96, "sw" }, { 97, "sw" }, { 98, "obstacle" }, { 99, "se" }
+        { 92, "obstacle" }, { 93, "obstacle" }, { 94, "obstacle" }, { 95, "obstacle" },
+        { 96, "obstacle" }, { 97, "obstacle" }, { 98, "obstacle" }, { 99, "obstacle" }
     };
     private Dictionary<int, string> etDict = new Dictionary<int, string>()
     {
         { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "outFloor" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "outFloor" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "outFloor" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "outFloor" },
         { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "outFloor" },
         { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "outFloor" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstacle" },
-        { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "sw" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "nw" }, { 43, "obstacle" },
-        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "ne" }, { 47, "obstacle" },
-        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "se" }, { 51, "obstacle" },
-        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "sw" }, { 55, "obstacle" },
+        { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstacle" }, { 43, "obstacle" },
+        { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstacle" }, { 47, "obstacle" },
+        { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstacle" }, { 51, "obstacle" },
+        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "outFloor" }, { 58, "outFloor" }, { 59, "elec" },
         { 60, "chip" }, { 61, "obstacle" }, { 62, "outFloor" }, { 63, "elec" },
         { 64, "chip" }, { 65, "obstacle" }, { 66, "outFloor" }, { 67, "obstacle" },
@@ -447,24 +447,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "outFloor" },
         { 76, "obstNoShad" }, { 77, "highFloor" }, { 78, "inFloor" }, { 79, "outFloor" },
         { 80, "obstNoShad" }, { 81, "outFloor" }, { 82, "inFloor" }, { 83, "outFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstacle" }, { 87, "obstacle" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstacle" }, { 91, "outFloor" },
-        { 92, "ne" }, { 93, "obstNoShad" }, { 94, "outFloor" }, { 95, "outFloor" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "outFloor" }, { 99, "outFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstacle" }, { 87, "obstacle" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstacle" }, { 91, "outFloor" },
+        { 92, "obstacle" }, { 93, "obstNoShad" }, { 94, "outFloor" }, { 95, "outFloor" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "outFloor" }, { 99, "outFloor" }
     };
     private Dictionary<int, string> alcaDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "box" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -475,24 +475,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "outFloor" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "outFloor" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "outFloor" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> fhurstDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstNoShad" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstNoShad" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -503,24 +503,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> epsilonDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -531,24 +531,24 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "obstNoShad" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
     private Dictionary<int, string> bamfordDict = new Dictionary<int, string>()
     {
-        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "nw" },
-        { 4, "inFloor" }, { 5, "box" }, { 6, "obstacle" }, { 7, "obstacle" },
+        { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
+        { 4, "inFloor" }, { 5, "obstacle" }, { 6, "obstacle" }, { 7, "obstacle" },
         { 8, "inFloor" }, { 9, "obstacle" }, { 10, "obstacle" }, { 11, "obstacle" },
-        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "sw" },
-        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "ne" },
+        { 12, "obstNoShad" }, { 13, "obstacle" }, { 14, "obstacle" }, { 15, "obstacle" },
+        { 16, "obstacle" }, { 17, "obstacle" }, { 18, "obstacle" }, { 19, "obstacle" },
         { 20, "chip" }, { 21, "obstacle" }, { 22, "bar" }, { 23, "obstNoShad" },
         { 24, "chip" }, { 25, "horiLedge" }, { 26, "obstacle" }, { 27, "obstacle" },
-        { 28, "nw" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "se" },
-        { 32, "ne" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
-        { 36, "sw" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
-        { 40, "se" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
+        { 28, "obstacle" }, { 29, "vertLedge" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstNoShad" }, { 35, "obstacle" },
+        { 36, "obstacle" }, { 37, "obstacle" }, { 38, "obstNoShad" }, { 39, "obstacle" },
+        { 40, "obstacle" }, { 41, "obstacle" }, { 42, "obstNoShad" }, { 43, "obstNoShad" },
         { 44, "obstacle" }, { 45, "obstacle" }, { 46, "obstNoShad" }, { 47, "obstacle" },
         { 48, "obstacle" }, { 49, "obstacle" }, { 50, "obstNoShad" }, { 51, "obstacle" },
         { 52, "obstacle" }, { 53, "obstNoShad" }, { 54, "obstNoShad" }, { 55, "obstacle" },
@@ -559,10 +559,10 @@ public class LoadPrison : MonoBehaviour
         { 72, "outFloor" }, { 73, "medFloor" }, { 74, "outFloor" }, { 75, "obstNoShad" },
         { 76, "cut" }, { 77, "highFloor" }, { 78, "obstNoShad" }, { 79, "obstNoShad" },
         { 80, "cut" }, { 81, "outFloor" }, { 82, "obstNoShad" }, { 83, "inFloor" },
-        { 84, "se" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
-        { 88, "sw" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
-        { 92, "ne" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "inFloor" },
-        { 96, "nw" }, { 97, "outFloor" }, { 98, "inFloor" }, { 99, "inFloor" }
+        { 84, "obstacle" }, { 85, "outFloor" }, { 86, "obstNoShad" }, { 87, "inFloor" },
+        { 88, "obstacle" }, { 89, "obstNoShad" }, { 90, "obstNoShad" }, { 91, "inFloor" },
+        { 92, "obstacle" }, { 93, "outFloor" }, { 94, "obstNoShad" }, { 95, "inFloor" },
+        { 96, "obstacle" }, { 97, "outFloor" }, { 98, "inFloor" }, { 99, "inFloor" }
     };
     private Dictionary<int, string> customDict = new Dictionary<int, string>()
     {
@@ -571,15 +571,15 @@ public class LoadPrison : MonoBehaviour
         { 8, "cut" }, { 9, "cut" }, { 10, "cut" }, { 11, "cut" },
         { 12, "cut" }, { 13, "cut" }, { 14, "cut" }, { 15, "cut" },
         { 16, "bar" }, { 17, "bar" }, { 18, "elec" }, { 19, "elec" },
-        { 20, "nw" }, { 21, "nw" }, { 22, "nw" }, { 23, "nw" },
-        { 24, "ne" }, { 25, "ne" }, { 26, "ne" }, { 27, "ne" },
-        { 28, "sw" }, { 29, "sw" }, { 30, "sw" }, { 31, "sw" },
-        { 32, "se" }, { 33, "se" }, { 34, "se" }, { 35, "se" },
+        { 20, "obstacle" }, { 21, "obstacle" }, { 22, "obstacle" }, { 23, "obstacle" },
+        { 24, "obstacle" }, { 25, "obstacle" }, { 26, "obstacle" }, { 27, "obstacle" },
+        { 28, "obstacle" }, { 29, "obstacle" }, { 30, "obstacle" }, { 31, "obstacle" },
+        { 32, "obstacle" }, { 33, "obstacle" }, { 34, "obstacle" }, { 35, "obstacle" },
         { 36, "outFloor" }, { 37, "outFloor" }, { 38, "outFloor" }, { 39, "outFloor" },
         { 40, "outFloor" }, { 41, "outFloor" }, { 42, "outFloor" }, { 43, "outFloor" },
         { 44, "inFloor" }, { 45, "inFloor" }, { 46, "inFloor" }, { 47, "inFloor" },
         { 48, "inFloor" }, { 49, "inFloor" }, { 50, "inFloor" }, { 51, "inFloor" },
-        { 52, "box" }, { 53, "box" }, { 54, "obstacle" }, { 55, "obstacle" },
+        { 52, "obstacle" }, { 53, "obstacle" }, { 54, "obstacle" }, { 55, "obstacle" },
         { 56, "obstacle" }, { 57, "obstacle" }, { 58, "obstacle" }, { 59, "obstacle" },
         { 60, "obstacle" }, { 61, "obstacle" }, { 62, "obstacle" }, { 63, "obstacle" },
         { 64, "obstacle" }, { 65, "obstacle" }, { 66, "obstacle" }, { 67, "obstacle" },
@@ -598,6 +598,14 @@ public class LoadPrison : MonoBehaviour
 
     private Transform tiles;
 
+    private List<string> shadowTileLayers = new List<string>() //this is for shadows
+    {
+        "Ground", "Roof"
+    };
+    private List<string> shadowObjectLayers = new List<string>()//this is for shadows
+    {
+        "GroundObjects", "RoofObjects"
+    };
 
     public Map currentMap;
     private void Start()
@@ -693,8 +701,366 @@ public class LoadPrison : MonoBehaviour
         SetGround();
         SetTiles(currentTileDict);
         SetObjects();
+        SetItems();
+        SetShadows(currentTileDict);
         //doing zones now !!! >:3
         SetZones();
+    }
+    private void SetItems()
+    {
+        List<string[]> objectProperties = new List<string[]>()
+        {
+            currentMap.undergroundObjectProperties,
+            currentMap.groundObjectProperties,
+            currentMap.ventObjectProperties,
+            currentMap.roofObjectProperties
+        };
+        List<string> objectLayers = new List<string>()
+        {
+            "UndergroundObjects",
+            "GroundObjects",
+            "VentObjects",
+            "RoofObjects"
+        };
+        List<int> sortingLayers = new List<int>()
+        {
+            11, 3, 10, 14
+        };
+        List<int> gameObjectLayers = new List<int>()
+        {
+            LayerMask.NameToLayer("Underground"),
+            LayerMask.NameToLayer("Ground"),
+            LayerMask.NameToLayer("Vents"),
+            LayerMask.NameToLayer("Roof")
+        };
+
+        for(int i = 0; i < 4; i++)
+        {
+            foreach(string line in objectProperties[i])
+            {
+                string lineName = "";
+                try
+                {
+                    lineName = line.Split("=")[0];
+                }
+                catch
+                {
+                    continue;
+                }
+                if(lineName != "Item")
+                {
+                    continue;
+                }
+                string lineData = line.Split("=")[1];
+                string rawPos = lineData.Split(";")[0];
+                int itemID = Convert.ToInt32(lineData.Split(";")[1]);
+                Vector2 pos = new Vector2(Convert.ToSingle(rawPos.Split(",")[0]), Convert.ToSingle(rawPos.Split(",")[1]));
+                pos = new Vector2((pos.x * 1.6f) - 1.6f, (pos.y * 1.6f) - 1.6f);
+
+                ItemData data = creatorScript.CreateItemData(itemID);
+                GameObject itemObj = Instantiate(data.prefab, pos, Quaternion.identity, tiles.Find(objectLayers[i]));
+                itemObj.GetComponent<ItemCollectionData>().itemData = data;
+                itemObj.GetComponent<SpriteRenderer>().sprite = data.sprite;
+                itemObj.GetComponent<SpriteRenderer>().sortingOrder = sortingLayers[i];
+                itemObj.layer = gameObjectLayers[i];
+            }
+        }
+    }
+    private void SetShadows(Dictionary<int, string> tileDict)
+    {
+        int sizeX = currentMap.sizeX;
+        int sizeY = currentMap.sizeY;
+        char[,] shadArr = new char[sizeX, sizeY];
+        char[,] roofShadArr = new char[sizeX, sizeY];
+
+        List<string> tTypes = new List<string>()
+        {
+            "chip", "cut", "elec", "bar", "obstacle", "horiLedge", "vertLedge"
+        };
+        List<string> eTypes = new List<string>()
+        {
+            "WorkDoor", "BlankDoor", "WhiteDoor", "GuardDoor", "StaffDoor", "EnteranceDoor",
+            "CellDoor", "UtilityDoor"
+        };
+        List<string> oTypes = new List<string>() //for the roof
+        {
+            "inFloor", "outFloor", "highFloor", "medFloor", "lowFloor"
+        };
+
+        // fill with o
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                shadArr[x, y] = 'o';
+            }
+        }
+
+        //fill roof with d
+        for(int x = 0; x < sizeX; x++)
+        {
+            for(int y = 0; y < sizeY; y++)
+            {
+                roofShadArr[x, y] = 'd';
+            }
+        }
+
+        // doors
+        for (int i = 0; i < currentMap.objNames.Count; i++)
+        {
+            float[] objVars = currentMap.objVars[i];
+
+            int x = Mathf.RoundToInt(objVars[0]) - 1;
+            int y = Mathf.RoundToInt(objVars[1]) - 1;
+
+            if (objVars[2] == 1 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //ground
+            {
+                if (eTypes.Contains(currentMap.objNames[i]))
+                {
+                    shadArr[x, y] = 'e';
+                }
+            }
+            if (objVars[2] == 3 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //roof
+            {
+                if (eTypes.Contains(currentMap.objNames[i]))
+                {
+                    roofShadArr[x, y] = 'e';
+                }
+            }
+        }
+
+        // tiels
+        foreach (int[] tileVars in currentMap.tilesList)
+        {
+            int x = tileVars[1] - 1;
+            int y = tileVars[2] - 1;
+
+            if (tileVars[3] == 1 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //ground
+            {
+                if (tileVars[0] != 100 && tTypes.Contains(tileDict[tileVars[0]]))
+                {
+                    shadArr[x, y] = 't';
+                }
+                else if (tileVars[0] != 100 && tileDict[tileVars[0]] == "obstNoShad")
+                {
+                    shadArr[x, y] = 'd';
+                }
+            }
+            if (tileVars[3] == 3 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //roof
+            {
+                if (tileVars[0] != 100 && tTypes.Contains(tileDict[tileVars[0]]))
+                {
+                    roofShadArr[x, y] = 't';
+                }
+                else if (tileVars[0] != 100 && tileDict[tileVars[0]] == "obstNoShad")
+                {
+                    roofShadArr[x, y] = 'd';
+                }
+                else if (tileVars[0] != 100 && oTypes.Contains(tileDict[tileVars[0]]))
+                {
+                    roofShadArr[x, y] = 'o';
+                }
+            }
+        }
+
+        //System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        //for (int y = sizeY - 1; y >= 0; y--)
+        //{
+        //    for (int x = 0; x < sizeX; x++)
+        //    {
+        //        if (roofShadArr[x, y] == '\0')
+        //        {
+        //            roofShadArr[x, y] = ' ';
+        //        }
+                
+        //        sb.Append(roofShadArr[x, y]);
+        //    }
+        //    sb.AppendLine();
+        //}
+        //File.WriteAllText("C:\\Users\\ilike\\OneDrive\\Desktop\\as.txt", sb.ToString());
+
+        // shads
+        for (int y = sizeY - 1; y >= 0; y--) // iterating top downwards
+        {
+            for (int x = sizeX - 1; x >= 0; x--)
+            {
+                if (shadArr[x, y] == 'o' || shadArr[x, y] == 'd')
+                    continue;
+
+                if (shadArr[x, y] == 't' || shadArr[x, y] == 'e')
+                {
+                    // Cast Right
+                    if (x + 1 < sizeX)
+                    {
+                        if (shadArr[x + 1, y] == 'b')
+                            shadArr[x + 1, y] = 'f';
+                        else if (shadArr[x + 1, y] == 'o')
+                            shadArr[x + 1, y] = 'r';
+                    }
+
+                    // Cast Down
+                    if (y - 1 >= 0)
+                    {
+                        if (shadArr[x, y - 1] == 'r')
+                            shadArr[x, y - 1] = 'f';
+                        else if (shadArr[x, y - 1] == 'o')
+                            shadArr[x, y - 1] = 'b';
+                    }
+
+                    // Cast Corner (Right + Down)
+                    if (x + 1 < sizeX && y - 1 >= 0)
+                    {
+                        if (shadArr[x + 1, y - 1] != 't' && shadArr[x + 1, y - 1] != 'd' && shadArr[x + 1, y - 1] != 'e')
+                        {
+                            shadArr[x + 1, y - 1] = 'f';
+                        }
+                    }
+                }
+            }
+        }
+        // roof shads
+        for (int y = sizeY - 1; y >= 0; y--) // iterating top downwards
+        {
+            for (int x = sizeX - 1; x >= 0; x--)
+            {
+                if (roofShadArr[x, y] == 'o' || roofShadArr[x, y] == 'd')
+                    continue;
+
+                if (roofShadArr[x, y] == 't' || roofShadArr[x, y] == 'e')
+                {
+                    // Cast Right
+                    if (x + 1 < sizeX)
+                    {
+                        if (roofShadArr[x + 1, y] == 'b')
+                            roofShadArr[x + 1, y] = 'f';
+                        else if (roofShadArr[x + 1, y] == 'o')
+                            roofShadArr[x + 1, y] = 'r';
+                    }
+
+                    // Cast Down
+                    if (y - 1 >= 0)
+                    {
+                        if (roofShadArr[x, y - 1] == 'r')
+                            roofShadArr[x, y - 1] = 'f';
+                        else if (roofShadArr[x, y - 1] == 'o')
+                            roofShadArr[x, y - 1] = 'b';
+                    }
+
+                    // Cast Corner (Right + Down)
+                    if (x + 1 < sizeX && y - 1 >= 0)
+                    {
+                        Debug.Log("here 1111111");
+                        if (roofShadArr[x + 1, y - 1] != 't' && roofShadArr[x + 1, y - 1] != 'd' && roofShadArr[x + 1, y - 1] != 'e')
+                        {
+                            Debug.Log("herererherehrerherhehrehrerehrherher");
+                            roofShadArr[x + 1, y - 1] = 'f';
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // change doors to full shads
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int y = 0; y < sizeY; y++)
+            {
+                if (shadArr[x, y] == 'e')
+                {
+                    shadArr[x, y] = 'f';
+                }
+                if (roofShadArr[x, y] == 'e')
+                {
+                    roofShadArr[x, y] = 'f';
+                }
+            }
+        }
+
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        for (int y = sizeY - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < sizeX; x++)
+            {
+                if (roofShadArr[x, y] == '\0')
+                {
+                    roofShadArr[x, y] = ' ';
+                }
+
+                sb.Append(roofShadArr[x, y]);
+            }
+            sb.AppendLine();
+        }
+        File.WriteAllText("C:\\Users\\ilike\\OneDrive\\Desktop\\as.txt", sb.ToString());
+
+
+        int width = shadArr.GetLength(0);
+        int height = shadArr.GetLength(1);
+
+        Texture2D shadowTex = new Texture2D(width * 16, height * 16, TextureFormat.RGBA32, false);
+        shadowTex.filterMode = FilterMode.Point;
+        Texture2D roofShadowTex = new Texture2D(width * 16, height * 16, TextureFormat.RGBA32, false);
+        roofShadowTex.filterMode = FilterMode.Point;
+
+        Color32[] clearPixels = new Color32[width * 16 * height * 16];
+        shadowTex.SetPixels32(clearPixels);
+        roofShadowTex.SetPixels32(clearPixels);
+
+        Sprite fSprite = Resources.Load<Sprite>("PrisonResources/Sprites/ShadFull");
+        Sprite rSprite = Resources.Load<Sprite>("PrisonResources/Sprites/ShadRight");
+        Sprite bSprite = Resources.Load<Sprite>("PrisonResources/Sprites/ShadBottom");
+
+        Color[] fPixels = fSprite.texture.GetPixels((int)fSprite.rect.x, (int)fSprite.rect.y, 16, 16);
+        Color[] rPixels = rSprite.texture.GetPixels((int)rSprite.rect.x, (int)rSprite.rect.y, 16, 16);
+        Color[] bPixels = bSprite.texture.GetPixels((int)bSprite.rect.x, (int)bSprite.rect.y, 16, 16);
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                char piece = shadArr[x, y];
+                if (piece == 'f' || piece == 'r' || piece == 'b')
+                {
+                    Color[] pixelsToDraw = piece == 'f' ? fPixels : (piece == 'r' ? rPixels : bPixels);
+
+                    int pixelX = x * 16;
+                    int pixelY = y * 16; 
+
+                    shadowTex.SetPixels(pixelX, pixelY, 16, 16, pixelsToDraw);
+                }
+
+                piece = roofShadArr[x, y];
+                if (piece == 'f' || piece == 'r' || piece == 'b')
+                {
+                    Color[] pixelsToDraw = piece == 'f' ? fPixels : (piece == 'r' ? rPixels : bPixels);
+
+                    int pixelX = x * 16;
+                    int pixelY = y * 16;
+
+                    roofShadowTex.SetPixels(pixelX, pixelY, 16, 16, pixelsToDraw);
+                }
+            }
+        }
+
+        shadowTex.Apply();
+        roofShadowTex.Apply();
+
+        //byte[] bytes = shadowTex.EncodeToPNG();
+        //string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+        //string fileExportPath = Path.Combine(desktopPath, "ShadowTestExport.png");
+        //File.WriteAllBytes(fileExportPath, bytes);
+        //Debug.Log("Exported Shadow PNG to: " + fileExportPath);
+
+        Sprite finalShadowSprite = Sprite.Create(shadowTex, new Rect(0, 0, shadowTex.width, shadowTex.height), new Vector2(0.5f, 0.5f), 100f);
+        Sprite finalRoofShadowSprite = Sprite.Create(roofShadowTex, new Rect(0, 0, roofShadowTex.width, roofShadowTex.height), new Vector2(0.5f, 0.5f), 100f);
+
+        tiles.Find("ShadowPlane").GetComponent<SpriteRenderer>().sprite = finalShadowSprite;
+        Vector2 size = tiles.Find("ShadowPlane").GetComponent<SpriteRenderer>().size;
+        tiles.Find("ShadowPlane").position = new Vector3(-.8f, -.8f, -2f);
+        tiles.Find("ShadowPlane").position += new Vector3((size.x * 10f) / 2f, (size.y * 10f) / 2f);
+
+        tiles.Find("RoofShadowPlane").GetComponent<SpriteRenderer>().sprite = finalRoofShadowSprite;
+        tiles.Find("RoofShadowPlane").position = tiles.Find("ShadowPlane").position;
     }
     private void SetZones()
     {
@@ -788,7 +1154,115 @@ public class LoadPrison : MonoBehaviour
     }
     private void SetTiles(Dictionary<int, string> tileDict)
     {
-        List<Sprite> tileList = SliceAndDice(currentMap.tileset);
+        int sizeX = currentMap.sizeX;
+        int sizeY = currentMap.sizeY;
+        int[,] groundArr = new int[sizeX, sizeY];
+        int[,] undergroundArr = new int[sizeX, sizeY];
+        int[,] ventArr = new int[sizeX, sizeY];
+        int[,] roofArr = new int[sizeX, sizeY];
+        List<int[,]> arrays = new List<int[,]>()
+        {
+            undergroundArr, groundArr, ventArr, roofArr
+        };
+
+        Debug.Log("size: " + sizeX.ToString() + ", " + sizeY.ToString());
+
+        foreach (int[,] array in arrays)
+        {
+            for(int x = 0; x < sizeX; x++)
+            {
+                for(int y = 0; y < sizeY; y++)
+                {
+                    array[x, y] = 100;
+                }
+            }
+        }
+
+        foreach (int[] tileVars in currentMap.tilesList) //make tile arrays
+        {
+            int x = tileVars[1] - 1;
+            int y = tileVars[2] - 1;
+
+            if (x >= 0 && x < sizeX && y >= 0 && y < sizeY)
+            {
+                //Debug.Log("point: " + x.ToString() + ", " + y.ToString());
+                arrays[tileVars[3]][x, y] = tileVars[0];
+            }
+        }
+
+        //make images
+        Sprite groundTiles = null;
+        Sprite undergroundTiles = null;
+        Sprite ventTiles = null;
+        Sprite roofTiles = null;
+        int index = 0;
+        List<Sprite> tileSprites = SliceAndDice(currentMap.tileset);
+        foreach (int[,] array in arrays)
+        {
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+
+            Texture2D texture = new Texture2D(width * 16, height * 16, TextureFormat.RGBA32, false);
+            texture.filterMode = FilterMode.Point;
+
+            Color32[] clearPixels = new Color32[width * 16 * height * 16];
+            texture.SetPixels32(clearPixels);
+
+            for(int x = 0; x < width; x++)
+            {
+                for(int y = 0; y < height; y++)
+                {
+                    int piece = array[x, y];
+                    if(piece != 100) //clear
+                    {
+                        Color[] pixels = tileSprites[piece].texture.GetPixels((int)tileSprites[piece].rect.x, (int)tileSprites[piece].rect.y, 16, 16);
+
+                        int pixelX = x * 16;
+                        int pixelY = y * 16;
+
+                        texture.SetPixels(pixelX, pixelY, 16, 16, pixels);
+                    }
+                }
+            }
+
+            texture.Apply();
+
+            switch (index)
+            {
+                case 0:
+                    undergroundTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 1:
+                    groundTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 2:
+                    ventTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 3:
+                    roofTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+            }
+
+            index++;
+        }
+
+        tiles.Find("GroundTiles").GetComponent<SpriteRenderer>().sprite = groundTiles;
+        Vector2 size = tiles.Find("GroundTiles").GetComponent<SpriteRenderer>().size;
+        tiles.Find("GroundTiles").position = new Vector3(-.8f, -.8f);
+        tiles.Find("GroundTiles").position += new Vector3((size.x * 10f) / 2f, (size.y * 10f) / 2f);
+        tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sprite = undergroundTiles;
+        tiles.Find("UndergroundTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("VentTiles").GetComponent<SpriteRenderer>().sprite = ventTiles;
+        tiles.Find("VentTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("RoofTiles").GetComponent<SpriteRenderer>().sprite = roofTiles;
+        tiles.Find("RoofTiles").position = tiles.Find("GroundTiles").position;
+
+        //actual tile objects for collision
+        int groundLayer = LayerMask.NameToLayer("Ground");
+        int undergroundLayer = LayerMask.NameToLayer("Underground");
+        int ventLayer = LayerMask.NameToLayer("Vents");
+        int roofLayer = LayerMask.NameToLayer("Roof");
+
         foreach (int[] tileVars in currentMap.tilesList)
         {
             if (tileVars[0] == 100) //if its an empty tile
@@ -804,7 +1278,7 @@ public class LoadPrison : MonoBehaviour
                 emptyTile.AddComponent<BoxCollider2D>().isTrigger = true;
                 emptyTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                 emptyTile.tag = "Digable";
-                emptyTile.layer = 10;
+                emptyTile.layer = groundLayer;
                 emptyTile.transform.parent = tiles.Find("Ground");
                 continue;
             }
@@ -827,30 +1301,24 @@ public class LoadPrison : MonoBehaviour
             Vector3 tilePos = new Vector3((tileVars[1] * 1.6f) - 1.6f, (tileVars[2] * 1.6f) - 1.6f, 0);
             tile.transform.position = tilePos;
             tile.name = tileVars[0].ToString();
-            tile.AddComponent<TileCollectionData>();
             tile.GetComponent<TileCollectionData>().tileData = new TileData();
             tile.GetComponent<TileCollectionData>().tileData.tileType = tileType;
             tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             tile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            tile.GetComponent<SpriteRenderer>().sprite = tileList[tileVars[0]];
 
             switch (tileLayer)
             {
                 case "Underground":
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = -1;
-                    tile.layer = 11;
+                    tile.layer = undergroundLayer;
                     break;
                 case "Ground":
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                    tile.layer = 10;
+                    tile.layer = groundLayer;
                     break;
                 case "Vents":
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = 9;
-                    tile.layer = 12;
+                    tile.layer = ventLayer;
                     break;
                 case "Roof":
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = 13;
-                    tile.layer = 13;
+                    tile.layer = roofLayer;
                     break;
             }
         }
@@ -1016,6 +1484,12 @@ public class LoadPrison : MonoBehaviour
         Debug.Log("objVars count = " + currentMap.objVars.Count);
         Debug.Log("objNames count = " + currentMap.objNames.Count);
 
+        int groundLayer = LayerMask.NameToLayer("Ground");
+        int undergroundLayer = LayerMask.NameToLayer("Underground");
+        int ventLayer = LayerMask.NameToLayer("Vents");
+        int roofLayer = LayerMask.NameToLayer("Roof");
+        int ventCoverLayer = LayerMask.NameToLayer("VentCovers");
+
         for (int i = 0; i < currentMap.objNames.Count; i++)
         {
             float[] objVars = currentMap.objVars[i];
@@ -1091,11 +1565,11 @@ public class LoadPrison : MonoBehaviour
                 {
                     case "Underground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = -1;
-                        objInst.layer = 11;
+                        objInst.layer = undergroundLayer;
                         break;
                     case "Ground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                        objInst.layer = 10;
+                        objInst.layer = groundLayer;
                         if (objInst.name.StartsWith("Detector"))
                         {
                             objInst.GetComponent<SpriteRenderer>().sortingOrder = 8;
@@ -1103,11 +1577,15 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "Vents":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 10;
-                        objInst.layer = 12;
+                        objInst.layer = ventLayer;
+                        if(objName == "Vent")
+                        {
+                            objInst.layer = ventCoverLayer;
+                        }
                         break;
                     case "Roof":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 14;
-                        objInst.layer = 13;
+                        objInst.layer = roofLayer;
                         break;
                 }
 

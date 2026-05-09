@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 3022241687264094852}
   - component: {fileID: 5341286191016631086}
   - component: {fileID: 6680145677854381454}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -370,6 +370,7 @@ MonoBehaviour:
   isInGym: 0
   shouldReset: 0
   isAtJob: 0
+  dirToLook: 
 --- !u!114 &-5813940400225957718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +437,7 @@ GameObject:
   - component: {fileID: 6968034023014166851}
   - component: {fileID: 4598546007363732908}
   - component: {fileID: 4841992509202940161}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: MissionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +534,7 @@ GameObject:
   - component: {fileID: 29104605151326000}
   - component: {fileID: 1964808650233522479}
   - component: {fileID: 839734359900130648}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: SpeechBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2723581974344264849}
   - component: {fileID: 5091616800114609614}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: OutBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +688,7 @@ GameObject:
   - component: {fileID: 8416460050862279797}
   - component: {fileID: 1958188644890395765}
   - component: {fileID: 5999614588964861331}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,7 +839,7 @@ GameObject:
   - component: {fileID: 3683736596203547461}
   - component: {fileID: 2578506646621323462}
   - component: {fileID: 8869870689589398464}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: RightSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,7 +914,7 @@ GameObject:
   - component: {fileID: 1642357891703966672}
   - component: {fileID: 3793517846047368343}
   - component: {fileID: 1069273104322790840}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: LeftSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +989,7 @@ GameObject:
   - component: {fileID: 3124225708525871622}
   - component: {fileID: 8329588980900568229}
   - component: {fileID: 4316737381518948206}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: BottomSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1063,7 +1064,7 @@ GameObject:
   - component: {fileID: 5342091348809286787}
   - component: {fileID: 4395386495136416916}
   - component: {fileID: 1767226504717942699}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: TopSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1139,7 +1140,7 @@ GameObject:
   - component: {fileID: 5737011014458236792}
   - component: {fileID: 4827180117578241014}
   - component: {fileID: 7998799785444000257}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: IconCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1242,7 +1243,7 @@ GameObject:
   - component: {fileID: 3549812964453957750}
   - component: {fileID: 3315953028517894263}
   - component: {fileID: 6780685066017957857}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: SpeechCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1347,7 +1348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 859715106352561353}
   - component: {fileID: 117999588228691428}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Outfit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1440,7 +1441,7 @@ GameObject:
   - component: {fileID: 2278014530439539040}
   - component: {fileID: 2173206835582201228}
   - component: {fileID: 2641750311725941237}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: ShopIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

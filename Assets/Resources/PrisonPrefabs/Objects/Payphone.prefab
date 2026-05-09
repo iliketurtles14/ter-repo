@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7019415838489947336}
   - component: {fileID: -437673462206434926}
   - component: {fileID: -7297958938544924456}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Payphone
   m_TagString: Payphone
   m_Icon: {fileID: 0}

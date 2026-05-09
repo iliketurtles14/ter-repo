@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 98119853496026687}
   - component: {fileID: -8583995242104505266}
-  m_Layer: 10
+  - component: {fileID: -8292246441547482400}
+  m_Layer: 6
   m_Name: GuardGym
   m_TagString: Waypoint
   m_Icon: {fileID: 0}
@@ -91,3 +92,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8292246441547482400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6922105754361345385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b57c3aa09b8e2847a20cfe316816825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaypointData
+  dir: 

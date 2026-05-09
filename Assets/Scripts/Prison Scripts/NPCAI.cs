@@ -33,6 +33,9 @@ public class NPCAI : MonoBehaviour
     private string job;
     private List<Transform> deskPositions = new List<Transform>();
     private WeedController weedScript;
+    private SetFacingDirections directionScript;
+    public string dirToLook = "any";
+    private bool canChangeDir;
     private void Start()
     {   
         //get npctype and num
@@ -61,6 +64,7 @@ public class NPCAI : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         applyPrisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         weedScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WeedController>();
+        directionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetFacingDirections>();
 
         StartCoroutine(StartWait());
     }
@@ -304,6 +308,17 @@ public class NPCAI : MonoBehaviour
         {
             isAtJob = false;
         }
+
+        if ((((period == "L" || period == "D" || period == "B" || period == "E" || period == "S" || period == "R") && npcType == "Guard") ||
+            ((period == "R" || period == "D" || period == "L" || period == "B") && npcType == "Inmate")) &&
+            currentWaypoint.GetComponent<WaypointData>() != null && canChangeDir)
+        {
+            dirToLook = currentWaypoint.GetComponent<WaypointData>().dir;
+        }
+        else
+        {
+            dirToLook = "any";
+        }
     }
     private void SetCurrentPossibleWaypoints()
     {
@@ -426,7 +441,6 @@ public class NPCAI : MonoBehaviour
     private void SetCurrentWaypoint()
     {
         seeker.CancelCurrentPathRequest(true);
-        
         if (isFreeWalking)
         {
             int rand = UnityEngine.Random.Range(0, currentPossibleWaypoints.Count);
@@ -440,8 +454,10 @@ public class NPCAI : MonoBehaviour
     private IEnumerator FinishMovement()
     {
         seeker.CancelCurrentPathRequest(true);
+        canChangeDir = true;
         int rand = UnityEngine.Random.Range(0, 4);
         yield return new WaitForSeconds(rand);
+        canChangeDir = false;
         isMoving = false;
         isFinishing = false;
     }
@@ -526,6 +542,7 @@ public class NPCAI : MonoBehaviour
                 if(seat.GetComponent<SeatNumber>().seatNumber == npcNum)
                 {
                     currentCanteenSeatPos = seat.position;
+                    currentWaypoint = seat;
                 }
             }
         }
@@ -543,9 +560,13 @@ public class NPCAI : MonoBehaviour
         }
         seeker.CancelCurrentPathRequest(true);
         transform.position = currentCanteenSeatPos;
+        canChangeDir = true;
 
         isMoving = false;
         isFinishing = false;
+
+        yield return new WaitForSeconds(.5f);
+        canChangeDir = false;
     }
     private IEnumerator InmateExercise()
     {

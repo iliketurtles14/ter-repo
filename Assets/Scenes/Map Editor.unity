@@ -1833,8 +1833,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -190}
-  m_SizeDelta: {x: 520, y: 595}
+  m_AnchoredPosition: {x: 0, y: -175}
+  m_SizeDelta: {x: 520, y: 625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &57042103
 MonoBehaviour:
@@ -1860,7 +1860,9 @@ MonoBehaviour:
     Reincarcerated_Data/\nStreamingAssets/Prisons\n\nFor help with creating a custom
     tileset,\n go to:\n[wherever TER is installed]/\nThe Escapists Reincarcerated_Data/\nStreamingAssets/TilesetHelp\n\nExtra
     instructions for creating custom item data are located at the top of the Items.ini
-    file which can be downloaded in the Advanced tab."
+    file which can be downloaded in the Advanced tab.\n\nWhen converting a .cmap
+    to a .zmap, keep in mind that the converter is only built to convert regular
+    custom maps and not decrypted .map files."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
@@ -8218,7 +8220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 290}
+  m_AnchoredPosition: {x: 0, y: 320}
   m_SizeDelta: {x: 480, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &256882545
@@ -29122,7 +29124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 220}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 480, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760671775
@@ -40614,7 +40616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 360}
+  m_AnchoredPosition: {x: 0, y: 390}
   m_SizeDelta: {x: 480, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1037589819
@@ -55730,7 +55732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 0, y: 180}
   m_SizeDelta: {x: 480, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1384832861

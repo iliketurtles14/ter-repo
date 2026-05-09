@@ -24,7 +24,10 @@ public class NPCSpeech : MonoBehaviour
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
 
         DestroyTextBox(transform);
-        StartCoroutine(SpeechLoop());
+        if(name != "VisitorNPC")
+        {
+            StartCoroutine(SpeechLoop());
+        }
     }
     private void Update()
     {
@@ -234,6 +237,9 @@ public class NPCSpeech : MonoBehaviour
                 break;
             case "Medic":
                 npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/MedicSpeechBackground");
+                break;
+            case "VisitorNPC":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().color = new Color(254f / 255f, 243f / 255f, 187f / 255f);
                 break;
         }
 

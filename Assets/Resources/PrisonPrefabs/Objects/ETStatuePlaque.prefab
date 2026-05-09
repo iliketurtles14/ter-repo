@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3596967681169400212}
   - component: {fileID: -1617505782957786772}
   - component: {fileID: -7245176120136178171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ETStatuePlaque
   m_TagString: Untagged
   m_Icon: {fileID: 0}

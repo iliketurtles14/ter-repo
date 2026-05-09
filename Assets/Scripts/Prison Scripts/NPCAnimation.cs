@@ -21,7 +21,7 @@ public class NPCAnimation : MonoBehaviour
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
     private int whichCycle = 0;
-
+    private NPCAI npcAIScript;
 
     public void OnEnable()
     {
@@ -30,6 +30,7 @@ public class NPCAnimation : MonoBehaviour
         {
             lookDir = "down";
         }
+        npcAIScript = GetComponent<NPCAI>();
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
     }
@@ -78,7 +79,14 @@ public class NPCAnimation : MonoBehaviour
             oldPos = transform.position;
             yield return new WaitForSeconds(.05f); //apparantly this is 20hz or something idk the ai said so
             currentPos = transform.position;
-            DirGet();
+            if(npcAIScript.dirToLook == "any")
+            {
+                DirGet();
+            }
+            else
+            {
+                lookDir = npcAIScript.dirToLook;
+            }
         }
     }
     public void DirGet()

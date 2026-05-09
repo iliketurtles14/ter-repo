@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: -1661899407953193181}
   - component: {fileID: -6084370021873270727}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: CleanLaundry
   m_TagString: JobBox
   m_Icon: {fileID: 0}

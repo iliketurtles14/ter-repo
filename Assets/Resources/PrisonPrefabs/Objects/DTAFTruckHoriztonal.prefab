@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1120015651027006885}
   - component: {fileID: -5830066294755553185}
   - component: {fileID: -8152178062100862141}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFTruckHoriztonal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

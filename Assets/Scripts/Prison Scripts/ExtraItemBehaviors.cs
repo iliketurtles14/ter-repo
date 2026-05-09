@@ -40,7 +40,14 @@ public class ExtraItemBehaviors : MonoBehaviour
         }
         else
         {
-            selectedItemID = inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id;
+            try
+            {
+                selectedItemID = inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id;
+            }
+            catch
+            {
+                //ts causes an error for no reason sometimes
+            }
         }
 
         if(mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedItemID == 76)

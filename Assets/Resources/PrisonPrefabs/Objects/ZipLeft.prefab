@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8161814695528730810}
   - component: {fileID: -2986041553378209327}
   - component: {fileID: -7132234495506778105}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: ZipLeft
   m_TagString: Zipline
   m_Icon: {fileID: 0}
@@ -152,3 +152,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZiplineData
   endPoint: {x: 0, y: 0}
+  hasEndPoint: 0

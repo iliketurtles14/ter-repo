@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3544928796676315529}
   - component: {fileID: -3209547573696548809}
   - component: {fileID: 2939551757579819150}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFPlantBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

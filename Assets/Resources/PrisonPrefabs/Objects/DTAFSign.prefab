@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 708066264073879629}
   - component: {fileID: 760360095334524339}
   - component: {fileID: 3924348668875923530}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFSign
   m_TagString: Sign
   m_Icon: {fileID: 0}

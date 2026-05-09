@@ -42,7 +42,7 @@ public class SetUpNPCs : MonoBehaviour
 
         foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
         {
-            if(obj.name == "Seat" || obj.gameObject.CompareTag("Equipment"))
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door"))
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = true;
             }
@@ -227,5 +227,8 @@ public class SetUpNPCs : MonoBehaviour
                 warden.transform.parent = aStar;
             }
         }
+        GameObject visitorNPC = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/VisitorNPC"));
+        visitorNPC.name = "VisitorNPC";
+        visitorNPC.transform.parent = aStar;
     }
 }

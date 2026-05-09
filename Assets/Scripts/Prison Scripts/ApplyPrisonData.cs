@@ -467,6 +467,7 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> JobOfficerSprites = new List<Sprite>();
     public List<Sprite> WardenSprites = new List<Sprite>();
 
+    public List<Sprite> VisitorSprites = new List<Sprite>(); //this includes all visitor sprites, so each character is separated by 8 sprites
     private void Start()
     {
         senderScript = DataSender.instance;
@@ -2776,7 +2777,7 @@ public class ApplyPrisonData : MonoBehaviour
         GuardElfOutfitHoldingSprites.Add(NPCSprites[2452]);
         GuardElfOutfitHoldingSprites.Add(NPCSprites[2453]);
 
-        //medic sprites are in prison objects
+        //medic sprites are in prison objects .... thanks older me :3
         //10, 9, 15, 16, 11, 12, 14, 13
         MedicSprites.Add(PrisonObjectSprites[10]);
         MedicSprites.Add(PrisonObjectSprites[9]);
@@ -2804,5 +2805,111 @@ public class ApplyPrisonData : MonoBehaviour
         JobOfficerSprites.Add(NPCSprites[569]);
         JobOfficerSprites.Add(NPCSprites[573]);
         JobOfficerSprites.Add(NPCSprites[572]);
+
+        //visitor sprites
+        VisitorSprites.Add(NPCSprites[544]);// 0
+        VisitorSprites.Add(NPCSprites[545]);
+        VisitorSprites.Add(NPCSprites[549]);
+        VisitorSprites.Add(NPCSprites[548]);
+        VisitorSprites.Add(NPCSprites[542]);
+        VisitorSprites.Add(NPCSprites[543]);
+        VisitorSprites.Add(NPCSprites[547]);
+        VisitorSprites.Add(NPCSprites[546]);
+        VisitorSprites.Add(NPCSprites[551]);// 1
+        VisitorSprites.Add(NPCSprites[550]);
+        VisitorSprites.Add(NPCSprites[555]);
+        VisitorSprites.Add(NPCSprites[554]);
+        VisitorSprites.Add(NPCSprites[552]);
+        VisitorSprites.Add(NPCSprites[553]);
+        VisitorSprites.Add(NPCSprites[557]);
+        VisitorSprites.Add(NPCSprites[556]);
+        VisitorSprites.Add(NPCSprites[574]);// 2
+        VisitorSprites.Add(NPCSprites[575]);
+        VisitorSprites.Add(NPCSprites[579]);
+        VisitorSprites.Add(NPCSprites[578]);
+        VisitorSprites.Add(NPCSprites[576]);
+        VisitorSprites.Add(NPCSprites[577]);
+        VisitorSprites.Add(NPCSprites[581]);
+        VisitorSprites.Add(NPCSprites[580]);
+        VisitorSprites.Add(NPCSprites[582]);// 3
+        VisitorSprites.Add(NPCSprites[583]);
+        VisitorSprites.Add(NPCSprites[588]);
+        VisitorSprites.Add(NPCSprites[587]);
+        VisitorSprites.Add(NPCSprites[585]);
+        VisitorSprites.Add(NPCSprites[584]);
+        VisitorSprites.Add(NPCSprites[589]);
+        VisitorSprites.Add(NPCSprites[586]);
+        VisitorSprites.Add(NPCSprites[594]);// 4
+        VisitorSprites.Add(NPCSprites[595]);
+        VisitorSprites.Add(NPCSprites[592]);
+        VisitorSprites.Add(NPCSprites[591]);
+        VisitorSprites.Add(NPCSprites[596]);
+        VisitorSprites.Add(NPCSprites[597]);
+        VisitorSprites.Add(NPCSprites[593]);
+        VisitorSprites.Add(NPCSprites[590]);
+        VisitorSprites.Add(NPCSprites[599]);// 5
+        VisitorSprites.Add(NPCSprites[600]);
+        VisitorSprites.Add(NPCSprites[602]);
+        VisitorSprites.Add(NPCSprites[601]);
+        VisitorSprites.Add(NPCSprites[603]);
+        VisitorSprites.Add(NPCSprites[604]);
+        VisitorSprites.Add(NPCSprites[606]);
+        VisitorSprites.Add(NPCSprites[605]);
+        VisitorSprites.Add(NPCSprites[611]);// 6
+        VisitorSprites.Add(NPCSprites[612]);
+        VisitorSprites.Add(NPCSprites[607]);
+        VisitorSprites.Add(NPCSprites[608]);
+        VisitorSprites.Add(NPCSprites[610]);
+        VisitorSprites.Add(NPCSprites[609]);
+        VisitorSprites.Add(NPCSprites[614]);
+        VisitorSprites.Add(NPCSprites[613]);
+        VisitorSprites.Add(NPCSprites[619]);// 7
+        VisitorSprites.Add(NPCSprites[618]);
+        VisitorSprites.Add(NPCSprites[621]);
+        VisitorSprites.Add(NPCSprites[620]);
+        VisitorSprites.Add(NPCSprites[617]);
+        VisitorSprites.Add(NPCSprites[616]);
+        VisitorSprites.Add(NPCSprites[615]);
+        VisitorSprites.Add(NPCSprites[622]);
+        VisitorSprites.Add(NPCSprites[2546]);// 8
+        VisitorSprites.Add(NPCSprites[2547]);
+        VisitorSprites.Add(NPCSprites[2552]);
+        VisitorSprites.Add(NPCSprites[2553]);
+        VisitorSprites.Add(NPCSprites[2549]);
+        VisitorSprites.Add(NPCSprites[2548]);
+        VisitorSprites.Add(NPCSprites[2551]);
+        VisitorSprites.Add(NPCSprites[2550]);
+        VisitorSprites.Add(NPCSprites[2554]);// 9
+        VisitorSprites.Add(NPCSprites[2555]);
+        VisitorSprites.Add(NPCSprites[2560]);
+        VisitorSprites.Add(NPCSprites[2561]);
+        VisitorSprites.Add(NPCSprites[2556]);
+        VisitorSprites.Add(NPCSprites[2557]);
+        VisitorSprites.Add(NPCSprites[2559]);
+        VisitorSprites.Add(NPCSprites[2558]);
+        VisitorSprites.Add(NPCSprites[2562]);// 10
+        VisitorSprites.Add(NPCSprites[2563]);
+        VisitorSprites.Add(NPCSprites[2566]);
+        VisitorSprites.Add(NPCSprites[2567]);
+        VisitorSprites.Add(NPCSprites[2564]);
+        VisitorSprites.Add(NPCSprites[2565]);
+        VisitorSprites.Add(NPCSprites[2569]);
+        VisitorSprites.Add(NPCSprites[2568]);
+        VisitorSprites.Add(NPCSprites[2570]);// 11
+        VisitorSprites.Add(NPCSprites[2571]);
+        VisitorSprites.Add(NPCSprites[2576]);
+        VisitorSprites.Add(NPCSprites[2577]);
+        VisitorSprites.Add(NPCSprites[2572]);
+        VisitorSprites.Add(NPCSprites[2573]);
+        VisitorSprites.Add(NPCSprites[2575]);
+        VisitorSprites.Add(NPCSprites[2574]);
+        VisitorSprites.Add(NPCSprites[2578]);// 12
+        VisitorSprites.Add(NPCSprites[2579]);
+        VisitorSprites.Add(NPCSprites[2584]);
+        VisitorSprites.Add(NPCSprites[2585]);
+        VisitorSprites.Add(NPCSprites[2580]);
+        VisitorSprites.Add(NPCSprites[2581]);
+        VisitorSprites.Add(NPCSprites[2583]);
+        VisitorSprites.Add(NPCSprites[2582]);
     }
 }

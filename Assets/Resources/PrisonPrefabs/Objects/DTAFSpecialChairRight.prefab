@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4613617762837504100}
   - component: {fileID: -7368514776796708020}
   - component: {fileID: 9071059615657129065}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFSpecialChairRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

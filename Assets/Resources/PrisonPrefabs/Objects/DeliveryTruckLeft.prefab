@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: 5979165580726116636}
   - component: {fileID: -9173364594171724644}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DeliveryTruckLeft
   m_TagString: ItemBox
   m_Icon: {fileID: 0}

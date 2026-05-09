@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8711029831559105450}
   - component: {fileID: -6898607331221424575}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: JeepUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

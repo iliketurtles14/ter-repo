@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5693458902486959858}
   - component: {fileID: -4119594485901968387}
   - component: {fileID: -7465870853846698334}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Oven
   m_TagString: ItemTransformer
   m_Icon: {fileID: 0}

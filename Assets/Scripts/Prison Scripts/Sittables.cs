@@ -159,7 +159,11 @@ public class Sittables : MonoBehaviour
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         player.GetComponent<PlayerCtrl>().enabled = false;
-        while(Vector2.Distance(player.transform.position, sittable.transform.position + climbOffset) > .1f)
+        if(sittable.GetComponent<WaypointData>() != null)
+        {
+            player.GetComponent<PlayerAnimation>().lookDir = sittable.GetComponent<WaypointData>().dir;
+        }
+        while (Vector2.Distance(player.transform.position, sittable.transform.position + climbOffset) > .1f)
         {
             player.transform.position += 5f * Time.deltaTime * (sittable.transform.position + climbOffset - player.transform.position).normalized;
             yield return null;
@@ -195,7 +199,7 @@ public class Sittables : MonoBehaviour
                 }
             }
         }
-        else if (sittable.name.StartsWith("Seat"))
+        else if (sittable.name.StartsWith("Seat") || sittable.name.StartsWith("VisitorPlayer"))
         {
             vitalScript.energyRate = 1;
             vitalScript.energyRateAmount = 2;

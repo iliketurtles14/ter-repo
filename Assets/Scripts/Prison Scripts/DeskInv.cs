@@ -254,6 +254,7 @@ public class DeskInv : MonoBehaviour
         switch (aDesk.name)
         {
             case "PlayerDesk":
+            case "ETPlayerDesk":
                 return "Your Desk";
             case "DevDesk":
                 return "Dev Desk";
@@ -261,9 +262,9 @@ public class DeskInv : MonoBehaviour
                 return "Gardening Tools";
             case "JanitorDesk":
                 return "Cleaning Supplies";
-            default:
-                {
-                    int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;
+            case "NPCDesk":
+            case "ETNPCDesk":
+                int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;
                     foreach (Transform npc in aStar.transform)
                     {
                         if (npc.name.StartsWith("Inmate"))
@@ -275,6 +276,9 @@ public class DeskInv : MonoBehaviour
                             }
                         }
                     }
+                    return "Desk";
+            default:
+                {
                     return "Desk";
                 }
         }
@@ -308,7 +312,7 @@ public class DeskInv : MonoBehaviour
             yield break;
         }
         
-        if (desk.name.StartsWith("NPCDesk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
+        if ((desk.name == "NPCDesk" || desk.name == "ETNPCDesk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
         {
             isOpening = true;
 

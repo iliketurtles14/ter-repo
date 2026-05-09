@@ -12,10 +12,17 @@ public class LadderClimb : MonoBehaviour
     private GameObject player;
     private Transform tiles;
     private GameObject currentLadder;
-    public bool hasPickedUp;
     private Vector3 offsetVector = new Vector3(); //only for ground-to-roof operations
     private float distance;
     private HPAChecker HPAScript;
+
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private int uiLayer;
+    private int ventCoverLayer;
     public void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -25,6 +32,14 @@ public class LadderClimb : MonoBehaviour
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         HPAScript = player.GetComponent<HPAChecker>();
+
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+        uiLayer = LayerMask.NameToLayer("UI");
+        ventCoverLayer = LayerMask.NameToLayer("VentCovers");
 
         offsetVector.y = 1.6f;
     }
@@ -47,19 +62,6 @@ public class LadderClimb : MonoBehaviour
             }
             if(Input.GetMouseButtonDown(0) && distance <= 2.4f && player.layer != 15)
             {
-                foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
-                {
-                    if(obj.layer == 14)
-                    {
-                        hasPickedUp = true;
-                        break;
-                    }
-                    else
-                    {
-                        hasPickedUp = false;
-                    }
-                }
-                
                 if (mcs.isTouchingGroundLadder)
                 {
                     currentLadder = mcs.touchedGroundLadder;
@@ -73,11 +75,11 @@ public class LadderClimb : MonoBehaviour
                     currentLadder = mcs.touchedRoofLadder;
                 }
 
-                if (!hasPickedUp && !currentLadder.GetComponent<LadderConnect>().fall)
+                if (!currentLadder.GetComponent<LadderConnect>().fall)
                 {
                     StartCoroutine(ClimbLadder());
                 }
-                else if(!hasPickedUp && currentLadder.GetComponent<LadderConnect>().fall)
+                else if(currentLadder.GetComponent<LadderConnect>().fall)
                 {
                     //fall
                 }
@@ -95,92 +97,61 @@ public class LadderClimb : MonoBehaviour
         switch (currentLadder.GetComponent<LadderConnect>().goToLayer)
         {
             case "ground":
-                foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Desk"))
-                {
-                    if(obj.GetComponent<DeskPickUp>() != null)
-                    {
-                        obj.GetComponent<DeskPickUp>().enabled = true;
-                    }
-                }
-                player.layer = 3;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
-                tiles.Find("Roof").gameObject.SetActive(false);
-                tiles.Find("RoofObjects").gameObject.SetActive(false);
-                tiles.Find("Vents").gameObject.SetActive(false);
-                tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
-                foreach (Transform child in tiles.Find("GroundObjects"))
-                {
-                    if (child.gameObject.CompareTag("Item"))
-                    {
-                        child.GetComponent<BoxCollider2D>().enabled = true;
-                    }
-                }
-                EnableTags();
+                tiles.Find("RoofTiles").gameObject.SetActive(false);
+                tiles.Find("RoofObjects").gameObject.SetActive(false);
+                tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentObjects").gameObject.SetActive(false);
+                tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
+                DisableAllLayerCollisions();
+                Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
+                Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
                 break;
             case "vents":
-                player.layer = 12;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 11;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
-                tiles.Find("Roof").gameObject.SetActive(false);
+                tiles.Find("RoofTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
-                tiles.Find("Vents").gameObject.SetActive(true);
+                tiles.Find("VentTiles").gameObject.SetActive(true);
                 tiles.Find("VentObjects").gameObject.SetActive(true);
-                foreach (Transform child in tiles.Find("GroundObjects"))
-                {
-                    if (child.gameObject.CompareTag("Item"))
-                    {
-                        child.GetComponent<BoxCollider2D>().enabled = false;
-                    }
-                }
+                tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
+                DisableAllLayerCollisions();
+                Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, false);
+                Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
+                Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, false);
                 VentEnable();
-                DisableTags();
                 break;
             case "roof":
-                player.layer = 13;
                 player.GetComponent<SpriteRenderer>().sortingOrder = 15;
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
-                tiles.Find("Roof").gameObject.SetActive(true);
-                tiles.Find("RoofObjects").gameObject.SetActive(true);
-                tiles.Find("Vents").gameObject.SetActive(false);
-                tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
-                foreach (Transform child in tiles.Find("GroundObjects"))
-                {
-                    if (child.gameObject.CompareTag("Item"))
-                    {
-                        child.GetComponent<BoxCollider2D>().enabled = false;
-                    }
-                }
-                DisableTags();
+                tiles.Find("RoofTiles").gameObject.SetActive(true);
+                tiles.Find("RoofObjects").gameObject.SetActive(true);
+                tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentObjects").gameObject.SetActive(false);
+                tiles.Find("RoofShadowPlane").gameObject.SetActive(true);
+                DisableAllLayerCollisions();
+                Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, false);
+                Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, false);
                 break;
         }
         player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedTilePos;
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
-    public void DisableTags()
+    private void DisableAllLayerCollisions()
     {
-        mcs.EnableAllTags();
-        
-        mcs.DisableTag("Bars");
-        mcs.DisableTag("Fence");
-        mcs.DisableTag("ElectricFence");
-        mcs.DisableTag("Digable");
-        mcs.DisableTag("Wall");
-        mcs.DisableTag("Ladder(Ground)");
-        mcs.DisableTag("Desk");//currently the only menu
-    }
-    public void EnableTags()
-    {
-        mcs.EnableTag("Bars");
-        mcs.EnableTag("Fence");
-        mcs.EnableTag("ElectricFence");
-        mcs.EnableTag("Digable");
-        mcs.EnableTag("Wall");
-        mcs.EnableTag("Ladder(Ground)");
-        mcs.EnableTag("Desk");//currently the only menu
+        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
     }
     public void VentEnable()
     {
@@ -189,14 +160,9 @@ public class LadderClimb : MonoBehaviour
         color.a = 235f / 256f;
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = color;
 
-        SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
         SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sr in ventSpriteRenderers)
-        {
-            Color aColor = sr.color;
-            aColor.a = 1;
-            sr.color = aColor;
-        }
+        ventTilesSpriteRenderer.color = new Color(ventTilesSpriteRenderer.color.r, ventTilesSpriteRenderer.color.g, ventTilesSpriteRenderer.color.b, 1);
         foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
         {
             Color aColor = sr.color;

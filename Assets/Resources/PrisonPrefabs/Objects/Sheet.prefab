@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 116744536528317138}
   - component: {fileID: 6700469364148330916}
   - component: {fileID: -1267250889552372304}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Sheet
   m_TagString: Sheet
   m_Icon: {fileID: 0}

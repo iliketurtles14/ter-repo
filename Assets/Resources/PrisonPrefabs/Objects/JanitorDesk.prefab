@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4308634893678182137}
   - component: {fileID: 3256052722442004754}
   - component: {fileID: 1106639911941055254}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: JanitorDesk
   m_TagString: Desk
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3484689251299267676}
   - component: {fileID: 5643076882845890974}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ClimbingArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

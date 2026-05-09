@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2888890789745418764}
   - component: {fileID: 623492457983374162}
   - component: {fileID: 8306320838677439816}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: GuardBed
   m_TagString: Sittable
   m_Icon: {fileID: 0}

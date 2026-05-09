@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -5678289099566642696}
   - component: {fileID: -5317126617029370077}
   - component: {fileID: 8399923902415712631}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ExtraNPC
   m_TagString: ExtraNPC
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 2817042937121591148}
   - component: {fileID: 3287971020571444488}
   - component: {fileID: 7936350329854065300}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: LeftSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 6756969191686207112}
   - component: {fileID: 545480937340291755}
   - component: {fileID: 5531518047862017021}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: BottomSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 5360549667046844807}
   - component: {fileID: 5347730916981102466}
   - component: {fileID: 1475377416801989288}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: RightSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ GameObject:
   - component: {fileID: 929026658908240660}
   - component: {fileID: 1254253611161567062}
   - component: {fileID: 4558574613768232146}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: TopSpeechBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 4071236539868462392}
   - component: {fileID: 7870523645689106139}
   - component: {fileID: 1631441643836833433}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: SpeechBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 2298175296857955987}
   - component: {fileID: 1295399521062692789}
   - component: {fileID: 9144580873487738322}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: SpeechCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 393801273796274534}
   - component: {fileID: 4682368345371684668}
   - component: {fileID: 1198587303435814310}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}

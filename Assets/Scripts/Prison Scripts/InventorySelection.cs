@@ -32,12 +32,14 @@ public class InventorySelection : MonoBehaviour
     private Inventory inventoryScript;
     private List<InventoryItem> inventoryList;
     public int selectedSlotNum; //starts at 0
+    private PauseController pc;
 
     public void Start()
     {
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         inventoryScript = GetComponent<Inventory>();
+        pc = GetComponent<PauseController>();
 
         //define the Images
         Transform slot1 = InventoryCanvas.transform.Find("SelectionPanel/SelectOutline1");
@@ -59,10 +61,18 @@ public class InventorySelection : MonoBehaviour
         slot4SelectionImage.enabled = false;
         slot5SelectionImage.enabled = false;
         slot6SelectionImage.enabled = false;
-
     }
     public void Update()
     {
+        if (pc.isPaused)
+        {
+            if (aSlotSelected)
+            {
+                ClearAllSelections(false);
+            }
+            return;
+        }
+        
         if (aSlotSelected)
         {
             if (slot1Selected)

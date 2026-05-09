@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5494193924481687301}
   - component: {fileID: 6583994315493892344}
   - component: {fileID: 8813258754161067754}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: SSToyWoodBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

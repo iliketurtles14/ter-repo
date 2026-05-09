@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6796032475276755172}
   - component: {fileID: 5832748441787824156}
   - component: {fileID: -4979918769753396656}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: JobBoard
   m_TagString: JobBoard
   m_Icon: {fileID: 0}

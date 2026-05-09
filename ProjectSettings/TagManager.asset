@@ -101,6 +101,7 @@ TagManager:
   - Sign
   - Generator
   - Payphone
+  - VisitorNPC
   layers:
   - Default
   - TransparentFX
@@ -108,16 +109,16 @@ TagManager:
   - Player
   - Water
   - UI
-  - Items
-  - DeskUI
-  - Walls
-  - Zones
   - Ground
   - Underground
   - Vents
   - Roof
-  - PickedUpDesk
-  - Desk
+  - VentCovers
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

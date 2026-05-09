@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8712538724975154696}
   - component: {fileID: 242786091244124326}
   - component: {fileID: -2619257016781575195}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFComputerCylindar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8451226931008923628}
   - component: {fileID: -6974662237862670791}
   - component: {fileID: 2931717403957620829}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: ToiletWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,3 +180,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToiletWater
   waterLevel: 0
+  toiletPos: {x: 0, y: 0}

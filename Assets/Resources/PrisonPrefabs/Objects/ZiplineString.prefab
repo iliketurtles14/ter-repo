@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8404740615890244897}
   - component: {fileID: 1469968955258412058}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: ZiplineString
   m_TagString: Untagged
   m_Icon: {fileID: 0}

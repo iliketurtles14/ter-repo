@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3250980069268352016}
   - component: {fileID: -7407377574736586855}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ETPhone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

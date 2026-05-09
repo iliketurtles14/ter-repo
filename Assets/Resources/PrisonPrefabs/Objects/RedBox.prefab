@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4634564076267414187}
   - component: {fileID: 9177981649351842311}
   - component: {fileID: -8240608766679373228}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: RedBox
   m_TagString: JobBox
   m_Icon: {fileID: 0}

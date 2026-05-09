@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8101391137945978212}
   - component: {fileID: 8973582135574079047}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFCarpet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

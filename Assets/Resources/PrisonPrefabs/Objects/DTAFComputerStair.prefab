@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3773707362208001973}
   - component: {fileID: -6427807649946797025}
   - component: {fileID: -344028665740896801}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: DTAFComputerStair
   m_TagString: Untagged
   m_Icon: {fileID: 0}

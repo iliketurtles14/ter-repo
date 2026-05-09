@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Pathfinding;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ public class PauseController : MonoBehaviour
     private Sittables sittablesScript;
     private bool npcsAreStopped;
     private bool noAnimOnNPCs;
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     private List<string> currentDisabledTags = new List<string>();
 
@@ -58,7 +59,8 @@ public class PauseController : MonoBehaviour
                     anyNPCMoving = true;
                 }
                 if ((npc.CompareTag("NPC") && npc.GetComponent<NPCAnimation>().enabled) ||
-                    (npc.CompareTag("ExtraNPC") && npc.GetComponent<ExtraNPCAnimation>().enabled))
+                    (npc.CompareTag("ExtraNPC") && npc.GetComponent<ExtraNPCAnimation>().enabled) ||
+                    (npc.CompareTag("VisitorNPC") && npc.GetComponent<VisitorNPCAnimation>().enabled))
                 {
                     anyNPCAnim = true;
                 }
@@ -96,9 +98,13 @@ public class PauseController : MonoBehaviour
                 npc.GetComponent<NPCAnimation>().enabled = false;
                 npc.GetComponent<NavMeshAgent>().speed = 0;
             }
-            else
+            else if(npc.CompareTag("ExtraNPC"))
             {
                 npc.GetComponent<ExtraNPCAnimation>().enabled = false;
+            }
+            else if (npc.CompareTag("VisitorNPC"))
+            {
+                npc.GetComponent<VisitorNPCAnimation>().enabled = false;
             }
         }
 
@@ -157,12 +163,16 @@ public class PauseController : MonoBehaviour
                 {
                     npc.GetComponent<ExtraNPCAnimation>().enabled = true;
                 }
+                else if(npc.CompareTag("VisitorNPC"))
+                {
+                    npc.GetComponent<VisitorNPCAnimation>().enabled = true;
+                }
                 else
                 {
                     npc.GetComponent<NPCAnimation>().enabled = true;
                 }
             }
-            if (!npc.CompareTag("ExtraNPC"))
+            if (!npc.CompareTag("ExtraNPC") && !npc.CompareTag("VisitorNPC"))
             {
                 npc.GetComponent<NavMeshAgent>().speed = 8;
             }
