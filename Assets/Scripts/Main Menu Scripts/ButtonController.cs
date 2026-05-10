@@ -99,6 +99,14 @@ public class ButtonController : MonoBehaviour
 
         Addressables.LoadSceneAsync("Map Editor");
     }
+    public void MainQuit()
+    {
+#if     UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
     public void PatchBack()
     {
         foreach(Transform child in mmc.Find("TitlePanel"))

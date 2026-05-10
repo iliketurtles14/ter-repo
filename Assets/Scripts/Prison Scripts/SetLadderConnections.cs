@@ -29,7 +29,8 @@ public class SetLadderConnections : MonoBehaviour
                 bool isNeither = true;
                 foreach (Transform tile in tiles.Find("Vents"))
                 {
-                    if (tile.position == ladder.position - new Vector3(0, 1.6f, 0))
+                    float distance = Vector2.Distance(tile.position, ladder.position + new Vector3(0, 1.6f, 0));
+                    if (distance <= .1f)
                     {
                         ladder.GetComponent<LadderConnect>().connectedTilePos = tile.position;
                         ladder.GetComponent<LadderConnect>().goToLayer = "vents";
@@ -42,7 +43,8 @@ public class SetLadderConnections : MonoBehaviour
                 {
                     foreach (Transform tile in tiles.Find("Roof"))
                     {
-                        if (tile.position == ladder.position - new Vector3(0, 1.6f, 0))
+                        float distance = Vector2.Distance(tile.position, ladder.position + new Vector3(0, 1.6f, 0));
+                        if (distance <= .1f)
                         {
                             ladder.GetComponent<LadderConnect>().connectedTilePos = tile.position;
                             ladder.GetComponent<LadderConnect>().goToLayer = "roof";
@@ -64,7 +66,8 @@ public class SetLadderConnections : MonoBehaviour
                 bool isRoof = false;
                 foreach(Transform tile in tiles.Find("Roof"))
                 {
-                    if(tile.position == ladder.position)
+                    float distance = Vector2.Distance(tile.position, ladder.position);
+                    if (distance <= .1f)
                     {
                         ladder.GetComponent<LadderConnect>().connectedTilePos = tile.position;
                         ladder.GetComponent<LadderConnect>().goToLayer = "roof";
@@ -90,7 +93,8 @@ public class SetLadderConnections : MonoBehaviour
                 bool isVents = false;
                 foreach (Transform tile in tiles.Find("Vents"))
                 {
-                    if (tile.position == ladder.position)
+                    float distance = Vector2.Distance(tile.position, ladder.position);
+                    if (distance <= .1f)
                     {
                         ladder.GetComponent<LadderConnect>().connectedTilePos = tile.position;
                         ladder.GetComponent<LadderConnect>().goToLayer = "vents";

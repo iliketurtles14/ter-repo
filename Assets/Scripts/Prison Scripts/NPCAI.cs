@@ -311,7 +311,7 @@ public class NPCAI : MonoBehaviour
 
         if ((((period == "L" || period == "D" || period == "B" || period == "E" || period == "S" || period == "R") && npcType == "Guard") ||
             ((period == "R" || period == "D" || period == "L" || period == "B") && npcType == "Inmate")) &&
-            currentWaypoint.GetComponent<WaypointData>() != null && canChangeDir)
+            currentWaypoint != null && currentWaypoint.GetComponent<WaypointData>() != null && canChangeDir)
         {
             dirToLook = currentWaypoint.GetComponent<WaypointData>().dir;
         }

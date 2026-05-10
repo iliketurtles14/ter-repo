@@ -153,6 +153,7 @@ public class NPCSpeech : MonoBehaviour
         madeTextBox = true;
         isTalking = true;
 
+        Debug.Log(npc.name + ": " + msg);
         while (true)
         {
             if (msg.EndsWith(' '))

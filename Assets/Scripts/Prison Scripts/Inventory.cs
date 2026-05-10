@@ -26,6 +26,13 @@ public class Inventory : MonoBehaviour
     public int droppedDurability = 100;
     public bool isDropped = false;
     private ItemSwell swellScript;
+
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private int uiLayer;
     public void Start()
     {
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
@@ -38,6 +45,12 @@ public class Inventory : MonoBehaviour
         PlayerTransform = Player.transform;
         mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         swellScript = GetComponent<ItemSwell>();
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+        uiLayer = LayerMask.NameToLayer("UI");
 
         for (int i = 0; i < 6; i++)
         {
@@ -229,41 +242,41 @@ public class Inventory : MonoBehaviour
             }
 
             //ground dropping
-            if (Player.layer == 3)
+            if (!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
             {
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
-                droppedItem.layer = 3;
+                droppedItem.layer = groundLayer;
             }
-            else if (Player.layer == 12) //vent dropping
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer)) //vent dropping
             {
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("VentObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 10;
-                droppedItem.layer = 12;
+                droppedItem.layer = ventLayer;
             }
-            else if (Player.layer == 13) // roof dropping
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, roofLayer)) // roof dropping
             {
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("RoofObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 14;
-                droppedItem.layer = 13;
+                droppedItem.layer = roofLayer;
             }
-            else if (Player.layer == 11) //underground deropping
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer)) //underground deropping
             {
                 Vector3 playerPosition = Player.transform.position;
                 GameObject droppedItem = Instantiate(inventory[slotIndex].itemData.prefab, playerCollisionScript.playerFloor.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 droppedItem.GetComponent<ItemCollectionData>().itemData = inventory[slotIndex].itemData;
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 11;
-                droppedItem.layer = 11;
+                droppedItem.layer = undergroundLayer;
             }
             else { return; }
             droppedDurability = inventory[slotIndex].itemData.currentDurability;

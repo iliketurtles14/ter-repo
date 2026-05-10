@@ -132,6 +132,7 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("MapEditorButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Image>().sprite = UISprites[328];
+        mmc.Find("TitlePanel").Find("QuitButton").GetComponent<Image>().sprite = UISprites[212];
         spriteState = mmc.Find("TitlePanel").Find("PlayButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[199];
         mmc.Find("TitlePanel").Find("PlayButton").GetComponent<Button>().spriteState = spriteState;

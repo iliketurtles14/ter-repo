@@ -21,6 +21,7 @@ public class Tooltips : MonoBehaviour
     private GameObject TooltipMid;
     private GameObject TooltipSide;
     private GameObject TooltipTextBox;
+    private bool isContraband;
     private string toPrint;
     private string printDurability;
     private string printInmateName;
@@ -159,12 +160,14 @@ public class Tooltips : MonoBehaviour
             {
                 printInmateName = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s ";
                 tooltipType = "invItem";
+                isContraband = inventoryList[invSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
             else
             {
                 printInmateName = "'s ";
                 tooltipType = "invItem";
+                isContraband = inventoryList[invSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(toPrint + printDurability));
             }
             return;
@@ -219,12 +222,14 @@ public class Tooltips : MonoBehaviour
             {
                 printInmateName = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s ";
                 tooltipType = "deskItem";
+                isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
             else
             {
                 printInmateName = "'s ";
                 tooltipType = "deskItem";
+                isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(toPrint + printDurability));
             }
             return;
@@ -294,6 +299,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "idItem";
+            isContraband = currentIDList[idSlotNumber].itemData.isContraband;
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
@@ -355,12 +361,14 @@ public class Tooltips : MonoBehaviour
             {
                 printInmateName = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s ";
                 tooltipType = "npcItem";
+                isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
             else
             {
                 printInmateName = "'s ";
                 tooltipType = "npcItem";
+                isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
                 StartCoroutine(DrawTooltip(toPrint + printDurability));
             }
             return;
@@ -412,6 +420,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "shopItem";
+            isContraband = shopMenuScript.shopItems[npcShopSlotNumber].itemData.isContraband;
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
@@ -451,12 +460,14 @@ public class Tooltips : MonoBehaviour
             {
                 printInmateName = givingScript.item.itemData.inmateGiveName + "'s ";
                 tooltipType = "giveItem";
+                isContraband = givingScript.item.itemData.isContraband;
                 StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
             }
             else
             {
                 printInmateName = "'s ";
                 tooltipType = "giveItem";
+                isContraband = givingScript.item.itemData.isContraband;
                 StartCoroutine(DrawTooltip(toPrint + printDurability));
             }
             return;
@@ -508,6 +519,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "craftItem";
+            isContraband = craftItemData.isContraband;
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
@@ -554,6 +566,7 @@ public class Tooltips : MonoBehaviour
                 printDurability = "";
             }
             tooltipType = "toiletItem";
+            isContraband = toiletInv[toiletSlotNumber].isContraband;
             StartCoroutine(DrawTooltip(toPrint + printDurability));
             return;
         }
@@ -584,6 +597,7 @@ public class Tooltips : MonoBehaviour
                 toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName + "'s " + toPrint;
             }
             tooltipType = "groundItem";
+            isContraband = touchedItem.GetComponent<ItemCollectionData>().itemData.isContraband;
             StartCoroutine(DrawTooltip(toPrint));
             return;
         }
@@ -1624,7 +1638,21 @@ public class Tooltips : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(textBox.GetComponent<RectTransform>());
         yield return new WaitForEndOfFrame();
 
-        textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
+        if (tooltipType.Contains("Item"))
+        {
+            if (isContraband)
+            {
+                textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(1, 0, 0);
+            }
+            else
+            {
+                textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(0, 1, 0);
+            }
+        }
+        else
+        {
+            textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
+        }
 
         //draw the tooltip
         GameObject side1 = Instantiate(TooltipSide, TooltipPanelTransform);
