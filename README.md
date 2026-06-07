@@ -25,6 +25,8 @@ Note: There is a warning screen that will appear at the start of the game if you
 
 ## Dependencies
 
+Download the latest release of The Escapists Reincarcerated.
+
 The Escapists on Steam with all DLC: https://store.steampowered.com/app/298630/The_Escapists
 
 .NET 6.0 Desktop Runtime, .NET 6.0 Runtime, and ASP.NET Core Runtime 6.0

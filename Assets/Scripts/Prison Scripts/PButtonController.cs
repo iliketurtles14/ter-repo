@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PButtonController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PButtonController : MonoBehaviour
     private PlayerIDInv playerIDInvScript;
     private ToiletMenu toiletMenuScript;
     private PayphoneMenu payphoneMenuScript;
+    private CreateNote createNoteScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -29,6 +31,7 @@ public class PButtonController : MonoBehaviour
         playerIDInvScript = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
         toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
         payphoneMenuScript = mc.Find("PayphoneMenuPanel").GetComponent<PayphoneMenu>();
+        createNoteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
     }
     public void MissionYes()
     {
@@ -230,5 +233,9 @@ public class PButtonController : MonoBehaviour
     public void PayphoneReturn()
     {
         payphoneMenuScript.ReturnFromTip();
+    }
+    public void NoteContinue()
+    {
+        createNoteScript.CloseWardenNote();
     }
 }
