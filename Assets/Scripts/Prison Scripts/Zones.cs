@@ -32,7 +32,7 @@ public class Zones : MonoBehaviour
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
         { "LO", "YourCell" }, { "R", "Rollcall" }, { "B", "Canteen" }, { "L", "Canteen" },
-        { "D", "Canteen" }, { "E", "Gym" }, { "S", "Showers" }
+        { "D", "Canteen" }, { "E", "Gym" }, { "S", "Showers" }, { "LD", "YourCell" }
     };
     private List<string> jobZones = new List<string>()
     {

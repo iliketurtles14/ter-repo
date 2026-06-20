@@ -23,6 +23,7 @@ public class NPCData : ScriptableObject
     public bool isAggro;
     public GameObject aggroTarget;
     public bool isDead;
+    public bool isTied;
     public bool hasFood;
     public GameObject bed;
     public GameObject desk;

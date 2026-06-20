@@ -102,6 +102,8 @@ TagManager:
   - Generator
   - Payphone
   - VisitorNPC
+  - EscapeObject
+  - PatchUp
   layers:
   - Default
   - TransparentFX

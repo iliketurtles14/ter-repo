@@ -15,6 +15,7 @@ public class Schedule : MonoBehaviour
     private MissionAsk missionAskScript;
     private bool isOnFavorPeriod;
     private string favorPeriod;
+    private Lockdown lockdownScript;
     void Start()
     {
         TimeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
@@ -23,6 +24,7 @@ public class Schedule : MonoBehaviour
         periodCode = "LO";
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
         missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
+        lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
 
         StartCoroutine(StartWait());
     }
@@ -60,80 +62,87 @@ public class Schedule : MonoBehaviour
         
         time = timeScript.time;
 
-        switch (time)
+        if (lockdownScript.lockdownIsActive)
         {
-            case "00:00":
-                periodCode = map.routineDict[0];
-                break;
-            case "01:00":
-                periodCode = map.routineDict[1];
-                break;
-            case "02:00":
-                periodCode = map.routineDict[2];
-                break;
-            case "03:00":
-                periodCode = map.routineDict[3];
-                break;
-            case "04:00":
-                periodCode = map.routineDict[4];
-                break;
-            case "05:00":
-                periodCode = map.routineDict[5];
-                break;
-            case "06:00":
-                periodCode = map.routineDict[6];
-                break;
-            case "07:00":
-                periodCode = map.routineDict[7];
-                break;
-            case "08:00":
-                periodCode = map.routineDict[8];
-                break;
-            case "09:00":
-                periodCode = map.routineDict[9];
-                break;
-            case "10:00":
-                periodCode = map.routineDict[10];
-                break;
-            case "11:00":
-                periodCode = map.routineDict[11];
-                break;
-            case "12:00":
-                periodCode = map.routineDict[12];
-                break;
-            case "13:00":
-                periodCode = map.routineDict[13];
-                break;
-            case "14:00":
-                periodCode = map.routineDict[14];
-                break;
-            case "15:00":
-                periodCode = map.routineDict[15];
-                break;
-            case "16:00":
-                periodCode = map.routineDict[16];
-                break;
-            case "17:00":
-                periodCode = map.routineDict[17];
-                break;
-            case "18:00":
-                periodCode = map.routineDict[18];
-                break;
-            case "19:00":
-                periodCode = map.routineDict[19];
-                break;
-            case "20:00":
-                periodCode = map.routineDict[20];
-                break;
-            case "21:00":
-                periodCode = map.routineDict[21];
-                break;
-            case "22:00":
-                periodCode = map.routineDict[22];
-                break;
-            case "23:00":
-                periodCode = map.routineDict[23];
-                break;
+            periodCode = "LD";
+        }
+        else
+        {
+            switch (time)
+            {
+                case "00:00":
+                    periodCode = map.routineDict[0];
+                    break;
+                case "01:00":
+                    periodCode = map.routineDict[1];
+                    break;
+                case "02:00":
+                    periodCode = map.routineDict[2];
+                    break;
+                case "03:00":
+                    periodCode = map.routineDict[3];
+                    break;
+                case "04:00":
+                    periodCode = map.routineDict[4];
+                    break;
+                case "05:00":
+                    periodCode = map.routineDict[5];
+                    break;
+                case "06:00":
+                    periodCode = map.routineDict[6];
+                    break;
+                case "07:00":
+                    periodCode = map.routineDict[7];
+                    break;
+                case "08:00":
+                    periodCode = map.routineDict[8];
+                    break;
+                case "09:00":
+                    periodCode = map.routineDict[9];
+                    break;
+                case "10:00":
+                    periodCode = map.routineDict[10];
+                    break;
+                case "11:00":
+                    periodCode = map.routineDict[11];
+                    break;
+                case "12:00":
+                    periodCode = map.routineDict[12];
+                    break;
+                case "13:00":
+                    periodCode = map.routineDict[13];
+                    break;
+                case "14:00":
+                    periodCode = map.routineDict[14];
+                    break;
+                case "15:00":
+                    periodCode = map.routineDict[15];
+                    break;
+                case "16:00":
+                    periodCode = map.routineDict[16];
+                    break;
+                case "17:00":
+                    periodCode = map.routineDict[17];
+                    break;
+                case "18:00":
+                    periodCode = map.routineDict[18];
+                    break;
+                case "19:00":
+                    periodCode = map.routineDict[19];
+                    break;
+                case "20:00":
+                    periodCode = map.routineDict[20];
+                    break;
+                case "21:00":
+                    periodCode = map.routineDict[21];
+                    break;
+                case "22:00":
+                    periodCode = map.routineDict[22];
+                    break;
+                case "23:00":
+                    periodCode = map.routineDict[23];
+                    break;
+            }
         }
 
         switch (periodCode)
@@ -164,6 +173,9 @@ public class Schedule : MonoBehaviour
                 break;
             case "FT":
                 period = "Free Time";
+                break;
+            case "LD":
+                period = "Lockdown";
                 break;
         }
 

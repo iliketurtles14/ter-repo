@@ -53,6 +53,7 @@ public class Tooltips : MonoBehaviour
     private GameObject touchedItem;
     private float wallDistance;
     private float fenceDistance;
+    private float electricFenceDistance;
     private float barsDistance;
     private float ventCoverDistance;
     private float slatsDistance;
@@ -789,6 +790,43 @@ public class Tooltips : MonoBehaviour
             return;
         }
         if (mcs.isTouchingFence && showingTooltip && fenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+        {
+            DestroyTooltip();
+            return;
+        }
+        //electric fences
+        if (mcs.isTouchingElectricFence)
+        {
+            electricFenceDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedElectricFence.transform.position);
+        }
+        if (!showingTooltip && mcs.isTouchingElectricFence && electricFenceDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
+        {
+            toPrint = "Cut Fence";
+            printedTileDurability = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability;
+            printDurability = " (" + mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+            tooltipType = "electricFence";
+            printedTileData = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData;
+            StartCoroutine(DrawTooltip(toPrint + printDurability));
+            return;
+        }
+        else if (showingTooltip && tooltipType == "electricFence" &&
+            (!mcs.isTouchingElectricFence || !itemBehavioursScript.selectedCuttingItem))
+        {
+            DestroyTooltip();
+            return;
+        }
+        else if (showingTooltip && tooltipType == "electricFence" && mcs.isTouchingElectricFence && itemBehavioursScript.selectedCuttingItem && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if (mcs.isTouchingElectricFence && tooltipType == "electricFence" && showingTooltip && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+        {
+            changeType = "tileDurability";
+            ChangeTooltipText(changeType);
+            return;
+        }
+        if (mcs.isTouchingElectricFence && showingTooltip && electricFenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
         {
             DestroyTooltip();
             return;
@@ -1544,6 +1582,71 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
+        //escape objects
+        if(mcs.isTouchingEscapeObject && !showingTooltip)
+        {
+            switch (mcs.touchedEscapeObject.name)
+            {
+                case "SSTree":
+                    toPrint = "Christmas Tree";
+                    break;
+                case "ETTank":
+                    toPrint = "Tank";
+                    break;
+                case "JingleSantaSleigh":
+                    toPrint = "Santa's Sleigh";
+                    break;
+                case "DTAFComputerLeft":
+                    toPrint = "Keycard Panel";
+                    break;
+                case "DTAFComputerDown":
+                    toPrint = "Voice Analyzer";
+                    break;
+                case "DTAFComputerRight":
+                    toPrint = "Fingerprint Scanner";
+                    break;
+            }
+            tooltipType = "escapeObject";
+            StartCoroutine(DrawTooltip(toPrint));
+            return;
+        }
+        if(showingTooltip && tooltipType == "escapeObject" && !mcs.isTouchingEscapeObject)
+        {
+            DestroyTooltip();
+            return;
+        }
+        if(showingTooltip && tooltipType == "escapeObject")
+        {
+            string str = null;
+
+            switch (mcs.touchedEscapeObject.name)
+            {
+                case "SSTree":
+                    str = "Christmas Tree";
+                    break;
+                case "ETTank":
+                    str = "Tank";
+                    break;
+                case "JingleSantaSleigh":
+                    str = "Santa's Sleigh";
+                    break;
+                case "DTAFComputerLeft":
+                    str = "Keycard Panel";
+                    break;
+                case "DTAFComputerDown":
+                    str = "Voice Analyzer";
+                    break;
+                case "DTAFComputerRight":
+                    str = "Fingerprint Scanner";
+                    break;
+            }
+
+            if(str != toPrint)
+            {
+                DestroyTooltip();
+                return;
+            }
+        }
 
         ///NPCS
         //inmates/guards
@@ -1690,6 +1793,7 @@ public class Tooltips : MonoBehaviour
                 {
                     case "wall": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+                    case "electricFence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
                     case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;

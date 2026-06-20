@@ -22,6 +22,7 @@ public class NPCAnimation : MonoBehaviour
     public List<Sprite> outfitDirSprites;
     private int whichCycle = 0;
     private NPCAI npcAIScript;
+    public bool shouldUseNoLooks;
 
     public void OnEnable()
     {
@@ -51,6 +52,11 @@ public class NPCAnimation : MonoBehaviour
                 case "up": lookNum = 2; break;
                 case "left": lookNum = 4; break;
                 case "down": lookNum = 6; break;
+            }
+
+            if (shouldUseNoLooks)
+            {
+                lookNum = 0;
             }
 
             try

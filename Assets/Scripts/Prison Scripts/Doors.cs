@@ -76,6 +76,9 @@ public class Doors : MonoBehaviour
             case "OpenCellDoor":
             case "OpenEnteranceDoor":
             case "OpenWhiteDoor":
+            case "OpenUtiltiyDoor":
+            case "OpenStaffDoor":
+            case "OpenGuardDoor":
                 return true;
             case "CellDoor":
             case "UtilityDoor":

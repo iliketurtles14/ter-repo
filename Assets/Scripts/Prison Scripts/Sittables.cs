@@ -46,23 +46,18 @@ public class Sittables : MonoBehaviour
         {
             clearTile = false;
             Vector3 bedOffset;
+            Vector3 otherPossibleTileBedOffset;
             if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
-                sittable.name.StartsWith("MedicBed"))
+                sittable.name.StartsWith("MedicBed")) //when making a horizontal bed, change otherPossibleTileBedOffset to -1.6, 0
             {
-                if(NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
-                {
-                    bedOffset = new Vector3(0, .4f);
-                    onBed = true;
-                }
-                else
-                {
-                    bedOffset = new Vector3(0, .45f);
-                    onBed = true;
-                }
+                bedOffset = new Vector3(0, .8f);
+                otherPossibleTileBedOffset = new Vector3(0, -1.6f);
+                onBed = true;
             }
             else
             {
                 bedOffset = Vector3.zero;
+                otherPossibleTileBedOffset = Vector3.zero;
                 onBed = false;
             }
 
@@ -89,20 +84,31 @@ public class Sittables : MonoBehaviour
                 return;
             }
 
-            Vector3 wantedTilePos = leaveVector + bedOffset + player.transform.position;
+            Vector3 wantedTilePos = leaveVector + bedOffset + sittable.transform.position;
             foreach (Transform tile in tiles.Find("Ground"))
             {
-                if (Vector2.Distance(tile.position, wantedTilePos) <= .01f)
+                if (tile.CompareTag("Digable"))
                 {
-                    if (tile.gameObject.CompareTag("Digable"))
+                    if (Vector2.Distance(tile.position, wantedTilePos) <= .1f)
                     {
                         clearTile = true;
                         goToTile = tile.gameObject;
-                    }
-                    else if (!tile.gameObject.CompareTag("Digable"))
-                    {
-                        clearTile = false;
                         break;
+                    }
+                }
+            }
+            if (!clearTile && onBed)
+            {
+                foreach(Transform tile in tiles.Find("Ground"))
+                {
+                    if (tile.CompareTag("Digable"))
+                    {
+                        if(Vector2.Distance(tile.position, wantedTilePos + otherPossibleTileBedOffset) <= .1f)
+                        {
+                            clearTile = true;
+                            goToTile = tile.gameObject;
+                            break;
+                        }
                     }
                 }
             }
@@ -115,6 +121,7 @@ public class Sittables : MonoBehaviour
     }
     public IEnumerator LeaveSittable()
     {
+        onSittable = false;
         ResetRates();
         
         player.GetComponent<PlayerAnimation>().enabled = true;
@@ -127,11 +134,11 @@ public class Sittables : MonoBehaviour
         }
         player.transform.position = goToTile.transform.position;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.GetComponent<PlayerCtrl>().enabled = true;
+        player.GetComponent<PlayerCtrl>().enabled = true;//dont remove ts line
+        player.GetComponent<PlayerCtrl>().canMove = true;
 
         sittable.GetComponent<BoxCollider2D>().enabled = true;
         sittable = null;
-        onSittable = false;
     }
     public IEnumerator ClimbSittable()
     {
@@ -158,7 +165,7 @@ public class Sittables : MonoBehaviour
         }
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        player.GetComponent<PlayerCtrl>().enabled = false;
+        player.GetComponent<PlayerCtrl>().canMove = false;
         if(sittable.GetComponent<WaypointData>() != null)
         {
             player.GetComponent<PlayerAnimation>().lookDir = sittable.GetComponent<WaypointData>().dir;

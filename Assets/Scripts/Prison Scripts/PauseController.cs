@@ -167,7 +167,7 @@ public class PauseController : MonoBehaviour
                 {
                     npc.GetComponent<VisitorNPCAnimation>().enabled = true;
                 }
-                else
+                else if(!npc.GetComponent<NPCCollectionData>().npcData.isDead || npc.GetComponent<NPCCollectionData>().npcData.isTied)
                 {
                     npc.GetComponent<NPCAnimation>().enabled = true;
                 }

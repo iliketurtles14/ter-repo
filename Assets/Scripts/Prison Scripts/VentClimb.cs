@@ -82,7 +82,7 @@ public class VentClimb : MonoBehaviour
                 }
             }
         }
-        else if (!HPAScript.isBusy && player.layer == 12) //when the player is in a vent
+        else if (!HPAScript.isBusy && !Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer)) //when the player is in a vent
         {
             if (mcs.isTouchingOpenVent)
             {                

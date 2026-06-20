@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5494193924481687301}
   - component: {fileID: 6583994315493892344}
   - component: {fileID: 8813258754161067754}
+  - component: {fileID: -5392578971919732060}
   m_Layer: 6
   m_Name: SSTree
-  m_TagString: Untagged
+  m_TagString: EscapeObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +139,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.8, y: 8}
   m_EdgeRadius: 0
+--- !u!114 &-5392578971919732060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7649661233908366611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d5c79811873b6478e3aef557b2eb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EscapeObjectHandler
+  objectivesCleared: 0

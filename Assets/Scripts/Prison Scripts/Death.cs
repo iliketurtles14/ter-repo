@@ -35,6 +35,7 @@ public class Death : MonoBehaviour
     }
     public void KillPlayer()
     {
+        player.GetComponent<PlayerCollectionData>().playerData.health = 0;
         player.GetComponent<HPAChecker>().isDead = true;
         player.GetComponent<PlayerCollectionData>().playerData.isDead = true;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -136,6 +137,7 @@ public class Death : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2);//waits for the animation to stop and for the game to allow the player to get off the bed
+        player.GetComponent<PlayerCollectionData>().playerData.isDead = false;
         player.GetComponent<PlayerCollectionData>().playerData.heat = 0;
         player.GetComponent<PlayerCollectionData>().playerData.energy -= 50;
         player.GetComponent<PlayerCollectionData>().playerData.health = Mathf.FloorToInt((player.GetComponent<PlayerCollectionData>().playerData.strength / 2) * .75f);
@@ -164,11 +166,11 @@ public class Death : MonoBehaviour
             {
                 if (npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
                 {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.25f, 0);
                 }
                 else
                 {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.2f, 0);
                 }
             }
         }
@@ -176,12 +178,39 @@ public class Death : MonoBehaviour
     }
     private IEnumerator NPCWake(GameObject npc)
     {
-        yield return new WaitForSeconds(11);
+        NPCCollectionData npcColData = npc.GetComponent<NPCCollectionData>();
+        float time = 0f;
+        while (time < 11f)
+        {
+            time += Time.deltaTime;
+
+            if (npcColData.npcData.isTied)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+        if (npcColData.npcData.isTied)
+        {
+            NPCAnimation anim = npc.GetComponent<NPCAnimation>();
+            anim.shouldUseNoLooks = true;
+            anim.enabled = true;
+
+            time = 0f;
+            while(time < 133f)
+            {
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
         npc.GetComponent<NPCCombat>().enabled = true;
         npc.GetComponent<AILerp>().enabled = true;
         npc.GetComponent<NPCAI>().enabled = true;
         npc.GetComponent<NPCCollectionData>().npcData.isDead = false;
         npc.GetComponent<NPCAnimation>().enabled = true;
         npc.GetComponent<NPCCollectionData>().npcData.health = Mathf.FloorToInt(npc.GetComponent<NPCCollectionData>().npcData.strength / 2f);
+        npc.GetComponent<NPCCollectionData>().npcData.isTied = false;
+        npc.GetComponent<NPCAnimation>().shouldUseNoLooks = false;
     }
 }

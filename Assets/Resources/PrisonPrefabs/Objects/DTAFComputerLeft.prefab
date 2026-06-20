@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 2203012758251578210}
   - component: {fileID: 708066264073879629}
   - component: {fileID: 760360095334524339}
+  - component: {fileID: 590251243572991366}
+  - component: {fileID: -4503243580756587764}
   m_Layer: 6
   m_Name: DTAFComputerLeft
-  m_TagString: Untagged
+  m_TagString: EscapeObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +140,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.8, y: 4.1}
   m_EdgeRadius: 0
+--- !u!114 &590251243572991366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054905500707598608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d5c79811873b6478e3aef557b2eb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EscapeObjectHandler
+  objectivesCleared: 0
+--- !u!114 &-4503243580756587764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054905500707598608}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4818dc777179344ba43673d8030097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DTAFComputerAnimation

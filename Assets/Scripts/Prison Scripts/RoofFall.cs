@@ -10,6 +10,13 @@ public class RoofFall : MonoBehaviour
     private PlayerFloorCollision floorCollisionScript;
     private Ziplines ziplinesScript;
     Vector3 offset;
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private int uiLayer;
+    private int ventCoverLayer;
 
     public void Start()
     {
@@ -22,38 +29,31 @@ public class RoofFall : MonoBehaviour
         floorCollisionScript = player.GetComponent<PlayerFloorCollision>();
         offset = new Vector3(0, 1.6f, 0);
 
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+        uiLayer = LayerMask.NameToLayer("UI");
+        ventCoverLayer = LayerMask.NameToLayer("VentCovers");
+
         StartCoroutine(Loop());
     }
     public IEnumerator Loop()
     {
         while (true)
         {
-            if(player.layer == 13 && !itemBehavioursScript.isRoping && !ziplinesScript.isZipping && false)
+            if(!Physics2D.GetIgnoreLayerCollision(playerLayer, roofLayer) && !itemBehavioursScript.isRoping && !ziplinesScript.isZipping && false)
             {
                 yield return new WaitForFixedUpdate();
                 if (floorCollisionScript.touchedRoofFloor == null)
                 {
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
-                    player.layer = 3;
                     player.GetComponent<SpriteRenderer>().sortingOrder = 6;
                     player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
                     tiles.Find("Roof").gameObject.SetActive(false);
                     tiles.Find("RoofObjects").gameObject.SetActive(false);
-                    foreach (Transform child in tiles.Find("GroundObjects"))
-                    {
-                        if (child.CompareTag("Item"))
-                        {
-                            child.GetComponent<BoxCollider2D>().enabled = true;
-                        }
-                    }
-                    mcs.EnableTag("Bars");
-                    mcs.EnableTag("Fence");
-                    mcs.EnableTag("ElectricFence");
-                    mcs.EnableTag("Digable");
-                    mcs.EnableTag("Wall");
-                    mcs.EnableTag("Ladder(Ground)");
-                    mcs.EnableTag("Desk");//currently the only menu
 
                     player.transform.position -= offset;
 

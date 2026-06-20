@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour
             if (mouseCollisionScript.touchedItem != null)
             {
                 Transform ItemTransform = mouseCollisionScript.touchedItem.transform;
-                if (Input.GetMouseButtonDown(1) && mouseCollisionScript.isTouchingItem == true && Vector2.Distance(PlayerTransform.position, ItemTransform.position) <= 2.4f && mouseCollisionScript.touchedItem.layer == Player.layer)
+                if (Input.GetMouseButtonDown(1) && mouseCollisionScript.isTouchingItem == true && Vector2.Distance(PlayerTransform.position, ItemTransform.position) <= 2.4f && !Physics2D.GetIgnoreLayerCollision(playerLayer, mouseCollisionScript.touchedItem.layer))
                 {
                     ItemCollectionData itemCollectionData = itemObject.GetComponent<ItemCollectionData>();
                     Add(itemCollectionData.itemData);
@@ -196,31 +196,31 @@ public class Inventory : MonoBehaviour
             return;
         } else if(slot2Image.sprite == ClearSprite)
         {
-            StartCoroutine(swellScript.Swell(slot1.gameObject));
+            StartCoroutine(swellScript.Swell(slot2.gameObject));
             slot2Image.sprite = itemData.sprite;
             inventory[1].itemData = itemData;
             return;
         } else if(slot3Image.sprite == ClearSprite)
         {
-            StartCoroutine(swellScript.Swell(slot1.gameObject));
+            StartCoroutine(swellScript.Swell(slot3.gameObject));
             slot3Image.sprite = itemData.sprite;
             inventory[2].itemData = itemData;
             return;
         } else if(slot4Image.sprite == ClearSprite)
         {
-            StartCoroutine(swellScript.Swell(slot1.gameObject));
+            StartCoroutine(swellScript.Swell(slot4.gameObject));
             slot4Image.sprite = itemData.sprite;
             inventory[3].itemData = itemData;
             return;
         } else if(slot5Image.sprite == ClearSprite)
         {
-            StartCoroutine(swellScript.Swell(slot1.gameObject));
+            StartCoroutine(swellScript.Swell(slot5.gameObject));
             slot5Image.sprite = itemData.sprite;
             inventory[4].itemData = itemData;
             return;
         } else if( slot6Image.sprite == ClearSprite)
         {
-            StartCoroutine(swellScript.Swell(slot1.gameObject));
+            StartCoroutine(swellScript.Swell(slot6.gameObject));
             slot6Image.sprite = itemData.sprite;
             inventory[5].itemData = itemData;
             return;

@@ -12,6 +12,7 @@ public class HoleClimb : MonoBehaviour
     private GameObject globalLight;
     private GameObject currentHole;
     private HPAChecker HPAScript;
+    private InventorySelection selectionScript;
     private int groundLayer;
     private int undergroundLayer;
     private int ventLayer;
@@ -27,6 +28,7 @@ public class HoleClimb : MonoBehaviour
         undergroundLight = RootObjectCache.GetRoot("UndergroundLight");
         globalLight = RootObjectCache.GetRoot("GlobalLight");
         HPAScript = player.GetComponent<HPAChecker>();
+        selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
 
         groundLayer = LayerMask.NameToLayer("Ground");
         undergroundLayer = LayerMask.NameToLayer("Underground");
@@ -55,7 +57,7 @@ public class HoleClimb : MonoBehaviour
             undergroundLight.transform.position = player.transform.position;
         }
 
-        if (!HPAScript.isBusy && mcs.isTouchingHoleDown)
+        if (!HPAScript.isBusy && mcs.isTouchingHoleDown && !selectionScript.aSlotSelected)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleDown.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)
@@ -64,7 +66,7 @@ public class HoleClimb : MonoBehaviour
                 StartCoroutine(ClimbDown());
             }
         }
-        else if(!HPAScript.isBusy && mcs.isTouchingHoleUp)
+        else if(!HPAScript.isBusy && mcs.isTouchingHoleUp && !selectionScript.aSlotSelected)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedHoleUp.transform.position);
             if (Input.GetMouseButtonDown(0) && distance <= 2.4f)

@@ -276,6 +276,10 @@ public class OutfitController : MonoBehaviour
         {
             currentActionNum = 11;
         }
+        else if ((name.StartsWith("Guard") || name.StartsWith("Inmate")) && GetComponent<NPCCollectionData>().npcData.isTied)
+        {
+            currentActionNum = 12;
+        }
         else if (itemBehavioursScript.isCutting && name == "Player")
         {
             currentActionNum = 4;

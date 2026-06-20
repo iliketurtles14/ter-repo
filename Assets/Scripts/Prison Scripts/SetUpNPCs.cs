@@ -180,6 +180,12 @@ public class SetUpNPCs : MonoBehaviour
             //set npc pos randomly
             rand = UnityEngine.Random.Range(0, waypoints.Count);
             npc.transform.position = waypoints[rand].position;
+
+            //other
+            if (npc.name.Contains("Guard"))
+            {
+                npc.transform.Find("IconCanvas").gameObject.SetActive(false);
+            }
         }
 
         //extra npc stuff

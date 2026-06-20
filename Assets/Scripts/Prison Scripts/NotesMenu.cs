@@ -11,17 +11,28 @@ public class NotesMenu : MonoBehaviour
     private Transform mc;
     private CraftMenu craftMenuScript;
     private ItemDataCreator creator;
+    private bool menuIsOpen;
+    private MouseCollisionOnItems mcs;
     private void Start()
     {
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         craftMenuScript = mc.Find("CraftMenuPanel").GetComponent<CraftMenu>();
         creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
+        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
 
         CloseMenu(false);
     }
+    private void Update()
+    {
+        if (menuIsOpen && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
+        {
+            CloseMenu(false);
+        }
+    }
     public void OpenMenu()
     {
+        menuIsOpen = true;
         LoadNotes();
         GetComponent<Image>().enabled = true;
         GetComponent<BoxCollider2D>().enabled = true;
@@ -33,6 +44,7 @@ public class NotesMenu : MonoBehaviour
     }
     public void CloseMenu(bool goToCraft)
     {
+        menuIsOpen = false;
         if (goToCraft)
         {
             craftMenuScript.OpenMenu();
@@ -47,17 +59,28 @@ public class NotesMenu : MonoBehaviour
         transform.Find("NotesScrollRect").gameObject.SetActive(false);
         transform.Find("NotesText").gameObject.SetActive(false);
         transform.Find("CraftingButton").gameObject.SetActive(false);
+        ClearNotes();
+    }
+    private void ClearNotes()
+    {
+        foreach(Transform note in transform.Find("NotesScrollRect").Find("Viewport").Find("Content"))
+        {
+            if(note.name != "PlaceholderNote")
+            {
+                Destroy(note.gameObject);
+            }
+        }
     }
     private void LoadNotes()
     {
-        string[] playerData;
+        string[] cNotes;
         try
         {
-            playerData = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "PlayerData.ini"));
+            cNotes = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "CraftingNotes.ini"));
         }
         catch { return; }
 
-        List<string> rawNotes = GetINISet("CraftingNotes", playerData);
+        List<string> rawNotes = GetINISet("CraftingNotes", cNotes);
         List<string> tempList = new List<string>();
         foreach(string line in rawNotes)
         {
@@ -92,13 +115,15 @@ public class NotesMenu : MonoBehaviour
             recipeStr = recipeStr.Substring(0, recipeStr.Length - 2);
             recipeStr += " (" + reqInt + " Int.)";
 
-            GameObject noteObj = Instantiate(transform.Find("NotesScrollRect").Find("ViewPort").Find("Content").Find("PlaceholderNote")).gameObject;
+            GameObject noteObj = Instantiate(transform.Find("NotesScrollRect").Find("Viewport").Find("Content").Find("PlaceholderNote")).gameObject;
             noteObj.SetActive(true);
             noteObj.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             noteObj.name = resultName + " Note";
             noteObj.transform.Find("Slot").Find("Item").GetComponent<Image>().sprite = resultSprite;
             noteObj.transform.Find("TextBoxes").Find("CraftedItemText").GetComponent<TextMeshProUGUI>().text = resultName;
             noteObj.transform.Find("TextBoxes").Find("RecipeText").GetComponent<TextMeshProUGUI>().text = recipeStr;
+            noteObj.transform.parent = transform.Find("NotesScrollRect").Find("Viewport").Find("Content");
+            noteObj.transform.localScale = new Vector3(1, 1, 1);
         }
     }
     public List<string> GetINISet(string header, string[] file)

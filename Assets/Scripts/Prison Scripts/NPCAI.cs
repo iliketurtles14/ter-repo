@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using Pathfinding;
 using System;
 using System.Collections;
@@ -26,6 +27,7 @@ public class NPCAI : MonoBehaviour
     public bool isInGym;
     public bool shouldReset;
     public bool isAtJob;
+    public bool isAtLockdown;
     private ApplyPrisonData applyPrisonDataScript;
     private List<Transform> positions = new List<Transform>(); //job positions (didnt change the name)
     private int timeBetweenPositions;
@@ -266,18 +268,18 @@ public class NPCAI : MonoBehaviour
         //get period
         period = scheduleScript.periodCode;
 
-        if (!isMoving && !isInCanteen && !isInGym && !isAtJob)
+        if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown)
         {
             currentWaypoint = null;
             SetCurrentPossibleWaypoints();
-            if (!isInCanteen && !isInGym && !isAtJob) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
+            if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
             {
                 SetCurrentWaypoint();
                 seeker.StartPath(transform.position, currentWaypoint.position);
                 isMoving = true;
             }
         }
-        else if (isMoving && !isInCanteen && !isInGym && !isAtJob)
+        else if (isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown)
         {
             try
             {
@@ -307,6 +309,10 @@ public class NPCAI : MonoBehaviour
         if(period != "W")
         {
             isAtJob = false;
+        }
+        if(period != "LD")
+        {
+            isAtLockdown = false;
         }
 
         if ((((period == "L" || period == "D" || period == "B" || period == "E" || period == "S" || period == "R") && npcType == "Guard") ||
@@ -354,6 +360,19 @@ public class NPCAI : MonoBehaviour
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
+                        }
+                        else if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
+                        {
+                            isFreeWalking = true;
+                            currentPossibleWaypoints.Add(waypoint);
+                        }
+                        break;
+                    case "LD":
+                        if(npcType == "Inmate")
+                        {
+                            isFreeWalking = false;
+                            isAtLockdown = true;
+                            StartCoroutine(InmateLockdown());
                         }
                         else if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
@@ -567,6 +586,79 @@ public class NPCAI : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
         canChangeDir = false;
+    }
+    private IEnumerator InmateLockdown()
+    {
+        Transform bed = GetComponent<NPCCollectionData>().npcData.bed.transform;
+        List<Vector3> surroundingTileVectors = new List<Vector3>();
+        if(bed.name == "BedVertical")
+        {
+            surroundingTileVectors.Add(new Vector3(1.6f, .8f));
+            surroundingTileVectors.Add(new Vector3(1.6f, -.8f));
+            surroundingTileVectors.Add(new Vector3(-1.6f, .8f));
+            surroundingTileVectors.Add(new Vector3(-1.6f, -.8f));
+        }
+        else if(bed.name == "BedHorizontal")
+        {
+            surroundingTileVectors.Add(new Vector3(.8f, 1.6f));
+            surroundingTileVectors.Add(new Vector3(-.8f, 1.6f));
+            surroundingTileVectors.Add(new Vector3(.8f, -1.6f));
+            surroundingTileVectors.Add(new Vector3(-.8f, -1.6f));
+        }
+
+        Vector2 goToVector = Vector2.zero;
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject checkerObj = new GameObject("CheckerObj");
+            checkerObj.AddComponent<BoxCollider2D>().size = new Vector2(.8f, .8f);
+            checkerObj.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            checkerObj.GetComponent<BoxCollider2D>().isTrigger = true;
+            checkerObj.layer = LayerMask.NameToLayer("Ground");
+            checkerObj.transform.position = bed.position + surroundingTileVectors[i];
+            yield return new WaitForFixedUpdate();
+
+            Collider2D checkerCollider = checkerObj.GetComponent<BoxCollider2D>();
+            List<Collider2D> hitColliders = new List<Collider2D>();
+            ContactFilter2D filter = ContactFilter2D.noFilter;
+            checkerCollider.Overlap(filter, hitColliders);
+            bool hitDigable = false;
+            foreach(Collider2D col in hitColliders)
+            {
+                if (col.CompareTag("Digable"))
+                {
+                    goToVector = col.transform.position;
+                    hitDigable = true;
+                    break;
+                }
+            }
+            if (hitDigable)
+            {
+                break;
+            }
+            else
+            {
+                Destroy(checkerObj);
+            }
+        }
+        if(goToVector == Vector2.zero)
+        {
+            yield break;
+        }
+        seeker.StartPath(transform.position, goToVector);
+        while (true)
+        {
+            float distance = Vector2.Distance(transform.position, goToVector);
+            if(distance < .01f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        seeker.CancelCurrentPathRequest(true);
+        transform.position = goToVector;
+        canChangeDir = false;
+        isMoving = false;
+        isFinishing = false;
     }
     private IEnumerator InmateExercise()
     {
@@ -813,7 +905,6 @@ public class NPCAI : MonoBehaviour
                             timer += Time.deltaTime;
                             yield return null;
                         }
-
                         GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
                         if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                         {
@@ -908,7 +999,6 @@ public class NPCAI : MonoBehaviour
                             timer += Time.deltaTime;
                             yield return null;
                         }
-
                         GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
                         if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                         {

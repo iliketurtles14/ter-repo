@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5629666405614219364}
   - component: {fileID: 7022291000908906306}
   - component: {fileID: 2369112919555686191}
+  - component: {fileID: 1766831602448267876}
   m_Layer: 6
   m_Name: ETTank
-  m_TagString: Untagged
+  m_TagString: EscapeObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +139,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1766831602448267876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671863186611691954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d5c79811873b6478e3aef557b2eb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EscapeObjectHandler
+  objectivesCleared: 0

@@ -49,7 +49,7 @@ public class NPCIDInv : MonoBehaviour
         if (!idIsOpen && !givingScript.menuIsOpen && !shopMenuScript.menuIsOpen)
         {
             currentNPC = null;
-            if(mcs.isTouchingNPC && Input.GetMouseButtonDown(1))
+            if(mcs.isTouchingNPC && Input.GetMouseButtonDown(1) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
                 currentNPC = mcs.touchedNPC;
                 OpenMenu();

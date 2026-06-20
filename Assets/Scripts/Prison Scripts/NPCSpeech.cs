@@ -125,6 +125,9 @@ public class NPCSpeech : MonoBehaviour
                     case "S":
                         messageType = "Shower";
                         break;
+                    case "LD":
+                        messageType = "Lockdown";
+                        break;
                 }
             }
             else if(name == "JobOfficer")

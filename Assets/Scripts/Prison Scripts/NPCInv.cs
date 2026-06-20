@@ -33,6 +33,7 @@ public class NPCInv : MonoBehaviour
     private MissionAsk missionAskScript;
     private SpecialMessages specialMessagesScript;
     private List<GameObject> currentAnimatingSlots = new List<GameObject>();
+    private InventorySelection selectionScript;
     public void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
@@ -46,6 +47,7 @@ public class NPCInv : MonoBehaviour
         npcInvMenu = mc.Find("NPCInvMenu");
         missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
         specialMessagesScript = ic.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
+        selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
 
         //make slot list
         foreach (Transform child in npcInvMenu.Find("ItemPanel"))
@@ -74,7 +76,7 @@ public class NPCInv : MonoBehaviour
             catch { }
         }
         
-        if (!menuIsOpen)
+        if (!menuIsOpen && !selectionScript.aSlotSelected)
         {
             npc = null;
             if(mcs.isTouchingNPC && mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)

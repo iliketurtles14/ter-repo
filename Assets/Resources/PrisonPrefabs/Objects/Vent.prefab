@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -8810816235785863312}
   - component: {fileID: -3103862438599683707}
   - component: {fileID: 4479089049268335406}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Vent
   m_TagString: VentCover
   m_Icon: {fileID: 0}

@@ -18,7 +18,7 @@ public class DeskPickUp : MonoBehaviour
     private Vector3 deskVector;
     private List<GameObject> touchedFloors = new List<GameObject>();
     private bool isBusy;
-
+    private PlayerCollectionData playerColData;
     private void Start()
     {
         deskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskInv>();
@@ -28,6 +28,7 @@ public class DeskPickUp : MonoBehaviour
         bodyControllerScript = player.GetComponent<BodyController>();
         deskStandScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<DeskStand>();
         HPAScript = player.GetComponent<HPAChecker>();
+        playerColData = player.GetComponent<PlayerCollectionData>();
 
         deskVector = new Vector3(0, .8f);
     }
@@ -66,27 +67,19 @@ public class DeskPickUp : MonoBehaviour
                 }
             }
         }
+        else if(isPickedUp && playerColData.playerData.isDead)
+        {
+            isPickedUp = false;
+            outfitControllerScript.deskIsPickedUp = false;
+            bodyControllerScript.deskIsPickedUp = false;
+            DropDesk(desk);
+        }
     }
     private void PickUpDesk(GameObject aDesk)
     {
         aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
         aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
         deskStandScript.isPickedUp = true;
-
-        //switch (NPCSave.instance.playerCharacter)
-        //{
-        //    case 1: playerAnimationScript.bodyDirSprites = applyScript.RabbitHoldingSprites; break;
-        //    case 2: playerAnimationScript.bodyDirSprites = applyScript.BaldEagleHoldingSprites; break;
-        //    case 3: playerAnimationScript.bodyDirSprites = applyScript.LiferHoldingSprites; break;
-        //    case 4: playerAnimationScript.bodyDirSprites = applyScript.YoungBuckHoldingSprites; break;
-        //    case 5: playerAnimationScript.bodyDirSprites = applyScript.OldTimerHoldingSprites; break;
-        //    case 6: playerAnimationScript.bodyDirSprites = applyScript.BillyGoatHoldingSprites; break;
-        //    case 7: playerAnimationScript.bodyDirSprites = applyScript.FrosephHoldingSprites; break;
-        //    case 8: playerAnimationScript.bodyDirSprites = applyScript.TangoHoldingSprites; break;
-        //    case 9: playerAnimationScript.bodyDirSprites = applyScript.MaruHoldingSprites; break;
-        //}
-        //playerAnimationScript.outfitDirSprites = applyScript.InmateOutfitHoldingSprites;
-
     }
     private void DropDesk(GameObject floor)
     {
@@ -94,20 +87,5 @@ public class DeskPickUp : MonoBehaviour
         desk.transform.position = floor.transform.position;
         desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
         deskStandScript.isPickedUp = false;
-
-        //switch (NPCSave.instance.playerCharacter)
-        //{
-        //    case 1: playerAnimationScript.bodyDirSprites = DataSender.instance.RabbitSprites; break;
-        //    case 2: playerAnimationScript.bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
-        //    case 3: playerAnimationScript.bodyDirSprites = DataSender.instance.LiferSprites; break;
-        //    case 4: playerAnimationScript.bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
-        //    case 5: playerAnimationScript.bodyDirSprites = DataSender.instance.OldTimerSprites; break;
-        //    case 6: playerAnimationScript.bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
-        //    case 7: playerAnimationScript.bodyDirSprites = DataSender.instance.FrosephSprites; break;
-        //    case 8: playerAnimationScript.bodyDirSprites = DataSender.instance.TangoSprites; break;
-        //    case 9: playerAnimationScript.bodyDirSprites = DataSender.instance.MaruSprites; break;
-        //}
-        //playerAnimationScript.outfitDirSprites = DataSender.instance.InmateOutfitSprites;
-
     }
 }

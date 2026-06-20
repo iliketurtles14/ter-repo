@@ -24,11 +24,20 @@ public class ItemBehaviours : MonoBehaviour
     private ItemData usedItemData;
     private GameObject InventoryCanvas;
     private HPAChecker HPAScript;
+    private ItemDataCreator creator;
+    private List<GameObject> invSlots = new List<GameObject>();
+    private int playerLayer;
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
     public int slotNumber;
     private int usedSlotNumber;
     private List<InventoryItem> inventoryList;
     private Inventory inventoryScript;
     private MouseCollisionOnItems mcs;
+    private GeneratorController genScript;
+    private Electrocution electrocutionScript;
     private GameObject barLine;
     private GameObject actionBarPanel;
     public bool barIsMoving;
@@ -87,6 +96,8 @@ public class ItemBehaviours : MonoBehaviour
     public bool isRoping;
     public void Start()
     {
+        electrocutionScript = GetComponent<Electrocution>();
+        genScript = GetComponent<GeneratorController>();
         selectionScript = GetComponent<InventorySelection>();
         holeClimbScript = GetComponent<HoleClimb>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
@@ -103,6 +114,18 @@ public class ItemBehaviours : MonoBehaviour
         emptyVentCover = Resources.Load<GameObject>("PrisonPrefabs/Objects/EmptyVentCover");
         player = RootObjectCache.GetRoot("Player").transform;
         particlesScript = GetComponent<Particles>();
+        creator = GetComponent<ItemDataCreator>();
+
+        playerLayer = LayerMask.NameToLayer("Player");
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Player");
+
+        foreach (Transform slot in InventoryCanvas.transform.Find("GUIPanel"))
+        {
+            invSlots.Add(slot.gameObject);
+        }
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
@@ -228,6 +251,29 @@ public class ItemBehaviours : MonoBehaviour
         {
             Deselect();
         }
+        //cutting electric fences
+        if(!isBusy && mcs.isTouchingElectricFence && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
+        {
+            float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedElectricFence.transform.position);
+            if(distance <= 2.4f)
+            {
+                if (!genScript.genIsOff)
+                {
+                    electrocutionScript.Electrocute();
+                    return;
+                }
+                whatAction = "cutting electric fence";
+                touchedTileObject = mcs.touchedElectricFence.gameObject;
+                isCutting = true;
+                StartCoroutine(DrawActionBar(true, true));
+                CreateActionText("Cutting");
+                Deselect();
+            }
+        }
+        else if(Input.GetMouseButtonDown(0) && barIsMoving && selectionScript.aSlotSelected)
+        {
+            Deselect();
+        }
         //cutting bars
         if(!isBusy && mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedCuttingItem && !barIsMoving)
         {
@@ -322,7 +368,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         
         //digging down holes
-        if(!isBusy && PlayerTransform.gameObject.layer == 3 && mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if(!isBusy && !Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer) && mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
             if(distance <= 2.4f)
@@ -360,7 +406,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //digging up holes
-        if (!isBusy && PlayerTransform.gameObject.layer == 11 && mcs.isTouchingEmptyDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if (!isBusy && !Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer) && mcs.isTouchingEmptyDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
             if (distance <= 2.4f)
@@ -405,7 +451,7 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //digging normally
-        if (!isBusy && PlayerTransform.gameObject.layer == 11 && mcs.isTouchingDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
+        if (!isBusy && !Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer) && mcs.isTouchingDirt && Input.GetMouseButtonDown(0) && selectedDiggingItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
             if (distance <= 2.4f)
@@ -480,7 +526,7 @@ public class ItemBehaviours : MonoBehaviour
 
         ///SPECIAL
         //timeber braces
-        if(selectionScript.aSlotSelected && selectedItemData.id == 140 && Input.GetMouseButtonDown(0) && mcs.isTouchingEmptyDirt && PlayerTransform.gameObject.layer == 11)
+        if (selectionScript.aSlotSelected && selectedItemData.id == 140 && Input.GetMouseButtonDown(0) && mcs.isTouchingEmptyDirt && !Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer))
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
             if(distance <= 2.4f)
@@ -1298,6 +1344,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
                 case "cutting fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
+                case "cutting electric fence": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
                 case "cutting bars": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower / 2); break;
                 case "unscrewing vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.ventBreakingPower); break;
                 case "cutting vent": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.cuttingPower); break;
@@ -1318,6 +1365,7 @@ public class ItemBehaviours : MonoBehaviour
         {
             case "chipping":
             case "cutting fence":
+            case "cutting electric fence":
             case "cutting bars":
             case "unscrewing vent":
             case "cutting vent":
@@ -1393,25 +1441,13 @@ public class ItemBehaviours : MonoBehaviour
             Destroy(touchedTileObject);
             GameObject emptyVentObj = Instantiate(emptyVentCover, ventPosition, ventRotation, tiles.Find("VentObjects"));
             emptyVentObj.GetComponent<SpriteRenderer>().sprite = emptyVentSprite;
-
-            if(PlayerTransform.gameObject.layer == 15)
+            if(!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
             {
-                //set transparency of vents
-                SpriteRenderer[] ventSpriteRenderers = tiles.Find("Vents").GetComponentsInChildren<SpriteRenderer>();
-                SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
-                foreach (SpriteRenderer sr in ventSpriteRenderers)
-                {
-                    Color color = sr.color;
-                    color.a = .75f;
-                    sr.color = color;
-                }
-                foreach (SpriteRenderer sr in ventObjectSpriteRenderers)
-                {
-                    Color color = sr.color;
-                    color.a = .75f;
-                    sr.color = color;
-                }
+                Color color = emptyVentObj.GetComponent<SpriteRenderer>().color;
+                color.a = .75f;
+                emptyVentObj.GetComponent<SpriteRenderer>().color = color;
             }
+
         }
         else if(whatAction == "unscrewing slats" || whatAction == "cutting slats")
         {
@@ -1439,8 +1475,8 @@ public class ItemBehaviours : MonoBehaviour
         {
             Vector3 tilePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion rotation = Quaternion.identity;
-            Destroy(touchedTileObject);
-            GameObject emptyTile = new GameObject();
+            touchedTileObject.GetComponent<BoxCollider2D>().enabled = false;
+            GameObject emptyTile = new GameObject("BrokenTile");
             emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
             emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "inFloor";
             emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
@@ -1451,11 +1487,170 @@ public class ItemBehaviours : MonoBehaviour
             emptyTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
             emptyTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
             emptyTile.AddComponent<NavMeshModifier>();
+            emptyTile.AddComponent<BrokenTileConnection>().connectedTile = touchedTileObject;
             emptyTile.tag = "Digable";
-            emptyTile.layer = 10;
-            emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
-            emptyTile.transform.parent = tiles.Find("Ground");
+            if(!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
+            {
+                emptyTile.layer = LayerMask.NameToLayer("Ground");
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                emptyTile.transform.parent = tiles.Find("Ground");
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer))
+            {
+                emptyTile.layer = LayerMask.NameToLayer("Underground");
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = -5;
+                emptyTile.transform.parent = tiles.Find("Underground");
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
+            {
+                emptyTile.layer = LayerMask.NameToLayer("Vents");
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                emptyTile.transform.parent = tiles.Find("Vents");
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, roofLayer))
+            {
+                emptyTile.layer = LayerMask.NameToLayer("Roof");
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                emptyTile.transform.parent = tiles.Find("Roof");
+            }
             emptyTile.transform.position = tilePosition;
+            Vector3 renderVector = new Vector3(0, 0, -1);
+            emptyTile.transform.position += renderVector;
+
+            if (touchedTileObject.GetComponent<TileCollectionData>().tileData.holeIsUnder)
+            {
+                emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileObject.GetComponent<TileCollectionData>().tileData.holeDurability;
+                if(emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability <= 0)
+                {
+                    emptyTile.GetComponent<BoxCollider2D>().enabled = false;
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.Contains("HoleDown"))
+                    {
+                        float distance = Vector2.Distance(obj.position, touchedTileObject.transform.position);
+                        if(distance < .01f)
+                        {
+                            obj.GetComponent<BoxCollider2D>().enabled = true;
+                            obj.GetComponent<SpriteRenderer>().enabled = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        AddBrokenTileItem();
+    }
+    private void AddBrokenTileItem()
+    {
+        bool shouldGoToFloor = true;
+        for(int i = 0; i < 6; i++)
+        {
+            if (inventoryList[i].itemData != null)
+            {
+                shouldGoToFloor = true;
+            }
+            else if (inventoryList[i].itemData == null)
+            {
+                shouldGoToFloor = false;
+                break;
+            }
+        }
+
+        int layer = 1;
+        switch (touchedTileObject.transform.parent.name)
+        {
+            case "Ground":
+            case "GroundObjects":
+                layer = 1;
+                break;
+            case "Underground":
+            case "UndergroundObjects":
+                layer = 0;
+                break;
+            case "Vents":
+            case "VentObjects":
+                layer = 2;
+                break;
+            case "Roof":
+            case "RoofObjects":
+                layer = 3;
+                break;
+        }
+
+        Vector2 pos = touchedTileObject.transform.position;
+
+        int id = -1;
+        switch (whatAction)
+        {
+            case "chipping":
+                id = 154;
+                break;
+            case "unscrewing vent":
+                id = 151;
+                break;
+            case "digging down":
+            case "digging up":
+            case "digging":
+                id = 123;
+                break;
+        }
+
+        if(id == -1)
+        {
+            return;
+        }
+
+        ItemData data = creator.CreateItemData(id);
+        if (shouldGoToFloor)
+        {
+            GameObject itemObj = Instantiate(data.prefab);
+            itemObj.transform.position = touchedTileObject.transform.position;
+            itemObj.GetComponent<ItemCollectionData>().itemData = data;
+            itemObj.GetComponent<SpriteRenderer>().sprite = data.sprite;
+            switch (layer)
+            {
+                case 0:
+                    itemObj.transform.parent = tiles.Find("UndergroundObjects");
+                    itemObj.layer = LayerMask.NameToLayer("Underground");
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                    break;
+                case 1:
+                    itemObj.transform.parent = tiles.Find("GroundObjects");
+                    itemObj.layer = LayerMask.NameToLayer("Ground");
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                    break;
+                case 2:
+                    itemObj.transform.parent = tiles.Find("VentObjects");
+                    itemObj.layer = LayerMask.NameToLayer("Vents");
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                    break;
+                case 3:
+                    itemObj.transform.parent = tiles.Find("RoofObjects");
+                    itemObj.layer = LayerMask.NameToLayer("Roof");
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                    break;
+            }
+        }
+        else
+        {
+            foreach(InventoryItem item in inventoryList)
+            {
+                if(item.itemData == null)
+                {
+                    item.itemData = data;
+                    break;
+                }
+            }
+            foreach(GameObject slot in invSlots)
+            {
+                if(slot.GetComponent<Image>().sprite == clearSprite)
+                {
+                    slot.GetComponent<Image>().sprite = data.sprite;
+                    break;
+                }
+            }
         }
     }
 }

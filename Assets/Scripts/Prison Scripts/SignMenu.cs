@@ -137,7 +137,7 @@ public class SignMenu : MonoBehaviour //the parent of this object is ScriptObjec
             CloseMenu(currentSignType);
         }
     }
-    private void OpenMenu(string signType, string header, string body)
+    public void OpenMenu(string signType, string header, string body)
     {
         GameObject signMenu = null;
         switch (signType)
@@ -153,6 +153,7 @@ public class SignMenu : MonoBehaviour //the parent of this object is ScriptObjec
         {
             return;
         }
+        currentSignType = signType;
         mc.Find("Black").GetComponent<Image>().enabled = true;
         signMenu.transform.Find("HeaderText").GetComponent<TextMeshProUGUI>().text = header;
         signMenu.transform.Find("BodyText").GetComponent<TextMeshProUGUI>().text = body;

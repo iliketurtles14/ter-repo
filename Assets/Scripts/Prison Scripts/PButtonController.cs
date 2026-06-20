@@ -18,6 +18,8 @@ public class PButtonController : MonoBehaviour
     private ToiletMenu toiletMenuScript;
     private PayphoneMenu payphoneMenuScript;
     private CreateNote createNoteScript;
+    private NotesMenu notesMenuScript;
+    private EscapeObjectController escapeObjectControllerScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -32,6 +34,8 @@ public class PButtonController : MonoBehaviour
         toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
         payphoneMenuScript = mc.Find("PayphoneMenuPanel").GetComponent<PayphoneMenu>();
         createNoteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
+        notesMenuScript = mc.Find("NotesMenuPanel").GetComponent<NotesMenu>();
+        escapeObjectControllerScript = GetComponent<EscapeObjectController>();
     }
     public void MissionYes()
     {
@@ -169,7 +173,11 @@ public class PButtonController : MonoBehaviour
     }
     public void CraftNotes()
     {
-        Debug.Log("go to notes");
+        craftMenuScript.CloseMenu(true);
+    }
+    public void NotesCraft()
+    {
+        notesMenuScript.CloseMenu(true);
     }
     public void ToiletFlush()
     {
@@ -237,5 +245,9 @@ public class PButtonController : MonoBehaviour
     public void NoteContinue()
     {
         createNoteScript.CloseWardenNote();
+    }
+    public void EscapeObjectContinue()
+    {
+        escapeObjectControllerScript.CloseMenu();
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4499915356518020319}
   - component: {fileID: 7918056391138649595}
   - component: {fileID: -8833484126390815793}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: EmptyVentCover
   m_TagString: OpenVent
   m_Icon: {fileID: 0}

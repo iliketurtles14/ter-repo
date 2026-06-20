@@ -58,7 +58,7 @@ public class DetectorController : MonoBehaviour
         {
             try
             {
-                if (item.itemData.isContraband)
+                if (item != null && item.itemData != null && item.itemData.isContraband)
                 {
                     hasContraband = true;
                     break;

@@ -33,6 +33,7 @@ public class CraftMenu : MonoBehaviour
     private PauseController pc;
     private Transform mc;
     private NotesMenu notesMenuScript;
+    private List<List<int>> normalRecipes = new List<List<int>>();
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -202,6 +203,23 @@ public class CraftMenu : MonoBehaviour
                 craftingRecipes.Add(ids);
             }
         }
+        string itemsFile = Resources.Load<TextAsset>("Items").text;
+        string[] itemsArr = itemsFile.Split('\n');
+        List<string> nrSet = GetINISet("Crafting Recipes", itemsArr);
+        foreach (string str in nrSet)
+        {
+            if (str.Contains('='))
+            {
+                string rawRecipe = str.Split('=')[0];
+                List<int> ids = new List<int>();
+                string[] idStrings = rawRecipe.Split('+');
+                foreach (string idString in idStrings)
+                {
+                    ids.Add(Convert.ToInt32(idString));
+                }
+                normalRecipes.Add(ids);
+            }
+        }
     }
     public void Craft()
     {
@@ -233,23 +251,36 @@ public class CraftMenu : MonoBehaviour
         }
 
         int i = 0;
-        bool matches = false;
+        bool matchesMap = false; //matches the recipes in the map
         foreach (List<int> lists in craftingRecipes)
         {
             bool same = currentIDs.OrderBy(x => x).SequenceEqual(lists.OrderBy(x => x));
             if (same)
             {
-                matches = true;
+                matchesMap = true;
+                break;
+            }
+            i++;
+        }
+        i = 0;
+        bool matchesOG = false; //matches the recipes in the original items file in the resources folder
+        foreach(List<int> lists in normalRecipes)
+        {
+            bool same = currentIDs.OrderBy(x => x).SequenceEqual(lists.OrderBy(x => x));
+            if (same)
+            {
+                matchesOG = true;
                 break;
             }
             i++;
         }
 
-        if (!matches)
+        if (!matchesMap)
         {
             Debug.Log("No crafting recipes match the given crafting input. Returning...");
             return;
         }
+        bool canAddToNotes = matchesMap && matchesOG;
 
         string rawResult = crSet[i].Split('=')[1];
         List<int> results = new List<int>();
@@ -291,7 +322,10 @@ public class CraftMenu : MonoBehaviour
             return;
         }
 
-        AddCraftNote(currentIDs, results, reqInt);
+        if (canAddToNotes)
+        {
+            AddCraftNote(currentIDs, results, reqInt);
+        }
         StartCoroutine(CraftMenuAnim());
 
         item0 = null;
@@ -313,20 +347,7 @@ public class CraftMenu : MonoBehaviour
     }
     public void AddCraftNote(List<int> ingredients, List<int> results, int intellect)
     {
-        string[] paths = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, "CraftingNotes"));
-        string cnPath = "";
-        foreach(string path in paths)
-        {
-            if(Path.GetFileNameWithoutExtension(path) == currentMap.fileName)
-            {
-                cnPath = path;
-                break;
-            }
-        }
-        if (string.IsNullOrEmpty(cnPath))
-        {
-            cnPath = Path.Combine(Application.streamingAssetsPath, "GlobalCraftingNotes.ini");
-        }
+        string cnPath = Path.Combine(Application.streamingAssetsPath, "CraftingNotes.ini");
 
         string cnFile = File.ReadAllText(cnPath);
 

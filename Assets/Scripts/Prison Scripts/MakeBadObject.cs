@@ -121,8 +121,8 @@ public class MakeBadObject : MonoBehaviour
         }
 
         //outside
-        if (player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor" &&
-            !Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
+        if (!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer) &&
+            player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
         {
             isOutside = true;
         }

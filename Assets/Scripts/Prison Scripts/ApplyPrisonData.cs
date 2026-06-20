@@ -592,6 +592,12 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("BlueSignMenuPanel").GetComponent<Image>().sprite = UISprites[529];
         mc.Find("WhiteSignMenuPanel").GetComponent<Image>().sprite = UISprites[530];
 
+        //escape object menu
+        mc.Find("EscapeObjectMenuPanel").GetComponent<Image>().sprite = UISprites[512];
+        spriteState = mc.Find("EscapeObjectMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[378];
+        mc.Find("EscapeObjectMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("EscapeObjectMenuPanel").Find("ContinueButton").GetComponent<Image>().sprite = UISprites[377];
         //payphone menu
         mc.Find("PayphoneMenuPanel").GetComponent<Image>().sprite = UISprites[267];
         mc.Find("PayphoneMenuPanel").Find("Tip1Button").GetComponent<Image>().sprite = UISprites[265];
@@ -620,6 +626,9 @@ public class ApplyPrisonData : MonoBehaviour
         spriteState = mc.Find("CraftMenuPanel").Find("CraftButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[411];
         mc.Find("CraftMenuPanel").Find("CraftButton").GetComponent<Button>().spriteState = spriteState;
+
+        //crafting ntoe slot
+        mc.Find("NotesMenuPanel").Find("NotesScrollRect").Find("Viewport").Find("Content").Find("PlaceholderNote").Find("Slot").Find("Backdrop").GetComponent<Image>().sprite = UISprites[33];
 
         //job menu
         mc.Find("JobMenuPanel").GetComponent<Image>().sprite = UISprites[65];

@@ -179,7 +179,7 @@ public class ApplyMapEditorData : MonoBehaviour
         }
         foreach(Transform obj in uic.Find("SecurityPanel"))
         {
-            if (obj.name != "SecurityText" && obj.name != "Spotlight")
+            if (obj.name != "SecurityText" && obj.name != "Spotlight" && obj.name != "Mines")
             {
                 obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
@@ -457,11 +457,17 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "AlcaBoat":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[251];
                     break;
+                case "Wall":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[349];
+                    break;
+                case "Concrete":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[282];
+                    break;
             }
         }
         foreach(Transform obj in uic.Find("SpecialPanel"))
         {
-            if(obj.name != "SpecialText")
+            if(obj.name != "SpecialText" && obj.name != "Raft")
             {
                 obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);

@@ -21,6 +21,10 @@ public class MouseOverlay : MonoBehaviour
     public Sprite mouseUp;
     public Sprite mouseDown;
     public Sprite mouseRed;
+
+    private int playerLayer;
+    private int ventLayer;
+    private int groundLayer;
     private void Start()
     {
         if(SceneManager.GetActiveScene().name != "Main Menu")
@@ -42,6 +46,9 @@ public class MouseOverlay : MonoBehaviour
         Cursor.visible = false;
         offset = new Vector2(20, -32);
 
+        playerLayer = LayerMask.NameToLayer("Player");
+        groundLayer = LayerMask.NameToLayer("Ground");
+        ventLayer = LayerMask.NameToLayer("Vents");
     }
     private void Update()
     {
@@ -67,7 +74,15 @@ public class MouseOverlay : MonoBehaviour
         else
         {
 
-            if (mcs.isTouchingHoleDown)
+            if (iss.aSlotSelected)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
+            }
+            else if (combatScript.inAttackMode)
+            {
+                MouseOverlayObject.GetComponent<Image>().sprite = mouseRed;
+            }
+            else if (mcs.isTouchingHoleDown)
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
             }
@@ -75,11 +90,11 @@ public class MouseOverlay : MonoBehaviour
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
             }
-            else if (mcs.isTouchingOpenVent && player.layer == 15)
+            else if (mcs.isTouchingOpenVent && !Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
             }
-            else if (mcs.isTouchingOpenVent && player.layer == 12)
+            else if (mcs.isTouchingOpenVent && !Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mouseDown;
             }
@@ -98,14 +113,6 @@ public class MouseOverlay : MonoBehaviour
             else if (mcs.isTouchingVentLadder && mcs.touchedVentLadder.name.StartsWith("LadderUp (Vent)"))
             {
                 MouseOverlayObject.GetComponent<Image>().sprite = mouseUp;
-            }
-            else if (iss.aSlotSelected)
-            {
-                MouseOverlayObject.GetComponent<Image>().sprite = mousePurple;
-            }
-            else if (combatScript.inAttackMode)
-            {
-                MouseOverlayObject.GetComponent<Image>().sprite = mouseRed;
             }
             else
             {

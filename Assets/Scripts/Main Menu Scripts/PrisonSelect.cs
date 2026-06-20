@@ -500,39 +500,6 @@ public class PrisonSelect : MonoBehaviour
             customPrisonGuardNums.Add(Convert.ToInt32(GetINIVar("Properties", "Guards", data)));
             customPrisonNames.Add(GetINIVar("Properties", "MapName", data).ToUpper());
             customPrisonNamesNormal.Add(GetINIVar("Properties", "MapName", data));
-
-            //crafting note stuff
-
-            if(File.Exists(Path.Combine(extractPath, "Items.ini")))
-            {
-                string[] items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
-                List<string> customCraftNotes = new List<string>();
-                foreach(string line in GetINISet("CraftingNotes", items))
-                {
-                    if (line.Contains('='))
-                    {
-                        customCraftNotes.Add(line);
-                    }
-                }
-                string[] normalItems = Resources.Load<TextAsset>("Items").text.Split('\n');
-                List<string> normalCraftNotes = new List<string>();
-                foreach(string line in GetINISet("CraftingNotes", normalItems))
-                {
-                    if (line.Contains('='))
-                    {
-                        normalCraftNotes.Add(line);
-                    }
-                }
-                if (normalCraftNotes != customCraftNotes)
-                {
-                    if(!File.Exists(Path.Combine(Application.streamingAssetsPath, "CraftingNotes", Path.GetFileNameWithoutExtension(customPrisonPaths[i]) + " Crafting Notes.ini")))
-                    {
-                        File.WriteAllText(Path.Combine(Application.streamingAssetsPath, "CraftingNotes", Path.GetFileNameWithoutExtension(customPrisonPaths[i]) + " Crafting Notes.ini"), "[CraftingNotes]\n");
-                    }
-                }
-
-                File.Delete(Path.Combine(extractPath, "Items.ini"));
-            }
         }
 
         if (!onlyCustom)

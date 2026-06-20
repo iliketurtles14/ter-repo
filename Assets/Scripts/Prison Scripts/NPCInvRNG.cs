@@ -44,6 +44,8 @@ public class NPCInvRNG : MonoBehaviour
                 SetGuardInv(npc.gameObject);
             }
         }
+
+        StartCoroutine(RNGLoop());
     }
     private IEnumerator RNGLoop()
     {

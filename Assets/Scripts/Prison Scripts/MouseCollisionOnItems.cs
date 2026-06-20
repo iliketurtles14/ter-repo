@@ -122,6 +122,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedGenerator;
     public bool isTouchingPayphone;
     public GameObject touchedPayphone;
+    public bool isTouchingEscapeObject;
+    public GameObject touchedEscapeObject;
+    public bool isTouchingPatchUp;
+    public GameObject touchedPatchUp;
     private void Start()
     {
         uiLayerNum = LayerMask.NameToLayer("UI");
@@ -167,9 +171,11 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "JobBoard",
             "TV",
             "Payphone",
+            "EscapeObject",
             "Generator",
             "Sign",
             "Toilet",
+            "PatchUp",
             "Stepladder",
             "Ladder(Roof)",
             "Ladder(Vent)",
@@ -187,6 +193,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "FoodTable",
             "Weed",
             "Spill",
+            "Slats",
             "Digable",
             "Dirt",
             "Rock",
@@ -197,7 +204,6 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Fence",
             "ElectricFence",
             "RoofLedge",
-            "Slats"
         };
 
         GameObject highestPriorityObject = null;
@@ -316,6 +322,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingPayphone = true;
                     touchedPayphone = highestPriorityObject;
                     break;
+                case "EscapeObject":
+                    isTouchingEscapeObject = true;
+                    touchedEscapeObject = highestPriorityObject;
+                    break;
                 case "Generator":
                     isTouchingGenerator = true;
                     touchedGenerator = highestPriorityObject;
@@ -327,6 +337,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Toilet":
                     isTouchingToilet = true;
                     touchedToilet = highestPriorityObject;
+                    break;
+                case "PatchUp":
+                    isTouchingPatchUp = true;
+                    touchedPatchUp = highestPriorityObject;
                     break;
                 case "Stepladder":
                     isTouchingStepladder = true;
@@ -587,5 +601,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedGenerator = null;
         isTouchingPayphone = false;
         touchedPayphone = null;
+        isTouchingEscapeObject = false;
+        touchedEscapeObject = null;
+        isTouchingPatchUp = false;
+        touchedPatchUp = null;
     }
 }
