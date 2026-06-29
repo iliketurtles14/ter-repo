@@ -41,6 +41,7 @@ public class MineSpawn : MonoBehaviour
             mine.layer = layer;
             mine.transform.parent = tiles.Find(parent);
             mine.transform.position = transform.position + mineOffsets[randInts[i]];
+            mine.transform.position -= new Vector3(.1f, .1f, 0); //its offset for some reason
         }
 
         string parentUp = "lmao";

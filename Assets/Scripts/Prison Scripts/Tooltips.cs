@@ -12,1800 +12,1841 @@ using UnityEngine.UI;
 
 public class Tooltips : MonoBehaviour
 {
-    private Transform PlayerTransform;
-    private GameObject InventoryCanvas;
-    private Map currentMap;
-    private GameObject menuCanvas;
-    private GameObject aStar;
-    private Transform TooltipPanelTransform;
-    private GameObject TooltipMid;
-    private GameObject TooltipSide;
-    private GameObject TooltipTextBox;
-    private bool isContraband;
-    private string toPrint;
-    private string printDurability;
-    private string printInmateName;
-    private int textWidth;
-    public bool showingTooltip;
-    public string tooltipType; //invItem, groundItem, deskItem, wall, 
-    private List<InventoryItem> inventoryList;
-    private List<DeskItem> deskInvList;
-    private List<IDItem> idInvList;
-    private List<NPCInvItem> npcInvList;
-    private List<ItemData> toiletInv;
-    private Inventory inventoryScript;
-    private DeskInv deskInvScript;
-    private MouseCollisionOnItems mcs;
-    private InventorySelection selectionScript;
-    private ItemBehaviours itemBehavioursScript;
-    private NPCIDInv npcIDInvScript;
-    private CraftMenu craftMenuScript;
-    private GameObject touchedInvSlot;
-    private bool isTouchingInvSlot;
-    private int invSlotNumber; //starts at 0
-    private int deskSlotNumber;
-    private int idSlotNumber;
-    private int npcInvSlotNumber;
-    private int npcShopSlotNumber;
-    private int toiletSlotNumber;
-    private ItemData craftItemData;
-    private bool isTouchingItem;
-    private GameObject touchedItem;
-    private float wallDistance;
-    private float fenceDistance;
-    private float electricFenceDistance;
-    private float barsDistance;
-    private float ventCoverDistance;
-    private float slatsDistance;
-    private float floorDistance;
-    private float emptyDirtDistance;
-    private float dirtDistance;
-    private float rockDistance;
-    private int printedInvSlotNumber;
-    private int printedDeskSlotNumber;
-    private int printedIDSlotNumber;
-    private int printedNPCInvSlotNumber;
-    private int printedShopSlotNumber;
-    private int printedToiletSlotNumber;
+	private Transform PlayerTransform;
+	private GameObject InventoryCanvas;
+	private Map currentMap;
+	private GameObject menuCanvas;
+	private GameObject aStar;
+	private Transform TooltipPanelTransform;
+	private GameObject TooltipMid;
+	private GameObject TooltipSide;
+	private GameObject TooltipTextBox;
+	private bool isContraband;
+	private string toPrint;
+	private string printDurability;
+	private string printInmateName;
+	private int textWidth;
+	public bool showingTooltip;
+	public string tooltipType; //invItem, groundItem, deskItem, wall, 
+	private List<InventoryItem> inventoryList;
+	private List<DeskItem> deskInvList;
+	private List<IDItem> idInvList;
+	private List<NPCInvItem> npcInvList;
+	private List<ItemData> toiletInv;
+	private Inventory inventoryScript;
+	private DeskInv deskInvScript;
+	private MouseCollisionOnItems mcs;
+	private InventorySelection selectionScript;
+	private ItemBehaviours itemBehavioursScript;
+	private NPCIDInv npcIDInvScript;
+	private CraftMenu craftMenuScript;
+	private GameObject touchedInvSlot;
+	private bool isTouchingInvSlot;
+	private int invSlotNumber; //starts at 0
+	private int deskSlotNumber;
+	private int idSlotNumber;
+	private int npcInvSlotNumber;
+	private int npcShopSlotNumber;
+	private int toiletSlotNumber;
+	private ItemData craftItemData;
+	private bool isTouchingItem;
+	private GameObject touchedItem;
+	private float wallDistance;
+	private float fenceDistance;
+	private float electricFenceDistance;
+	private float barsDistance;
+	private float ventCoverDistance;
+	private float slatsDistance;
+	private float floorDistance;
+	private float emptyDirtDistance;
+	private float dirtDistance;
+	private float rockDistance;
+	private int printedInvSlotNumber;
+	private int printedDeskSlotNumber;
+	private int printedIDSlotNumber;
+	private int printedNPCInvSlotNumber;
+	private int printedShopSlotNumber;
+	private int printedToiletSlotNumber;
 
-    private TileData printedTileData;
-    private int printedTileDurability;
-    private int printedItemDurability;
-    private string changeType;
-    private GameObject currentTouchedItem;
-    private bool isScrewingVent;
-    private bool isScrewingSlats;
-    private GameObject deskMenu;
-    private Sprite clearSprite;
-    private List<IDItem> currentIDList;
-    private NPCInv npcInvScript;
-    private Giving givingScript;
-    private ShopMenu shopMenuScript;
-    private ToiletMenu toiletMenuScript;
-    public void Start()
-    {
-        PlayerTransform = RootObjectCache.GetRoot("Player").transform;
-        InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
-        menuCanvas = RootObjectCache.GetRoot("MenuCanvas");
-        aStar = RootObjectCache.GetRoot("A*");
-        TooltipMid = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipMid");
-        TooltipSide = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipSide");
-        TooltipTextBox = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipText");
-        inventoryScript = GetComponent<Inventory>();
-        mcs = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
-        selectionScript = GetComponent<InventorySelection>();
-        itemBehavioursScript = GetComponent<ItemBehaviours>();
-        deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;
-        deskInvScript = deskMenu.GetComponent<DeskInv>();
-        clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
-        npcIDInvScript = menuCanvas.transform.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
-        npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
-        givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
-        shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
-        craftMenuScript = menuCanvas.transform.Find("CraftMenuPanel").GetComponent<CraftMenu>();
-        toiletMenuScript = menuCanvas.transform.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
-        StartCoroutine(StartWait());
-    }
-    private IEnumerator StartWait()
-    {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        currentMap = GetComponent<LoadPrison>().currentMap;
-    }
-    public void Update()
-    {
-        //update these vars
-        inventoryList = inventoryScript.inventory;
-        idInvList = menuCanvas.transform.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv;
-        touchedInvSlot = mcs.touchedInvSlot;
-        isTouchingInvSlot = mcs.isTouchingInvSlot;
-        isTouchingItem = mcs.isTouchingItem;
-        touchedItem = mcs.touchedItem;
-        deskInvList = deskInvScript.deskInv;
+	private TileData printedTileData;
+	private int printedTileDurability;
+	private int printedItemDurability;
+	private string changeType;
+	private GameObject currentTouchedItem;
+	private bool isScrewingVent;
+	private bool isScrewingSlats;
+	private GameObject deskMenu;
+	private Sprite clearSprite;
+	private List<IDItem> currentIDList;
+	private NPCInv npcInvScript;
+	private Giving givingScript;
+	private ShopMenu shopMenuScript;
+	private ToiletMenu toiletMenuScript;
+	public void Start()
+	{
+		PlayerTransform = RootObjectCache.GetRoot("Player").transform;
+		InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+		menuCanvas = RootObjectCache.GetRoot("MenuCanvas");
+		aStar = RootObjectCache.GetRoot("A*");
+		TooltipMid = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipMid");
+		TooltipSide = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipSide");
+		TooltipTextBox = Resources.Load<GameObject>("PrisonResources/UI Stuff/TooltipText");
+		inventoryScript = GetComponent<Inventory>();
+		mcs = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+		selectionScript = GetComponent<InventorySelection>();
+		itemBehavioursScript = GetComponent<ItemBehaviours>();
+		deskMenu = menuCanvas.transform.Find("DeskMenuPanel").gameObject;
+		deskInvScript = deskMenu.GetComponent<DeskInv>();
+		clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
+		npcIDInvScript = menuCanvas.transform.Find("NPCMenuPanel").GetComponent<NPCIDInv>();
+		npcInvScript = menuCanvas.transform.Find("NPCInvMenu").GetComponent<NPCInv>();
+		givingScript = menuCanvas.transform.Find("NPCGiveMenuPanel").GetComponent<Giving>();
+		shopMenuScript = menuCanvas.transform.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
+		craftMenuScript = menuCanvas.transform.Find("CraftMenuPanel").GetComponent<CraftMenu>();
+		toiletMenuScript = menuCanvas.transform.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
+		StartCoroutine(StartWait());
+	}
+	private IEnumerator StartWait()
+	{
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
+		currentMap = GetComponent<LoadPrison>().currentMap;
+	}
+	public void Update()
+	{
+		//update these vars
+		inventoryList = inventoryScript.inventory;
+		idInvList = menuCanvas.transform.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv;
+		touchedInvSlot = mcs.touchedInvSlot;
+		isTouchingInvSlot = mcs.isTouchingInvSlot;
+		isTouchingItem = mcs.isTouchingItem;
+		touchedItem = mcs.touchedItem;
+		deskInvList = deskInvScript.deskInv;
 
-        ///ITEMS
-        //for inventory items
-        if (isTouchingInvSlot)
-        {
-            switch (touchedInvSlot.name)
-            {
-                case "Slot1": invSlotNumber = 0; break;
-                case "Slot2": invSlotNumber = 1; break;
-                case "Slot3": invSlotNumber = 2; break;
-                case "Slot4": invSlotNumber = 3; break;
-                case "Slot5": invSlotNumber = 4; break;
-                case "Slot6": invSlotNumber = 5; break;
-                default: break;
-            }
-        } else if (!isTouchingInvSlot) { invSlotNumber = -1; }
+		///ITEMS
+		//for inventory items
+		if (isTouchingInvSlot)
+		{
+			switch (touchedInvSlot.name)
+			{
+				case "Slot1": invSlotNumber = 0; break;
+				case "Slot2": invSlotNumber = 1; break;
+				case "Slot3": invSlotNumber = 2; break;
+				case "Slot4": invSlotNumber = 3; break;
+				case "Slot5": invSlotNumber = 4; break;
+				case "Slot6": invSlotNumber = 5; break;
+				default: break;
+			}
+		} else if (!isTouchingInvSlot) { invSlotNumber = -1; }
 
-        if (isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && !showingTooltip)
-        {
-            if (inventoryList[invSlotNumber].itemData.durability != -1)
-            {
-                printedInvSlotNumber = invSlotNumber;
-                toPrint = inventoryList[invSlotNumber].itemData.displayName;
-                printedItemDurability = inventoryList[invSlotNumber].itemData.currentDurability;
-                printDurability = " (" + inventoryList[invSlotNumber].itemData.currentDurability + "%)";
-            }
-            else if (inventoryList[invSlotNumber].itemData.durability == -1)
-            {
-                printedInvSlotNumber = invSlotNumber;
-                toPrint = inventoryList[invSlotNumber].itemData.displayName;
-                printDurability = "";
-            }
-            if (inventoryList[invSlotNumber].itemData.inmateGiveName != null)
-            {
-                printInmateName = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s ";
-                tooltipType = "invItem";
-                isContraband = inventoryList[invSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
-            }
-            else
-            {
-                printInmateName = "'s ";
-                tooltipType = "invItem";
-                isContraband = inventoryList[invSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-            }
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "invItem" && !isTouchingInvSlot))
-        {
-            DestroyTooltip();
-            return;
-        } 
-        else if ((showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.currentDurability != inventoryList[printedInvSlotNumber].itemData.currentDurability) ||
-            (showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingInvSlot && showingTooltip && inventoryList[invSlotNumber].itemData.currentDurability != printedItemDurability)
-        {
-            changeType = "invItemDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        //for desk items
-        if (mcs.isTouchingDeskSlot)
-        {
-            for (int i = 1; i <= 20; i++)
-            {
-                if (mcs.touchedDeskSlot.name == "Slot" + i)
-                {
-                    deskSlotNumber = i - 1;
-                    break;
-                }
-            }
-        }
-        if(mcs.isTouchingDeskSlot && mcs.touchedDeskSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            if (deskInvList[deskSlotNumber].itemData.durability != -1)
-            {
-                printedDeskSlotNumber = deskSlotNumber;
-                toPrint = deskInvList[deskSlotNumber].itemData.displayName;
-                printedItemDurability = deskInvList[deskSlotNumber].itemData.currentDurability;
-                printDurability = " (" + deskInvList[deskSlotNumber].itemData.currentDurability + "%)";
-            }
-            else if (deskInvList[deskSlotNumber].itemData.durability == -1)
-            {
-                printedDeskSlotNumber = deskSlotNumber;
-                toPrint = deskInvList[deskSlotNumber].itemData.displayName;
-                printDurability = "";
-            }
-            if (deskInvList[deskSlotNumber].itemData.inmateGiveName != null)
-            {
-                printInmateName = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s ";
-                tooltipType = "deskItem";
-                isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
-            }
-            else
-            {
-                printInmateName = "'s ";
-                tooltipType = "deskItem";
-                isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-            }
-            return;
-        }
-        else if(showingTooltip && tooltipType == "deskItem" && !mcs.isTouchingDeskSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.currentDurability != deskInvList[printedDeskSlotNumber].itemData.currentDurability) ||
-            (showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(mcs.isTouchingDeskSlot && showingTooltip && deskInvList[deskSlotNumber].itemData == null)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //for ID items
-        if (mcs.isTouchingIDSlot)
-        {
-            if (mcs.touchedIDSlot.transform.parent.name == "NPCMenuPanel")
-            {
-                IDItem outfitItem = new IDItem();
-                outfitItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData;
-                IDItem weaponItem = new IDItem();
-                weaponItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[6].itemData;
-                currentIDList = new List<IDItem>()
-                {
-                    outfitItem, weaponItem
-                };
-            }
-            else
-            {
-                currentIDList = idInvList;
-            }
-            if (mcs.touchedIDSlot.name == "Outfit")
-            {
-                idSlotNumber = 0;
-            }
-            else if (mcs.touchedIDSlot.name == "Weapon")
-            {
-                idSlotNumber = 1;
-            }
-            else
-            {
-                idSlotNumber = -1;
-            }
-        }
-        if (mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData != null && !showingTooltip)
-        {
-            if (currentIDList[idSlotNumber].itemData.durability != -1)
-            {
-                printedIDSlotNumber = idSlotNumber;
-                toPrint = currentIDList[idSlotNumber].itemData.displayName;
-                printedItemDurability = currentIDList[idSlotNumber].itemData.currentDurability;
-                printDurability = " (" + currentIDList[idSlotNumber].itemData.currentDurability + "%)";
-            }
-            else if (currentIDList[idSlotNumber].itemData.durability == -1)
-            {
-                printedIDSlotNumber = idSlotNumber;
-                toPrint = currentIDList[idSlotNumber].itemData.displayName;
-                printDurability = "";
-            }
-            tooltipType = "idItem";
-            isContraband = currentIDList[idSlotNumber].itemData.isContraband;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "idItem" && !mcs.isTouchingIDSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.currentDurability != currentIDList[printedIDSlotNumber].itemData.currentDurability))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (mcs.isTouchingIDSlot && showingTooltip && currentIDList[idSlotNumber].itemData == null)
-        {
-            DestroyTooltip();
-            return;
-        }
+		if (isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && !showingTooltip)
+		{
+			if (inventoryList[invSlotNumber].itemData.durability != -1)
+			{
+				printedInvSlotNumber = invSlotNumber;
+				toPrint = inventoryList[invSlotNumber].itemData.displayName;
+				printedItemDurability = inventoryList[invSlotNumber].itemData.currentDurability;
+				printDurability = " (" + inventoryList[invSlotNumber].itemData.currentDurability + "%)";
+			}
+			else if (inventoryList[invSlotNumber].itemData.durability == -1)
+			{
+				printedInvSlotNumber = invSlotNumber;
+				toPrint = inventoryList[invSlotNumber].itemData.displayName;
+				printDurability = "";
+			}
+			if (inventoryList[invSlotNumber].itemData.inmateGiveName != null)
+			{
+				printInmateName = inventoryList[invSlotNumber].itemData.inmateGiveName + "'s ";
+				tooltipType = "invItem";
+				isContraband = inventoryList[invSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
+			}
+			else
+			{
+				printInmateName = "'s ";
+				tooltipType = "invItem";
+				isContraband = inventoryList[invSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+			}
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "invItem" && !isTouchingInvSlot))
+		{
+			DestroyTooltip();
+			return;
+		} 
+		else if ((showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData == null) ||
+			(showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.displayName != toPrint) ||
+			(showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.currentDurability != inventoryList[printedInvSlotNumber].itemData.currentDurability) ||
+			(showingTooltip && tooltipType == "invItem" && isTouchingInvSlot && inventoryList[invSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingInvSlot && showingTooltip && inventoryList[invSlotNumber].itemData.currentDurability != printedItemDurability)
+		{
+			changeType = "invItemDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		//for desk items
+		if (mcs.isTouchingDeskSlot)
+		{
+			for (int i = 1; i <= 20; i++)
+			{
+				if (mcs.touchedDeskSlot.name == "Slot" + i)
+				{
+					deskSlotNumber = i - 1;
+					break;
+				}
+			}
+		}
+		if(mcs.isTouchingDeskSlot && mcs.touchedDeskSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			if (deskInvList[deskSlotNumber].itemData.durability != -1)
+			{
+				printedDeskSlotNumber = deskSlotNumber;
+				toPrint = deskInvList[deskSlotNumber].itemData.displayName;
+				printedItemDurability = deskInvList[deskSlotNumber].itemData.currentDurability;
+				printDurability = " (" + deskInvList[deskSlotNumber].itemData.currentDurability + "%)";
+			}
+			else if (deskInvList[deskSlotNumber].itemData.durability == -1)
+			{
+				printedDeskSlotNumber = deskSlotNumber;
+				toPrint = deskInvList[deskSlotNumber].itemData.displayName;
+				printDurability = "";
+			}
+			if (deskInvList[deskSlotNumber].itemData.inmateGiveName != null)
+			{
+				printInmateName = deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s ";
+				tooltipType = "deskItem";
+				isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
+			}
+			else
+			{
+				printInmateName = "'s ";
+				tooltipType = "deskItem";
+				isContraband = deskInvList[deskSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+			}
+			return;
+		}
+		else if(showingTooltip && tooltipType == "deskItem" && !mcs.isTouchingDeskSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData == null) ||
+			(showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.displayName != toPrint) ||
+			(showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.currentDurability != deskInvList[printedDeskSlotNumber].itemData.currentDurability) ||
+			(showingTooltip && tooltipType == "deskItem" && mcs.isTouchingDeskSlot && deskInvList[deskSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(mcs.isTouchingDeskSlot && showingTooltip && deskInvList[deskSlotNumber].itemData == null)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//for ID items
+		if (mcs.isTouchingIDSlot)
+		{
+			if (mcs.touchedIDSlot.transform.parent.name == "NPCMenuPanel")
+			{
+				IDItem outfitItem = new IDItem();
+				outfitItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData;
+				IDItem weaponItem = new IDItem();
+				weaponItem.itemData = npcIDInvScript.currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[6].itemData;
+				currentIDList = new List<IDItem>()
+				{
+					outfitItem, weaponItem
+				};
+			}
+			else
+			{
+				currentIDList = idInvList;
+			}
+			if (mcs.touchedIDSlot.name == "Outfit")
+			{
+				idSlotNumber = 0;
+			}
+			else if (mcs.touchedIDSlot.name == "Weapon")
+			{
+				idSlotNumber = 1;
+			}
+			else
+			{
+				idSlotNumber = -1;
+			}
+		}
+		if (mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData != null && !showingTooltip)
+		{
+			if (currentIDList[idSlotNumber].itemData.durability != -1)
+			{
+				printedIDSlotNumber = idSlotNumber;
+				toPrint = currentIDList[idSlotNumber].itemData.displayName;
+				printedItemDurability = currentIDList[idSlotNumber].itemData.currentDurability;
+				printDurability = " (" + currentIDList[idSlotNumber].itemData.currentDurability + "%)";
+			}
+			else if (currentIDList[idSlotNumber].itemData.durability == -1)
+			{
+				printedIDSlotNumber = idSlotNumber;
+				toPrint = currentIDList[idSlotNumber].itemData.displayName;
+				printDurability = "";
+			}
+			tooltipType = "idItem";
+			isContraband = currentIDList[idSlotNumber].itemData.isContraband;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "idItem" && !mcs.isTouchingIDSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData == null) ||
+			(showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.displayName != toPrint) ||
+			(showingTooltip && tooltipType == "idItem" && mcs.isTouchingIDSlot && currentIDList[idSlotNumber].itemData.currentDurability != currentIDList[printedIDSlotNumber].itemData.currentDurability))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (mcs.isTouchingIDSlot && showingTooltip && currentIDList[idSlotNumber].itemData == null)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //for npcInv items
-        if (mcs.isTouchingNPCInvSlot)
-        {
-            npcInvList = npcInvScript.npc.GetComponent<NPCCollectionData>().npcData.inventory;
-            for(int i = 1; i <= 6; i++)
-            {
-                if(mcs.touchedNPCInvSlot.name == "Slot" + i)
-                {
-                    npcInvSlotNumber = i - 1;
-                    break;
-                }
-            }
-            if(mcs.touchedNPCInvSlot.name == "Outfit")
-            {
-                npcInvSlotNumber = 7;
-            }
-            else if(mcs.touchedNPCInvSlot.name == "Weapon")
-            {
-                npcInvSlotNumber = 6;
-            }
-        }
-        if(mcs.isTouchingNPCInvSlot && mcs.touchedNPCInvSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            if (npcInvList[npcInvSlotNumber].itemData.durability != -1)
-            {
-                printedNPCInvSlotNumber = npcInvSlotNumber;
-                toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
-                printedItemDurability = npcInvList[npcInvSlotNumber].itemData.currentDurability;
-                printDurability = " (" + npcInvList[npcInvSlotNumber].itemData.currentDurability + "%)";
-            }
-            else if (npcInvList[npcInvSlotNumber].itemData.durability == -1)
-            {
-                printedNPCInvSlotNumber = npcInvSlotNumber;
-                toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
-                printDurability = "";
-            }
-            if (npcInvList[npcInvSlotNumber].itemData.inmateGiveName != null)
-            {
-                printInmateName = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s ";
-                tooltipType = "npcItem";
-                isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
-            }
-            else
-            {
-                printInmateName = "'s ";
-                tooltipType = "npcItem";
-                isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-            }
-            return;
-        }
-        else if(showingTooltip && tooltipType == "npcItem" && !mcs.isTouchingNPCInvSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability) ||
-            (showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(mcs.isTouchingNPCInvSlot && showingTooltip && npcInvList[npcInvSlotNumber].itemData == null)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//for npcInv items
+		if (mcs.isTouchingNPCInvSlot)
+		{
+			npcInvList = npcInvScript.npc.GetComponent<NPCCollectionData>().npcData.inventory;
+			for(int i = 1; i <= 6; i++)
+			{
+				if(mcs.touchedNPCInvSlot.name == "Slot" + i)
+				{
+					npcInvSlotNumber = i - 1;
+					break;
+				}
+			}
+			if(mcs.touchedNPCInvSlot.name == "Outfit")
+			{
+				npcInvSlotNumber = 7;
+			}
+			else if(mcs.touchedNPCInvSlot.name == "Weapon")
+			{
+				npcInvSlotNumber = 6;
+			}
+		}
+		if(mcs.isTouchingNPCInvSlot && mcs.touchedNPCInvSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			if (npcInvList[npcInvSlotNumber].itemData.durability != -1)
+			{
+				printedNPCInvSlotNumber = npcInvSlotNumber;
+				toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
+				printedItemDurability = npcInvList[npcInvSlotNumber].itemData.currentDurability;
+				printDurability = " (" + npcInvList[npcInvSlotNumber].itemData.currentDurability + "%)";
+			}
+			else if (npcInvList[npcInvSlotNumber].itemData.durability == -1)
+			{
+				printedNPCInvSlotNumber = npcInvSlotNumber;
+				toPrint = npcInvList[npcInvSlotNumber].itemData.displayName;
+				printDurability = "";
+			}
+			if (npcInvList[npcInvSlotNumber].itemData.inmateGiveName != null)
+			{
+				printInmateName = npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s ";
+				tooltipType = "npcItem";
+				isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
+			}
+			else
+			{
+				printInmateName = "'s ";
+				tooltipType = "npcItem";
+				isContraband = npcInvList[npcInvSlotNumber].itemData.isContraband;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+			}
+			return;
+		}
+		else if(showingTooltip && tooltipType == "npcItem" && !mcs.isTouchingNPCInvSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData == null) ||
+			(showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.displayName != toPrint) ||
+			(showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.currentDurability != npcInvList[printedNPCInvSlotNumber].itemData.currentDurability) ||
+			(showingTooltip && tooltipType == "npcItem" && mcs.isTouchingNPCInvSlot && npcInvList[npcInvSlotNumber].itemData.inmateGiveName + "'s " != printInmateName))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(mcs.isTouchingNPCInvSlot && showingTooltip && npcInvList[npcInvSlotNumber].itemData == null)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //for shop items
-        if (mcs.isTouchingShopSlot)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                if (mcs.touchedShopSlot.transform.parent.name == "Slot" + i)
-                {
-                    npcShopSlotNumber = i;
-                    break;
-                }
-            }
-        }
-        if(mcs.isTouchingShopSlot && mcs.touchedShopSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability != -1)
-            {
-                printedShopSlotNumber = npcShopSlotNumber;
-                toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
-                printedItemDurability = shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability;
-                printDurability = " (" + shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability + "%)";
-            }
-            else if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability == -1)
-            {
-                printedShopSlotNumber = npcShopSlotNumber;
-                toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
-                printDurability = "";
-            }
-            tooltipType = "shopItem";
-            isContraband = shopMenuScript.shopItems[npcShopSlotNumber].itemData.isContraband;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "shopItem" && !mcs.isTouchingShopSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null) ||
-            (showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName != toPrint) ||
-            (showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability != shopMenuScript.shopItems[printedShopSlotNumber].itemData.currentDurability))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(mcs.isTouchingShopSlot && showingTooltip && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//for shop items
+		if (mcs.isTouchingShopSlot)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (mcs.touchedShopSlot.transform.parent.name == "Slot" + i)
+				{
+					npcShopSlotNumber = i;
+					break;
+				}
+			}
+		}
+		if(mcs.isTouchingShopSlot && mcs.touchedShopSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability != -1)
+			{
+				printedShopSlotNumber = npcShopSlotNumber;
+				toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
+				printedItemDurability = shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability;
+				printDurability = " (" + shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability + "%)";
+			}
+			else if (shopMenuScript.shopItems[npcShopSlotNumber].itemData.durability == -1)
+			{
+				printedShopSlotNumber = npcShopSlotNumber;
+				toPrint = shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName;
+				printDurability = "";
+			}
+			tooltipType = "shopItem";
+			isContraband = shopMenuScript.shopItems[npcShopSlotNumber].itemData.isContraband;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "shopItem" && !mcs.isTouchingShopSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null) ||
+			(showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.displayName != toPrint) ||
+			(showingTooltip && tooltipType == "shopItem" && mcs.isTouchingShopSlot && shopMenuScript.shopItems[npcShopSlotNumber].itemData.currentDurability != shopMenuScript.shopItems[printedShopSlotNumber].itemData.currentDurability))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(mcs.isTouchingShopSlot && showingTooltip && shopMenuScript.shopItems[npcShopSlotNumber].itemData == null)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //for give items
-        if (mcs.isTouchingGiveSlot && mcs.touchedGiveSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            if (givingScript.item.itemData.durability != -1)
-            {
-                toPrint = givingScript.item.itemData.displayName;
-                printedItemDurability = givingScript.item.itemData.currentDurability;
-                printDurability = " (" + givingScript.item.itemData.currentDurability + "%)";
-            }
-            else if (givingScript.item.itemData.durability == -1)
-            {
-                toPrint = givingScript.item.itemData.displayName;
-                printDurability = "";
-            }
-            if (givingScript.item.itemData.inmateGiveName != null)
-            {
-                printInmateName = givingScript.item.itemData.inmateGiveName + "'s ";
-                tooltipType = "giveItem";
-                isContraband = givingScript.item.itemData.isContraband;
-                StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
-            }
-            else
-            {
-                printInmateName = "'s ";
-                tooltipType = "giveItem";
-                isContraband = givingScript.item.itemData.isContraband;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-            }
-            return;
-        }
-        else if (showingTooltip && tooltipType == "giveItem" && !mcs.isTouchingGiveSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData == null) ||
-            (showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData.displayName != toPrint)) //DONT USE THIS AS A TEMPLATE. USE NCPINVSLOTS
-        {
-            DestroyTooltip();
-            return;
-        }
-        //for craft items (DONT USE THIS AS AN EXAMPLE)
-        if (mcs.isTouchingCraftSlot)
-        {
-            switch (mcs.touchedCraftSlot.name)
-            {
-                case "Item0":
-                    craftItemData = craftMenuScript.item0;
-                    break;
-                case "Item1":
-                    craftItemData = craftMenuScript.item1;
-                    break;
-                case "Item2":
-                    craftItemData = craftMenuScript.item2;
-                    break;
-                case "CraftedItem":
-                    craftItemData = craftMenuScript.craftedItem;
-                    break;
-                default:
-                    craftItemData = null;
-                    break;
-            }
-        }
-        if (mcs.isTouchingCraftSlot && mcs.touchedCraftSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            if (craftItemData.durability != -1)
-            {
-                toPrint = craftItemData.displayName;
-                printedItemDurability = craftItemData.currentDurability;
-                printDurability = " (" + craftItemData.currentDurability + "%)";
-            }
-            else if (craftItemData.durability == -1)
-            {
-                toPrint = craftItemData.displayName;
-                printDurability = "";
-            }
-            tooltipType = "craftItem";
-            isContraband = craftItemData.isContraband;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "craftItem" && !mcs.isTouchingCraftSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData == null) ||
-            (showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData.displayName != toPrint))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (mcs.isTouchingCraftSlot && showingTooltip && craftItemData == null)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //for toilet items
-        if (mcs.isTouchingToiletSlot && mcs.touchedToiletSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
-        {
-            toiletInv = toiletMenuScript.currentToilet.GetComponent<ToiletInv>().toiletInv;
-            for(int i = 0; i < 3; i++)
-            {
-                if(mcs.touchedToiletSlot.name == "Item" + i)
-                {
-                    toiletSlotNumber = i;
-                    break;
-                }
-            }
-            
-            if (toiletInv[toiletSlotNumber].durability != -1)
-            {
-                printedToiletSlotNumber = toiletSlotNumber;
-                toPrint = toiletInv[toiletSlotNumber].displayName;
-                printedItemDurability = toiletInv[toiletSlotNumber].currentDurability;
-                printDurability = " (" + toiletInv[toiletSlotNumber].currentDurability + "%)";
-            }
-            else if (toiletInv[toiletSlotNumber].durability == -1)
-            {
-                printedToiletSlotNumber = toiletSlotNumber;
-                toPrint = toiletInv[toiletSlotNumber].displayName;
-                printDurability = "";
-            }
-            tooltipType = "toiletItem";
-            isContraband = toiletInv[toiletSlotNumber].isContraband;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "toiletItem" && !mcs.isTouchingToiletSlot)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if ((showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber] == null) ||
-            (showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].displayName != toPrint) ||
-            (showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].currentDurability != toiletInv[printedToiletSlotNumber].currentDurability))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (mcs.isTouchingToiletSlot && showingTooltip && toiletInv[toiletSlotNumber] == null)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //for ground items
-        if (isTouchingItem && !showingTooltip)
-        {
-            currentTouchedItem = mcs.touchedItem;
-            toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
-            if (touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName != null)
-            {
-                toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName + "'s " + toPrint;
-            }
-            tooltipType = "groundItem";
-            isContraband = touchedItem.GetComponent<ItemCollectionData>().itemData.isContraband;
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
-        
-        if(isTouchingItem && showingTooltip && mcs.touchedItem != currentTouchedItem)
-        {
-            DestroyTooltip();
-            return;
-        }
-        ///TILES
-        //floors
-        if (mcs.isTouchingFloor)
-        {
-            floorDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
-        }
-        if (!showingTooltip && mcs.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            toPrint = "Dig";
-            printedTileDurability = mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "floor";
-            printedTileData = mcs.touchedFloor.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "floor" &&
-            (!mcs.isTouchingFloor || !itemBehavioursScript.selectedDiggingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "floor" && mcs.isTouchingFloor && itemBehavioursScript.selectedDiggingItem && mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingFloor && showingTooltip && mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//for give items
+		if (mcs.isTouchingGiveSlot && mcs.touchedGiveSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			if (givingScript.item.itemData.durability != -1)
+			{
+				toPrint = givingScript.item.itemData.displayName;
+				printedItemDurability = givingScript.item.itemData.currentDurability;
+				printDurability = " (" + givingScript.item.itemData.currentDurability + "%)";
+			}
+			else if (givingScript.item.itemData.durability == -1)
+			{
+				toPrint = givingScript.item.itemData.displayName;
+				printDurability = "";
+			}
+			if (givingScript.item.itemData.inmateGiveName != null)
+			{
+				printInmateName = givingScript.item.itemData.inmateGiveName + "'s ";
+				tooltipType = "giveItem";
+				isContraband = givingScript.item.itemData.isContraband;
+				StartCoroutine(DrawTooltip(printInmateName + toPrint + printDurability));
+			}
+			else
+			{
+				printInmateName = "'s ";
+				tooltipType = "giveItem";
+				isContraband = givingScript.item.itemData.isContraband;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+			}
+			return;
+		}
+		else if (showingTooltip && tooltipType == "giveItem" && !mcs.isTouchingGiveSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData == null) ||
+			(showingTooltip && tooltipType == "giveItem" && mcs.isTouchingGiveSlot && givingScript.item.itemData.displayName != toPrint)) //DONT USE THIS AS A TEMPLATE. USE NCPINVSLOTS
+		{
+			DestroyTooltip();
+			return;
+		}
+		//for craft items (DONT USE THIS AS AN EXAMPLE)
+		if (mcs.isTouchingCraftSlot)
+		{
+			switch (mcs.touchedCraftSlot.name)
+			{
+				case "Item0":
+					craftItemData = craftMenuScript.item0;
+					break;
+				case "Item1":
+					craftItemData = craftMenuScript.item1;
+					break;
+				case "Item2":
+					craftItemData = craftMenuScript.item2;
+					break;
+				case "CraftedItem":
+					craftItemData = craftMenuScript.craftedItem;
+					break;
+				default:
+					craftItemData = null;
+					break;
+			}
+		}
+		if (mcs.isTouchingCraftSlot && mcs.touchedCraftSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			if (craftItemData.durability != -1)
+			{
+				toPrint = craftItemData.displayName;
+				printedItemDurability = craftItemData.currentDurability;
+				printDurability = " (" + craftItemData.currentDurability + "%)";
+			}
+			else if (craftItemData.durability == -1)
+			{
+				toPrint = craftItemData.displayName;
+				printDurability = "";
+			}
+			tooltipType = "craftItem";
+			isContraband = craftItemData.isContraband;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "craftItem" && !mcs.isTouchingCraftSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData == null) ||
+			(showingTooltip && tooltipType == "craftItem" && mcs.isTouchingCraftSlot && craftItemData.displayName != toPrint))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (mcs.isTouchingCraftSlot && showingTooltip && craftItemData == null)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//for toilet items
+		if (mcs.isTouchingToiletSlot && mcs.touchedToiletSlot.GetComponent<Image>().sprite != clearSprite && !showingTooltip)
+		{
+			toiletInv = toiletMenuScript.currentToilet.GetComponent<ToiletInv>().toiletInv;
+			for(int i = 0; i < 3; i++)
+			{
+				if(mcs.touchedToiletSlot.name == "Item" + i)
+				{
+					toiletSlotNumber = i;
+					break;
+				}
+			}
+			
+			if (toiletInv[toiletSlotNumber].durability != -1)
+			{
+				printedToiletSlotNumber = toiletSlotNumber;
+				toPrint = toiletInv[toiletSlotNumber].displayName;
+				printedItemDurability = toiletInv[toiletSlotNumber].currentDurability;
+				printDurability = " (" + toiletInv[toiletSlotNumber].currentDurability + "%)";
+			}
+			else if (toiletInv[toiletSlotNumber].durability == -1)
+			{
+				printedToiletSlotNumber = toiletSlotNumber;
+				toPrint = toiletInv[toiletSlotNumber].displayName;
+				printDurability = "";
+			}
+			tooltipType = "toiletItem";
+			isContraband = toiletInv[toiletSlotNumber].isContraband;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "toiletItem" && !mcs.isTouchingToiletSlot)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if ((showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber] == null) ||
+			(showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].displayName != toPrint) ||
+			(showingTooltip && tooltipType == "toiletItem" && mcs.isTouchingToiletSlot && toiletInv[toiletSlotNumber].currentDurability != toiletInv[printedToiletSlotNumber].currentDurability))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (mcs.isTouchingToiletSlot && showingTooltip && toiletInv[toiletSlotNumber] == null)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//for ground items
+		if (isTouchingItem && !showingTooltip)
+		{
+			currentTouchedItem = mcs.touchedItem;
+			toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.displayName;
+			if (touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName != null)
+			{
+				toPrint = touchedItem.GetComponent<ItemCollectionData>().itemData.inmateGiveName + "'s " + toPrint;
+			}
+			tooltipType = "groundItem";
+			isContraband = touchedItem.GetComponent<ItemCollectionData>().itemData.isContraband;
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "groundItem" && !isTouchingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
+		
+		if(isTouchingItem && showingTooltip && mcs.touchedItem != currentTouchedItem)
+		{
+			DestroyTooltip();
+			return;
+		}
+		///TILES
+		//floors
+		if (mcs.isTouchingFloor)
+		{
+			floorDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
+		}
+		if (!showingTooltip && mcs.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+		{
+			toPrint = "Dig";
+			printedTileDurability = mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "floor";
+			printedTileData = mcs.touchedFloor.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "floor" &&
+			(!mcs.isTouchingFloor || !itemBehavioursScript.selectedDiggingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "floor" && mcs.isTouchingFloor && itemBehavioursScript.selectedDiggingItem && mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingFloor && showingTooltip && mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //empty dirt tiles
-        if (mcs.isTouchingEmptyDirt)
-        {
-            emptyDirtDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
-        }
-        if (!showingTooltip && mcs.isTouchingEmptyDirt && emptyDirtDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            toPrint = "Dig";
-            printedTileDurability = mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "emptyDirt";
-            printedTileData = mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "emptyDirt" &&
-            (!mcs.isTouchingEmptyDirt || !itemBehavioursScript.selectedDiggingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "emptyDirt" && mcs.isTouchingEmptyDirt && itemBehavioursScript.selectedDiggingItem && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingEmptyDirt && tooltipType == "emptyDirt" && showingTooltip && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingEmptyDirt && showingTooltip && emptyDirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//empty dirt tiles
+		if (mcs.isTouchingEmptyDirt)
+		{
+			emptyDirtDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedEmptyDirt.transform.position);
+		}
+		if (!showingTooltip && mcs.isTouchingEmptyDirt && emptyDirtDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+		{
+			toPrint = "Dig";
+			printedTileDurability = mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "emptyDirt";
+			printedTileData = mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "emptyDirt" &&
+			(!mcs.isTouchingEmptyDirt || !itemBehavioursScript.selectedDiggingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "emptyDirt" && mcs.isTouchingEmptyDirt && itemBehavioursScript.selectedDiggingItem && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingEmptyDirt && tooltipType == "emptyDirt" && showingTooltip && mcs.touchedEmptyDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingEmptyDirt && showingTooltip && emptyDirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //dirt tiles
-        if (mcs.isTouchingDirt)
-        {
-            dirtDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
-        }
-        if (!showingTooltip && mcs.isTouchingDirt && dirtDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            toPrint = "Dig";
-            printedTileDurability = mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "dirt";
-            printedTileData = mcs.touchedDirt.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "dirt" &&
-            (!mcs.isTouchingDirt || !itemBehavioursScript.selectedDiggingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "dirt" && mcs.isTouchingDirt && itemBehavioursScript.selectedDiggingItem && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingDirt && tooltipType == "dirt" && showingTooltip && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingDirt && showingTooltip && dirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//dirt tiles
+		if (mcs.isTouchingDirt)
+		{
+			dirtDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
+		}
+		if (!showingTooltip && mcs.isTouchingDirt && dirtDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
+		{
+			toPrint = "Dig";
+			printedTileDurability = mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "dirt";
+			printedTileData = mcs.touchedDirt.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "dirt" &&
+			(!mcs.isTouchingDirt || !itemBehavioursScript.selectedDiggingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "dirt" && mcs.isTouchingDirt && itemBehavioursScript.selectedDiggingItem && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingDirt && tooltipType == "dirt" && showingTooltip && mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingDirt && showingTooltip && dirtDistance > 2.4f && itemBehavioursScript.selectedDiggingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //walls
-        if (mcs.isTouchingWall)
-        {
-            wallDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedWall.transform.position);
-        }
-        if (!showingTooltip && mcs.isTouchingWall && wallDistance <= 2.4f && itemBehavioursScript.selectedChippingItem)
-        {
-            toPrint = "Chip Wall";
-            printedTileDurability = mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "wall";
-            printedTileData = mcs.touchedWall.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "wall" && 
-            (!mcs.isTouchingWall || !itemBehavioursScript.selectedChippingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "wall" &&  mcs.isTouchingWall && itemBehavioursScript.selectedChippingItem && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingWall && tooltipType == "wall" && showingTooltip && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if(mcs.isTouchingWall && showingTooltip && wallDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //fences
-        if (mcs.isTouchingFence)
-        {
-            fenceDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedFence.transform.position);
-        }
-        if(!showingTooltip && mcs.isTouchingFence && fenceDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            toPrint = "Cut Fence";
-            printedTileDurability = mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "fence";
-            printedTileData = mcs.touchedFence.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "fence" && 
-            (!mcs.isTouchingFence || !itemBehavioursScript.selectedCuttingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "fence" && mcs.isTouchingFence && itemBehavioursScript.selectedCuttingItem && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingFence && tooltipType == "fence" && showingTooltip && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingFence && showingTooltip && fenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //electric fences
-        if (mcs.isTouchingElectricFence)
-        {
-            electricFenceDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedElectricFence.transform.position);
-        }
-        if (!showingTooltip && mcs.isTouchingElectricFence && electricFenceDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            toPrint = "Cut Fence";
-            printedTileDurability = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "electricFence";
-            printedTileData = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "electricFence" &&
-            (!mcs.isTouchingElectricFence || !itemBehavioursScript.selectedCuttingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "electricFence" && mcs.isTouchingElectricFence && itemBehavioursScript.selectedCuttingItem && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingElectricFence && tooltipType == "electricFence" && showingTooltip && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingElectricFence && showingTooltip && electricFenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//walls
+		if (mcs.isTouchingWall)
+		{
+			wallDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedWall.transform.position);
+		}
+		if (!showingTooltip && mcs.isTouchingWall && wallDistance <= 2.4f && itemBehavioursScript.selectedChippingItem)
+		{
+			toPrint = "Chip Wall";
+			printedTileDurability = mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "wall";
+			printedTileData = mcs.touchedWall.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "wall" && 
+			(!mcs.isTouchingWall || !itemBehavioursScript.selectedChippingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "wall" &&  mcs.isTouchingWall && itemBehavioursScript.selectedChippingItem && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingWall && tooltipType == "wall" && showingTooltip && mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if(mcs.isTouchingWall && showingTooltip && wallDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//fences
+		if (mcs.isTouchingFence)
+		{
+			fenceDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedFence.transform.position);
+		}
+		if(!showingTooltip && mcs.isTouchingFence && fenceDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			toPrint = "Cut Fence";
+			printedTileDurability = mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "fence";
+			printedTileData = mcs.touchedFence.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "fence" && 
+			(!mcs.isTouchingFence || !itemBehavioursScript.selectedCuttingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "fence" && mcs.isTouchingFence && itemBehavioursScript.selectedCuttingItem && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingFence && tooltipType == "fence" && showingTooltip && mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingFence && showingTooltip && fenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//electric fences
+		if (mcs.isTouchingElectricFence)
+		{
+			electricFenceDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedElectricFence.transform.position);
+		}
+		if (!showingTooltip && mcs.isTouchingElectricFence && electricFenceDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			toPrint = "Cut Fence";
+			printedTileDurability = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "electricFence";
+			printedTileData = mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "electricFence" &&
+			(!mcs.isTouchingElectricFence || !itemBehavioursScript.selectedCuttingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "electricFence" && mcs.isTouchingElectricFence && itemBehavioursScript.selectedCuttingItem && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingElectricFence && tooltipType == "electricFence" && showingTooltip && mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingElectricFence && showingTooltip && electricFenceDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //bars
-        if (mcs.isTouchingBars)
-        {
-            barsDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedBars.transform.position);
-        }
-        if(!showingTooltip && mcs.isTouchingBars && barsDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            toPrint = "Cut Bars";
-            printedTileDurability = mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "bars";
-            printedTileData = mcs.touchedBars.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "bars" &&
-            (!mcs.isTouchingBars || !itemBehavioursScript.selectedCuttingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "bars" && mcs.isTouchingBars && itemBehavioursScript.selectedCuttingItem && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingBars && tooltipType == "bars" && showingTooltip && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingBars && showingTooltip && barsDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
+		//bars
+		if (mcs.isTouchingBars)
+		{
+			barsDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedBars.transform.position);
+		}
+		if(!showingTooltip && mcs.isTouchingBars && barsDistance <= 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			toPrint = "Cut Bars";
+			printedTileDurability = mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "bars";
+			printedTileData = mcs.touchedBars.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "bars" &&
+			(!mcs.isTouchingBars || !itemBehavioursScript.selectedCuttingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "bars" && mcs.isTouchingBars && itemBehavioursScript.selectedCuttingItem && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingBars && tooltipType == "bars" && showingTooltip && mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingBars && showingTooltip && barsDistance > 2.4f && itemBehavioursScript.selectedCuttingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //rocks
-        if (mcs.isTouchingRock)
-        {
-            rockDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedRock.transform.position);
-        }
-        if(!showingTooltip && mcs.isTouchingRock && rockDistance <=2.4f && itemBehavioursScript.selectedChippingItem)
-        {
-            toPrint = "Chip Rock";
-            printedTileDurability = mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability;
-            printDurability = " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-            tooltipType = "rock";
-            printedTileData = mcs.touchedRock.GetComponent<TileCollectionData>().tileData;
-            StartCoroutine(DrawTooltip(toPrint + printDurability));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "rock" &&
-            (!mcs.isTouchingRock || !itemBehavioursScript.selectedChippingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "rock" && mcs.isTouchingRock && itemBehavioursScript.selectedChippingItem && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(mcs.isTouchingRock && tooltipType == "rock" && showingTooltip && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingRock && showingTooltip && rockDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
-        if (mcs.isTouchingVentCover && mcs.touchedVentCover != null)
-        {
-            ventCoverDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
-        }
-        if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
-        {
-            if (!showingTooltip && mcs.isTouchingVentCover && ventCoverDistance <= 2.4f)
-            {
-                if (itemBehavioursScript.selectedVentBreakingItem)
-                {
-                    toPrint = "Unscrew Vent";
-                    isScrewingVent = true;
-                }
-                else
-                {
-                    toPrint = "Cut Vent";
-                    isScrewingVent = false;
-                }
-                printedTileDurability = mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability;
-                printDurability = " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-                tooltipType = "ventCover";
-                printedTileData = mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-                return;
-            }
-        }
-        if (isScrewingVent)
-        {
-            if (showingTooltip && tooltipType == "ventCover" &&
-                (!mcs.isTouchingVentCover || !itemBehavioursScript.selectedVentBreakingItem))
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
-        else if (!isScrewingVent)
-        {
-            if (showingTooltip && tooltipType == "ventCover" &&
-                (!mcs.isTouchingVentCover || !itemBehavioursScript.selectedCuttingItem))
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
-        else if (showingTooltip && tooltipType == "ventCover" && mcs.isTouchingVentCover && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingVentCover && tooltipType == "ventCover" && showingTooltip && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingVentCover && showingTooltip && ventCoverDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
+		//rocks
+		if (mcs.isTouchingRock)
+		{
+			rockDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedRock.transform.position);
+		}
+		if(!showingTooltip && mcs.isTouchingRock && rockDistance <=2.4f && itemBehavioursScript.selectedChippingItem)
+		{
+			toPrint = "Chip Rock";
+			printedTileDurability = mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability;
+			printDurability = " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+			tooltipType = "rock";
+			printedTileData = mcs.touchedRock.GetComponent<TileCollectionData>().tileData;
+			StartCoroutine(DrawTooltip(toPrint + printDurability));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "rock" &&
+			(!mcs.isTouchingRock || !itemBehavioursScript.selectedChippingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "rock" && mcs.isTouchingRock && itemBehavioursScript.selectedChippingItem && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(mcs.isTouchingRock && tooltipType == "rock" && showingTooltip && mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingRock && showingTooltip && rockDistance > 2.4f && itemBehavioursScript.selectedChippingItem)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//vent covers (ONLY BIG BECAUSE UNSCREWING AND CUTTING CAPABILITIES)
+		if (mcs.isTouchingVentCover && mcs.touchedVentCover != null)
+		{
+			ventCoverDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedVentCover.transform.position);
+		}
+		if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
+		{
+			if (!showingTooltip && mcs.isTouchingVentCover && ventCoverDistance <= 2.4f)
+			{
+				if (itemBehavioursScript.selectedVentBreakingItem)
+				{
+					toPrint = "Unscrew Vent";
+					isScrewingVent = true;
+				}
+				else
+				{
+					toPrint = "Cut Vent";
+					isScrewingVent = false;
+				}
+				printedTileDurability = mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability;
+				printDurability = " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+				tooltipType = "ventCover";
+				printedTileData = mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+				return;
+			}
+		}
+		if (isScrewingVent)
+		{
+			if (showingTooltip && tooltipType == "ventCover" &&
+				(!mcs.isTouchingVentCover || !itemBehavioursScript.selectedVentBreakingItem))
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+		else if (!isScrewingVent)
+		{
+			if (showingTooltip && tooltipType == "ventCover" &&
+				(!mcs.isTouchingVentCover || !itemBehavioursScript.selectedCuttingItem))
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+		else if (showingTooltip && tooltipType == "ventCover" && mcs.isTouchingVentCover && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingVentCover && tooltipType == "ventCover" && showingTooltip && mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingVentCover && showingTooltip && ventCoverDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        //slats
-        if (mcs.isTouchingSlats)
-        {
-            slatsDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
-        }
-        if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
-        {
-            if (!showingTooltip && mcs.isTouchingSlats && slatsDistance <= 2.4f)
-            {
-                if (itemBehavioursScript.selectedVentBreakingItem)
-                {
-                    toPrint = "Unscrew Slats";
-                    isScrewingSlats = true;
-                }
-                else
-                {
-                    toPrint = "Cut Slats";
-                    isScrewingSlats = false;
-                }
-                printedTileDurability = mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability;
-                printDurability = " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
-                tooltipType = "slats";
-                printedTileData = mcs.touchedSlats.GetComponent<TileCollectionData>().tileData;
-                StartCoroutine(DrawTooltip(toPrint + printDurability));
-                return;
-            }
-        }
-        if (isScrewingSlats)
-        {
-            if (showingTooltip && tooltipType == "slats" &&
-                (!mcs.isTouchingSlats || !itemBehavioursScript.selectedVentBreakingItem))
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
-        else if (!isScrewingSlats)
-        {
-            if (showingTooltip && tooltipType == "slats" &&
-                (!mcs.isTouchingSlats || !itemBehavioursScript.selectedCuttingItem))
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
-        else if (showingTooltip && tooltipType == "slats" && mcs.isTouchingSlats && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if (mcs.isTouchingSlats && tooltipType == "slats" && showingTooltip && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
-        {
-            changeType = "tileDurability";
-            ChangeTooltipText(changeType);
-            return;
-        }
-        if (mcs.isTouchingSlats && showingTooltip && slatsDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
-        {
-            DestroyTooltip();
-            return;
-        }
+		//slats
+		if (mcs.isTouchingSlats)
+		{
+			slatsDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedSlats.transform.position);
+		}
+		if (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem)
+		{
+			if (!showingTooltip && mcs.isTouchingSlats && slatsDistance <= 2.4f)
+			{
+				if (itemBehavioursScript.selectedVentBreakingItem)
+				{
+					toPrint = "Unscrew Slats";
+					isScrewingSlats = true;
+				}
+				else
+				{
+					toPrint = "Cut Slats";
+					isScrewingSlats = false;
+				}
+				printedTileDurability = mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability;
+				printDurability = " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)";
+				tooltipType = "slats";
+				printedTileData = mcs.touchedSlats.GetComponent<TileCollectionData>().tileData;
+				StartCoroutine(DrawTooltip(toPrint + printDurability));
+				return;
+			}
+		}
+		if (isScrewingSlats)
+		{
+			if (showingTooltip && tooltipType == "slats" &&
+				(!mcs.isTouchingSlats || !itemBehavioursScript.selectedVentBreakingItem))
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+		else if (!isScrewingSlats)
+		{
+			if (showingTooltip && tooltipType == "slats" &&
+				(!mcs.isTouchingSlats || !itemBehavioursScript.selectedCuttingItem))
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+		else if (showingTooltip && tooltipType == "slats" && mcs.isTouchingSlats && (itemBehavioursScript.selectedVentBreakingItem || itemBehavioursScript.selectedCuttingItem) && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileData.currentDurability)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if (mcs.isTouchingSlats && tooltipType == "slats" && showingTooltip && mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability != printedTileDurability)
+		{
+			changeType = "tileDurability";
+			ChangeTooltipText(changeType);
+			return;
+		}
+		if (mcs.isTouchingSlats && showingTooltip && slatsDistance > 2.4f && (itemBehavioursScript.selectedCuttingItem || itemBehavioursScript.selectedVentBreakingItem))
+		{
+			DestroyTooltip();
+			return;
+		}
 
-        ///OBJECTS
-        //desks
-        if (mcs.isTouchingDesk && !showingTooltip)
-        {
-            if (mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
-            {
-                toPrint = "Your Desk";
-            }
-            else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
-            {
-                int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
+		///OBJECTS
+		//desks
+		if (mcs.isTouchingDesk && !showingTooltip)
+		{
+			if (mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
+			{
+				toPrint = "Your Desk";
+			}
+			else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
+			{
+				int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
-                if (num == -1)
-                {
-                    toPrint = "Desk";
-                }
-                else
-                {
-                    foreach (Transform child in aStar.transform)
-                    {
-                        if (child.name.StartsWith("Inmate"))
-                        {
-                            if (child.GetComponent<NPCCollectionData>().npcData.order == num)
-                            {
-                                toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            else if(mcs.touchedDesk.name == "DevDesk")
-            {
-                toPrint = "Dev Desk";
-            }
-            else if(mcs.touchedDesk.name == "YardWorkBox")
-            {
-                toPrint = "Gardening Tools";
-            }
-            else if(mcs.touchedDesk.name == "JanitorDesk")
-            {
-                toPrint = "Cleaning Supplies";
-            }
-            else if(mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
-            {
-                toPrint = "Desk";
-            }
-            tooltipType = "desk";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if (showingTooltip && tooltipType == "desk" &&
-            !mcs.isTouchingDesk)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if (showingTooltip && tooltipType == "desk")
-        {
-            string str = null;
+				if (num == -1)
+				{
+					toPrint = "Desk";
+				}
+				else
+				{
+					foreach (Transform child in aStar.transform)
+					{
+						if (child.name.StartsWith("Inmate"))
+						{
+							if (child.GetComponent<NPCCollectionData>().npcData.order == num)
+							{
+								toPrint = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+								break;
+							}
+						}
+					}
+				}
+			}
+			else if(mcs.touchedDesk.name == "DevDesk")
+			{
+				toPrint = "Dev Desk";
+			}
+			else if(mcs.touchedDesk.name == "YardWorkBox")
+			{
+				toPrint = "Gardening Tools";
+			}
+			else if(mcs.touchedDesk.name == "JanitorDesk")
+			{
+				toPrint = "Cleaning Supplies";
+			}
+			else if(mcs.touchedDesk.name == "CutleryTable")
+			{
+				toPrint = "Cutlery";
+			}
+			else if(mcs.touchedDesk.name == "MedicDesk")
+			{
+				toPrint = "Medical Supplies";
+			}
+			else if(mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
+			{
+				toPrint = "Desk";
+			}
+			tooltipType = "desk";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "desk" &&
+			!mcs.isTouchingDesk)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "desk")
+		{
+			string str = null;
 
-            if(mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
-            {
-                str = "Your Desk";
-            }
-            else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
-            {
-                int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
+			if(mcs.touchedDesk.name == "PlayerDesk" || mcs.touchedDesk.name == "ETPlayerDesk")
+			{
+				str = "Your Desk";
+			}
+			else if (mcs.touchedDesk.name == "NPCDesk" || mcs.touchedDesk.name == "ETNPCDesk")
+			{
+				int num = mcs.touchedDesk.GetComponent<DeskData>().inmateCorrelationNumber;
 
-                if (num == -1)
-                {
-                    str = "Desk";
-                }
-                else
-                {
-                    foreach (Transform child in aStar.transform)
-                    {
-                        if (child.name.StartsWith("Inmate"))
-                        {
-                            if(child.GetComponent<NPCCollectionData>().npcData.order == num)
-                            {
-                                str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            else if(mcs.touchedDesk.name == "DevDesk")
-            {
-                str = "Dev Desk";
-            }
-            else if (mcs.touchedDesk.name == "YardWorkBox")
-            {
-                str = "Gardening Tools";
-            }
-            else if (mcs.touchedDesk.name == "JanitorDesk")
-            {
-                str = "Cleaning Supplies";
-            }
-            else if (mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
-            {
-                str = "Desk";
-            }
+				if (num == -1)
+				{
+					str = "Desk";
+				}
+				else
+				{
+					foreach (Transform child in aStar.transform)
+					{
+						if (child.name.StartsWith("Inmate"))
+						{
+							if(child.GetComponent<NPCCollectionData>().npcData.order == num)
+							{
+								str = child.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\r\n", "").Replace("\n", "").Replace("\r", "") + "'s Desk";
+								break;
+							}
+						}
+					}
+				}
+			}
+			else if(mcs.touchedDesk.name == "DevDesk")
+			{
+				str = "Dev Desk";
+			}
+			else if (mcs.touchedDesk.name == "YardWorkBox")
+			{
+				str = "Gardening Tools";
+			}
+			else if (mcs.touchedDesk.name == "JanitorDesk")
+			{
+				str = "Cleaning Supplies";
+			}
+			else if(mcs.touchedDesk.name == "CutleryTable")
+			{
+				str = "Cutlery";
+			}
+			else if(mcs.touchedDesk.name == "MedicDesk")
+			{
+				str = "Medical Supplies";
+			}
+			else if (mcs.touchedDesk.name == "ChristmasDesk" || mcs.touchedDesk.name == "ETSpecialDesk" || mcs.touchedDesk.name == "DTAFSpecialDesk")
+			{
+				str = "Desk";
+			}
 
-            if (str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if (str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //equipment
-        if(mcs.isTouchingEquipment && !showingTooltip)
-        {
-            if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
-            {
-                toPrint = "Train (treadmill)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
-            {
-                toPrint = "Train (weights)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
-            {
-                toPrint = "Train (chin ups)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
-            {
-                toPrint = "Train (press ups)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
-            {
-                toPrint = "Train (jogging)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
-            {
-                toPrint = "Train (skipping)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
-            {
-                toPrint = "Train (punch bag)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
-            {
-                toPrint = "Train (speed bag)";
-            }
-            tooltipType = "equipment";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "equipment" && !mcs.isTouchingEquipment)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "equipment")
-        {
-            string str = null;
+		//equipment
+		if(mcs.isTouchingEquipment && !showingTooltip)
+		{
+			if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
+			{
+				toPrint = "Train (treadmill)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
+			{
+				toPrint = "Train (weights)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
+			{
+				toPrint = "Train (chin ups)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
+			{
+				toPrint = "Train (press ups)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
+			{
+				toPrint = "Train (jogging)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
+			{
+				toPrint = "Train (skipping)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
+			{
+				toPrint = "Train (punch bag)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
+			{
+				toPrint = "Train (speed bag)";
+			}
+			tooltipType = "equipment";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "equipment" && !mcs.isTouchingEquipment)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "equipment")
+		{
+			string str = null;
 
-            if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
-            {
-                str = "Train (treadmill)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
-            {
-                str = "Train (weights)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
-            {
-                str = "Train (chin ups)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
-            {
-                str = "Train (press ups)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
-            {
-                str = "Train (jogging)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
-            {
-                str = "Train (skipping)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
-            {
-                str = "Train (punch bag)";
-            }
-            else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
-            {
-                str = "Train (speed bag)";
-            }
+			if (mcs.touchedEquipment.name.StartsWith("Treadmill"))
+			{
+				str = "Train (treadmill)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("Benchpress"))
+			{
+				str = "Train (weights)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PullupBar"))
+			{
+				str = "Train (chin ups)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PushupMat"))
+			{
+				str = "Train (press ups)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("RunningMat"))
+			{
+				str = "Train (jogging)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("JumpropeMat"))
+			{
+				str = "Train (skipping)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("PunchingMat"))
+			{
+				str = "Train (punch bag)";
+			}
+			else if (mcs.touchedEquipment.name.StartsWith("SpeedBag"))
+			{
+				str = "Train (speed bag)";
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //readers
-        if(mcs.isTouchingReader && !showingTooltip)
-        {
-            if (mcs.touchedReader.name.StartsWith("ComputerTable"))
-            {
-                toPrint = "Internet";
-            }
-            tooltipType = "reader";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "reader" && !mcs.isTouchingReader)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "reader")
-        {
-            string str = null;
+		//readers
+		if(mcs.isTouchingReader && !showingTooltip)
+		{
+			if (mcs.touchedReader.name.StartsWith("ComputerTable"))
+			{
+				toPrint = "Internet";
+			}
+			tooltipType = "reader";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "reader" && !mcs.isTouchingReader)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "reader")
+		{
+			string str = null;
 
-            if (mcs.touchedReader.name.StartsWith("ComputerTable"))
-            {
-                str = "Internet";
-            }
+			if (mcs.touchedReader.name.StartsWith("ComputerTable"))
+			{
+				str = "Internet";
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //sittables
-        if(mcs.isTouchingSittable && !showingTooltip)
-        {
-            if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
-            {
-                toPrint = "Your Bed";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
-            {
-                toPrint = "Infirmary Bed";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("Lounger"))
-            {
-                toPrint = "Sun Lounger";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("Seat"))
-            {
-                toPrint = "Sit Down";
-            }
-            tooltipType = "sittable";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(showingTooltip && tooltipType == "sittable")
-        {
-            string str = null;
+		//sittables
+		if(mcs.isTouchingSittable && !showingTooltip)
+		{
+			if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
+			{
+				toPrint = "Your Bed";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
+			{
+				toPrint = "Infirmary Bed";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("Lounger"))
+			{
+				toPrint = "Sun Lounger";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("Seat"))
+			{
+				toPrint = "Sit Down";
+			}
+			tooltipType = "sittable";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "sittable" && !mcs.isTouchingSittable)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "sittable")
+		{
+			string str = null;
 
-            if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
-            {
-                str = "Your Bed";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
-            {
-                str = "Infirmary Bed";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("Lounger"))
-            {
-                str = "Sun Lounger";
-            }
-            else if (mcs.touchedSittable.name.StartsWith("Seat"))
-            {
-                str = "Sit Down";
-            }
+			if (mcs.touchedSittable.name.StartsWith("PlayerBed"))
+			{
+				str = "Your Bed";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("MedicBed"))
+			{
+				str = "Infirmary Bed";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("Lounger"))
+			{
+				str = "Sun Lounger";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("Seat"))
+			{
+				str = "Sit Down";
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //item boxes
-        if(mcs.isTouchingItemBox && !showingTooltip)
-        {
-            switch (mcs.touchedItemBox.name)
-            {
-                case "TailorBox":
-                    toPrint = "Fabric Chest";
-                    break;
-                case "TimberBox":
-                    toPrint = "Timber Supplies";
-                    break;
-                case "MetalBox":
-                    toPrint = "Metal Supplies";
-                    break;
-                case "DirtyLaundry":
-                    toPrint = "Dirty Laundry";
-                    break;
-                case "BookBox":
-                    toPrint = "Book Chest";
-                    break;
-                case "MailBox":
-                    toPrint = "Mailroom File";
-                    break;
-                case "Freezer":
-                    toPrint = "Freezer";
-                    break;
-                default:
-                    if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
-                    {
-                        toPrint = "Delivery Truck";
-                    }
-                    break;
-            }
-            tooltipType = "itemBox";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if (showingTooltip && tooltipType == "itemBox" && !mcs.isTouchingItemBox)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(showingTooltip && tooltipType == "itemBox")
-        {
-            string str = null;
+		//item boxes
+		if(mcs.isTouchingItemBox && !showingTooltip)
+		{
+			switch (mcs.touchedItemBox.name)
+			{
+				case "TailorBox":
+					toPrint = "Fabric Chest";
+					break;
+				case "TimberBox":
+					toPrint = "Timber Supplies";
+					break;
+				case "MetalBox":
+					toPrint = "Metal Supplies";
+					break;
+				case "DirtyLaundry":
+					toPrint = "Dirty Laundry";
+					break;
+				case "BookBox":
+					toPrint = "Book Chest";
+					break;
+				case "MailBox":
+					toPrint = "Mailroom File";
+					break;
+				case "Freezer":
+					toPrint = "Freezer";
+					break;
+				default:
+					if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
+					{
+						toPrint = "Delivery Truck";
+					}
+					break;
+			}
+			tooltipType = "itemBox";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if (showingTooltip && tooltipType == "itemBox" && !mcs.isTouchingItemBox)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "itemBox")
+		{
+			string str = null;
 
-            switch (mcs.touchedItemBox.name)
-            {
-                case "TailorBox":
-                    str = "Fabric Chest";
-                    break;
-                case "TimberBox":
-                    str = "Timber Supplies";
-                    break;
-                case "MetalBox":
-                    str = "Metal Supplies";
-                    break;
-                case "DirtyLaundry":
-                    str = "Dirty Laundry";
-                    break;
-                case "BookBox":
-                    str = "Book Chest";
-                    break;
-                case "MailBox":
-                    str = "Mailroom File";
-                    break;
-                case "Freezer":
-                    str = "Freezer";
-                    break;
-                default:
-                    if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
-                    {
-                        str = "Delivery Truck";
-                    }
-                    break;
-            }
+			switch (mcs.touchedItemBox.name)
+			{
+				case "TailorBox":
+					str = "Fabric Chest";
+					break;
+				case "TimberBox":
+					str = "Timber Supplies";
+					break;
+				case "MetalBox":
+					str = "Metal Supplies";
+					break;
+				case "DirtyLaundry":
+					str = "Dirty Laundry";
+					break;
+				case "BookBox":
+					str = "Book Chest";
+					break;
+				case "MailBox":
+					str = "Mailroom File";
+					break;
+				case "Freezer":
+					str = "Freezer";
+					break;
+				default:
+					if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
+					{
+						str = "Delivery Truck";
+					}
+					break;
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //item transformers
-        if(mcs.isTouchingItemTransformer && !showingTooltip)
-        {
-            switch (mcs.touchedItemTransformer.name)
-            {
-                case "Oven":
-                    toPrint = "Oven";
-                    break;
-                case "Washer":
-                    toPrint = "Washing Machine";
-                    break;
-                case "LicensePress":
-                    toPrint = "License Press";
-                    break;
-            }
-            tooltipType = "itemTransformer";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "itemTransformer" && !mcs.isTouchingItemTransformer)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(showingTooltip && tooltipType == "itemTransformer")
-        {
-            string str = null;
+		//item transformers
+		if(mcs.isTouchingItemTransformer && !showingTooltip)
+		{
+			switch (mcs.touchedItemTransformer.name)
+			{
+				case "Oven":
+					toPrint = "Oven";
+					break;
+				case "Washer":
+					toPrint = "Washing Machine";
+					break;
+				case "LicensePress":
+					toPrint = "License Press";
+					break;
+			}
+			tooltipType = "itemTransformer";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "itemTransformer" && !mcs.isTouchingItemTransformer)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "itemTransformer")
+		{
+			string str = null;
 
-            switch (mcs.touchedItemTransformer.name)
-            {
-                case "Oven":
-                    str = "Oven";
-                    break;
-                case "Washer":
-                    str = "Washing Machine";
-                    break;
-                case "LicensePress":
-                    str = "License Press";
-                    break;
-            }
+			switch (mcs.touchedItemTransformer.name)
+			{
+				case "Oven":
+					str = "Oven";
+					break;
+				case "Washer":
+					str = "Washing Machine";
+					break;
+				case "LicensePress":
+					str = "License Press";
+					break;
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //job boxes
-        if(mcs.isTouchingJobBox && !showingTooltip)
-        {
-            switch (mcs.touchedJobBox.name)
-            {
-                case "RedBox":
-                    toPrint = "Red Package Container";
-                    break;
-                case "BlueBox":
-                    toPrint = "Blue Package Container";
-                    break;
-                case "ClothesBox":
-                    toPrint = "Clothing Container";
-                    break;
-                case "CleanLaundry":
-                    toPrint = "Clean Laundry";
-                    break;
-                case "FurnitureBox":
-                    toPrint = "Furniture Container";
-                    break;
-                case "PlatesBox":
-                    toPrint = "License Container";
-                    break;
-            }
-            tooltipType = "jobBox";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "jobBox" && !mcs.isTouchingJobBox)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(showingTooltip && tooltipType == "jobBox")
-        {
-            string str = null;
+		//job boxes
+		if(mcs.isTouchingJobBox && !showingTooltip)
+		{
+			switch (mcs.touchedJobBox.name)
+			{
+				case "RedBox":
+					toPrint = "Red Package Container";
+					break;
+				case "BlueBox":
+					toPrint = "Blue Package Container";
+					break;
+				case "ClothesBox":
+					toPrint = "Clothing Container";
+					break;
+				case "CleanLaundry":
+					toPrint = "Clean Laundry";
+					break;
+				case "FurnitureBox":
+					toPrint = "Furniture Container";
+					break;
+				case "PlatesBox":
+					toPrint = "License Container";
+					break;
+			}
+			tooltipType = "jobBox";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "jobBox" && !mcs.isTouchingJobBox)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "jobBox")
+		{
+			string str = null;
 
-            switch (mcs.touchedJobBox.name)
-            {
-                case "RedBox":
-                    str = "Red Package Container";
-                    break;
-                case "BlueBox":
-                    str = "Blue Package Container";
-                    break;
-                case "ClothesBox":
-                    str = "Clothing Container";
-                    break;
-                case "CleanLaundry":
-                    str = "Clean Laundry";
-                    break;
-                case "FurnitureBox":
-                    str = "Furniture Container";
-                    break;
-                case "PlatesBox":
-                    str = "License Container";
-                    break;
-            }
+			switch (mcs.touchedJobBox.name)
+			{
+				case "RedBox":
+					str = "Red Package Container";
+					break;
+				case "BlueBox":
+					str = "Blue Package Container";
+					break;
+				case "ClothesBox":
+					str = "Clothing Container";
+					break;
+				case "CleanLaundry":
+					str = "Clean Laundry";
+					break;
+				case "FurnitureBox":
+					str = "Furniture Container";
+					break;
+				case "PlatesBox":
+					str = "License Container";
+					break;
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //job board
-        if (mcs.isTouchingJobBoard && !showingTooltip)
-        {
-            toPrint = "Job Board";
-            tooltipType = "jobBoard";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if (showingTooltip && tooltipType == "jobBoard" && !mcs.isTouchingJobBoard)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //toilet
-        if (mcs.isTouchingToilet && !showingTooltip)
-        {
-            toPrint = "Dispose Items";
-            tooltipType = "toilet";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if (showingTooltip && tooltipType == "toilet" && !mcs.isTouchingToilet)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //tv
-        if (mcs.isTouchingTV && !showingTooltip)
-        {
-            toPrint = "Cable TV";
-            tooltipType = "tv";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if (showingTooltip && tooltipType == "tv" && !mcs.isTouchingTV)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //signs
-        if(mcs.isTouchingSign && !showingTooltip)
-        {
-            toPrint = "Sign";
-            tooltipType = "sign";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "sign" && !mcs.isTouchingSign)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //generators
-        if(mcs.isTouchingGenerator && !showingTooltip)
-        {
-            toPrint = "Generator";
-            tooltipType = "generator";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "generator" && !mcs.isTouchingGenerator)
-        {
-            DestroyTooltip();
-            return;
-        }
-        //escape objects
-        if(mcs.isTouchingEscapeObject && !showingTooltip)
-        {
-            switch (mcs.touchedEscapeObject.name)
-            {
-                case "SSTree":
-                    toPrint = "Christmas Tree";
-                    break;
-                case "ETTank":
-                    toPrint = "Tank";
-                    break;
-                case "JingleSantaSleigh":
-                    toPrint = "Santa's Sleigh";
-                    break;
-                case "DTAFComputerLeft":
-                    toPrint = "Keycard Panel";
-                    break;
-                case "DTAFComputerDown":
-                    toPrint = "Voice Analyzer";
-                    break;
-                case "DTAFComputerRight":
-                    toPrint = "Fingerprint Scanner";
-                    break;
-            }
-            tooltipType = "escapeObject";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        if(showingTooltip && tooltipType == "escapeObject" && !mcs.isTouchingEscapeObject)
-        {
-            DestroyTooltip();
-            return;
-        }
-        if(showingTooltip && tooltipType == "escapeObject")
-        {
-            string str = null;
+		//job board
+		if (mcs.isTouchingJobBoard && !showingTooltip)
+		{
+			toPrint = "Job Board";
+			tooltipType = "jobBoard";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if (showingTooltip && tooltipType == "jobBoard" && !mcs.isTouchingJobBoard)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//toilet
+		if (mcs.isTouchingToilet && !showingTooltip)
+		{
+			toPrint = "Dispose Items";
+			tooltipType = "toilet";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if (showingTooltip && tooltipType == "toilet" && !mcs.isTouchingToilet)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//tv
+		if (mcs.isTouchingTV && !showingTooltip)
+		{
+			toPrint = "Cable TV";
+			tooltipType = "tv";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if (showingTooltip && tooltipType == "tv" && !mcs.isTouchingTV)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//signs
+		if(mcs.isTouchingSign && !showingTooltip)
+		{
+			toPrint = "Sign";
+			tooltipType = "sign";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "sign" && !mcs.isTouchingSign)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//generators
+		if(mcs.isTouchingGenerator && !showingTooltip)
+		{
+			toPrint = "Generator";
+			tooltipType = "generator";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "generator" && !mcs.isTouchingGenerator)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//escape objects
+		if(mcs.isTouchingEscapeObject && !showingTooltip)
+		{
+			switch (mcs.touchedEscapeObject.name)
+			{
+				case "SSTree":
+					toPrint = "Christmas Tree";
+					break;
+				case "ETTank":
+					toPrint = "Tank";
+					break;
+				case "JingleSantaSleigh":
+					toPrint = "Santa's Sleigh";
+					break;
+				case "DTAFComputerLeft":
+					toPrint = "Keycard Panel";
+					break;
+				case "DTAFComputerDown":
+					toPrint = "Voice Analyzer";
+					break;
+				case "DTAFComputerRight":
+					toPrint = "Fingerprint Scanner";
+					break;
+			}
+			tooltipType = "escapeObject";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "escapeObject" && !mcs.isTouchingEscapeObject)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "escapeObject")
+		{
+			string str = null;
 
-            switch (mcs.touchedEscapeObject.name)
-            {
-                case "SSTree":
-                    str = "Christmas Tree";
-                    break;
-                case "ETTank":
-                    str = "Tank";
-                    break;
-                case "JingleSantaSleigh":
-                    str = "Santa's Sleigh";
-                    break;
-                case "DTAFComputerLeft":
-                    str = "Keycard Panel";
-                    break;
-                case "DTAFComputerDown":
-                    str = "Voice Analyzer";
-                    break;
-                case "DTAFComputerRight":
-                    str = "Fingerprint Scanner";
-                    break;
-            }
+			switch (mcs.touchedEscapeObject.name)
+			{
+				case "SSTree":
+					str = "Christmas Tree";
+					break;
+				case "ETTank":
+					str = "Tank";
+					break;
+				case "JingleSantaSleigh":
+					str = "Santa's Sleigh";
+					break;
+				case "DTAFComputerLeft":
+					str = "Keycard Panel";
+					break;
+				case "DTAFComputerDown":
+					str = "Voice Analyzer";
+					break;
+				case "DTAFComputerRight":
+					str = "Fingerprint Scanner";
+					break;
+			}
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        ///NPCS
-        //inmates/guards
-        if (mcs.isTouchingNPC && !showingTooltip)
-        {
-            toPrint = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
-            tooltipType = "inmates/guards";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "inmates/guards" && !mcs.isTouchingNPC)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "inmates/guards")
-        {
-            string str = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
+		///NPCS
+		//inmates/guards
+		if (mcs.isTouchingNPC && !showingTooltip)
+		{
+			toPrint = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
+			tooltipType = "inmates/guards";
+			StartCoroutine(DrawTooltip(toPrint, mcs.touchedNPC.GetComponent<NPCNameColor>().currentColor));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "inmates/guards" && !mcs.isTouchingNPC)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "inmates/guards")
+		{
+			string str = mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.displayName;
 
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
 
-        //extra NPCs
-        if(mcs.isTouchingExtraNPC && !showingTooltip)
-        {
-            switch (mcs.touchedExtraNPC.name)
-            {
-                case "Warden":
-                    if (!string.IsNullOrEmpty(currentMap.warden))
-                    {
-                        toPrint = "Warden " + currentMap.warden;
-                    }
-                    else
-                    {
-                        toPrint = "Warden";
-                    }
-                    break;
-                case "JobOfficer":
-                    toPrint = "Employment Staff";
-                    break;
-                case "Medic":
-                    toPrint = "Infirmary Staff";
-                    break;
-            }
-            tooltipType = "extraNPC";
-            StartCoroutine(DrawTooltip(toPrint));
-            return;
-        }
-        else if(showingTooltip && tooltipType == "extraNPC" && !mcs.isTouchingExtraNPC)
-        {
-            DestroyTooltip();
-            return;
-        }
-        else if(showingTooltip && tooltipType == "extraNPC")
-        {
-            string str = null;
-            switch (mcs.touchedExtraNPC.name)
-            {
-                case "Warden":
-                    str = "Warden" + currentMap.warden;
-                    break;
-                case "JobOfficer":
-                    str = "Employment Staff";
-                    break;
-                case "Medic":
-                    str = "Infirmary Staff";
-                    break;
-            }
-            if(str != toPrint)
-            {
-                DestroyTooltip();
-                return;
-            }
-        }
-    }
+		//extra NPCs
+		if(mcs.isTouchingExtraNPC && !showingTooltip)
+		{
+			switch (mcs.touchedExtraNPC.name)
+			{
+				case "Warden":
+					if (!string.IsNullOrEmpty(currentMap.warden))
+					{
+						toPrint = "Warden " + currentMap.warden;
+					}
+					else
+					{
+						toPrint = "Warden";
+					}
+					break;
+				case "JobOfficer":
+					toPrint = "Employment Staff";
+					break;
+				case "Medic":
+					toPrint = "Infirmary Staff";
+					break;
+			}
+			tooltipType = "extraNPC";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		else if(showingTooltip && tooltipType == "extraNPC" && !mcs.isTouchingExtraNPC)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if(showingTooltip && tooltipType == "extraNPC")
+		{
+			string str = null;
+			switch (mcs.touchedExtraNPC.name)
+			{
+				case "Warden":
+					str = "Warden" + currentMap.warden;
+					break;
+				case "JobOfficer":
+					str = "Employment Staff";
+					break;
+				case "Medic":
+					str = "Infirmary Staff";
+					break;
+			}
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+	}
 
-    public IEnumerator DrawTooltip(string text)
-    {
-        showingTooltip = true;
-        TooltipPanelTransform = InventoryCanvas.transform.Find("TooltipPanel");
-        TooltipPanelTransform.gameObject.SetActive(false);
-        //make the textbox
-        GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
-        textBox.GetComponent<TextMeshProUGUI>().color = UnityEngine.Color.clear;
-        textBox.GetComponent<TextMeshProUGUI>().text = text;
+	public IEnumerator DrawTooltip(string text)
+	{
+		showingTooltip = true;
+		TooltipPanelTransform = InventoryCanvas.transform.Find("TooltipPanel");
+		TooltipPanelTransform.gameObject.SetActive(false);
+		//make the textbox
+		GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
+		textBox.GetComponent<TextMeshProUGUI>().color = UnityEngine.Color.clear;
+		textBox.GetComponent<TextMeshProUGUI>().text = text;
 
-        Canvas.ForceUpdateCanvases();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(textBox.GetComponent<RectTransform>());
-        yield return new WaitForEndOfFrame();
+		Canvas.ForceUpdateCanvases();
+		LayoutRebuilder.ForceRebuildLayoutImmediate(textBox.GetComponent<RectTransform>());
+		yield return new WaitForEndOfFrame();
 
-        if (tooltipType.Contains("Item"))
-        {
-            if (isContraband)
-            {
-                textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(1, 0, 0);
-            }
-            else
-            {
-                textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(0, 1, 0);
-            }
-        }
-        else
-        {
-            textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
-        }
+		if (tooltipType.Contains("Item"))
+		{
+			if (isContraband)
+			{
+				textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(1, 0, 0);
+			}
+			else
+			{
+				textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(0, 1, 0);
+			}
+		}
+		else
+		{
+			textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
+		}
 
-        //draw the tooltip
-        GameObject side1 = Instantiate(TooltipSide, TooltipPanelTransform);
-        GameObject mid = Instantiate(TooltipMid, TooltipPanelTransform);
-        GameObject side2 = Instantiate(TooltipSide, TooltipPanelTransform);
-        mid.GetComponent<RectTransform>().sizeDelta = new Vector2(textBox.GetComponent<RectTransform>().sizeDelta.x, 80);
-        side1.transform.localPosition = new Vector2((-mid.GetComponent<RectTransform>().sizeDelta.x / 2f) - 2f, 0);
-        side2.transform.localPosition = new Vector2((mid.GetComponent<RectTransform>().sizeDelta.x / 2f) + 2f, 0);
-        mid.transform.localPosition = new Vector2(0, 0);
-        TooltipPanelTransform.gameObject.SetActive(true);
-    }
-    public void DestroyTooltip()
-    {
-        foreach(Transform child in TooltipPanelTransform)
-        {
-            Destroy(child.gameObject);
-        }
-        Destroy(InventoryCanvas.transform.Find("TooltipText(Clone)").gameObject);
-        showingTooltip = false;
-        tooltipType = null;
-    }
+		//draw the tooltip
+		GameObject side1 = Instantiate(TooltipSide, TooltipPanelTransform);
+		GameObject mid = Instantiate(TooltipMid, TooltipPanelTransform);
+		GameObject side2 = Instantiate(TooltipSide, TooltipPanelTransform);
+		mid.GetComponent<RectTransform>().sizeDelta = new Vector2(textBox.GetComponent<RectTransform>().sizeDelta.x, 80);
+		side1.transform.localPosition = new Vector2((-mid.GetComponent<RectTransform>().sizeDelta.x / 2f) - 2f, 0);
+		side2.transform.localPosition = new Vector2((mid.GetComponent<RectTransform>().sizeDelta.x / 2f) + 2f, 0);
+		mid.transform.localPosition = new Vector2(0, 0);
+		TooltipPanelTransform.gameObject.SetActive(true);
+	}
+	public IEnumerator DrawTooltip(string text, UnityEngine.Color color) //for inmates basically
+	{
+		showingTooltip = true;
+		TooltipPanelTransform = InventoryCanvas.transform.Find("TooltipPanel");
+		TooltipPanelTransform.gameObject.SetActive(false);
+		//make the textbox
+		GameObject textBox = Instantiate(TooltipTextBox, InventoryCanvas.transform);
+		textBox.GetComponent<TextMeshProUGUI>().color = UnityEngine.Color.clear;
+		textBox.GetComponent<TextMeshProUGUI>().text = text;
 
-    public void ChangeTooltipText(string changeType)
-    {
-        switch (changeType)
-        {
-            case "invItemDurability":
-                if (inventoryList[invSlotNumber].itemData.durability != -1)
-                    {
-                        InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + inventoryList[invSlotNumber].itemData.currentDurability + "%)";
-                    }
-                break;
-            case "tileDurability":
-                switch (tooltipType)
-                {
-                    case "wall": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "electricFence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "floor": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "emptyDirt": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "dirt": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                    case "rock": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-                }
-                break;
+		Canvas.ForceUpdateCanvases();
+		LayoutRebuilder.ForceRebuildLayoutImmediate(textBox.GetComponent<RectTransform>());
+		yield return new WaitForEndOfFrame();
+
+		textBox.GetComponent<TextMeshProUGUI>().color = color;
+		//draw the tooltip
+		GameObject side1 = Instantiate(TooltipSide, TooltipPanelTransform);
+		GameObject mid = Instantiate(TooltipMid, TooltipPanelTransform);
+		GameObject side2 = Instantiate(TooltipSide, TooltipPanelTransform);
+		mid.GetComponent<RectTransform>().sizeDelta = new Vector2(textBox.GetComponent<RectTransform>().sizeDelta.x, 80);
+		side1.transform.localPosition = new Vector2((-mid.GetComponent<RectTransform>().sizeDelta.x / 2f) - 2f, 0);
+		side2.transform.localPosition = new Vector2((mid.GetComponent<RectTransform>().sizeDelta.x / 2f) + 2f, 0);
+		mid.transform.localPosition = new Vector2(0, 0);
+		TooltipPanelTransform.gameObject.SetActive(true);
+	}
+	public void DestroyTooltip()
+	{
+		foreach(Transform child in TooltipPanelTransform)
+		{
+			Destroy(child.gameObject);
+		}
+		Destroy(InventoryCanvas.transform.Find("TooltipText(Clone)").gameObject);
+		showingTooltip = false;
+		tooltipType = null;
+	}
+
+	public void ChangeTooltipText(string changeType)
+	{
+		switch (changeType)
+		{
+			case "invItemDurability":
+				if (inventoryList[invSlotNumber].itemData.durability != -1)
+					{
+						InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + inventoryList[invSlotNumber].itemData.currentDurability + "%)";
+					}
+				break;
+			case "tileDurability":
+				switch (tooltipType)
+				{
+					case "wall": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "electricFence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "floor": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFloor.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "emptyDirt": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "dirt": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedDirt.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "rock": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+				}
+				break;
 
 
-        }
-    }
+		}
+	}
 
 }

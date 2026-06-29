@@ -227,6 +227,18 @@ public class DeskRNG : MonoBehaviour
             return;
         }
 
+        if(deskName == "CutleryTable")
+        {
+            RandomizeCutlery();
+            return;
+        }
+
+        if(deskName == "MedicDesk")
+        {
+            RandomizeMedic();
+            return;
+        }
+
         int amountOfItems = 6;
         tokens = UnityEngine.Random.Range(8, 13);
 
@@ -309,6 +321,30 @@ public class DeskRNG : MonoBehaviour
             }
         }
     }
+    private void RandomizeCutlery()
+    {
+        List<int> ids = new List<int>
+        {
+            26, 28, 27
+        };
+        for(int i = 0; i < 20; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, 3);
+            AddItem(ids[rand]);
+        }
+    }
+    private void RandomizeMedic()
+    {
+        List<int> ids = new List<int>
+        {
+            110, 78, 79
+        };
+        for(int i = 0; i < 20; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, 3);
+            AddItem(ids[rand]);
+        }
+    }
     private void SetCustomDesk()
     {
         string[] layer = null;
@@ -381,10 +417,11 @@ public class DeskRNG : MonoBehaviour
             {
                 AddItem(61);
             }
-            int randAmount = UnityEngine.Random.Range(0, 15);
+            int randAmount = UnityEngine.Random.Range(10, 17);
             for(int i = 0; i < randAmount; i++)
             {
-                deskInv[i].itemData = null;
+                int randPlace = UnityEngine.Random.Range(0, 20);
+                deskInv[randPlace].itemData = null;
             }
         }
         else if(name == "JanitorDesk")

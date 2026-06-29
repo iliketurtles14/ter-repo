@@ -14,21 +14,49 @@ public class Routine : MonoBehaviour
     private bool withSecZero;
     private TMP_Text timeText;
     public int day;
-    private string period;
-    public string periodCode;
+    private string period = "";
+    public string periodCode = "";
     private Schedule scheduleScript;
     private bool isSpeedingUp;
+    public int startingMin;
+    public int doorsOpenMin;
+    public int doorsCloseMin;
+    private Map currentMap;
     public void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         
         timeText = GetComponent<TMP_Text>();
+
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
+        bool gotStartingMin = false;
+        for(int i = 0; i < 24; i++)
+        {
+            if (currentMap.routineDict[i] != "LO" && !gotStartingMin)
+            {
+                startingMin = i - 1;
+                if(startingMin < 0)
+                {
+                    startingMin = 0;
+                }
+                gotStartingMin = true;
+            }
+            if (currentMap.routineDict[i] == "LO" && gotStartingMin)
+            {
+                doorsCloseMin = i - 1;
+                doorsOpenMin = startingMin + 3;
+            }
+        }
         day = 1;
         sec = 50;
-        min = 7;
-        period = "Lights Out";
-        periodCode = "LO";
-        timeText.text = "07:50 - Lights Out (Day 1)";
+        min = startingMin;
     }
     public void OnEnable()
     {

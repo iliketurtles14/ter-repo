@@ -141,6 +141,9 @@ public class ApplyMainMenuData : MonoBehaviour
         spriteState = mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[329];
         mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Button>().spriteState = spriteState;
+        spriteState = mmc.Find("TitlePanel").Find("CreditsButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[329];
+        mmc.Find("TitlePanel").Find("CreditsButton").GetComponent<Button>().spriteState = spriteState;
         //options stuff
         //mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
         //mmc.Find("OptionsPanel").Find("NormalizeCheckBox").GetComponent<Image>().sprite = UISprites[215];

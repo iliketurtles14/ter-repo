@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 3022241687264094852}
   - component: {fileID: 5341286191016631086}
   - component: {fileID: 6680145677854381454}
+  - component: {fileID: -3052007431216516377}
   m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
@@ -78,7 +79,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!212 &6606782495365490341
 SpriteRenderer:
   serializedVersion: 2
@@ -243,6 +244,7 @@ MonoBehaviour:
   bodyDirSprites: []
   outfitDirSprites: []
   shouldUseNoLooks: 0
+  shouldUseHalfLooks: 0
 --- !u!114 &6562309745721140569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +373,8 @@ MonoBehaviour:
   isInGym: 0
   shouldReset: 0
   isAtJob: 0
+  isAtLockdown: 0
+  isAtBed: 0
   dirToLook: 
 --- !u!114 &-5813940400225957718
 MonoBehaviour:
@@ -426,6 +430,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735fa4045c8ee4b4ab45149c17efdf01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MakeNPCInv
+--- !u!114 &-3052007431216516377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def326bd2b390354b8754adf12ca3f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCNameColor
+  currentColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &347473100117320719
 GameObject:
   m_ObjectHideFlags: 0

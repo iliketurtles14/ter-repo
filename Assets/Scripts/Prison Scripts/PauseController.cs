@@ -34,7 +34,6 @@ public class PauseController : MonoBehaviour
     {
         //player movement
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        player.GetComponent<PlayerCtrl>().enabled = false;
         player.GetComponent<PlayerAnimation>().enabled = false;
 
         // Only capture state if not already paused
@@ -126,7 +125,6 @@ public class PauseController : MonoBehaviour
             player = RootObjectCache.GetRoot("Player");
         }
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        player.GetComponent<PlayerCtrl>().enabled = true;
         int actionNum = player.GetComponent<BodyController>().currentActionNum;
         if((actionNum == 2 || actionNum == 15 || actionNum == 11 || actionNum == 4 || actionNum == 1) &&
             !(sittablesScript.onSittable && sittablesScript.onBed))

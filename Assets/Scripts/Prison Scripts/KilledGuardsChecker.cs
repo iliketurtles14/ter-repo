@@ -27,17 +27,25 @@ public class KilledGuardsChecker : MonoBehaviour//.2, .4, .8
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        foreach(Transform npc in aStar)
+        foreach (Transform npc in aStar)
         {
             if (npc.name.Contains("Guard"))
             {
                 guards.Add(npc.gameObject);
             }
         }
+
+        if(guards.Count == 0)
+        {
+            GetComponent<KilledGuardsChecker>().enabled = false;
+        }
+
         foreach(GameObject guard in guards)
         {
             guardColDatas.Add(guard.GetComponent<NPCCollectionData>());
         }
+
+        Debug.Log(guardColDatas.Count);
         ready = true;
     }
     private void Update()
@@ -61,6 +69,7 @@ public class KilledGuardsChecker : MonoBehaviour//.2, .4, .8
 
         if(guardKillCount >= guardColDatas.Count * .4f && !lockdownScript.lockdownIsActive)
         {
+            Debug.Log("doing lockdonw");
             lockdownScript.StartLockdown();
             lockdownScript.isRiotLockdown = true;
         }

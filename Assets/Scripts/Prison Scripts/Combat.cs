@@ -46,7 +46,12 @@ public class Combat : MonoBehaviour
             LockOff();
         }
 
-        if(inAttackMode && mcs.isTouchingNPC && Input.GetMouseButtonDown(0))
+        if(isLockedOn && targetNPC.GetComponent<NPCCollectionData>().npcData.isDead)
+        {
+            LockOff();
+        }
+
+        if(inAttackMode && mcs.isTouchingNPC && Input.GetMouseButtonDown(0) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
         {
             LockOn(mcs.touchedNPC);
             return;
@@ -146,8 +151,8 @@ public class Combat : MonoBehaviour
             case "down": lookNum = 3; break;
         }
 
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         GetComponent<PlayerCtrl>().canMove = false;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
         GetComponent<PlayerAnimation>().enabled = false;
@@ -178,6 +183,11 @@ public class Combat : MonoBehaviour
     }
     public void LockOn(GameObject npc)
     {
+        if (npc.GetComponent<NPCCollectionData>().npcData.isRecruited)
+        {
+            return;
+        }
+        
         isLockedOn = true;
         targetNPC = npc;
 

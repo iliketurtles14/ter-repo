@@ -14,6 +14,7 @@ public class VitalController : MonoBehaviour
     public List<Sprite> friendsList = new List<Sprite>();
     public Sprite energyPercentage;
     public Sprite heatPercentage;
+    public Sprite friendsX;
     private PlayerData data;
     public float energyRate;
     public float healthRate;
@@ -88,12 +89,13 @@ public class VitalController : MonoBehaviour
             data.health = maxHealth;
         }
 
-        if (oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat)
+        if (oldHealth != data.health || oldEnergy != data.energy || oldMoney != data.money || oldHeat != data.heat || oldFriends != data.friends)
         {
             oldHealth = data.health;
             oldEnergy = data.energy;
             oldMoney = data.money;
             oldHeat = data.heat;
+            oldFriends = data.friends;
             SetVitals();
         }
 
@@ -116,7 +118,11 @@ public class VitalController : MonoBehaviour
         {
             Destroy(obj.gameObject);
         }
-        foreach(Transform obj in ic.Find("MoneyPanel"))
+        foreach (Transform obj in ic.Find("MoneyPanel"))
+        {
+            Destroy(obj.gameObject);
+        }
+        foreach (Transform obj in ic.Find("FriendsPanel"))
         {
             Destroy(obj.gameObject);
         }
@@ -188,6 +194,35 @@ public class VitalController : MonoBehaviour
 
             GameObject letter = Instantiate(Resources.Load<GameObject>("VitalObj"), ic.Find("MoneyPanel"));
             letter.GetComponent<Image>().sprite = moneyList[num];
+            letter.GetComponent<RectTransform>().sizeDelta = sizeVector;
+        }
+        if(data.friends > 0)
+        {
+            ic.Find("FriendsPanel").gameObject.SetActive(true);
+            ic.Find("FriendsSprite").gameObject.SetActive(true);
+        }
+        else
+        {
+            ic.Find("FriendsPanel").gameObject.SetActive(false);
+            ic.Find("FriendsSprite").gameObject.SetActive(false);
+        }
+        GameObject friendsXObj = Instantiate(Resources.Load<GameObject>("VitalObj"), ic.Find("FriendsPanel"));
+        friendsXObj.GetComponent<Image>().sprite = friendsX;
+        friendsXObj.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 55);
+        foreach (char c in Convert.ToString(data.friends))
+        {
+            int num = c - '0';
+            if (num == 1)
+            {
+                sizeVector = new Vector2(30, 55);
+            }
+            else
+            {
+                sizeVector = new Vector2(40, 55);
+            }
+
+            GameObject letter = Instantiate(Resources.Load<GameObject>("VitalObj"), ic.Find("FriendsPanel"));
+            letter.GetComponent<Image>().sprite = friendsList[num];
             letter.GetComponent<RectTransform>().sizeDelta = sizeVector;
         }
     }

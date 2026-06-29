@@ -25,7 +25,9 @@ public class NPCData : ScriptableObject
     public bool isDead;
     public bool isTied;
     public bool hasFood;
+    public bool isSleeping;
     public GameObject bed;
     public GameObject desk;
     public Mission mission;
+    public bool isRecruited;
 }

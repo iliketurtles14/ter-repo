@@ -22,7 +22,7 @@ public class DeskInv : MonoBehaviour
     private GameObject aStar;
     private ItemBehaviours itemBehavioursScript;
     private List<InventoryItem> inventoryList;
-    private MouseCollisionOnItems mouseCollisionScript;
+    private MouseCollisionOnItems mcs;
     private GameObject player;
     private Sprite ClearSprite;
     private List<GameObject> deskSlots = new List<GameObject>();
@@ -44,16 +44,19 @@ public class DeskInv : MonoBehaviour
     private SpecialMessages specialMessagesScript;
     private MissionAsk missionAskScript;
     private InventorySelection selectionScript;
+    private WarningMessage warningScript;
+
     public void Start()
     {
         //get vars
         MenuCanvas = RootObjectCache.GetRoot("MenuCanvas");
         InventoryCanvas = RootObjectCache.GetRoot("InventoryCanvas");
+        warningScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WarningMessage>();
         tiles = RootObjectCache.GetRoot("Tiles");
         inventoryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Inventory>();
         aStar = RootObjectCache.GetRoot("A*");
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
-        mouseCollisionScript = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        mcs = InventoryCanvas.transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player");
         ClearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         timeObject = InventoryCanvas.transform.Find("Time").gameObject;
@@ -78,17 +81,24 @@ public class DeskInv : MonoBehaviour
     }
     public void Update()
     {
-        
         HPAScript.isSearching = isOpening;
         
         if (!deskIsOpen)
         {
             currentDesk = null;
-            if (mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
+            if (mcs.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
-                desk = mouseCollisionScript.touchedDesk;
+                if(mcs.touchedDesk.name == "MedicDesk")
+                {
+                    if(player.GetComponent<OutfitController>().outfit != "Medic")
+                    {
+                        StartCoroutine(warningScript.CreateWarningMessage("Infirmary staff only!"));
+                        return;
+                    }
+                }
+                desk = mcs.touchedDesk;
                 distance = Vector2.Distance(player.transform.position, desk.transform.position);
-                if(distance <= 2.4f)
+                if (distance <= 2.4f)
                 {
                     deskText = GetDeskText(desk);
                     deskInv = desk.GetComponent<DeskData>().deskInv;
@@ -122,11 +132,11 @@ public class DeskInv : MonoBehaviour
                     break;
                 }
             }
-            if (mouseCollisionScript.isTouchingInvSlot)
+            if (mcs.isTouchingInvSlot)
             {
                 for (int i = 1; i <= 6; i++)
                 {
-                    if (mouseCollisionScript.touchedInvSlot.name == "Slot" + i)
+                    if (mcs.touchedInvSlot.name == "Slot" + i)
                     {
                         invSlotNumber = i - 1;
                         break;
@@ -134,7 +144,7 @@ public class DeskInv : MonoBehaviour
                 }
             }
 
-            if (mouseCollisionScript.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !deskIsFull)
+            if (mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !deskIsFull)
             {
                 for (int i = 0; i < deskInv.Count; i++)
                 {
@@ -146,7 +156,7 @@ public class DeskInv : MonoBehaviour
                     }
                 }
                 inventoryList[invSlotNumber].itemData = null;
-                mouseCollisionScript.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
+                mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
             }
             
             //putting items in the inv
@@ -163,11 +173,11 @@ public class DeskInv : MonoBehaviour
                 }
             }
 
-            if (mouseCollisionScript.isTouchingDeskSlot)
+            if (mcs.isTouchingDeskSlot)
             {
                 for (int i = 1; i <= 20; i++)
                 {
-                    if (mouseCollisionScript.touchedDeskSlot.name == "Slot" + i)
+                    if (mcs.touchedDeskSlot.name == "Slot" + i)
                     {
                         deskSlotNumber = i - 1;
                         break;
@@ -175,7 +185,7 @@ public class DeskInv : MonoBehaviour
                 }
             }
 
-            if (mouseCollisionScript.isTouchingDeskSlot && deskInv[deskSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !invIsFull)
+            if (mcs.isTouchingDeskSlot && deskInv[deskSlotNumber].itemData != null && Input.GetMouseButtonDown(0) && !invIsFull)
             {
                 if (!deskInv[deskSlotNumber].itemData.forFavor)
                 {
@@ -229,10 +239,10 @@ public class DeskInv : MonoBehaviour
                     player.GetComponent<PlayerCollectionData>().playerData.money += cost;
                 }
                 deskInv[deskSlotNumber].itemData = null;
-                mouseCollisionScript.touchedDeskSlot.GetComponent<Image>().sprite = ClearSprite;
+                mcs.touchedDeskSlot.GetComponent<Image>().sprite = ClearSprite;
             }
             //exiting the desk
-            if (!mouseCollisionScript.isTouchingInvSlot && !mouseCollisionScript.isTouchingDeskPanel && !mouseCollisionScript.isTouchingDeskSlot && !mouseCollisionScript.isTouchingExtra && !mouseCollisionScript.isTouchingDesk && Input.GetMouseButtonDown(0))
+            if (!mcs.isTouchingInvSlot && !mcs.isTouchingDeskPanel && !mcs.isTouchingDeskSlot && !mcs.isTouchingExtra && !mcs.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
                 CloseDesk();
             }
@@ -262,6 +272,10 @@ public class DeskInv : MonoBehaviour
                 return "Gardening Tools";
             case "JanitorDesk":
                 return "Cleaning Supplies";
+            case "CutleryTable":
+                return "Cutlery";
+            case "MedicDesk":
+                return "Medical Supplies";
             case "NPCDesk":
             case "ETNPCDesk":
                 int deskNumber = aDesk.GetComponent<DeskData>().inmateCorrelationNumber;

@@ -19,6 +19,7 @@ public class NPCAI : MonoBehaviour
     private Schedule scheduleScript;
     private Transform tiles;
     public List<Transform> currentPossibleWaypoints;
+    private NPCSleep sleepScript;
     public bool isMoving;
     public Transform currentWaypoint;
     public bool isFreeWalking;
@@ -28,6 +29,7 @@ public class NPCAI : MonoBehaviour
     public bool shouldReset;
     public bool isAtJob;
     public bool isAtLockdown;
+    public bool isAtBed;
     private ApplyPrisonData applyPrisonDataScript;
     private List<Transform> positions = new List<Transform>(); //job positions (didnt change the name)
     private int timeBetweenPositions;
@@ -38,6 +40,8 @@ public class NPCAI : MonoBehaviour
     private SetFacingDirections directionScript;
     public string dirToLook = "any";
     private bool canChangeDir;
+    private NPCCollectionData npcColData;
+    private bool ready;
     private void Start()
     {   
         //get npctype and num
@@ -67,6 +71,8 @@ public class NPCAI : MonoBehaviour
         applyPrisonDataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         weedScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WeedController>();
         directionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetFacingDirections>();
+        sleepScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<NPCSleep>();
+        npcColData = GetComponent<NPCCollectionData>();
 
         StartCoroutine(StartWait());
     }
@@ -78,7 +84,10 @@ public class NPCAI : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        ready = true;
         LoadNormalJobPositions();
         LoadDeskPositions();
     }
@@ -260,26 +269,33 @@ public class NPCAI : MonoBehaviour
         isInCanteen = false;
         isInGym = false;
         isAtJob = false;
+        isAtLockdown = false;
+        isAtBed = false;
         StopAllCoroutines();
         seeker.CancelCurrentPathRequest(true);
     }
     private void Update()
     {
+        if (!ready)
+        {
+            return;
+        }
+        
         //get period
         period = scheduleScript.periodCode;
 
-        if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown)
+        if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
             currentWaypoint = null;
             SetCurrentPossibleWaypoints();
-            if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
+            if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
             {
                 SetCurrentWaypoint();
                 seeker.StartPath(transform.position, currentWaypoint.position);
                 isMoving = true;
             }
         }
-        else if (isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown)
+        else if (isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
             try
             {
@@ -314,6 +330,14 @@ public class NPCAI : MonoBehaviour
         {
             isAtLockdown = false;
         }
+        if(period != "LO")
+        {
+            isAtBed = false;
+            if (npcColData.npcData.isSleeping)
+            {
+                sleepScript.Wake(gameObject);
+            }
+        }
 
         if ((((period == "L" || period == "D" || period == "B" || period == "E" || period == "S" || period == "R") && npcType == "Guard") ||
             ((period == "R" || period == "D" || period == "L" || period == "B") && npcType == "Inmate")) &&
@@ -336,7 +360,6 @@ public class NPCAI : MonoBehaviour
             {
                 switch (period)
                 {
-                    case "LO":
                     case "FT":
                         if (npcType == "Inmate" && waypoint.name == "InmateWaypoint")
                         {
@@ -347,6 +370,19 @@ public class NPCAI : MonoBehaviour
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
+                        }
+                        break;
+                    case "LO":
+                        if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
+                        {
+                            isFreeWalking = true;
+                            currentPossibleWaypoints.Add(waypoint);
+                        }
+                        else if(npcType == "Inmate")
+                        {
+                            isFreeWalking = false;
+                            isAtBed = true;
+                            StartCoroutine(InmateBed());
                         }
                         break;
                     case "W":
@@ -479,6 +515,22 @@ public class NPCAI : MonoBehaviour
         canChangeDir = false;
         isMoving = false;
         isFinishing = false;
+    }
+    private IEnumerator InmateBed()
+    {
+        GameObject bed = GetComponent<NPCCollectionData>().npcData.bed;
+        seeker.StartPath(transform.position, GetComponent<NPCCollectionData>().npcData.bed.transform.position);
+        while (true)
+        {
+            float distance = Vector2.Distance(transform.position, bed.transform.position);
+            if(distance < .01f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        seeker.CancelCurrentPathRequest(true);
+        sleepScript.Sleep(gameObject, bed);
     }
     private IEnumerator InmateCanteen()
     {

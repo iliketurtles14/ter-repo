@@ -23,9 +23,12 @@ public class NPCAnimation : MonoBehaviour
     private int whichCycle = 0;
     private NPCAI npcAIScript;
     public bool shouldUseNoLooks;
+    public bool shouldUseHalfLooks; //look nums go up by 1 instead of 2
+    private NPCCollectionData npcColData;
 
     public void OnEnable()
     {
+        npcColData = GetComponent<NPCCollectionData>();
         oldPos = currentPos = transform.position;
         if (string.IsNullOrEmpty(lookDir))
         {
@@ -42,16 +45,31 @@ public class NPCAnimation : MonoBehaviour
 
     public void Update()
     {
+        shouldUseHalfLooks = npcColData.npcData.isSleeping;
+        
         transform.Find("Outfit").position = transform.position;
         
         if(lookDir != null)
         {
-            switch (lookDir)
+            if (shouldUseHalfLooks)
             {
-                case "right": lookNum = 0; break;
-                case "up": lookNum = 2; break;
-                case "left": lookNum = 4; break;
-                case "down": lookNum = 6; break;
+                switch (lookDir)
+                {
+                    case "right": lookNum = 0; break;
+                    case "up": lookNum = 1; break;
+                    case "left": lookNum = 2; break;
+                    case "down": lookNum = 3; break;
+                }
+            }
+            else
+            {
+                switch (lookDir)
+                {
+                    case "right": lookNum = 0; break;
+                    case "up": lookNum = 2; break;
+                    case "left": lookNum = 4; break;
+                    case "down": lookNum = 6; break;
+                }
             }
 
             if (shouldUseNoLooks)

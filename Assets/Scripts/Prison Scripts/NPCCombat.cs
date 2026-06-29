@@ -11,27 +11,42 @@ public class NPCCombat : MonoBehaviour
     public bool isPunching;
     private Transform mc;
     private Death deathScript;
+    private NPCCollectionData npcColData;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
+        npcColData = GetComponent<NPCCollectionData>();
     }
 
     private void Update()
     {
-        if (isAggro)
-        {
-            SetTarget(target);
-        }
-        else
-        {
-            DeAggro();
-        }
 
-        if (!isPunching && isAggro && GetComponent<CapsuleCollider2D>().IsTouching(target.GetComponent<CapsuleCollider2D>()))
+        if (!isPunching && isAggro &&
+            Vector2.Distance(transform.position, target.transform.position) <= 1.2f &&(
+            (target.GetComponent<NPCCollectionData>() != null && !target.GetComponent<NPCCollectionData>().npcData.isDead) || 
+            (target.GetComponent<PlayerCollectionData>() != null && !target.GetComponent<PlayerCollectionData>().playerData.isDead)))
         {
             isPunching = true;
             StartCoroutine(Punch(target));
+        }
+
+        if (isAggro)
+        {
+            if (target.name == "Player")
+            {
+                if (target.GetComponent<PlayerCollectionData>().playerData.isDead)
+                {
+                    DeAggro();
+                }
+            }
+            else
+            {
+                if (target.GetComponent<NPCCollectionData>().npcData.isDead)
+                {
+                    DeAggro();
+                }
+            }
         }
 
         if (isAggro)
@@ -41,6 +56,15 @@ public class NPCCombat : MonoBehaviour
             {
                 DeAggro();
             }
+        }
+
+        if (isAggro)
+        {
+            SetTarget(target);
+        }
+        else if (!npcColData.npcData.isRecruited)
+        {
+            DeAggro();
         }
     }
     private void OnDisable()
@@ -58,6 +82,7 @@ public class NPCCombat : MonoBehaviour
         GetComponent<AILerp>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = true;
         GetComponent<NavMeshAgent>().destination = aTarget.transform.position;
+        GetComponent<NavMeshAgent>().stoppingDistance = 1.1f;
     }
     public IEnumerator Punch(GameObject aTarget)
     {
@@ -195,6 +220,7 @@ public class NPCCombat : MonoBehaviour
     public void DeAggro()
     {
         isAggro = false;
+        isPunching = false;
         GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<AILerp>().enabled = true;
         GetComponent<NPCAI>().enabled = true;

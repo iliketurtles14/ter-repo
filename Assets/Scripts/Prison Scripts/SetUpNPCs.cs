@@ -17,12 +17,16 @@ public class SetUpNPCs : MonoBehaviour
     private Transform aStar;
     private Transform tiles;
     private ItemDataCreator creator;
+    private NPCSleep sleepScript;
+    private SetInmateCorrelations setScript;
     private void Start()
     {
         surface = RootObjectCache.GetRoot("NavMesh").GetComponent<NavMeshSurface>();
         aStar = RootObjectCache.GetRoot("A*").transform;
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
+        sleepScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<NPCSleep>();
+        setScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetInmateCorrelations>();
 
         StartCoroutine(StartWait());
     }
@@ -34,15 +38,15 @@ public class SetUpNPCs : MonoBehaviour
         yield return new WaitForEndOfFrame();
         map = GetComponent<LoadPrison>().currentMap;
 
-        NPCSetUp();
+        StartCoroutine(NPCSetUp());
     }
-    private void NPCSetUp()
+    private IEnumerator NPCSetUp()
     {
         //make navmesh surface and a* surface
 
         foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
-        {
-            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door"))
+        {                 //REMEMBER TO ALSO ADD THIS TO THE LOWER FOREACH LOOP IF ADDING NEW OBJECTS THAT SHOULDNT HAVE COLLISION WITH INMATES
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed"))
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = true;
             }
@@ -57,7 +61,7 @@ public class SetUpNPCs : MonoBehaviour
 
         foreach (Transform obj in tiles.Find("GroundObjects"))
         {
-            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment"))
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed"))
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = false;
             }
@@ -68,15 +72,15 @@ public class SetUpNPCs : MonoBehaviour
         int guardAmount = map.guardCount;
         int npcAmount = inmateAmount + guardAmount;
 
-        //get freetime waypoints (this is temporary stuff)
-        List<Transform> waypoints = new List<Transform>();
+        //get freetime guard waypoints (this is NOT temporary stuff) heh
+        List<Transform> gWaypoints = new List<Transform>();
         foreach(Transform waypoint in tiles.Find("GroundObjects"))
         {
             if (waypoint.CompareTag("Waypoint"))
             {
-                if(waypoint.name == "InmateWaypoint")
+                if(waypoint.name == "GuardWaypoint")
                 {
-                    waypoints.Add(waypoint);
+                    gWaypoints.Add(waypoint);
                 }
             }
         }
@@ -135,15 +139,14 @@ public class SetUpNPCs : MonoBehaviour
             NPCData data = new NPCData();
             npc.GetComponent<NPCCollectionData>().npcData = data;
             npc.transform.parent = aStar;
-            if(i < inmateAmount)
+            if (i < inmateAmount)
             {
                 npc.name = "Inmate" + (i + 1);
             }
-            else if(i >= inmateAmount)
+            else if (i >= inmateAmount)
             {
                 npc.name = "Guard" + (i - inmateAmount + 1);
             }
-
             npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i];
             npc.GetComponent<NPCCollectionData>().npcData.charNum = NPCSave.instance.npcCharacters[i];
 
@@ -177,14 +180,36 @@ public class SetUpNPCs : MonoBehaviour
 
             npc.GetComponent<NavMeshAgent>().updateRotation = false;
             npc.GetComponent<NavMeshAgent>().updateUpAxis = false;
-            //set npc pos randomly
-            rand = UnityEngine.Random.Range(0, waypoints.Count);
-            npc.transform.position = waypoints[rand].position;
+
+            //set guard pos randomly
+            if(npc.name.Contains("Guard") && gWaypoints.Count > 0)
+            {
+                rand = UnityEngine.Random.Range(0, gWaypoints.Count);
+                npc.transform.position = gWaypoints[rand].position;
+            }
 
             //other
             if (npc.name.Contains("Guard"))
             {
                 npc.transform.Find("IconCanvas").gameObject.SetActive(false);
+            }
+        }
+
+        //set inmate correlations
+        setScript.Set();
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+
+        //send inmates to beds
+        foreach (Transform npc in aStar)
+        {
+            if (npc.name.StartsWith("Inmate"))
+            {
+                if (npc.GetComponent<NPCCollectionData>().npcData.bed != null)
+                {
+                    sleepScript.Sleep(npc.gameObject, npc.GetComponent<NPCCollectionData>().npcData.bed);
+                }
             }
         }
 

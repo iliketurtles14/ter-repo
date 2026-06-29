@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 93a06278f371f60498d49af8dd39cc3d
+guid: f58fc48888109274ea89fe68ad3324bc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1512763632761734357
-    second: Mouldy_Toof_Studios_0
+      213: 325440641546151924
+    second: Credits_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mouldy_Toof_Studios_0
+      name: ZoneObjectsButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 563
-        height: 137
+        width: 71
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5d484ef428a6ef410800000000000000
-      internalID: 1512763632761734357
+      spriteID: e447f870e653c6de0800000000000000
+      internalID: -1338636242546363314
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mouldy_Toof_Studios_0: 1512763632761734357
+      ZoneObjectsButton_0: -1338636242546363314
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

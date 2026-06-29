@@ -11,11 +11,12 @@ public class ExtraNPCAI : MonoBehaviour
     private Seeker seeker;
     private Transform jobWP;
     private Transform medicWP;
-    private Transform spawnWP;
+    public Transform spawnWP;
     private List<Transform> guardWPs = new List<Transform>();
     private Transform tiles;
     private bool alreadyWentToday;
     private int dayWent;
+    private Saving savingScript;
     private void Start()
     {
         //9 - job and medic spawn
@@ -26,6 +27,7 @@ public class ExtraNPCAI : MonoBehaviour
         routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").GetComponent<Routine>();
         seeker = GetComponent<Seeker>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
+        savingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Saving>();
 
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
@@ -72,6 +74,11 @@ public class ExtraNPCAI : MonoBehaviour
         if (dayWent != routineScript.day)
         {
             alreadyWentToday = false;
+        }
+
+        if(name == "Warden")
+        {
+            savingScript.wardenWent = alreadyWentToday;
         }
     }
     private IEnumerator JobOfficerAI()

@@ -17,6 +17,9 @@ public class PayphoneMenu : MonoBehaviour
     private Transform player;
     private MouseCollisionOnItems mcs;
     private bool ready;
+    public bool hint1Bought;
+    public bool hint2Bought;
+    public bool hint3Bought;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -82,6 +85,19 @@ public class PayphoneMenu : MonoBehaviour
     public void BuyTip(int hintNum)
     {
         Debug.Log(hintNum);
+
+        switch (hintNum)
+        {
+            case 1:
+                hint1Bought = true;
+                break;
+            case 2:
+                hint2Bought = true;
+                break;
+            case 3:
+                hint3Bought = true;
+                break;
+        }
         
         int price = ((hintNum - 1) * 10) + baseCost;
         if(player.GetComponent<PlayerCollectionData>().playerData.money < price)

@@ -309,7 +309,7 @@ public class ToiletMenu : MonoBehaviour
             toiletWater.GetComponent<ToiletWater>().toiletPos = toilet.transform.position;
         }
     }
-    private void UnclogToilet(GameObject toilet)
+    public void UnclogToilet(GameObject toilet)
     {
         if (!toilet.GetComponent<ToiletInv>().isClogged)
         {

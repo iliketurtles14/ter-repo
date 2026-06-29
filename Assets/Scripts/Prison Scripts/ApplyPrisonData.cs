@@ -487,7 +487,7 @@ public class ApplyPrisonData : MonoBehaviour
         UISprites = senderScript.UIImages;
 
         //GetComponent<LoadPrison>().StartLoad()
-        SetNPCOrder();
+        //SetNPCOrder();
         LoadImages();
     }
     private Sprite Cutter(Sprite sprite, int x, int y, int width, int height)
@@ -750,7 +750,8 @@ public class ApplyPrisonData : MonoBehaviour
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 199, 78, 8, 11));
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 208, 78, 8, 11));
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 217, 78, 8, 11));
-        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 226, 78, 8, 11));
+        vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 226, 78, 8, 11));//217 52
+        vitalControllerScript.friendsX = Cutter(UISprites[273], 217, 52, 8, 11);
 
         //holding sprites
         RabbitHoldingSprites.Add(NPCSprites[127]);

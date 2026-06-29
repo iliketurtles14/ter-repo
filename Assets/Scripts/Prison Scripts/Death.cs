@@ -150,9 +150,11 @@ public class Death : MonoBehaviour
         Debug.Log("Killing " + npc.name);
         npc.GetComponent<NPCCombat>().isAggro = false;
         npc.GetComponent<NPCCombat>().enabled = false;
+        npc.GetComponent<NPCCombat>().isPunching = false;
         npc.GetComponent<NavMeshAgent>().enabled = false;
         npc.GetComponent<AILerp>().enabled = false;
         npc.GetComponent<NPCAI>().enabled = false;
+        npc.GetComponent<NPCCollectionData>().npcData.isRecruited = false;
         npc.GetComponent<NPCCollectionData>().npcData.isDead = true;
         npc.GetComponent<NPCAnimation>().enabled = false;
         BodyController bc = npc.GetComponent<BodyController>();
@@ -178,6 +180,9 @@ public class Death : MonoBehaviour
     }
     private IEnumerator NPCWake(GameObject npc)
     {
+        yield return new WaitForEndOfFrame();
+        npc.GetComponent<NPCCombat>().isAggro = false;
+        
         NPCCollectionData npcColData = npc.GetComponent<NPCCollectionData>();
         float time = 0f;
         while (time < 11f)

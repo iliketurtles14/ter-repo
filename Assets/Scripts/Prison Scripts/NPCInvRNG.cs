@@ -29,6 +29,8 @@ public class NPCInvRNG : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
         currentMap = GetComponent<LoadPrison>().currentMap;
         GetItemList();

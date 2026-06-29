@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 8778787008837161793}
   - component: {fileID: 167148707535915454}
   - component: {fileID: 3124819760221514121}
+  - component: {fileID: 2273326790271587584}
+  - component: {fileID: 7649519896235101875}
   m_Layer: 6
   m_Name: CutleryTable
-  m_TagString: Untagged
+  m_TagString: Desk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +140,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &2273326790271587584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531885344142971243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dccf549e6abb514bb9bbf4245b5a0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskData
+  deskInv: []
+  inmateCorrelationNumber: -1
+--- !u!114 &7649519896235101875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531885344142971243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c26af5b0ac1742840dd57dd5ee113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskRNG

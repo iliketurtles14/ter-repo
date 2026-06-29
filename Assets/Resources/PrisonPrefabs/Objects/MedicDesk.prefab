@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 1383132487111033111}
   - component: {fileID: 7709154431553806631}
   - component: {fileID: 4972276051785558612}
+  - component: {fileID: -3062066799881504316}
+  - component: {fileID: 2378870165801344602}
+  - component: {fileID: 2787330871614472976}
   m_Layer: 6
   m_Name: MedicDesk
   m_TagString: Untagged
@@ -138,3 +141,42 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-3062066799881504316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652413001364049025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5c26af5b0ac1742840dd57dd5ee113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskRNG
+--- !u!114 &2378870165801344602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652413001364049025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dccf549e6abb514bb9bbf4245b5a0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskData
+  deskInv: []
+  inmateCorrelationNumber: -1
+--- !u!114 &2787330871614472976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652413001364049025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f01ce22cd57b8149949e2b8a33873aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskPickUp
+  isPickedUp: 0

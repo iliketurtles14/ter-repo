@@ -54,7 +54,7 @@ public class LogoMenu : MonoBehaviour
         else if(currentScreen == "text")
         {
             transform.Find("IntroText").gameObject.SetActive(false);
-            transform.Find("Logos").gameObject.SetActive(true);
+            //transform.Find("Logos").gameObject.SetActive(true);
             currentScreen = "logos";
         }
         else if(currentScreen == "logos")

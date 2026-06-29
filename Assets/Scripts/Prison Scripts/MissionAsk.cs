@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class MissionAsk : MonoBehaviour
     private PauseController pc;
     private ItemDataCreator creator;
     private Transform aStar;
+    private bool ready;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -24,10 +26,30 @@ public class MissionAsk : MonoBehaviour
         creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
         aStar = RootObjectCache.GetRoot("A*").transform;
 
+        StartCoroutine(StartWait());
         CloseMenu();
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        ready = true;
     }
     private void Update()
     {
+        if (!ready)
+        {
+            return;
+        }
+        
         if(mcs.isTouchingNPC && mcs.touchedNPC.name.Contains("Inmate") && !String.IsNullOrEmpty(mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.mission.type) && Input.GetMouseButtonDown(0))
         {
             AskFavor(mcs.touchedNPC);

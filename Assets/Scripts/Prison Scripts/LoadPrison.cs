@@ -949,10 +949,8 @@ public class LoadPrison : MonoBehaviour
                     // Cast Corner (Right + Down)
                     if (x + 1 < sizeX && y - 1 >= 0)
                     {
-                        Debug.Log("here 1111111");
                         if (roofShadArr[x + 1, y - 1] != 't' && roofShadArr[x + 1, y - 1] != 'd' && roofShadArr[x + 1, y - 1] != 'e')
                         {
-                            Debug.Log("herererherehrerherhehrehrerehrherher");
                             roofShadArr[x + 1, y - 1] = 'f';
                         }
                     }
@@ -976,23 +974,6 @@ public class LoadPrison : MonoBehaviour
                 }
             }
         }
-
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        for (int y = sizeY - 1; y >= 0; y--)
-        {
-            for (int x = 0; x < sizeX; x++)
-            {
-                if (roofShadArr[x, y] == '\0')
-                {
-                    roofShadArr[x, y] = ' ';
-                }
-
-                sb.Append(roofShadArr[x, y]);
-            }
-            sb.AppendLine();
-        }
-        File.WriteAllText("C:\\Users\\ilike\\OneDrive\\Desktop\\as.txt", sb.ToString());
-
 
         int width = shadArr.GetLength(0);
         int height = shadArr.GetLength(1);
@@ -1284,7 +1265,7 @@ public class LoadPrison : MonoBehaviour
             }
             
             string tileType = tileDict[tileVars[0]];
-            Debug.Log("Tile ID: " + tileVars[0] + ", TileType: " + tileType);
+            //Debug.Log("Tile ID: " + tileVars[0] + ", TileType: " + tileType);
             string tileLayer = layerDict[tileVars[3]];
 
             GameObject tile;

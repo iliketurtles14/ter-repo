@@ -10,6 +10,7 @@ public class Zones : MonoBehaviour
     public bool isTouchingSafe;
     public bool isTouchingEscape;
     public bool isTouchingSolitary;
+    public bool isTouchingYourCell;
     public bool isTouchingCurrentZone;
 
     public bool isOverriding;
@@ -28,6 +29,7 @@ public class Zones : MonoBehaviour
     private List<GameObject> specialZones = new List<GameObject>();
     private GameObject arrow;
     private Transform ic;
+    private Solitary solitaryScript;
 
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
@@ -48,6 +50,7 @@ public class Zones : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         arrow = RootObjectCache.GetRoot("MenuCanvas").transform.Find("ZoneArrow").gameObject;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        solitaryScript = GetComponent<Solitary>();
 
         StartCoroutine(StartWait());
     }
@@ -68,7 +71,7 @@ public class Zones : MonoBehaviour
         foreach (Transform zone in tiles.Find("Zones"))
         {
             if (zone.name == "Unsafe" || zone.name == "Safe" || zone.name == "Escape" ||
-                zone.name == "Cells" || zone.name == "Solitary")
+                zone.name == "Cells" || zone.name == "Solitary" || zone.name == "YourCell")
             {
                 specialZones.Add(zone.gameObject);
             }
@@ -158,7 +161,12 @@ public class Zones : MonoBehaviour
                 List<GameObject> currentZones = new List<GameObject>();
                 foreach (Transform zone in tiles.Find("Zones"))
                 {
-                    if(zone.name == zoneDict[periodCode])
+                    if(solitaryScript.inSolitary && zone.name == "Solitary")
+                    {
+                        currentZones.Add(zone.gameObject);
+                        zoneExists = true;
+                    }
+                    else if(zone.name == zoneDict[periodCode])
                     {
                         currentZones.Add(zone.gameObject);
                         zoneExists = true;
@@ -232,6 +240,7 @@ public class Zones : MonoBehaviour
             isTouchingSafe = false;
             isTouchingUnsafe = false;
             isTouchingSolitary = false;
+            isTouchingYourCell = false;
             foreach(GameObject zone in specialZones)
             {
                 if (player.GetComponent<CapsuleCollider2D>().IsTouching(zone.GetComponent<BoxCollider2D>()))
@@ -252,6 +261,9 @@ public class Zones : MonoBehaviour
                             break;
                         case "Solitary":
                             isTouchingSolitary = true;
+                            break;
+                        case "YourCell":
+                            isTouchingYourCell = true;
                             break;
                     }
                 }

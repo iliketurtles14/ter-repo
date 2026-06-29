@@ -9,6 +9,7 @@ public class CreateNote : MonoBehaviour
     private Transform mc;
     private PauseController pc;
     private Transform currentPanel;
+    public bool inNote;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -49,6 +50,7 @@ public class CreateNote : MonoBehaviour
         panel.GetComponent<Image>().enabled = false;
         mc.Find("Black").GetComponent<Image>().enabled = false;
         pc.Unpause();
+        inNote = false;
     }
     public void CreateWardenNote(string type, string msg, string warden) //day1, loseJob, getJob, solitary
     {
@@ -83,5 +85,6 @@ public class CreateNote : MonoBehaviour
         panel.GetComponent<Image>().enabled = true;
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(true);
+        inNote = true;
     }
 }

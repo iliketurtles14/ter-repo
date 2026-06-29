@@ -21,6 +21,7 @@ public class Jobs : MonoBehaviour
     private Sprite quotaSprite3; //3rd brightest
     private Sprite quotaSprite4; //original
     private ApplyPrisonData applyScript;
+    private Saving savingScript;
     private Dictionary<string, int> jobPayDict = new Dictionary<string, int>()
     {
         { "Janitor", 5 }, { "Gardening", 10 }, { "Tailor", 15 }, { "Laundry", 20 },
@@ -33,6 +34,7 @@ public class Jobs : MonoBehaviour
         scheduleScript = ic.Find("Period").GetComponent<Schedule>();
         player = RootObjectCache.GetRoot("Player").transform;
         applyScript = GetComponent<ApplyPrisonData>();
+        savingScript = GetComponent<Saving>();
         StartCoroutine(StartWait());
         HideQuotaPanel();
     }
@@ -89,6 +91,7 @@ public class Jobs : MonoBehaviour
         //divide the size by 2 and make that its pos
         float maxWidth = 280;
         float size = (maxWidth * num) / denom;
+        savingScript.jobQuotaBarSize = size;
         GameObject bar = ic.Find("QuotaPanel").Find("BarLine").gameObject;
         if (bar.GetComponent<RectTransform>().sizeDelta.x + size > maxWidth)
         {

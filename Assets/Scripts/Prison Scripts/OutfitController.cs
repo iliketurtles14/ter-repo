@@ -25,6 +25,7 @@ public class OutfitController : MonoBehaviour
     public List<List<Sprite>> HenchmanOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> PrisonerOutfitLists = new List<List<Sprite>>();
     public List<List<Sprite>> SoldierOutfitLists = new List<List<Sprite>>();
+    public List<List<Sprite>> MedicOutfitLists = new List<List<Sprite>>();
     public Dictionary<string, List<List<Sprite>>> outfitDict = new Dictionary<string, List<List<Sprite>>>();
     public void Start()
     {
@@ -51,6 +52,22 @@ public class OutfitController : MonoBehaviour
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitTraySprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitZippingSprites);
         InmateOutfitLists.Add(prisonDataScript.InmateOutfitHoldingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitSleepDeadSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitDiggingSprites);
+        MedicOutfitLists.Add(DataSender.instance.MedicOutfitWalkingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitPunchingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitCuttingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitRakingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitBroomingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitPushUpSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitBenchingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitJumpRopeSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitPullUpSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitChippingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitBoundSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitTraySprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitZippingSprites);
+        MedicOutfitLists.Add(prisonDataScript.MedicOutfitHoldingSprites);
         POWOutfitLists.Add(prisonDataScript.POWOutfitSleepDeadSprites);
         POWOutfitLists.Add(prisonDataScript.POWOutfitDiggingSprites);
         POWOutfitLists.Add(DataSender.instance.POWOutfitWalkingSprites);
@@ -183,6 +200,7 @@ public class OutfitController : MonoBehaviour
         outfitDict = new Dictionary<string, List<List<Sprite>>>
         {
             { "Inmate", InmateOutfitLists },
+            { "Medic", MedicOutfitLists },
             { "POW", POWOutfitLists },
             { "Guard", GuardOutfitLists },
             { "Elf", ElfOutfitLists },
@@ -230,6 +248,9 @@ public class OutfitController : MonoBehaviour
             case 31:
             case 32:
                 outfit = "Inmate";
+                break;
+            case 103:
+                outfit = "Medic";
                 break;
             case 33:
             case 34:
@@ -279,6 +300,10 @@ public class OutfitController : MonoBehaviour
         else if ((name.StartsWith("Guard") || name.StartsWith("Inmate")) && GetComponent<NPCCollectionData>().npcData.isTied)
         {
             currentActionNum = 12;
+        }
+        else if ((name.StartsWith("Guard") || name.StartsWith("Inmate")) && GetComponent<NPCCollectionData>().npcData.isSleeping)
+        {
+            currentActionNum = 0;
         }
         else if (itemBehavioursScript.isCutting && name == "Player")
         {

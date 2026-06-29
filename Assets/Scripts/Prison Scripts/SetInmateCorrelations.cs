@@ -7,24 +7,18 @@ using UnityEngine;
 
 public class SetInmateCorrelations : MonoBehaviour //this is for correlations with desks and beds, not for seats at food periods and such
 {
-    private List<Transform> beds = new List<Transform>();
-    private List<Transform> desks = new List<Transform>();
-    private List<Transform> inmates = new List<Transform>();
+    public List<Transform> beds = new List<Transform>();
+    public List<Transform> desks = new List<Transform>();
+    public List<Transform> inmates = new List<Transform>();
     private Transform aStar;
     private Transform tiles;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         aStar = RootObjectCache.GetRoot("A*").transform;
-        StartCoroutine(StartWait());
     }
-    private IEnumerator StartWait()
+    public void Set()
     {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
         GetLists();
         SetInmateOrder();
         SetInmateBed();

@@ -425,6 +425,10 @@ public class BodyController : MonoBehaviour
         {
             currentActionNum = 12;
         }
+        else if((name.StartsWith("Guard") || name.StartsWith("Inmate")) && GetComponent<NPCCollectionData>().npcData.isSleeping)
+        {
+            currentActionNum = 0;
+        }
         else if (itemBehavioursScript.isCutting && name == "Player")
         {
             currentActionNum = 4;

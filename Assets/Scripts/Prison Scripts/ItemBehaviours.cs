@@ -16,6 +16,7 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     private InventorySelection selectionScript;
+    private Solitary solitaryScript;
     private Transform player;
     private Particles particlesScript;
     private HoleClimb holeClimbScript; //for sprites
@@ -115,6 +116,7 @@ public class ItemBehaviours : MonoBehaviour
         player = RootObjectCache.GetRoot("Player").transform;
         particlesScript = GetComponent<Particles>();
         creator = GetComponent<ItemDataCreator>();
+        solitaryScript = GetComponent<Solitary>();
 
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -1289,6 +1291,11 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void RemoveTileDurability(GameObject touchedTile, int currentDurability, int itemStrength)
     {
+        if (!solitaryScript.damagedTiles.Contains(touchedTile))
+        {
+            solitaryScript.damagedTiles.Add(touchedTile);
+        }
+
         TileData touchedTileData = touchedTile.GetComponent<TileCollectionData>().tileData;
         touchedTileData.currentDurability = currentDurability - itemStrength;
         if(whatAction == "digging down")

@@ -42,6 +42,10 @@ public class SetInitialLocation : MonoBehaviour
                 sittablesScript.sittable = obj.gameObject;
             }
         }
+        if(bedLocation == Vector3.zero)
+        {
+            yield break;
+        }
         sittablesScript.sittable.GetComponent<BoxCollider2D>().enabled = false;
         player.GetComponent<PlayerCtrl>().enabled = false;
         yield return new WaitForFixedUpdate();

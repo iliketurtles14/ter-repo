@@ -48,7 +48,7 @@ public class Sittables : MonoBehaviour
             Vector3 bedOffset;
             Vector3 otherPossibleTileBedOffset;
             if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
-                sittable.name.StartsWith("MedicBed")) //when making a horizontal bed, change otherPossibleTileBedOffset to -1.6, 0
+                sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed") //when making a horizontal bed, change otherPossibleTileBedOffset to -1.6, 0
             {
                 bedOffset = new Vector3(0, .8f);
                 otherPossibleTileBedOffset = new Vector3(0, -1.6f);
@@ -146,7 +146,7 @@ public class Sittables : MonoBehaviour
 
         Vector3 climbOffset;
         if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
-            sittable.name.StartsWith("MedicBed"))
+            sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed")
         {
             if (NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
             {
@@ -236,7 +236,7 @@ public class Sittables : MonoBehaviour
                 }
             }
         }
-        else if (sittable.name.StartsWith("SunChair"))
+        else if (sittable.name.StartsWith("SunChair") || sittable.name.StartsWith("SolitaryBed"))
         {
             vitalScript.energyRate = 1;
             vitalScript.energyRateAmount = 2;
@@ -245,8 +245,7 @@ public class Sittables : MonoBehaviour
             if (player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
-                int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
-                if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
+                if (oc.outfit == "Inmate") //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
                 {
                     if (NPCSave.instance.playerCharacter != 1)
                     {

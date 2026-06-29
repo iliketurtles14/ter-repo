@@ -19,6 +19,7 @@ public class ButtonController : MonoBehaviour
     public NPCRename npcRenameScript;
     public Warnings warningsScript;
     public MMSoundController sc;
+    public Credits creditsScript;
     public void MainPlayGame()
     {
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
@@ -48,6 +49,11 @@ public class ButtonController : MonoBehaviour
         }
 
         sc.PlaySound("open");
+    }
+    public void MainCredits()
+    {
+        StartCoroutine(creditsScript.StartCredits());
+        sc.PlaySound("rumble");
     }
     public void MainOptions()
     {
