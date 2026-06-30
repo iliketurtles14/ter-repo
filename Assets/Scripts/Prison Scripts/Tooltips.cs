@@ -1298,6 +1298,10 @@ public class Tooltips : MonoBehaviour
 			{
 				toPrint = "Sit Down";
 			}
+			else if (mcs.touchedSittable.name.StartsWith("Locker"))
+			{
+				toPrint = "Cabinet (hide)";
+			}
 			tooltipType = "sittable";
 			StartCoroutine(DrawTooltip(toPrint));
 			return;
@@ -1326,6 +1330,10 @@ public class Tooltips : MonoBehaviour
 			else if (mcs.touchedSittable.name.StartsWith("Seat"))
 			{
 				str = "Sit Down";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("Locker"))
+			{
+				str = "Cabinet (hide)";
 			}
 
 			if(str != toPrint)

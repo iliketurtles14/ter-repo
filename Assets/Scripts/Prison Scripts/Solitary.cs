@@ -28,6 +28,7 @@ public class Solitary : MonoBehaviour
     private Schedule scheduleScript;
     public List<GameObject> damagedTiles = new List<GameObject>();
     private ToiletMenu toiletMenuScript;
+    private bool startingSolitary;
     private void Start()
     {
         solitaryCanvas = RootObjectCache.GetRoot("SolitaryBlockerCanvas").transform;
@@ -87,6 +88,11 @@ public class Solitary : MonoBehaviour
         //finish black stuff -
 
         //start black fade anim and pause it
+        if (startingSolitary)
+        {
+            yield break;
+        }
+        startingSolitary = true;
         solitaryCanvas.gameObject.SetActive(true);
         noteScript.CreateWardenNote("solitary", noteMsg, currentMap.warden);
         yield return new WaitForEndOfFrame();
@@ -394,5 +400,6 @@ public class Solitary : MonoBehaviour
         solitaryCanvas.GetComponent<Animator>().speed = 1;
         yield return new WaitForSeconds(1);
         solitaryCanvas.gameObject.SetActive(false);
+        startingSolitary = false;
     }
 }

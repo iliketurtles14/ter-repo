@@ -1567,6 +1567,11 @@ public class LoadPrison : MonoBehaviour
                     case "Roof":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 14;
                         objInst.layer = roofLayer;
+                        if (objInst.name.StartsWith("SpotLight"))
+                        {
+                            objInst.layer = LayerMask.NameToLayer("SpotLight");
+                            objInst.transform.Find("PlayerCatch").gameObject.layer = LayerMask.NameToLayer("Roof");
+                        }
                         break;
                 }
 

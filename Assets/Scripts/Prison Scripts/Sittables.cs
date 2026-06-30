@@ -16,7 +16,10 @@ public class Sittables : MonoBehaviour
     public GameObject sittable;
     public bool onBed;
     private bool isBusy;
+    public bool inLocker;
     private InventorySelection selectionScript;
+    private int previousBodyLayer;
+    private int previousOutfitLayer;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -35,6 +38,10 @@ public class Sittables : MonoBehaviour
         if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable && !selectionScript.aSlotSelected)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position);
+            if (mcs.touchedSittable.name == "Locker")
+            {
+                distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position + new Vector3(0, -.8f));
+            }
             if(distance <= 2.4f)
             {
                 sittable = mcs.touchedSittable;
@@ -61,6 +68,20 @@ public class Sittables : MonoBehaviour
                 onBed = false;
             }
 
+            Vector3 lockerOffset;
+            if (sittable.name.StartsWith("Locker"))
+            {
+                lockerOffset = new Vector3(0, -.8f);
+                otherPossibleTileBedOffset = new Vector3(0, -1.6f);
+                inLocker = true;
+            }
+            else
+            {
+                lockerOffset = Vector3.zero;
+                otherPossibleTileBedOffset = Vector3.zero;
+                inLocker = false;
+            }
+
             Vector3 leaveVector = Vector3.zero;
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -83,8 +104,11 @@ public class Sittables : MonoBehaviour
             {
                 return;
             }
-
-            Vector3 wantedTilePos = leaveVector + bedOffset + sittable.transform.position;
+            if(inLocker && Input.GetKeyDown(KeyCode.W))
+            {
+                return;
+            }
+            Vector3 wantedTilePos = leaveVector + bedOffset + lockerOffset + sittable.transform.position;
             foreach (Transform tile in tiles.Find("Ground"))
             {
                 if (tile.CompareTag("Digable"))
@@ -126,6 +150,12 @@ public class Sittables : MonoBehaviour
         
         player.GetComponent<PlayerAnimation>().enabled = true;
 
+        if (sittable.name.StartsWith("Locker"))
+        {
+            player.GetComponent<SpriteRenderer>().sortingOrder = previousBodyLayer;
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = previousOutfitLayer;
+        }
+
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         while(Vector2.Distance(player.transform.position, goToTile.transform.position) > .1f)
         {
@@ -158,6 +188,11 @@ public class Sittables : MonoBehaviour
                 climbOffset = new Vector3(0, .35f);
                 onBed = true;
             }
+        }
+        else if (sittable.name.StartsWith("Locker"))
+        {
+            climbOffset = new Vector3(0, -.8f);
+            inLocker = true;
         }
         else
         {
@@ -257,6 +292,13 @@ public class Sittables : MonoBehaviour
                     }
                 }
             }
+        }
+        else if (sittable.name.StartsWith("Locker"))
+        {
+            previousBodyLayer = player.GetComponent<SpriteRenderer>().sortingOrder;
+            previousOutfitLayer = player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder;
+            player.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 0;
         }
     }
     public void ResetRates()
