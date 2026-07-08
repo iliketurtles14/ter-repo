@@ -25,14 +25,14 @@ public class Particles : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            StartCoroutine(CreateDust(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1));
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StartCoroutine(CreateDirtParticles(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    StartCoroutine(CreateDust(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1));
+        //}
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    StartCoroutine(CreateDirtParticles(Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+        //}
     }
     private void MakeLists()
     {

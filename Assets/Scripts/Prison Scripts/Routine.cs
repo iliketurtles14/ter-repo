@@ -17,7 +17,8 @@ public class Routine : MonoBehaviour
     private string period = "";
     public string periodCode = "";
     private Schedule scheduleScript;
-    private bool isSpeedingUp;
+    public bool isSpeedingUp;
+    public bool isFrozen;
     public int startingMin;
     public int doorsOpenMin;
     public int doorsCloseMin;
@@ -71,15 +72,6 @@ public class Routine : MonoBehaviour
         period = scheduleScript.period;
         periodCode = scheduleScript.periodCode;
 
-        if (Input.GetKeyDown(KeyCode.F1) && !isSpeedingUp)
-        {
-            isSpeedingUp = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.F1) && isSpeedingUp)
-        {
-            isSpeedingUp = false;
-        }
-
         if (isSpeedingUp)
         {
             interval = .01f;
@@ -93,6 +85,11 @@ public class Routine : MonoBehaviour
     {
         while (true)
         {
+            if (isFrozen)
+            {
+                yield return null;
+                continue;
+            }
             yield return new WaitForSeconds(interval);
 
             sec++;

@@ -108,18 +108,6 @@ public class LadderClimb : MonoBehaviour
                 DisableAllLayerCollisions();
                 Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
                 Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
-
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if (obj.CompareTag("Desk"))
-                    {
-                        obj.GetComponent<BoxCollider2D>().isTrigger = false;
-                        if(obj.GetComponent<DeskPickUp>() != null)
-                        {
-                            obj.GetComponent<DeskPickUp>().enabled = true;
-                        }
-                    }
-                }
                 break;
             case "vents":
                 player.GetComponent<SpriteRenderer>().sortingOrder = 11;

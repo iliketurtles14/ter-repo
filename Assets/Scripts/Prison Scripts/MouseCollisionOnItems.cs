@@ -126,6 +126,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedEscapeObject;
     public bool isTouchingPatchUp;
     public GameObject touchedPatchUp;
+    public bool isTouchingDebugMask;
+    public GameObject touchedDebugMask;
+    public bool isTouchingInmateBed;
+    public GameObject touchedInmateBed;
+    public bool isTouchingCharlie;
+    public GameObject touchedCharlie;
+    public bool isTouchingCamera;
+    public GameObject touchedCamera;
     private void Start()
     {
         uiLayerNum = LayerMask.NameToLayer("UI");
@@ -148,6 +156,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
 
         priorityOrder = new List<string>
         {
+            "DebugMask",
             "DeskSlot",
             "InvSlot",
             "IDSlot",
@@ -177,6 +186,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Toilet",
             "PatchUp",
             "Stepladder",
+            "InmateBed",
+            "Charlie",
+            "Camera",
             "Ladder(Roof)",
             "Ladder(Vent)",
             "Ladder(Ground)",
@@ -230,6 +242,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         {
             switch (priorityOrder[highestPriorityIndex])
             {
+                case "DebugMask":
+                    isTouchingDebugMask = true;
+                    touchedDebugMask = highestPriorityObject;
+                    break;
                 case "DeskSlot":
                     isTouchingDeskSlot = true;
                     touchedDeskSlot = highestPriorityObject;
@@ -341,6 +357,18 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "PatchUp":
                     isTouchingPatchUp = true;
                     touchedPatchUp = highestPriorityObject;
+                    break;
+                case "InmateBed":
+                    isTouchingInmateBed = true;
+                    touchedInmateBed = highestPriorityObject;
+                    break;
+                case "Charlie":
+                    isTouchingCharlie = true;
+                    touchedCharlie = highestPriorityObject;
+                    break;
+                case "Camera":
+                    isTouchingCamera = true;
+                    touchedCamera = highestPriorityObject;
                     break;
                 case "Stepladder":
                     isTouchingStepladder = true;
@@ -605,5 +633,13 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedEscapeObject = null;
         isTouchingPatchUp = false;
         touchedPatchUp = null;
+        isTouchingDebugMask = false;
+        touchedDebugMask = null;
+        isTouchingInmateBed = false;
+        touchedInmateBed = null;
+        isTouchingCharlie = false;
+        touchedCharlie = null;
+        isTouchingCamera = false;
+        touchedCamera = null;
     }
 }

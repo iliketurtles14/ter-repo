@@ -16,10 +16,10 @@ public class WarningMessage : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            StartCoroutine(CreateWarningMessage("This is a test warning!"));
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    StartCoroutine(CreateWarningMessage("This is a test warning!"));
+        //}
     }
     public IEnumerator CreateWarningMessage(string msg)
     {

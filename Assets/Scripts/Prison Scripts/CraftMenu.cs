@@ -428,6 +428,7 @@ public class CraftMenu : MonoBehaviour
                     if (item.itemData == null)
                     {
                         item.itemData = data;
+                        break;
                     }
                 }
                 foreach (GameObject slot in invSlots)
@@ -435,6 +436,7 @@ public class CraftMenu : MonoBehaviour
                     if (slot.GetComponent<Image>().sprite == clear)
                     {
                         slot.GetComponent<Image>().sprite = data.sprite;
+                        break;
                     }
                 }
             }

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class DeskStand : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DeskStand : MonoBehaviour
     public bool hasJumped;
     public bool isPickedUp;
     public GameObject[] desks;
+    public List<GameObject> stepladders = new List<GameObject>();
     private Vector2 colliderOffset = new Vector2();
     private Vector3 playerOffset = new Vector3();
     public bool shouldStepOff = true;
@@ -52,6 +54,23 @@ public class DeskStand : MonoBehaviour
         {
             return;
         }
+
+        stepladders = new List<GameObject>();
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "Stepladder")
+            {
+                stepladders.Add(obj.gameObject);
+            }
+        }
+
+        if (hasClimbed)
+        {
+            foreach(GameObject sl in stepladders)
+            {
+                sl.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
+        }
         
         if (!HPAScript.isBusy && !hasClimbed && !isClimbing && !isPickedUp)
         {
@@ -64,6 +83,20 @@ public class DeskStand : MonoBehaviour
                     break;
                 }
             }
+            if (!isClimbing)
+            {
+                Debug.Log("Here");
+                foreach (GameObject sl in stepladders)
+                {
+                    if (player.GetComponent<CapsuleCollider2D>().IsTouching(sl.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                    {
+                        Debug.Log("trying to climb stepladder");
+                        isClimbing = true;
+                        StartCoroutine(ClimbDesk(sl));
+                        break;
+                    }
+                }
+            }
         }
         else if (hasClimbed && !isClimbing && shouldStepOff)
         {
@@ -74,6 +107,17 @@ public class DeskStand : MonoBehaviour
                 {
                     isOnADesk = true;
                     break;
+                }
+            }
+            if (!isOnADesk)
+            {
+                foreach(GameObject sl in stepladders)
+                {
+                    if (player.GetComponent<CapsuleCollider2D>().IsTouching(sl.GetComponent<BoxCollider2D>()))
+                    {
+                        isOnADesk = true;
+                        break;
+                    }
                 }
             }
             if (!isOnADesk)
@@ -101,6 +145,10 @@ public class DeskStand : MonoBehaviour
         foreach (GameObject aDesk in desks)
         {
             aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+        foreach(GameObject sl in stepladders)
+        {
+            sl.GetComponent<BoxCollider2D>().isTrigger = true;
         }
 
         Vector3 deskVector = desk.transform.position;
@@ -147,6 +195,10 @@ public class DeskStand : MonoBehaviour
             {
                 aDesk.GetComponent<DeskPickUp>().enabled = true;
             }
+        }
+        foreach(GameObject sl in stepladders)
+        {
+            sl.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         int uiLayer = LayerMask.NameToLayer("UI");
         int ventCoverLayer = LayerMask.NameToLayer("VentCovers");

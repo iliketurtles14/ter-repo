@@ -17,6 +17,8 @@ public class Combat : MonoBehaviour
     private Death deathScript;
     private MissionAsk missionAskScript;
     private SpecialMessages specialMessagesScript;
+    private FightEffects fightFX;
+    private Particles particlesScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -26,6 +28,8 @@ public class Combat : MonoBehaviour
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
         missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
         specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
+        fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
+        particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
     }
     private void Update()
     {
@@ -139,6 +143,10 @@ public class Combat : MonoBehaviour
         npc.GetComponent<NPCCombat>().isAggro = true;
         npc.GetComponent<NPCCombat>().target = gameObject;
 
+        //shake screen
+        StartCoroutine(fightFX.MakeScreenShake());
+        StartCoroutine(fightFX.MakeStar(npc.transform.position));
+        StartCoroutine(particlesScript.CreateDust(npc.transform.position, 1));
         //punch animation plays
 
         int lookNum = 0;
@@ -162,9 +170,12 @@ public class Combat : MonoBehaviour
             transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][3][lookNum];
         }
         yield return new WaitForSeconds(.45f);
-        GetComponent<PlayerAnimation>().enabled = true;
-        GetComponent<PlayerCtrl>().canMove = true;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        if (!GetComponent<PlayerCollectionData>().playerData.isDead)
+        {
+            GetComponent<PlayerAnimation>().enabled = true;
+            GetComponent<PlayerCtrl>().canMove = true;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
 
         float timeBetweenPunches;
         int speed = GetComponent<PlayerCollectionData>().playerData.speed;

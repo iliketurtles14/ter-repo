@@ -38,6 +38,7 @@ public class Death : MonoBehaviour
         player.GetComponent<PlayerCollectionData>().playerData.health = 0;
         player.GetComponent<HPAChecker>().isDead = true;
         player.GetComponent<PlayerCollectionData>().playerData.isDead = true;
+        player.GetComponent<PlayerCtrl>().canMove = false;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         player.GetComponent<PlayerAnimation>().enabled = false;
         BodyController bc = player.GetComponent<BodyController>();

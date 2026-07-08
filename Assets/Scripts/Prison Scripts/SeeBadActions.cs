@@ -20,6 +20,7 @@ public class SeeBadActions : MonoBehaviour
     private MissionAsk missionAskScript;
     private Schedule scheduleScript;
     private SpecialMessages specialMessagesScript;
+    private StatEffects statEffectsScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -27,6 +28,7 @@ public class SeeBadActions : MonoBehaviour
         missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
+        statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
         MakeVectorLists();
         MakeBadObjectList();
 
@@ -215,12 +217,17 @@ public class SeeBadActions : MonoBehaviour
         {
             heatToAdd = data.heatGain;
         }
-        player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
+        if(heatToAdd > 0)
+        {
+            player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+        }
 
         //set heat
-        if(data.heatSet != -1 && isGuard)
+        if (data.heatSet != -1 && isGuard)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
         }
 
         //should aggro

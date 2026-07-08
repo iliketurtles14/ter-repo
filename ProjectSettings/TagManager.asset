@@ -104,6 +104,10 @@ TagManager:
   - VisitorNPC
   - EscapeObject
   - PatchUp
+  - DebugMask
+  - InmateBed
+  - Charlie
+  - Camera
   layers:
   - Default
   - TransparentFX
@@ -117,7 +121,7 @@ TagManager:
   - Roof
   - VentCovers
   - SpotLight
-  - 
+  - ToiletWater
   - 
   - 
   - 

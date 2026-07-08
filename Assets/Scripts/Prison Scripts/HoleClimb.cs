@@ -19,7 +19,7 @@ public class HoleClimb : MonoBehaviour
     private int roofLayer;
     private int playerLayer;
     private int uiLayer;
-    private bool isUnderground;
+    public bool isUnderground;
     public void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();

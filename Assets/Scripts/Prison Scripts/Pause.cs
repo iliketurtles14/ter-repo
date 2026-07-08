@@ -5,12 +5,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Pause : MonoBehaviour
+public class Pause : MonoBehaviour //lol i finally changed this script to be better buttons (July 3, 2026)
 {
-    private GameObject lastTouchedButton;
-    private MouseCollisionOnItems mcs;
-    public Sprite buttonNormalSprite;
-    public Sprite buttonPressedSprite;
     private GameObject black;
     private PauseController pc;
     public bool paused = false;
@@ -19,13 +15,14 @@ public class Pause : MonoBehaviour
     public void Start()
     {
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
-        mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         black = RootObjectCache.GetRoot("MenuCanvas").transform.Find("Black").gameObject;
 
-        ClosePauseMenu();
+        ClosePauseMenu(false);
     }
     public void Update()
-    {        
+    {
+        paused = pc.isPaused;
+        
         if (Input.GetKeyDown(KeyCode.Escape) && !paused)
         {
             OpenPauseMenu();
@@ -34,58 +31,35 @@ public class Pause : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && paused)
         {
-            ClosePauseMenu();
+            ClosePauseMenu(false);
             return;
         }
-
-        if (mcs.isTouchingButton && paused)
-        {
-            lastTouchedButton = mcs.touchedButton;
-            mcs.touchedButton.GetComponent<Image>().sprite = buttonPressedSprite;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                if(lastTouchedButton.name == "ContinueButton")
-                {
-                    ClosePauseMenu();
-                }
-                else if(lastTouchedButton.name == "QuitButton" && !isQuitting)
-                {
-                    isQuitting = true;
-                    Addressables.LoadSceneAsync("Main Menu");
-                    GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
-                }
-            }
-        }
-        else if(!mcs.isTouchingButton && lastTouchedButton != null)
-        {
-            lastTouchedButton.GetComponent<Image>().sprite = buttonNormalSprite;
-        }
     }
-    private void ClosePauseMenu()
+    public void ClosePauseMenu(bool goingSomewhereElse)
     {
         foreach(Transform child in transform)
         {
             child.gameObject.SetActive(false);
         }
         GetComponent<Image>().enabled = false;
-        black.GetComponent<Image>().enabled = false;
-        
-        pc.Unpause();
-        
-        paused = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        if (!goingSomewhereElse)
+        {
+            black.GetComponent<Image>().enabled = false;
+
+            pc.Unpause();
+        }
     }
-    private void OpenPauseMenu()
+    public void OpenPauseMenu()
     {
         foreach(Transform child in transform)
         {
             child.gameObject.SetActive(true);
         }
         GetComponent<Image>().enabled = true;
+        GetComponent<BoxCollider2D>().enabled = true;
         black.GetComponent<Image>().enabled = true;
         
         pc.Pause(true);
-
-        paused = true;
     }
 }

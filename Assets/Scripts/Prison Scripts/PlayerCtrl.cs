@@ -9,6 +9,7 @@ public class PlayerCtrl : MonoBehaviour
     private Rigidbody2D rb;
     public bool canMove;
     private PauseController pc;
+    private PlayerCollectionData playerColData;
 
     private IniFile iniFile;
 
@@ -18,6 +19,7 @@ public class PlayerCtrl : MonoBehaviour
 
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         rb = GetComponent<Rigidbody2D>();
+        playerColData = GetComponent<PlayerCollectionData>();
 
         iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "UserData.ini"));
     }
@@ -27,7 +29,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             return;
         }
-        
+
         if (canMove)
         {
             speedX = Input.GetAxisRaw("Horizontal");

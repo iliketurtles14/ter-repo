@@ -57,37 +57,7 @@ public class ButtonController : MonoBehaviour
     }
     public void MainOptions()
     {
-        Transform optionsPanel = mmc.Find("OptionsPanel");
-        
-        optionsPanel.gameObject.SetActive(true);
-        mmc.Find("Black").GetComponent<Image>().enabled = true;
-        foreach (Transform child in mmc.Find("TitlePanel"))
-        {
-            if (child.GetComponent<Button>() != null)
-            {
-                child.GetComponent<Button>().enabled = false;
-                child.GetComponent<EventTrigger>().enabled = false;
-            }
-        }
-
-        //load config file
-        iniFile = new IniFile(Path.Combine(Application.streamingAssetsPath, "CTFAK", "config.ini"));
-    
-        foreach(Transform child in optionsPanel)
-        {
-            if(child.name == "NormalizeCheckBox")
-            {
-                if(iniFile.Read("NormalizePlayerMovement", "Settings") == "true")
-                {
-                    child.GetComponent<Image>().sprite = checkedBoxSprite;
-                }
-                else
-                {
-                    child.GetComponent<Image>().sprite = uncheckedBoxSprite;
-                }
-            }
-        }
-
+        mmc.Find("OptionsPanel").GetComponent<Options>().Open("gameplay");
         sc.PlaySound("open");
     }
     public void MainMapEditor()
@@ -127,53 +97,46 @@ public class ButtonController : MonoBehaviour
         mmc.Find("PatchNotesPanel").gameObject.SetActive(false);
         sc.PlaySound("close");
     }
-    public void OptionsNormalize()
+    public void OptionsCheckBox(BaseEventData data)
     {
-        Transform normalizeBox = mmc.Find("OptionsPanel").Find("NormalizeCheckBox");
+        var pd = data as PointerEventData;
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
 
-        if(normalizeBox.GetComponent<Image>().sprite == checkedBoxSprite)
+        if(clicked.GetComponent<Image>().sprite == checkedBoxSprite)
         {
-            normalizeBox.GetComponent<Image>().sprite = uncheckedBoxSprite;
+            clicked.GetComponent<Image>().sprite = uncheckedBoxSprite;
         }
         else
         {
-            normalizeBox.GetComponent<Image>().sprite = checkedBoxSprite;
+            clicked.GetComponent<Image>().sprite = checkedBoxSprite;
         }
 
         sc.PlaySound("plip");
     }
     public void OptionsSave()
     {
-        foreach(Transform child in mmc.Find("OptionsPanel"))
-        {
-            if(child.name == "NormalizeCheckBox")
-            {
-                if(child.GetComponent<Image>().sprite == checkedBoxSprite)
-                {
-                    iniFile.Write("NormalizePlayerMovement", "true", "Settings");
-                }
-                else
-                {
-                    iniFile.Write("NormalizePlayerMovement", "false", "Settings");
-                }
-            }
-        }
+        mmc.Find("OptionsPanel").GetComponent<Options>().Save();
         sc.PlaySound("plip");
     }
     public void OptionsBack()
     {
-        mmc.Find("OptionsPanel").gameObject.SetActive(false);
-        mmc.Find("Black").GetComponent<Image>().enabled = false;
-        foreach(Transform child in mmc.Find("TitlePanel"))
-        {
-            if(child.GetComponent<Button>() != null)
-            {
-                child.GetComponent<Button>().enabled = true;
-                child.GetComponent<EventTrigger>().enabled = true;
-            }
-        }
-
+        mmc.Find("OptionsPanel").GetComponent<Options>().Close();
         sc.PlaySound("close");
+    }
+    public void OptionsGameplay()
+    {
+        mmc.Find("OptionsPanel").GetComponent<Options>().Open("gameplay");
+        sc.PlaySound("plip");
+    }
+    public void OptionsVisual()
+    {
+        mmc.Find("OptionsPanel").GetComponent<Options>().Open("visual");
+        sc.PlaySound("plip");
+    }
+    public void OptionsAudio()
+    {
+        mmc.Find("OptionsPanel").GetComponent<Options>().Open("audio");
+        sc.PlaySound("plip");
     }
     public void PrisonSelectLeft()
     {

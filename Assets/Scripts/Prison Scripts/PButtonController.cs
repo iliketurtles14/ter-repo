@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ public class PButtonController : MonoBehaviour
     private CreateNote createNoteScript;
     private NotesMenu notesMenuScript;
     private EscapeObjectController escapeObjectControllerScript;
+    private HelpMenu helpMenuScript;
+    private Pause pauseScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -36,6 +39,51 @@ public class PButtonController : MonoBehaviour
         createNoteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
         notesMenuScript = mc.Find("NotesMenuPanel").GetComponent<NotesMenu>();
         escapeObjectControllerScript = GetComponent<EscapeObjectController>();
+        helpMenuScript = mc.Find("HelpMenuPanel").GetComponent<HelpMenu>();
+        pauseScript = mc.Find("PauseMenuPanel").GetComponent<Pause>();
+    }
+    public void PauseContinue()
+    {
+        pauseScript.ClosePauseMenu(false);
+    }
+    public void PauseHelp()
+    {
+        helpMenuScript.Open();
+    }
+    public void PauseOptions()
+    {
+        //heh
+    }
+    public void PauseQuit()
+    {
+        pauseScript.isQuitting = true;
+        Addressables.LoadSceneAsync("Main Menu");
+        GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
+    }
+    public void HelpButton(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        if (pd == null)
+        {
+            return;
+        }
+
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        helpMenuScript.Switch(Convert.ToInt32(clicked.gameObject.name));
+        mc.Find("HelpMenuPanel").Find("HelpText").GetComponent<TextMeshProUGUI>().text = clicked.transform.Find("Text").GetComponent<TextMeshProUGUI>().text.ToUpper();
+    }
+    public void HelpReturn()
+    {
+        if (helpMenuScript.atButtons)
+        {
+            helpMenuScript.Close(false);
+        }
+        else
+        {
+            helpMenuScript.Switch(-1);
+            mc.Find("HelpMenuPanel").Find("HelpText").GetComponent<TextMeshProUGUI>().text = "HELP";
+        }
     }
     public void MissionYes()
     {

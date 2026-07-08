@@ -67,13 +67,18 @@ public class Solitary : MonoBehaviour
             inSolitary = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            StartCoroutine(GoToSolitary("youre in solitary now heh"));
-        }
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    StartCoroutine(GoToSolitary("youre in solitary now heh"));
+        //}
     }
     public IEnumerator GoToSolitary(string noteMsg)
     {
+        if (player.GetComponent<PlayerCollectionData>().playerData.inGodMode)
+        {
+            yield break;
+        }
+        
         //spawn in solitary bed - 
         //go 3 days into the future !!! -
         //7:40 -

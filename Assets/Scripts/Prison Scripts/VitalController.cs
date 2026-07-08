@@ -28,11 +28,13 @@ public class VitalController : MonoBehaviour
     private int oldHeat;
     private int oldFriends;
     private bool doneWithWait = false;
+    private StatEffects statEffectsScript;
 
 
     public void Start()
     {
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
 
         energyRate = 5;
         healthRate = 3;
@@ -83,7 +85,7 @@ public class VitalController : MonoBehaviour
         {
             data.money = 0;
         }
-        int maxHealth = Mathf.FloorToInt((data.strength / 2) * .75f);
+        int maxHealth = Mathf.FloorToInt(data.strength / 2);
         if(data.health > maxHealth)
         {
             data.health = maxHealth;
@@ -234,6 +236,10 @@ public class VitalController : MonoBehaviour
             if(data.energy > 0)
             {
                 data.energy -= energyRateAmount;
+                if(energyRate != 5)
+                {
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "energy"));
+                }
             }
             if(data.energy < 0)
             {
@@ -247,9 +253,13 @@ public class VitalController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(healthRate);
-            if(data.health < Mathf.Floor(data.strength / 2))
+            if(data.health < Mathf.FloorToInt(data.strength / 2))
             {
                 data.health += healthRateAmount;
+                if(healthRate != 3)
+                {
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "health"));
+                }
             }
             yield return null;
         }

@@ -1,4 +1,4 @@
-This is the same layout as the original game's speech files, so you can copy and paste if you already have a custom speech file.
+This is a similar layout to the original game's speech files, so you can copy and paste if you already have a custom speech file.
 
 [OnDesk]
 Count=3
@@ -1500,6 +1500,63 @@ Gardening=Dream of working in the great outdoors Being at one with nature and al
 Mailman=I hate to be the bearer of bad news, which is why I'm asking you to do it for me.#Collect mail from the mailroom and deliver it to the inmates it's addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
 Metalshop=The automotive industry is booming! The only booming you will hear is the sound of licence plates being pressed. The harder you work, the sooner I get my sporty little convertible.#Take metal sheets from the container in the metalshop and use them on the presses to create license plates. Put the finished plates in the relevant container.
 Deliveries=What's inside those boxes isn't of concern to you. I just want them moving UNTAMPERED to where they need to go. #Take packages from the delivery truck and place them in the relevant storage containers.
+
+[Help_Buttons]
+0=Controls
+1=Picking Up and Dropping
+2=Using Items
+3=Attacking
+4=Routines
+5=Stats and Training
+6=Heat and Punishment
+7=Opinion
+8=Crafting
+9=Favors
+10=Prison Jobs
+11=Health
+12=Fatigue
+13=Weapons and Outfits
+14=Buying Items
+15=Storing Items
+16=Contraband Detectors
+17=Stealing and Looting
+18=Recruiting Buddies
+19=Escaping
+
+[Help_Me_Please]
+0=- Use the W, A, S, and D keys to move.#- Space to toggle combat mode.#- Left Mouse to interact, target, use, and move items.#- Right Mouse to pick up & drop, view profiles.#- Variations of Q and E to exercise.#- Use Q to recruit & dismiss buddies.
+1=RIGHT CLICK is used for picking up & dropping things. For items, RIGHT CLICK an item on the floor to pick it up, or RIGHT CLICK an item in your inventory to drop it. You can't drop items on top of one another.##You can also pick up and drop desks, knocked out characters, bed sheets, pillows, removable vents and wall blocks, and a list of otther things.
+2=To use an item, LEFT CLICK on it in your inventory to select it. The mouse cursor will change purple to indicate you're in USE mode.##Then just LEFT CLICK again on where you want to use that particular item. You can also use the 1-6 number keys as shortcuts for selecting items.
+3=The Space key is used to toggle attack mode on and off. With attack mode on, left click on someone to target them. Once in range of a target, you'll attack them automatically. To stop attacking either move away, turn off attack mode, or untarget them by clicking elsewhere.##You can increase the damage you do in combat by equipping weapons and increasing your strength stat.
+4=Prison life is all about routines. The bar at the bottom of the screen, along with the yellow destination arrow tells you where you need to be at any particular time.##If you ignore these then you'll find the guards yelling at you and your heat level rising. Skipping rollcalls will put the prison in lockdown mode.
+5=Your main stats are strength, speed, and intellect. These (don't) degrade over time.##Strength is how hard you hit others, and speed is how fast. Both are trained in the gym.##Intellect is improved by reading or browsing the internet. It determines which jobs you can have, what you can craft, and so on.
+6=Everytime you break prison rules in sight of a guard or camera your heat rating will rise. If it gets too high, the guards will attack you.##More serious offenses, like them discovering evidence of an attempted escape, will see you sent to solitary confinement for three days.
+7=All other inmates and guards have an opinion of you, which can be seen on their profile. The higher the opinion, the more they like you. Opinions always gravitate towards neutral over time.##You can raise others opinion by talking to them or giving them items and money. Someone who dislikes you will probably attack you for no reason or snitch on you.
+8=Crafting is merging two or three items to create a new item. The best weapons and tools needed to help you escape are only available through crafting.##Around the prison you'll come across Crafting Notes which tell you how to make certain items when you use them. These will then be stored in your journal for reference.
+9=Inmates with a green exclamation icon above their heads have a favor to ask of you. LEFT CLICK on them to see the favor.##Favors might be anything from asking you to retrive an item for them or beating someone up. If you accept and complete a favor for someone, their opinion of you will rise and they'll give you cash.
+10=Prison jobs are a legal way of earning some cash. There are various ones available and you can apply on the job board in the prison office.##There are set periods of the daily routine where inmates with jobs can attend to them. Failure to meet a quota during this time will result in losing the job.
+11=You lose health each time you are attacked by a guard or another inmate. Once it reaches zero you're sent to the infirmary and stripped of any contraband on hand.##Health regenerates over time, but you can speed this up by using healing items or resting in infirmary beds. The higher your strength, the higher your max health.
+12=Fatigue represents how tired you are. Everytime you do a task that requires physical energy it will rise.##Although it drops slowly over time, there are several ways to reduce fatigue faster such as showering, eating, and resting in beds.
+13=You can equip a weapon and an outfit via your character profile page.##Weapons will increase the damage you do during a fight. You are assigned a prison outfit to start with, but you may come across various other ones. Some of them have defensive properties that reduce attack damage against you.
+14=Inmates with a flashing yellow bag icon over their head have items for sale.##RIGHT CLICK on them to see their profile, then click the buy tab to see what they're selling. The price they charge is dependent upon their opinion of you.
+15=Every prison inmate has a desk in their cell to store items in. LEFT CLICK on it to open it.##Legal items are always safe while stored in desks, but illegal ones will be removed should your cell be shaken down by guards.
+16=Around the prisons, you'll come across contraband detectors in some doorways.##If you pass through these while carrying any illegal items. it will trigger the alarm and the guards will be onto you. Therea re however ways to bypass these if you're in the smuggling mood.
+17=You can loot a knocked out inmate or guard by using LEFT CLICK on their body. You're then free to pilfer from their inventory.##You can also steal from other inmate desks in the same manner. Just don't let them see you doing it!
+18=You are able to recruit fellow prisoners who have a high opinion of you by hovering the mouse over them and pressing the Q key. In this state, they will follow you around until you dismiss them in the same manner.##They will attack whoever you target, or whoever attacks you. Since their reputation with guards takes a hit by fighting for you, you will lose a little opinion each attack call.
+19=Ultimately the objective is to escape the prison. There are various ways of doing this, and what might work on one prison can be impossible on another.##Be observant to any potential flaws in the prison security. Be resourceful in collecting and storing items that might be of use. Be patient and pick the right time to make a move.
+
+[Charlie_Signed]
+Count=4
+1=Have a good day!
+2=Seeya tomorrow!
+3=Clockin' off eh? Take care!
+4=Good times!
+
+[Charlie_Unsigned]
+Count=3
+1=What am I supposed to do with them?
+2=You call that proof of identity?
+3=They're not signed pal
 
 -----------DLC---------------------------------------------------
 

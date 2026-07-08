@@ -12,11 +12,15 @@ public class NPCCombat : MonoBehaviour
     private Transform mc;
     private Death deathScript;
     private NPCCollectionData npcColData;
+    private FightEffects fightFX;
+    private Particles particlesScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
         npcColData = GetComponent<NPCCollectionData>();
+        fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
+        particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
     }
 
     private void Update()
@@ -160,7 +164,7 @@ public class NPCCombat : MonoBehaviour
                 deathScript.KillNPC(aTarget);
             }
         }
-        else
+        else if(aTarget.name == "Player" && !aTarget.GetComponent<PlayerCollectionData>().playerData.inGodMode)
         {
             aTarget.GetComponent<PlayerCollectionData>().playerData.health -= netDamage;
             if(aTarget.GetComponent<PlayerCollectionData>().playerData.health < 0)
@@ -180,6 +184,10 @@ public class NPCCombat : MonoBehaviour
             aTarget.GetComponent<NPCCombat>().isAggro = true;
             aTarget.GetComponent<NPCCombat>().target = gameObject;
         }
+
+        StartCoroutine(fightFX.MakeScreenShake());
+        StartCoroutine(fightFX.MakeStar(aTarget.transform.position));
+        StartCoroutine(particlesScript.CreateDust(aTarget.transform.position, 1));
 
         //punch anim plays
 

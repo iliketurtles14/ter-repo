@@ -50,6 +50,7 @@ public class ToiletWater : MonoBehaviour
             
             GameObject toiletWater = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/ToiletWater"));
             toiletWater.GetComponent<ToiletWater>().StopAllCoroutines();
+            
             toiletWater.GetComponent<ToiletWater>().enabled = false;
             toiletWater.GetComponent<SpriteRenderer>().enabled = false;
             toiletWater.transform.parent = transform.parent;
@@ -57,6 +58,23 @@ public class ToiletWater : MonoBehaviour
             toiletWater.transform.position += new Vector3(0, 0, -1);
             toiletWater.name = "ToiletWater";
             yield return new WaitForFixedUpdate();
+
+            string currentLayer = "Ground";
+            switch (transform.parent.name)
+            {
+                case "UndergroundObjects":
+                    currentLayer = "Underground";
+                    break;
+                case "GroundObjects":
+                    currentLayer = "Ground";
+                    break;
+                case "VentObjects":
+                    currentLayer = "Vents";
+                    break;
+                case "RoofObjects":
+                    currentLayer = "Roof";
+                    break;
+            }
 
             Rigidbody2D rb = toiletWater.GetComponent<Rigidbody2D>();
             var cols = new List<Collider2D>();
@@ -67,7 +85,7 @@ public class ToiletWater : MonoBehaviour
             {
                 Collider2D col = cols[j];
 
-                if((col.transform.parent.name == "Ground" && !col.CompareTag("Digable")) || col.name == "ToiletWater")
+                if((col.transform.parent.name == currentLayer && !col.CompareTag("Digable")) || col.name == "ToiletWater")
                 {
                     shouldSpread = false;
                     break;

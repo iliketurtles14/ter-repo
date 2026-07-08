@@ -23,6 +23,7 @@ public class EscapeObjectController : MonoBehaviour
     private bool inMenu;
     private Transform player;
     private PauseController pc;
+    private FightEffects fightFX;
     private List<GameObject> escObjs = new List<GameObject>();
     private List<GameObject> invSlots = new List<GameObject>();
     private List<string> layers = new List<string>()
@@ -44,6 +45,7 @@ public class EscapeObjectController : MonoBehaviour
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         pc = GetComponent<PauseController>();
         player = RootObjectCache.GetRoot("Player").transform;
+        fightFX = GetComponent<FightEffects>();
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -283,6 +285,7 @@ public class EscapeObjectController : MonoBehaviour
                     }
                     if(handler.objectivesCleared == 3)
                     {
+                        StartCoroutine(fightFX.MakeScreenShake());
                         mcs.touchedEscapeObject.tag = "Untagged";
                         for (int i = 0; i < 4; i++)
                         {

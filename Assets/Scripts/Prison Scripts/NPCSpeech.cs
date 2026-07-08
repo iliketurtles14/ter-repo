@@ -17,14 +17,16 @@ public class NPCSpeech : MonoBehaviour
     private bool isWaiting;
     private bool textBoxIsActive;
     private bool madeTextBox;
+    private StatEffects statEffectsScript;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         speechFile = Resources.Load<TextAsset>("Speech").text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); ;
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
 
         DestroyTextBox(transform);
-        if(name != "VisitorNPC")
+        if(name != "VisitorNPC" && name != "CheckpointCharlie")
         {
             StartCoroutine(SpeechLoop());
         }
@@ -76,6 +78,7 @@ public class NPCSpeech : MonoBehaviour
                 messageType = "Rep_3";
             }
         }
+        StartCoroutine(statEffectsScript.MakeEffect(transform, "good"));
         StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
     }
     private IEnumerator SpeechLoop()
@@ -227,7 +230,7 @@ public class NPCSpeech : MonoBehaviour
         RectTransform textRT = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>();
         textRT.anchoredPosition = backgroundRT.anchoredPosition;
 
-        if (npc.name.StartsWith("Guard"))
+        if (npc.name.StartsWith("Guard") || npc.name == "CheckpointCharlie")
         {
             npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/GuardSpeechBackground");
         }

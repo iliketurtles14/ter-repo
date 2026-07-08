@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8451226931008923628}
   - component: {fileID: -6974662237862670791}
   - component: {fileID: 2931717403957620829}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: ToiletWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &2931717403957620829
 MonoBehaviour:

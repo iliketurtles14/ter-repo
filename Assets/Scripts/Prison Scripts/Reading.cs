@@ -11,11 +11,13 @@ public class Reading : MonoBehaviour
     private bool isReading = false;
     private bool stopReading = false;
     private bool isBusy;
+    private StatEffects statEffectsScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
+        statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
     }
     public void Update()
     {
@@ -31,7 +33,7 @@ public class Reading : MonoBehaviour
                 StartCoroutine(Read());
             }
         }
-        if (isReading && oldPos != transform.position)
+        if (isReading && Vector2.Distance(oldPos, transform.position) > .01f)
         {
             stopReading = true;
         }
@@ -50,6 +52,7 @@ public class Reading : MonoBehaviour
             yield return new WaitForSeconds(.045f);
         }
         GetComponent<PlayerCollectionData>().playerData.intellect++;
+        StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect"));
         GetComponent<PlayerCollectionData>().playerData.energy += 5;
         isReading = false;
     }

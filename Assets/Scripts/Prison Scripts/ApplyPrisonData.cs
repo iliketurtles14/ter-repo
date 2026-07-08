@@ -21,6 +21,7 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> PrisonObjectSprites = new List<Sprite>();
     public List<Sprite> UISprites = new List<Sprite>();
     private SniperAnimation sniperAnimationScript;
+    private StatEffects statEffectsScript;
 
     public List<Sprite> sniperSprites = new List<Sprite>();
 
@@ -480,6 +481,7 @@ public class ApplyPrisonData : MonoBehaviour
         pauseScript = mc.Find("PauseMenuPanel").GetComponent<Pause>();
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         aStar = RootObjectCache.GetRoot("A*").transform;
+        statEffectsScript = GetComponent<StatEffects>();
 
         ItemSprites = senderScript.ItemImages;
         NPCSprites = senderScript.NPCImages;
@@ -545,8 +547,18 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("PauseMenuPanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[359];
         mc.Find("PauseMenuPanel").Find("HelpButton").GetComponent<Image>().sprite = UISprites[359];
         mc.Find("PauseMenuPanel").Find("QuitButton").GetComponent<Image>().sprite = UISprites[359];
-        pauseScript.buttonNormalSprite = UISprites[359];
-        pauseScript.buttonPressedSprite = UISprites[360];
+        spriteState = mc.Find("PauseMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[360];
+        mc.Find("PauseMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PauseMenuPanel").Find("OptionsButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PauseMenuPanel").Find("HelpButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("PauseMenuPanel").Find("QuitButton").GetComponent<Button>().spriteState = spriteState;
+        //help menu stuff
+        mc.Find("HelpMenuPanel").GetComponent<Image>().sprite = UISprites[286];
+        mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Image>().sprite = UISprites[359];
+        spriteState = mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[360];
+        mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState = spriteState;
         //npcmenu stuff
         mc.Find("NPCMenuPanel").Find("StrengthIcon").GetComponent<Image>().sprite = UISprites[450];
         mc.Find("NPCMenuPanel").Find("SpeedIcon").GetComponent<Image>().sprite = UISprites[449];
@@ -751,7 +763,11 @@ public class ApplyPrisonData : MonoBehaviour
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 208, 78, 8, 11));
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 217, 78, 8, 11));
         vitalControllerScript.friendsList.Add(Cutter(UISprites[273], 226, 78, 8, 11));//217 52
-        vitalControllerScript.friendsX = Cutter(UISprites[273], 217, 52, 8, 11);
+        vitalControllerScript.friendsX = Cutter(UISprites[273], 217, 52, 8, 11);//45 48, 1 40 5x7 6x6
+
+        //stat effect sprites (heart and energy)
+        statEffectsScript.health = Cutter(UISprites[344], 45, 48, 6, 6);
+        statEffectsScript.energy = Cutter(UISprites[344], 1, 40, 5, 7);
 
         //holding sprites
         RabbitHoldingSprites.Add(NPCSprites[127]);

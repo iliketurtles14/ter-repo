@@ -11397,6 +11397,7 @@ GameObject:
   - component: {fileID: 328373092}
   - component: {fileID: 328373094}
   - component: {fileID: 328373095}
+  - component: {fileID: 328373096}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -11860,6 +11861,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MEJobController
   currentDoor: {fileID: 0}
   panel: {fileID: 1183760296}
+--- !u!114 &328373096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328373068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411de33dc753c76419a2b83e0cc1edcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapMove
+  tiles: {fileID: 794001620}
+  canvases: {fileID: 1843937361}
+  moveX: 0
+  moveY: 0
 --- !u!1 &333084040
 GameObject:
   m_ObjectHideFlags: 0

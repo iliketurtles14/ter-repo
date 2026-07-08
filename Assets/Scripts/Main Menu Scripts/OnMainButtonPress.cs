@@ -29,7 +29,6 @@ public class OnMainButtonPress : MonoBehaviour
         MainMenuCanvas.transform.Find("SmallMenuPanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("PlayerPanel").gameObject.SetActive(false);
         MainMenuCanvas.transform.Find("PatchNotesPanel").gameObject.SetActive(false);
-        MainMenuCanvas.transform.Find("OptionsPanel").gameObject.SetActive(false);
         isPrisonSelectPanelOpen = false;
         if (NPCRenameScript.comingFromRename)
         {
@@ -46,6 +45,8 @@ public class OnMainButtonPress : MonoBehaviour
             NPCRenameScript.comingFromRename = false;
         }
     }
+    //words of a fallen solider vvv
+
     //private void Update()
     //{
     //    if (mouseCollisionScript.isTouchingButton)

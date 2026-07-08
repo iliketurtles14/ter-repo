@@ -13,10 +13,10 @@ public class TextureSaver : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SaveTextures();
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    SaveTextures();
+        //}
     }
     
 

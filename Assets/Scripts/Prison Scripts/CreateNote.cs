@@ -18,10 +18,10 @@ public class CreateNote : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            CreateWardenNote("day1", "This is the first day!!!", "Warden diddy heh");
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    CreateWardenNote("day1", "This is the first day!!!", "Warden diddy heh");
+        //}
     }
     private void CloseAllNotes()
     {

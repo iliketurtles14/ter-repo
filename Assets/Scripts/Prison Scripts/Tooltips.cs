@@ -67,6 +67,8 @@ public class Tooltips : MonoBehaviour
 	private int printedNPCInvSlotNumber;
 	private int printedShopSlotNumber;
 	private int printedToiletSlotNumber;
+	private int printedCameraTime;
+	private string printCameraTime;
 
 	private TileData printedTileData;
 	private int printedTileDurability;
@@ -618,6 +620,11 @@ public class Tooltips : MonoBehaviour
 		if (mcs.isTouchingFloor)
 		{
 			floorDistance = Vector2.Distance(PlayerTransform.position, mcs.touchedFloor.transform.position);
+		}
+		if(showingTooltip && tooltipType == "floor" && floorDistance > 2.4f)
+		{
+			DestroyTooltip();
+			return;
 		}
 		if (!showingTooltip && mcs.isTouchingFloor && floorDistance <= 2.4f && itemBehavioursScript.selectedDiggingItem)
 		{
@@ -1606,6 +1613,48 @@ public class Tooltips : MonoBehaviour
 			DestroyTooltip();
 			return;
 		}
+		//charlie
+		if(mcs.isTouchingCharlie && !showingTooltip)
+		{
+			toPrint = "Checkpoint Charlie";
+			tooltipType = "charlie";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+        if (showingTooltip && tooltipType == "charlie" && !mcs.isTouchingCharlie)
+        {
+            DestroyTooltip();
+            return;
+        }
+
+		//cameras
+		if (mcs.isTouchingCamera && !showingTooltip)
+		{
+			toPrint = "Camera";
+			printedCameraTime = mcs.touchedCamera.GetComponent<CameraController>().camTime;
+			if (printedCameraTime != -1)
+			{
+				printCameraTime = " (activates in " + printedCameraTime.ToString() + ")";
+			}
+			else
+			{
+				printCameraTime = "";
+			}
+			tooltipType = "camera";
+			StartCoroutine(DrawTooltip(toPrint + printCameraTime));
+			return;
+		}
+		else if (showingTooltip && tooltipType == "camera" && !mcs.isTouchingCamera)
+		{
+			DestroyTooltip();
+			return;
+		}
+		else if (showingTooltip && tooltipType == "camera" && mcs.isTouchingCamera && mcs.touchedCamera.GetComponent<CameraController>().camTime != printedCameraTime)
+		{
+			DestroyTooltip();
+			return;
+        }
+
 		//escape objects
 		if(mcs.isTouchingEscapeObject && !showingTooltip)
 		{
@@ -1776,6 +1825,10 @@ public class Tooltips : MonoBehaviour
 				textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(0, 1, 0);
 			}
 		}
+		else if(tooltipType == "charlie")
+        {   //guard: 115, 196, 243
+			textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(115f / 255f, 196f / 255f, 243f / 255f);
+		}
 		else
 		{
 			textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(191f / 255f, 191f / 255f, 191f / 255f);
@@ -1852,7 +1905,8 @@ public class Tooltips : MonoBehaviour
 					case "rock": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedRock.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
 				}
 				break;
-
+			case "camTime":
+				InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (activates in " + mcs.touchedCamera.GetComponent<CameraController>().camTime + ")"; break;
 
 		}
 	}

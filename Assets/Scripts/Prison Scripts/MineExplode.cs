@@ -7,6 +7,7 @@ public class MineExplode : MonoBehaviour
     private Death deathScript;
     private PlayerCollectionData pData;
     private Particles particlesScript;
+    private FightEffects fightFX;
 
     private Sprite s1;
     private Sprite s2;
@@ -20,6 +21,7 @@ public class MineExplode : MonoBehaviour
         pData = player.GetComponent<PlayerCollectionData>();
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
+        fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
 
         s1 = PadSpriteToSizeBottom(DataSender.instance.UIImages[363], 49, 76); //.033, .167
         s2 = PadSpriteToSizeBottom(DataSender.instance.UIImages[364], 49, 76);
@@ -30,7 +32,7 @@ public class MineExplode : MonoBehaviour
     }
     private void Update()
     {
-        if(!pData.playerData.isDead && player.GetComponent<CapsuleCollider2D>().IsTouching(GetComponent<BoxCollider2D>()))
+        if(!pData.playerData.isDead && !pData.playerData.inGodMode && player.GetComponent<CapsuleCollider2D>().IsTouching(GetComponent<BoxCollider2D>()))
         {
             deathScript.KillPlayer();
             StartCoroutine(Explode());
@@ -47,7 +49,8 @@ public class MineExplode : MonoBehaviour
         explosionObj.transform.position = transform.position;
         explosionObj.transform.position += new Vector3(0, 0, -1);
         explosionObj.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
-        
+
+        StartCoroutine(fightFX.MakeScreenShake());
         StartCoroutine(particlesScript.CreateDust(transform.position, 2));
 
         yield return new WaitForSeconds(.033f);

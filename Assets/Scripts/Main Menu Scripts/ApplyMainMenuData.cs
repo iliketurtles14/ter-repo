@@ -132,6 +132,7 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").Find("OptionsButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("MapEditorButton").GetComponent<Image>().sprite = UISprites[198];
         mmc.Find("TitlePanel").Find("PatchNotesButton").GetComponent<Image>().sprite = UISprites[328];
+        mmc.Find("TitlePanel").Find("CreditsButton").GetComponent<Image>().sprite = UISprites[328];
         mmc.Find("TitlePanel").Find("QuitButton").GetComponent<Image>().sprite = UISprites[212];
         spriteState = mmc.Find("TitlePanel").Find("PlayButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[199];
@@ -145,15 +146,34 @@ public class ApplyMainMenuData : MonoBehaviour
         spriteState.highlightedSprite = UISprites[329];
         mmc.Find("TitlePanel").Find("CreditsButton").GetComponent<Button>().spriteState = spriteState;
         //options stuff
-        //mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
-        //mmc.Find("OptionsPanel").Find("NormalizeCheckBox").GetComponent<Image>().sprite = UISprites[215];
-        //mmc.Find("OptionsPanel").Find("OptionsTextBackdrop").GetComponent<Image>().sprite = UISprites[186];
-        //mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
-        //spriteState = mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState;
-        //spriteState.highlightedSprite = UISprites[327];
-        //mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
-        //mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
-        //mmc.Find("OptionsPanel").GetComponent<Image>().sprite = UISprites[184];
+        mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
+        mmc.Find("OptionsPanel").Find("OptionsTextBackdrop").GetComponent<Image>().sprite = UISprites[186];
+        mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
+        spriteState = mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[327];
+        mmc.Find("OptionsPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        mmc.Find("OptionsPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
+        List<string> menus = new List<string>
+        {
+            "GameplayMenu", "AudioMenu", "VisualMenu"
+        };
+        for(int i = 0; i < 3; i++)
+        {
+            foreach(Transform child in mmc.Find("OptionsPanel").Find(menus[i]).Find("Viewport").Find("Content"))
+            {
+                if (child.name.Contains("Picker"))
+                {
+                    child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+                    child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+                    child.GetComponent<Image>().sprite = UISprites[368];
+                }
+                else if (child.name.Contains("Slider"))
+                {
+                    child.Find("Background").GetComponent<Image>().sprite = UISprites[368];
+                    child.Find("Handle Slide Area").Find("Handle").GetComponent<Image>().sprite = UISprites[370];
+                }
+            }
+        }
         //patch notes buttosns
         mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[248];
         spriteState = mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Button>().spriteState;
@@ -225,12 +245,10 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonPressedSprite = UISprites[199];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonNormalSprite = UISprites[328];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonPressedSprite = UISprites[329];
-        mmc.Find("OptionsPanel").GetComponent<Options>().backButtonNormalSprite = UISprites[326];
-        mmc.Find("OptionsPanel").GetComponent<Options>().backButtonPressedSprite = UISprites[327];
-        mmc.Find("OptionsPanel").GetComponent<Options>().checkedBoxSprite = UISprites[216];
-        mmc.Find("OptionsPanel").GetComponent<Options>().uncheckedBoxSprite = UISprites[215];
-        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonNormalSprite = UISprites[248];
-        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonPressedSprite = UISprites[249];
+        mmc.Find("OptionsPanel").GetComponent<Options>().checkedBoxSprite = UISprites[448];
+        mmc.Find("OptionsPanel").GetComponent<Options>().uncheckedBoxSprite = UISprites[447];
+        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonNormalSprite = UISprites[248];//248
+        mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonPressedSprite = UISprites[249];//249
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[518]);
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[519]);
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[520]);
@@ -254,8 +272,8 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("NPCCustomizePanel").GetComponent<NPCRename>().SelectPressedSprite = UISprites[318];
         mmc.Find("NPCCustomizePanel").GetComponent<NPCRename>().LeftArrowSprite = UISprites[203];
         mmc.Find("NPCCustomizePanel").GetComponent<NPCRename>().RightArrowSprite = UISprites[200];
-        bc.checkedBoxSprite = UISprites[216];
-        bc.uncheckedBoxSprite = UISprites[215];
+        bc.checkedBoxSprite = UISprites[448];
+        bc.uncheckedBoxSprite = UISprites[447];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonsButtonNormal = UISprites[485];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonsButtonPressed = UISprites[441];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonsButtonNormal = UISprites[471];

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5211655884579952548}
   m_Layer: 6
   m_Name: BedHorizontal
-  m_TagString: Untagged
+  m_TagString: InmateBed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

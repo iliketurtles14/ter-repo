@@ -32,6 +32,7 @@ public class Exercising : MonoBehaviour
     private bool isGoingDown;
     private int subGain;
     private bool isBusy;
+    private StatEffects statEffectsScript;
     public void Start()
     {
         so = RootObjectCache.GetRoot("ScriptObject").transform;
@@ -42,6 +43,7 @@ public class Exercising : MonoBehaviour
         applyPrisonDataScript = so.GetComponent<ApplyPrisonData>();
         actionBarPanel = ic.transform.Find("ActionBarPanel").gameObject;
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
+        statEffectsScript = so.GetComponent<StatEffects>();
 
         barLine = Resources.Load<GameObject>("BarLine");
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
@@ -311,6 +313,7 @@ public class Exercising : MonoBehaviour
                 if(subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -376,6 +379,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -430,6 +434,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -500,6 +505,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 3)
                     {
                         GetComponent<PlayerCollectionData>().playerData.strength++;
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -576,6 +582,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -724,6 +731,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -804,6 +812,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.speed++;
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
                     subGain = 0;
                 }
             }

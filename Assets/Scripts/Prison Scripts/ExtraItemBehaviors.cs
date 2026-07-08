@@ -18,6 +18,8 @@ public class ExtraItemBehaviors : MonoBehaviour
     private ItemDataCreator creator;
     private Transform player;
     private Particles particlesScript;
+    private DeskStand deskStandScript;
+    private StatEffects statEffectsScript;
     private void Start()
     {
         selectionScript = GetComponent<InventorySelection>();
@@ -30,6 +32,8 @@ public class ExtraItemBehaviors : MonoBehaviour
         creator = GetComponent<ItemDataCreator>();
         player = RootObjectCache.GetRoot("Player").transform;
         particlesScript = GetComponent<Particles>();
+        deskStandScript = GetComponent<DeskStand>();
+        statEffectsScript = GetComponent<StatEffects>();
         foreach(Transform slot in ic.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -55,19 +59,31 @@ public class ExtraItemBehaviors : MonoBehaviour
 
         if(mcs.isTouchingBars && Input.GetMouseButtonDown(0) && selectedItemID == 76)
         {
-            PlaceBedSheet(selectionScript.selectedSlotNum, mcs.touchedBars);
+            if(Vector2.Distance(player.transform.position, mcs.touchedBars.transform.position) <= 2.4f)
+            {
+                PlaceBedSheet(selectionScript.selectedSlotNum, mcs.touchedBars);
+            }
         }
         else if(mcs.isTouchingSittable && mcs.touchedSittable.name.StartsWith("PlayerBed") && Input.GetMouseButtonDown(0) && selectedItemID == 75)
         {
-            PlaceBedDummy(selectionScript.selectedSlotNum, mcs.touchedSittable);
+            if (Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position) <= 2.4f)
+            {
+                PlaceBedDummy(selectionScript.selectedSlotNum, mcs.touchedSittable);
+            }
         }
-        else if(mcs.isTouchingFloor && Input.GetMouseButtonDown(0) && selectedItemID == 137)
+        else if(mcs.isTouchingFloor && !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground")) && Input.GetMouseButtonDown(0) && selectedItemID == 137)
         {
-            PlaceStepladder(selectionScript.selectedSlotNum, mcs.touchedFloor);
+            if(Vector2.Distance(player.transform.position, mcs.touchedFloor.transform.position) <= 2.4f)
+            {
+                PlaceStepladder(selectionScript.selectedSlotNum, mcs.touchedFloor);
+            }
         }
         else if(mcs.isTouchingNPC && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead && Input.GetMouseButtonDown(0) && (selectedItemID == 87 || selectedItemID == 240 || selectedItemID == 237))
         {
-            InstaKO(selectionScript.selectedSlotNum, mcs.touchedNPC);
+            if (Vector2.Distance(player.transform.position, mcs.touchedNPC.transform.position) <= 2.4f)
+            {
+                InstaKO(selectionScript.selectedSlotNum, mcs.touchedNPC);
+            }
         }
         else if(mcs.isTouchingPlayer && (creator.CreateItemData(selectedItemID).health != -1 || creator.CreateItemData(selectedItemID).energy != -1) && Input.GetMouseButtonDown(0))
         {
@@ -75,45 +91,60 @@ public class ExtraItemBehaviors : MonoBehaviour
         }
         else if(mcs.isTouchingFloor && mcs.touchedFloor.name == "BrokenTile" && mcs.touchedFloor.GetComponent<BrokenTileConnection>().connectedTile.CompareTag("Wall") && Input.GetMouseButtonDown(0) && (selectedItemID == 154 || selectedItemID == 97 || selectedItemID == 124))
         {
-            PlacePatchUp("wall", selectionScript.selectedSlotNum, mcs.touchedFloor);
+            if (Vector2.Distance(player.transform.position, mcs.touchedFloor.transform.position) <= 2.4f)
+            {
+                PlacePatchUp("wall", selectionScript.selectedSlotNum, mcs.touchedFloor);
+            }
         }
         else if((mcs.isTouchingHoleDown || mcs.isTouchingHoleUp) && Input.GetMouseButtonDown(0) && (selectedItemID == 123 || selectedItemID == 265))
         {
             if (mcs.isTouchingHoleDown)
             {
-                PlacePatchUp("hole", selectionScript.selectedSlotNum, mcs.touchedHoleDown);
+                if(Vector2.Distance(player.position, mcs.touchedHoleDown.transform.position) <= 2.4f)
+                {
+                    PlacePatchUp("hole", selectionScript.selectedSlotNum, mcs.touchedHoleDown);
+                }
             }
             else if (mcs.isTouchingHoleUp)
             {
-                PlacePatchUp("hole", selectionScript.selectedSlotNum, mcs.touchedHoleUp);
+                if (Vector2.Distance(player.position, mcs.touchedHoleUp.transform.position) <= 2.4f)
+                {
+                    PlacePatchUp("hole", selectionScript.selectedSlotNum, mcs.touchedHoleUp);
+                }
             }
         }
         else if((mcs.isTouchingEmptyDirt || mcs.isTouchingFloor) && Input.GetMouseButtonDown(0) && (selectedItemID == 123 || selectedItemID == 265))
         {
             if (mcs.isTouchingEmptyDirt)
             {
-                foreach(Transform obj in tiles.Find("UndergroundObjects"))
+                if(Vector2.Distance(player.position, mcs.touchedEmptyDirt.transform.position) <= 2.4f)
                 {
-                    if (obj.name.Contains("HoleUp"))
+                    foreach (Transform obj in tiles.Find("UndergroundObjects"))
                     {
-                        float distance = Vector2.Distance(obj.position, mcs.touchedEmptyDirt.transform.position);
-                        if(distance < .01f)
+                        if (obj.name.Contains("HoleUp"))
                         {
-                            PlacePatchUp("hole", selectionScript.selectedSlotNum, obj.gameObject);
+                            float distance = Vector2.Distance(obj.position, mcs.touchedEmptyDirt.transform.position);
+                            if (distance < .01f)
+                            {
+                                PlacePatchUp("hole", selectionScript.selectedSlotNum, obj.gameObject);
+                            }
                         }
                     }
                 }
             }
             else if (mcs.isTouchingFloor)
             {
-                foreach(Transform obj in tiles.Find("GroundObjects"))
+                if(Vector2.Distance(player.position, mcs.touchedFloor.transform.position) <= 2.4f)
                 {
-                    if (obj.name.Contains("HoleDown"))
+                    foreach (Transform obj in tiles.Find("GroundObjects"))
                     {
-                        float distance = Vector2.Distance(obj.position, mcs.touchedFloor.transform.position);
-                        if(distance < .01f)
+                        if (obj.name.Contains("HoleDown"))
                         {
-                            PlacePatchUp("hole", selectionScript.selectedSlotNum, obj.gameObject);
+                            float distance = Vector2.Distance(obj.position, mcs.touchedFloor.transform.position);
+                            if (distance < .01f)
+                            {
+                                PlacePatchUp("hole", selectionScript.selectedSlotNum, obj.gameObject);
+                            }
                         }
                     }
                 }
@@ -121,17 +152,61 @@ public class ExtraItemBehaviors : MonoBehaviour
         }
         else if(mcs.isTouchingOpenVent && Input.GetMouseButtonDown(0) && (selectedItemID == 151 || selectedItemID == 96))
         {
-            PlacePatchUp("vent", selectionScript.selectedSlotNum, mcs.touchedOpenVent);
+            if(Vector2.Distance(player.position, mcs.touchedOpenVent.transform.position) <= 2.4f)
+            {
+                PlacePatchUp("vent", selectionScript.selectedSlotNum, mcs.touchedOpenVent);
+            }
         }
         else if(mcs.isTouchingFloor && mcs.touchedFloor.name == "BrokenTile" && mcs.touchedFloor.GetComponent<BrokenTileConnection>().connectedTile.CompareTag("Fence") && Input.GetMouseButtonDown(0) && selectedItemID == 95)
         {
-            PlacePatchUp("fence", selectionScript.selectedSlotNum, mcs.touchedFloor);
+            if(Vector2.Distance(player.position, mcs.touchedFloor.transform.position) <= 2.4f)
+            {
+                PlacePatchUp("fence", selectionScript.selectedSlotNum, mcs.touchedFloor);
+            }
         }
         else if(mcs.isTouchingNPC && Input.GetMouseButtonDown(0) && (selectedItemID == 127 || selectedItemID == 105 || selectedItemID == 131))
         {
             if (mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
-                TieUpNPC(selectionScript.selectedSlotNum, mcs.touchedNPC);
+                if(Vector2.Distance(player.position, mcs.touchedNPC.transform.position) <= 2.4f)
+                {
+                    TieUpNPC(selectionScript.selectedSlotNum, mcs.touchedNPC);
+                }
+            }
+        }
+        else if((mcs.isTouchingWall || mcs.isTouchingFence || mcs.isTouchingElectricFence || mcs.isTouchingBars) &&
+            Input.GetMouseButtonDown(0) && (selectedItemID == 82 || selectedItemID == 142))
+        {
+            GameObject obj = null;
+            if (mcs.isTouchingWall)
+            {
+                obj = mcs.touchedWall;
+            }
+            else if (mcs.isTouchingFence)
+            {
+                obj = mcs.touchedFence;
+            }
+            else if (mcs.isTouchingElectricFence)
+            {
+                obj = mcs.touchedElectricFence;
+            }
+            else if (mcs.isTouchingBars)
+            {
+                obj = mcs.touchedBars;
+            }
+            if(Vector2.Distance(player.position, obj.transform.position) <= 2.4f)
+            {
+                MakeShiv(selectionScript.selectedSlotNum, obj.transform.position);
+            }
+        }
+        else if(mcs.isTouchingCamera && Input.GetMouseButtonDown(0) && selectedItemID != -1)
+        {
+            if(creator.CreateItemData(selectedItemID).cameraBlock != -1 && mcs.touchedCamera.GetComponent<CameraController>().camMode != 2)
+            {
+                if(Vector2.Distance(player.position, mcs.touchedCamera.transform.position) <= 2.4f)
+                {
+                    BlockCamera(selectionScript.selectedSlotNum, mcs.touchedCamera);
+                }
             }
         }
     }
@@ -426,14 +501,24 @@ public class ExtraItemBehaviors : MonoBehaviour
         invSlots[slot].GetComponent<Image>().sprite = clear;
         inventoryScript.inventory[slot].itemData = null;
     }
-    private void BlockCamera()//
+    private void BlockCamera(int slot, GameObject cam)
     {
-
+        StartCoroutine(cam.GetComponent<CameraController>().TurnOffCam(inventoryScript.inventory[slot].itemData.cameraBlock, false));
+        StartCoroutine(particlesScript.CreateDust(cam.transform.position, 1));
+        inventoryScript.inventory[slot].itemData.currentDurability -= inventoryScript.inventory[slot].itemData.durability;
+        if (inventoryScript.inventory[slot].itemData.currentDurability <= 0)
+        {
+            inventoryScript.inventory[slot].itemData = null;
+            invSlots[slot].GetComponent<SpriteRenderer>().sprite = clear;
+            
+        }
     }
     private void PlaceStepladder(int slot, GameObject floor)
     {
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
+
+        StartCoroutine(particlesScript.CreateDust(floor.transform.position, 1));
 
         GameObject sl = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Stepladder"));
         sl.name = "Stepladder";
@@ -453,17 +538,37 @@ public class ExtraItemBehaviors : MonoBehaviour
         if(health != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.health += health;
+            StartCoroutine(statEffectsScript.MakeEffect(player, "health"));
         }
         if(energy != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.energy -= energy;
+            StartCoroutine(statEffectsScript.MakeEffect(player, "energy"));
         }
     }
     private void InstaKO(int slot, GameObject npc)
     {
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
-
+        StartCoroutine(particlesScript.CreateDust(npc.transform.position, 1));
         deathScript.KillNPC(npc);
+    }
+    private void MakeShiv(int slot, Vector2 pos)
+    {
+        int id = inventoryScript.inventory[slot].itemData.id;
+        int idToMake = 0;
+        switch (id)
+        {
+            case 82:
+                idToMake = 59;
+                break;
+            case 142:
+                idToMake = 69;
+                break;
+        }
+        ItemData data = creator.CreateItemData(idToMake);
+        inventoryScript.inventory[slot].itemData = data;
+        invSlots[slot].GetComponent<Image>().sprite = data.sprite;
+        StartCoroutine(particlesScript.CreateDust(pos, 1));
     }
 }

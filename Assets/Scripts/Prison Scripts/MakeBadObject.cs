@@ -26,14 +26,20 @@ public class MakeBadObject : MonoBehaviour
     private ApplyPrisonData applyScript;
     private bool isGivingOutfitHeat;
     private bool hasBadOutfit;
+    private bool hasInmateOutfit;
     private bool isOutside;
     private Death deathScript;
     private int playerLayer;
     private int groundLayer;
+    private FightEffects fightFX;
     
     private List<int> badOutfitIDs = new List<int>()
     {
         39, 44, 49, 54, 103
+    };
+    private List<int> inmateOutfitIDs = new List<int>()
+    {
+        29, 30, 31, 32, 33, 34, 35, 36, 40, 41, 42, 43, 45, 46, 47, 48, 50, 51, 52, 53, 54
     };
 
     //these bools are to make sure the same badObject doesnt get made more than once at a given time
@@ -50,6 +56,7 @@ public class MakeBadObject : MonoBehaviour
     private bool highHeat;
     private bool breakingTile;
     private bool emptyBed;
+    private bool inmateOutfit;
     private void Start()
     {
         ready = false;
@@ -68,6 +75,7 @@ public class MakeBadObject : MonoBehaviour
         deathScript = scriptObject.GetComponent<Death>();
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
+        fightFX = scriptObject.GetComponent<FightEffects>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -107,7 +115,7 @@ public class MakeBadObject : MonoBehaviour
         //          missing routines,
 
         ///bool management
-        //bad outfit
+        //bad/inmate outfit
         try
         {
             if (badOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
@@ -118,6 +126,17 @@ public class MakeBadObject : MonoBehaviour
         catch
         {
             hasBadOutfit = false;
+        }
+        try
+        {
+            if (inmateOutfitIDs.Contains(mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id))
+            {
+                hasInmateOutfit = true;
+            }
+        }
+        catch
+        {
+            hasInmateOutfit = false;
         }
 
         //outside
@@ -332,6 +351,24 @@ public class MakeBadObject : MonoBehaviour
             DestroyBadObject("notAtWork");
         }
 
+        //inmate type outfit (for jeeps and when outside at night)
+        if(!inmateOutfit && (!player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled || hasInmateOutfit))
+        {
+            inmateOutfit = true;
+
+            BadObjectData data = new BadObjectData
+            {
+                solitary = true,
+                attachedObject = player
+            };
+            CreateBadObject(data, "inmateOutfit");
+        }
+        else if(inmateOutfit && player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled && !hasInmateOutfit)
+        {
+            inmateOutfit = false;
+            DestroyBadObject("inmateOutfit");
+        }
+
         //no outfit
         if (!noOutfit && mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData == null)
         {
@@ -479,6 +516,10 @@ public class MakeBadObject : MonoBehaviour
         {
             yield break;
         }
+        if (player.GetComponent<PlayerCollectionData>().playerData.inGodMode)
+        {
+            yield break;
+        }
         
         //get random sniper
         int rand = UnityEngine.Random.Range(0, sniperList.Count);
@@ -507,6 +548,8 @@ public class MakeBadObject : MonoBehaviour
         bullet.transform.position = midPoint;
         bullet.transform.rotation = rotation;
         bullet.GetComponent<SpriteRenderer>().size = new Vector2(length, .3f);
+
+        StartCoroutine(fightFX.MakeScreenShake());
 
         //hurt player
         player.GetComponent<PlayerCollectionData>().playerData.health -= 20;

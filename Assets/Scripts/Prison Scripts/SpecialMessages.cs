@@ -64,11 +64,11 @@ public class SpecialMessages : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            StartCoroutine(MakeMessage("This is the " + which + " test!!!", "favor"));
-            StartCoroutine(MakeMessage("This is the " + which + " (2) test!!!", "favor"));
-            which++;
-        }
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    StartCoroutine(MakeMessage("This is the " + which + " test!!!", "favor"));
+        //    StartCoroutine(MakeMessage("This is the " + which + " (2) test!!!", "favor"));
+        //    which++;
+        //}
     }
 }

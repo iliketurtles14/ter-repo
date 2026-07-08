@@ -433,9 +433,9 @@ public class ZonePlacer : MonoBehaviour
     }
     public void PlaceZone(string name)
     {
-        Vector3 placePos = new Vector3(-.8f, -.8f, 0);
+        //Vector3 placePos = new Vector3(-.8f, -.8f, 0);
 
-        GameObject newZone = Instantiate(Resources.Load<GameObject>("MapEditorPrefabs/ZoneObject"), placePos, Quaternion.identity, zonesLayer);
+        GameObject newZone = Instantiate(Resources.Load<GameObject>("MapEditorPrefabs/ZoneObject"), Vector3.zero, Quaternion.identity, zonesLayer);
         newZone.name = name;
         newZone.transform.Find("NameText").GetComponent<TextMeshPro>().text = name;
         newZone.transform.Find("NameText").GetComponent<MeshRenderer>().sortingOrder = 10;

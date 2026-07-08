@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 2585470023729604215}
   - component: {fileID: -69427406734950765}
   - component: {fileID: 3102743240784607657}
+  - component: {fileID: 7234184351740607372}
   m_Layer: 6
   m_Name: Jeep
   m_TagString: Untagged
@@ -286,3 +287,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6682485b038704d99769bb17246177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JeepAnimation
+--- !u!114 &7234184351740607372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701133702800250310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dc0b37d76dad64fa3ac9d2cc5403a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JeepSee

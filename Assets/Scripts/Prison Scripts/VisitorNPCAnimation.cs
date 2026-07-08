@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -18,26 +19,20 @@ public class VisitorNPCAnimation : MonoBehaviour
     private int whichCycle = 0;
     private List<Sprite> visitorSprites;
     private bool isSS;
+    private bool isCustom;
     private Map currentMap;
     private int charNum;
     private bool ready;
     private VisitorNPCAI visitorNPCAIScript;
+    private IniFile iniFile;
+    List<Sprite> newVisitorSprites;
+    private bool doSpecial;
     private void Start()
     {
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         visitorSprites = applyScript.VisitorSprites;
         visitorNPCAIScript = GetComponent<VisitorNPCAI>();
-        visitorSprites = new List<Sprite>()
-        {
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/0"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/1"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/2"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/3"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/4"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/5"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/6"),
-            Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/1/7"),
-        };
+        iniFile = new IniFile(Path.Combine(Application.streamingAssetsPath, "UserData.ini"));
 
         StartCoroutine(StartWait());
     }
@@ -50,6 +45,22 @@ public class VisitorNPCAnimation : MonoBehaviour
         yield return new WaitForEndOfFrame();
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         isSS = currentMap.mapName == "Santa's Sweatshop";
+        newVisitorSprites = new List<Sprite>();
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                newVisitorSprites.Add(Resources.Load<Sprite>("PrisonResources/FanmadeVisitorSprites/" + i.ToString() + "/" + j.ToString()));
+            }
+        }
+        if (iniFile.Read("EnableNewVisitors", "Settings") == "True")
+        {
+            isCustom = true;
+            foreach (Sprite sprite in newVisitorSprites)
+            {
+                visitorSprites.Add(sprite);
+            }
+        }
         ready = true;
     }
     private void OnEnable()
@@ -60,16 +71,32 @@ public class VisitorNPCAnimation : MonoBehaviour
         }
 
         //get char
-        //if (isSS)
-        //{
-        //    charNum = UnityEngine.Random.Range(8, 13);
-        //}
-        //else
-        //{
-        //    charNum = UnityEngine.Random.Range(0, 8);
-        //}
-
-        charNum = 0;
+        doSpecial = false;
+        if (isSS)
+        {
+            charNum = UnityEngine.Random.Range(8, 13);
+        }
+        else if (isCustom)
+        {
+            int rand = UnityEngine.Random.Range(0, 2);
+            if(rand == 0)
+            {
+                charNum = UnityEngine.Random.Range(0, 8);
+                if (isSS)
+                {
+                    charNum = UnityEngine.Random.Range(8, 13);
+                }
+            }
+            else
+            {
+                charNum = UnityEngine.Random.Range(0, 6);
+                doSpecial = true;
+            }
+        }
+        else
+        {
+            charNum = UnityEngine.Random.Range(0, 8);
+        }
 
         oldPos = currentPos = transform.position;
         if (string.IsNullOrEmpty(lookDir))
@@ -97,7 +124,14 @@ public class VisitorNPCAnimation : MonoBehaviour
 
             try
             {
-                GetComponent<SpriteRenderer>().sprite = visitorSprites[(lookNum + whichCycle) + (charNum * 8)];
+                if (doSpecial)
+                {
+                    GetComponent<SpriteRenderer>().sprite = newVisitorSprites[(lookNum + whichCycle) + (charNum * 8)];
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().sprite = visitorSprites[(lookNum + whichCycle) + (charNum * 8)];
+                }
             }
             catch { }
         }

@@ -52,30 +52,30 @@ public class Missions : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            GameObject inmate = null;
-            foreach (Transform npc in aStar)
-            {
-                if (npc.name.Contains("Inmate"))
-                {
-                    inmate = npc.gameObject;
-                }
-            }
-            MakeMission(inmate, "distract");
-        }
-        else if (Input.GetKeyDown(KeyCode.F4))
-        {
-            GameObject inmate = null;
-            foreach (Transform npc in aStar)
-            {
-                if (npc.name.Contains("Inmate"))
-                {
-                    inmate = npc.gameObject;
-                }
-            }
-            MakeMission(inmate, "stealInmateBody");
-        }
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    GameObject inmate = null;
+        //    foreach (Transform npc in aStar)
+        //    {
+        //        if (npc.name.Contains("Inmate"))
+        //        {
+        //            inmate = npc.gameObject;
+        //        }
+        //    }
+        //    MakeMission(inmate, "distract");
+        //}
+        //else if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    GameObject inmate = null;
+        //    foreach (Transform npc in aStar)
+        //    {
+        //        if (npc.name.Contains("Inmate"))
+        //        {
+        //            inmate = npc.gameObject;
+        //        }
+        //    }
+        //    MakeMission(inmate, "stealInmateBody");
+        //}
     }
     private IEnumerator StartWait()
     {

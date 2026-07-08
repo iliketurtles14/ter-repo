@@ -1,18 +1,20 @@
 using SFB;
-using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Collections;
 using System.Linq;
-using UnityEngine.Networking;
-using TMPro;
-using System.Text.RegularExpressions;
-using UnityEngine.UI;
-using Unity.VisualScripting;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 public class LoadMap : MonoBehaviour
 {
@@ -363,6 +365,19 @@ public class LoadMap : MonoBehaviour
             empty.transform.SetParent(tileGroup);
             empty.AddComponent<BoxCollider2D>();
         }
+        foreach(Transform canvasGroup in canvases)
+        {
+            if(canvasGroup.name == "Ground" ||
+                canvasGroup.name == "Vent" ||
+                canvasGroup.name == "Underground" ||
+                canvasGroup.name == "Roof")
+            {
+                foreach(Transform canvas in canvasGroup)
+                {
+                    Destroy(canvas.gameObject);
+                }
+            }
+        }
     }
     private void LoadTiles()
     {
@@ -596,6 +611,30 @@ public class LoadMap : MonoBehaviour
                             }
                         }
                         break;
+                    case "WorkDoor":
+                        foreach(string line in currentList)
+                        {
+                            string name = line.Split("=")[0];
+                            if(name != obj.name)
+                            {
+                                continue;
+                            }
+                            string position = line.Split("=")[1].Split(";")[0];
+                            float posX = Convert.ToSingle(position.Split(",")[0]);
+                            float posY = Convert.ToSingle(position.Split(",")[1]);
+                            posX = (posX * 1.6f) - 1.6f;
+                            posY = (posY * 1.6f) - 1.6f;
+                            Vector2 pos = new Vector2(posX, posY);
+                            string job = line.Split("=")[1].Split(";")[1];
+
+                            float distance = Vector2.Distance(obj.position, pos);
+                            if (distance < .01f)
+                            {
+                                obj.GetComponent<MEJobContainer>().job = job;
+                                break;
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -824,7 +863,7 @@ public class LoadMap : MonoBehaviour
             case "WorkDoor":
                 GameObject canvas5 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
                 canvas5.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "workDoor";
-                canvas5.transform.parent = canvases.Find(layer);
+                canvas5.transform.parent = canvases.Find(realLayer);
                 canvas5.transform.position = placedObj.transform.position;
                 canvas5.name = "SpecialObjectCanvas";
                 canvas5.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);

@@ -7,17 +7,20 @@ public class Picker : MonoBehaviour
 {
     public List<string> options = new List<string>();
     private TextMeshProUGUI tmp;
-    private int currentIndex;
+    public int currentIndex;
     private void Start()
     {
         tmp = transform.Find("Text").GetComponent<TextMeshProUGUI>();
+    }
+    private void Update()
+    {
+        tmp.text = options[currentIndex];
     }
     public void PickerLeft()
     {
         if(currentIndex > 0 && options.Count > 0)
         {
             currentIndex--;
-            tmp.text = options[currentIndex];
         }
     }
     public void PickerRight()
@@ -25,7 +28,6 @@ public class Picker : MonoBehaviour
         if(currentIndex < options.Count - 1 && options.Count > 0)
         {
             currentIndex++;
-            tmp.text = options[currentIndex];
         }
     }
 }

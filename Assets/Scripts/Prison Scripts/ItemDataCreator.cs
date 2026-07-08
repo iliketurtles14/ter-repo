@@ -67,19 +67,19 @@ public class ItemDataCreator : MonoBehaviour
     }
     public ItemData CreateItemData(int id)
     {
-            string str;
-            if(id.ToString().Length == 1)
-            {
-                str = "00" + id.ToString();
-            }
-            else if(id.ToString().Length == 2)
-            {
-                str = "0" + id.ToString();
-            }
-            else
-            {
-                str = id.ToString();
-            }
+        string str;
+        if(id.ToString().Length == 1)
+        {
+            str = "00" + id.ToString();
+        }
+        else if(id.ToString().Length == 2)
+        {
+            str = "0" + id.ToString();
+        }
+        else
+        {
+            str = id.ToString();
+        }
 
         
         string[] itemsFile = loadPrisonScript.currentMap.items;
