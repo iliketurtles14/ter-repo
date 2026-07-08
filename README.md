@@ -11,7 +11,7 @@ This is only officially supported for Windows systems. Linux work-arounds can be
 
 The CTFAK 2.0: https://github.com/CTFAK/CTFAK2.0 (you do NOT have to download this)
 
-Discord: https://discord.gg/PEzv5ECNgR
+Discord: https://discord.gg/pPWrSgwBRW
 
 For fully built and "stable" releases, go to the "Releases" section.
 
