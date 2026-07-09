@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using System.Collections;
 
 public class ButtonController : MonoBehaviour
 {
@@ -172,18 +173,21 @@ public class ButtonController : MonoBehaviour
     public void PrisonSelectMainPrisons()
     {
         prisonSelectScript.whichTab = 0;
+        prisonSelectScript.whichPrison = 0;
         StartCoroutine(prisonSelectScript.ReloadGrid());
         sc.PlaySound("plip");
     }
     public void PrisonSelectBonusPrisons()
     {
         prisonSelectScript.whichTab = 1;
+        prisonSelectScript.whichPrison = 0;
         StartCoroutine(prisonSelectScript.ReloadGrid());
         sc.PlaySound("plip");
     }
     public void PrisonSelectCustomPrisons()
     {
         prisonSelectScript.whichTab = 2;
+        prisonSelectScript.whichPrison = 0;
         StartCoroutine(prisonSelectScript.ReloadGrid());
         sc.PlaySound("plip");
     }
@@ -251,18 +255,27 @@ public class ButtonController : MonoBehaviour
     }
     public void PlayerMenuLeft()
     {
+        sc.PlaySound("plip");
+        StartCoroutine(PlayerMenuLeftWait());
+    }
+    private IEnumerator PlayerMenuLeftWait()
+    {
         PlayerMenuScript.characterNum--;
+        yield return new WaitForEndOfFrame();
         mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
         mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
-
-        sc.PlaySound("plip");
     }
     public void PlayerMenuRight()
     {
+        sc.PlaySound("plip");
+        StartCoroutine(PlayerMenuRightWait());
+    }
+    private IEnumerator PlayerMenuRightWait()
+    {
         PlayerMenuScript.characterNum++;
+        yield return new WaitForEndOfFrame();
         mmc.Find("PlayerPanel").Find("NameText").GetComponent<TMP_InputField>().text = PlayerMenuScript.playerCharacter;
         mmc.Find("PlayerPanel").Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = PlayerMenuScript.playerCharacter;
-        sc.PlaySound("plip");
     }
     public void PlayerMenuBack()
     {

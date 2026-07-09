@@ -12315,6 +12315,7 @@ GameObject:
   - component: {fileID: 567059237}
   - component: {fileID: 567059238}
   - component: {fileID: 567059239}
+  - component: {fileID: 567059240}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -13835,6 +13836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f055d7ba60a080742bb62d75a6793b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatEffects
+  energy: {fileID: 0}
+  health: {fileID: 0}
 --- !u!114 &567059235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13895,6 +13898,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c605dc3019811354f99af4d003eb6bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CPCharlie
+--- !u!114 &567059240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f19fa0c6af3704e817f38005cbed57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCSpeechController
 --- !u!1 &573411685
 GameObject:
   m_ObjectHideFlags: 0
@@ -47248,6 +47263,8 @@ MonoBehaviour:
   touchedInmateBed: {fileID: 0}
   isTouchingCharlie: 0
   touchedCharlie: {fileID: 0}
+  isTouchingCamera: 0
+  touchedCamera: {fileID: 0}
 --- !u!1 &1956077075
 GameObject:
   m_ObjectHideFlags: 0

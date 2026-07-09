@@ -16,7 +16,7 @@ using UnityEngine.UI;
 public class PrisonSelect : MonoBehaviour
 {
     public MouseCollisionOnButtons mouseCollisionScript;
-    public List<Sprite> prisonSprites = new List<Sprite>();
+    //public List<Sprite> prisonSprites = new List<Sprite>();
     public TextMeshProUGUI prisonText;
     public TextMeshProUGUI difficultyText;
     public GameObject CurrentPrisonObject;
@@ -37,12 +37,12 @@ public class PrisonSelect : MonoBehaviour
     public int currentPrisonGuardNum;
     public bool currentPrisonHasPOW;
     public string currentPrisonPath;
-    private List<Sprite> mainPrisonIcons = new List<Sprite>();
+    public List<Sprite> mainPrisonIcons = new List<Sprite>();
     private List<int> mainPrisonInmateNums = new List<int>();
     private List<int> mainPrisonGuardNums = new List<int>();
     private List<bool> mainPrisonHasPOWBools = new List<bool>();
     public List<string> mainPrisonNames = new List<string>();
-    private List<Sprite> bonusPrisonIcons = new List<Sprite>();
+    public List<Sprite> bonusPrisonIcons = new List<Sprite>();
     private List<int> bonusPrisonInmateNums = new List<int>();
     private List<int> bonusPrisonGuardNums = new List<int>();
     private List<bool> bonusPrisonHasPOWBools = new List<bool>();
@@ -78,8 +78,28 @@ public class PrisonSelect : MonoBehaviour
     public Sprite continueButtonMad;
     public Sprite continueButtonGood;
     public bool showGrid;
-
-
+    private bool ready = false;
+    private void Start()
+    {
+        DataSender ds = DataSender.instance;
+        mainPrisonIcons.Add(ds.UIImages[519]);
+        mainPrisonIcons.Add(ds.UIImages[520]);
+        mainPrisonIcons.Add(ds.UIImages[521]);
+        mainPrisonIcons.Add(ds.UIImages[522]);
+        mainPrisonIcons.Add(ds.UIImages[523]);
+        mainPrisonIcons.Add(ds.UIImages[524]);
+        bonusPrisonIcons.Add(ds.UIImages[585]);
+        bonusPrisonIcons.Add(ds.UIImages[574]);
+        bonusPrisonIcons.Add(ds.UIImages[573]);
+        bonusPrisonIcons.Add(ds.UIImages[564]);
+        bonusPrisonIcons.Add(ds.UIImages[536]);
+        bonusPrisonIcons.Add(ds.UIImages[532]);
+        bonusPrisonIcons.Add(ds.UIImages[513]);
+        bonusPrisonIcons.Add(ds.UIImages[516]);
+        bonusPrisonIcons.Add(ds.UIImages[517]);
+        bonusPrisonIcons.Add(ds.UIImages[514]);
+        bonusPrisonIcons.Add(ds.UIImages[515]);
+    }
     public void Update()
     {
         switch (whichTab)
@@ -362,12 +382,7 @@ public class PrisonSelect : MonoBehaviour
                 File.Delete(Path.Combine(extractPath, "Data.ini"));
                 if (File.Exists(Path.Combine(extractPath, "Icon.png")))
                 {
-                    mainPrisonIcons.Add(ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png")));
                     File.Delete(Path.Combine(extractPath, "Icon.png"));
-                }
-                else
-                {
-                    mainPrisonIcons.Add(Resources.Load<Sprite>("Main Menu Resources/UI Stuff/noicon"));
                 }
                 if (File.Exists(Path.Combine(extractPath, "Tiles.png")))
                 {
@@ -405,12 +420,7 @@ public class PrisonSelect : MonoBehaviour
                 File.Delete(Path.Combine(extractPath, "Data.ini"));
                 if (File.Exists(Path.Combine(extractPath, "Icon.png")))
                 {
-                    bonusPrisonIcons.Add(ConvertPNGToSprite(Path.Combine(extractPath, "Icon.png")));
                     File.Delete(Path.Combine(extractPath, "Icon.png"));
-                }
-                else
-                {
-                    bonusPrisonIcons.Add(Resources.Load<Sprite>("Main Menu Resources/UI Stuff/noicon"));
                 }
                 if (File.Exists(Path.Combine(extractPath, "Tiles.png")))
                 {

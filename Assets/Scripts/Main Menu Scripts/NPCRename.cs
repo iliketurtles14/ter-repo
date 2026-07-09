@@ -447,7 +447,7 @@ public class NPCRename : MonoBehaviour
         int i = 0;
         foreach(Transform npc in transform.Find("NPCGrid"))
         {            
-            setNames.Add(npc.GetComponent<CustomNPCCollectionData>().customNPCData.displayName);
+            setNames.Add(npc.GetComponent<CustomNPCCollectionData>().customNPCData.displayName.Replace("\n", ""));
             setCharacters.Add(CharacterEnumClass.GetCharacterInt(npc.GetComponent<CustomNPCCollectionData>().customNPCData.npcType));
             i++;
         }

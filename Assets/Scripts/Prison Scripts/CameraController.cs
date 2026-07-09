@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour
     private List<Sprite> seenSprites = new List<Sprite>();
     private List<Sprite> offSprites = new List<Sprite>();
     private List<Vector2> currentVectors = new List<Vector2>();
+    private List<Transform> guardsNotSpecial = new List<Transform>();//for calls
+    private Transform aStar;
     private List<string> availableBadObjects = new List<string>
     {
         "onDesk", "pickedUp", "inWrongCell", "playerPunching", "wrongRoutine", "noOutfit", "guardBreakingTile"
@@ -42,6 +44,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         Transform so = RootObjectCache.GetRoot("ScriptObject").transform;
+        aStar = RootObjectCache.GetRoot("A*").transform;
         statEffectsScript = so.GetComponent<StatEffects>();
         player = RootObjectCache.GetRoot("Player").transform;
         pc = so.GetComponent<PauseController>();
@@ -63,6 +66,13 @@ public class CameraController : MonoBehaviour
         StartCoroutine(ScanAnim());
         StartCoroutine(FollowAnim());
         StartCoroutine(CooldownWait());
+        foreach(Transform npc in aStar)
+        {
+            if (npc.name.Contains("Guard") && npc.name != "Guard1" && npc.name != "Guard2" && npc.name != "Guard3")
+            {
+                guardsNotSpecial.Add(npc);
+            }
+        }
         ready = true;
     }
     private void MakeSpriteLists()
@@ -280,7 +290,25 @@ public class CameraController : MonoBehaviour
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
             StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
         }
-        //send guard
+        if (guardsNotSpecial.Count > 0)
+        {
+            List<Transform> availableGuards = new List<Transform>();
+            foreach (Transform guard in guardsNotSpecial)
+            {
+                if (!guard.GetComponent<NPCCollectionData>().npcData.isDead &&
+                    !guard.GetComponent<NPCCombat>().isAggro &&
+                    !guard.GetComponent<NPCCollectionData>().npcData.isSleeping)
+                {
+                    availableGuards.Add(guard);
+                }
+            }
+
+            if (availableGuards.Count > 0)
+            {
+                int rand = UnityEngine.Random.Range(0, availableGuards.Count);
+                availableGuards[rand].GetComponent<NPCAI>().SendToPos(transform.position);
+            }
+        }
 
     }
     private IEnumerator CooldownWait()

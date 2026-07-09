@@ -42,6 +42,11 @@ public class NPCAI : MonoBehaviour
     private bool canChangeDir;
     private NPCCollectionData npcColData;
     private bool ready;
+    public bool followSchedule = true;
+    public bool atCanteenSeat; //for speech
+    public bool atExerciseEquipment; //for speech
+    public bool atShowerPoint; //for speech
+    public bool atGuardRollcall; //for speech (only for guard1)
     private void Start()
     {   
         //get npctype and num
@@ -276,13 +281,26 @@ public class NPCAI : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G) && name == "Guard1")
+        {
+            MouseCollisionOnItems mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+            
+            SendToPos(mcs.touchedFloor.transform.position);
+        }
+        
         if (!ready)
         {
             return;
         }
-        
+
         //get period
         period = scheduleScript.periodCode;
+
+        if (!followSchedule)
+        {
+            return;
+        }
+        
 
         if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
@@ -303,13 +321,13 @@ public class NPCAI : MonoBehaviour
                 if (distance < .01f && !isFinishing)
                 {
                     isFinishing = true;
-                    StartCoroutine(FinishMovement());
+                    StartCoroutine(FinishMovement(true));
                 }
             }
             catch //force finish
             {
                 isFinishing = true;
-                StartCoroutine(FinishMovement());
+                StartCoroutine(FinishMovement(true));
             }
         }
 
@@ -506,15 +524,31 @@ public class NPCAI : MonoBehaviour
             currentWaypoint = currentPossibleWaypoints[npcNum - 1];
         }
     }
-    private IEnumerator FinishMovement()
+    private IEnumerator FinishMovement(bool doDirStuff)
     {
+        if (currentWaypoint.name.Contains("Shower"))
+        {
+            atShowerPoint = true;//for speech aasd;lfkajs;dlfkjasdf
+        }
+        if(currentWaypoint.name.Contains("Rollcall") && name == "Guard1")
+        {
+            atGuardRollcall = true;//for speech hahahahahahaha
+        }
         seeker.CancelCurrentPathRequest(true);
-        canChangeDir = true;
+        if (doDirStuff)
+        {
+            canChangeDir = true;
+        }
         int rand = UnityEngine.Random.Range(0, 4);
         yield return new WaitForSeconds(rand);
-        canChangeDir = false;
+        if (doDirStuff)
+        {
+            canChangeDir = false;
+        }
         isMoving = false;
         isFinishing = false;
+        atShowerPoint = false;//for speech hah
+        atGuardRollcall = false; //hey its me turtles hi turtles how are you im good thx ok thats good!
     }
     private IEnumerator InmateBed()
     {
@@ -534,6 +568,7 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateCanteen()
     {
+        atCanteenSeat = false;
         Debug.Log("Is in canteen");
         
         //get canteen postiions
@@ -630,6 +665,7 @@ public class NPCAI : MonoBehaviour
             yield return null;
         }
         seeker.CancelCurrentPathRequest(true);
+        atCanteenSeat = true;
         transform.position = currentCanteenSeatPos;
         canChangeDir = true;
 
@@ -714,6 +750,7 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateExercise()
     {
+        atExerciseEquipment = false;
         GameObject currentEquipment = null;
         
         //get equipment positions
@@ -742,6 +779,7 @@ public class NPCAI : MonoBehaviour
             yield return null;
         }
         seeker.CancelCurrentPathRequest(true);
+        atExerciseEquipment = true;
         transform.position = currentEquipmentPos;
 
         //set animation
@@ -1531,5 +1569,29 @@ public class NPCAI : MonoBehaviour
                     break;
             }
         }
+    }
+    public void SendToPos(Vector2 pos) //p much js for guards ts
+    {
+        OnDisable();
+        StartCoroutine(SendToPosWait(pos));
+    }
+    private IEnumerator SendToPosWait(Vector2 pos)
+    {
+        yield return new WaitForEndOfFrame();
+        canChangeDir = false;
+        dirToLook = "any";
+        followSchedule = false;
+        seeker.StartPath(transform.position, pos);
+        while (true)
+        {
+            if (Vector2.Distance(transform.position, pos) <= 1.2f)//1.2 is a little over the max distance (sqrt(1.28)) an npc can be from a tile (this is done because of the a* movement)
+            {
+                break;
+            }
+            Debug.Log(Vector2.Distance(transform.position, pos));
+            yield return new WaitForEndOfFrame();
+        }
+        StartCoroutine(FinishMovement(false));
+        followSchedule = true;
     }
 }

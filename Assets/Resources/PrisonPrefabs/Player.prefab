@@ -34,6 +34,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &951245835020195457
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -79,6 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: e17a5f8385657b44087047c72799d4b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -88,7 +90,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1578911972997081704
 GameObject:
@@ -103,7 +104,6 @@ GameObject:
   - component: {fileID: 4891178094634230641}
   - component: {fileID: 2740286130468209070}
   - component: {fileID: 5295133662868875703}
-  - component: {fileID: 7495228360518187876}
   - component: {fileID: 3065578113236292986}
   - component: {fileID: 960907651471285055}
   - component: {fileID: 677651251334809322}
@@ -143,6 +143,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2616495951596330687
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -188,6 +189,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
+  m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 170c0fd9b66594745b4baa90729dd752, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -197,7 +199,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &4891178094634230641
 MonoBehaviour:
@@ -252,42 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea905dcb4b092684a9a726057e28bf4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7495228360518187876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1578911972997081704}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 973d0eba35960d84d9b38189c4caa1c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTouchingCellsZone: 0
-  touchedCellsZone: {fileID: 0}
-  isTouchingSolitaryZone: 0
-  touchedSolitaryZone: {fileID: 0}
-  isTouchingPlayerCell: 0
-  touchedPlayerCell: {fileID: 0}
-  isTouchingRollcallZone: 0
-  touchedRollcallZone: {fileID: 0}
-  isTouchingMailroomZone: 0
-  touchedMailroomZone: {fileID: 0}
-  isTouchingMetalshopZone: 0
-  touchedMetalshopZone: {fileID: 0}
-  isTouchingJanitorZone: 0
-  touchedJanitorZone: {fileID: 0}
-  isTouchingLaundryZone: 0
-  touchedLaundryZone: {fileID: 0}
-  isTouchingShowersZone: 0
-  touchedShowersZone: {fileID: 0}
-  isTouchingKitchenZone: 0
-  touchedKitchenZone: {fileID: 0}
-  isTouchingGymZone: 0
-  touchedGymZone: {fileID: 0}
-  isTouchingCanteenZone: 0
-  touchedCanteenZone: {fileID: 0}
 --- !u!114 &3065578113236292986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +268,7 @@ MonoBehaviour:
   lookDir: 
   bodyDirSprites: []
   outfitDirSprites: []
+  shouldRestartCycle: 0
 --- !u!114 &960907651471285055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +439,7 @@ MonoBehaviour:
   friendsList: []
   energyPercentage: {fileID: 0}
   heatPercentage: {fileID: 0}
+  friendsX: {fileID: 0}
   energyRate: 0
   healthRate: 0
   energyRateAmount: 0
@@ -501,6 +468,8 @@ MonoBehaviour:
   isSeated: 0
   isZipping: 0
   isPunching: 0
+  isDead: 0
+  isBeingElectrocuted: 0
   isBusy: 0
 --- !u!114 &6121060470746086807
 MonoBehaviour:

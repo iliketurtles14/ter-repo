@@ -4,9 +4,11 @@ using UnityEngine;
 public class LoadBlockerController : MonoBehaviour
 {
     private Transform loadCanvas;
+    private Routine routineScript;
     private void Start()
     {
         loadCanvas = RootObjectCache.GetRoot("LoadBlockerCanvas").transform;
+        routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").GetComponent<Routine>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -28,6 +30,7 @@ public class LoadBlockerController : MonoBehaviour
     {
         loadCanvas.GetComponent<Animator>().enabled = true;
         yield return new WaitForSeconds(1);
+        routineScript.isFrozen = false;
         Destroy(loadCanvas.gameObject);
     }
 }

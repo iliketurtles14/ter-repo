@@ -147,7 +147,7 @@ public class SetUpNPCs : MonoBehaviour
             {
                 npc.name = "Guard" + (i - inmateAmount + 1);
             }
-            npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i];
+            npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i].Replace("\n", "").Replace("\r", "");
             npc.GetComponent<NPCCollectionData>().npcData.charNum = NPCSave.instance.npcCharacters[i];
 
             //npc stats

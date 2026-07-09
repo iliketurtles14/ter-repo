@@ -18,15 +18,17 @@ public class Routine : MonoBehaviour
     public string periodCode = "";
     private Schedule scheduleScript;
     public bool isSpeedingUp;
-    public bool isFrozen;
+    public bool isFrozen = true;
     public int startingMin;
     public int doorsOpenMin;
     public int doorsCloseMin;
     private Map currentMap;
+    private CreateNote noteScript;
     public void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
-        
+        noteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
+
         timeText = GetComponent<TMP_Text>();
 
         StartCoroutine(StartWait());
@@ -93,6 +95,18 @@ public class Routine : MonoBehaviour
             yield return new WaitForSeconds(interval);
 
             sec++;
+
+            if(sec == 55 && min == startingMin && day == 1)
+            {
+                if(string.IsNullOrEmpty(currentMap.note) && string.IsNullOrEmpty(currentMap.warden))
+                {
+                    //do nothing
+                }
+                else
+                {
+                    noteScript.CreateWardenNote("day1", currentMap.note, currentMap.warden);
+                }
+            }
 
             if(sec == 60)
             {

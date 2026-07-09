@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ public class NPCSpeech : MonoBehaviour
     private bool textBoxIsActive;
     private bool madeTextBox;
     private StatEffects statEffectsScript;
+    private List<string> inmateNames = new List<string>();
+    private List<string> guardNames = new List<string>();
+    private string playerName;
+    private bool ready = false;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -26,13 +31,40 @@ public class NPCSpeech : MonoBehaviour
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
 
         DestroyTextBox(transform);
-        if(name != "VisitorNPC" && name != "CheckpointCharlie")
+        if(name != "VisitorNPC" && name != "CheckpointCharlie" && !name.Contains("Inmate") && !name.Contains("Guard"))
         {
             StartCoroutine(SpeechLoop());
         }
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        foreach(Transform npc in transform.parent)
+        {
+            if (npc.name.Contains("Inmate"))
+            {
+                inmateNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
+            }
+            else if (npc.name.Contains("Guard"))
+            {
+                guardNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
+            }
+        }
+        playerName = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>().playerData.displayName.Replace("\n", "");
+        ready = true;
     }
     private void Update()
     {
+        if (!ready)
+        {
+            return;
+        }
+        
         if(Input.GetMouseButtonDown(0) && !isTalking && !textBoxIsActive && mcs.isTouchingNPC && mcs.touchedNPC == gameObject && (mcs.touchedNPC.name.StartsWith("Inmate") || mcs.touchedNPC.name.StartsWith("Guard")) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
         {
             isTalking = true;
@@ -81,17 +113,17 @@ public class NPCSpeech : MonoBehaviour
         StartCoroutine(statEffectsScript.MakeEffect(transform, "good"));
         StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
     }
-    private IEnumerator SpeechLoop()
-    {
+    private IEnumerator SpeechLoop() //this has been partially replaced by NPCSpeechController.cs to create a more te1 feeling to speech stuff
+    {                                //pretty much this is only used by medic, warden, and job guy
         while (true)
         {
-            if((name == "Warden" || name == "Medic" || name == "JobOfficer") &&
+            if ((name == "Warden" || name == "Medic" || name == "JobOfficer") &&
                 GetComponent<SpriteRenderer>().enabled == false)
             {
                 yield return null;
                 continue;
             }
-            
+
             if (!isTalking && !isWaiting && !textBoxIsActive)
             {
                 isWaiting = true;
@@ -104,46 +136,21 @@ public class NPCSpeech : MonoBehaviour
                 yield return null;
                 continue;
             }
-
-            period = scheduleScript.periodCode;
+            
 
             string messageType = null;
 
-            if (name.StartsWith("Inmate"))
+            switch (name)
             {
-                switch (period)
-                {
-                    case "B":
-                    case "L":
-                    case "D":
-                        messageType = "Canteen";
-                        break;
-                    case "E":
-                        messageType = "Gym";
-                        break;
-                    case "FT":
-                    case "W":
-                        messageType = "Banter";
-                        break;
-                    case "S":
-                        messageType = "Shower";
-                        break;
-                    case "LD":
-                        messageType = "Lockdown";
-                        break;
-                }
-            }
-            else if(name == "JobOfficer")
-            {
-                messageType = "JobStaff";
-            }
-            else if(name == "Medic")
-            {
-                messageType = "MedStaff";
-            }
-            else if(name == "Warden")
-            {
-                messageType = "Warden";
+                case "JobOfficer":
+                    messageType = "JobStaff";
+                    break;
+                case "Medic":
+                    messageType = "MedStaff";
+                    break;
+                case "Warden":
+                    messageType = "Warden";
+                    break;
             }
 
             if (!isTalking && messageType != null && !textBoxIsActive)
@@ -159,7 +166,31 @@ public class NPCSpeech : MonoBehaviour
         madeTextBox = true;
         isTalking = true;
 
-        Debug.Log(npc.name + ": " + msg);
+        string inmateName = "someone";
+        string guardName = "someone";
+
+        if (inmateNames.Count > 0)
+        {
+            inmateName = inmateNames[UnityEngine.Random.Range(0, inmateNames.Count)];
+        }
+        if (guardNames.Count > 0)
+        {
+            guardName = guardNames[UnityEngine.Random.Range(0, guardNames.Count)];
+        }
+
+        if (msg.Contains("$inmate"))
+        {
+            msg = msg.Replace("$inmate", inmateName);
+        }
+        if (msg.Contains("$guard"))
+        {
+            msg = msg.Replace("$guard", guardName);
+        }
+        if (msg.Contains("$name"))
+        {
+            msg = msg.Replace("$name", playerName);
+        }
+
         while (true)
         {
             if (msg.EndsWith(' '))

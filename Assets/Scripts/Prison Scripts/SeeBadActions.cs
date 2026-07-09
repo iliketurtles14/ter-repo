@@ -21,6 +21,7 @@ public class SeeBadActions : MonoBehaviour
     private Schedule scheduleScript;
     private SpecialMessages specialMessagesScript;
     private StatEffects statEffectsScript;
+    private List<Transform> guardsNotSpecial = new List<Transform>();//for calls
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -33,6 +34,22 @@ public class SeeBadActions : MonoBehaviour
         MakeBadObjectList();
 
         StartCoroutine(LookWait());
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        foreach(Transform npc in transform.parent)
+        {
+            if(npc.name.Contains("Guard") && npc.name != "Guard1" && npc.name != "Guard2" && npc.name != "Guard3")
+            {
+                guardsNotSpecial.Add(npc);
+            }
+        }
     }
     private void MakeVectorLists()
     {
@@ -220,7 +237,10 @@ public class SeeBadActions : MonoBehaviour
         if(heatToAdd > 0)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
-            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+            if(badObject.name != "guardNonInmateOutfit" && badObject.name != "inmateNonInmateOutfit")
+            {
+                StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+            }
         }
 
         //set heat
@@ -281,8 +301,26 @@ public class SeeBadActions : MonoBehaviour
         //should call
         if (data.shouldCall && !isGuard && data.forInmate)
         {
-            Debug.Log("call");
-            //remember to add 30 heat
+            if(guardsNotSpecial.Count > 0)
+            {
+                List<Transform> availableGuards = new List<Transform>();
+                foreach(Transform guard in guardsNotSpecial)
+                {
+                    if(!guard.GetComponent<NPCCollectionData>().npcData.isDead &&
+                        !guard.GetComponent<NPCCombat>().isAggro &&
+                        !guard.GetComponent<NPCCollectionData>().npcData.isSleeping)
+                    {
+                        availableGuards.Add(guard);
+                    }
+                }
+
+                if(availableGuards.Count > 0)
+                {
+                    int rand = UnityEngine.Random.Range(0, availableGuards.Count);
+                    availableGuards[rand].GetComponent<NPCAI>().SendToPos(transform.position);
+                }
+            }
+            player.GetComponent<PlayerCollectionData>().playerData.heat += 30;
         }
 
         //do timers

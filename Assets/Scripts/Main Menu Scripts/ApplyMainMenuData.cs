@@ -249,13 +249,23 @@ public class ApplyMainMenuData : MonoBehaviour
         mmc.Find("OptionsPanel").GetComponent<Options>().uncheckedBoxSprite = UISprites[447];
         mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonNormalSprite = UISprites[248];//248
         mmc.Find("PatchNotesPanel").GetComponent<PatchNotes>().buttonPressedSprite = UISprites[249];//249
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[518]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[519]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[520]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[521]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[522]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[523]);
-        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().prisonSprites.Add(UISprites[524]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[519]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[520]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[521]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[522]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[523]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().mainPrisonIcons.Add(UISprites[524]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[585]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[574]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[573]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[564]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[536]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[532]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[513]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[516]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[517]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[514]);
+        mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().bonusPrisonIcons.Add(UISprites[515]);
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().ButtonNormalSprite = UISprites[248];
         mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>().ButtonPressedSprite = UISprites[249];
         mmc.Find("PlayerPanel").GetComponent<PlayerMenu>().normalSprite = UISprites[248];

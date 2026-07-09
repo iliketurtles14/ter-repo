@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,11 +11,26 @@ public class CreateNote : MonoBehaviour
     private PauseController pc;
     private Transform currentPanel;
     public bool inNote;
+    private string playerName;
+    private List<string> wardenNames = new List<string>
+    {
+        "Dean Hall", "Monkey Alan", "Alberto Valero", "Craig Monkford", "Patrick Garratt", "Chinsworth", "Stuart Foot", "Jim Sterling", "Geoff Lamp", "Paul Soares Jr.", "Davis", "Isaac", "Sparrow"
+    };
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         CloseAllNotes();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        playerName = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>().playerData.displayName.Replace("\n", "");
     }
     private void Update()
     {
@@ -74,6 +90,18 @@ public class CreateNote : MonoBehaviour
                 break;
         }
         currentPanel = panel;
+        if (msg.Contains("$name"))
+        {
+            msg = msg.Replace("$name", playerName);
+        }
+        if (msg.Contains("$warden"))
+        {
+            msg = msg.Replace("$warden", wardenNames[UnityEngine.Random.Range(0, wardenNames.Count)]);
+        }
+        if (warden.Contains("$warden"))
+        {
+            warden = warden.Replace("$warden", wardenNames[UnityEngine.Random.Range(0, wardenNames.Count)]);
+        }
         panel.Find("NoteText").GetComponent<TextMeshProUGUI>().text = msg;
         panel.Find("WardenText").GetComponent<TextMeshProUGUI>().text = warden;
 

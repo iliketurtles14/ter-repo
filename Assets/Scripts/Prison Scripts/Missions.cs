@@ -13,6 +13,7 @@ public class Missions : MonoBehaviour
     private Map currentMap;
     private Transform aStar;
     private ApplyPrisonData applyScript;
+    private ItemDataCreator creator;
     private List<int> guardItems = new List<int>();
     private List<int> stolenItems = new List<int>();
     private List<int> giveItems = new List<int>();
@@ -31,6 +32,7 @@ public class Missions : MonoBehaviour
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+        creator = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemDataCreator>();
 
         StartCoroutine(StartWait());
     }
@@ -172,6 +174,7 @@ public class Missions : MonoBehaviour
                 List<string> remainingInmates = GetRemainingNPCs(giver, "Inmate");
                 rand = UnityEngine.Random.Range(0, remainingInmates.Count);
                 target = remainingInmates[rand];
+                message = message.Replace("$inmate", target);
                 break;
             case "guardBeat":
                 count = Convert.ToInt32(GetINIVar("Missions_GuardBeat", "Count", speechFile));
@@ -180,6 +183,7 @@ public class Missions : MonoBehaviour
                 List<string> remainingGuards = GetRemainingNPCs(giver, "Guard");
                 rand = UnityEngine.Random.Range(0, remainingGuards.Count);
                 target = remainingGuards[rand];
+                message = message.Replace("$guard", target);
                 break;
             case "distract":
                 count = Convert.ToInt32(GetINIVar("Missions_Distract", "Count", speechFile));
@@ -188,6 +192,7 @@ public class Missions : MonoBehaviour
                 List<string> periods = GetAvailablePeriods();
                 rand = UnityEngine.Random.Range(0, periods.Count);
                 period = periods[rand];
+                message = message.Replace("$routine", period);
                 break;
             case "give":
                 count = Convert.ToInt32(GetINIVar("Missions_Give", "Count", speechFile));
@@ -195,6 +200,7 @@ public class Missions : MonoBehaviour
                 message = GetINIVar("Missions_Give", rand.ToString(), speechFile);
                 rand = UnityEngine.Random.Range(0, giveItems.Count);
                 item = giveItems[rand];
+                message = message.Replace("$item", creator.CreateItemData(item).displayName);
                 break;
             case "stealDesk":
             case "stealInmateBody":
@@ -206,6 +212,7 @@ public class Missions : MonoBehaviour
                 remainingInmates = GetRemainingNPCs(giver, "Inmate");
                 rand = UnityEngine.Random.Range(0, remainingInmates.Count);
                 target = remainingInmates[rand];
+                message = message.Replace("$inmate", target).Replace("$item", creator.CreateItemData(item).displayName);
                 break;
             case "stealGuardBody":
                 count = Convert.ToInt32(GetINIVar("Missions_StealGuard", "Count", speechFile));
@@ -216,6 +223,7 @@ public class Missions : MonoBehaviour
                 remainingGuards = GetRemainingNPCs(giver, "Guard");
                 rand = UnityEngine.Random.Range(0, remainingGuards.Count);
                 target = remainingGuards[rand];
+                message = message.Replace("$guard", target).Replace("$item", creator.CreateItemData(item).displayName);
                 break;
         }
 
