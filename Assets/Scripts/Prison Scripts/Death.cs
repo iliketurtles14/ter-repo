@@ -18,6 +18,7 @@ public class Death : MonoBehaviour
     private Transform ic;
     private Sprite clearSprite;
     private SetInitialOutfits setInitialOutfitsScript;
+    private LadderClimb ladderClimbScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player");
@@ -30,6 +31,7 @@ public class Death : MonoBehaviour
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         setInitialOutfitsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetInitialOutfits>();
+        ladderClimbScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LadderClimb>();
 
         deathCanvas.gameObject.SetActive(false);
     }
@@ -93,6 +95,8 @@ public class Death : MonoBehaviour
         medicBed.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForFixedUpdate();
         player.transform.position = medicBed.transform.position + bedOffset;
+
+        ladderClimbScript.SendToGround();
 
         vitalScript.energyRate = 1;
         vitalScript.energyRateAmount = 2;

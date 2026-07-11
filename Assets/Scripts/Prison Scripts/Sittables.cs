@@ -20,6 +20,7 @@ public class Sittables : MonoBehaviour
     private InventorySelection selectionScript;
     private int previousBodyLayer;
     private int previousOutfitLayer;
+    private PlayerShowerOutfit pso;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -29,11 +30,17 @@ public class Sittables : MonoBehaviour
         HPAScript = player.GetComponent<HPAChecker>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         selectionScript = GetComponent<InventorySelection>();
+        pso = player.GetComponent<PlayerShowerOutfit>();
     }
     public void Update()
     {
         HPAScript.isSeated = onSittable;
         isBusy = HPAScript.isBusy;
+        
+        if(!pso.isShowering && !onSittable)
+        {
+            ResetRates();
+        }
         
         if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable && !selectionScript.aSlotSelected)
         {

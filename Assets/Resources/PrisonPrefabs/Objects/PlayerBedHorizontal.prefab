@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9117668915196446706}
   - component: {fileID: -7685775202116151073}
   - component: {fileID: 5211655884579952548}
+  - component: {fileID: -1144184820302732745}
   m_Layer: 6
   m_Name: PlayerBedHorizontal
   m_TagString: Sittable
@@ -138,3 +139,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-1144184820302732745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482039254060292073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62228344218da4944ba6fa7d1416d514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BedDummyBadAction
+  hasDummy: 0

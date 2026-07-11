@@ -10,12 +10,21 @@ public class NPCSpeechController : MonoBehaviour
     //shower: rand(150) + 50
     //gym: rand(150) + 50
     //lockdown: rand(150) + 200
-    //freetime: check each 1/45 seconds if rand(5) + 1 = 1 and that the npc is on screen
+    //freetime: check each 50/45 seconds if rand(5) + 1 = 1 and that the npc is on screen
     private Schedule scheduleScript;
     private int randTime;
     private int offsetTime;
     private PauseController pc;
     private int rcPhase;
+    Dictionary<string, List<int>> periodTimeDict = new Dictionary<string, List<int>>
+    {
+        { "L", new List<int>{ 175, 80 } },
+        { "D", new List<int>{ 175, 80 } },
+        { "B", new List<int>{ 175, 80 } },
+        { "S", new List<int>{ 150, 50 } },
+        { "E", new List<int>{ 150, 50 } },
+        { "LD", new List<int>{ 150, 200 } }
+    };
     private List<string> normalPeriodCodes = new List<string>
     {
         "L", "D", "B", "S", "E", "LD"
@@ -153,10 +162,16 @@ public class NPCSpeechController : MonoBehaviour
                         continue;
                     }
                 }
+                if(currentPeriod != scheduleScript.periodCode)
+                {
+                    yield return null;
+                    continue;
+                }
 
                 float time = 0f;
-                int rand = UnityEngine.Random.Range(0, randTime);
-                while (time <= (1f / 45f) * (rand + offsetTime))
+                int rand = UnityEngine.Random.Range(0, periodTimeDict[scheduleScript.periodCode][0]);
+                int offset = periodTimeDict[scheduleScript.periodCode][1];
+                while (time <= (1f / 45f) * (rand + offset))
                 {
                     if (currentPeriod != scheduleScript.periodCode)
                     {
@@ -180,6 +195,7 @@ public class NPCSpeechController : MonoBehaviour
             }
             else if(scheduleScript.periodCode == "FT" || scheduleScript.periodCode == "W")
             {
+                bool shouldTalk = false;
                 while (true)
                 {
                     if(currentPeriod != scheduleScript.periodCode)
@@ -191,14 +207,15 @@ public class NPCSpeechController : MonoBehaviour
                         yield return null;
                         continue;
                     }
-                    yield return new WaitForSeconds(1f / 45f);
+                    yield return new WaitForSeconds(50f / 45f);
                     int rand = UnityEngine.Random.Range(0, 5) + 1;
                     if(rand == 1)
                     {
+                        shouldTalk = true;
                         break;
                     }
                 }
-                if (currentPeriod != scheduleScript.periodCode)
+                if (currentPeriod != scheduleScript.periodCode || !shouldTalk)
                 {
                     yield return null;
                     continue;
@@ -249,10 +266,6 @@ public class NPCSpeechController : MonoBehaviour
                     }
                     NPCSpeech speech = mainGuard.GetComponent<NPCSpeech>();
                     string rcPhaseStr = rollcallSpeechTypes[rcPhase];
-                    if(rcPhase < 3)
-                    {
-                        rcPhase++;
-                    }
                     if (rcPhase == 2 && inmateNames.Count >= 2)
                     {
                         int rand1 = UnityEngine.Random.Range(0, inmateNames.Count);//do shakedown stuff idk
@@ -261,11 +274,11 @@ public class NPCSpeechController : MonoBehaviour
                         {
                             rand2 = inmateNames.Count - 1;//player
                         }
-                        rcPhaseStr = inmateNames[rand1] + " and " + inmateNames[rand2] + ".";
+                        rcPhaseStr = inmateNames[rand1] + " and " + inmateNames[rand2] + "";
                     }
                     else if(rcPhase == 2 && inmateNames.Count == 1)
                     {
-                        rcPhaseStr = inmateNames[0] + ".";
+                        rcPhaseStr = inmateNames[0];
                         if(UnityEngine.Random.Range(0, 10) == 0)//random easter egg ig
                         {
                             rcPhaseStr = inmateNames[0] + "... (aren't there supposed to be two?)";
@@ -279,6 +292,10 @@ public class NPCSpeechController : MonoBehaviour
                     else
                     {
                         StartCoroutine(speech.MakeTextBox(rcPhaseStr, mainGuard, false));
+                    }
+                    if (rcPhase < 3)
+                    {
+                        rcPhase++;
                     }
                 }
             }

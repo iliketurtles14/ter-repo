@@ -163,7 +163,7 @@ public class Missions : MonoBehaviour
         {
             type = debugStr; //for debug stuff
         }
-        Debug.Log("CHANGE THIS");
+        //Debug.Log("CHANGE THIS");           heh i did change it :3
 
         switch (type)
         {

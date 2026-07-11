@@ -77,7 +77,7 @@ public class KilledGuardsChecker : MonoBehaviour//.2, .4, .8
         {
             takeoverScript.StartTakeover();
         }
-        if(guardKillCount < guardColDatas.Count * .2f && lockdownScript.lockdownIsActive)
+        if(guardKillCount < guardColDatas.Count * .2f && lockdownScript.lockdownIsActive && lockdownScript.isRiotLockdown)
         {
             lockdownScript.StopLockdown();
             if (takeoverScript.takeoverIsActive)

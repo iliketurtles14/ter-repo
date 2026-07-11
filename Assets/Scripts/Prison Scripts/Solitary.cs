@@ -29,6 +29,7 @@ public class Solitary : MonoBehaviour
     public List<GameObject> damagedTiles = new List<GameObject>();
     private ToiletMenu toiletMenuScript;
     private bool startingSolitary;
+    private LadderClimb ladderClimbScript;
     private void Start()
     {
         solitaryCanvas = RootObjectCache.GetRoot("SolitaryBlockerCanvas").transform;
@@ -48,6 +49,7 @@ public class Solitary : MonoBehaviour
         npcSleepScript = GetComponent<NPCSleep>();
         scheduleScript = ic.Find("Period").GetComponent<Schedule>();
         toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
+        ladderClimbScript = GetComponent<LadderClimb>();
 
         StartCoroutine(StartWait());
     }
@@ -237,6 +239,8 @@ public class Solitary : MonoBehaviour
                     player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
                 }
             }
+
+            ladderClimbScript.SendToGround();
         }
         //do stuff to stats
         PlayerData data = player.GetComponent<PlayerCollectionData>().playerData;

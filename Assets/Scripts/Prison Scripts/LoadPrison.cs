@@ -1053,8 +1053,10 @@ public class LoadPrison : MonoBehaviour
             Vector2 zonePos = new Vector2(zoneVars[i][0] * 1.6f, zoneVars[i][1] * 1.6f);
             zonePos += new Vector2(-1.6f, -1.6f);
             Vector2 zoneSize = new Vector2(zoneVars[i][2] * 1.6f, zoneVars[i][3] * 1.6f);
+            zoneSize += new Vector2(-.1f, -.1f);//so you cant touch zones through walls
             GameObject zone = new GameObject();
             zone.transform.position = zonePos;
+            zone.layer = LayerMask.NameToLayer("Ground");
             zone.AddComponent<BoxCollider2D>().isTrigger = true;
             zone.GetComponent<BoxCollider2D>().size = zoneSize;
             zone.name = zoneNames[i];

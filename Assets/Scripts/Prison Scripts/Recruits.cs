@@ -36,6 +36,14 @@ public class Recruits : MonoBehaviour
         {
             Disband(recruit);
         }
+
+        if(recruits.Count > 0 && Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground")))
+        {
+            foreach(Transform recruit in recruits)
+            {
+                Disband(recruit);
+            }
+        }
         
         if (playerColData.playerData.friends > 0 && combatScript.isLockedOn)
         {

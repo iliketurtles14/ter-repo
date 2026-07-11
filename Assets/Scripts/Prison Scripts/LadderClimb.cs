@@ -15,6 +15,9 @@ public class LadderClimb : MonoBehaviour
     private Vector3 offsetVector = new Vector3(); //only for ground-to-roof operations
     private float distance;
     private HPAChecker HPAScript;
+    private GameObject undergroundLight;
+    private GameObject globalLight;
+    private HoleClimb holeClimbScript;
 
     private int groundLayer;
     private int undergroundLayer;
@@ -32,6 +35,9 @@ public class LadderClimb : MonoBehaviour
         player = RootObjectCache.GetRoot("Player");
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         HPAScript = player.GetComponent<HPAChecker>();
+        holeClimbScript = GetComponent<HoleClimb>();
+        undergroundLight = RootObjectCache.GetRoot("UndergroundLight");
+        globalLight = RootObjectCache.GetRoot("GlobalLight");
 
         groundLayer = LayerMask.NameToLayer("Ground");
         undergroundLayer = LayerMask.NameToLayer("Underground");
@@ -168,6 +174,32 @@ public class LadderClimb : MonoBehaviour
             Color aColor = sr.color;
             aColor.a = 1;
             sr.color = aColor;
+        }
+    }
+    public void SendToGround()//for death and solitary and other things that need to force the player to ground
+    {                         //(includes hole climb stuff too heh)
+        player.GetComponent<SpriteRenderer>().sortingOrder = 6;
+        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
+        tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
+        tiles.Find("RoofTiles").gameObject.SetActive(false);
+        tiles.Find("RoofObjects").gameObject.SetActive(false);
+        tiles.Find("VentTiles").gameObject.SetActive(false);
+        tiles.Find("VentObjects").gameObject.SetActive(false);
+        tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
+        DisableAllLayerCollisions();
+        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
+        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
+        tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingOrder = -1;
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = -1;
+        tiles.Find("UndergroundObjects").gameObject.SetActive(false);
+        undergroundLight.SetActive(false);
+        globalLight.SetActive(true);
+        
+        if (deskStandScript.hasClimbed)
+        {
+            deskStandScript.StepOffDesk();
+            deskStandScript.hasClimbed = false;
+            deskStandScript.hasJumped = false;
         }
     }
 }

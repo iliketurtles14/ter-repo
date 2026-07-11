@@ -181,7 +181,7 @@ public class DeskStand : MonoBehaviour
         int ventCoverLayer = LayerMask.NameToLayer("VentCovers");
         Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
     }
-    private void StepOffDesk()
+    public void StepOffDesk()
     {
         player.GetComponent<CapsuleCollider2D>().offset -= colliderOffset;
         player.GetComponent<Transform>().position -= playerOffset;

@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour
     public int droppedDurability = 100;
     public bool isDropped = false;
     private ItemSwell swellScript;
+    private MakeBadObject mbo;
+    private Transform badObjects;
 
     private int groundLayer;
     private int undergroundLayer;
@@ -51,6 +53,8 @@ public class Inventory : MonoBehaviour
         roofLayer = LayerMask.NameToLayer("Roof");
         playerLayer = LayerMask.NameToLayer("Player");
         uiLayer = LayerMask.NameToLayer("UI");
+        mbo = GetComponent<MakeBadObject>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
 
         for (int i = 0; i < 6; i++)
         {
@@ -116,6 +120,14 @@ public class Inventory : MonoBehaviour
                 {
                     ItemCollectionData itemCollectionData = itemObject.GetComponent<ItemCollectionData>();
                     Add(itemCollectionData.itemData);
+                    foreach(Transform badObject in badObjects)
+                    {
+                        if(badObject.GetComponent<BadObjectData>().attachedObject == ItemTransform.gameObject)
+                        {
+                            Destroy(badObject.gameObject);
+                            break;
+                        }
+                    }
                     Destroy(itemObject);
                 }
             }
@@ -250,6 +262,15 @@ public class Inventory : MonoBehaviour
                 droppedItem.GetComponent<SpriteRenderer>().sprite = droppedItem.GetComponent<ItemCollectionData>().itemData.sprite;
                 droppedItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
                 droppedItem.layer = groundLayer;
+                if (inventory[slotIndex].itemData.isContraband)
+                {
+                    BadObjectData data = new BadObjectData
+                    {
+                        item = true,
+                        attachedObject = droppedItem
+                    };
+                    mbo.CreateBadObject(data, "item");
+                }
             }
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer)) //vent dropping
             {

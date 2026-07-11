@@ -16,6 +16,7 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     private InventorySelection selectionScript;
+    private WarningMessage warningScript;
     private Solitary solitaryScript;
     private Transform player;
     private Particles particlesScript;
@@ -117,6 +118,7 @@ public class ItemBehaviours : MonoBehaviour
         particlesScript = GetComponent<Particles>();
         creator = GetComponent<ItemDataCreator>();
         solitaryScript = GetComponent<Solitary>();
+        warningScript = GetComponent<WarningMessage>();
 
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -1291,6 +1293,7 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void RemoveTileDurability(GameObject touchedTile, int currentDurability, int itemStrength)
     {
+        player.GetComponent<PlayerCollectionData>().playerData.energy += 5;
         if (!solitaryScript.damagedTiles.Contains(touchedTile))
         {
             solitaryScript.damagedTiles.Add(touchedTile);
@@ -1318,6 +1321,14 @@ public class ItemBehaviours : MonoBehaviour
     }
     public IEnumerator DrawActionBar(bool isTool, bool normal)
     {
+        if (isTool)
+        {
+            if (player.GetComponent<PlayerCollectionData>().playerData.energy >= 100)
+            {
+                StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                yield break;
+            }
+        }
         cancelBar = false;
         barIsMoving = true;
         oldPlayerTransform.position = PlayerTransform.position;
@@ -1325,7 +1336,6 @@ public class ItemBehaviours : MonoBehaviour
         usedSlotNumber = slotNumber;
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = true;
         player.GetComponent<PlayerAnimation>().shouldRestartCycle = true;
-        StartCoroutine(ParticleLoop());
         yield return new WaitForSeconds(.045f);
         if (cancelBar) { yield break; }
         if (normal)
@@ -1344,9 +1354,9 @@ public class ItemBehaviours : MonoBehaviour
             DestroyActionBar();
         }
         if (isTool)
-        {
+        {            
             RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
-
+            StartCoroutine(ParticleLoop());
             switch (whatAction)
             {
                 case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;

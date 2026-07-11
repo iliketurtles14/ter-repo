@@ -62,6 +62,14 @@ public class NPCCombat : MonoBehaviour
             }
         }
 
+        if(isAggro && target.name == "Player")
+        {
+            if(Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground")))
+            {
+                DeAggro();
+            }
+        }
+
         if (isAggro)
         {
             SetTarget(target);

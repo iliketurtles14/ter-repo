@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 5341286191016631086}
   - component: {fileID: 6680145677854381454}
   - component: {fileID: -3052007431216516377}
+  - component: {fileID: -8758275047305940777}
   m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
@@ -376,6 +377,12 @@ MonoBehaviour:
   isAtLockdown: 0
   isAtBed: 0
   dirToLook: 
+  followSchedule: 1
+  atCanteenSeat: 0
+  atExerciseEquipment: 0
+  atShowerPoint: 0
+  atGuardRollcall: 0
+  pc: {fileID: 0}
 --- !u!114 &-5813940400225957718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +450,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCNameColor
   currentColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &-8758275047305940777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3e89b360ea6844cb4aa10f36efeec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCShowerOutfit
 --- !u!1 &347473100117320719
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

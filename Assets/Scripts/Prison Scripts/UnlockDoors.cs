@@ -25,6 +25,7 @@ public class UnlockDoors : MonoBehaviour
     private PauseController pc;
     private List<NPCCollectionData> npcColDatas = new List<NPCCollectionData>();
     private Zones zonesScript;
+    public bool hasLockedCells;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
@@ -202,6 +203,10 @@ public class UnlockDoors : MonoBehaviour
                 door.name = door.name.Replace("Open", "");
                 door.GetComponent<SpriteRenderer>().sprite = spriteDict[types[i]];
             }
+            if (types.Contains("yellow"))
+            {
+                hasLockedCells = true;
+            }
         }
     }
     public void aUnlockDoors(List<string> types) //yellow, orange, red, green, purple, white, guard
@@ -213,6 +218,10 @@ public class UnlockDoors : MonoBehaviour
             {
                 door.name = "Open" + door.name;
                 door.GetComponent<SpriteRenderer>().sprite = unlockedSprite;
+            }
+            if (types.Contains("yellow"))
+            {
+                hasLockedCells = false;
             }
         }
     }

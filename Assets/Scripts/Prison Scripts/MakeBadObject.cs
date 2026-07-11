@@ -25,13 +25,18 @@ public class MakeBadObject : MonoBehaviour
     private Sprite bulletSprite;
     private ApplyPrisonData applyScript;
     private bool isGivingOutfitHeat;
-    private bool hasBadOutfit;
-    private bool hasInmateOutfit;
-    private bool isOutside;
+    public bool hasBadOutfit;
+    public bool hasInmateOutfit;
+    public bool isOutside;
     private Death deathScript;
     private int playerLayer;
     private int groundLayer;
     private FightEffects fightFX;
+    private Map currentMap;
+    private bool tookInmateItem;
+    private PauseController pc;
+    private Lockdown lockdownScript;
+    private UnlockDoors unlockDoorsScript;
     
     private List<int> badOutfitIDs = new List<int>()
     {
@@ -55,8 +60,10 @@ public class MakeBadObject : MonoBehaviour
     private bool nonInmateOutfit;
     private bool highHeat;
     private bool breakingTile;
-    private bool emptyBed;
-    private bool inmateOutfit;
+    private bool outsideOnInsideMap;
+    private bool npcLoot;
+    private bool missedRollcall;
+    private bool outLate;
     private void Start()
     {
         ready = false;
@@ -76,6 +83,10 @@ public class MakeBadObject : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
         fightFX = scriptObject.GetComponent<FightEffects>();
+        lockdownScript = scriptObject.GetComponent<Lockdown>();
+        unlockDoorsScript = scriptObject.GetComponent<UnlockDoors>();
+        pc = GetComponent<PauseController>();
+
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -85,7 +96,7 @@ public class MakeBadObject : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-
+        currentMap = GetComponent<LoadPrison>().currentMap;
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
             if(obj.name == "Sniper")
@@ -109,10 +120,9 @@ public class MakeBadObject : MonoBehaviour
         // this is only for certain bad actions. the reason some bad actions are missing is because
         // some bad actions can have multiple instances of it occuring (because of how this script is
         // set up, that cant happen within this script).
-        // MISSING: inmate punch, toilet clog, tied up npc, items on the floor, sheets on bars,
+        // MISSING: inmate punch, toilet clog, tied up npc, sheets on bars,
         //          broken tiles, being in a perimeter/unsafe zone, being on the roof without a
         //          guard/bleached outfit, missing rollcall, being outside with a non-inmate outfit,
-        //          missing routines,
 
         ///bool management
         //bad/inmate outfit
@@ -310,11 +320,28 @@ public class MakeBadObject : MonoBehaviour
             DestroyBadObject("playerPunching");
         }
 
-        //looting an inmate
-        //MAKE INMATE INVENTORIES
+        //looting an inmate/guard
+        if(tookInmateItem && !npcLoot)
+        {
+            npcLoot = true;
+
+            BadObjectData data = new BadObjectData
+            {
+                shouldAggro = true,
+                heatGain = 25,
+                messageType = "I saw that", //this is not in the speech file lol
+                attachedObject = player
+            };
+            CreateBadObject(data, "npcLoot");
+        }
+        else if(npcLoot && !tookInmateItem)
+        {
+            npcLoot = false;
+            DestroyBadObject("npcLoot");
+        }
 
         //not at the right routine(not work)
-        if (!wrongRoutine && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode != "W")
+        if (!wrongRoutine && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode != "W" && zonesScript.timeInPeriod / .75f >= 25f)
         {
             wrongRoutine = true;
 
@@ -326,14 +353,14 @@ public class MakeBadObject : MonoBehaviour
             };
             CreateBadObject(data, "wrongRoutine");
         }
-        else if (wrongRoutine && zonesScript.isTouchingCurrentZone)
+        else if (wrongRoutine && (zonesScript.isTouchingCurrentZone || scheduleScript.period == "W" || zonesScript.timeInPeriod / .75f < 25f))
         {
             wrongRoutine = false;
             DestroyBadObject("wrongRoutine");
         }
 
         //not at work
-        if (!notAtWork && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode == "W")
+        if (!notAtWork && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode == "W" && zonesScript.timeInPeriod / .75f <= 25f)
         {
             notAtWork = true;
 
@@ -345,28 +372,26 @@ public class MakeBadObject : MonoBehaviour
             };
             CreateBadObject(data, "notAtWork");
         }
-        else if (notAtWork && zonesScript.isTouchingCurrentZone)
+        else if (notAtWork && (zonesScript.isTouchingCurrentZone || scheduleScript.periodCode != "W" || zonesScript.timeInPeriod / .75f > 25f))
         {
             notAtWork = false;
             DestroyBadObject("notAtWork");
         }
 
-        //inmate type outfit (for jeeps and when outside at night)
-        if(!inmateOutfit && (!player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled || hasInmateOutfit))
+        if(!outLate && (!player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled || hasInmateOutfit) && unlockDoorsScript.hasLockedCells && !zonesScript.isTouchingYourCell)
         {
-            inmateOutfit = true;
-
+            outLate = true;
             BadObjectData data = new BadObjectData
             {
                 solitary = true,
                 attachedObject = player
             };
-            CreateBadObject(data, "inmateOutfit");
+            CreateBadObject(data, "outLate");
         }
-        else if(inmateOutfit && player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled && !hasInmateOutfit)
+        else if(!outLate && (!(!player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled || hasInmateOutfit) || !unlockDoorsScript.hasLockedCells || zonesScript.isTouchingYourCell))
         {
-            inmateOutfit = false;
-            DestroyBadObject("inmateOutfit");
+            outLate = false;
+            DestroyBadObject("outLate");
         }
 
         //no outfit
@@ -436,7 +461,7 @@ public class MakeBadObject : MonoBehaviour
 
         //breaking a tile
         if (!breakingTile && (itemBehavioursScript.isChipping || itemBehavioursScript.isCutting ||
-            itemBehavioursScript.isDigging || itemBehavioursScript.isScrewing) && player.layer == 3)
+            itemBehavioursScript.isDigging || itemBehavioursScript.isScrewing))
         {
             breakingTile = true;
 
@@ -467,16 +492,48 @@ public class MakeBadObject : MonoBehaviour
             DestroyBadObject("guardBreakingTile");
         }
 
-        //empty bed at midnight
-        //ADD BED DUMMIES
+        //outside at inside prison
+        if(isOutside && currentMap.grounds == "Inside" && !outsideOnInsideMap && !zonesScript.isTouchingSafe)
+        {
+            outsideOnInsideMap = true;
+            BadObjectData data = new BadObjectData
+            {
+                heatSet = 99,
+                shouldAggro = true,
+                messageType = "Guards_Halt",
+                attachedObject = player
+            };
+            CreateBadObject(data, "outsideOnInsideMap");
+        }
+        else if(!isOutside && (currentMap.grounds != "Inside" || outsideOnInsideMap || zonesScript.isTouchingSafe))
+        {
+            outsideOnInsideMap = false;
+            DestroyBadObject("outsideOnInsideMap");
+        }
 
-        //sees you during lockdown
-        //ADD LOCKDOWN
+
+        //sees you during lockdown from rollcall
+        if(lockdownScript.lockdownIsActive && !lockdownScript.isRiotLockdown && !missedRollcall)
+        {
+            missedRollcall = true;
+            BadObjectData data = new BadObjectData
+            {
+                attachedObject = player
+            };
+            CreateBadObject(data, "missedRollcall");
+            Debug.Log("making missedRollcall");
+        }
+        else if(missedRollcall && (!lockdownScript.lockdownIsActive || lockdownScript.isRiotLockdown))
+        {
+            missedRollcall = false;
+            DestroyBadObject("missedRollcall");
+            Debug.Log("destroying msisedRolclalllalfladjkfasj;dfklasj;f");
+        }
 
         ///not bad object dependent
         //99 heat outside
         if((isOutside || 
-            player.layer == 13) &&
+            !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Roof"))) &&
             player.GetComponent<PlayerCollectionData>().playerData.heat > 89 && !player.GetComponent<PlayerCollectionData>().playerData.isDead &&
             !isShooting)
         {
@@ -484,20 +541,24 @@ public class MakeBadObject : MonoBehaviour
             StartCoroutine(SniperShoot());
         }
 
+        if(!Physics2D.GetIgnoreLayerCollision(playerLayer, LayerMask.NameToLayer("Roof")) && hasInmateOutfit)
+        {
+            player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
+        }
+
         //chipping/cutting/etc outside
         if(isOutside && !isShooting &&
             (itemBehavioursScript.isChipping || itemBehavioursScript.isCutting ||
             itemBehavioursScript.isDigging || itemBehavioursScript.isScrewing))
         {
-            isShooting = true;
-            StartCoroutine(SniperShoot());
+            player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
         }
 
         //unsafe outfit
-        if ((isOutside || player.layer == 13) && hasBadOutfit && !isGivingOutfitHeat)
+        if ((isOutside || !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Roof"))) && hasBadOutfit && !isGivingOutfitHeat && routineScript.periodCode != "LO")
         {
             isGivingOutfitHeat = true;
-            if(player.layer == 13)
+            if(!Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Roof")))
             {
                 StartCoroutine(HeatGain(5));
             }
@@ -510,6 +571,27 @@ public class MakeBadObject : MonoBehaviour
         yield return new WaitForSeconds(1);
         isGivingOutfitHeat = false;
     }
+    public IEnumerator TookInmateItem()
+    {
+        if (tookInmateItem)
+        {
+            yield break;
+        }
+        tookInmateItem = true;
+
+        float time = 0f;
+        while (time < .35f)
+        {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
+        tookInmateItem = false;
+    }
     private IEnumerator SniperShoot()
     {
         if (!hasSniper)
@@ -517,6 +599,10 @@ public class MakeBadObject : MonoBehaviour
             yield break;
         }
         if (player.GetComponent<PlayerCollectionData>().playerData.inGodMode)
+        {
+            yield break;
+        }
+        if(scheduleScript.periodCode == "LO")
         {
             yield break;
         }

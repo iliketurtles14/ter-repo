@@ -34,6 +34,8 @@ public class NPCInv : MonoBehaviour
     private SpecialMessages specialMessagesScript;
     private List<GameObject> currentAnimatingSlots = new List<GameObject>();
     private InventorySelection selectionScript;
+    private bool tookItem;
+    private MakeBadObject mbo;
     public void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
@@ -48,6 +50,7 @@ public class NPCInv : MonoBehaviour
         missionAskScript = mc.Find("MissionPanel").GetComponent<MissionAsk>();
         specialMessagesScript = ic.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
+        mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
 
         //make slot list
         foreach (Transform child in npcInvMenu.Find("ItemPanel"))
@@ -255,6 +258,7 @@ public class NPCInv : MonoBehaviour
                 }
                     npcInv[npcInvSlotNumber].itemData = null;
                 mcs.touchedNPCInvSlot.GetComponent<Image>().sprite = clearSprite;
+                tookItem = true;
             }
 
             if(mcs.isTouchingNPCInvSlot && ((mcs.touchedNPCInvSlot.name == "Weapon" && weapon.itemData != null) || (mcs.touchedNPCInvSlot.name == "Outfit" && outfit.itemData != null)) && Input.GetMouseButtonDown(0) && !invIsFull)
@@ -298,6 +302,7 @@ public class NPCInv : MonoBehaviour
                     outfit.itemData = null;
                     transform.Find("Outfit").GetComponent<Image>().sprite = clearSprite;
                 }
+                tookItem = true;
             }
             //exiting the menu
             if(!mcs.isTouchingInvSlot && !mcs.isTouchingNPCInvPanel && !mcs.isTouchingNPCInvSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
@@ -423,6 +428,17 @@ public class NPCInv : MonoBehaviour
         menuIsOpen = false;
 
         pauseController.Unpause();
+
+        if (tookItem)
+        {
+            foreach(Transform npc in aStar)
+            {
+                if (npc.name.Contains("Guard"))
+                {
+                    StartCoroutine(mbo.TookInmateItem());
+                }
+            }
+        }
     }
     public static Sprite AddPaddingToSprite(Sprite originalSprite, int padding)
     {

@@ -306,7 +306,7 @@ public class CameraController : MonoBehaviour
             if (availableGuards.Count > 0)
             {
                 int rand = UnityEngine.Random.Range(0, availableGuards.Count);
-                availableGuards[rand].GetComponent<NPCAI>().SendToPos(transform.position);
+                availableGuards[rand].GetComponent<NPCAI>().SendToPos(player.GetComponent<PlayerFloorCollision>().playerFloor.transform.position);
             }
         }
 

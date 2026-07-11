@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class NPCSleep : MonoBehaviour
 {
     public void Sleep(GameObject npc, GameObject bed)
     {
+        npc.GetComponent<AILerp>().canMove = false;
         Vector3 bedOffset;
         if(npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
         {
@@ -33,11 +35,11 @@ public class NPCSleep : MonoBehaviour
             {
                 if (npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
                 {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.25f, 0);
                 }
                 else
                 {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.2f, 0);
                 }
             }
         }

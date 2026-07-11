@@ -10,11 +10,13 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     public bool lockdownIsActive;
     public bool isRiotLockdown; //one that sends you to solitary if you die (killing guards to make lockdown happen)
     public int lockdownTime;
+    private Solitary solitaryScript;
     private Transform mc;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        solitaryScript = GetComponent<Solitary>();
         mc.Find("LockdownTextPanel").Find("Text").GetComponent<TextMeshProUGUI>().text = "";
     }
     public void StartLockdown()
@@ -26,6 +28,7 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     public void StopLockdown()
     {
         lockdownIsActive = false;
+        isRiotLockdown = false;
         StopCoroutine(heatLoopCoroutine);
         StopCoroutine(textLoopCoroutine);
         mc.Find("LockdownTextPanel").Find("Text").GetComponent<TextMeshProUGUI>().text = "";
@@ -61,7 +64,7 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
             {
                 lockdownIsActive = false;
                 StopLockdown();
-                Debug.Log("Send to solitary.");
+                StartCoroutine(solitaryScript.GoToSolitary(""));
             }
         }
     }

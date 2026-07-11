@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Pathfinding;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.AI;
@@ -107,9 +108,6 @@ public class PauseController : MonoBehaviour
             }
         }
 
-        //time freeze
-        timeObject.GetComponent<Routine>().enabled = false;
-
         //disable id button and craft button
         ic.Find("PlayerIDButton").GetComponent<EventTrigger>().enabled = false;
         ic.Find("CraftButton").GetComponent<EventTrigger>().enabled = false;
@@ -126,7 +124,7 @@ public class PauseController : MonoBehaviour
         }
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         int actionNum = player.GetComponent<BodyController>().currentActionNum;
-        if((actionNum == 2 || actionNum == 15 || actionNum == 11 || actionNum == 4 || actionNum == 1) &&
+        if((actionNum == 2 || actionNum == 15 || actionNum == 11 || actionNum == 4 || actionNum == 1 || actionNum == 13) &&
             !(sittablesScript.onSittable && sittablesScript.onBed))
         {
             player.GetComponent<PlayerAnimation>().enabled = true;
@@ -151,13 +149,23 @@ public class PauseController : MonoBehaviour
         }
         foreach(Transform npc in aStar)
         {
-            if (!npcsAreStopped)
+            //if (!npcsAreStopped)
+            //{
+            try
+            {
+                if (!npc.GetComponent<NPCAI>().atExerciseEquipment && !npc.GetComponent<NPCCollectionData>().npcData.isSleeping)
+                {
+                    npc.GetComponent<AILerp>().canMove = true;
+                }
+            }
+            catch
             {
                 npc.GetComponent<AILerp>().canMove = true;
             }
-            if (!noAnimOnNPCs)
-            {
-                if (npc.CompareTag("ExtraNPC"))
+            //}
+            //if (!noAnimOnNPCs)
+            //{
+            if (npc.CompareTag("ExtraNPC"))
                 {
                     npc.GetComponent<ExtraNPCAnimation>().enabled = true;
                 }
@@ -165,23 +173,17 @@ public class PauseController : MonoBehaviour
                 {
                     npc.GetComponent<VisitorNPCAnimation>().enabled = true;
                 }
-                else if(!npc.GetComponent<NPCCollectionData>().npcData.isDead || npc.GetComponent<NPCCollectionData>().npcData.isTied)
+                else if(!npc.GetComponent<NPCCollectionData>().npcData.isDead && !npc.GetComponent<NPCAI>().atExerciseEquipment && !npc.GetComponent<NPCCollectionData>().npcData.isSleeping)
                 {
                     npc.GetComponent<NPCAnimation>().enabled = true;
                 }
-            }
+            //}
             if (!npc.CompareTag("ExtraNPC") && !npc.CompareTag("VisitorNPC"))
             {
                 npc.GetComponent<NavMeshAgent>().speed = 8;
             }
         }
 
-        //time unfreeze
-        if(timeObject == null)
-        {
-            timeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
-        }
-        timeObject.GetComponent<Routine>().enabled = true;
 
         //enable id button and craft button
         if(ic == null)

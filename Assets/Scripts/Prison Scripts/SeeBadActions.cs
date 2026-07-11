@@ -12,7 +12,7 @@ public class SeeBadActions : MonoBehaviour
     private List<Vector2> downVectors = new List<Vector2>();
     private List<Vector2> leftVectors = new List<Vector2>();
     private List<Vector2> currentVectors;
-    public float rangeOfSight = 8f;
+    public float rangeOfSight = 10f;
     private Transform player;
     private Map map;
     private bool canSee = true;
@@ -21,7 +21,11 @@ public class SeeBadActions : MonoBehaviour
     private Schedule scheduleScript;
     private SpecialMessages specialMessagesScript;
     private StatEffects statEffectsScript;
+    private Solitary solitaryScript;
     private List<Transform> guardsNotSpecial = new List<Transform>();//for calls
+    private PauseController pc;
+    private Lockdown lockdownScript;
+    private UnlockDoors unlockDoorsScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -30,6 +34,10 @@ public class SeeBadActions : MonoBehaviour
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
+        solitaryScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Solitary>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
+        unlockDoorsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<UnlockDoors>();
         MakeVectorLists();
         MakeBadObjectList();
 
@@ -110,6 +118,12 @@ public class SeeBadActions : MonoBehaviour
         availableBadObjects.Add("highHeat");
         availableBadObjects.Add("inmateBreakingTile");
         availableBadObjects.Add("guardBreakingTile");
+        availableBadObjects.Add("item");
+        availableBadObjects.Add("outsideOnInsideMap");
+        availableBadObjects.Add("npcLoot");
+        availableBadObjects.Add("noDummy");
+        availableBadObjects.Add("missedRollcall");
+        availableBadObjects.Add("outLate");
     }
     private IEnumerator LookWait()
     {
@@ -121,6 +135,12 @@ public class SeeBadActions : MonoBehaviour
     {
         while (true)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            
             switch (GetComponent<NPCAnimation>().lookDir)
             {
                 case "up":
@@ -145,12 +165,12 @@ public class SeeBadActions : MonoBehaviour
 
             foreach (Vector2 vector in currentVectors)
             {
-                RaycastHit2D[] wallHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
+                RaycastHit2D[] wallHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight, LayerMask.GetMask("Ground"));
 
                 RaycastHit2D? wallHit = null;
                 foreach (RaycastHit2D aHit in wallHits)
                 {
-                    if (aHit.collider.CompareTag("Wall"))
+                    if (aHit.collider.CompareTag("Wall") || aHit.collider.CompareTag("Obstacle"))
                     {
                         wallHit = aHit;
                         break;
@@ -169,12 +189,12 @@ public class SeeBadActions : MonoBehaviour
                 RaycastHit2D[] badHits;
                 try
                 {
-                    badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance);
+                    badHits = Physics2D.RaycastAll(transform.position, wallHit.Value.point, wallHit.Value.distance, LayerMask.GetMask("Ground"));
 
                 }
                 catch
                 {
-                    badHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight);
+                    badHits = Physics2D.RaycastAll(transform.position, vector, rangeOfSight, LayerMask.GetMask("Ground"));
                 }
 
                 RaycastHit2D? badHit = null;
@@ -189,6 +209,12 @@ public class SeeBadActions : MonoBehaviour
                 {
                     if (aHit.collider.CompareTag("BadObject"))
                     {
+                        if (aHit.collider.name == "missedRollcall")//take priority
+                        {
+                            badHit = aHit;
+                            SeeBadAction(aHit.transform.gameObject);
+                        }
+
                         if (availableBadObjects.Contains(aHit.collider.name) && !GetComponent<NPCCombat>().isAggro && aHit.collider.name != "playerPunching")
                         {
                             badHit = aHit;
@@ -215,22 +241,42 @@ public class SeeBadActions : MonoBehaviour
         }
     }
     public void SeeBadAction(GameObject badObject)
-    {
+    {        
         if(badObject.name != "highHeat") //add things here that shouldnt have a cooldown
         {
             availableBadObjects.Remove(badObject.name);
         }
-
+        
         BadObjectData data = badObject.GetComponent<BadObjectData>();
         bool isGuard = GetComponent<NPCCollectionData>().npcData.isGuard;
 
+        if(data.attachedObject == player.gameObject && player.GetComponent<PlayerCollectionData>().playerData.isDead)
+        {
+            return;
+        }
+
+        if(data.forInmate && isGuard)
+        {
+            return;
+        }
+        if(!data.forInmate && !isGuard)
+        {
+            return;
+        }
+
+        if (badObject.name == "missedRollcall")
+        {
+            lockdownScript.StopLockdown();
+            return;
+        }
+
         //add heat
         int heatToAdd = 0;
-        if (data.isMultiplied && isGuard)
+        if (data.isMultiplied)
         {
             heatToAdd = data.heatGain * map.npcLevel;
         }
-        else if(!data.isMultiplied && isGuard)
+        else if(!data.isMultiplied)
         {
             heatToAdd = data.heatGain;
         }
@@ -244,14 +290,14 @@ public class SeeBadActions : MonoBehaviour
         }
 
         //set heat
-        if (data.heatSet != -1 && isGuard)
+        if (data.heatSet != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
             StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
         }
 
         //should aggro
-        if (data.shouldAggro && !data.forInmate) //make this also work for searching inmate desks when the same inmate sees it
+        if (data.shouldAggro) //make this also work for searching inmate desks when the same inmate sees it
         {
             GetComponent<NPCCombat>().isAggro = true;
             GetComponent<NPCCombat>().target = data.attachedObject;
@@ -260,31 +306,31 @@ public class SeeBadActions : MonoBehaviour
         }
 
         //solitary
-        if (data.solitary && isGuard)
+        if (data.solitary)
         {
-            Debug.Log("solitary");
+            StartCoroutine(solitaryScript.GoToSolitary(""));
         }
 
         //item
-        if (data.item && isGuard)
+        if (data.item)
         {
-            Debug.Log("item");
+            StartCoroutine(GoToItem(badObject));
         }
 
         //toilet
-        if (data.toilet && isGuard)
+        if (data.toilet)
         {
             Debug.Log("toilet");
         }
 
         //untie
-        if (data.untie && isGuard)
+        if (data.untie)
         {
             Debug.Log("untie");
         }
 
         //sheets
-        if (data.sheets && isGuard)
+        if (data.sheets)
         {
             Debug.Log("sheets");
         }
@@ -295,11 +341,19 @@ public class SeeBadActions : MonoBehaviour
             !isGuard && data.forInmate))
         {
             NPCSpeech speechScript = GetComponent<NPCSpeech>();
-            StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true));
+            if(data.messageType != "I saw that")
+            {
+                StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true));
+            }
+            else
+            {
+                string msg = "I saw that, " + player.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\n", "").Replace("\r", "") + "!";
+                StartCoroutine(speechScript.MakeTextBox(msg, transform, true));
+            }
         }
 
         //should call
-        if (data.shouldCall && !isGuard && data.forInmate)
+        if (data.shouldCall)
         {
             if(guardsNotSpecial.Count > 0)
             {
@@ -362,6 +416,34 @@ public class SeeBadActions : MonoBehaviour
                 missionAskScript.savedMissions.Remove(mission);
             }
         }
+    }
+    private IEnumerator GoToItem(GameObject badObject)
+    {
+        GetComponent<NPCAI>().SendToPos(badObject.transform.position);
+        while (true)
+        {
+            if(badObject == null)
+            {
+                yield break;
+            }
+            if(Vector2.Distance(transform.position, badObject.transform.position) < .4f)
+            {
+                break;
+            }
+            if (!GetComponent<NPCAI>().enabled)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+        ItemData itemData = badObject.GetComponent<BadObjectData>().attachedObject.GetComponent<ItemCollectionData>().itemData;
+        if (itemData.causeSolitary)
+        {
+            StartCoroutine(solitaryScript.GoToSolitary(""));
+            yield break;
+        }
+        Destroy(badObject.GetComponent<BadObjectData>().attachedObject);
+        Destroy(badObject);
     }
 
     private IEnumerator SeeBadCooldown(float time, string name)

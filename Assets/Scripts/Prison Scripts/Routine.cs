@@ -24,10 +24,18 @@ public class Routine : MonoBehaviour
     public int doorsCloseMin;
     private Map currentMap;
     private CreateNote noteScript;
+    private PauseController pc;
+    private Transform tiles;
+    private Transform badObjects;
+    private MakeBadObject mbo;
     public void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         noteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
 
         timeText = GetComponent<TMP_Text>();
 
@@ -60,14 +68,7 @@ public class Routine : MonoBehaviour
         day = 1;
         sec = 50;
         min = startingMin;
-    }
-    public void OnEnable()
-    {
         StartCoroutine(TimerCoroutine());
-    }
-    public void OnDisable()
-    {
-        StopAllCoroutines();
     }
     private void Update()
     {
@@ -87,12 +88,17 @@ public class Routine : MonoBehaviour
     {
         while (true)
         {
-            if (isFrozen)
+            float aTime = 0f;
+            while(aTime < interval)
             {
+                if (pc.isPaused || isFrozen)
+                {
+                    yield return null;
+                    continue;
+                }
+                aTime += Time.deltaTime;
                 yield return null;
-                continue;
             }
-            yield return new WaitForSeconds(interval);
 
             sec++;
 
@@ -122,6 +128,31 @@ public class Routine : MonoBehaviour
             if(sec == 0 && min == 0)
             {
                 day++;
+
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.CompareTag("Item"))
+                    {
+                        bool shouldPutBO = true;
+                        foreach(Transform bo in badObjects)
+                        {
+                            if(bo.GetComponent<BadObjectData>().attachedObject == obj.gameObject)
+                            {
+                                shouldPutBO = false;
+                                break;
+                            }
+                        }
+                        if (shouldPutBO)
+                        {
+                            BadObjectData data = new BadObjectData
+                            {
+                                item = true,
+                                attachedObject = obj.gameObject
+                            };
+                            mbo.CreateBadObject(data, "item");
+                        }
+                    }
+                }
             }
 
             if(min < 10)

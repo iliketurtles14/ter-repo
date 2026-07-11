@@ -44,9 +44,10 @@ public class NPCAI : MonoBehaviour
     private bool ready;
     public bool followSchedule = true;
     public bool atCanteenSeat; //for speech
-    public bool atExerciseEquipment; //for speech
+    public bool atExerciseEquipment; //for speech and pausing
     public bool atShowerPoint; //for speech
     public bool atGuardRollcall; //for speech (only for guard1)
+    public PauseController pc;
     private void Start()
     {   
         //get npctype and num
@@ -77,6 +78,7 @@ public class NPCAI : MonoBehaviour
         weedScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WeedController>();
         directionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetFacingDirections>();
         sleepScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<NPCSleep>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         npcColData = GetComponent<NPCCollectionData>();
 
         StartCoroutine(StartWait());
@@ -276,17 +278,19 @@ public class NPCAI : MonoBehaviour
         isAtJob = false;
         isAtLockdown = false;
         isAtBed = false;
+        followSchedule = true;
+        dirToLook = "any";
         StopAllCoroutines();
         seeker.CancelCurrentPathRequest(true);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && name == "Guard1")
-        {
-            MouseCollisionOnItems mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        //if (Input.GetKeyDown(KeyCode.G) && name == "Guard1")
+        //{
+        //    MouseCollisionOnItems mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
             
-            SendToPos(mcs.touchedFloor.transform.position);
-        }
+        //    SendToPos(mcs.touchedFloor.transform.position);
+        //}
         
         if (!ready)
         {
@@ -301,6 +305,10 @@ public class NPCAI : MonoBehaviour
             return;
         }
         
+        if(!atExerciseEquipment && !GetComponent<NPCCollectionData>().npcData.isSleeping && !GetComponent<NPCCollectionData>().npcData.isDead && !pc.isPaused)
+        {
+            GetComponent<AILerp>().canMove = true;
+        }
 
         if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
@@ -523,16 +531,23 @@ public class NPCAI : MonoBehaviour
         {
             currentWaypoint = currentPossibleWaypoints[npcNum - 1];
         }
+        if (!pc.isPaused)
+        {
+            GetComponent<AILerp>().canMove = true;
+        }
     }
     private IEnumerator FinishMovement(bool doDirStuff)
     {
-        if (currentWaypoint.name.Contains("Shower"))
+        if(currentWaypoint != null)
         {
-            atShowerPoint = true;//for speech aasd;lfkajs;dlfkjasdf
-        }
-        if(currentWaypoint.name.Contains("Rollcall") && name == "Guard1")
-        {
-            atGuardRollcall = true;//for speech hahahahahahaha
+            if (currentWaypoint.name.Contains("Shower"))
+            {
+                atShowerPoint = true;//for speech aasd;lfkajs;dlfkjasdf (and also for shower anim)
+            }
+            if (currentWaypoint.name.Contains("Rollcall") && name == "Guard1")
+            {
+                atGuardRollcall = true;//for speech hahahahahahaha
+            }
         }
         seeker.CancelCurrentPathRequest(true);
         if (doDirStuff)
@@ -557,12 +572,14 @@ public class NPCAI : MonoBehaviour
         while (true)
         {
             float distance = Vector2.Distance(transform.position, bed.transform.position);
-            if(distance < .01f)
+            if(distance < .8f)
             {
                 break;
             }
             yield return null;
         }
+        GetComponent<NPCCollectionData>().npcData.isSleeping = true;
+        GetComponent<AILerp>().canMove = false;
         seeker.CancelCurrentPathRequest(true);
         sleepScript.Sleep(gameObject, bed);
     }
@@ -810,6 +827,11 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -824,6 +846,11 @@ public class NPCAI : MonoBehaviour
                             if (!isInGym)
                             {
                                 yield break;
+                            }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
                             }
                             timer += Time.deltaTime;
                             yield return null;
@@ -840,6 +867,11 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -855,6 +887,11 @@ public class NPCAI : MonoBehaviour
                             if (!isInGym)
                             {
                                 yield break;
+                            }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
                             }
                             timer += Time.deltaTime;
                             yield return null;
@@ -887,6 +924,11 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -901,6 +943,11 @@ public class NPCAI : MonoBehaviour
                             if (!isInGym)
                             {
                                 yield break;
+                            }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
                             }
                             timer += Time.deltaTime;
                             yield return null;
@@ -932,6 +979,11 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -946,6 +998,11 @@ public class NPCAI : MonoBehaviour
                             if (!isInGym)
                             {
                                 yield break;
+                            }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
                             }
                             timer += Time.deltaTime;
                             yield return null;
@@ -977,6 +1034,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -992,6 +1055,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1008,6 +1077,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1019,6 +1094,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1030,6 +1111,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1041,6 +1128,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1071,6 +1164,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1086,6 +1185,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1102,6 +1207,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1113,6 +1224,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1124,6 +1241,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1160,6 +1283,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1191,6 +1320,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1206,6 +1341,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1221,6 +1362,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1236,6 +1383,12 @@ public class NPCAI : MonoBehaviour
                             {
                                 yield break;
                             }
+                            if (pc.isPaused)
+                            {
+                                yield return null;
+                                continue;
+                            }
+
                             timer += Time.deltaTime;
                             yield return null;
                         }
@@ -1584,7 +1737,7 @@ public class NPCAI : MonoBehaviour
         seeker.StartPath(transform.position, pos);
         while (true)
         {
-            if (Vector2.Distance(transform.position, pos) <= 1.2f)//1.2 is a little over the max distance (sqrt(1.28)) an npc can be from a tile (this is done because of the a* movement)
+            if (Vector2.Distance(transform.position, pos) <= .1f)
             {
                 break;
             }

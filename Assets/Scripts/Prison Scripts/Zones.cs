@@ -1,6 +1,7 @@
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Zones : MonoBehaviour
@@ -12,6 +13,12 @@ public class Zones : MonoBehaviour
     public bool isTouchingSolitary;
     public bool isTouchingYourCell;
     public bool isTouchingCurrentZone;
+
+    public bool wentToCurrentZone = false;
+    private string lastPeriodCode;
+    public float timeInPeriod;
+
+    private PauseController pc;
 
     public bool isOverriding;
 
@@ -30,6 +37,8 @@ public class Zones : MonoBehaviour
     private GameObject arrow;
     private Transform ic;
     private Solitary solitaryScript;
+    private Map currentMap;
+    private Lockdown lockdownScript;
 
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
@@ -51,6 +60,8 @@ public class Zones : MonoBehaviour
         arrow = RootObjectCache.GetRoot("MenuCanvas").transform.Find("ZoneArrow").gameObject;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         solitaryScript = GetComponent<Solitary>();
+        lockdownScript = GetComponent<Lockdown>();
+        pc = GetComponent<PauseController>();
 
         StartCoroutine(StartWait());
     }
@@ -61,10 +72,16 @@ public class Zones : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+
+        currentMap = GetComponent<LoadPrison>().currentMap;
         GetSpecialZones();
+
+        lastPeriodCode = scheduleScript.periodCode;
+
         StartCoroutine(CheckLoop());
         StartCoroutine(ArrowLoop());
         StartCoroutine(ArrowAnim());
+        StartCoroutine(WentToZoneLoop());
     }
     private void GetSpecialZones()
     {
@@ -83,6 +100,41 @@ public class Zones : MonoBehaviour
         {
             distanceFromPlayer = baseDistanceFromPlayer + Mathf.Sin(Time.time * speed) * amplitude;
             
+            yield return null;
+        }
+    }
+    private IEnumerator WentToZoneLoop()
+    {
+        while (true)
+        {
+            string currentPeriodCode = scheduleScript.periodCode;
+
+            if (currentPeriodCode != lastPeriodCode)
+            {
+                timeInPeriod = 0;
+                // evaluate the period that just ended
+                if (!wentToCurrentZone && lastPeriodCode != "LO")
+                {
+                    player.GetComponent<PlayerCollectionData>().playerData.heat += 35 * currentMap.npcLevel;
+
+                    if (lastPeriodCode == "R" && !lockdownScript.lockdownIsActive)
+                    {
+                        lockdownScript.StartLockdown();
+                    }
+                }
+
+                // reset for the new period
+                wentToCurrentZone = false;
+                lastPeriodCode = currentPeriodCode;
+            }
+            else
+            {
+                if (!pc.isPaused)
+                {
+                    timeInPeriod += Time.deltaTime;
+                }
+            }
+
             yield return null;
         }
     }
@@ -147,7 +199,7 @@ public class Zones : MonoBehaviour
                 continue;
             }
             
-            if(player.gameObject.layer != LayerMask.NameToLayer("Ground")) //if not on ground layer
+            if(Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground"))) //if not on ground layer
             {
                 isTouchingCurrentZone = true;
                 yield return new WaitForSeconds(.1f);
@@ -176,6 +228,7 @@ public class Zones : MonoBehaviour
                 if (!zoneExists)
                 {
                     isTouchingCurrentZone = true;
+                    wentToCurrentZone = true;
                     yield return new WaitForSeconds(.1f);
                     continue;
                 }
@@ -185,6 +238,7 @@ public class Zones : MonoBehaviour
                     if (player.GetComponent<CapsuleCollider2D>().IsTouching(zone.GetComponent<BoxCollider2D>()))
                     {
                         isTouchingCurrentZone = true;
+                        wentToCurrentZone = true;
                         break;
                     }
                     else
@@ -196,6 +250,7 @@ public class Zones : MonoBehaviour
             else if(periodCode == "FT")
             {
                 isTouchingCurrentZone = true;
+                wentToCurrentZone = true;
             }
             else if(periodCode == "W")
             {
@@ -216,6 +271,7 @@ public class Zones : MonoBehaviour
                     if (!zoneExists)
                     {
                         isTouchingCurrentZone = true;
+                        wentToCurrentZone = true;
                         yield return new WaitForSeconds(.1f);
                         continue;
                     }
@@ -225,6 +281,7 @@ public class Zones : MonoBehaviour
                         if (player.GetComponent<CapsuleCollider2D>().IsTouching(zone.GetComponent<BoxCollider2D>()))
                         {
                             isTouchingCurrentZone = true;
+                            wentToCurrentZone = true;
                             break;
                         }
                         else
