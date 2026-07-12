@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 95da3f6f529e67a469d9cbe55dc44dfa
   - enabled: 0
-    path: Assets/Scenes/Center Perks.unity
-    guid: 0da3f44e8f0b1e346baeb4ac3a993897
+    path: Assets/Scenes/Prison.unity
+    guid: 46d6f3adcc1a4424c8fd2d8242097601
   - enabled: 0
     path: Assets/Scenes/Map Editor.unity
     guid: 67976e995cb3c214a94ca691cd75683f
+  - enabled: 0
+    path: Assets/Scenes/Center Perks.unity
+    guid: 0da3f44e8f0b1e346baeb4ac3a993897
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ce3e950c3ff77ed4394f329548695e6c, type: 2}
   m_UseUCBPForAssetBundles: 0

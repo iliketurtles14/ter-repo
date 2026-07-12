@@ -163,6 +163,11 @@ public class NPCSpeech : MonoBehaviour
     }
     public IEnumerator MakeTextBox(string msg, Transform npc, bool isMad)
     {
+        if (string.IsNullOrEmpty(msg))
+        {
+            yield break;
+        }
+        
         madeTextBox = true;
         isTalking = true;
 

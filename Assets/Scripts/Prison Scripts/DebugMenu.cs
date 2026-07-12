@@ -1,12 +1,8 @@
 using System;
 using System.IO;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class DebugMenu : MonoBehaviour
 {

@@ -14,10 +14,12 @@ public class Escaping : MonoBehaviour
     private bool hasEscaped;
     private PauseController pc;
     private bool isQuitting;
+    private Zones zonesScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
         pc = GetComponent<PauseController>();
+        zonesScript = GetComponent<Zones>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -54,9 +56,17 @@ public class Escaping : MonoBehaviour
             hasEscaped = true;
             StartCoroutine(Escape());
         }
+
+        if (zonesScript.isTouchingEscape)
+        {
+            hasEscaped = true;
+            StartCoroutine(Escape());
+        }
     }
     public IEnumerator Escape()
     {
+        hasEscaped = true;
+        
         pc.Pause(true);
         
         //do black bar anim

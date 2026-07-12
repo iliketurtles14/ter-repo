@@ -121,8 +121,7 @@ public class MakeBadObject : MonoBehaviour
         // some bad actions can have multiple instances of it occuring (because of how this script is
         // set up, that cant happen within this script).
         // MISSING: inmate punch, toilet clog, tied up npc, sheets on bars,
-        //          broken tiles, being in a perimeter/unsafe zone, being on the roof without a
-        //          guard/bleached outfit, missing rollcall, being outside with a non-inmate outfit,
+        //          broken tiles, being in a perimeter/unsafe zone
 
         ///bool management
         //bad/inmate outfit

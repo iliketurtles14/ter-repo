@@ -48,7 +48,16 @@ public class IGTimer : MonoBehaviour
             {
                 dec = "0";
             }
-            string igtStr = Mathf.FloorToInt(igt / 60f).ToString() + ":" + (Mathf.FloorToInt(igt) % 60f).ToString() + "." + dec;
+
+            string igtStr = "";
+            if(Mathf.FloorToInt(igt / 60f) == 0)
+            {
+                igtStr =(Mathf.FloorToInt(igt) % 60f).ToString() + "." + dec;
+            }
+            else
+            {
+                igtStr = Mathf.FloorToInt(igt / 60f).ToString() + ":" + (Mathf.FloorToInt(igt) % 60f).ToString() + "." + dec;
+            }
             tmp.text = igtStr;
 
             pausedIGT = Convert.ToSingle(Math.Round(Convert.ToDouble(pausedIGT), 3));
@@ -61,7 +70,15 @@ public class IGTimer : MonoBehaviour
             {
                 dec = "0";
             }
-            igtStr = Mathf.FloorToInt(pausedIGT / 60f).ToString() + ":" + (Mathf.FloorToInt(pausedIGT) % 60f).ToString() + "." + dec;
+
+            if(Mathf.FloorToInt(pausedIGT / 60f) == 0)
+            {
+                igtStr = (Mathf.FloorToInt(pausedIGT) % 60f).ToString() + "." + dec;
+            }
+            else
+            {
+                igtStr = Mathf.FloorToInt(pausedIGT / 60f).ToString() + ":" + (Mathf.FloorToInt(pausedIGT) % 60f).ToString() + "." + dec;
+            }
             pausedTMP.text = igtStr;
             yield return null;
         }

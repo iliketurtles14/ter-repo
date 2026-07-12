@@ -21,6 +21,7 @@ public class Sittables : MonoBehaviour
     private int previousBodyLayer;
     private int previousOutfitLayer;
     private PlayerShowerOutfit pso;
+    public bool canLeaveSittable;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -56,7 +57,7 @@ public class Sittables : MonoBehaviour
             }
         }
 
-        if(onSittable && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)))
+        if(canLeaveSittable && onSittable && (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)))
         {
             clearTile = false;
             Vector3 bedOffset;
