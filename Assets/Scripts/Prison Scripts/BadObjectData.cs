@@ -11,6 +11,7 @@ public class BadObjectData : MonoBehaviour
     public bool toilet = false; //if true, it will search and unclog the toilet
     public bool untie = false; //if true, it will untie the seen npc
     public bool sheets = false; //if true, it will take down the seen sheets from the bars
+    public bool stepladder = false;//if true, it will take down the seen stepladder
     public string messageType = null; //if not null, it will make the guard say a message
     public bool shouldCall = false; //if true, this will make the inmate call a guard to this position.
     public GameObject attachedObject;

@@ -10,6 +10,7 @@ public class StepladderPickup : MonoBehaviour
     private Particles particlesScript;
     private ItemDataCreator creator;
     private List<GameObject> slots = new List<GameObject>();
+    private Transform badObjects;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -17,6 +18,7 @@ public class StepladderPickup : MonoBehaviour
         invScript = GetComponent<Inventory>();
         particlesScript = GetComponent<Particles>();
         creator = GetComponent<ItemDataCreator>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             slots.Add(slot.gameObject);
@@ -60,5 +62,13 @@ public class StepladderPickup : MonoBehaviour
             }
         }
         Destroy(sl);
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.GetComponent<BadObjectData>().attachedObject == sl && bo.name == "stepladder")
+            {
+                Destroy(bo.gameObject);
+                break;
+            }
+        }
     }
 }

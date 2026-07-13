@@ -15,6 +15,7 @@ public class PatchUpPickUp : MonoBehaviour
     private Sprite clear;
     private Particles particlesScript;
     private WarningMessage warningScript;
+    private MakeBadObject mbo;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -24,6 +25,7 @@ public class PatchUpPickUp : MonoBehaviour
         clear = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/clear");
         particlesScript = GetComponent<Particles>();
         warningScript = GetComponent<WarningMessage>();
+        mbo = GetComponent<MakeBadObject>();
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -163,6 +165,13 @@ public class PatchUpPickUp : MonoBehaviour
                     color.a = .75f;
                     vent.GetComponent<SpriteRenderer>().color = color;
                 }
+
+                BadObjectData boData = new BadObjectData
+                {
+                    solitary = true,
+                    attachedObject = vent
+                };
+                mbo.CreateBadObject(boData, "openVent");
             }
             else if (mcs.touchedPatchUp.name != "Poster")
             {
@@ -216,6 +225,22 @@ public class PatchUpPickUp : MonoBehaviour
                 emptyTile.transform.position = mcs.touchedPatchUp.transform.position;
                 Vector3 renderVector = new Vector3(0, 0, -1);
                 emptyTile.transform.position += renderVector;
+
+                BadObjectData boData = new BadObjectData
+                {
+                    solitary = true,
+                    attachedObject = emptyTile
+                };
+                mbo.CreateBadObject(boData, "openWall");
+            }
+            else if(mcs.touchedPatchUp.name == "Poster")
+            {
+                BadObjectData boData = new BadObjectData
+                {
+                    solitary = true,
+                    attachedObject = mcs.touchedPatchUp.GetComponent<PatchUpHandler>().connectedTile
+                };
+                mbo.CreateBadObject(boData, "openWall");
             }
 
             if (mcs.touchedPatchUp.GetComponent<PatchUpHandler>().hasHoleUnder && layer == 1)
@@ -229,6 +254,16 @@ public class PatchUpPickUp : MonoBehaviour
                         {
                             obj.GetComponent<BoxCollider2D>().enabled = true;
                             obj.GetComponent<SpriteRenderer>().enabled = true;
+
+                            GameObject boAttachment = new GameObject("BOAttachment");
+                            boAttachment.transform.position = obj.position;
+                            boAttachment.transform.parent = tiles.Find("GroundObjects");
+                            BadObjectData aBOData = new BadObjectData
+                            {
+                                solitary = true,
+                                attachedObject = boAttachment //this is super aids. super duper aids. this is js cuz i dont have a reference to the original tile at this point in the code unless if i do a search on all tiles which i dont wanna do so sorry!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            };
+                            mbo.CreateBadObject(aBOData, "openHole");
                             break;
                         }
                     }

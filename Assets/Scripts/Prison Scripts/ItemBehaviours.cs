@@ -16,6 +16,8 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     private InventorySelection selectionScript;
+    private Transform badObjects;
+    private MakeBadObject mbo;
     private WarningMessage warningScript;
     private Solitary solitaryScript;
     private Transform player;
@@ -119,6 +121,8 @@ public class ItemBehaviours : MonoBehaviour
         creator = GetComponent<ItemDataCreator>();
         solitaryScript = GetComponent<Solitary>();
         warningScript = GetComponent<WarningMessage>();
+        mbo = GetComponent<MakeBadObject>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
 
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -820,9 +824,28 @@ public class ItemBehaviours : MonoBehaviour
         {
             yield break;
         }
-    }
-    public IEnumerator DigDown(TileData touchedTileData)
+    }                                                           // vvv this touchedTile var is only for the bad object stuff
+    public IEnumerator DigDown(TileData touchedTileData, GameObject touchedTile)
     {
+        bool shouldMakeBO = true;
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.GetComponent<BadObjectData>().attachedObject == touchedTile && bo.name == "openHole")
+            {
+                shouldMakeBO = false;
+                break;
+            }
+        }
+        if (shouldMakeBO)
+        {
+            BadObjectData data = new BadObjectData
+            {
+                solitary = true,
+                attachedObject = touchedTile
+            };
+            mbo.CreateBadObject(data, "openHole");
+        }
+
         foreach (Transform tile in tiles.Find("UndergroundObjects"))
         {
             if (tile.position == touchedTileObject.transform.position && tile.name.StartsWith("HalfHoleUp"))
@@ -977,6 +1000,7 @@ public class ItemBehaviours : MonoBehaviour
     }
     public IEnumerator DigUp(TileData touchedTileData)
     {
+
         foreach (Transform tile in tiles.Find("UndergroundObjects"))
         {
             if (tile.position == touchedTileObject.transform.position && tile.name.StartsWith("HalfHoleUp"))
@@ -1002,12 +1026,31 @@ public class ItemBehaviours : MonoBehaviour
 
         foreach(GameObject tile in GameObject.FindGameObjectsWithTag("Digable"))
         {
-            if(tile.transform.position == touchedTileObject.transform.position)
+            if(tile.transform.position == touchedTileObject.transform.position && tile.layer == LayerMask.NameToLayer("Ground"))
             {
                 tile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
                 floorObject = tile;
                 break;
             }
+        }
+
+        bool shouldMakeBO = true;
+        foreach (Transform bo in badObjects)
+        {
+            if (bo.GetComponent<BadObjectData>().attachedObject == floorObject && bo.name == "openHole")
+            {
+                shouldMakeBO = false;
+                break;
+            }
+        }
+        if (shouldMakeBO)
+        {
+            BadObjectData data = new BadObjectData
+            {
+                solitary = true,
+                attachedObject = floorObject
+            };
+            mbo.CreateBadObject(data, "openHole");
         }
 
         if (touchedTileData.currentDurability <= 24 && touchedTileData.currentDurability > 0)
@@ -1303,7 +1346,7 @@ public class ItemBehaviours : MonoBehaviour
         touchedTileData.currentDurability = currentDurability - itemStrength;
         if(whatAction == "digging down")
         {
-            StartCoroutine(DigDown(touchedTileData));
+            StartCoroutine(DigDown(touchedTileData, touchedTile));
         }
         else if(whatAction == "digging up")
         {
@@ -1464,7 +1507,12 @@ public class ItemBehaviours : MonoBehaviour
                 color.a = .75f;
                 emptyVentObj.GetComponent<SpriteRenderer>().color = color;
             }
-
+            BadObjectData data = new BadObjectData
+            {
+                solitary = true,
+                attachedObject = emptyVentObj
+            };
+            mbo.CreateBadObject(data, "openVent");
         }
         else if(whatAction == "unscrewing slats" || whatAction == "cutting slats")
         {
@@ -1511,6 +1559,29 @@ public class ItemBehaviours : MonoBehaviour
                 emptyTile.layer = LayerMask.NameToLayer("Ground");
                 emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
                 emptyTile.transform.parent = tiles.Find("Ground");
+
+                //bad object stuff
+                BadObjectData data = new BadObjectData
+                {
+                    solitary = true,
+                    attachedObject = emptyTile
+                };
+                switch (whatAction)
+                {
+                    case "chipping":
+                        mbo.CreateBadObject(data, "openWall");
+                        break;
+                    case "cutting":
+                        if(touchedTileObject.GetComponent<TileCollectionData>().tileData.tileType == "bars")
+                        {
+                            mbo.CreateBadObject(data, "openBars");
+                        }
+                        else
+                        {
+                            mbo.CreateBadObject(data, "openFence");
+                        }
+                        break;
+                }
             }
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer))
             {
@@ -1550,6 +1621,16 @@ public class ItemBehaviours : MonoBehaviour
                         {
                             obj.GetComponent<BoxCollider2D>().enabled = true;
                             obj.GetComponent<SpriteRenderer>().enabled = true;
+
+                            GameObject boAttachment = new GameObject("BOAttachment");
+                            boAttachment.transform.position = obj.position;
+                            boAttachment.transform.parent = tiles.Find("GroundObjects");
+                            BadObjectData aBOData = new BadObjectData
+                            {
+                                solitary = true,
+                                attachedObject = boAttachment //this is super aids. super duper aids. this is js cuz i dont have a reference to the original tile at this point in the code unless if i do a search on all tiles which i dont wanna do so sorry!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            };
+                            mbo.CreateBadObject(aBOData, "openHole");
                             break;
                         }
                     }

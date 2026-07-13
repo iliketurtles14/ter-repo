@@ -402,6 +402,7 @@ public class NPCAI : MonoBehaviour
                         if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
                             isFreeWalking = true;
+                            Debug.Log("Hereereerererererrereraskld;h");
                             currentPossibleWaypoints.Add(waypoint);
                         }
                         else if(npcType == "Inmate")
@@ -736,13 +737,10 @@ public class NPCAI : MonoBehaviour
                     break;
                 }
             }
+            Destroy(checkerObj);
             if (hitDigable)
             {
                 break;
-            }
-            else
-            {
-                Destroy(checkerObj);
             }
         }
         if(goToVector == Vector2.zero)

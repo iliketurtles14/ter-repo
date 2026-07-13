@@ -19,6 +19,7 @@ public class DeskPickUp : MonoBehaviour
     private List<GameObject> touchedFloors = new List<GameObject>();
     private bool isBusy;
     private PlayerCollectionData playerColData;
+    private Transform badObjects;
     private void Start()
     {
         deskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskInv>();
@@ -29,6 +30,7 @@ public class DeskPickUp : MonoBehaviour
         deskStandScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<DeskStand>();
         HPAScript = player.GetComponent<HPAChecker>();
         playerColData = player.GetComponent<PlayerCollectionData>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
 
         deskVector = new Vector3(0, .8f);
     }
@@ -80,6 +82,15 @@ public class DeskPickUp : MonoBehaviour
         aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
         aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
         deskStandScript.isPickedUp = true;
+
+        foreach (Transform bo in badObjects)
+        {
+            if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, aDesk.transform.position) <= .1f && bo.name == "openHole")
+            {
+                bo.gameObject.SetActive(true);
+                break;
+            }
+        }
     }
     private void DropDesk(GameObject floor)
     {
@@ -87,5 +98,14 @@ public class DeskPickUp : MonoBehaviour
         desk.transform.position = floor.transform.position;
         desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
         deskStandScript.isPickedUp = false;
+
+        foreach(Transform bo in badObjects)
+        {
+            if(Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, floor.transform.position) <= .1f && bo.name == "openHole")
+            {
+                bo.gameObject.SetActive(false);
+                break;
+            }
+        }
     }
 }

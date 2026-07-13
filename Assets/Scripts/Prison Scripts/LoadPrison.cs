@@ -1461,6 +1461,26 @@ public class LoadPrison : MonoBehaviour
                     break;
             }
         }
+
+        //set fence isOutside
+        foreach (Transform tile1 in tiles.Find("Ground"))
+        {
+            if (tile1.CompareTag("Fence") || tile1.CompareTag("ElectricFence"))
+            {
+                foreach (Transform tile2 in tiles.Find("Ground"))
+                {
+                    if (tile2.GetComponent<TileCollectionData>().tileData.tileType == "inFloor" &&
+                        (tile2.position == tile1.position + new Vector3(1.6f, 0) ||
+                        tile2.position == tile1.position + new Vector3(-1.6f, 0) ||
+                        tile2.position == tile1.position + new Vector3(0, 1.6f) ||
+                        tile2.position == tile1.position + new Vector3(0, -1.6f)))
+                    {
+                        tile1.GetComponent<TileCollectionData>().tileData.isOutside = false;
+                        break;
+                    }
+                }
+            }
+        }
     }
     private void SetObjects()
     {

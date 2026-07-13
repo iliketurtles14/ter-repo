@@ -14,6 +14,9 @@ public class NPCCombat : MonoBehaviour
     private NPCCollectionData npcColData;
     private FightEffects fightFX;
     private Particles particlesScript;
+    private MakeBadObject mbo;
+    private Transform badObjects;
+    private PauseController pc;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -21,6 +24,9 @@ public class NPCCombat : MonoBehaviour
         npcColData = GetComponent<NPCCollectionData>();
         fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
+        mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
     }
 
     private void Update()
@@ -68,6 +74,11 @@ public class NPCCombat : MonoBehaviour
             {
                 DeAggro();
             }
+        }
+
+        if (isAggro)
+        {
+            GetComponent<NPCCollectionData>().npcData.hasFood = false;
         }
 
         if (isAggro)
@@ -193,7 +204,10 @@ public class NPCCombat : MonoBehaviour
             aTarget.GetComponent<NPCCombat>().target = gameObject;
         }
 
-        StartCoroutine(fightFX.MakeScreenShake());
+        if(aTarget.name == "Player")
+        {
+            StartCoroutine(fightFX.MakeScreenShake());
+        }
         StartCoroutine(fightFX.MakeStar(aTarget.transform.position));
         StartCoroutine(particlesScript.CreateDust(aTarget.transform.position, 1));
 
@@ -219,7 +233,38 @@ public class NPCCombat : MonoBehaviour
         {
             transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][3][lookNum];
         }
-        yield return new WaitForSeconds(.45f);
+        if (name.Contains("Inmate"))
+        {
+            BadObjectData data = new BadObjectData
+            {
+                shouldAggro = true,
+                messageType = "Guards_Heat",
+                attachedObject = gameObject
+            };
+            mbo.CreateBadObject(data, "inmatePunch");
+        }
+        float time = 0f;
+        while(time < .45f)
+        {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
+        if (name.Contains("Inmate"))
+        {
+            foreach (Transform bo in badObjects)
+            {
+                if (bo.gameObject.name == "inmatePunch" && bo.GetComponent<BadObjectData>().attachedObject == gameObject)
+                {
+                    Destroy(bo.gameObject);
+                    break;
+                }
+            }
+        }
         GetComponent<NPCAnimation>().enabled = true;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         GetComponent<NavMeshAgent>().speed = 8;
@@ -229,7 +274,17 @@ public class NPCCombat : MonoBehaviour
 
         timeBetweenPunches = ((-11f / 1500f) * speed) + .68f + (11f / 150f);
 
-        yield return new WaitForSeconds(timeBetweenPunches);
+        time = 0f;
+        while(time < timeBetweenPunches)
+        {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
 
         isPunching = false;
     }

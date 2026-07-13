@@ -9,4 +9,5 @@ public class TileData : ScriptableObject
     public int holeStability;
     public bool holeIsUnder;//for patchups
     public int holeDurability;//for patchups
+    public bool isOutside = true; //for fences and bad objects
 }

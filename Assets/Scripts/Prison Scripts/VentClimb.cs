@@ -61,7 +61,7 @@ public class VentClimb : MonoBehaviour
     {
         if (!HPAScript.isBusy && deskStandScript.hasClimbed)//when the player is on a desk
         {
-            if (mcs.isTouchingOpenVent)
+            if (mcs.isTouchingOpenVent && !selectionScript.aSlotSelected)
             {
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
                 desks = deskStandScript.desks;
@@ -84,7 +84,7 @@ public class VentClimb : MonoBehaviour
         }
         else if (!HPAScript.isBusy && !Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer)) //when the player is in a vent
         {
-            if (mcs.isTouchingOpenVent)
+            if (mcs.isTouchingOpenVent && !selectionScript.aSlotSelected)
             {                
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
                 if (Input.GetMouseButtonDown(0) && distance <= 2.4f)

@@ -22,6 +22,9 @@ public class ToiletMenu : MonoBehaviour
     private InventorySelection selectionScript;
     private Transform mc;
     private PauseController pc;
+    private MakeBadObject mbo;
+    private Transform badObjects;
+    private Particles particlesScript;
 
     private Sprite toiletLeftClogged;
     private Sprite toiletRightClogged;
@@ -47,6 +50,9 @@ public class ToiletMenu : MonoBehaviour
         selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
 
         foreach(Transform slot in ic.Find("GUIPanel"))
         {
@@ -268,6 +274,13 @@ public class ToiletMenu : MonoBehaviour
     private void ClogToilet(GameObject toilet)
     {
         toilet.GetComponent<ToiletInv>().isClogged = true;
+        BadObjectData data = new BadObjectData
+        {
+            attachedObject = toilet,
+            messageType = "The heck?",
+            toilet = true
+        };
+        mbo.CreateBadObject(data, "toilet");
         switch (toilet.name)
         {
             case "ToiletLeft":
@@ -315,6 +328,17 @@ public class ToiletMenu : MonoBehaviour
         {
             return;
         }
+
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.GetComponent<BadObjectData>().attachedObject == toilet && bo.name == "toilet")
+            {
+                Destroy(bo.gameObject);
+                break;
+            }
+        }
+
+        StartCoroutine(particlesScript.CreateDust(toilet.transform.position, 1));
 
         List<GameObject> waterToDestroy = new List<GameObject>();
         foreach(Transform toiletWater in tiles.Find("GroundObjects"))

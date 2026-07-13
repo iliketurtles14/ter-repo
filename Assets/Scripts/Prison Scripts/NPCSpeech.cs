@@ -299,6 +299,145 @@ public class NPCSpeech : MonoBehaviour
         {
             obj.gameObject.SetActive(true);
         }
+    }
+    public IEnumerator MakeTextBox(string msg, Transform npc, bool isMad, string nameTarget)
+    {
+        if (string.IsNullOrEmpty(msg))
+        {
+            yield break;
+        }
+
+        madeTextBox = true;
+        isTalking = true;
+
+        string inmateName = "someone";
+        string guardName = "someone";
+
+        if (inmateNames.Count > 0)
+        {
+            inmateName = inmateNames[UnityEngine.Random.Range(0, inmateNames.Count)];
+        }
+        if (guardNames.Count > 0)
+        {
+            guardName = guardNames[UnityEngine.Random.Range(0, guardNames.Count)];
+        }
+
+        if (msg.Contains("$inmate"))
+        {
+            msg = msg.Replace("$inmate", inmateName);
+        }
+        if (msg.Contains("$guard"))
+        {
+            msg = msg.Replace("$guard", guardName);
+        }
+        if (msg.Contains("$name"))
+        {
+            msg = msg.Replace("$name", nameTarget);
+        }
+
+        while (true)
+        {
+            if (msg.EndsWith(' '))
+            {
+                msg = msg.Substring(0, msg.Length - 1);
+            }
+            else
+            {
+                break;
+            }
+            yield return null;
+        }
+
+        List<int> breakPoints = new List<int>();
+        int loopBreakNum = 0;
+        for (int i = 0; i < msg.Length; i++)
+        {
+            if (msg[i] == ' ')
+            {
+                loopBreakNum++;
+                if (loopBreakNum % 8 == 0)
+                {
+                    breakPoints.Add(i);
+                }
+            }
+        }
+        string newMsg = "";
+        for (int i = 0; i < breakPoints.Count; i++)
+        {
+            breakPoints[i] += i;
+        }
+        for (int i = 0; i < msg.Length; i++)
+        {
+            if (breakPoints.Contains(i))
+            {
+                newMsg += "\n";
+            }
+            newMsg += msg[i];
+        }
+
+        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().text = newMsg;
+        npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.clear;
+        npc.Find("SpeechCanvas").Find("Text").gameObject.SetActive(true);
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>());
+        yield return null;
+
+        float borderWidth = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.x;
+        float borderHeight = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>().sizeDelta.y;
+
+        RectTransform bottomRT = npc.Find("SpeechCanvas").Find("BottomSpeechBorder").GetComponent<RectTransform>();
+        bottomRT.sizeDelta = new Vector2(borderWidth, .1f);
+        bottomRT.anchoredPosition = new Vector2(0, .05f);
+        RectTransform topRT = npc.Find("SpeechCanvas").Find("TopSpeechBorder").GetComponent<RectTransform>();
+        topRT.sizeDelta = new Vector2(borderWidth, .1f);
+        topRT.anchoredPosition = new Vector2(0, (borderHeight) + .05f);
+        RectTransform leftRT = npc.Find("SpeechCanvas").Find("LeftSpeechBorder").GetComponent<RectTransform>();
+        leftRT.sizeDelta = new Vector2(.1f, (borderHeight) + .1f);
+        leftRT.anchoredPosition = new Vector2(((-borderWidth) / 2f) - .05f, ((borderHeight) / 2f) + .05f);
+        RectTransform rightRT = npc.Find("SpeechCanvas").Find("RightSpeechBorder").GetComponent<RectTransform>();
+        rightRT.sizeDelta = new Vector2(.1f, (borderHeight) + .1f);
+        rightRT.anchoredPosition = new Vector2(((borderWidth) / 2f) + .05f, ((borderHeight) / 2f) + .05f);
+
+        RectTransform backgroundRT = npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<RectTransform>();
+        backgroundRT.sizeDelta = new Vector2(borderWidth, borderHeight);
+        backgroundRT.anchoredPosition = new Vector2(0, (borderHeight) / 2f);
+
+        RectTransform textRT = npc.Find("SpeechCanvas").Find("Text").GetComponent<RectTransform>();
+        textRT.anchoredPosition = backgroundRT.anchoredPosition;
+
+        if (npc.name.StartsWith("Guard") || npc.name == "CheckpointCharlie")
+        {
+            npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/GuardSpeechBackground");
+        }
+        switch (npc.name)
+        {
+            case "Warden":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/WardenSpeechBackground");
+                break;
+            case "JobOfficer":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/JobOfficerSpeechBackground");
+                break;
+            case "Medic":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().sprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/MedicSpeechBackground");
+                break;
+            case "VisitorNPC":
+                npc.Find("SpeechCanvas").Find("SpeechBackground").GetComponent<Image>().color = new Color(254f / 255f, 243f / 255f, 187f / 255f);
+                break;
+        }
+
+        if (isMad && npc.name.StartsWith("Guard"))
+        {
+            npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = new Color(157f / 255f, 0f, 0f);
+        }
+        else
+        {
+            npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
+        }
+
+        foreach (Transform obj in npc.Find("SpeechCanvas"))
+        {
+            obj.gameObject.SetActive(true);
+        }
         npc.Find("SpeechCanvas").Find("Text").GetComponent<TextMeshProUGUI>().color = Color.black;
     }
     private IEnumerator DestroyWait()

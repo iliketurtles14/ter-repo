@@ -37,7 +37,9 @@ public class MakeBadObject : MonoBehaviour
     private PauseController pc;
     private Lockdown lockdownScript;
     private UnlockDoors unlockDoorsScript;
-    
+    private NPCPickup npcPickupScript;
+    private Solitary solitaryScript;
+
     private List<int> badOutfitIDs = new List<int>()
     {
         39, 44, 49, 54, 103
@@ -64,6 +66,7 @@ public class MakeBadObject : MonoBehaviour
     private bool npcLoot;
     private bool missedRollcall;
     private bool outLate;
+    private bool inUnsafeZone;
     private void Start()
     {
         ready = false;
@@ -86,6 +89,8 @@ public class MakeBadObject : MonoBehaviour
         lockdownScript = scriptObject.GetComponent<Lockdown>();
         unlockDoorsScript = scriptObject.GetComponent<UnlockDoors>();
         pc = GetComponent<PauseController>();
+        npcPickupScript = GetComponent<NPCPickup>();
+        solitaryScript = GetComponent<Solitary>();
 
         StartCoroutine(StartWait());
     }
@@ -120,8 +125,7 @@ public class MakeBadObject : MonoBehaviour
         // this is only for certain bad actions. the reason some bad actions are missing is because
         // some bad actions can have multiple instances of it occuring (because of how this script is
         // set up, that cant happen within this script).
-        // MISSING: inmate punch, toilet clog, tied up npc, sheets on bars,
-        //          broken tiles, being in a perimeter/unsafe zone
+        // MISSING: ... there is nothing here ... :3 good job!!!
 
         ///bool management
         //bad/inmate outfit
@@ -216,23 +220,40 @@ public class MakeBadObject : MonoBehaviour
         //picking up a desk/inmate
         if (!pickedUp)
         {
-            foreach (Transform desk in tiles.Find("GroundObjects"))
+            if (npcPickupScript.hasPickedUp)
             {
-                if (desk.CompareTag("Desk"))
+                pickedUp = true;
+
+                BadObjectData data = new BadObjectData
                 {
-                    if (desk.GetComponent<DeskPickUp>() && desk.GetComponent<DeskPickUp>().isPickedUp)
+                    isMultiplied = true,
+                    heatGain = 10,
+                    messageType = "DropIt",
+                    attachedObject = player
+                };
+
+                CreateBadObject(data, "pickedUp");
+            }
+            else
+            {
+                foreach (Transform desk in tiles.Find("GroundObjects"))
+                {
+                    if (desk.CompareTag("Desk"))
                     {
-                        pickedUp = true;
-
-                        BadObjectData data = new BadObjectData
+                        if (desk.GetComponent<DeskPickUp>() && desk.GetComponent<DeskPickUp>().isPickedUp)
                         {
-                            isMultiplied = true,
-                            heatGain = 10,
-                            messageType = "DropIt",
-                            attachedObject = player
-                        };
+                            pickedUp = true;
 
-                        CreateBadObject(data, "pickedUp");
+                            BadObjectData data = new BadObjectData
+                            {
+                                isMultiplied = true,
+                                heatGain = 10,
+                                messageType = "DropIt",
+                                attachedObject = player
+                            };
+
+                            CreateBadObject(data, "pickedUp");
+                        }
                     }
                 }
             }
@@ -510,6 +531,24 @@ public class MakeBadObject : MonoBehaviour
             DestroyBadObject("outsideOnInsideMap");
         }
 
+        //in an unsafe zone
+        if(!inUnsafeZone && zonesScript.isTouchingUnsafe)
+        {
+            inUnsafeZone = true;
+            BadObjectData data = new BadObjectData
+            {
+                heatSet = 99,
+                shouldAggro = true,
+                messageType = "Guards_Halt",
+                attachedObject = player
+            };
+            CreateBadObject(data, "inUnsafeZone");
+        }
+        else if(inUnsafeZone && !zonesScript.isTouchingUnsafe)
+        {
+            inUnsafeZone = false;
+            DestroyBadObject("inUnsafeZone");
+        }
 
         //sees you during lockdown from rollcall
         if(lockdownScript.lockdownIsActive && !lockdownScript.isRiotLockdown && !missedRollcall)
@@ -562,6 +601,38 @@ public class MakeBadObject : MonoBehaviour
                 StartCoroutine(HeatGain(5));
             }
             StartCoroutine(HeatGain(3));
+        }
+
+        //in unsafe zone outside
+        if(isOutside && zonesScript.isTouchingUnsafe)
+        {
+            player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
+        }
+
+        //broken tiles outside
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.name == "openFence")
+            {
+                if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.isOutside)
+                {
+                    StartCoroutine(solitaryScript.GoToSolitary(""));
+                }
+            }
+            else if(bo.name == "openHole")
+            {
+                try //doing this try catch because in a certain case, the attachedObject for an openHole is just the BOAttachment object and doesnt have a tileData (those are always inside tho, so its ok)
+                {
+                    if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+                    {
+                        StartCoroutine(solitaryScript.GoToSolitary(""));
+                    }
+                }
+                catch
+                {
+
+                }
+            }
         }
     }
     private IEnumerator HeatGain(int amount)

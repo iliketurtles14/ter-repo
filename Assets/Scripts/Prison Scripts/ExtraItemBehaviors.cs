@@ -20,6 +20,8 @@ public class ExtraItemBehaviors : MonoBehaviour
     private Particles particlesScript;
     private DeskStand deskStandScript;
     private StatEffects statEffectsScript;
+    private MakeBadObject mbo;
+    private Transform badObjects;
     private void Start()
     {
         selectionScript = GetComponent<InventorySelection>();
@@ -34,6 +36,8 @@ public class ExtraItemBehaviors : MonoBehaviour
         particlesScript = GetComponent<Particles>();
         deskStandScript = GetComponent<DeskStand>();
         statEffectsScript = GetComponent<StatEffects>();
+        mbo = GetComponent<MakeBadObject>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         foreach(Transform slot in ic.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -216,6 +220,12 @@ public class ExtraItemBehaviors : MonoBehaviour
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
         particlesScript.CreateDust(npc.transform.position, 1);
+        BadObjectData data = new BadObjectData
+        {
+            untie = true,
+            attachedObject = npc
+        };
+        mbo.CreateBadObject(data, "untie");
     }
     private void PlaceBedSheet(int slot, GameObject bars)
     {
@@ -227,6 +237,14 @@ public class ExtraItemBehaviors : MonoBehaviour
         sheet.transform.parent = tiles.Find("GroundObjects");
         sheet.transform.position = new Vector3(bars.transform.position.x, bars.transform.position.y, -1);
         sheet.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[173];
+
+        BadObjectData data = new BadObjectData
+        {
+            sheets = true,
+            attachedObject = sheet,
+            messageType = "Sheets"
+        };
+        mbo.CreateBadObject(data, "sheets");
     }
     private void PlaceBedDummy(int slot, GameObject bed)
     {
@@ -303,6 +321,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                      //when putting stuff back, do the dust particles
         {
             case "wall":
+                foreach(Transform bo in badObjects)
+                {
+                    if(Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openWall")
+                    {
+                        Destroy(bo.gameObject);
+                        break;
+                    }
+                }
                 switch (id)
                 {
                     case 124://poster
@@ -326,6 +352,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                                     handler.holeDurability = obj.GetComponent<TileCollectionData>().tileData.currentDurability;
                                     aObj.GetComponent<BoxCollider2D>().enabled = false;
                                     aObj.GetComponent<SpriteRenderer>().enabled = false;
+                                    foreach (Transform bo in badObjects)
+                                    {
+                                        if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openHole")
+                                        {
+                                            Destroy(bo.gameObject);
+                                            break;
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -355,6 +389,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                                     handler.holeDurability = obj.GetComponent<TileCollectionData>().tileData.currentDurability;
                                     aObj.GetComponent<BoxCollider2D>().enabled = false;
                                     aObj.GetComponent<SpriteRenderer>().enabled = false;
+                                    foreach (Transform bo in badObjects)
+                                    {
+                                        if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openHole")
+                                        {
+                                            Destroy(bo.gameObject);
+                                            break;
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -381,6 +423,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                                     aTCD.tileData.holeDurability = obj.GetComponent<TileCollectionData>().tileData.currentDurability;
                                     aObj.GetComponent<BoxCollider2D>().enabled = false;
                                     aObj.GetComponent<SpriteRenderer>().enabled = false;
+                                    foreach (Transform bo in badObjects)
+                                    {
+                                        if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openHole")
+                                        {
+                                            Destroy(bo.gameObject);
+                                            break;
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -394,6 +444,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                 }
                 break;
             case "vent":
+                foreach (Transform bo in badObjects)
+                {
+                    if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openVent")
+                    {
+                        Destroy(bo.gameObject);
+                        break;
+                    }
+                }
                 switch (id)
                 {
                     case 151://vent cover
@@ -424,6 +482,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                 }
                 break;
             case "hole":
+                foreach (Transform bo in badObjects)
+                {
+                    if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openHole")
+                    {
+                        Destroy(bo.gameObject);
+                        break;
+                    }
+                }
                 GameObject dirtCrumbs = new GameObject("DirtCrumbs");
                 dirtCrumbs.transform.parent = tiles.Find("GroundObjects");
                 dirtCrumbs.AddComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[178];
@@ -471,6 +537,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                 }
                 break;
             case "fence":
+                foreach (Transform bo in badObjects)
+                {
+                    if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openFence")
+                    {
+                        Destroy(bo.gameObject);
+                        break;
+                    }
+                }
                 GameObject aConnectedTile = obj.GetComponent<BrokenTileConnection>().connectedTile;
                 aConnectedTile.GetComponent<BoxCollider2D>().enabled = true;
                 aConnectedTile.GetComponent<TileCollectionData>().tileData.currentDurability = 10;
@@ -486,6 +560,14 @@ public class ExtraItemBehaviors : MonoBehaviour
                             aConnectedTile.GetComponent<TileCollectionData>().tileData.holeDurability = obj.GetComponent<TileCollectionData>().tileData.currentDurability;
                             aObj.GetComponent<BoxCollider2D>().enabled = false;
                             aObj.GetComponent<SpriteRenderer>().enabled = false;
+                            foreach(Transform bo in badObjects)
+                            {
+                                if (Vector2.Distance(bo.GetComponent<BadObjectData>().attachedObject.transform.position, obj.transform.position) <= .1f && bo.name == "openHole")
+                                {
+                                    Destroy(bo.gameObject);
+                                    break;
+                                }
+                            }
                             break;
                         }
                     }
@@ -525,6 +607,13 @@ public class ExtraItemBehaviors : MonoBehaviour
         sl.transform.parent = tiles.Find("GroundObjects");
         sl.transform.position = floor.transform.position;
         sl.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[154];
+
+        BadObjectData data = new BadObjectData
+        {
+            stepladder = true,
+            attachedObject = sl
+        };
+        mbo.CreateBadObject(data, "stepladder");
     }
     private void Eat(int slot)
     {
@@ -572,3 +661,4 @@ public class ExtraItemBehaviors : MonoBehaviour
         StartCoroutine(particlesScript.CreateDust(pos, 1));
     }
 }
+ 

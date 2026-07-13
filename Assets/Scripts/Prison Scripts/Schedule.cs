@@ -16,6 +16,10 @@ public class Schedule : MonoBehaviour
     private bool isOnFavorPeriod;
     private string favorPeriod;
     private Lockdown lockdownScript;
+    private List<string> allowedPeriods = new List<string>
+    {
+        "B", "L", "D", "R", "E", "FT", "LO", "S", "W"
+    };
     void Start()
     {
         TimeObject = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").gameObject;
@@ -69,6 +73,10 @@ public class Schedule : MonoBehaviour
         else
         {
             periodCode = map.routineDict[min];
+            if (!allowedPeriods.Contains(periodCode))
+            {
+                periodCode = "FT";
+            }
         }
 
         switch (periodCode)

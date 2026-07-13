@@ -10,12 +10,14 @@ public class BedDummySheetRemove : MonoBehaviour
     private Inventory invScript;
     private List<GameObject> slots = new List<GameObject>();
     private ItemDataCreator creator;
+    private Transform badObjects;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         player = RootObjectCache.GetRoot("Player").transform;
         invScript = GetComponent<Inventory>();
         creator = GetComponent<ItemDataCreator>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             slots.Add(slot.gameObject);
@@ -76,6 +78,19 @@ public class BedDummySheetRemove : MonoBehaviour
                 break;
             }
         }
+
+        if(obj.name == "Sheet")
+        {
+            foreach(Transform bo in badObjects)
+            {
+                if(bo.GetComponent<BadObjectData>().attachedObject == obj && bo.name == "sheets")
+                {
+                    Destroy(bo.gameObject);
+                    break;
+                }
+            }
+        }
+
         Destroy(obj);
     }
 }

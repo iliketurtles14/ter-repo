@@ -291,6 +291,10 @@ public class Solitary : MonoBehaviour
         //repair broken stuff
         foreach(GameObject tile in damagedTiles)
         {
+            if(tile == null)
+            {
+                continue;
+            }
             if(tile.GetComponent<TileCollectionData>() != null)
             {
                 TileCollectionData tileColData = tile.GetComponent<TileCollectionData>();

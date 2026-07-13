@@ -19,6 +19,7 @@ public class Death : MonoBehaviour
     private Sprite clearSprite;
     private SetInitialOutfits setInitialOutfitsScript;
     private LadderClimb ladderClimbScript;
+    private Transform badObjects;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player");
@@ -32,6 +33,7 @@ public class Death : MonoBehaviour
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
         setInitialOutfitsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetInitialOutfits>();
         ladderClimbScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LadderClimb>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
 
         deathCanvas.gameObject.SetActive(false);
     }
@@ -210,8 +212,20 @@ public class Death : MonoBehaviour
             time = 0f;
             while(time < 133f)
             {
+                if (!npcColData.npcData.isTied)
+                {
+                    break;
+                }
                 time += Time.deltaTime;
                 yield return null;
+            }
+        }
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.GetComponent<BadObjectData>().attachedObject == npc && bo.name == "untie")
+            {
+                Destroy(bo.gameObject);
+                break;
             }
         }
         npc.GetComponent<NPCCombat>().enabled = true;

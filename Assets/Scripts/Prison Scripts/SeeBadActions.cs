@@ -2,6 +2,7 @@ using Ookii.Dialogs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -26,6 +27,9 @@ public class SeeBadActions : MonoBehaviour
     private PauseController pc;
     private Lockdown lockdownScript;
     private UnlockDoors unlockDoorsScript;
+    private ToiletMenu toiletMenuScript;
+    private Particles particlesScript;
+    private Transform badObjects;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -38,6 +42,9 @@ public class SeeBadActions : MonoBehaviour
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
         unlockDoorsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<UnlockDoors>();
+        toiletMenuScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
+        particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         MakeVectorLists();
         MakeBadObjectList();
 
@@ -124,6 +131,17 @@ public class SeeBadActions : MonoBehaviour
         availableBadObjects.Add("noDummy");
         availableBadObjects.Add("missedRollcall");
         availableBadObjects.Add("outLate");
+        availableBadObjects.Add("inmatePunch");
+        availableBadObjects.Add("toilet");
+        availableBadObjects.Add("untie");
+        availableBadObjects.Add("sheets");
+        availableBadObjects.Add("stepladder");
+        availableBadObjects.Add("inUnsafeZone");
+        availableBadObjects.Add("openHole");
+        availableBadObjects.Add("openWall");
+        availableBadObjects.Add("openFence");
+        availableBadObjects.Add("openBars");
+        availableBadObjects.Add("openVent");
     }
     private IEnumerator LookWait()
     {
@@ -254,20 +272,62 @@ public class SeeBadActions : MonoBehaviour
         {
             return;
         }
-
-        if(data.forInmate && isGuard)
+        if (!badObject.name.Contains("open"))
         {
-            return;
+            if (data.forInmate && isGuard)
+            {
+                return;
+            }
+            if (!data.forInmate && !isGuard)
+            {
+                return;
+            }
         }
-        if(!data.forInmate && !isGuard)
+        else //decided to just write in the code for openHole, etc... for inmates because i didnt wanna have to make more badobjects
         {
-            return;
+            if (!isGuard)
+            {
+                if(GetComponent<NPCCollectionData>().npcData.opinion < 50)
+                {
+                    NPCSpeech speechScript = GetComponent<NPCSpeech>();
+                    StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage("SeeEscape_Call"), transform, true));
+                    if (guardsNotSpecial.Count > 0)
+                    {
+                        List<Transform> availableGuards = new List<Transform>();
+                        foreach (Transform guard in guardsNotSpecial)
+                        {
+                            if (!guard.GetComponent<NPCCollectionData>().npcData.isDead &&
+                                !guard.GetComponent<NPCCombat>().isAggro &&
+                                !guard.GetComponent<NPCCollectionData>().npcData.isSleeping)
+                            {
+                                availableGuards.Add(guard);
+                            }
+                        }
+
+                        if (availableGuards.Count > 0)
+                        {
+                            int rand = UnityEngine.Random.Range(0, availableGuards.Count);
+                            availableGuards[rand].GetComponent<NPCAI>().SendToPos(transform.position);
+                        }
+                    }
+                    player.GetComponent<PlayerCollectionData>().playerData.heat += 30;
+                }
+                return;
+            }
         }
 
         if (badObject.name == "missedRollcall")
         {
             lockdownScript.StopLockdown();
             return;
+        }
+        
+        if(badObject.name == "sheets")
+        {
+            if(GetComponent<NPCCollectionData>().npcData.opinion > 30)
+            {
+                return;
+            }
         }
 
         //add heat
@@ -320,34 +380,50 @@ public class SeeBadActions : MonoBehaviour
         //toilet
         if (data.toilet)
         {
-            Debug.Log("toilet");
+            StartCoroutine(ToiletUnclog(data.attachedObject.transform));
         }
 
         //untie
         if (data.untie)
         {
-            Debug.Log("untie");
+            StartCoroutine(Untie(data.attachedObject));
         }
 
         //sheets
         if (data.sheets)
         {
-            Debug.Log("sheets");
+            StartCoroutine(TakeSheetsDown(data.attachedObject.transform));
+        }
+
+        //stepladders
+        if (badObject.name == "stepladder") //for some reason the stepladder bool isnt being set properly
+        {
+            StartCoroutine(TakeStepladder(data.attachedObject.transform));
         }
 
         //message type
-        if(data.messageType != null &&
-            (isGuard && !data.forInmate ||
-            !isGuard && data.forInmate))
+        if(data.messageType != null)
         {
             NPCSpeech speechScript = GetComponent<NPCSpeech>();
-            if(data.messageType != "I saw that")
+            if (data.messageType != "I saw that" && data.messageType != "The heck?")
             {
-                StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true));
+                if (data.attachedObject.name == "Player" || data.attachedObject.name == "Sheet")
+                {
+                    StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true));
+                }
+                else if(data.attachedObject.name.Contains("Inmate"))
+                {
+                    StartCoroutine(speechScript.MakeTextBox(speechScript.GetMessage(data.messageType), transform, true, data.attachedObject.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\n", "").Replace("\r", "")));
+                }
             }
-            else
+            else if (data.messageType == "I saw that")
             {
-                string msg = "I saw that, " + player.GetComponent<NPCCollectionData>().npcData.displayName.Replace("\n", "").Replace("\r", "") + "!";
+                string msg = "I saw that, $name!";
+                StartCoroutine(speechScript.MakeTextBox(msg, transform, true));
+            }
+            else if(data.messageType == "The heck?")
+            {
+                string msg = "The heck?";
                 StartCoroutine(speechScript.MakeTextBox(msg, transform, true));
             }
         }
@@ -385,6 +461,252 @@ public class SeeBadActions : MonoBehaviour
         else if (badObject.name == "guardNonInmateOutfit" || badObject.name == "inmateNonInmateOutfit")
         {
             StartCoroutine(SeeBadCooldown(2, badObject.name));
+        }
+    }
+    private IEnumerator TakeStepladder(Transform stepladder)
+    {
+        GetComponent<NPCAI>().SendToPos(stepladder.position);
+        while (true)
+        {
+            if (stepladder == null)
+            {
+                yield break;
+            }
+            if (Vector2.Distance(transform.position, stepladder.position) < .4f)
+            {
+                break;
+            }
+            if (!GetComponent<NPCAI>().enabled || GetComponent<NPCCollectionData>().npcData.isDead)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+        foreach(Transform bo in badObjects)
+        {
+            if(bo.GetComponent<BadObjectData>().attachedObject == stepladder.gameObject && bo.name == "stepladder")
+            {
+                Destroy(bo.gameObject);
+                break;
+            }
+        }
+        StartCoroutine(particlesScript.CreateDust(stepladder.transform.position, 1));
+        Destroy(stepladder.gameObject);
+    }
+    private IEnumerator TakeSheetsDown(Transform sheets)
+    {
+        List<Vector3> vectors = new List<Vector3>
+        {
+            new Vector3(0, -1.6f), new Vector3(0, 1.6f), new Vector3(-1.6f, 0), new Vector3(1.6f, 0)
+        };
+        Vector2 goToVector = Vector2.zero;
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject checkerObj = new GameObject("CheckerObj");
+            checkerObj.AddComponent<BoxCollider2D>().size = new Vector2(.8f, .8f);
+            checkerObj.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            checkerObj.GetComponent<BoxCollider2D>().isTrigger = true;
+            checkerObj.layer = LayerMask.NameToLayer("Ground");
+            checkerObj.transform.position = sheets.position + vectors[i];
+            yield return new WaitForFixedUpdate();
+
+            Collider2D checkerCollider = checkerObj.GetComponent<BoxCollider2D>();
+            List<Collider2D> hitColliders = new List<Collider2D>();
+            ContactFilter2D filter = ContactFilter2D.noFilter;
+            checkerCollider.Overlap(filter, hitColliders);
+            bool hitDigable = false;
+            foreach (Collider2D col in hitColliders)
+            {
+                if (col.CompareTag("Digable"))
+                {
+                    goToVector = col.transform.position;
+                    hitDigable = true;
+                    break;
+                }
+            }
+            Destroy(checkerObj);
+            if (hitDigable)
+            {
+                break;
+            }
+        }
+        if(goToVector == Vector2.zero)
+        {
+            yield break;
+        }
+
+        GetComponent<NPCAI>().SendToPos(goToVector);
+
+        while (true)
+        {
+            if(Vector2.Distance(transform.position, goToVector) <= .1f)
+            {
+                break;
+            }
+            yield return null;
+        }
+
+        StartCoroutine(particlesScript.CreateDust(sheets.position, 1));
+        Destroy(sheets.gameObject);
+
+        GameObject sheetFall = new GameObject("SheetFall");
+        sheetFall.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+        DataSender ds = DataSender.instance;
+        sheetFall.GetComponent<SpriteRenderer>().sprite = ds.PrisonObjectImages[242];
+        sheetFall.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        sheetFall.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+        sheetFall.transform.position = goToVector;
+
+        for(int i = 0; i < 5; i++)
+        {
+            float time = 0f;
+            while(time < .133f)
+            {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            sheetFall.GetComponent<SpriteRenderer>().enabled = false;
+
+            time = 0f;
+            while (time < .133f)
+            {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            if(i != 4)
+            {
+                sheetFall.GetComponent<SpriteRenderer>().enabled = true;
+            }
+        }
+        Destroy(sheetFall);
+    }
+    private IEnumerator ToiletUnclog(Transform toilet)
+    {
+        //check for surrounding free tiles to walk to
+        List<Vector3> vectors = new List<Vector3>
+        {
+            new Vector3(1.6f, 0), new Vector3(-1.6f, 0), new Vector3(0, 1.6f), new Vector3(0, -1.6f)
+        };
+        Vector2 goToVector = Vector2.zero;
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject checkerObj = new GameObject("CheckerObj");
+            checkerObj.AddComponent<BoxCollider2D>().size = new Vector2(.8f, .8f);
+            checkerObj.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            checkerObj.GetComponent<BoxCollider2D>().isTrigger = true;
+            checkerObj.layer = LayerMask.NameToLayer("Ground");
+            checkerObj.transform.position = toilet.position + vectors[i];
+            yield return new WaitForFixedUpdate();
+
+            Collider2D checkerCollider = checkerObj.GetComponent<BoxCollider2D>();
+            List<Collider2D> hitColliders = new List<Collider2D>();
+            ContactFilter2D filter = ContactFilter2D.noFilter;
+            checkerCollider.Overlap(filter, hitColliders);
+            bool hitDigable = false;
+            foreach (Collider2D col in hitColliders)
+            {
+                if (col.CompareTag("Digable"))
+                {
+                    goToVector = col.transform.position;
+                    hitDigable = true;
+                    break;
+                }
+            }
+            Destroy(checkerObj);
+            if (hitDigable)
+            {
+                break;
+            }
+        }
+        if(goToVector == Vector2.zero)
+        {
+            yield break;
+        }
+
+        GetComponent<NPCAI>().SendToPos(goToVector);
+
+        NPCCollectionData npcColData = GetComponent<NPCCollectionData>();
+        while (true)
+        {
+            if(Vector2.Distance(goToVector, transform.position) <= .1f)
+            {
+                break;
+            }
+            if(npcColData.npcData.isAggro || npcColData.npcData.isDead)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+
+        bool shouldSolitary = false;
+        ToiletInv inv = toilet.GetComponent<ToiletInv>();
+        foreach(ItemData data in inv.toiletInv)
+        {
+            if (data.isContraband)
+            {
+                shouldSolitary = true;
+                break;
+            }
+        }
+
+        if (shouldSolitary)
+        {
+            solitaryScript.GoToSolitary("");
+        }
+        toiletMenuScript.UnclogToilet(toilet.gameObject);
+    }
+    private IEnumerator Untie(GameObject target)
+    {
+        //get floor npc is on
+        Collider2D[] hitColliders = Physics2D.OverlapPointAll(target.transform.position);
+        Vector2 floorPos = Vector2.zero;
+        foreach(Collider2D collider in hitColliders)
+        {
+            if(collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                floorPos = collider.transform.position;
+                break;
+            }
+        }
+        if(floorPos == Vector2.zero)
+        {
+            yield break;
+        }
+
+        GetComponent<NPCAI>().SendToPos(floorPos);
+        NPCCollectionData npcColData = GetComponent<NPCCollectionData>();
+        while (true)
+        {
+            if(Vector2.Distance(floorPos, transform.position) <= .1f)
+            {
+                break;
+            }
+            if(npcColData.npcData.isAggro || npcColData.npcData.isDead)
+            {
+                yield break;
+            }
+            yield return null;
+        }
+
+        npcColData.npcData.isTied = false;
+
+        if(npcColData.npcData.opinion < 50)
+        {
+            StartCoroutine(target.GetComponent<NPCSpeech>().MakeTextBox("It was $name!", target.transform, false));
+            player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
         }
     }
     private void DistractionFavor()
@@ -430,7 +752,7 @@ public class SeeBadActions : MonoBehaviour
             {
                 break;
             }
-            if (!GetComponent<NPCAI>().enabled)
+            if (!GetComponent<NPCAI>().enabled || GetComponent<NPCCollectionData>().npcData.isDead)
             {
                 yield break;
             }

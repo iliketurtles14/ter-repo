@@ -193,6 +193,10 @@ public class SetUpNPCs : MonoBehaviour
             {
                 npc.transform.Find("IconCanvas").gameObject.SetActive(false);
             }
+
+            Vector3 zFightVector = npc.transform.position;
+            zFightVector.z = i;
+            npc.transform.position = zFightVector;
         }
 
         //set inmate correlations

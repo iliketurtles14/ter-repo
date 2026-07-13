@@ -19,23 +19,16 @@ public class InmateFight : MonoBehaviour
     //every 1/45 seconds increase it by Random(3) if two inmates are within a 4.5 tile radius of each other
     //once this int is equal or greater than 4000, choose inmate to attack within range
     //make this int 0 and repeat
-    private NPCAI aiScript;
     private Schedule scheduleScript;
     private PauseController pc;
     private List<Transform> inmates = new List<Transform>();
     private Transform aStar;
-    private NPCCombat combatScript;
-    private NPCCollectionData npcColData;
-    private InmateFightCooldown cooldownScript;
+    private int cooldown;
     private void Start()
     {
-        aiScript = GetComponent<NPCAI>();
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         aStar = RootObjectCache.GetRoot("A*").transform;
-        combatScript = GetComponent<NPCCombat>();
-        npcColData = GetComponent<NPCCollectionData>();
-        cooldownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InmateFightCooldown>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -45,11 +38,6 @@ public class InmateFight : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        if (!name.Contains("Inmate"))
-        {
-            enabled = false;
-            yield break;
-        }
         foreach(Transform npc in aStar)
         {
             if(npc.name.Contains("Inmate"))
@@ -63,32 +51,14 @@ public class InmateFight : MonoBehaviour
     {
         while (true)
         {
-            if(!aiScript.enabled || scheduleScript.periodCode == "R" || scheduleScript.periodCode == "LO" || scheduleScript.periodCode == "LD" || npcColData.npcData.isDead)
-            {
-                yield return null;
-                continue;
-            }
-            //figure out what to do here. the problem is the cooldown int. it should be above the inmates and not on each of them.
-            List<Transform> availableInmates = new List<Transform>();
-            foreach(Transform inmate in inmates)
-            {
-                if (inmate.GetComponent<NPCCollectionData>().npcData.isDead)
-                {
-                    continue;
-                }
-                if(Vector2.Distance(inmate.position, transform.position) <= 7.2f)
-                {
-                    availableInmates.Add(inmate);
-                }
-            }
-            if(availableInmates.Count == 0)
+            if(scheduleScript.periodCode == "R" || scheduleScript.periodCode == "LO" || scheduleScript.periodCode == "LD")
             {
                 yield return null;
                 continue;
             }
 
             float time = 0f;
-            while(time < 1f / 45f)
+            while (time < 1f / 45f)
             {
                 if (pc.isPaused)
                 {
@@ -98,15 +68,58 @@ public class InmateFight : MonoBehaviour
                 time += Time.deltaTime;
                 yield return null;
             }
-            int rand = UnityEngine.Random.Range(0, 3);
-            cooldownScript.cooldown += rand;
 
-            if(cooldownScript.cooldown >= 4000)
+            List<Transform> availableInmates = new List<Transform>();
+            foreach(Transform inmate1 in inmates)
             {
+                NPCCollectionData npcColData = inmate1.GetComponent<NPCCollectionData>();
+                if (npcColData.npcData.isDead || npcColData.npcData.isAggro)
+                {
+                    continue;
+                }
+                foreach(Transform inmate2 in inmates)
+                {
+                    npcColData = inmate2.GetComponent<NPCCollectionData>();
+                    if (npcColData.npcData.isDead || npcColData.npcData.isAggro)
+                    {
+                        continue;
+                    }
+                    if(inmate1.name != inmate2.name && Vector2.Distance(inmate1.position, inmate2.position) <= 7.2f)
+                    {
+                        availableInmates.Add(inmate1);
+                    }
+                }
+            }
+            if(availableInmates.Count < 2)
+            {
+                yield return null;
+                continue;
+            }
+
+            int rand = UnityEngine.Random.Range(0, 3);
+            cooldown += rand;
+
+            if(cooldown >= 4000)
+            {
+                Transform inmate1;
+                Transform inmate2;
+
+                List<Transform> randInmates = new List<Transform>(availableInmates);
+
+                rand = UnityEngine.Random.Range(0, randInmates.Count);
+                inmate1 = randInmates[rand];
+
+                randInmates.Remove(inmate1);
+
+                rand = UnityEngine.Random.Range(0, randInmates.Count);
+                inmate2 = randInmates[rand];
+
+                NPCCombat combatScript = inmate1.GetComponent<NPCCombat>();
+                
                 combatScript.isAggro = true;
-                rand = UnityEngine.Random.Range(0, availableInmates.Count);
-                combatScript.target = availableInmates[rand].gameObject;
-                cooldownScript.cooldown = 0;
+                combatScript.target = inmate2.gameObject;
+
+                cooldown = 0;
             }
         }
     }
