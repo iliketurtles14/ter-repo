@@ -490,7 +490,7 @@ public class SeeBadActions : MonoBehaviour
                 break;
             }
         }
-        StartCoroutine(particlesScript.CreateDust(stepladder.transform.position, 1));
+        particlesScript.CreateDust(stepladder.transform.position, 1);
         Destroy(stepladder.gameObject);
     }
     private IEnumerator TakeSheetsDown(Transform sheets)
@@ -546,7 +546,7 @@ public class SeeBadActions : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(particlesScript.CreateDust(sheets.position, 1));
+        particlesScript.CreateDust(sheets.position, 1);
         Destroy(sheets.gameObject);
 
         GameObject sheetFall = new GameObject("SheetFall");

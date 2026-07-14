@@ -8,7 +8,11 @@ public class FightEffects : MonoBehaviour
     {
         mainCam = Camera.main;
     }
-    public IEnumerator MakeScreenShake()
+    public void MakeScreenShake()
+    {
+        StartCoroutine(aMakeScreenShake());
+    }
+    public IEnumerator aMakeScreenShake()
     {
         Vector3 rand1 = new Vector3(UnityEngine.Random.Range(.1f, .5f), UnityEngine.Random.Range(.1f, .5f));
         Vector3 rand2 = new Vector3(UnityEngine.Random.Range(.1f, .5f), UnityEngine.Random.Range(.1f, .5f));
@@ -26,7 +30,11 @@ public class FightEffects : MonoBehaviour
         yield return new WaitForSeconds(.05f);
         mainCam.transform.position += rand2;
     }
-    public IEnumerator MakeStar(Vector2 pos)
+    public void MakeStar(Vector2 pos)
+    {
+        StartCoroutine(aMakeStar(pos));
+    }
+    public IEnumerator aMakeStar(Vector2 pos)
     {
         //.083
         DataSender ds = DataSender.instance;

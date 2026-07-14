@@ -49,7 +49,11 @@ public class Particles : MonoBehaviour
             dirtSprites.Add(ds.UIImages[i]);
         }
     }
-    public IEnumerator CreateDust(Vector2 pos, float sizeScale)
+    public void CreateDust(Vector2 pos, float sizeScale)
+    {
+        StartCoroutine(aCreateDust(pos, sizeScale));
+    }
+    public IEnumerator aCreateDust(Vector2 pos, float sizeScale)
     {
         GameObject dust = new GameObject();
         dust.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
@@ -69,7 +73,11 @@ public class Particles : MonoBehaviour
 
         Destroy(dust);
     }
-    public IEnumerator CreateDirtParticles(Vector2 pos)
+    public void CreateDirtParticles(Vector2 pos)
+    {
+        StartCoroutine(aCreateDirtParticles(pos));
+    }
+    public IEnumerator aCreateDirtParticles(Vector2 pos)
     {
         GameObject dirt = new GameObject();
         dirt.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;

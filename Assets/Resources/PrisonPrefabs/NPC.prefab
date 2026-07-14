@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 6680145677854381454}
   - component: {fileID: -3052007431216516377}
   - component: {fileID: -8758275047305940777}
+  - component: {fileID: -7434286056456832966}
   m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
@@ -462,6 +463,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3e89b360ea6844cb4aa10f36efeec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCShowerOutfit
+--- !u!114 &-7434286056456832966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49997bb803c4030438de10e610e7c7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCGetOutfit
 --- !u!1 &347473100117320719
 GameObject:
   m_ObjectHideFlags: 0

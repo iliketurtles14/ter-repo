@@ -277,7 +277,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     }
     private void PlacePatchUp(string type, int slot, GameObject obj) //wall, vent, hole, fence
     {
-        StartCoroutine(particlesScript.CreateDust(obj.transform.position, 1));
+        particlesScript.CreateDust(obj.transform.position, 1);
 
         int id = inventoryScript.inventory[slot].itemData.id;
         string layerTilesName = "Ground";
@@ -586,7 +586,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     private void BlockCamera(int slot, GameObject cam)
     {
         StartCoroutine(cam.GetComponent<CameraController>().TurnOffCam(inventoryScript.inventory[slot].itemData.cameraBlock, false));
-        StartCoroutine(particlesScript.CreateDust(cam.transform.position, 1));
+        particlesScript.CreateDust(cam.transform.position, 1);
         inventoryScript.inventory[slot].itemData.currentDurability -= inventoryScript.inventory[slot].itemData.durability;
         if (inventoryScript.inventory[slot].itemData.currentDurability <= 0)
         {
@@ -600,7 +600,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
 
-        StartCoroutine(particlesScript.CreateDust(floor.transform.position, 1));
+        particlesScript.CreateDust(floor.transform.position, 1);
 
         GameObject sl = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Stepladder"));
         sl.name = "Stepladder";
@@ -639,7 +639,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     {
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
-        StartCoroutine(particlesScript.CreateDust(npc.transform.position, 1));
+        particlesScript.CreateDust(npc.transform.position, 1);
         deathScript.KillNPC(npc);
     }
     private void MakeShiv(int slot, Vector2 pos)
@@ -658,7 +658,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         ItemData data = creator.CreateItemData(idToMake);
         inventoryScript.inventory[slot].itemData = data;
         invSlots[slot].GetComponent<Image>().sprite = data.sprite;
-        StartCoroutine(particlesScript.CreateDust(pos, 1));
+        particlesScript.CreateDust(pos, 1);
     }
 }
  

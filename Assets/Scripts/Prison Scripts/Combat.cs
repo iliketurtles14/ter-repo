@@ -144,9 +144,9 @@ public class Combat : MonoBehaviour
         npc.GetComponent<NPCCombat>().target = gameObject;
 
         //shake screen
-        StartCoroutine(fightFX.MakeScreenShake());
-        StartCoroutine(fightFX.MakeStar(npc.transform.position));
-        StartCoroutine(particlesScript.CreateDust(npc.transform.position, 1));
+        fightFX.MakeScreenShake();
+        fightFX.MakeStar(npc.transform.position);
+        particlesScript.CreateDust(npc.transform.position, 1);
         //punch animation plays
 
         int lookNum = 0;

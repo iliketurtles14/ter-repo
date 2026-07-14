@@ -107,8 +107,17 @@ public class Shops : MonoBehaviour
         {
             npc.GetComponent<NPCCollectionData>().npcData.hasShop = false;
         }
+
+        List<GameObject> availableNPCs = new List<GameObject>();
+        foreach(GameObject npc in npcs)
+        {
+            if (!npc.GetComponent<NPCCollectionData>().npcData.hasFavor)
+            {
+                availableNPCs.Add(npc);
+            }
+        }
         
-        int count = npcs.Count;
+        int count = availableNPCs.Count;
         if(count == 0)
         {
             return;
@@ -143,11 +152,11 @@ public class Shops : MonoBehaviour
             }
         }
 
-        shop1NPC = npcs[rand1];
+        shop1NPC = availableNPCs[rand1];
         shop1NPC.GetComponent<NPCCollectionData>().npcData.hasShop = true;
         if (!oneShop)
         {
-            shop2NPC = npcs[rand2];
+            shop2NPC = availableNPCs[rand2];
             shop2NPC.GetComponent<NPCCollectionData>().npcData.hasShop = true;
         }
     }

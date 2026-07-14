@@ -1379,6 +1379,12 @@ public class ItemBehaviours : MonoBehaviour
         usedSlotNumber = slotNumber;
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = true;
         player.GetComponent<PlayerAnimation>().shouldRestartCycle = true;
+
+        if (isTool)
+        {
+            StartCoroutine(ParticleLoop());
+        }
+
         yield return new WaitForSeconds(.045f);
         if (cancelBar) { yield break; }
         if (normal)
@@ -1399,7 +1405,6 @@ public class ItemBehaviours : MonoBehaviour
         if (isTool)
         {            
             RemoveItemDurability(usedItemData.currentDurability, usedItemData.durability);
-            StartCoroutine(ParticleLoop());
             switch (whatAction)
             {
                 case "chipping": RemoveTileDurability(touchedTileObject, touchedTileObject.GetComponent<TileCollectionData>().tileData.currentDurability, usedItemData.chippingPower); break;
@@ -1436,7 +1441,7 @@ public class ItemBehaviours : MonoBehaviour
             case "cleaning":
                 while (barIsMoving)
                 {
-                    StartCoroutine(particlesScript.CreateDust(touchedTileObject.transform.position, 1));
+                    particlesScript.CreateDust(touchedTileObject.transform.position, 1);
                     float time = 0;
                     while(time < .532f && barIsMoving)
                     {
@@ -1450,8 +1455,8 @@ public class ItemBehaviours : MonoBehaviour
             case "digging":
                 while (barIsMoving)
                 {
-                    StartCoroutine(particlesScript.CreateDust(touchedTileObject.transform.position, 1));
-                    StartCoroutine(particlesScript.CreateDirtParticles(touchedTileObject.transform.position));
+                    particlesScript.CreateDust(touchedTileObject.transform.position, 1);
+                    particlesScript.CreateDirtParticles(touchedTileObject.transform.position);
                     float time = 0;
                     while (time < .532f && barIsMoving)
                     {

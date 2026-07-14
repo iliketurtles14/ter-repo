@@ -380,7 +380,7 @@ public class MakeBadObject : MonoBehaviour
         }
 
         //not at work
-        if (!notAtWork && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode == "W" && zonesScript.timeInPeriod / .75f <= 25f)
+        if (!notAtWork && !zonesScript.isTouchingCurrentZone && scheduleScript.periodCode == "W" && zonesScript.timeInPeriod / .75f >= 25f)
         {
             notAtWork = true;
 
@@ -392,7 +392,7 @@ public class MakeBadObject : MonoBehaviour
             };
             CreateBadObject(data, "notAtWork");
         }
-        else if (notAtWork && (zonesScript.isTouchingCurrentZone || scheduleScript.periodCode != "W" || zonesScript.timeInPeriod / .75f > 25f))
+        else if (notAtWork && (zonesScript.isTouchingCurrentZone || scheduleScript.periodCode != "W" || zonesScript.timeInPeriod / .75f < 25f))
         {
             notAtWork = false;
             DestroyBadObject("notAtWork");
@@ -705,7 +705,7 @@ public class MakeBadObject : MonoBehaviour
         bullet.transform.rotation = rotation;
         bullet.GetComponent<SpriteRenderer>().size = new Vector2(length, .3f);
 
-        StartCoroutine(fightFX.MakeScreenShake());
+        fightFX.MakeScreenShake();
 
         //hurt player
         player.GetComponent<PlayerCollectionData>().playerData.health -= 20;

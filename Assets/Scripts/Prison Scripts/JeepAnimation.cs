@@ -108,7 +108,7 @@ public class JeepAnimation : MonoBehaviour
                 yield return null;
             }
             float rand = UnityEngine.Random.Range(1f, 2f);
-            StartCoroutine(particlesScript.CreateDust(dustPos, rand));
+            particlesScript.CreateDust(dustPos, rand);
         }
     }
 }

@@ -228,7 +228,7 @@ public class EscapeObjectController : MonoBehaviour
                 return;
             }
 
-            StartCoroutine(particlesScript.CreateDust(mcs.touchedEscapeObject.transform.position, 1));
+            particlesScript.CreateDust(mcs.touchedEscapeObject.transform.position, 1);
             inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
             invSlots[selectionScript.selectedSlotNum].GetComponent<Image>().sprite = clear;
             handler.objectivesCleared++;
@@ -271,7 +271,7 @@ public class EscapeObjectController : MonoBehaviour
                                     if (obj.name == "Wall")
                                     {
                                         Destroy(obj.gameObject);
-                                        StartCoroutine(particlesScript.CreateDust(obj.position, 2));
+                                        particlesScript.CreateDust(obj.position, 2);
                                     }
                                 }
                             }
@@ -285,7 +285,7 @@ public class EscapeObjectController : MonoBehaviour
                     }
                     if(handler.objectivesCleared == 3)
                     {
-                        StartCoroutine(fightFX.MakeScreenShake());
+                        fightFX.MakeScreenShake();
                         mcs.touchedEscapeObject.tag = "Untagged";
                         for (int i = 0; i < 4; i++)
                         {
@@ -294,7 +294,7 @@ public class EscapeObjectController : MonoBehaviour
                                 if (obj.name == "Concrete")
                                 {
                                     Destroy(obj.gameObject);
-                                    StartCoroutine(particlesScript.CreateDust(obj.position, 2));
+                                    particlesScript.CreateDust(obj.position, 2);
                                 }
                             }
                         }

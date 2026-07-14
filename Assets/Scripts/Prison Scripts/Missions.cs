@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -111,17 +112,27 @@ public class Missions : MonoBehaviour
     }
     private IEnumerator MissionsLoop()
     {
-        List<GameObject> availableInmates = new List<GameObject>();
         foreach(Transform npc in aStar)
         {
             if (npc.name.Contains("Inmate"))
             {
                 npc.GetComponent<NPCCollectionData>().npcData.mission = new Mission("", -1, "", "", "", "", -1);
-                availableInmates.Add(npc.gameObject);
             }
         }
         while (true) //a bunch of gross magic numbers. sorryyyy
         {
+            List<GameObject> availableInmates = new List<GameObject>();
+            foreach (Transform npc in aStar)
+            {
+                if (npc.name.Contains("Inmate"))
+                {
+                    if (!npc.GetComponent<NPCCollectionData>().npcData.hasShop && !npc.GetComponent<NPCCollectionData>().npcData.hasFavor)
+                    {
+                        availableInmates.Add(npc.gameObject);
+                    }
+                }
+            }
+
             int available = 0;
             int amountOfMissions = 0;
             foreach(GameObject npc in availableInmates)

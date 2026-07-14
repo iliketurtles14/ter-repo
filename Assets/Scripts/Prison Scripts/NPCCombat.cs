@@ -92,6 +92,18 @@ public class NPCCombat : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (name.Contains("Inmate"))
+        {
+            foreach (Transform bo in badObjects)
+            {
+                if (bo.gameObject.name == "inmatePunch" && bo.GetComponent<BadObjectData>().attachedObject == gameObject)
+                {
+                    Destroy(bo.gameObject);
+                    break;
+                }
+            }
+        }
+        
         StopAllCoroutines();
         DeAggro();
     }
@@ -206,10 +218,10 @@ public class NPCCombat : MonoBehaviour
 
         if(aTarget.name == "Player")
         {
-            StartCoroutine(fightFX.MakeScreenShake());
+            fightFX.MakeScreenShake();
         }
-        StartCoroutine(fightFX.MakeStar(aTarget.transform.position));
-        StartCoroutine(particlesScript.CreateDust(aTarget.transform.position, 1));
+        fightFX.MakeStar(aTarget.transform.position);
+        particlesScript.CreateDust(aTarget.transform.position, 1);
 
         //punch anim plays
 

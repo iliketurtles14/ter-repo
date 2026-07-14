@@ -48,7 +48,7 @@ public class MineBigExplode : MonoBehaviour
         explosionObj.transform.position += new Vector3(0, 0, -1);
         explosionObj.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
 
-        StartCoroutine(particlesScript.CreateDust(player.position, 2));
+        particlesScript.CreateDust(player.position, 2);
 
         yield return new WaitForSeconds(.033f);
         explosionObj.GetComponent<SpriteRenderer>().sprite = s2;

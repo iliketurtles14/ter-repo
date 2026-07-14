@@ -16,7 +16,7 @@ public class JeepKill : MonoBehaviour
             if (!otherCollider.GetComponent<PlayerCollectionData>().playerData.isDead)
             {
                 deathScript.KillPlayer();
-                StartCoroutine(fightFX.MakeScreenShake());
+                fightFX.MakeScreenShake();
             }
         }
     }

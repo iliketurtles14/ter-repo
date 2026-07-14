@@ -50,8 +50,8 @@ public class MineExplode : MonoBehaviour
         explosionObj.transform.position += new Vector3(0, 0, -1);
         explosionObj.GetComponent<SpriteRenderer>().sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
 
-        StartCoroutine(fightFX.MakeScreenShake());
-        StartCoroutine(particlesScript.CreateDust(transform.position, 2));
+        fightFX.MakeScreenShake();
+        particlesScript.CreateDust(transform.position, 2);
 
         yield return new WaitForSeconds(.033f);
         explosionObj.GetComponent<SpriteRenderer>().sprite = s2;

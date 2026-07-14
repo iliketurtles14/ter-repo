@@ -338,7 +338,7 @@ public class ToiletMenu : MonoBehaviour
             }
         }
 
-        StartCoroutine(particlesScript.CreateDust(toilet.transform.position, 1));
+        particlesScript.CreateDust(toilet.transform.position, 1);
 
         List<GameObject> waterToDestroy = new List<GameObject>();
         foreach(Transform toiletWater in tiles.Find("GroundObjects"))

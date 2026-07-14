@@ -270,7 +270,7 @@ public class PatchUpPickUp : MonoBehaviour
                 }
             }
 
-            StartCoroutine(particlesScript.CreateDust(mcs.touchedPatchUp.transform.position, 1));
+            particlesScript.CreateDust(mcs.touchedPatchUp.transform.position, 1);
             Destroy(mcs.touchedPatchUp);
         }
     }
