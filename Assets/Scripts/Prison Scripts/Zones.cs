@@ -13,6 +13,7 @@ public class Zones : MonoBehaviour
     public bool isTouchingSolitary;
     public bool isTouchingYourCell;
     public bool isTouchingCurrentZone;
+    public bool isTouchingCurrentJobZone;
 
     public bool wentToCurrentZone = false;
     private string lastPeriodCode;
@@ -39,6 +40,9 @@ public class Zones : MonoBehaviour
     private Solitary solitaryScript;
     private Map currentMap;
     private Lockdown lockdownScript;
+    public bool hasLostJob;
+    private Transform mc;
+    private CreateNote noteScript;
 
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
@@ -62,8 +66,20 @@ public class Zones : MonoBehaviour
         solitaryScript = GetComponent<Solitary>();
         lockdownScript = GetComponent<Lockdown>();
         pc = GetComponent<PauseController>();
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        noteScript = GetComponent<CreateNote>();
 
         StartCoroutine(StartWait());
+    }
+    private void Update()
+    {
+        if (hasLostJob && !isTouchingCurrentJobZone)
+        {
+            hasLostJob = false;
+            player.GetComponent<PlayerCollectionData>().playerData.job = "";
+            mc.Find("JobMenuPanel").GetComponent<JobMenu>().ResetJobButtons();
+            noteScript.CreateWardenNote("loseJob", noteScript.GetNoteText("JobLose", -1), currentMap.warden);
+        }
     }
     private IEnumerator StartWait()
     {
@@ -88,7 +104,9 @@ public class Zones : MonoBehaviour
         foreach (Transform zone in tiles.Find("Zones"))
         {
             if (zone.name == "Unsafe" || zone.name == "Safe" || zone.name == "Escape" ||
-                zone.name == "Cells" || zone.name == "Solitary" || zone.name == "YourCell")
+                zone.name == "Cells" || zone.name == "Solitary" || zone.name == "YourCell" ||
+                zone.name == "Woodshop" || zone.name == "Metalshop" || zone.name == "Deliveries" ||
+                zone.name == "Kitchen" || zone.name == "Laundry" || zone.name == "Tailorshop")
             {
                 specialZones.Add(zone.gameObject);
             }
@@ -153,7 +171,15 @@ public class Zones : MonoBehaviour
             GameObject currentZone = null;
             foreach(Transform zone in tiles.Find("Zones"))
             {
-                try
+                if (solitaryScript.inSolitary)
+                {
+                    if (zone.name == "Solitary")
+                    {
+                        currentZone = zone.gameObject;
+                        break;
+                    }
+                }
+                else if (scheduleScript.periodCode == "B" || scheduleScript.periodCode == "L" || scheduleScript.periodCode == "D" || scheduleScript.periodCode == "R" || scheduleScript.periodCode == "S" || scheduleScript.periodCode == "E" || scheduleScript.periodCode == "LD" || scheduleScript.periodCode == "LO")
                 {
                     if (zone.name == zoneDict[scheduleScript.periodCode])
                     {
@@ -161,7 +187,14 @@ public class Zones : MonoBehaviour
                         break;
                     }
                 }
-                catch { }
+                else if(scheduleScript.periodCode == "W" && !string.IsNullOrEmpty(player.GetComponent<PlayerCollectionData>().playerData.job))
+                {
+                    if(zone.name == player.GetComponent<PlayerCollectionData>().playerData.job)
+                    {
+                        currentZone = zone.gameObject;
+                        break;
+                    }
+                }
             }
             if(currentZone == null)
             {
@@ -298,6 +331,7 @@ public class Zones : MonoBehaviour
             isTouchingUnsafe = false;
             isTouchingSolitary = false;
             isTouchingYourCell = false;
+            isTouchingCurrentJobZone = false;
             foreach(GameObject zone in specialZones)
             {
                 if (player.GetComponent<CapsuleCollider2D>().IsTouching(zone.GetComponent<BoxCollider2D>()))
@@ -322,6 +356,10 @@ public class Zones : MonoBehaviour
                         case "YourCell":
                             isTouchingYourCell = true;
                             break;
+                    }
+                    if(zone.name == player.GetComponent<PlayerCollectionData>().playerData.job)
+                    {
+                        isTouchingCurrentJobZone = true;
                     }
                 }
             }

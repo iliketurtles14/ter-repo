@@ -1558,27 +1558,13 @@ Count=3
 2=You call that proof of identity?
 3=They're not signed pal
 
+[Notes]
+JobLose=Due to your sheer incompetence and inability to reach the quotas we've set, we've taken away your job.##Once you pull yourself together and decide to try harder, you may reapply at the job board.
+JobGet=I've stamped your application as approved - welcome to prison industries!##Complete your quota and you'll get paid, fail to meet it and consider yourself fired!
+JobDumb=You need at least $intellect intellect to apply for that job, so your application has been declined and filed neatly away down my toilet.##Smarten yourself up boy!
+JobHeat=The cheek of applying for a job while you're in bad standing with the guards!##Learn to respect the basic rules of our fine prison and try again later. Scoot!
+JobBusy=I'm far too busy to be processing requests like this during a work period!##Move along and try again later..
 -----------DLC---------------------------------------------------
-
-[Vis_Greet_LAcops]
-Count=4
-1=Er. . . sir?
-2=Well I. . .
-3=Sir can I. . .
-4=The chief sent me. . .
-
-[Vis_Banter_LAcops]
-Count=4
-1=Because of what you've done, Hawaiian Mo is coming for us. . .
-2=This seems out of the blue but have you played L.A. Cops yet? 
-3=I heard you got banged up with only two days left to retirement. . .
-4=I heard one of your boys took out Hawaiian Mo's son. . .
-
-[Vis_Leave_LAcops]
-Count=3
-1=Anyway - *if* we get through this, one day, we'll play some L.A. Cops together.
-2=Right, I'm gonna go *cough* play some L.A. Cops. Ciao!
-3=Ok. Gonna grab me some coffee and some DoDo Donuts. Later, pal.
 
 [ET_Banter_Cage]
 Count=22

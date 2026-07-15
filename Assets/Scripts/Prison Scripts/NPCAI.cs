@@ -32,6 +32,8 @@ public class NPCAI : MonoBehaviour
     public bool isAtBed;
     private ApplyPrisonData applyPrisonDataScript;
     private List<Transform> positions = new List<Transform>(); //job positions (didnt change the name)
+    private List<Transform> guardBeds = new List<Transform>();
+    private Transform randGuardBed;
     private int timeBetweenPositions;
     private bool hasNormalJob;
     private string job;
@@ -48,6 +50,7 @@ public class NPCAI : MonoBehaviour
     public bool atShowerPoint; //for speech
     public bool atGuardRollcall; //for speech (only for guard1)
     public PauseController pc;
+    public int jobQuota;
     private void Start()
     {   
         //get npctype and num
@@ -97,10 +100,30 @@ public class NPCAI : MonoBehaviour
         ready = true;
         LoadNormalJobPositions();
         LoadDeskPositions();
+        LoadGuardBedPositions();
+    }
+    private void LoadGuardBedPositions()
+    {
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "GuardBed")
+            {
+                guardBeds.Add(obj);
+            }
+        }
+        if(guardBeds.Count != 0)
+        {
+            int rand = UnityEngine.Random.Range(0, guardBeds.Count);
+            randGuardBed = guardBeds[rand];
+        }
     }
     private void LoadNormalJobPositions()
     {
-        job = GetComponent<NPCCollectionData>().npcData.job;
+        job = npcColData.npcData.job;
+
+        hasNormalJob = false;
+        timeBetweenPositions = 0;
+        positions = new List<Transform>();
 
         //get cycle for the certain job (only for jobs other than gardening, janitor, library, and mailman as they are more involved)
         switch (job)
@@ -300,12 +323,23 @@ public class NPCAI : MonoBehaviour
         //get period
         period = scheduleScript.periodCode;
 
+        if(period != "W")
+        {
+            jobQuota = 0;
+        }
+
+        if(job != npcColData.npcData.job)
+        {
+            job = npcColData.npcData.job;
+            LoadNormalJobPositions();
+        }
+
         if (!followSchedule)
         {
             return;
         }
         
-        if(!atExerciseEquipment && !GetComponent<NPCCollectionData>().npcData.isSleeping && !GetComponent<NPCCollectionData>().npcData.isDead && !pc.isPaused)
+        if(!atExerciseEquipment && !npcColData.npcData.isSleeping && !npcColData.npcData.isDead && !pc.isPaused)
         {
             GetComponent<AILerp>().canMove = true;
         }
@@ -342,7 +376,7 @@ public class NPCAI : MonoBehaviour
         if (period != "L" && period != "B" && period != "D")
         {
             isInCanteen = false;
-            GetComponent<NPCCollectionData>().npcData.hasFood = false;
+            npcColData.npcData.hasFood = false;
         }
         if (period != "E")
         {
@@ -401,9 +435,17 @@ public class NPCAI : MonoBehaviour
                     case "LO":
                         if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
-                            isFreeWalking = true;
-                            Debug.Log("Hereereerererererrereraskld;h");
-                            currentPossibleWaypoints.Add(waypoint);
+                            if(npcNum >= 6 && npcNum <= 10 && guardBeds.Count != 0)
+                            {
+                                isFreeWalking = false;
+                                isAtBed = true;
+                                StartCoroutine(GuardBed());
+                            }
+                            else
+                            {
+                                isFreeWalking = true;
+                                currentPossibleWaypoints.Add(waypoint);
+                            }
                         }
                         else if(npcType == "Inmate")
                         {
@@ -413,13 +455,13 @@ public class NPCAI : MonoBehaviour
                         }
                         break;
                     case "W":
-                        if(npcType == "Inmate" && !string.IsNullOrEmpty(GetComponent<NPCCollectionData>().npcData.job) && !isAtJob)
+                        if(npcType == "Inmate" && !string.IsNullOrEmpty(npcColData.npcData.job) && !isAtJob)
                         {
                             isFreeWalking = false;
                             isAtJob = true;
                             StartCoroutine(InmateJobs());
                         }
-                        else if(npcType == "Inmate" && string.IsNullOrEmpty(GetComponent<NPCCollectionData>().npcData.job) && waypoint.name == "InmateWaypoint")
+                        else if(npcType == "Inmate" && string.IsNullOrEmpty(npcColData.npcData.job) && waypoint.name == "InmateWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
@@ -568,8 +610,8 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateBed()
     {
-        GameObject bed = GetComponent<NPCCollectionData>().npcData.bed;
-        seeker.StartPath(transform.position, GetComponent<NPCCollectionData>().npcData.bed.transform.position);
+        GameObject bed = npcColData.npcData.bed;
+        seeker.StartPath(transform.position, bed.transform.position);
         while (true)
         {
             float distance = Vector2.Distance(transform.position, bed.transform.position);
@@ -579,10 +621,27 @@ public class NPCAI : MonoBehaviour
             }
             yield return null;
         }
-        GetComponent<NPCCollectionData>().npcData.isSleeping = true;
+        npcColData.npcData.isSleeping = true;
         GetComponent<AILerp>().canMove = false;
         seeker.CancelCurrentPathRequest(true);
         sleepScript.Sleep(gameObject, bed);
+    }
+    private IEnumerator GuardBed()
+    {
+        seeker.StartPath(transform.position, randGuardBed.position);
+        while (true)
+        {
+            float distance = Vector2.Distance(transform.position, randGuardBed.position);
+            if(distance < .8f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        npcColData.npcData.isSleeping = true;
+        GetComponent<AILerp>().canMove = false;
+        seeker.CancelCurrentPathRequest(true);
+        sleepScript.Sleep(gameObject, randGuardBed.gameObject);
     }
     private IEnumerator InmateCanteen()
     {
@@ -633,7 +692,7 @@ public class NPCAI : MonoBehaviour
         }
 
         //grab food
-        GetComponent<NPCCollectionData>().npcData.hasFood = true;
+        npcColData.npcData.hasFood = true;
         
         List<float> distances = new List<float>();
         foreach(Transform foodTable in tiles.Find("GroundObjects"))
@@ -695,7 +754,7 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateLockdown()
     {
-        Transform bed = GetComponent<NPCCollectionData>().npcData.bed.transform;
+        Transform bed = npcColData.npcData.bed.transform;
         List<Vector3> surroundingTileVectors = new List<Vector3>();
         if(bed.name == "BedVertical")
         {
@@ -1423,7 +1482,7 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateJobs()
     {
-        Debug.Log("In Job");
+        Debug.Log("In Job for inmate " + npcNum.ToString());
         BoxCollider2D outBoxCollider = transform.Find("OutBox").GetComponent<BoxCollider2D>();
         if (hasNormalJob)
         {
@@ -1434,6 +1493,11 @@ public class NPCAI : MonoBehaviour
                 if(i == positions.Count)
                 {
                     i = 0;
+                    jobQuota++;
+                }
+                else if(i == 1 && job == "Deliveries")
+                {
+                    jobQuota++;
                 }
 
                 Transform currentObj = positions[i];
@@ -1514,6 +1578,7 @@ public class NPCAI : MonoBehaviour
                             }
                             Destroy(currentSpill.gameObject);
                             weedScript.spillAmount--;
+                            jobQuota++;
                         }
 
                         if (!isAtJob)
@@ -1561,6 +1626,7 @@ public class NPCAI : MonoBehaviour
                             }
                             Destroy(currentWeed.gameObject);
                             weedScript.weedAmount--;
+                            jobQuota++;
                         }
 
                         if (!isAtJob)
@@ -1626,6 +1692,8 @@ public class NPCAI : MonoBehaviour
                             }
                             yield return null;
                         }
+
+                        jobQuota++;
 
                         time = 0f;
                         while (time < 2f)
@@ -1700,6 +1768,8 @@ public class NPCAI : MonoBehaviour
                             }
                             yield return null;
                         }
+
+                        jobQuota++;
 
                         time = 0f;
                         while (time < 2f)

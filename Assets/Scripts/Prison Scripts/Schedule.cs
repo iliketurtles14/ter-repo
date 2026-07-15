@@ -15,7 +15,13 @@ public class Schedule : MonoBehaviour
     private MissionAsk missionAskScript;
     private bool isOnFavorPeriod;
     private string favorPeriod;
+    private List<string> validJobs = new List<string>()
+    {
+        "Janitor", "Gardening", "Kitchen", "Woodshop", "Metalshop", "Mailman", "Deliveries",
+        "Tailor", "Laundry", "Library"
+    };
     private Lockdown lockdownScript;
+    private PlayerCollectionData playerColData;
     private List<string> allowedPeriods = new List<string>
     {
         "B", "L", "D", "R", "E", "FT", "LO", "S", "W"
@@ -29,6 +35,7 @@ public class Schedule : MonoBehaviour
         loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
         missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
         lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
+        playerColData = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>();
 
         StartCoroutine(StartWait());
     }
@@ -97,7 +104,14 @@ public class Schedule : MonoBehaviour
                 period = "Dinner";
                 break;
             case "W":
-                period = "Work";
+                if (validJobs.Contains(playerColData.playerData.job))
+                {
+                    period = playerColData.playerData.job + " Job";
+                }
+                else
+                {
+                    period = "Work";
+                }
                 break;
             case "E":
                 period = "Gym";

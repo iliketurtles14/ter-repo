@@ -19,16 +19,17 @@ public class DeskData : MonoBehaviour
     }
     private void Update()
     {
-        for(int i = 0; i < 20; i++)
+        for (int i = 0; i < 20; i++)
         {
-            try
+            if (deskInv[i] == null)
             {
-                if (deskInv[i].itemData.sprite == null)
-                {
-                    deskInv[i] = new DeskItem();
-                }
+                deskInv[i] = new DeskItem();
             }
-            catch 
+            else if (deskInv[i].itemData == null)
+            {
+
+            }
+            else if (deskInv[i].itemData.sprite == null)
             {
                 deskInv[i] = new DeskItem();
             }

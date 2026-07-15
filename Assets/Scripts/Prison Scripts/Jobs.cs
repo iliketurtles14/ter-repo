@@ -22,6 +22,8 @@ public class Jobs : MonoBehaviour
     private Sprite quotaSprite4; //original
     private ApplyPrisonData applyScript;
     private Saving savingScript;
+    private Transform mc;
+    private Zones zonesScript;
     private Dictionary<string, int> jobPayDict = new Dictionary<string, int>()
     {
         { "Janitor", 5 }, { "Gardening", 10 }, { "Tailor", 15 }, { "Laundry", 20 },
@@ -35,6 +37,8 @@ public class Jobs : MonoBehaviour
         player = RootObjectCache.GetRoot("Player").transform;
         applyScript = GetComponent<ApplyPrisonData>();
         savingScript = GetComponent<Saving>();
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        zonesScript = GetComponent<Zones>();
         StartCoroutine(StartWait());
         HideQuotaPanel();
     }
@@ -60,7 +64,7 @@ public class Jobs : MonoBehaviour
         {
             ShowQuotaPanel();
         }
-        else if(isShowing && (!hasJob || scheduleScript.periodCode != "W"))
+        else if(isShowing && scheduleScript.periodCode != "W")
         {
             HideQuotaPanel();
         }
@@ -72,6 +76,11 @@ public class Jobs : MonoBehaviour
     }
     private void HideQuotaPanel()
     {
+        if(hasJob && !doneWithJob)
+        {
+            zonesScript.hasLostJob = true;
+        }
+
         isShowing = false;
         ic.Find("QuotaPanel").gameObject.SetActive(false);
         doneWithJob = false;

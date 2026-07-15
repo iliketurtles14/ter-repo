@@ -85,9 +85,13 @@ public class Doors : MonoBehaviour
             case "EnteranceDoor":
             case "StaffDoor":
             case "WorkDoor":
-                if(door.name == "WorkDoor" && player.GetComponent<PlayerCollectionData>().playerData.job == door.GetComponent<WorkDoorContainer>().job)
+                if(door.name == "WorkDoor" && player.GetComponent<PlayerCollectionData>().playerData.job == door.GetComponent<WorkDoorContainer>().job && !string.IsNullOrEmpty(player.GetComponent<PlayerCollectionData>().playerData.job))
                 {
                     return true;
+                }
+                else if(door.name == "WorkDoor")
+                {
+                    return false;
                 }
                 for(int i = 0; i < 6; i++)
                 {

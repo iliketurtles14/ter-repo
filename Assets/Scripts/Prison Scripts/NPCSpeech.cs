@@ -44,15 +44,18 @@ public class NPCSpeech : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        foreach(Transform npc in transform.parent)
+        if (name != "CheckpointCharlie")
         {
-            if (npc.name.Contains("Inmate"))
+            foreach (Transform npc in transform.parent)
             {
-                inmateNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
-            }
-            else if (npc.name.Contains("Guard"))
-            {
-                guardNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
+                if (npc.name.Contains("Inmate"))
+                {
+                    inmateNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
+                }
+                else if (npc.name.Contains("Guard"))
+                {
+                    guardNames.Add(npc.GetComponent<NPCCollectionData>().npcData.displayName);
+                }
             }
         }
         playerName = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>().playerData.displayName.Replace("\n", "");

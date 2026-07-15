@@ -110,7 +110,7 @@ public class CameraController : MonoBehaviour
     }
     private IEnumerator LookWait()
     {
-        float rand = UnityEngine.Random.Range(0f, .1f);
+        float rand = UnityEngine.Random.Range(0f, .25f);
         yield return new WaitForSeconds(rand);
         StartCoroutine(Scanning());
     }
@@ -209,7 +209,7 @@ public class CameraController : MonoBehaviour
                     Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
                 }
             }
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.25f);
         }
     }
     private IEnumerator Following()

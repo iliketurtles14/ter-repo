@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: -3052007431216516377}
   - component: {fileID: -8758275047305940777}
   - component: {fileID: -7434286056456832966}
+  - component: {fileID: 1420327819158832450}
   m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
@@ -384,6 +385,7 @@ MonoBehaviour:
   atShowerPoint: 0
   atGuardRollcall: 0
   pc: {fileID: 0}
+  jobQuota: 0
 --- !u!114 &-5813940400225957718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +477,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49997bb803c4030438de10e610e7c7c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCGetOutfit
+--- !u!114 &1420327819158832450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8213213298135180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5736aef7349810e4088a9ebb89add868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCTakeJob
 --- !u!1 &347473100117320719
 GameObject:
   m_ObjectHideFlags: 0

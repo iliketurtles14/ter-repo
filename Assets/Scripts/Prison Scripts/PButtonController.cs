@@ -175,8 +175,7 @@ public class PButtonController : MonoBehaviour
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
 
-        string job = clicked.name;
-        jobMenuScript.Apply(job);
+        jobMenuScript.Apply();
     }
     public void JobResign(BaseEventData data)
     {
@@ -188,8 +187,7 @@ public class PButtonController : MonoBehaviour
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
 
-        string job = clicked.name;
-        jobMenuScript.Resign(job);
+        jobMenuScript.Resign();
     }
     public void JobBack()
     {

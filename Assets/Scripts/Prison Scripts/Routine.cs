@@ -28,6 +28,14 @@ public class Routine : MonoBehaviour
     private Transform tiles;
     private Transform badObjects;
     private MakeBadObject mbo;
+    private Transform aStar;
+    private Transform player;
+    private Transform mc;
+    private List<string> validJobs = new List<string>()
+    {
+        "Janitor", "Gardening", "Kitchen", "Woodshop", "Metalshop", "Mailman", "Deliveries",
+        "Tailor", "Laundry", "Library"
+    };
     public void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -36,6 +44,9 @@ public class Routine : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
+        aStar = RootObjectCache.GetRoot("A*").transform;
+        player = RootObjectCache.GetRoot("Player").transform;
+        mc = RootObjectCache.GetRoot("MenuCanvas").transform;
 
         timeText = GetComponent<TMP_Text>();
 
@@ -129,6 +140,7 @@ public class Routine : MonoBehaviour
             {
                 day++;
 
+                //make everything that happens here also happen at sleeping and solitary day advances
                 foreach(Transform obj in tiles.Find("GroundObjects"))
                 {
                     if (obj.CompareTag("Item"))
@@ -153,6 +165,41 @@ public class Routine : MonoBehaviour
                         }
                     }
                 }
+
+                List<string> availableJobs = new List<string>(validJobs);
+
+
+                foreach(Transform inmate in aStar)
+                {
+                    if (inmate.name.Contains("Inmate"))
+                    {
+                        if (availableJobs.Contains(inmate.GetComponent<NPCCollectionData>().npcData.job))
+                        {
+                            availableJobs.Remove(inmate.GetComponent<NPCCollectionData>().npcData.job);
+                        }
+                    }
+                }
+                if (availableJobs.Contains(player.GetComponent<PlayerCollectionData>().playerData.job))
+                {
+                    availableJobs.Remove(player.GetComponent<PlayerCollectionData>().playerData.job);
+                }
+
+                foreach(Transform inmate in aStar)
+                {
+                    if(availableJobs.Count == 0)
+                    {
+                        break;
+                    }
+                    if (inmate.name.Contains("Inmate"))
+                    {
+                        if (string.IsNullOrEmpty(inmate.GetComponent<NPCCollectionData>().npcData.job))
+                        {
+                            inmate.GetComponent<NPCCollectionData>().npcData.job = availableJobs[0];
+                            availableJobs.RemoveAt(0);
+                        }
+                    }
+                }
+                mc.Find("JobMenuPanel").GetComponent<JobMenu>().ResetJobButtons();
             }
 
             if(min < 10)

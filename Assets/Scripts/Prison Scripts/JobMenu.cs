@@ -17,6 +17,8 @@ public class JobMenu : MonoBehaviour
     private Transform mc;
     private Schedule scheduleScript;
     private PauseController pc;
+    private CreateNote noteScript;
+    private string currentJob; //this is the job that is showing its description. if not, this equals ""
     private Dictionary<string, int> jobIntDict = new Dictionary<string, int>() //compares a job to its required intellect
     {
         { "Janitor", 10 }, { "Gardening", 20 }, { "Tailor", 30 }, { "Laundry", 30 }, { "Library", 40 },
@@ -31,6 +33,7 @@ public class JobMenu : MonoBehaviour
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
+        noteScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<CreateNote>();
         StartCoroutine(StartWait());
         CloseJobBoard();
     }
@@ -53,6 +56,7 @@ public class JobMenu : MonoBehaviour
     {
         if (menuIsOpen && !mcs.isTouchingIDPanel && Input.GetMouseButtonDown(0))
         {
+            Debug.Log("here");
             CloseJobBoard();
         }
 
@@ -67,6 +71,7 @@ public class JobMenu : MonoBehaviour
     }
     private void OpenJobBoard()
     {
+        currentJob = "";
         transform.Find("JobScrollRect").gameObject.SetActive(true);
         transform.Find("TitleText").GetComponent<TextMeshProUGUI>().text = "JOB BOARD";
         transform.Find("TitleText").gameObject.SetActive(true);
@@ -79,6 +84,7 @@ public class JobMenu : MonoBehaviour
     }
     private void CloseJobBoard()
     {
+        currentJob = "";
         transform.Find("JobScrollRect").gameObject.SetActive(false);
         transform.Find("TitleText").gameObject.SetActive(false);
         transform.Find("TipText").gameObject.SetActive(false);
@@ -97,11 +103,16 @@ public class JobMenu : MonoBehaviour
         string desc = GetINIVar("Job_Descrip", job, currentMap.speech);
         desc = desc.Replace('#', '\n');
 
+        currentJob = job;
+
+        Debug.Log(job);
+
         bool canApply = true;
         bool canResign = false;
         if(player.GetComponent<PlayerCollectionData>().playerData.job == job)
         {
             canResign = true;
+            canApply = false;
         }
         if (!canResign)
         {
@@ -131,31 +142,33 @@ public class JobMenu : MonoBehaviour
         transform.Find("DescriptionText").GetComponent<TextMeshProUGUI>().text = desc;
         transform.Find("DescriptionText").gameObject.SetActive(true);
     }
-    public void Apply(string job)
+    public void Apply()
     {
-        int requiredInt = jobIntDict[job];
+        int requiredInt = jobIntDict[currentJob];
         bool canApply = true;
         if(player.GetComponent<PlayerCollectionData>().playerData.intellect < requiredInt)
         {
             canApply = false;
+            CloseJobBoard();
+            noteScript.CreateWardenNote("getJob", noteScript.GetNoteText("JobDumb", requiredInt), currentMap.warden);
         }
         if(player.GetComponent<PlayerCollectionData>().playerData.heat >= 50)
         {
             canApply = false;
+            CloseJobBoard();
+            noteScript.CreateWardenNote("getJob", noteScript.GetNoteText("JobHeat", -1), currentMap.warden);
         }
-        if(scheduleScript.periodCode == "W")
+        if (scheduleScript.periodCode == "W")
         {
             canApply = false;
-        }
-        if (!canApply)
-        {
-            Debug.LogError("MAKE SURE TO MAKE IT OPEN THE WARDEN NOTE THING ASDFASDFASDFASDF");
+            CloseJobBoard();
+            noteScript.CreateWardenNote("getJob", noteScript.GetNoteText("JobHeat", -1), currentMap.warden);
         }
 
         if (canApply)
         {
             string jobToOpen = player.GetComponent<PlayerCollectionData>().playerData.job;
-            player.GetComponent<PlayerCollectionData>().playerData.job = job;
+            player.GetComponent<PlayerCollectionData>().playerData.job = currentJob;
 
             Transform content = transform.Find("JobScrollRect").Find("Viewport").Find("Content");
             foreach(Transform button in content)
@@ -165,29 +178,28 @@ public class JobMenu : MonoBehaviour
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": Vacant";
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(0, 128f / 255f, 0);
                 }
-                else if(button.name == job)
+                else if(button.name == currentJob)
                 {
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": " + player.GetComponent<PlayerCollectionData>().playerData.displayName;
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(0, 113f / 255f, 170f / 255f);
                 }
             }
+            CloseJobBoard();
+            noteScript.CreateWardenNote("getJob", noteScript.GetNoteText("JobGet", -1), currentMap.warden);
+            GoToAllJobView();
         }
 
-        GoToAllJobView();
     }
-    public void Resign(string job)
+    public void Resign()
     {
         bool canResign = true;
         
         if(scheduleScript.periodCode == "W")
         {
             canResign = false;
+            CloseJobBoard();
+            noteScript.CreateWardenNote("getJob", noteScript.GetNoteText("JobBusy", -1), currentMap.warden);
         }
-        if (!canResign)
-        {
-            Debug.LogError("PLEASE MAKE SURE TO REMEMEBR TO MAKE IT OPNE A WARDEN NOTE HERERERERERERERER");
-        }
-
         if (canResign)
         {
             player.GetComponent<PlayerCollectionData>().playerData.job = "";
@@ -195,19 +207,20 @@ public class JobMenu : MonoBehaviour
             Transform content = transform.Find("JobScrollRect").Find("Viewport").Find("Content");
             foreach (Transform button in content)
             {
-                if (button.name == job)
+                if (button.name == currentJob)
                 {
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": Vacant";
                     button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(0, 128f / 255f, 0);
                     break;
                 }
             }
+            GoToAllJobView();
         }
 
-        GoToAllJobView();
     }
     public void GoToAllJobView()
     {
+        currentJob = "";
         transform.Find("JobScrollRect").gameObject.SetActive(true);
         transform.Find("TitleText").GetComponent<TextMeshProUGUI>().text = "JOB BOARD";
         transform.Find("TipText").gameObject.SetActive(true);
@@ -315,6 +328,52 @@ public class JobMenu : MonoBehaviour
             SpriteState spriteState = button.GetComponent<Button>().spriteState;
             spriteState.highlightedSprite = applyScript.UISprites[269];
             button.GetComponent<Button>().spriteState = spriteState;
+        }
+    }
+    public void ResetJobButtons()
+    {
+        Transform content = transform.Find("JobScrollRect").Find("Viewport").Find("Content");
+        foreach (Transform button in content)
+        {
+            //: Vacancy
+
+            bool npcHasJob = false;
+            bool playerHasJob = false;
+            string npcName = "";
+
+            if (player.GetComponent<PlayerCollectionData>().playerData.job == button.name)
+            {
+                playerHasJob = true;
+            }
+
+            if (!playerHasJob)
+            {
+                foreach (Transform npc in aStar)
+                {
+                    if (npc.name.StartsWith("Inmate") && npc.GetComponent<NPCCollectionData>().npcData.job == button.name)
+                    {
+                        npcHasJob = true;
+                        npcName = npc.GetComponent<NPCCollectionData>().npcData.displayName;
+                        break;
+                    }
+                }
+            }
+
+            if (npcHasJob) //128, 0, 0
+            {
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": " + npcName;
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(128f / 255f, 0, 0);
+            }
+            else if (playerHasJob) //0, 113, 170
+            {
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": " + player.GetComponent<PlayerCollectionData>().playerData.displayName;
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(0, 113f / 255f, 170f / 255f);
+            }
+            else //0, 128, 0
+            {
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().text = button.name + ": Vacant";
+                button.Find("JobText").GetComponent<TextMeshProUGUI>().color = new Color(0, 128f / 255f, 0);
+            }
         }
     }
     public string GetINIVar(string header, string varName, string[] file)

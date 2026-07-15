@@ -46,7 +46,7 @@ public class SetUpNPCs : MonoBehaviour
 
         foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
         {                 //REMEMBER TO ALSO ADD THIS TO THE LOWER FOREACH LOOP IF ADDING NEW OBJECTS THAT SHOULDNT HAVE COLLISION WITH INMATES
-            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed"))
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed") || obj.name == "GuardBed")
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = true;
             }
@@ -61,7 +61,7 @@ public class SetUpNPCs : MonoBehaviour
 
         foreach (Transform obj in tiles.Find("GroundObjects"))
         {
-            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed"))
+            if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.StartsWith("Bed") || obj.name == "GuardBed")
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = false;
             }

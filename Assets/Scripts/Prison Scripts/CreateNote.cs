@@ -12,6 +12,7 @@ public class CreateNote : MonoBehaviour
     private Transform currentPanel;
     public bool inNote;
     private string playerName;
+    private Map currentMap;
     private List<string> wardenNames = new List<string>
     {
         "Dean Hall", "Monkey Alan", "Alberto Valero", "Craig Monkford", "Patrick Garratt", "Chinsworth", "Stuart Foot", "Jim Sterling", "Geoff Lamp", "Paul Soares Jr.", "Davis", "Isaac", "Sparrow"
@@ -31,6 +32,7 @@ public class CreateNote : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         playerName = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>().playerData.displayName.Replace("\n", "");
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
     }
     private void Update()
     {
@@ -114,5 +116,49 @@ public class CreateNote : MonoBehaviour
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(true);
         inNote = true;
+    }
+    public string GetNoteText(string messageType, int intellect)//pretty much js for solitary and job baord stuff
+    {
+        string message = GetINIVar("Notes", messageType, currentMap.speech);
+        if (message.Contains("$intellect"))
+        {
+            message = message.Replace("$intellect", intellect.ToString());
+        }
+        if (message.Contains("#"))
+        {
+            message = message.Replace("#", "\n");
+        }
+
+        return message;
+    }
+    public string GetINIVar(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+
+
+        if (line == null)
+        {
+            return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
     }
 }
