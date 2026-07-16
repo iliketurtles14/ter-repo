@@ -28,20 +28,24 @@ public class WorkDoorContainer : MonoBehaviour
                     continue;
                 }
 
-                string rawPos = line.Split("=")[1].Split(";")[0];
-                string aJob = line.Split(";")[1];
-                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
-                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
-                posX -= 1.6f;
-                posY -= 1.6f;
-
-                Debug.Log(posX.ToString() + ", " + posY.ToString());
-
-                if (transform.position == new Vector3(posX, posY, 0))
+                try
                 {
-                    job = aJob;
-                    break;
+                    string rawPos = line.Split("=")[1].Split(";")[0];
+                    string aJob = line.Split(";")[1];
+                    float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
+                    float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
+                    posX -= 1.6f;
+                    posY -= 1.6f;
+
+                    Debug.Log(posX.ToString() + ", " + posY.ToString());
+
+                    if (transform.position == new Vector3(posX, posY, 0))
+                    {
+                        job = aJob;
+                        break;
+                    }
                 }
+                catch { }
             }
         }
         if (gameObject.layer == LayerMask.NameToLayer("Underground"))

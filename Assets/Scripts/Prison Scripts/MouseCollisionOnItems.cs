@@ -215,6 +215,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Bars",
             "Fence",
             "ElectricFence",
+            "HighWall",
             "RoofLedge",
         };
 
@@ -474,6 +475,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingElectricFence = true;
                     touchedElectricFence = highestPriorityObject;
                     break;
+                case "HighWall":
                 case "RoofLedge":
                     isTouchingRoofLedge = true;
                     touchedRoofLedge = highestPriorityObject;

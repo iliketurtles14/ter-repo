@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PButtonController : MonoBehaviour
 {
@@ -23,6 +24,13 @@ public class PButtonController : MonoBehaviour
     private EscapeObjectController escapeObjectControllerScript;
     private HelpMenu helpMenuScript;
     private Pause pauseScript;
+    private int groundLayer;
+    private int undergroundLayer;
+    private int ventLayer;
+    private int roofLayer;
+    private int playerLayer;
+    private int uiLayer;
+    private int ventCoverLayer;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -41,6 +49,13 @@ public class PButtonController : MonoBehaviour
         escapeObjectControllerScript = GetComponent<EscapeObjectController>();
         helpMenuScript = mc.Find("HelpMenuPanel").GetComponent<HelpMenu>();
         pauseScript = mc.Find("PauseMenuPanel").GetComponent<Pause>();
+        groundLayer = LayerMask.NameToLayer("Ground");
+        undergroundLayer = LayerMask.NameToLayer("Underground");
+        ventLayer = LayerMask.NameToLayer("Vents");
+        roofLayer = LayerMask.NameToLayer("Roof");
+        playerLayer = LayerMask.NameToLayer("Player");
+        uiLayer = LayerMask.NameToLayer("UI");
+        ventCoverLayer = LayerMask.NameToLayer("VentCovers");
     }
     public void PauseContinue()
     {
@@ -59,6 +74,15 @@ public class PButtonController : MonoBehaviour
         pauseScript.isQuitting = true;
         Addressables.LoadSceneAsync("Main Menu");
         GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
+        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
+        Physics2D.IgnoreLayerCollision(uiLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, true);
+        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
+        Physics2D.IgnoreLayerCollision(playerLayer, undergroundLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
+        Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
     }
     public void HelpButton(BaseEventData data)
     {

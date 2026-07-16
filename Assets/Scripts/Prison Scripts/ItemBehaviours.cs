@@ -575,9 +575,18 @@ public class ItemBehaviours : MonoBehaviour
     {
         usedItemData = selectedItemData;
         usedSlotNumber = slotNumber;
+        TileData touchedTileData = touchedTileObject.GetComponent<TileCollectionData>().tileData;
+        ropeTile = null;
+
+        if((touchedTileData.tileType == "vertWall" || touchedTileData.tileType == "horiWall") && 
+            selectedItemData.id != 102)
+        {
+            yield break;
+        }
+
         //get tile to rope to
         Vector3 ropeTilePos = new Vector3();
-        if(touchedTileObject.name.StartsWith("Roofing Vertical") || touchedTileObject.name.StartsWith("Top Wall Vertical (Roof)"))
+        if(touchedTileData.tileType == "vertLedge" || touchedTileData.tileType == "vertWall")
         {
             if (PlayerTransform.position.x < touchedTileObject.transform.position.x)//if player is to the left of the ledge
             {
@@ -590,7 +599,7 @@ public class ItemBehaviours : MonoBehaviour
             ropeTilePos.y = touchedTileObject.transform.position.y;
             ropeTilePos.z = touchedTileObject.transform.position.z;
         }
-        else if(touchedTileObject.name.StartsWith("Roofing Horizontal") || touchedTileObject.name.StartsWith("Top Wall Horizontal (Roof)"))
+        else if(touchedTileData.tileType == "horiLedge" || touchedTileData.tileType == "horiWall")
         {
             if (PlayerTransform.position.y < touchedTileObject.transform.position.y)//if player is below the ledge
             {
@@ -603,30 +612,80 @@ public class ItemBehaviours : MonoBehaviour
             ropeTilePos.x = touchedTileObject.transform.position.x;
             ropeTilePos.z = touchedTileObject.transform.position.z;
         }
-        foreach (Transform tile in tiles.Find("Roof"))//gets tile to rope to
+        //check if there is an obstacle in the way or if its a rope off the roof
+        GameObject aChecker = new GameObject("Checker");
+        aChecker.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        aChecker.AddComponent<BoxCollider2D>().isTrigger = true;
+        aChecker.GetComponent<BoxCollider2D>().size = new Vector2(1.5f, 1.5f);
+        aChecker.transform.position = ropeTilePos;
+        aChecker.layer = LayerMask.NameToLayer("Roof");
+        ContactFilter2D aFilter = new ContactFilter2D
         {
-            if (tile.position == ropeTilePos)
+            useLayerMask = false,
+            useTriggers = true,
+        };
+        List<Collider2D> aContacts = new List<Collider2D>();
+        yield return new WaitForFixedUpdate();
+        int aCount = aChecker.GetComponent<BoxCollider2D>().GetContacts(aFilter, aContacts);
+        bool aShouldGo = true;
+        for (int i = 0; i < aCount; i++)
+        {
+            Collider2D col = aContacts[i];
+            if (col.gameObject.GetComponent<Collider2D>() != null && !col.gameObject.GetComponent<Collider2D>().isTrigger)
             {
-                ropeTile = tile.gameObject;
+                aShouldGo = false;
                 break;
             }
-            else if(tile.position != ropeTilePos)
+            else if(col.gameObject.GetComponent<TileCollectionData>() != null)
             {
-                ropeTile = null;
+                ropeTile = col.gameObject;
             }
         }
-
-        if(ropeTile == null && !touchedTileObject.name.StartsWith("Top Wall"))//check if roping off the roof normally
+        Destroy(aChecker);
+        if (aCount == 0)
+        {
+            ropeTile = null;
+        }
+        else if (!aShouldGo)
+        {
+            yield break;
+        }
+        //the ropeTile being null means that you are roping/grappling off of the roof instead of onto another part of the roof
+        if(ropeTile == null && touchedTileData.tileType != "vertLedge" && touchedTileData.tileType != "horiLedge")//check if roping off the roof normally
         {
             //check if there is an obstacle in the way
-            Vector3 obstacleOffset = new Vector3(0, 1.6f, 0);
-            foreach(Transform tile in tiles.Find("Ground"))
+            Vector3 obstacleOffset = new Vector3(0, -1.6f, 0);
+            GameObject checker = new GameObject("Checker");
+            checker.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            checker.AddComponent<BoxCollider2D>().isTrigger = true;
+            checker.GetComponent<BoxCollider2D>().size = new Vector2(1.5f, 1.5f);
+            checker.transform.position = ropeTilePos + obstacleOffset;
+            checker.layer = LayerMask.NameToLayer("Ground");
+            ContactFilter2D filter = new ContactFilter2D
             {
-                if(tile.gameObject.layer == 8 && tile.position == ropeTilePos - obstacleOffset)
+                useLayerMask = false,
+                useTriggers = true,
+            };
+            List<Collider2D> contacts = new List<Collider2D>();
+            yield return new WaitForFixedUpdate();
+            int count = checker.GetComponent<BoxCollider2D>().GetContacts(filter, contacts);
+            bool shouldGo = true;
+            for(int i = 0; i < count; i++)
+            {
+                Collider2D col = contacts[i];
+                if(col.gameObject.GetComponent<Collider2D>() != null && !col.gameObject.GetComponent<Collider2D>().isTrigger)
                 {
-                    yield break;
+                    shouldGo = false;
+                    break;
                 }
             }
+            Destroy(checker);
+            if (!shouldGo)
+            {
+                yield break;
+            }
+
+            particlesScript.CreateDust(ropeTilePos, 1);
             
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -634,24 +693,31 @@ public class ItemBehaviours : MonoBehaviour
             Vector3 direction = (ropeTilePos - PlayerTransform.position).normalized;
             isRoping = true;
             GameObject ropePrefab;
+            Sprite spr;
+            DataSender ds = DataSender.instance;
             switch (identifier)
             {
                 case "rope":
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
+                    spr = ds.UIImages[163];
                     break;
                 case "sheet":
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/SheetRope");
+                    spr = ds.UIImages[162];
                     break;
                 case "grapple":
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
+                    spr = ds.UIImages[163];
                     break;
                 default:
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Grapple");
+                    spr = ds.UIImages[163];
                     break;
             }
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            ropeObject.GetComponent<SpriteRenderer>().sprite = spr;
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
@@ -673,17 +739,41 @@ public class ItemBehaviours : MonoBehaviour
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             yield break;
         }
-        else if(ropeTile == null && touchedTileObject.name.StartsWith("Top Wall") && identifier == "grapple")//check if roping off the roof via top wall (grapple only)
+        else if(ropeTile == null && (touchedTileData.tileType == "vertLedge" || touchedTileData.tileType == "horiLedge"))//check if roping off the roof via top wall (grapple only)
         {
             //check if there is an obstacle in the way
-            Vector3 obstacleOffset = new Vector3(0, 1.6f, 0);
-            foreach (Transform tile in tiles.Find("Ground"))
+            Vector3 obstacleOffset = new Vector3(0, -1.6f, 0);
+            GameObject checker = new GameObject("Checker");
+            checker.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            checker.AddComponent<BoxCollider2D>().isTrigger = true;
+            checker.GetComponent<BoxCollider2D>().size = new Vector2(1.5f, 1.5f);
+            checker.transform.position = ropeTilePos + obstacleOffset;
+            checker.layer = LayerMask.NameToLayer("Ground");
+            ContactFilter2D filter = new ContactFilter2D
             {
-                if (tile.gameObject.layer == 8 && tile.position == ropeTilePos - obstacleOffset)
+                useLayerMask = false,
+                useTriggers = true,
+            };
+            List<Collider2D> contacts = new List<Collider2D>();
+            yield return new WaitForFixedUpdate();
+            int count = checker.GetComponent<BoxCollider2D>().GetContacts(filter, contacts);
+            bool shouldGo = true;
+            for (int i = 0; i < count; i++)
+            {
+                Collider2D col = contacts[i];
+                if (col.gameObject.GetComponent<Collider2D>() != null && !col.gameObject.GetComponent<Collider2D>().isTrigger)
                 {
-                    yield break;
+                    shouldGo = false;
+                    break;
                 }
             }
+            Destroy(checker);
+            if (!shouldGo)
+            {
+                yield break;
+            }
+
+            particlesScript.CreateDust(ropeTilePos, 1);
 
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -695,6 +785,7 @@ public class ItemBehaviours : MonoBehaviour
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            ropeObject.GetComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[163];
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
@@ -718,56 +809,66 @@ public class ItemBehaviours : MonoBehaviour
         }
         //see if possible based on height
         GameObject lastTouchedRoofFloor = PlayerTransform.GetComponent<PlayerFloorCollision>().lastTouchedRoofFloor;
+        string lastTouchedRoofFloorType = lastTouchedRoofFloor.GetComponent<TileCollectionData>().tileData.tileType;
+        string ropeTileType = ropeTile.GetComponent<TileCollectionData>().tileData.tileType;
 
-        if(lastTouchedRoofFloor.name.StartsWith("Roof Floor High"))
+        currentHeight = 2; //default height (if floor isnt an actual roof floor)        
+        if(lastTouchedRoofFloorType == "highFloor")
         {
             currentHeight = 3;
         }
-        else if(lastTouchedRoofFloor.name.StartsWith("Roof Floor Medium"))
+        else if(lastTouchedRoofFloorType == "medFloor")
         {
             currentHeight = 2;
         }
-        else if(lastTouchedRoofFloor.name.StartsWith("Roof Floor Low"))
+        else if(lastTouchedRoofFloorType == "lowFloor")
         {
             currentHeight = 1;
         }
 
-        if (ropeTile.name.StartsWith("Roof Floor High"))
+        if (ropeTileType == "highFloor")
         {
             ropeTileHeight = 3;
         }
-        else if (ropeTile.name.StartsWith("Roof Floor Medium"))
+        else if (ropeTileType == "medFloor")
         {
             ropeTileHeight = 2;
         }
-        else if (ropeTile.name.StartsWith("Roof Floor Low"))
+        else if (ropeTileType == "lowFloor")
         {
             ropeTileHeight = 1;
         }
 
         if(currentHeight >= ropeTileHeight && (identifier == "rope" || identifier == "sheet"))
         {
+            particlesScript.CreateDust(ropeTilePos, 1);
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             float speed = 10f;
             Vector3 direction = (ropeTile.transform.position - PlayerTransform.position).normalized;
             isRoping = true;
             GameObject ropePrefab;
+            Sprite spr;
+            DataSender ds = DataSender.instance;
             switch (identifier)
             {
                 case "rope":
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
+                    spr = ds.UIImages[163];
                     break;
                 case "sheet":
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/SheetRope");
+                    spr = ds.UIImages[162];
                     break;
                 default:
                     ropePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rope");
+                    spr = ds.UIImages[163];
                     break;
             }
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            ropeObject.GetComponent<SpriteRenderer>().sprite = spr;
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
@@ -790,6 +891,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         else if (currentHeight <= ropeTileHeight && identifier == "grapple")
         {
+            particlesScript.CreateDust(ropeTilePos, 1);
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             float speed = 10f;
@@ -800,6 +902,7 @@ public class ItemBehaviours : MonoBehaviour
             GameObject ropeObject = Instantiate(ropePrefab, PlayerTransform.position, Quaternion.identity, tiles.Find("RoofObjects"));
             Vector2 ropeSize = new Vector2(.1f, .5f);
             ropeObject.GetComponent<SpriteRenderer>().size = ropeSize;
+            ropeObject.GetComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[163];
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
@@ -1173,7 +1276,7 @@ public class ItemBehaviours : MonoBehaviour
 
                 if (tile.name.StartsWith("Dirt(Clone)"))
                 {
-                    tile.GetComponent<BoxCollider2D>().enabled = true;
+                    tile.GetComponent<Collider2D>().enabled = true;
                 }
                 if (tile.name == "Rock(Clone)" || tile.name == "Mine(Clone)" || tile.name == "Brace(Clone)")
                 {
@@ -1525,7 +1628,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         else if(whatAction == "digging down" || whatAction == "digging up")
         {
-            touchedTileObject.GetComponent<BoxCollider2D>().enabled = false;
+            touchedTileObject.GetComponent<Collider2D>().enabled = false;
 
             Vector3 holePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion holeRotation = Quaternion.identity;
@@ -1545,7 +1648,7 @@ public class ItemBehaviours : MonoBehaviour
         {
             Vector3 tilePosition = new Vector3(touchedTileObject.transform.position.x, touchedTileObject.transform.position.y);
             Quaternion rotation = Quaternion.identity;
-            touchedTileObject.GetComponent<BoxCollider2D>().enabled = false;
+            touchedTileObject.GetComponent<Collider2D>().enabled = false;
             GameObject emptyTile = new GameObject("BrokenTile");
             emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
             emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "inFloor";

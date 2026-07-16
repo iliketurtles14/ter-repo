@@ -108,6 +108,7 @@ TagManager:
   - InmateBed
   - Charlie
   - Camera
+  - HighWall
   layers:
   - Default
   - TransparentFX

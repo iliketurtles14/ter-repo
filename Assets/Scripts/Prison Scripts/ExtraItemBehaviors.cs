@@ -409,7 +409,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         break;
                     case 154://wall block
                         GameObject connectedTile = obj.GetComponent<BrokenTileConnection>().connectedTile;
-                        connectedTile.GetComponent<BoxCollider2D>().enabled = true;
+                        connectedTile.GetComponent<Collider2D>().enabled = true;
                         connectedTile.GetComponent<TileCollectionData>().tileData.currentDurability = 10;
                         TileCollectionData aTCD = connectedTile.GetComponent<TileCollectionData>();
                         foreach(Transform aObj in tiles.Find("GroundObjects"))
@@ -505,7 +505,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                 {
                     if(tile.position == obj.transform.position && tile.CompareTag("Digable"))
                     {
-                        tile.GetComponent<BoxCollider2D>().enabled = true;
+                        tile.GetComponent<Collider2D>().enabled = true;
                         tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                         break;
                     }
@@ -514,7 +514,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                 {
                     if(tile.position == obj.transform.position && tile.CompareTag("EmptyDirt"))
                     {
-                        tile.GetComponent<BoxCollider2D>().enabled = true;
+                        tile.GetComponent<Collider2D>().enabled = true;
                         tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     }
                 }
@@ -546,7 +546,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                     }
                 }
                 GameObject aConnectedTile = obj.GetComponent<BrokenTileConnection>().connectedTile;
-                aConnectedTile.GetComponent<BoxCollider2D>().enabled = true;
+                aConnectedTile.GetComponent<Collider2D>().enabled = true;
                 aConnectedTile.GetComponent<TileCollectionData>().tileData.currentDurability = 10;
                 TileCollectionData tcd = aConnectedTile.GetComponent<TileCollectionData>();
                 foreach (Transform aObj in tiles.Find("GroundObjects"))
@@ -558,7 +558,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         {
                             aConnectedTile.GetComponent<TileCollectionData>().tileData.holeIsUnder = true;
                             aConnectedTile.GetComponent<TileCollectionData>().tileData.holeDurability = obj.GetComponent<TileCollectionData>().tileData.currentDurability;
-                            aObj.GetComponent<BoxCollider2D>().enabled = false;
+                            aObj.GetComponent<Collider2D>().enabled = false;
                             aObj.GetComponent<SpriteRenderer>().enabled = false;
                             foreach(Transform bo in badObjects)
                             {

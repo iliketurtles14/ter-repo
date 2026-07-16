@@ -376,11 +376,13 @@ public class NPCAI : MonoBehaviour
         if (period != "L" && period != "B" && period != "D")
         {
             isInCanteen = false;
+            atCanteenSeat = false;
             npcColData.npcData.hasFood = false;
         }
         if (period != "E")
         {
             isInGym = false;
+            atExerciseEquipment = false;
         }
         if(period != "W")
         {

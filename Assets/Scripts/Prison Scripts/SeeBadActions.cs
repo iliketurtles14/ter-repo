@@ -192,7 +192,7 @@ public class SeeBadActions : MonoBehaviour
                 RaycastHit2D? wallHit = null;
                 foreach (RaycastHit2D aHit in wallHits)
                 {
-                    if (aHit.collider.CompareTag("Wall") || aHit.collider.CompareTag("Obstacle"))
+                    if (aHit.collider.CompareTag("Wall") || aHit.collider.CompareTag("Obstacle") || aHit.collider.CompareTag("HighWall") || aHit.collider.CompareTag("RoofLedge"))
                     {
                         wallHit = aHit;
                         break;
