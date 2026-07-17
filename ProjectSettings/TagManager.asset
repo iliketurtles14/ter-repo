@@ -149,11 +149,17 @@ TagManager:
   - name: UI
     uniqueID: 1972456887
     locked: 0
-  - name: Outside
-    uniqueID: 1951758995
+  - name: Roof
+    uniqueID: 3661231893
     locked: 0
-  - name: Inside
-    uniqueID: 3507173125
+  - name: Vents
+    uniqueID: 3031750423
+    locked: 0
+  - name: Ground
+    uniqueID: 1098254257
+    locked: 0
+  - name: Underground
+    uniqueID: 3035350931
     locked: 0
   m_RenderingLayers:
   - Default
