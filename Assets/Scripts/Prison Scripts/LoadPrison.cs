@@ -722,9 +722,12 @@ public class LoadPrison : MonoBehaviour
             "VentObjects",
             "RoofObjects"
         };
-        List<int> sortingLayers = new List<int>()
+        List<string> sortingLayers = new List<string>()
         {
-            11, 3, 10, 14
+            "Underground",
+            "Ground",
+            "Vents",
+            "Roof"
         };
         List<int> gameObjectLayers = new List<int>()
         {
@@ -761,7 +764,7 @@ public class LoadPrison : MonoBehaviour
                 GameObject itemObj = Instantiate(data.prefab, pos, Quaternion.identity, tiles.Find(objectLayers[i]));
                 itemObj.GetComponent<ItemCollectionData>().itemData = data;
                 itemObj.GetComponent<SpriteRenderer>().sprite = data.sprite;
-                itemObj.GetComponent<SpriteRenderer>().sortingOrder = sortingLayers[i];
+                itemObj.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayers[i];
                 itemObj.layer = gameObjectLayers[i];
             }
         }
@@ -1580,23 +1583,25 @@ public class LoadPrison : MonoBehaviour
                     objInst.transform.parent = tiles.Find(objLayer + "Objects");
                 }
                 objInst.name = objName;
-
+                if (objInst.name.StartsWith("Detector"))
+                {
+                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
+                }
                 switch (objLayer)
                 {
                     case "Underground":
-                        objInst.GetComponent<SpriteRenderer>().sortingOrder = -1;
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                         objInst.layer = undergroundLayer;
                         break;
                     case "Ground":
-                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                         objInst.layer = groundLayer;
-                        if (objInst.name.StartsWith("Detector"))
-                        {
-                            objInst.GetComponent<SpriteRenderer>().sortingOrder = 8;
-                        }
                         break;
                     case "Vents":
-                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                         objInst.layer = ventLayer;
                         if(objName == "Vent")
                         {
@@ -1604,7 +1609,8 @@ public class LoadPrison : MonoBehaviour
                         }
                         break;
                     case "Roof":
-                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                        objInst.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                         objInst.layer = roofLayer;
                         if (objInst.name.StartsWith("SpotLight"))
                         {

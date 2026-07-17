@@ -14,7 +14,7 @@ public class MineSpawn : MonoBehaviour
     }
     private void SpawnMines()
     {
-        int renderLayer = GetComponent<SpriteRenderer>().sortingOrder;
+        string renderLayer = GetComponent<SpriteRenderer>().sortingLayerName;
         int layer = gameObject.layer;
         string parent = transform.parent.name;
 
@@ -37,7 +37,7 @@ public class MineSpawn : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             GameObject mine = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Mine"));
-            mine.GetComponent<SpriteRenderer>().sortingOrder = renderLayer;
+            mine.GetComponent<SpriteRenderer>().sortingLayerName = renderLayer;
             mine.layer = layer;
             mine.transform.parent = tiles.Find(parent);
             mine.transform.position = transform.position + mineOffsets[randInts[i]];

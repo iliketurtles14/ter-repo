@@ -314,7 +314,7 @@ public class Solitary : MonoBehaviour
             {
                 GameObject slat = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/SlatsHorizontal"));
                 slat.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[139];
-                slat.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+                slat.GetComponent<SpriteRenderer>().sortingLayerName = tile.GetComponent<SpriteRenderer>().sortingLayerName;
                 slat.layer = tile.layer;
                 slat.transform.position = tile.transform.position;
                 slat.GetComponent<TileCollectionData>().tileData = new TileData
@@ -333,7 +333,7 @@ public class Solitary : MonoBehaviour
             {
                 GameObject slat = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/SlatsVertical"));
                 slat.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[40];
-                slat.GetComponent<SpriteRenderer>().sortingOrder = tile.GetComponent<SpriteRenderer>().sortingOrder;
+                slat.GetComponent<SpriteRenderer>().sortingLayerName = tile.GetComponent<SpriteRenderer>().sortingLayerName;
                 slat.layer = tile.layer;
                 slat.transform.position = tile.transform.position;
                 slat.GetComponent<TileCollectionData>().tileData = new TileData

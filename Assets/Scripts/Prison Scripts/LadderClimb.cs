@@ -103,8 +103,8 @@ public class LadderClimb : MonoBehaviour
         switch (currentLadder.GetComponent<LadderConnect>().goToLayer)
         {
             case "ground":
-                player.GetComponent<SpriteRenderer>().sortingOrder = 6;
-                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
+                player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
@@ -116,8 +116,8 @@ public class LadderClimb : MonoBehaviour
                 Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
                 break;
             case "vents":
-                player.GetComponent<SpriteRenderer>().sortingOrder = 11;
-                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
+                player.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
+                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
                 tiles.Find("VentTiles").gameObject.SetActive(true);
@@ -130,8 +130,8 @@ public class LadderClimb : MonoBehaviour
                 VentEnable();
                 break;
             case "roof":
-                player.GetComponent<SpriteRenderer>().sortingOrder = 15;
-                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 16;
+                player.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
+                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(true);
                 tiles.Find("RoofObjects").gameObject.SetActive(true);
@@ -178,8 +178,8 @@ public class LadderClimb : MonoBehaviour
     }
     public void SendToGround()//for death and solitary and other things that need to force the player to ground
     {                         //(includes hole climb stuff too heh)
-        player.GetComponent<SpriteRenderer>().sortingOrder = 6;
-        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
+        player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
         tiles.Find("RoofTiles").gameObject.SetActive(false);
         tiles.Find("RoofObjects").gameObject.SetActive(false);
@@ -189,8 +189,8 @@ public class LadderClimb : MonoBehaviour
         DisableAllLayerCollisions();
         Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
         Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
-        tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingOrder = -1;
-        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingOrder = -1;
+        tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+        tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundObjects").gameObject.SetActive(false);
         undergroundLight.SetActive(false);
         globalLight.SetActive(true);

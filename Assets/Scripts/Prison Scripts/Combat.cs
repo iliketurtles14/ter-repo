@@ -145,8 +145,8 @@ public class Combat : MonoBehaviour
 
         //shake screen
         fightFX.MakeScreenShake();
-        fightFX.MakeStar(npc.transform.position);
-        particlesScript.CreateDust(npc.transform.position, 1);
+        fightFX.MakeStar(npc.transform.position, npc.GetComponent<SpriteRenderer>().sortingLayerName);
+        particlesScript.CreateDust(npc.transform.position, 1, npc.GetComponent<SpriteRenderer>().sortingLayerName);
         //punch animation plays
 
         int lookNum = 0;

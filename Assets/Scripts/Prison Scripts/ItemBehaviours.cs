@@ -542,7 +542,7 @@ public class ItemBehaviours : MonoBehaviour
                 GameObject bracePrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Brace");
                 GameObject braceObj = Instantiate(bracePrefab, mcs.touchedEmptyDirt.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 mcs.touchedEmptyDirt.GetComponent<BoxCollider2D>().enabled = false;
-                braceObj.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                braceObj.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
 
                 //remove brace from inv
                 foreach(InventoryItem item in inventoryList)
@@ -685,7 +685,7 @@ public class ItemBehaviours : MonoBehaviour
                 yield break;
             }
 
-            particlesScript.CreateDust(ropeTilePos, 1);
+            particlesScript.CreateDust(ropeTilePos, 1, "Roof");
             
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -773,7 +773,7 @@ public class ItemBehaviours : MonoBehaviour
                 yield break;
             }
 
-            particlesScript.CreateDust(ropeTilePos, 1);
+            particlesScript.CreateDust(ropeTilePos, 1, "Roof");
 
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -841,7 +841,7 @@ public class ItemBehaviours : MonoBehaviour
 
         if(currentHeight >= ropeTileHeight && (identifier == "rope" || identifier == "sheet"))
         {
-            particlesScript.CreateDust(ropeTilePos, 1);
+            particlesScript.CreateDust(ropeTilePos, 1, "Roof");
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             float speed = 10f;
@@ -891,7 +891,7 @@ public class ItemBehaviours : MonoBehaviour
         }
         else if (currentHeight <= ropeTileHeight && identifier == "grapple")
         {
-            particlesScript.CreateDust(ropeTilePos, 1);
+            particlesScript.CreateDust(ropeTilePos, 1, "Roof");
             //move to tile
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             float speed = 10f;
@@ -1271,7 +1271,7 @@ public class ItemBehaviours : MonoBehaviour
             {
                 if (!tile.name.StartsWith("Dirt(Clone)"))
                 {
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                    tile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 }
 
                 if (tile.name.StartsWith("Dirt(Clone)"))
@@ -1280,7 +1280,7 @@ public class ItemBehaviours : MonoBehaviour
                 }
                 if (tile.name == "Rock(Clone)" || tile.name == "Mine(Clone)" || tile.name == "Brace(Clone)")
                 {
-                    tile.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                    tile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 }
             }
 
@@ -1544,7 +1544,7 @@ public class ItemBehaviours : MonoBehaviour
             case "cleaning":
                 while (barIsMoving)
                 {
-                    particlesScript.CreateDust(touchedTileObject.transform.position, 1);
+                    particlesScript.CreateDust(touchedTileObject.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
                     float time = 0;
                     while(time < .532f && barIsMoving)
                     {
@@ -1558,8 +1558,8 @@ public class ItemBehaviours : MonoBehaviour
             case "digging":
                 while (barIsMoving)
                 {
-                    particlesScript.CreateDust(touchedTileObject.transform.position, 1);
-                    particlesScript.CreateDirtParticles(touchedTileObject.transform.position);
+                    particlesScript.CreateDust(touchedTileObject.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
+                    particlesScript.CreateDirtParticles(touchedTileObject.transform.position, player.GetComponent<SpriteRenderer>().sortingLayerName);
                     float time = 0;
                     while (time < .532f && barIsMoving)
                     {
@@ -1665,7 +1665,8 @@ public class ItemBehaviours : MonoBehaviour
             if(!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer))
             {
                 emptyTile.layer = LayerMask.NameToLayer("Ground");
-                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                 emptyTile.transform.parent = tiles.Find("Ground");
 
                 //bad object stuff
@@ -1694,19 +1695,22 @@ public class ItemBehaviours : MonoBehaviour
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, undergroundLayer))
             {
                 emptyTile.layer = LayerMask.NameToLayer("Underground");
-                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = -5;
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 emptyTile.transform.parent = tiles.Find("Underground");
             }
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
             {
                 emptyTile.layer = LayerMask.NameToLayer("Vents");
-                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 emptyTile.transform.parent = tiles.Find("Vents");
             }
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, roofLayer))
             {
                 emptyTile.layer = LayerMask.NameToLayer("Roof");
-                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                 emptyTile.transform.parent = tiles.Find("Roof");
             }
             emptyTile.transform.position = tilePosition;
@@ -1820,22 +1824,26 @@ public class ItemBehaviours : MonoBehaviour
                 case 0:
                     itemObj.transform.parent = tiles.Find("UndergroundObjects");
                     itemObj.layer = LayerMask.NameToLayer("Underground");
-                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 11;
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                     break;
                 case 1:
                     itemObj.transform.parent = tiles.Find("GroundObjects");
                     itemObj.layer = LayerMask.NameToLayer("Ground");
-                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                     break;
                 case 2:
                     itemObj.transform.parent = tiles.Find("VentObjects");
                     itemObj.layer = LayerMask.NameToLayer("Vents");
-                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                     break;
                 case 3:
                     itemObj.transform.parent = tiles.Find("RoofObjects");
                     itemObj.layer = LayerMask.NameToLayer("Roof");
-                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                    itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                     break;
             }
         }

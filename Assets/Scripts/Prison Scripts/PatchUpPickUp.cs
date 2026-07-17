@@ -16,6 +16,7 @@ public class PatchUpPickUp : MonoBehaviour
     private Particles particlesScript;
     private WarningMessage warningScript;
     private MakeBadObject mbo;
+    private Transform player;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -26,6 +27,7 @@ public class PatchUpPickUp : MonoBehaviour
         particlesScript = GetComponent<Particles>();
         warningScript = GetComponent<WarningMessage>();
         mbo = GetComponent<MakeBadObject>();
+        player = RootObjectCache.GetRoot("Player").transform;
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -96,22 +98,26 @@ public class PatchUpPickUp : MonoBehaviour
                     case 0:
                         itemObj.transform.parent = tiles.Find("UndergroundObjects");
                         itemObj.layer = LayerMask.NameToLayer("Underground");
-                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = -4;
+                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                         break;
                     case 1:
                         itemObj.transform.parent = tiles.Find("GroundObjects");
                         itemObj.layer = LayerMask.NameToLayer("Ground");
-                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                         break;
                     case 2:
                         itemObj.transform.parent = tiles.Find("VentObjects");
                         itemObj.layer = LayerMask.NameToLayer("Vents");
-                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                         break;
                     case 3:
                         itemObj.transform.parent = tiles.Find("RoofObjects");
                         itemObj.layer = LayerMask.NameToLayer("Roof");
-                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                        itemObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        itemObj.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                         break;
                 }
             }
@@ -138,22 +144,26 @@ public class PatchUpPickUp : MonoBehaviour
                 {
                     case 0:
                         vent.layer = LayerMask.NameToLayer("Underground");
-                        vent.GetComponent<SpriteRenderer>().sortingOrder = -5;
+                        vent.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        vent.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                         vent.transform.parent = tiles.Find("Underground");
                         break;
                     case 1:
                         vent.layer = LayerMask.NameToLayer("Ground");
-                        vent.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        vent.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        vent.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                         vent.transform.parent = tiles.Find("Ground");
                         break;
                     case 2:
                         vent.layer = LayerMask.NameToLayer("Vents");
-                        vent.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                        vent.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        vent.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                         vent.transform.parent = tiles.Find("Vents");
                         break;
                     case 3:
                         vent.layer = LayerMask.NameToLayer("Roof");
-                        vent.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                        vent.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        vent.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                         vent.transform.parent = tiles.Find("Roof");
                         break;
                 }
@@ -203,22 +213,26 @@ public class PatchUpPickUp : MonoBehaviour
                 {
                     case 0:
                         emptyTile.layer = LayerMask.NameToLayer("Underground");
-                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = -5;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                         emptyTile.transform.parent = tiles.Find("Underground");
                         break;
                     case 1:
                         emptyTile.layer = LayerMask.NameToLayer("Ground");
-                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                         emptyTile.transform.parent = tiles.Find("Ground");
                         break;
                     case 2:
                         emptyTile.layer = LayerMask.NameToLayer("Vents");
-                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 9;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                         emptyTile.transform.parent = tiles.Find("Vents");
                         break;
                     case 3:
                         emptyTile.layer = LayerMask.NameToLayer("Roof");
-                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 13;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
+                        emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                         emptyTile.transform.parent = tiles.Find("Roof");
                         break;
                 }
@@ -270,7 +284,7 @@ public class PatchUpPickUp : MonoBehaviour
                 }
             }
 
-            particlesScript.CreateDust(mcs.touchedPatchUp.transform.position, 1);
+            particlesScript.CreateDust(mcs.touchedPatchUp.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
             Destroy(mcs.touchedPatchUp);
         }
     }

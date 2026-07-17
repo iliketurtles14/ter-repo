@@ -50,7 +50,7 @@ public class StepladderPickup : MonoBehaviour
             return;
         }
 
-        particlesScript.CreateDust(sl.transform.position, 1);
+        particlesScript.CreateDust(sl.transform.position, 1, sl.GetComponent<SpriteRenderer>().sortingLayerName);
         ItemData data = creator.CreateItemData(137);
         for (int i = 0; i < 6; i++)
         {

@@ -228,7 +228,7 @@ public class EscapeObjectController : MonoBehaviour
                 return;
             }
 
-            particlesScript.CreateDust(mcs.touchedEscapeObject.transform.position, 1);
+            particlesScript.CreateDust(mcs.touchedEscapeObject.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
             inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
             invSlots[selectionScript.selectedSlotNum].GetComponent<Image>().sprite = clear;
             handler.objectivesCleared++;
@@ -271,7 +271,7 @@ public class EscapeObjectController : MonoBehaviour
                                     if (obj.name == "Wall")
                                     {
                                         Destroy(obj.gameObject);
-                                        particlesScript.CreateDust(obj.position, 2);
+                                        particlesScript.CreateDust(obj.position, 2, obj.GetComponent<SpriteRenderer>().sortingLayerName);
                                     }
                                 }
                             }
@@ -294,7 +294,7 @@ public class EscapeObjectController : MonoBehaviour
                                 if (obj.name == "Concrete")
                                 {
                                     Destroy(obj.gameObject);
-                                    particlesScript.CreateDust(obj.position, 2);
+                                    particlesScript.CreateDust(obj.position, 2, obj.GetComponent<SpriteRenderer>().sortingLayerName);
                                 }
                             }
                         }

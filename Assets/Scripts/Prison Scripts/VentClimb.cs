@@ -120,8 +120,8 @@ public class VentClimb : MonoBehaviour
         Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, false);
         tiles.Find("VentTiles").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true);
-        player.GetComponent<SpriteRenderer>().sortingOrder = 11;
-        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 12;
+        player.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
+        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     public IEnumerator ClimbVentDown()
@@ -161,8 +161,8 @@ public class VentClimb : MonoBehaviour
             yield return new WaitForFixedUpdate();
             player.GetComponent<CapsuleCollider2D>().offset += colliderOffset;
             player.transform.position += playerOffset;
-            player.GetComponent<SpriteRenderer>().sortingOrder = 6;
-            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
+            player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
             deskStandScript.ShowVents();
             player.transform.position = deskUnder.transform.position + playerOffset;
             player.GetComponent<PlayerCtrl>().enabled = true;
@@ -186,8 +186,8 @@ public class VentClimb : MonoBehaviour
             tiles.Find("VentTiles").gameObject.SetActive(false);
             tiles.Find("VentObjects").gameObject.SetActive(false);
 
-            player.GetComponent<SpriteRenderer>().sortingOrder = 6;
-            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 7;
+            player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
 
             desks = deskStandScript.desks;
             foreach(GameObject desk in desks)

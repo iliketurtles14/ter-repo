@@ -160,8 +160,8 @@ public class Sittables : MonoBehaviour
 
         if (sittable.name.StartsWith("Locker"))
         {
-            player.GetComponent<SpriteRenderer>().sortingOrder = previousBodyLayer;
-            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = previousOutfitLayer;
+            player.GetComponent<SpriteRenderer>().sortingOrder = 5;
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 6;
         }
 
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -303,8 +303,6 @@ public class Sittables : MonoBehaviour
         }
         else if (sittable.name.StartsWith("Locker"))
         {
-            previousBodyLayer = player.GetComponent<SpriteRenderer>().sortingOrder;
-            previousOutfitLayer = player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder;
             player.GetComponent<SpriteRenderer>().sortingOrder = 0;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 0;
         }

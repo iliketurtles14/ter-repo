@@ -29,12 +29,13 @@ public class VitalController : MonoBehaviour
     private int oldFriends;
     private bool doneWithWait = false;
     private StatEffects statEffectsScript;
-
+    private SpriteRenderer sr;
 
     public void Start()
     {
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
+        sr = GetComponent<SpriteRenderer>();
 
         energyRate = 5;
         healthRate = 3;
@@ -238,7 +239,7 @@ public class VitalController : MonoBehaviour
                 data.energy -= energyRateAmount;
                 if(energyRate != 5)
                 {
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "energy"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "energy", sr.sortingLayerName));
                 }
             }
             if(data.energy < 0)
@@ -258,7 +259,7 @@ public class VitalController : MonoBehaviour
                 data.health += healthRateAmount;
                 if(healthRate != 3)
                 {
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "health"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "health", sr.sortingLayerName));
                 }
             }
             yield return null;

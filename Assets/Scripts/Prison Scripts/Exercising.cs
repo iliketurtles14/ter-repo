@@ -313,7 +313,7 @@ public class Exercising : MonoBehaviour
                 if(subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength", GetComponent<SpriteRenderer>().sortingLayerName));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -379,7 +379,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
-                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed", GetComponent<SpriteRenderer>().sortingLayerName));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -434,7 +434,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength", GetComponent<SpriteRenderer>().sortingLayerName));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -505,7 +505,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 3)
                     {
                         GetComponent<PlayerCollectionData>().playerData.strength++;
-                        StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "strength", GetComponent<SpriteRenderer>().sortingLayerName));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -582,7 +582,7 @@ public class Exercising : MonoBehaviour
                     if (subGain == 4)
                     {
                         GetComponent<PlayerCollectionData>().playerData.speed++;
-                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
+                        StartCoroutine(statEffectsScript.MakeEffect(transform, "speed", GetComponent<SpriteRenderer>().sortingLayerName));
                         subGain = 0;
                     }
                     hasAdded = true;
@@ -731,7 +731,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.strength++;
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "strength", GetComponent<SpriteRenderer>().sortingLayerName));
                     subGain = 0;
                 }
                 hasAdded = true;
@@ -812,7 +812,7 @@ public class Exercising : MonoBehaviour
                 if (subGain == 2)
                 {
                     GetComponent<PlayerCollectionData>().playerData.speed++;
-                    StartCoroutine(statEffectsScript.MakeEffect(transform, "speed"));
+                    StartCoroutine(statEffectsScript.MakeEffect(transform, "speed", GetComponent<SpriteRenderer>().sortingLayerName));
                     subGain = 0;
                 }
             }

@@ -185,20 +185,23 @@ public class Jeeps : MonoBehaviour
                 switch (i)
                 {
                     case 0:
-                        jeep.GetComponent<SpriteRenderer>().sortingOrder = -4;
-                        jeep.layer = 7;
+                        jeep.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        jeep.GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+                        jeep.layer = LayerMask.NameToLayer("Underground");
                         jeep.GetComponent<Rigidbody2D>().includeLayers = LayerMask.NameToLayer("Underground");
                         jeep.transform.parent = tiles.Find("UndergroundObjects");
                         break;
                         //its already defaulted to ground layer, so no need to check for that
                     case 2:
-                        jeep.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                        jeep.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        jeep.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                         jeep.layer = 8;
                         jeep.GetComponent<Rigidbody2D>().includeLayers = LayerMask.NameToLayer("Vents");
                         jeep.transform.parent = tiles.Find("VentObjects");
                         break;
                     case 3:
-                        jeep.GetComponent<SpriteRenderer>().sortingOrder = 14;
+                        jeep.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                        jeep.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                         jeep.layer = 9;
                         jeep.GetComponent<Rigidbody2D>().includeLayers = LayerMask.NameToLayer("Roof");
                         jeep.transform.parent = tiles.Find("RoofObjects");

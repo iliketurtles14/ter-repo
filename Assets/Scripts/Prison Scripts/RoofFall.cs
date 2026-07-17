@@ -82,7 +82,7 @@ public class RoofFall : MonoBehaviour
                 {
                     ladderClimbScript.SendToGround();
                     player.transform.position -= offset;
-                    particlesScript.CreateDust(player.transform.position, 1);
+                    particlesScript.CreateDust(player.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
                 }
                 else if (!shouldFall && floorCollisionScript.touchedRoofFloor == null)
                 {

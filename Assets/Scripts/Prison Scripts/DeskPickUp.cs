@@ -80,7 +80,7 @@ public class DeskPickUp : MonoBehaviour
     private void PickUpDesk(GameObject aDesk)
     {
         aDesk.GetComponent<BoxCollider2D>().isTrigger = true;
-        aDesk.GetComponent<SpriteRenderer>().sortingOrder = 8;
+        aDesk.GetComponent<SpriteRenderer>().sortingOrder = 7;
         deskStandScript.isPickedUp = true;
 
         foreach (Transform bo in badObjects)
@@ -96,7 +96,7 @@ public class DeskPickUp : MonoBehaviour
     {
         desk.GetComponent<BoxCollider2D>().isTrigger = false;
         desk.transform.position = floor.transform.position;
-        desk.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        desk.GetComponent<SpriteRenderer>().sortingOrder = 2;
         deskStandScript.isPickedUp = false;
 
         foreach(Transform bo in badObjects)

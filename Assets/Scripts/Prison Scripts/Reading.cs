@@ -52,7 +52,7 @@ public class Reading : MonoBehaviour
             yield return new WaitForSeconds(.045f);
         }
         GetComponent<PlayerCollectionData>().playerData.intellect++;
-        StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect"));
+        StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect", GetComponent<SpriteRenderer>().sortingLayerName));
         GetComponent<PlayerCollectionData>().playerData.energy += 5;
         isReading = false;
     }

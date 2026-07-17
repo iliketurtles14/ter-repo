@@ -30,6 +30,7 @@ public class Snowing : MonoBehaviour
         snowFlake.GetComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[311];
         snowFlake.GetComponent<SpriteRenderer>().size = new Vector2(.5f, .5f);
         snowFlake.GetComponent<SpriteRenderer>().sortingOrder = 100;
+        snowFlake.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
         snowFlake.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 180f / 255f);
         snowFlake.AddComponent<SnowFall>();
         snowFlake.transform.position = new Vector2(9999, 9999);

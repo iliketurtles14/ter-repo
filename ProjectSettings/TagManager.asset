@@ -146,20 +146,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 1972456887
-    locked: 0
-  - name: Roof
-    uniqueID: 3661231893
-    locked: 0
-  - name: Vents
-    uniqueID: 3031750423
+  - name: Underground
+    uniqueID: 3035350931
     locked: 0
   - name: Ground
     uniqueID: 1098254257
     locked: 0
-  - name: Underground
-    uniqueID: 3035350931
+  - name: Vents
+    uniqueID: 3031750423
+    locked: 0
+  - name: Roof
+    uniqueID: 3661231893
+    locked: 0
+  - name: UndergroundVisible
+    uniqueID: 3358365695
+    locked: 0
+  - name: UI
+    uniqueID: 1972456887
     locked: 0
   m_RenderingLayers:
   - Default

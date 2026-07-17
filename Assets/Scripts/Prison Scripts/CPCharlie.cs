@@ -95,7 +95,7 @@ public class CPCharlie : MonoBehaviour
                 {
                     if(obj.name == "CharlieGate")
                     {
-                        particlesScript.CreateDust(obj.position, 1);
+                        particlesScript.CreateDust(obj.position, 1, obj.GetComponent<SpriteRenderer>().sortingLayerName);
                         Destroy(obj.gameObject);
                     }
                 }

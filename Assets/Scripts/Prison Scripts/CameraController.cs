@@ -282,13 +282,13 @@ public class CameraController : MonoBehaviour
         if(heatToAdd > 0)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
-            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
         }
 
         if(data.heatSet != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
-            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
         }
         if (guardsNotSpecial.Count > 0)
         {

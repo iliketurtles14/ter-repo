@@ -49,15 +49,16 @@ public class Particles : MonoBehaviour
             dirtSprites.Add(ds.UIImages[i]);
         }
     }
-    public void CreateDust(Vector2 pos, float sizeScale)
+    public void CreateDust(Vector2 pos, float sizeScale, string layer)
     {
-        StartCoroutine(aCreateDust(pos, sizeScale));
+        StartCoroutine(aCreateDust(pos, sizeScale, layer));
     }
-    public IEnumerator aCreateDust(Vector2 pos, float sizeScale)
+    public IEnumerator aCreateDust(Vector2 pos, float sizeScale, string layer)
     {
         GameObject dust = new GameObject();
         dust.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         dust.GetComponent<SpriteRenderer>().sortingOrder = 100;
+        dust.GetComponent<SpriteRenderer>().sortingLayerName = layer;
         dust.name = "Dust";
         dust.transform.parent = tiles.Find("GroundObjects"); //just doing this to make it organized
         dust.transform.position = pos;
@@ -73,15 +74,16 @@ public class Particles : MonoBehaviour
 
         Destroy(dust);
     }
-    public void CreateDirtParticles(Vector2 pos)
+    public void CreateDirtParticles(Vector2 pos, string layer)
     {
-        StartCoroutine(aCreateDirtParticles(pos));
+        StartCoroutine(aCreateDirtParticles(pos, layer));
     }
-    public IEnumerator aCreateDirtParticles(Vector2 pos)
+    public IEnumerator aCreateDirtParticles(Vector2 pos, string layer)
     {
         GameObject dirt = new GameObject();
         dirt.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         dirt.GetComponent<SpriteRenderer>().sortingOrder = 101;
+        dirt.GetComponent<SpriteRenderer>().sortingLayerName = layer;
         dirt.name = "DirtParticles";
         dirt.transform.parent = tiles.Find("GroundObjects");
         dirt.transform.position = pos;

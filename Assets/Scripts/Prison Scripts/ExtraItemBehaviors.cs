@@ -219,7 +219,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         npc.GetComponent<NPCCollectionData>().npcData.isTied = true;
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
-        particlesScript.CreateDust(npc.transform.position, 1);
+        particlesScript.CreateDust(npc.transform.position, 1, npc.GetComponent<SpriteRenderer>().sortingLayerName);
         BadObjectData data = new BadObjectData
         {
             untie = true,
@@ -277,7 +277,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     }
     private void PlacePatchUp(string type, int slot, GameObject obj) //wall, vent, hole, fence
     {
-        particlesScript.CreateDust(obj.transform.position, 1);
+        particlesScript.CreateDust(obj.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
 
         int id = inventoryScript.inventory[slot].itemData.id;
         string layerTilesName = "Ground";
@@ -338,7 +338,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         poster.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[180];
                         poster.transform.parent = tiles.Find(layerObjectsName);
                         poster.layer = LayerMask.NameToLayer(layerTilesName);
-                        poster.GetComponent<SpriteRenderer>().sortingOrder = layerObjectsSR;
+                        poster.GetComponent<SpriteRenderer>().sortingLayerName = layerTilesName;
                         poster.GetComponent<PatchUpHandler>().connectedTile = obj.GetComponent<BrokenTileConnection>().connectedTile;
                         PatchUpHandler handler = poster.GetComponent<PatchUpHandler>();
                         foreach (Transform aObj in tiles.Find("GroundObjects"))
@@ -462,7 +462,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         vent.GetComponent<TileCollectionData>().tileData.tileType = null;
                         vent.GetComponent<TileCollectionData>().tileData.currentDurability = 5;
                         vent.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                        vent.GetComponent<SpriteRenderer>().sortingOrder = layerObjectsSR;
+                        vent.GetComponent<SpriteRenderer>().sortingLayerName = layerTilesName;
                         vent.layer = LayerMask.NameToLayer("VentCovers");
                         vent.transform.position = obj.transform.position;
                         vent.transform.parent = tiles.Find(layerObjectsName);
@@ -472,7 +472,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         GameObject fakeVent = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/FakeVent"));
                         fakeVent.name = "FakeVent";
                         fakeVent.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[150];
-                        fakeVent.GetComponent<SpriteRenderer>().sortingOrder = layerObjectsSR;
+                        fakeVent.GetComponent<SpriteRenderer>().sortingLayerName = layerTilesName;
                         fakeVent.layer = LayerMask.NameToLayer("VentCovers");
                         fakeVent.transform.position = obj.transform.position;
                         fakeVent.transform.parent = tiles.Find(layerObjectsName);
@@ -495,7 +495,8 @@ public class ExtraItemBehaviors : MonoBehaviour
                 dirtCrumbs.AddComponent<SpriteRenderer>().sprite = DataSender.instance.UIImages[178];
                 dirtCrumbs.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
                 dirtCrumbs.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
-                dirtCrumbs.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                dirtCrumbs.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                dirtCrumbs.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                 dirtCrumbs.transform.position = obj.transform.position;
                 dirtCrumbs.layer = LayerMask.NameToLayer("Ground");
                 Vector3 renderVector = new Vector3(0, 0, 1); //to make it behind a new hole object
@@ -586,7 +587,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     private void BlockCamera(int slot, GameObject cam)
     {
         StartCoroutine(cam.GetComponent<CameraController>().TurnOffCam(inventoryScript.inventory[slot].itemData.cameraBlock, false));
-        particlesScript.CreateDust(cam.transform.position, 1);
+        particlesScript.CreateDust(cam.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
         inventoryScript.inventory[slot].itemData.currentDurability -= inventoryScript.inventory[slot].itemData.durability;
         if (inventoryScript.inventory[slot].itemData.currentDurability <= 0)
         {
@@ -600,7 +601,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
 
-        particlesScript.CreateDust(floor.transform.position, 1);
+        particlesScript.CreateDust(floor.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
 
         GameObject sl = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Stepladder"));
         sl.name = "Stepladder";
@@ -627,19 +628,19 @@ public class ExtraItemBehaviors : MonoBehaviour
         if(health != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.health += health;
-            StartCoroutine(statEffectsScript.MakeEffect(player, "health"));
+            StartCoroutine(statEffectsScript.MakeEffect(player, "health", player.GetComponent<SpriteRenderer>().sortingLayerName));
         }
         if(energy != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.energy -= energy;
-            StartCoroutine(statEffectsScript.MakeEffect(player, "energy"));
+            StartCoroutine(statEffectsScript.MakeEffect(player, "energy", player.GetComponent<SpriteRenderer>().sortingLayerName));
         }
     }
     private void InstaKO(int slot, GameObject npc)
     {
         inventoryScript.inventory[slot].itemData = null;
         invSlots[slot].GetComponent<Image>().sprite = clear;
-        particlesScript.CreateDust(npc.transform.position, 1);
+        particlesScript.CreateDust(npc.transform.position, 1, npc.GetComponent<SpriteRenderer>().sortingLayerName);
         deathScript.KillNPC(npc);
     }
     private void MakeShiv(int slot, Vector2 pos)
@@ -658,7 +659,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         ItemData data = creator.CreateItemData(idToMake);
         inventoryScript.inventory[slot].itemData = data;
         invSlots[slot].GetComponent<Image>().sprite = data.sprite;
-        particlesScript.CreateDust(pos, 1);
+        particlesScript.CreateDust(pos, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
     }
 }
  

@@ -40,8 +40,8 @@ public class NPCPickup : MonoBehaviour
         if (hasPickedUp)
         {
             pickedUpNPC.transform.position = player.position + offsetVector;
-            pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 8;
-            pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 9;
+            pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 7;
+            pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 8;
             bc.deskIsPickedUp = true;
             oc.deskIsPickedUp = true;
 
@@ -51,8 +51,8 @@ public class NPCPickup : MonoBehaviour
                 if(distance <= 2.4f)
                 {
                     pickedUpNPC.transform.position = mcs.touchedFloor.transform.position;
-                    pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 4;
-                    pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 5;
+                    pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                    pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 4;
                     bc.deskIsPickedUp = false;
                     oc.deskIsPickedUp = false;
                     hasPickedUp = false;
@@ -64,8 +64,8 @@ public class NPCPickup : MonoBehaviour
             (playerColData.playerData.isDead && hasPickedUp))
         {
             pickedUpNPC.transform.position = player.position;
-            pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 4;
-            pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 5;
+            pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 3;
+            pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 4;
             bc.deskIsPickedUp = false;
             oc.deskIsPickedUp = false;
             hasPickedUp = false;

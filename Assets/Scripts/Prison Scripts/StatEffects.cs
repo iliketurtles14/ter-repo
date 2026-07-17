@@ -44,11 +44,12 @@ public class StatEffects : MonoBehaviour
             { "intellect", intellect }, { "energy", energy }, { "health", health }
         };
     }
-    public IEnumerator MakeEffect(Transform obj, string type)//heat, good, bad, speed, strength, intellect
+    public IEnumerator MakeEffect(Transform obj, string type, string layer)//heat, good, bad, speed, strength, intellect
     {
         Sprite sprite = spriteDict[type];
         GameObject effectObj = new GameObject("EffectObject");
         effectObj.AddComponent<SpriteRenderer>().sortingOrder = 100;
+        effectObj.GetComponent<SpriteRenderer>().sortingLayerName = layer;
         effectObj.GetComponent<SpriteRenderer>().sprite = sprite;
         effectObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         effectObj.GetComponent<SpriteRenderer>().size = sizeDict[type];

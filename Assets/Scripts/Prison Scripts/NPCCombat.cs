@@ -220,8 +220,8 @@ public class NPCCombat : MonoBehaviour
         {
             fightFX.MakeScreenShake();
         }
-        fightFX.MakeStar(aTarget.transform.position);
-        particlesScript.CreateDust(aTarget.transform.position, 1);
+        fightFX.MakeStar(aTarget.transform.position, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
+        particlesScript.CreateDust(aTarget.transform.position, 1, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
 
         //punch anim plays
 

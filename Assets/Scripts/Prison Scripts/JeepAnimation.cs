@@ -16,11 +16,13 @@ public class JeepAnimation : MonoBehaviour
     private Vector2 dustPos;
     private Coroutine animCoroutine;
     private Coroutine dustCoroutine;
+    private SpriteRenderer sr;
     private void Start()
     {
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         jeepMovementScript = GetComponent<JeepMovement>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
+        sr = GetComponent<SpriteRenderer>();
         jeepSprites = new List<Sprite>()
         {
             applyScript.PrisonObjectSprites[216],
@@ -52,27 +54,27 @@ public class JeepAnimation : MonoBehaviour
             {
                 case "right": 
                     lookNum = 0; 
-                    GetComponent<SpriteRenderer>().size = new Vector2(4.8f, 3.2f);
+                    sr.size = new Vector2(4.8f, 3.2f);
                     dustPos = new Vector2(transform.position.x - 2.4f, transform.position.y);
                     break;
                 case "up":
                     lookNum = 2;
-                    GetComponent<SpriteRenderer>().size = new Vector2(3.2f, 4.8f);
+                    sr.size = new Vector2(3.2f, 4.8f);
                     dustPos = new Vector2(transform.position.x, transform.position.y - 2.4f);
                     break;
                 case "left": 
                     lookNum = 4;
-                    GetComponent<SpriteRenderer>().size = new Vector2(4.8f, 3.2f);
+                    sr.size = new Vector2(4.8f, 3.2f);
                     dustPos = new Vector2(transform.position.x + 2.4f, transform.position.y);
                     break;
                 case "down":
                     lookNum = 6;
-                    GetComponent<SpriteRenderer>().size = new Vector2(3.2f, 4.8f);
+                    sr.size = new Vector2(3.2f, 4.8f);
                     dustPos = new Vector2(transform.position.x, transform.position.y + 2.4f);
                     break;
             }
 
-            GetComponent<SpriteRenderer>().sprite = jeepSprites[lookNum + whichCycle];
+            sr.sprite = jeepSprites[lookNum + whichCycle];
         }
 
         oldLookDir = lookDir;
@@ -108,7 +110,7 @@ public class JeepAnimation : MonoBehaviour
                 yield return null;
             }
             float rand = UnityEngine.Random.Range(1f, 2f);
-            particlesScript.CreateDust(dustPos, rand);
+            particlesScript.CreateDust(dustPos, rand, sr.sortingLayerName);
         }
     }
 }

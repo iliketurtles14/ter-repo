@@ -113,7 +113,7 @@ public class NPCSpeech : MonoBehaviour
                 messageType = "Rep_3";
             }
         }
-        StartCoroutine(statEffectsScript.MakeEffect(transform, "good"));
+        StartCoroutine(statEffectsScript.MakeEffect(transform, "good", GetComponent<SpriteRenderer>().sortingLayerName));
         StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
     }
     private IEnumerator SpeechLoop() //this has been partially replaced by NPCSpeechController.cs to create a more te1 feeling to speech stuff

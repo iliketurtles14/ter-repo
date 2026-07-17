@@ -349,7 +349,7 @@ public class SeeBadActions : MonoBehaviour
             player.GetComponent<PlayerCollectionData>().playerData.heat += heatToAdd;
             if(badObject.name != "guardNonInmateOutfit" && badObject.name != "inmateNonInmateOutfit")
             {
-                StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+                StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
             }
         }
 
@@ -357,7 +357,7 @@ public class SeeBadActions : MonoBehaviour
         if (data.heatSet != -1)
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
-            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat"));
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
         }
 
         //should aggro
@@ -494,7 +494,7 @@ public class SeeBadActions : MonoBehaviour
                 break;
             }
         }
-        particlesScript.CreateDust(stepladder.transform.position, 1);
+        particlesScript.CreateDust(stepladder.transform.position, 1, GetComponent<SpriteRenderer>().sortingLayerName);
         Destroy(stepladder.gameObject);
     }
     private IEnumerator TakeSheetsDown(Transform sheets)
@@ -550,14 +550,15 @@ public class SeeBadActions : MonoBehaviour
             yield return null;
         }
 
-        particlesScript.CreateDust(sheets.position, 1);
+        particlesScript.CreateDust(sheets.position, 1, GetComponent<SpriteRenderer>().sortingLayerName);
         Destroy(sheets.gameObject);
 
         GameObject sheetFall = new GameObject("SheetFall");
         sheetFall.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         DataSender ds = DataSender.instance;
         sheetFall.GetComponent<SpriteRenderer>().sprite = ds.PrisonObjectImages[242];
-        sheetFall.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        sheetFall.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        sheetFall.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         sheetFall.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
         sheetFall.transform.position = goToVector;
 

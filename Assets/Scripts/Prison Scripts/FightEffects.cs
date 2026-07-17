@@ -30,11 +30,11 @@ public class FightEffects : MonoBehaviour
         yield return new WaitForSeconds(.05f);
         mainCam.transform.position += rand2;
     }
-    public void MakeStar(Vector2 pos)
+    public void MakeStar(Vector2 pos, string layer)
     {
-        StartCoroutine(aMakeStar(pos));
+        StartCoroutine(aMakeStar(pos, layer));
     }
-    public IEnumerator aMakeStar(Vector2 pos)
+    public IEnumerator aMakeStar(Vector2 pos, string layer)
     {
         //.083
         DataSender ds = DataSender.instance;
@@ -44,6 +44,7 @@ public class FightEffects : MonoBehaviour
         sr.drawMode = SpriteDrawMode.Sliced;
         sr.size = new Vector2(1.6f, 1.6f);
         sr.color += new Color(0, 0, -.5f);
+        sr.sortingLayerName = layer;
         sr.sortingOrder = 100;
         starObj.transform.position = pos;
         yield return new WaitForSeconds(.083f);
