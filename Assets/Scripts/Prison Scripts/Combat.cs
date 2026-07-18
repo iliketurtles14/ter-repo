@@ -147,6 +147,7 @@ public class Combat : MonoBehaviour
         fightFX.MakeScreenShake();
         fightFX.MakeStar(npc.transform.position, npc.GetComponent<SpriteRenderer>().sortingLayerName);
         particlesScript.CreateDust(npc.transform.position, 1, npc.GetComponent<SpriteRenderer>().sortingLayerName);
+        PSoundController.PlaySound("punch_new");
         //punch animation plays
 
         int lookNum = 0;
@@ -254,6 +255,7 @@ public class Combat : MonoBehaviour
                 StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
                 GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
                 missionAskScript.savedMissions.Remove(mission);
+                PSoundController.PlaySound("buy");
             }
         }
     }

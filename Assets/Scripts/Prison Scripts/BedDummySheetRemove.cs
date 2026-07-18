@@ -90,7 +90,7 @@ public class BedDummySheetRemove : MonoBehaviour
                 }
             }
         }
-
+        PSoundController.PlaySound("pickup");
         Destroy(obj);
     }
 }

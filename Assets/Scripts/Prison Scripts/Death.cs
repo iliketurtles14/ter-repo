@@ -65,6 +65,7 @@ public class Death : MonoBehaviour
             }
         }
         StartCoroutine(PlayerFadeOut());
+        PSoundController.PlaySound("en_hit");
     }
     private IEnumerator PlayerFadeOut()
     {
@@ -184,6 +185,7 @@ public class Death : MonoBehaviour
             }
         }
         StartCoroutine(NPCWake(npc));
+        PSoundController.PlaySound("en_hit");
     }
     private IEnumerator NPCWake(GameObject npc)
     {

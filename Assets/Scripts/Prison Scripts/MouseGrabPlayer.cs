@@ -25,7 +25,7 @@ public class MouseGrabPlayer : MonoBehaviour
         {
             dragging = true;
             rb.bodyType = RigidbodyType2D.Kinematic;
-
+            PSoundController.PlaySound("pickup");
             lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
 
@@ -41,6 +41,7 @@ public class MouseGrabPlayer : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && dragging)
         {
+            PSoundController.PlaySound("throw");
             dragging = false;
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.linearVelocity = throwVelocity * throwMultiplier;

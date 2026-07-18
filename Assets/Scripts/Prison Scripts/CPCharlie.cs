@@ -102,6 +102,7 @@ public class CPCharlie : MonoBehaviour
             }
             invScript.inventory[slot].itemData = null;
             slots[slot].GetComponent<Image>().sprite = clear;
+            PSoundController.PlaySound("pickup");
         }
         else if(id == 256)
         {
@@ -122,6 +123,7 @@ public class CPCharlie : MonoBehaviour
             player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
             string msg = charlie.GetComponent<NPCSpeech>().GetMessage("Guards_Halt");
             StartCoroutine(charlie.GetComponent<NPCSpeech>().MakeTextBox(msg, charlie.transform, true));
+            PSoundController.PlaySound("lose");
         }
         else
         {

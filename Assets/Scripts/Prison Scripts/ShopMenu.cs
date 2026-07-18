@@ -129,6 +129,13 @@ public class ShopMenu : MonoBehaviour
                 shopSlots[shopSlotNum].GetComponent<Image>().sprite = clearSprite;
                 costObjects[shopSlotNum].GetComponent<TextMeshProUGUI>().text = "";
                 player.GetComponent<PlayerCollectionData>().playerData.money -= prices[shopSlotNum];
+                PSoundController.PlaySound("buy");
+            }
+            else if(mcs.isTouchingShopSlot && mcs.touchedShopSlot.name.StartsWith("Item") &&
+                mcs.touchedShopSlot.GetComponent<Image>().sprite != clearSprite &&
+                Input.GetMouseButtonDown(0) && !invIsFull && playerMoney < prices[shopSlotNum])
+            {
+                PSoundController.PlaySound("lose");
             }
 
             //exiting the menu

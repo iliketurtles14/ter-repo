@@ -226,6 +226,7 @@ public class ExtraItemBehaviors : MonoBehaviour
             attachedObject = npc
         };
         mbo.CreateBadObject(data, "untie");
+        PSoundController.PlaySound("throw");
     }
     private void PlaceBedSheet(int slot, GameObject bars)
     {
@@ -245,6 +246,7 @@ public class ExtraItemBehaviors : MonoBehaviour
             messageType = "Sheets"
         };
         mbo.CreateBadObject(data, "sheets");
+        PSoundController.PlaySound("step");
     }
     private void PlaceBedDummy(int slot, GameObject bed)
     {
@@ -274,6 +276,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         dummy.transform.parent = tiles.Find("GroundObjects");
         dummy.transform.position = new Vector3(bed.transform.position.x, bed.transform.position.y, -1);
         dummy.GetComponent<SpriteRenderer>().sprite = dummySprite;
+        PSoundController.PlaySound("throw");
     }
     private void PlacePatchUp(string type, int slot, GameObject obj) //wall, vent, hole, fence
     {
@@ -368,6 +371,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                                 handler.hasHoleUnder = false;
                             }
                         }
+                        PSoundController.PlaySound("step");
                         break;
                     case 97://fake wall block
                         GameObject fakeWallBlock = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/FakeWallBlock"));
@@ -405,6 +409,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                                 handler.hasHoleUnder = false;
                             }
                         }
+                        PSoundController.PlaySound("step");
                         Destroy(obj);
                         break;
                     case 154://wall block
@@ -439,6 +444,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                                 aTCD.tileData.holeIsUnder = false;
                             }
                         }
+                        PSoundController.PlaySound("throw");
                         Destroy(obj);
                         break;
                 }
@@ -480,6 +486,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         Destroy(obj);
                         break;
                 }
+                PSoundController.PlaySound("plip");
                 break;
             case "hole":
                 foreach (Transform bo in badObjects)
@@ -501,7 +508,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                 dirtCrumbs.layer = LayerMask.NameToLayer("Ground");
                 Vector3 renderVector = new Vector3(0, 0, 1); //to make it behind a new hole object
                 dirtCrumbs.transform.position += renderVector;
-
+                PSoundController.PlaySound("throw");
                 foreach(Transform tile in tiles.Find("Ground"))
                 {
                     if(tile.position == obj.transform.position && tile.CompareTag("Digable"))
@@ -577,6 +584,7 @@ public class ExtraItemBehaviors : MonoBehaviour
                         tcd.tileData.holeIsUnder = false;
                     }
                 }
+                PSoundController.PlaySound("throw");
                 Destroy(obj);
                 break;
         }
@@ -595,6 +603,7 @@ public class ExtraItemBehaviors : MonoBehaviour
             invSlots[slot].GetComponent<SpriteRenderer>().sprite = clear;
             
         }
+        PSoundController.PlaySound("close");
     }
     private void PlaceStepladder(int slot, GameObject floor)
     {
@@ -615,6 +624,7 @@ public class ExtraItemBehaviors : MonoBehaviour
             attachedObject = sl
         };
         mbo.CreateBadObject(data, "stepladder");
+        PSoundController.PlaySound("hit");
     }
     private void Eat(int slot)
     {
@@ -635,6 +645,7 @@ public class ExtraItemBehaviors : MonoBehaviour
             player.GetComponent<PlayerCollectionData>().playerData.energy -= energy;
             StartCoroutine(statEffectsScript.MakeEffect(player, "energy", player.GetComponent<SpriteRenderer>().sortingLayerName));
         }
+        PSoundController.PlaySound("pickup");
     }
     private void InstaKO(int slot, GameObject npc)
     {
@@ -660,6 +671,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         inventoryScript.inventory[slot].itemData = data;
         invSlots[slot].GetComponent<Image>().sprite = data.sprite;
         particlesScript.CreateDust(pos, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
+        PSoundController.PlaySound("pickup");
     }
 }
  

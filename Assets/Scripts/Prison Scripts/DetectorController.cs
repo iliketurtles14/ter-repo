@@ -73,6 +73,7 @@ public class DetectorController : MonoBehaviour
     }
     private IEnumerator TriggerDetector()
     {
+        PSoundController.PlaySound("hp");
         player.GetComponent<PlayerCollectionData>().playerData.heat = 99;
 
         SpriteRenderer sr = GetComponent<SpriteRenderer>();

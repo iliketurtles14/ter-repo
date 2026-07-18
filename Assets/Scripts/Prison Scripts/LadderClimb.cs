@@ -99,7 +99,7 @@ public class LadderClimb : MonoBehaviour
         yield return new WaitForFixedUpdate();
 
         player.transform.position = currentLadder.GetComponent<LadderConnect>().connectedTilePos;
-
+        PSoundController.PlaySound("door");
         switch (currentLadder.GetComponent<LadderConnect>().goToLayer)
         {
             case "ground":

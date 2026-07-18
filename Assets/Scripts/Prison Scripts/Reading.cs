@@ -30,7 +30,8 @@ public class Reading : MonoBehaviour
             if (distance <= 2.4f)
             {
                 oldPos = transform.position;
-                StartCoroutine(Read());
+                PSoundController.PlaySound("open");
+                StartCoroutine(Read(mcs.touchedReader.name));
             }
         }
         if (isReading && Vector2.Distance(oldPos, transform.position) > .01f)
@@ -38,11 +39,23 @@ public class Reading : MonoBehaviour
             stopReading = true;
         }
     }
-    public IEnumerator Read()
+    public IEnumerator Read(string readerName)
     {
         isReading = true;
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, true));
-        itemBehavioursScript.CreateActionText("asdf");
+        int rand = UnityEngine.Random.Range(0, 100);
+        if(rand == 0 && readerName == "ComputerTable")
+        {
+            itemBehavioursScript.CreateActionText("LOLing at cats");
+        }
+        else if(readerName == "ComputerTable")
+        {
+            itemBehavioursScript.CreateActionText("Browsing");
+        }
+        else
+        {
+            itemBehavioursScript.CreateActionText("Reading");
+        }
         for (int i = 0; i < 49; i++)
         {
             if (stopReading)
@@ -54,6 +67,7 @@ public class Reading : MonoBehaviour
         GetComponent<PlayerCollectionData>().playerData.intellect++;
         StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect", GetComponent<SpriteRenderer>().sortingLayerName));
         GetComponent<PlayerCollectionData>().playerData.energy += 5;
+        PSoundController.PlaySound("open");
         isReading = false;
     }
 }

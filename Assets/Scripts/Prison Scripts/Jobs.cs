@@ -95,6 +95,8 @@ public class Jobs : MonoBehaviour
         {
             return;
         }
+
+        PSoundController.PlaySound("buy");
         
         //stretch bar to size
         //divide the size by 2 and make that its pos
@@ -116,6 +118,7 @@ public class Jobs : MonoBehaviour
         {
             doneWithJob = true;
             GiveJobMoney();
+            PSoundController.PlaySound("hp");
         }
     }
     private void GiveJobMoney()

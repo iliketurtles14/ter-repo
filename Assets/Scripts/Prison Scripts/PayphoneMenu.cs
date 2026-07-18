@@ -102,8 +102,10 @@ public class PayphoneMenu : MonoBehaviour
         int price = ((hintNum - 1) * 10) + baseCost;
         if(player.GetComponent<PlayerCollectionData>().playerData.money < price)
         {
+            PSoundController.PlaySound("lose");
             return;
         }
+        PSoundController.PlaySound("buy");
         player.GetComponent<PlayerCollectionData>().playerData.money -= price;
 
         TextMeshProUGUI tmp = null;
@@ -165,6 +167,7 @@ public class PayphoneMenu : MonoBehaviour
                 float distance = Vector2.Distance(player.position, mcs.touchedPayphone.transform.position);
                 if(distance <= 2.4f)
                 {
+                    PSoundController.PlaySound("open");
                     OpenMenu();
                 }
             }
@@ -173,6 +176,7 @@ public class PayphoneMenu : MonoBehaviour
         {
             if(!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingExtra && !mcs.isTouchingPayphone && !mcs.isTouchingButton && Input.GetMouseButtonDown(0))
             {
+                PSoundController.PlaySound("close");
                 CloseMenu();
             }
         }

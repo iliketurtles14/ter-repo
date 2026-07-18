@@ -32,6 +32,7 @@ public class NPCPickup : MonoBehaviour
                 float distance = Vector2.Distance(player.position, mcs.touchedNPC.transform.position);
                 if(distance <= 2.4f)
                 {
+                    PSoundController.PlaySound("pickup");
                     hasPickedUp = true;
                     pickedUpNPC = mcs.touchedNPC;
                 }
@@ -50,6 +51,7 @@ public class NPCPickup : MonoBehaviour
                 float distance = Vector2.Distance(player.position, mcs.touchedFloor.transform.position);
                 if(distance <= 2.4f)
                 {
+                    PSoundController.PlaySound("throw");
                     pickedUpNPC.transform.position = mcs.touchedFloor.transform.position;
                     pickedUpNPC.GetComponent<SpriteRenderer>().sortingOrder = 3;
                     pickedUpNPC.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 4;

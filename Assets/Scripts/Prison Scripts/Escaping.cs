@@ -79,7 +79,7 @@ public class Escaping : MonoBehaviour
         ec.Find("EscapeMenuPanel").gameObject.SetActive(true);
         ec.Find("BlockerPanel1").gameObject.SetActive(false);
         ec.Find("BlockerPanel2").gameObject.SetActive(false);
-
+        PSoundController.PlaySound("rumble");
         //do score anims
         yield return new WaitForSeconds(.85f);
         ec.Find("EscapeMenuPanel").Find("PlayerStatsText").gameObject.SetActive(true);

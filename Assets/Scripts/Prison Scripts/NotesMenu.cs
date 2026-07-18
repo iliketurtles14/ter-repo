@@ -27,6 +27,7 @@ public class NotesMenu : MonoBehaviour
     {
         if (menuIsOpen && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
         {
+            PSoundController.PlaySound("close");
             CloseMenu(false);
         }
     }

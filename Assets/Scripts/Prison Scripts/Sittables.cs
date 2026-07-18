@@ -201,6 +201,7 @@ public class Sittables : MonoBehaviour
         {
             climbOffset = new Vector3(0, -.8f);
             inLocker = true;
+            PSoundController.PlaySound("door");
         }
         else
         {

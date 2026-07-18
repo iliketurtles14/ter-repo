@@ -28,6 +28,7 @@ public class Takeover : MonoBehaviour
     public void StartTakeover()
     {
         takeoverIsActive = true;
+        PSoundController.PlaySound("buy");
         string msg = "Okay " + player.GetComponent<PlayerCollectionData>().playerData.displayName + ", you've made your point!\n\nThe main prison gate is now unlocked as requested, just please... don't hurt anyone else!";
         string warden = "Warden " + currentMap.warden;
         noteScript.CreateWardenNote("getJob", msg, warden);

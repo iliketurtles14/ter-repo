@@ -71,6 +71,7 @@ public class NPCSpeech : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && !isTalking && !textBoxIsActive && mcs.isTouchingNPC && mcs.touchedNPC == gameObject && (mcs.touchedNPC.name.StartsWith("Inmate") || mcs.touchedNPC.name.StartsWith("Guard")) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
         {
             isTalking = true;
+            PSoundController.PlaySound("open");
             Talk();
         }
 

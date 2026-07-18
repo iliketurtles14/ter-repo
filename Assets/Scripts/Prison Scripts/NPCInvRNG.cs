@@ -72,6 +72,7 @@ public class NPCInvRNG : MonoBehaviour
             int idRand = UnityEngine.Random.Range(0, itemsInInmates.Count);
             ItemData data = creator.CreateItemData(itemsInInmates[idRand]);
             NPCInvItem item = new NPCInvItem();
+            data.inmateGiveName = null;
             item.itemData = data;
 
             npc.GetComponent<NPCCollectionData>().npcData.inventory[i] = item;

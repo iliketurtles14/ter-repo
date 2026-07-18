@@ -271,6 +271,7 @@ public class SeeBadActions : MonoBehaviour
         
         BadObjectData data = badObject.GetComponent<BadObjectData>();
         bool isGuard = GetComponent<NPCCollectionData>().npcData.isGuard;
+        bool playSound = false;
 
         if(data.attachedObject == player.gameObject && player.GetComponent<PlayerCollectionData>().playerData.isDead)
         {
@@ -350,6 +351,10 @@ public class SeeBadActions : MonoBehaviour
             if(badObject.name != "guardNonInmateOutfit" && badObject.name != "inmateNonInmateOutfit")
             {
                 StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
+                if (isGuard)
+                {
+                    PSoundController.PlaySound("lose");
+                }
             }
         }
 
@@ -358,6 +363,10 @@ public class SeeBadActions : MonoBehaviour
         {
             player.GetComponent<PlayerCollectionData>().playerData.heat = data.heatSet;
             StartCoroutine(statEffectsScript.MakeEffect(transform, "heat", GetComponent<SpriteRenderer>().sortingLayerName));
+            if (isGuard)
+            {
+                PSoundController.PlaySound("lose");
+            }
         }
 
         //should aggro
@@ -384,6 +393,7 @@ public class SeeBadActions : MonoBehaviour
         //toilet
         if (data.toilet)
         {
+            PSoundController.PlaySound("lose");
             StartCoroutine(ToiletUnclog(data.attachedObject.transform));
         }
 

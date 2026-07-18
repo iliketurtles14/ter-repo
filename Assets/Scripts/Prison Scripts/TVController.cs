@@ -65,6 +65,7 @@ public class TVController : MonoBehaviour
                 {
                     StopCoroutine(tvStartCoroutine);
                 }
+                PSoundController.PlaySound("step");
                 tvStartCoroutine = StartCoroutine(StartTV());
             }
         }

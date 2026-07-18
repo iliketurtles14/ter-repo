@@ -157,6 +157,7 @@ public class DeskInv : MonoBehaviour
                 }
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
+                PSoundController.PlaySound("step");
             }
             
             //putting items in the inv
@@ -205,6 +206,7 @@ public class DeskInv : MonoBehaviour
                             break;
                         }
                     }
+                    PSoundController.PlaySound("step");
                 }
                 else
                 {
@@ -237,6 +239,7 @@ public class DeskInv : MonoBehaviour
 
                     StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + cost, "favor"));
                     player.GetComponent<PlayerCollectionData>().playerData.money += cost;
+                    PSoundController.PlaySound("buy");
                 }
                 deskInv[deskSlotNumber].itemData = null;
                 mcs.touchedDeskSlot.GetComponent<Image>().sprite = ClearSprite;
@@ -244,6 +247,7 @@ public class DeskInv : MonoBehaviour
             //exiting the desk
             if (!mcs.isTouchingInvSlot && !mcs.isTouchingDeskPanel && !mcs.isTouchingDeskSlot && !mcs.isTouchingExtra && !mcs.isTouchingDesk && Input.GetMouseButtonDown(0))
             {
+                PSoundController.PlaySound("close");
                 CloseDesk();
             }
         }
@@ -325,9 +329,11 @@ public class DeskInv : MonoBehaviour
         {
             yield break;
         }
+
         
         if ((desk.name == "NPCDesk" || desk.name == "ETNPCDesk") && !itemBehavioursScript.barIsMoving) //just checks if its a npc desk and not yours or the dev one
         {
+            PSoundController.PlaySound("open");
             isOpening = true;
 
             Vector3 oldDeskPos = new Vector3(desk.transform.position.x, desk.transform.position.y);
@@ -343,8 +349,8 @@ public class DeskInv : MonoBehaviour
             }
         }
         isOpening = false;
-
-        for(int i = 0; i < 20; i++)
+        PSoundController.PlaySound("open");
+        for (int i = 0; i < 20; i++)
         {
             if (deskInv[i].itemData != null)
             {

@@ -94,6 +94,7 @@ public class NPCInv : MonoBehaviour
                     weapon = npcInv[6];
                     outfit = npcInv[7];
                     StartCoroutine(OpenNPCInv());
+                    PSoundController.PlaySound("open");
                 }
             }
         }
@@ -189,6 +190,7 @@ public class NPCInv : MonoBehaviour
                 }
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = clearSprite;
+                PSoundController.PlaySound("step");
             }
 
             //putting items in the player inv
@@ -237,6 +239,7 @@ public class NPCInv : MonoBehaviour
                             break;
                         }
                     }
+                    PSoundController.PlaySound("step");
                 }
                 else
                 {
@@ -253,7 +256,7 @@ public class NPCInv : MonoBehaviour
                             break;
                         }
                     }
-
+                    PSoundController.PlaySound("buy");
                     StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + cost, "favor"));
                 }
                     npcInv[npcInvSlotNumber].itemData = null;
@@ -307,6 +310,7 @@ public class NPCInv : MonoBehaviour
             //exiting the menu
             if(!mcs.isTouchingInvSlot && !mcs.isTouchingNPCInvPanel && !mcs.isTouchingNPCInvSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
             {
+                PSoundController.PlaySound("close");
                 CloseNPCInv();
             }
         }

@@ -59,10 +59,12 @@ public class PButtonController : MonoBehaviour
     }
     public void PauseContinue()
     {
+        PSoundController.PlaySound("close");
         pauseScript.ClosePauseMenu(false);
     }
     public void PauseHelp()
     {
+        PSoundController.PlaySound("open");
         helpMenuScript.Open();
     }
     public void PauseOptions()
@@ -71,6 +73,7 @@ public class PButtonController : MonoBehaviour
     }
     public void PauseQuit()
     {
+        PSoundController.PlaySound("rumble");
         pauseScript.isQuitting = true;
         Addressables.LoadSceneAsync("Main Menu");
         GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
@@ -86,6 +89,7 @@ public class PButtonController : MonoBehaviour
     }
     public void HelpButton(BaseEventData data)
     {
+        PSoundController.PlaySound("open");
         var pd = data as PointerEventData;
         if (pd == null)
         {
@@ -99,6 +103,7 @@ public class PButtonController : MonoBehaviour
     }
     public void HelpReturn()
     {
+        PSoundController.PlaySound("close");
         if (helpMenuScript.atButtons)
         {
             helpMenuScript.Close(false);
@@ -111,23 +116,29 @@ public class PButtonController : MonoBehaviour
     }
     public void MissionYes()
     {
+        PSoundController.PlaySound("hp");
         missionAskScript.SaveMission(missionAskScript.currentNPC);
     }
     public void MissionNo()
     {
+        PSoundController.PlaySound("close");
         missionAskScript.CancelMission(missionAskScript.currentNPC);
     }
     public void MissionMaybe()
     {
+        PSoundController.PlaySound("close");
         missionAskScript.MaybeMission();
     }
     public void PlayerIDFavor()
     {
+        PSoundController.PlaySound("plip");
         Debug.Log("pressed!");
         favorMenuScript.OpenMenu();
     }
     public void FavorCancel(BaseEventData data)
     {
+        PSoundController.PlaySound("throw");
+
         var pd = data as PointerEventData;
         if(pd == null)
         {
@@ -159,34 +170,42 @@ public class PButtonController : MonoBehaviour
     }
     public void FavorPlayerID()
     {
+        PSoundController.PlaySound("plip");
         favorMenuScript.CloseMenu(true);
     }
     public void Give()
     {
+        PSoundController.PlaySound("plip");
         givingScript.Give();
     }
     public void NPCIDGive()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(npcIDInvScript.CloseMenu(true, false));
     }
     public void GiveNPCID()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(givingScript.CloseMenu(true, false));
     }
     public void NPCIDShop()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(npcIDInvScript.CloseMenu(false, true));
     }
     public void GiveShop()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(givingScript.CloseMenu(false, true));
     }
     public void ShopNPCID()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(shopMenuScript.CloseMenu(true, false));
     }
     public void ShopGive()
     {
+        PSoundController.PlaySound("plip");
         StartCoroutine(shopMenuScript.CloseMenu(false, true));
     }
     public void JobApply(BaseEventData data)
@@ -215,10 +234,12 @@ public class PButtonController : MonoBehaviour
     }
     public void JobBack()
     {
+        PSoundController.PlaySound("close");
         jobMenuScript.GoToAllJobView();
     }
     public void JobView(BaseEventData data)
     {
+        PSoundController.PlaySound("open");
         var pd = data as PointerEventData;
         if (pd == null)
         {
@@ -231,10 +252,12 @@ public class PButtonController : MonoBehaviour
     }
     public void InvCraft()
     {
+        PSoundController.PlaySound("open");
         craftMenuScript.OpenMenu();
     }
     public void InvID()
     {
+        PSoundController.PlaySound("open");
         StartCoroutine(playerIDInvScript.OpenMenu(false));
     }
     public void CraftCraft()
@@ -243,10 +266,12 @@ public class PButtonController : MonoBehaviour
     }
     public void CraftNotes()
     {
+        PSoundController.PlaySound("open");
         craftMenuScript.CloseMenu(true);
     }
     public void NotesCraft()
     {
+        PSoundController.PlaySound("close");
         notesMenuScript.CloseMenu(true);
     }
     public void ToiletFlush()
@@ -288,6 +313,7 @@ public class PButtonController : MonoBehaviour
                     hint = payphoneMenuScript.tip3;
                     break;
             }
+            PSoundController.PlaySound("open");
             payphoneMenuScript.GoToTip(hint);
         }
         else
@@ -310,14 +336,17 @@ public class PButtonController : MonoBehaviour
     }
     public void PayphoneReturn()
     {
+        PSoundController.PlaySound("close");
         payphoneMenuScript.ReturnFromTip();
     }
     public void NoteContinue()
     {
+        PSoundController.PlaySound("close");
         createNoteScript.CloseWardenNote();
     }
     public void EscapeObjectContinue()
     {
+        PSoundController.PlaySound("close");
         escapeObjectControllerScript.CloseMenu();
     }
 }

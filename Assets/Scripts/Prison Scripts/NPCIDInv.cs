@@ -51,6 +51,7 @@ public class NPCIDInv : MonoBehaviour
             currentNPC = null;
             if(mcs.isTouchingNPC && Input.GetMouseButtonDown(1) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
+                PSoundController.PlaySound("open");
                 currentNPC = mcs.touchedNPC;
                 OpenMenu();
             }
@@ -59,6 +60,7 @@ public class NPCIDInv : MonoBehaviour
         {
             if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
             {
+                PSoundController.PlaySound("open");
                 StartCoroutine(CloseMenu(false, false));
             }
         }

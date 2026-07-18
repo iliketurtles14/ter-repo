@@ -17,6 +17,7 @@ public class JeepMovement : MonoBehaviour
     private void Start()
     {
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
+        GetComponent<AudioSource>().PlayOneShot(DataSender.instance.SoundList[23]);
     }
     private void OnEnable()
     {

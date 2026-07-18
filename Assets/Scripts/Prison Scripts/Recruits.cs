@@ -83,18 +83,18 @@ public class Recruits : MonoBehaviour
             }
             else if(npc.GetComponent<NPCCollectionData>().npcData.isRecruited)
             {
+                PSoundController.PlaySound("step");
                 Disband(npc);
-            }
-            else if(!npc.GetComponent<NPCCollectionData>().npcData.isRecruited &&
-                npc.GetComponent<NPCCollectionData>().npcData.opinion < 80)
-            {
-                //play sound
             }
         }
     }
     public void Recruit(Transform npc, bool addToRecruitNum)
     {
         Debug.Log("recruitng");
+        if (addToRecruitNum)
+        {
+            PSoundController.PlaySound("step");
+        }
         npc.GetComponent<NPCAI>().enabled = false;
         npc.GetComponent<AILerp>().enabled = false;
         npc.GetComponent<NavMeshAgent>().enabled = true;

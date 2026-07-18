@@ -116,6 +116,7 @@ public class Giving : MonoBehaviour
                 slot.GetComponent<Image>().sprite = inventoryScript.inventory[invSlotNumber].itemData.sprite;
                 inventoryScript.inventory[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = clearSprite;
+                PSoundController.PlaySound("step");
             }
             //putting items in inv
             for(int i = 0; i < 6; i++)
@@ -152,10 +153,12 @@ public class Giving : MonoBehaviour
 
                 item.itemData = null;
                 slot.GetComponent<Image>().sprite = clearSprite;
+                PSoundController.PlaySound("step");
             }
             //exiting the menu
             if(!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingGiveSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0) && !mcs.isTouchingButton)
             {
+                PSoundController.PlaySound("close");
                 StartCoroutine(CloseMenu(false, false));
             }
 
@@ -315,7 +318,6 @@ public class Giving : MonoBehaviour
             GiftFavor();
             GiftJob();
         }
-
         item = null;
         money = 0;
     }
@@ -357,6 +359,7 @@ public class Giving : MonoBehaviour
                 StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
                 player.GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
                 missionAskScript.savedMissions.Remove(mission);
+                PSoundController.PlaySound("buy");
             }
         }
     }

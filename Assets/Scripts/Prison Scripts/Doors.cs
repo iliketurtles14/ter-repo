@@ -57,6 +57,10 @@ public class Doors : MonoBehaviour
             {
                 if (CanOpen(bc.gameObject))
                 {
+                    if (!bc.isTrigger)
+                    {
+                        PSoundController.PlaySound("door");
+                    }
                     bc.isTrigger = true;
                     bc.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
                 }

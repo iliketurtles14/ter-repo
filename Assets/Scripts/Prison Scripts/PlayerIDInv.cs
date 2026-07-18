@@ -80,13 +80,6 @@ public class PlayerIDInv : MonoBehaviour
 
         inventoryList = inventoryScript.inventory;
         
-        if (!idIsOpen)
-        {
-            if(mcs.isTouchingButton && mcs.touchedButton.name == "PlayerIDButton" && Input.GetMouseButtonDown(0))
-            {
-                StartCoroutine(OpenMenu(false));
-            }
-        }
         if (idIsOpen)
         {
             ///continue
@@ -135,6 +128,7 @@ public class PlayerIDInv : MonoBehaviour
                 outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
+                PSoundController.PlaySound("step");
             }
             else if (mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && inventoryList[invSlotNumber].itemData.strength != -1 && Input.GetMouseButtonDown(0) && !weaponIsFull)
             {
@@ -142,6 +136,7 @@ public class PlayerIDInv : MonoBehaviour
                 weaponSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;
                 mcs.touchedInvSlot.GetComponent<Image>().sprite = ClearSprite;
+                PSoundController.PlaySound("step");
             }
 
 
@@ -179,6 +174,7 @@ public class PlayerIDInv : MonoBehaviour
                 }
                 idInv[0] = new IDItem();
                 outfitSlot.GetComponent<Image>().sprite = ClearSprite;
+                PSoundController.PlaySound("step");
             }
             else if(mcs.isTouchingIDSlot && mcs.touchedIDSlot.name == "Weapon" && idInv[1].itemData != null && Input.GetMouseButtonDown(0) && !invIsFull)
             {
@@ -200,11 +196,13 @@ public class PlayerIDInv : MonoBehaviour
                 }
                 idInv[1] = new IDItem();
                 weaponSlot.GetComponent<Image>().sprite = ClearSprite;
+                PSoundController.PlaySound("step");
             }
 
-            if(!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
+            if (!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
             {
                 //exiting the idmenu
+                PSoundController.PlaySound("close");
                 CloseMenu();
 
                 pauseScript.Unpause();

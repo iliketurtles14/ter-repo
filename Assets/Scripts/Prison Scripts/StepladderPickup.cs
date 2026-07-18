@@ -30,6 +30,7 @@ public class StepladderPickup : MonoBehaviour
         {
             if(Vector2.Distance(player.position, mcs.touchedStepladder.transform.position) <= 2.4f)
             {
+                PSoundController.PlaySound("pickup");
                 PickupSL(mcs.touchedStepladder);
             }
         }

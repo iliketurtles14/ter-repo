@@ -137,6 +137,7 @@ public class ItemBoxes : MonoBehaviour
                     break;
                 }
             }
+            PSoundController.PlaySound("pickup");
         }
     }
 }

@@ -57,6 +57,7 @@ public class JobMenu : MonoBehaviour
         if (menuIsOpen && !mcs.isTouchingIDPanel && Input.GetMouseButtonDown(0))
         {
             Debug.Log("here");
+            PSoundController.PlaySound("close");
             CloseJobBoard();
         }
 
@@ -65,6 +66,7 @@ public class JobMenu : MonoBehaviour
             float distance = Vector2.Distance(player.position, mcs.touchedJobBoard.transform.position);
             if(distance <= 2.4f)
             {
+                PSoundController.PlaySound("open");
                 OpenJobBoard();
             }
         }
@@ -214,6 +216,7 @@ public class JobMenu : MonoBehaviour
                     break;
                 }
             }
+            PSoundController.PlaySound("close");
             GoToAllJobView();
         }
 

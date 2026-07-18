@@ -50,8 +50,9 @@ public class MissionAsk : MonoBehaviour
             return;
         }
         
-        if(mcs.isTouchingNPC && mcs.touchedNPC.name.Contains("Inmate") && !String.IsNullOrEmpty(mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.mission.type) && Input.GetMouseButtonDown(0))
+        if(mcs.isTouchingNPC && mcs.touchedNPC.name.Contains("Inmate") && !String.IsNullOrEmpty(mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.mission.type) && Input.GetMouseButtonDown(0) && !mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
         {
+            PSoundController.PlaySound("open");
             AskFavor(mcs.touchedNPC);
         }
     }

@@ -96,6 +96,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
                     inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
                     busyTransformers.Add(mcs.touchedItemTransformer);
                     StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
+                    PSoundController.PlaySound("step");
 
                     switch (id)
                     {
@@ -112,7 +113,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
                     inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = null;
                     busyTransformers.Add(mcs.touchedItemTransformer);
                     StartCoroutine(AnimateTransformer(mcs.touchedItemTransformer));
-
+                    PSoundController.PlaySound("buy");
                     switch (id)
                     {
                         case 38:
@@ -127,6 +128,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
                 {
                     inventoryScript.inventory[selectionScript.selectedSlotNum].itemData = creator.CreateItemData(182);
                     invSlots[selectionScript.selectedSlotNum].GetComponent<Image>().sprite = creator.CreateItemData(182).sprite;
+                    PSoundController.PlaySound("rumble");
                 }
             }
         }
@@ -154,6 +156,7 @@ public class ItemTransformers : MonoBehaviour //this is for job stuff like the p
                         doneTransformers.Remove(mcs.touchedItemTransformer);
                         busyTransformers.Remove(mcs.touchedItemTransformer);
                         mcs.touchedItemTransformer.GetComponent<ItemTransformerData>().heldID = -1;
+                        PSoundController.PlaySound("pickup");
                         switch (mcs.touchedItemTransformer.name)
                         {
                             case "Washer":

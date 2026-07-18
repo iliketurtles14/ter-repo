@@ -116,6 +116,7 @@ public class CreateNote : MonoBehaviour
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(true);
         inNote = true;
+        PSoundController.PlaySound("open");
     }
     public string GetNoteText(string messageType, int intellect)//pretty much js for solitary and job baord stuff
     {

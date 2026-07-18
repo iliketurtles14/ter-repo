@@ -53,7 +53,6 @@ public class StatEffects : MonoBehaviour
         effectObj.GetComponent<SpriteRenderer>().sprite = sprite;
         effectObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         effectObj.GetComponent<SpriteRenderer>().size = sizeDict[type];
-
         //2
         float time = 0f;
         while (time <= 1.75f)

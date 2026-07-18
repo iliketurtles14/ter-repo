@@ -25,12 +25,14 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
         
         if (Input.GetKeyDown(KeyCode.Escape) && !paused)
         {
+            PSoundController.PlaySound("open");
             OpenPauseMenu();
             return;
         } 
 
         if (Input.GetKeyDown(KeyCode.Escape) && paused)
         {
+            PSoundController.PlaySound("close");
             ClosePauseMenu(false);
             return;
         }

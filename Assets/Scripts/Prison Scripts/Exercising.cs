@@ -1,5 +1,7 @@
 using JetBrains.Annotations;
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,6 +35,7 @@ public class Exercising : MonoBehaviour
     private int subGain;
     private bool isBusy;
     private StatEffects statEffectsScript;
+    private int reps;
     public void Start()
     {
         so = RootObjectCache.GetRoot("ScriptObject").transform;
@@ -274,15 +277,18 @@ public class Exercising : MonoBehaviour
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Reps: 0");
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
 
         while (onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
+            
             if(!hasAdded && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
@@ -309,6 +315,8 @@ public class Exercising : MonoBehaviour
             if(amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                reps++;
+                PSoundController.PlaySound("throw");
                 GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if(subGain == 2)
                 {
@@ -357,12 +365,14 @@ public class Exercising : MonoBehaviour
         StartCoroutine(JumpRopeWalk());
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Skips: 0");
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
         while(onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Skips: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
 
             if (amountOfBars < 35)
@@ -375,6 +385,8 @@ public class Exercising : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Q) && !hasAdded)
                 {
                     subGain++;
+                    reps++;
+                    PSoundController.PlaySound("throw");
                     GetComponent<PlayerCollectionData>().playerData.energy += 2;
                     if (subGain == 4)
                     {
@@ -396,14 +408,16 @@ public class Exercising : MonoBehaviour
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Reps: 0");
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
         while (onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
             if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
@@ -430,6 +444,8 @@ public class Exercising : MonoBehaviour
             if (amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                reps++;
+                PSoundController.PlaySound("throw");
                 GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {
@@ -479,14 +495,16 @@ public class Exercising : MonoBehaviour
         StartCoroutine(SpeedBagWalk());
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Hits: 0");
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
         while(onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Hits: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
 
             if (amountOfBars < 35)
@@ -501,6 +519,13 @@ public class Exercising : MonoBehaviour
                 {
                     punching = true;
                     subGain++;
+                    reps++;//1, 2, new
+                    List<string> hitSounds = new List<string>
+                    {
+                        "hit1", "hit2", "punch_new"
+                    };
+                    int rand = UnityEngine.Random.Range(0, 3);
+                    PSoundController.PlaySound(hitSounds[rand]);
                     GetComponent<PlayerCollectionData>().playerData.energy += 3;
                     if (subGain == 3)
                     {
@@ -556,14 +581,16 @@ public class Exercising : MonoBehaviour
         StartCoroutine(SpeedBagWalk());
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = true;
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Hits: 0");
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
         while (onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Hits: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
             
             if (amountOfBars < 35)
@@ -578,6 +605,8 @@ public class Exercising : MonoBehaviour
                 {
                     punching = true;
                     subGain++;
+                    reps++;
+                    PSoundController.PlaySound("throw");
                     GetComponent<PlayerCollectionData>().playerData.energy += 2;
                     if (subGain == 4)
                     {
@@ -693,15 +722,17 @@ public class Exercising : MonoBehaviour
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Presses: 0");
         BodyController bc = GetComponent<BodyController>();
         OutfitController oc = GetComponent<OutfitController>();
 
         amountOfBars = 0;
         subGain = 0;
+        reps = 0;
         while(onEquipment && !isLeaving)
         {
-            if(hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            itemBehavioursScript.CreateActionText("Presses: " + reps.ToString());
+            if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
@@ -727,6 +758,8 @@ public class Exercising : MonoBehaviour
             if (amountOfBars == 49 && !hasAdded)
             {
                 subGain++;
+                reps++;
+                PSoundController.PlaySound("throw");
                 GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {
@@ -764,16 +797,18 @@ public class Exercising : MonoBehaviour
         StopCoroutine(ClimbEquipment());
         StartCoroutine(itemBehavioursScript.DrawActionBar(false, false));
         GetComponent<PlayerAnimation>().enabled = false;
-        itemBehavioursScript.CreateActionText("asdf");
+        itemBehavioursScript.CreateActionText("Distance: 0");
 
         amountOfBars = 0;
         subGain = 0;
         subDistanceNum = 0;
+        reps = 0;
 
         running = true;
         StartCoroutine(TreadmillWalk());
         while(onEquipment && !isLeaving)
         {
+            itemBehavioursScript.CreateActionText("Distance: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
             if (Input.GetKeyDown(KeyCode.Q) && onQ && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
@@ -808,6 +843,7 @@ public class Exercising : MonoBehaviour
             {
                 subDistanceNum = 0;
                 subGain++;
+                reps++;
                 GetComponent<PlayerCollectionData>().playerData.energy += 5;
                 if (subGain == 2)
                 {

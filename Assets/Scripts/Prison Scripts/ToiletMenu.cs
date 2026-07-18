@@ -103,11 +103,13 @@ public class ToiletMenu : MonoBehaviour
                     {
                         if(selectionScript.aSlotSelected && inventoryScript.inventory[selectionScript.selectedSlotNum].itemData.id == 122)
                         {
+                            PSoundController.PlaySound("throw");
                             UnclogToilet(toilet.gameObject);
                             return;
                         }
                         
                         currentToilet = toilet.gameObject;
+                        PSoundController.PlaySound("open");
                         OpenMenu();
                     }
                     break;
@@ -150,6 +152,7 @@ public class ToiletMenu : MonoBehaviour
                 currentToilet.GetComponent<ToiletInv>().toiletInv[index] = null;
                 inventoryScript.inventory[emptyInvIndex].itemData = data;
                 invSlots[emptyInvIndex].GetComponent<Image>().sprite = data.sprite;
+                PSoundController.PlaySound("step");
             }
             else if(Input.GetMouseButtonDown(0) && mcs.isTouchingInvSlot) //inv to toilet
             {
@@ -185,6 +188,7 @@ public class ToiletMenu : MonoBehaviour
                 inventoryScript.inventory[index].itemData = null;
                 currentToilet.GetComponent<ToiletInv>().toiletInv[emptyToiletIndex] = data;
                 toiletSlots[emptyToiletIndex].GetComponent<Image>().sprite = data.sprite;
+                PSoundController.PlaySound("plip");
             }
             else if(!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingToiletSlot &&!mcs.isTouchingExtra && !mcs.isTouchingToilet && Input.GetMouseButtonDown(0))
             {
@@ -201,7 +205,7 @@ public class ToiletMenu : MonoBehaviour
                 {
                     return;
                 }
-
+                PSoundController.PlaySound("close");
                 CloseMenu();
             }
         }
@@ -252,9 +256,10 @@ public class ToiletMenu : MonoBehaviour
         if(currentToilet.GetComponent<ToiletInv>().flushTimer > 0 || 
             currentToilet.GetComponent<ToiletInv>().isClogged)
         {
+            PSoundController.PlaySound("lose");
             return;
         }
-        
+        PSoundController.PlaySound("toilet");
         int rand = UnityEngine.Random.Range(0, 10);
         if(rand == 0)
         {

@@ -41,6 +41,7 @@ public class FavorMenu : MonoBehaviour
     {
         if (!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0) && favorMenuIsOpen)
         {
+            PSoundController.PlaySound("close");
             CloseMenu(false);
         }
     }

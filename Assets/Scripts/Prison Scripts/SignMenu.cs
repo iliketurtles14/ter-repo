@@ -128,12 +128,14 @@ public class SignMenu : MonoBehaviour //the parent of this object is ScriptObjec
 
                 if (!String.IsNullOrEmpty(currentSignType))
                 {
+                    PSoundController.PlaySound("open");
                     OpenMenu(currentSignType, mcs.touchedSign.GetComponent<SignData>().header, mcs.touchedSign.GetComponent<SignData>().body);
                 }
             }
         }
         else if(!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingExtra && !mcs.isTouchingSign && Input.GetMouseButtonDown(0) && inMenu)
         {
+            PSoundController.PlaySound("close");
             CloseMenu(currentSignType);
         }
     }

@@ -78,6 +78,7 @@ public class GeneratorController : MonoBehaviour
                 }
             }
         }
+        PSoundController.PlaySound("generator");
     }
     private IEnumerator GenWait()
     {

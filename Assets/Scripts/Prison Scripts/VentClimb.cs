@@ -109,6 +109,7 @@ public class VentClimb : MonoBehaviour
     }
     public IEnumerator ClimbVentUp()
     {
+        PSoundController.PlaySound("door");
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForFixedUpdate();
         player.transform.position = currentOpenVent.transform.position;
@@ -128,6 +129,7 @@ public class VentClimb : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
+        PSoundController.PlaySound("door");
         foreach(Transform desk in tiles.Find("GroundObjects"))
         {
             if (!desk.CompareTag("Desk"))

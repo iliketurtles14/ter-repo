@@ -38,6 +38,8 @@ public class MineBigExplode : MonoBehaviour
     }
     private IEnumerator Explode()
     {
+        PSoundController.PlaySound("explode");
+
         GameObject explosionObj = new GameObject("Explosion");
         explosionObj.AddComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
         explosionObj.GetComponent<SpriteRenderer>().sprite = s1;

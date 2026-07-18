@@ -222,7 +222,7 @@ public class NPCCombat : MonoBehaviour
         }
         fightFX.MakeStar(aTarget.transform.position, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
         particlesScript.CreateDust(aTarget.transform.position, 1, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
-
+        PSoundController.PlaySound("punch_new");
         //punch anim plays
 
         int lookNum = 0;

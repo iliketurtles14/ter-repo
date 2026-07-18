@@ -269,6 +269,8 @@ public class CameraController : MonoBehaviour
         
         BadObjectData data = badObject.GetComponent<BadObjectData>();
 
+        PSoundController.PlaySound("lose");
+
         //add heat
         int heatToAdd = 0;
         if (data.isMultiplied)

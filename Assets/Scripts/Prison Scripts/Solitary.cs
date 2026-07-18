@@ -97,6 +97,7 @@ public class Solitary : MonoBehaviour
         {
             yield break;
         }
+        PSoundController.PlaySound("electric");
         startingSolitary = true;
         solitaryCanvas.gameObject.SetActive(true);
         noteScript.CreateWardenNote("solitary", noteMsg, currentMap.warden);

@@ -125,6 +125,7 @@ public class CraftMenu : MonoBehaviour
             }
             inventoryScript.inventory[invSlotNumber].itemData = null;
             invSlots[invSlotNumber].GetComponent<Image>().sprite = clear;
+            PSoundController.PlaySound("step");
         }
 
         if(menuIsOpen && Input.GetMouseButtonDown(0) && mcs.isTouchingCraftSlot && !invIsFull)
@@ -179,10 +180,12 @@ public class CraftMenu : MonoBehaviour
                     break;
             }
             mcs.touchedCraftSlot.GetComponent<Image>().sprite = clear;
+            PSoundController.PlaySound("step");
         }
 
         if (menuIsOpen && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingCraftSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0))
         {
+            PSoundController.PlaySound("close");
             CloseMenu(false);
         }
     }
@@ -278,6 +281,7 @@ public class CraftMenu : MonoBehaviour
         if (!matchesMap)
         {
             Debug.Log("No crafting recipes match the given crafting input. Returning...");
+            PSoundController.PlaySound("lose");
             return;
         }
         bool canAddToNotes = matchesMap && matchesOG;
@@ -319,6 +323,7 @@ public class CraftMenu : MonoBehaviour
         if (reqInt > player.GetComponent<PlayerCollectionData>().playerData.intellect)
         {
             Debug.Log("Player is too stupid to craft this. Returning...");
+            PSoundController.PlaySound("lose");
             return;
         }
 
@@ -344,6 +349,7 @@ public class CraftMenu : MonoBehaviour
             Debug.Log("Returning an item...");
         }
         Debug.Log("Finished crafting.");
+        PSoundController.PlaySound("buy");
     }
     public void AddCraftNote(List<int> ingredients, List<int> results, int intellect)
     {

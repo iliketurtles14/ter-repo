@@ -543,6 +543,7 @@ public class ItemBehaviours : MonoBehaviour
                 GameObject braceObj = Instantiate(bracePrefab, mcs.touchedEmptyDirt.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 mcs.touchedEmptyDirt.GetComponent<BoxCollider2D>().enabled = false;
                 braceObj.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
+                PSoundController.PlaySound("hit");
 
                 //remove brace from inv
                 foreach(InventoryItem item in inventoryList)
@@ -721,6 +722,7 @@ public class ItemBehaviours : MonoBehaviour
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
+            PSoundController.PlaySound("throw");
             while (Vector3.Distance(PlayerTransform.position, ropeTilePos) > 0.1f)
             {
                 PlayerTransform.position += speed * Time.deltaTime * direction;
@@ -789,6 +791,7 @@ public class ItemBehaviours : MonoBehaviour
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
+            PSoundController.PlaySound("throw");
             while (Vector3.Distance(PlayerTransform.position, ropeTilePos) > 0.1f)
             {
                 PlayerTransform.position += speed * Time.deltaTime * direction;
@@ -872,7 +875,8 @@ public class ItemBehaviours : MonoBehaviour
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
-            while(Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
+            PSoundController.PlaySound("throw");
+            while (Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
             {
                 PlayerTransform.position += speed * Time.deltaTime * direction;
 
@@ -906,6 +910,7 @@ public class ItemBehaviours : MonoBehaviour
             Quaternion ropeRotation = Quaternion.LookRotation(Vector3.forward, direction);
             ropeRotation *= Quaternion.Euler(0, 0, 90);
             ropeObject.transform.rotation = ropeRotation;
+            PSoundController.PlaySound("throw");
             while (Vector3.Distance(PlayerTransform.position, ropeTile.transform.position) > 0.1f)
             {
                 PlayerTransform.position += speed * Time.deltaTime * direction;
@@ -1545,6 +1550,7 @@ public class ItemBehaviours : MonoBehaviour
                 while (barIsMoving)
                 {
                     particlesScript.CreateDust(touchedTileObject.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
+                    PSoundController.PlaySound("open");
                     float time = 0;
                     while(time < .532f && barIsMoving)
                     {
@@ -1560,6 +1566,7 @@ public class ItemBehaviours : MonoBehaviour
                 {
                     particlesScript.CreateDust(touchedTileObject.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
                     particlesScript.CreateDirtParticles(touchedTileObject.transform.position, player.GetComponent<SpriteRenderer>().sortingLayerName);
+                    PSoundController.PlaySound("open");
                     float time = 0;
                     while (time < .532f && barIsMoving)
                     {

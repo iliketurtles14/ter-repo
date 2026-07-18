@@ -44,6 +44,7 @@ public class Electrocution : MonoBehaviour
     }
     public void Electrocute()
     {
+        PSoundController.PlaySound("electric");
         StopAllCoroutines();
         StartCoroutine(ElectrocuteCoroutine());
     }

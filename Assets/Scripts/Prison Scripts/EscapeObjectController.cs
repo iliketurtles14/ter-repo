@@ -235,16 +235,19 @@ public class EscapeObjectController : MonoBehaviour
             switch (mcs.touchedEscapeObject.name)
             {
                 case "DTAFComputerDown":
+                    PSoundController.PlaySound("buy");
                     downPCDone = true;
                     mcs.touchedEscapeObject.tag = "Untagged";
                     mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
                     break;
                 case "DTAFComputerLeft":
+                    PSoundController.PlaySound("buy");
                     leftPCDone = true;
                     mcs.touchedEscapeObject.tag = "Untagged";
                     mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
                     break;
                 case "DTAFComputerRight":
+                    PSoundController.PlaySound("buy");
                     rightPCDone = true;
                     mcs.touchedEscapeObject.tag = "Untagged";
                     mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
@@ -253,15 +256,19 @@ public class EscapeObjectController : MonoBehaviour
                     switch (handler.objectivesCleared)
                     {
                         case 1:
+                            PSoundController.PlaySound("buy");
                             mcs.touchedEscapeObject.GetComponent<SpriteRenderer>().sprite = applyScript.PrisonObjectSprites[355];
                             break;
                         case 2:
+                            PSoundController.PlaySound("buy");
                             mcs.touchedEscapeObject.GetComponent<SpriteRenderer>().sprite = applyScript.PrisonObjectSprites[354];
                             break;
                         case 3:
+                            PSoundController.PlaySound("buy");
                             mcs.touchedEscapeObject.GetComponent<SpriteRenderer>().sprite = applyScript.PrisonObjectSprites[357];
                             break;
                         case 4:
+                            PSoundController.PlaySound("buy");
                             mcs.touchedEscapeObject.GetComponent<SpriteRenderer>().sprite = applyScript.PrisonObjectSprites[358];
                             mcs.touchedEscapeObject.tag = "Untagged";
                             for (int i = 0; i < 4; i++)
@@ -279,13 +286,15 @@ public class EscapeObjectController : MonoBehaviour
                     }
                     break;
                 case "ETTank":
-                    if(handler.objectivesCleared == 1)
+                    PSoundController.PlaySound("buy");
+                    if (handler.objectivesCleared == 1)
                     {
                         mcs.touchedEscapeObject.GetComponent<SpriteRenderer>().sprite = applyScript.PrisonObjectSprites[275];
                     }
                     if(handler.objectivesCleared == 3)
                     {
                         fightFX.MakeScreenShake();
+                        PSoundController.PlaySound("TANK_BOOM");
                         mcs.touchedEscapeObject.tag = "Untagged";
                         for (int i = 0; i < 4; i++)
                         {
@@ -301,6 +310,7 @@ public class EscapeObjectController : MonoBehaviour
                     }
                     break;
                 case "JingleSantaSleigh":
+                    PSoundController.PlaySound("buy");
                     switch (handler.objectivesCleared)
                     {
                         case 1:
@@ -331,6 +341,7 @@ public class EscapeObjectController : MonoBehaviour
 
             EscapeObject escObj = mcs.touchedEscapeObject.GetComponent<EscapeObjectHandler>().escObj;
             int objCleared = mcs.touchedEscapeObject.GetComponent<EscapeObjectHandler>().objectivesCleared;
+            PSoundController.PlaySound("open");
             if (mcs.touchedEscapeObject.name.Contains("DTAF"))
             {
                 signMenuScript.OpenMenu("white", escObj.headers[objCleared], escObj.messages[objCleared]);

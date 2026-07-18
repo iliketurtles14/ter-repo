@@ -21,9 +21,12 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     }
     public void StartLockdown()
     {
-        lockdownIsActive = true;
-        heatLoopCoroutine = StartCoroutine(HeatLoop());
-        textLoopCoroutine = StartCoroutine(LockdownTextLoop());
+        if (!lockdownIsActive)
+        {
+            lockdownIsActive = true;
+            heatLoopCoroutine = StartCoroutine(HeatLoop());
+            textLoopCoroutine = StartCoroutine(LockdownTextLoop());
+        }
     }
     public void StopLockdown()
     {

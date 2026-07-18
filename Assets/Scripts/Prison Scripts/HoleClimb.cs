@@ -95,6 +95,7 @@ public class HoleClimb : MonoBehaviour
         globalLight.SetActive(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         isUnderground = false;
+        PSoundController.PlaySound("pickup");
     }
     public IEnumerator ClimbDown()
     {
@@ -115,6 +116,7 @@ public class HoleClimb : MonoBehaviour
         globalLight.SetActive(false);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         isUnderground = true;
+        PSoundController.PlaySound("pickup");
     }
     private void DisableAllLayerCollisions()
     {

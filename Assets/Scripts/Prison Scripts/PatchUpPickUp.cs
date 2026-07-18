@@ -285,6 +285,7 @@ public class PatchUpPickUp : MonoBehaviour
             }
 
             particlesScript.CreateDust(mcs.touchedPatchUp.transform.position, 1, player.GetComponent<SpriteRenderer>().sortingLayerName);
+            PSoundController.PlaySound("pickup");
             Destroy(mcs.touchedPatchUp);
         }
     }
