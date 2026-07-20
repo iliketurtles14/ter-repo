@@ -8,6 +8,8 @@ public class NPCIDAnimation : MonoBehaviour
 {
     public List<Sprite> bodyDirSprites;
     public List<Sprite> outfitDirSprites;
+    public string character;
+    public string outfit;
     private List<Sprite> clearList;
     private int whichCycle = 0;
     public GameObject currentNPC;
@@ -26,27 +28,24 @@ public class NPCIDAnimation : MonoBehaviour
     {
         if(currentNPC != null)
         {
-            bodyDirSprites = new List<Sprite>(currentNPC.GetComponent<NPCAnimation>().bodyDirSprites);
-            outfitDirSprites = new List<Sprite>(currentNPC.GetComponent <NPCAnimation>().outfitDirSprites);
-        }
-
-
-        transform.Find("Outfit").position = transform.position;
-        try
-        {
-            GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];
-            if (currentNPC.GetComponent<NPCCollectionData>().npcData.inventory[7].itemData.sprite == null)
+            bodyDirSprites = new List<Sprite>(currentNPC.GetComponent<BodyController>().characterDict[character][2]);
+            if(outfit == "empty")
             {
                 outfitDirSprites = new List<Sprite>(clearList);
             }
-            transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[whichCycle + 6];
+            else
+            {
+                outfitDirSprites = new List<Sprite>(currentNPC.GetComponent<OutfitController>().outfitDict[outfit][2]);
+            }
         }
-        catch { }
-
-        if (transform.Find("Outfit").GetComponent<Image>().sprite == null)
+        else
         {
-            transform.Find("Outfit").GetComponent<Image>().sprite = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/clear");
+            return;
         }
+
+        transform.Find("Outfit").position = transform.position;
+        GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];
+        transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[whichCycle + 6];
     }
     private void OnDisable()
     {

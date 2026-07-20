@@ -134,6 +134,12 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedCharlie;
     public bool isTouchingCamera;
     public GameObject touchedCamera;
+    public bool isTouchingIDNPC;
+    public GameObject touchedIDNPC;
+    public bool isTouchingStatBar;
+    public GameObject touchedStatBar;
+
+    //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
     {
         uiLayerNum = LayerMask.NameToLayer("UI");
@@ -166,6 +172,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "ToiletSlot",
             "ShopSlot", //REMEMBER WHEN ADDING NEW SLOTS TO ALSO ADD THEM TO THE PAUSECONTROLLER
             "Button",
+            "StatBar",
+            "IDNPC",
             "DeskPanel",
             "IDPanel",
             "NPCInvPanel",
@@ -298,6 +306,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Button":
                     isTouchingButton = true;
                     touchedButton = highestPriorityObject;
+                    break;
+                case "StatBar":
+                    isTouchingStatBar = true;
+                    touchedStatBar = highestPriorityObject;
+                    break;
+                case "IDNPC":
+                    isTouchingIDNPC = true;
+                    touchedIDNPC = highestPriorityObject;
                     break;
                 case "NPC":
                     isTouchingNPC = true;
@@ -643,5 +659,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedCharlie = null;
         isTouchingCamera = false;
         touchedCamera = null;
+        isTouchingIDNPC = false;
+        touchedIDNPC = null;
+        isTouchingStatBar = false;
+        touchedStatBar = null;
     }
 }

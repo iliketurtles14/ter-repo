@@ -238,7 +238,8 @@ public class ExtraItemBehaviors : MonoBehaviour
         sheet.transform.parent = tiles.Find("GroundObjects");
         sheet.transform.position = new Vector3(bars.transform.position.x, bars.transform.position.y, -1);
         sheet.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[173];
-
+        sheet.layer = bars.layer;
+        sheet.GetComponent<SpriteRenderer>().sortingLayerName = bars.GetComponent<SpriteRenderer>().sortingLayerName;
         BadObjectData data = new BadObjectData
         {
             sheets = true,
@@ -276,6 +277,8 @@ public class ExtraItemBehaviors : MonoBehaviour
         dummy.transform.parent = tiles.Find("GroundObjects");
         dummy.transform.position = new Vector3(bed.transform.position.x, bed.transform.position.y, -1);
         dummy.GetComponent<SpriteRenderer>().sprite = dummySprite;
+        dummy.GetComponent<SpriteRenderer>().sortingLayerName = bed.GetComponent<SpriteRenderer>().sortingLayerName;
+        dummy.layer = bed.layer;
         PSoundController.PlaySound("throw");
     }
     private void PlacePatchUp(string type, int slot, GameObject obj) //wall, vent, hole, fence
@@ -285,37 +288,27 @@ public class ExtraItemBehaviors : MonoBehaviour
         int id = inventoryScript.inventory[slot].itemData.id;
         string layerTilesName = "Ground";
         string layerObjectsName = "GroundObjects";
-        int layerTilesSR = 2;
-        int layerObjectsSR = 3;
         switch (obj.transform.parent.name)
         {
             case "Ground":
             case "GroundObjects":
                 layerTilesName = "Ground";
                 layerObjectsName = "GroundObjects";
-                layerTilesSR = 2;
-                layerObjectsSR = 3;
                 break;
             case "Underground":
             case "UndergroundObjects":
                 layerTilesName = "Underground";
                 layerObjectsName = "UndergroundObjects";
-                layerTilesSR = -5;
-                layerObjectsSR = -4;
                 break;
             case "Vents":
             case "VentObjects":
                 layerTilesName = "Vents";
                 layerObjectsName = "VentObjects";
-                layerTilesSR = 9;
-                layerObjectsSR = 10;
                 break;
             case "Roof":
             case "RoofObjects":
                 layerTilesName = "Roof";
                 layerObjectsName = "RoofObjects";
-                layerTilesSR = 13;
-                layerObjectsSR = 14;
                 break;
         }
         switch (type)//fake wall blocks and fake vent covers have 10 uses
@@ -616,6 +609,8 @@ public class ExtraItemBehaviors : MonoBehaviour
         sl.name = "Stepladder";
         sl.transform.parent = tiles.Find("GroundObjects");
         sl.transform.position = floor.transform.position;
+        sl.layer = LayerMask.NameToLayer("Ground");
+        sl.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         sl.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[154];
 
         BadObjectData data = new BadObjectData

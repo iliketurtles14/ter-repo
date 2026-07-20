@@ -109,6 +109,7 @@ TagManager:
   - Charlie
   - Camera
   - HighWall
+  - IDNPC
   layers:
   - Default
   - TransparentFX

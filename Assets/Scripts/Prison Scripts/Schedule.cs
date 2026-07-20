@@ -5,6 +5,7 @@ using TMPro;
 public class Schedule : MonoBehaviour
 {
     private int min;
+    private int sec;
     private Routine timeScript;
     public string period;
     private GameObject TimeObject;
@@ -15,6 +16,8 @@ public class Schedule : MonoBehaviour
     private MissionAsk missionAskScript;
     private bool isOnFavorPeriod;
     private string favorPeriod;
+    private BellRing ringScript;
+    private bool changedPeriod;
     private List<string> validJobs = new List<string>()
     {
         "Janitor", "Gardening", "Kitchen", "Woodshop", "Metalshop", "Mailman", "Deliveries",
@@ -36,6 +39,7 @@ public class Schedule : MonoBehaviour
         missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
         lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
         playerColData = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>();
+        ringScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<BellRing>();
 
         StartCoroutine(StartWait());
     }
@@ -72,18 +76,26 @@ public class Schedule : MonoBehaviour
         }
         
         min = timeScript.min;
+        sec = timeScript.sec;
 
         if (lockdownScript.lockdownIsActive)
         {
             periodCode = "LD";
         }
-        else
+        else if (!changedPeriod && sec == 0 && ((min - 1 != -1 && map.routineDict[min] != map.routineDict[min - 1]) || (min - 1 == -1 && map.routineDict[min] != map.routineDict[23])))
         {
+            changedPeriod = true;
+            ringScript.RingBell();
             periodCode = map.routineDict[min];
             if (!allowedPeriods.Contains(periodCode))
             {
                 periodCode = "FT";
             }
+        }
+
+        if(sec != 0)
+        {
+            changedPeriod = false;
         }
 
         switch (periodCode)
@@ -141,5 +153,13 @@ public class Schedule : MonoBehaviour
             isOnFavorPeriod = false;
         }
 
+    }
+    public void ChangePeriod()//only for Lockdown.cs
+    {
+        periodCode = map.routineDict[min];
+        if (!allowedPeriods.Contains(periodCode))
+        {
+            periodCode = "FT";
+        }
     }
 }

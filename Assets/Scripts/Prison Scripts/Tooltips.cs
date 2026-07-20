@@ -69,6 +69,7 @@ public class Tooltips : MonoBehaviour
 	private int printedToiletSlotNumber;
 	private int printedCameraTime;
 	private string printCameraTime;
+	private int printedStatNum;
 
 	private TileData printedTileData;
 	private int printedTileDurability;
@@ -1309,6 +1310,10 @@ public class Tooltips : MonoBehaviour
 			{
 				toPrint = "Cabinet (hide)";
 			}
+			else if (mcs.touchedSittable.name.StartsWith("VisitorPlayer"))
+			{
+				toPrint = "Visitation";
+			}
 			tooltipType = "sittable";
 			StartCoroutine(DrawTooltip(toPrint));
 			return;
@@ -1341,6 +1346,10 @@ public class Tooltips : MonoBehaviour
 			else if (mcs.touchedSittable.name.StartsWith("Locker"))
 			{
 				str = "Cabinet (hide)";
+			}
+			else if (mcs.touchedSittable.name.StartsWith("VisitorPlayer"))
+			{
+				str = "Visitation";
 			}
 
 			if(str != toPrint)
@@ -1600,6 +1609,32 @@ public class Tooltips : MonoBehaviour
 			DestroyTooltip();
 			return;
 		}
+		//payphones
+		if(mcs.isTouchingPayphone && !showingTooltip)
+		{
+			toPrint = "Payphone";
+			tooltipType = "payphone";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "payphone" && !mcs.isTouchingPayphone)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//food trays
+		if(mcs.isTouchingFoodTable && !showingTooltip)
+		{
+			toPrint = "Food Tray";
+			tooltipType = "foodTray";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "foodTray" && !mcs.isTouchingFoodTable)
+		{
+			DestroyTooltip();
+			return;
+		}
 		//generators
 		if(mcs.isTouchingGenerator && !showingTooltip)
 		{
@@ -1644,12 +1679,12 @@ public class Tooltips : MonoBehaviour
 			StartCoroutine(DrawTooltip(toPrint + printCameraTime));
 			return;
 		}
-		else if (showingTooltip && tooltipType == "camera" && !mcs.isTouchingCamera)
+		if (showingTooltip && tooltipType == "camera" && !mcs.isTouchingCamera)
 		{
 			DestroyTooltip();
 			return;
 		}
-		else if (showingTooltip && tooltipType == "camera" && mcs.isTouchingCamera && mcs.touchedCamera.GetComponent<CameraController>().camTime != printedCameraTime)
+		if (showingTooltip && tooltipType == "camera" && mcs.isTouchingCamera && mcs.touchedCamera.GetComponent<CameraController>().camTime != printedCameraTime)
 		{
 			DestroyTooltip();
 			return;
@@ -1721,6 +1756,93 @@ public class Tooltips : MonoBehaviour
 			}
 		}
 
+		///BUTTONS
+		if(mcs.isTouchingButton && !showingTooltip)
+		{
+			switch (mcs.touchedButton.name)
+			{
+				case "PlayerIDButton":
+					toPrint = "Profile";
+					break;
+				case "CraftButton":
+					toPrint = "Crafting";
+					break;
+				default:
+					return;
+			}
+			tooltipType = "button";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "button" && !mcs.isTouchingButton)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "button")
+		{
+			string str = null;
+
+			switch (mcs.touchedButton.name)
+			{
+				case "PlayerIDButton":
+					str = "Profile";
+					break;
+				case "CraftButton":
+					str = "Crafting";
+					break;
+			}
+
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+
+		///id npcs
+		if(mcs.isTouchingIDNPC && !showingTooltip)
+		{
+			toPrint = mcs.touchedIDNPC.GetComponent<IDNPCName>().aName;
+			tooltipType = "idNPC";
+			StartCoroutine(DrawTooltip(toPrint, mcs.touchedIDNPC.GetComponent<IDNPCName>().color));
+			return;
+		}
+		if(showingTooltip && tooltipType == "idNPC" && !mcs.isTouchingIDNPC)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "idNPC")
+		{
+			string str = mcs.touchedIDNPC.GetComponent<IDNPCName>().aName;
+
+			if(str != toPrint)
+			{
+				DestroyTooltip();
+				return;
+			}
+		}
+
+		///stat bars 2/5
+		if(mcs.isTouchingStatBar && !showingTooltip)
+		{
+			printedStatNum = mcs.touchedStatBar.GetComponent<StatBarHandler>().stat;
+			tooltipType = "statBar";
+			toPrint = printedStatNum.ToString() + "/100";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "statBar" && !mcs.isTouchingStatBar)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "statBar" && mcs.isTouchingStatBar && mcs.touchedStatBar.GetComponent<StatBarHandler>().stat != printedStatNum)
+		{
+			DestroyTooltip();
+			return;
+		}
 		///NPCS
 		//inmates/guards
 		if (mcs.isTouchingNPC && !showingTooltip)

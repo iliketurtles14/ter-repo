@@ -195,14 +195,14 @@ public class Jeeps : MonoBehaviour
                     case 2:
                         jeep.GetComponent<SpriteRenderer>().sortingOrder = 2;
                         jeep.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
-                        jeep.layer = 8;
+                        jeep.layer = LayerMask.NameToLayer("Vents");
                         jeep.GetComponent<Rigidbody2D>().includeLayers = LayerMask.NameToLayer("Vents");
                         jeep.transform.parent = tiles.Find("VentObjects");
                         break;
                     case 3:
                         jeep.GetComponent<SpriteRenderer>().sortingOrder = 2;
                         jeep.GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
-                        jeep.layer = 9;
+                        jeep.layer = LayerMask.NameToLayer("Roof");
                         jeep.GetComponent<Rigidbody2D>().includeLayers = LayerMask.NameToLayer("Roof");
                         jeep.transform.parent = tiles.Find("RoofObjects");
                         break;

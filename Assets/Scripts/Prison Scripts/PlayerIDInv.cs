@@ -3,6 +3,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -61,7 +62,6 @@ public class PlayerIDInv : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = NPCSave.instance.playerName;
         CloseMenu();
     }
     public void Update()
@@ -199,7 +199,7 @@ public class PlayerIDInv : MonoBehaviour
                 PSoundController.PlaySound("step");
             }
 
-            if (!mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
+            if (!mcs.isTouchingStatBar && !mcs.isTouchingIDNPC && !mcs.isTouchingIDPanel && !mcs.isTouchingButton && !mcs.isTouchingInvSlot && !mcs.isTouchingExtra && !mcs.isTouchingIDSlot && Input.GetMouseButtonDown(0))
             {
                 //exiting the idmenu
                 PSoundController.PlaySound("close");
@@ -228,9 +228,21 @@ public class PlayerIDInv : MonoBehaviour
                 child.GetComponent<EventTrigger>().enabled = true;
             }
         }
+        transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<BoxCollider2D>().enabled = true;
+        transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<BoxCollider2D>().enabled = true;
+        transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<BoxCollider2D>().enabled = true;
         transform.Find("WeaponText").gameObject.SetActive(true);
         transform.Find("OutfitText").gameObject.SetActive(true);
-        transform.Find("NameText").gameObject.SetActive(true);
+        string job = player.GetComponent<PlayerCollectionData>().playerData.job;
+        if (string.IsNullOrEmpty(job))
+        {
+            transform.Find("JobText").GetComponent<TextMeshProUGUI>().text = "Unemployed";
+        }
+        else
+        {
+            transform.Find("JobText").GetComponent<TextMeshProUGUI>().text = job;
+        }
+        transform.Find("JobText").gameObject.SetActive(true);
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<Image>().enabled = true;
         transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = true;
@@ -298,7 +310,7 @@ public class PlayerIDInv : MonoBehaviour
         }
         transform.Find("WeaponText").gameObject.SetActive(false);
         transform.Find("OutfitText").gameObject.SetActive(false);
-        transform.Find("NameText").gameObject.SetActive(false);
+        transform.Find("JobText").gameObject.SetActive(false);
         transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;

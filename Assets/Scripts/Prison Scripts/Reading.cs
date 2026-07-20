@@ -34,9 +34,10 @@ public class Reading : MonoBehaviour
                 StartCoroutine(Read(mcs.touchedReader.name));
             }
         }
-        if (isReading && Vector2.Distance(oldPos, transform.position) > .01f)
+        if (isReading && Vector2.Distance(oldPos, transform.position) > .1f)
         {
             stopReading = true;
+            isReading = false;
         }
     }
     public IEnumerator Read(string readerName)

@@ -12,17 +12,22 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     public int lockdownTime;
     private Solitary solitaryScript;
     private Transform mc;
+    private BellRing ringScript;
+    private Schedule scheduleScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         solitaryScript = GetComponent<Solitary>();
         mc.Find("LockdownTextPanel").Find("Text").GetComponent<TextMeshProUGUI>().text = "";
+        ringScript = GetComponent<BellRing>();
+        scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
     }
     public void StartLockdown()
     {
         if (!lockdownIsActive)
         {
+            ringScript.RingBell();
             lockdownIsActive = true;
             heatLoopCoroutine = StartCoroutine(HeatLoop());
             textLoopCoroutine = StartCoroutine(LockdownTextLoop());
@@ -30,6 +35,11 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     }
     public void StopLockdown()
     {
+        if(lockdownTime != 0)
+        {
+            ringScript.RingBell();
+        }
+        scheduleScript.ChangePeriod();
         lockdownIsActive = false;
         isRiotLockdown = false;
         StopCoroutine(heatLoopCoroutine);

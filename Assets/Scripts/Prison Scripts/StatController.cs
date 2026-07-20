@@ -46,8 +46,13 @@ public class StatController : MonoBehaviour
             playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<RectTransform>().sizeDelta = new Vector2(data.speed / 2 * 5, 25);
             playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.speed / 2 * 2.5f + 454.5f, -157.5f);
             playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<RectTransform>().sizeDelta = new Vector2(data.intellect / 2 * 5, 25);
-            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.intellect / 2 * 2.5f + 454.5f, -213);
-
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<RectTransform>().anchoredPosition = new Vector2(data.intellect / 2 * 2.5f + 454.5f, -212);
+            playerMenuPanel.transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<BoxCollider2D>().size = new Vector2(data.strength / 2 * 5, 25);
+            playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<BoxCollider2D>().size = new Vector2(data.speed / 2 * 5, 25);
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<BoxCollider2D>().size = new Vector2(data.intellect / 2 * 5, 25);
+            playerMenuPanel.transform.Find("StrengthPanel").Find("StrengthBar").GetComponent<StatBarHandler>().stat = data.strength;
+            playerMenuPanel.transform.Find("SpeedPanel").Find("SpeedBar").GetComponent<StatBarHandler>().stat = data.speed;
+            playerMenuPanel.transform.Find("IntellectPanel").Find("IntellectBar").GetComponent<StatBarHandler>().stat = data.intellect;
             isSet = true;
         }
     }

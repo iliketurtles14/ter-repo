@@ -88,7 +88,8 @@ public class PauseController : MonoBehaviour
         mcs.EnableTag("ShopSlot");
         mcs.EnableTag("CraftSlot");
         mcs.EnableTag("ToiletSlot");
-        
+        mcs.EnableTag("IDNPC");
+        mcs.EnableTag("StatBar");
         // Always freeze NPCs
         foreach(Transform npc in aStar)
         {
@@ -166,17 +167,17 @@ public class PauseController : MonoBehaviour
             //if (!noAnimOnNPCs)
             //{
             if (npc.CompareTag("ExtraNPC"))
-                {
-                    npc.GetComponent<ExtraNPCAnimation>().enabled = true;
-                }
-                else if(npc.CompareTag("VisitorNPC"))
-                {
-                    npc.GetComponent<VisitorNPCAnimation>().enabled = true;
-                }
-                else if(!npc.GetComponent<NPCCollectionData>().npcData.isDead && !npc.GetComponent<NPCAI>().atExerciseEquipment && !npc.GetComponent<NPCCollectionData>().npcData.isSleeping)
-                {
-                    npc.GetComponent<NPCAnimation>().enabled = true;
-                }
+            {
+                npc.GetComponent<ExtraNPCAnimation>().enabled = true;
+            }
+            else if(npc.CompareTag("VisitorNPC"))
+            {
+                npc.GetComponent<VisitorNPCAnimation>().enabled = true;
+            }
+            else if(!npc.GetComponent<NPCCollectionData>().npcData.isDead && !npc.GetComponent<NPCAI>().atExerciseEquipment && !npc.GetComponent<NPCCollectionData>().npcData.isSleeping)
+            {
+                npc.GetComponent<NPCAnimation>().enabled = true;
+            }
             //}
             if (!npc.CompareTag("ExtraNPC") && !npc.CompareTag("VisitorNPC"))
             {

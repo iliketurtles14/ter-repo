@@ -1583,10 +1583,6 @@ public class LoadPrison : MonoBehaviour
                     objInst.transform.parent = tiles.Find(objLayer + "Objects");
                 }
                 objInst.name = objName;
-                if (objInst.name.StartsWith("Detector"))
-                {
-                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
-                }
                 switch (objLayer)
                 {
                     case "Underground":
@@ -1618,6 +1614,11 @@ public class LoadPrison : MonoBehaviour
                             objInst.transform.Find("PlayerCatch").gameObject.layer = LayerMask.NameToLayer("Roof");
                         }
                         break;
+                }
+                //add things with unique sortingOrders here vvv
+                if (objInst.name.StartsWith("Detector"))
+                {
+                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
                 }
 
                 dataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
