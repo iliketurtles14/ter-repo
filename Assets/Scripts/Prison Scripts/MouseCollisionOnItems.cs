@@ -138,6 +138,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedIDNPC;
     public bool isTouchingStatBar;
     public GameObject touchedStatBar;
+    public bool isTouchingStash;
+    public GameObject touchedStash;
 
     //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
@@ -192,6 +194,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Generator",
             "Sign",
             "Toilet",
+            "Stash",
             "PatchUp",
             "Stepladder",
             "InmateBed",
@@ -370,6 +373,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "Toilet":
                     isTouchingToilet = true;
                     touchedToilet = highestPriorityObject;
+                    break;
+                case "Stash":
+                    isTouchingStash = true;
+                    touchedStash = highestPriorityObject;
                     break;
                 case "PatchUp":
                     isTouchingPatchUp = true;
@@ -663,5 +670,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedIDNPC = null;
         isTouchingStatBar = false;
         touchedStatBar = null;
+        isTouchingStash = false;
+        touchedStash = null;
     }
 }

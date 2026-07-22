@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PButtonController : MonoBehaviour
@@ -24,6 +25,7 @@ public class PButtonController : MonoBehaviour
     private EscapeObjectController escapeObjectControllerScript;
     private HelpMenu helpMenuScript;
     private Pause pauseScript;
+    private RecipeMenu recipeMenuScript;
     private int groundLayer;
     private int undergroundLayer;
     private int ventLayer;
@@ -56,6 +58,7 @@ public class PButtonController : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         uiLayer = LayerMask.NameToLayer("UI");
         ventCoverLayer = LayerMask.NameToLayer("VentCovers");
+        recipeMenuScript = mc.Find("RecipeMenuPanel").GetComponent<RecipeMenu>();
     }
     public void PauseContinue()
     {
@@ -348,5 +351,10 @@ public class PButtonController : MonoBehaviour
     {
         PSoundController.PlaySound("close");
         escapeObjectControllerScript.CloseMenu();
+    }
+    public void RecipeClose()
+    {
+        PSoundController.PlaySound("close");
+        recipeMenuScript.Close();
     }
 }

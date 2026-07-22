@@ -110,6 +110,7 @@ TagManager:
   - Camera
   - HighWall
   - IDNPC
+  - Stash
   layers:
   - Default
   - TransparentFX

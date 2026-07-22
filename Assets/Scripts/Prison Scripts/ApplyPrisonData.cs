@@ -604,6 +604,14 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("BlueSignMenuPanel").GetComponent<Image>().sprite = UISprites[529];
         mc.Find("WhiteSignMenuPanel").GetComponent<Image>().sprite = UISprites[530];
 
+        //recipe menu
+        mc.Find("RecipeMenuPanel").GetComponent<Image>().sprite = UISprites[191];
+        mc.Find("RecipeMenuPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[377];
+        spriteState = mc.Find("RecipeMenuPanel").Find("CloseButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[378];
+        mc.Find("RecipeMenuPanel").Find("CloseButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("RecipeMenuPanel").Find("Slot").Find("Backdrop").GetComponent<Image>().sprite = UISprites[33];
+
         //escape object menu
         mc.Find("EscapeObjectMenuPanel").GetComponent<Image>().sprite = UISprites[512];
         spriteState = mc.Find("EscapeObjectMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState;

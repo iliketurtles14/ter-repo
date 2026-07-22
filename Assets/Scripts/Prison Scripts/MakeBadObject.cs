@@ -666,14 +666,17 @@ public class MakeBadObject : MonoBehaviour
     {
         if (!hasSniper)
         {
+            isShooting = false;
             yield break;
         }
         if (player.GetComponent<PlayerCollectionData>().playerData.inGodMode)
         {
+            isShooting = false;
             yield break;
         }
         if(scheduleScript.periodCode == "LO")
         {
+            isShooting = false;
             yield break;
         }
         
@@ -706,6 +709,7 @@ public class MakeBadObject : MonoBehaviour
         bullet.GetComponent<SpriteRenderer>().size = new Vector2(length, .3f);
 
         fightFX.MakeScreenShake();
+        PSoundController.PlaySound("shoot");
 
         //hurt player
         player.GetComponent<PlayerCollectionData>().playerData.health -= 20;

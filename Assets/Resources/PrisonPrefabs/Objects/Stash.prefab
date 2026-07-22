@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 3094140413776619050}
   - component: {fileID: -1531251184749803844}
   - component: {fileID: 6701838848230567472}
+  - component: {fileID: 7784060783676859999}
   m_Layer: 6
   m_Name: Stash
-  m_TagString: Untagged
+  m_TagString: Stash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +139,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &7784060783676859999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876891438730960061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63f9464a226a5bd488ec05df78f1380a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StashAnim
+  shouldStop: 0

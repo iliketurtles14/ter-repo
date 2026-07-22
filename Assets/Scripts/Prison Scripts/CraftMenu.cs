@@ -362,6 +362,7 @@ public class CraftMenu : MonoBehaviour
         {
             cnToAdd += ingredient.ToString() + "+";
         }
+        Debug.Log(cnToAdd);
         cnToAdd = cnToAdd.Substring(0, cnToAdd.Length - 1);
         cnToAdd += "=";
         string recipe = cnToAdd;

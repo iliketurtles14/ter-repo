@@ -1595,7 +1595,7 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void BreakItem()
     {
-
+        StartCoroutine(warningScript.CreateWarningMessage("The " + inventoryList[usedSlotNumber].itemData.displayName + " breaks..."));
         inventoryList[usedSlotNumber].itemData = null;
         switch (usedSlotNumber)
         {

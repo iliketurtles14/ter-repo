@@ -1661,7 +1661,19 @@ public class Tooltips : MonoBehaviour
             DestroyTooltip();
             return;
         }
-
+		//stashes
+		if(mcs.isTouchingStash && !showingTooltip)
+		{
+			toPrint = "Prisoner Stash";
+			tooltipType = "stash";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "stash" && !mcs.isTouchingStash)
+		{
+			DestroyTooltip();
+			return;
+		}
 		//cameras
 		if (mcs.isTouchingCamera && !showingTooltip)
 		{
