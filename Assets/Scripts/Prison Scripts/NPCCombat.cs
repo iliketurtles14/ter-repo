@@ -209,8 +209,13 @@ public class NPCCombat : MonoBehaviour
             }
         }
 
+        if (aTarget.name.StartsWith("Inmate") && !aTarget.GetComponent<NPCCombat>().isAggro)
+        {
+            StartCoroutine(aTarget.GetComponent<NPCSpeech>().MakeTextBox(aTarget.GetComponent<NPCSpeech>().GetMessage("Attacked"), aTarget.transform, false));
+        }
+
         //aggro target if not player
-        if(aTarget.name != "Player")
+        if (aTarget.name != "Player")
         {
             aTarget.GetComponent<NPCCombat>().isAggro = true;
             aTarget.GetComponent<NPCCombat>().target = gameObject;
@@ -220,9 +225,10 @@ public class NPCCombat : MonoBehaviour
         {
             fightFX.MakeScreenShake();
         }
+
         fightFX.MakeStar(aTarget.transform.position, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
         particlesScript.CreateDust(aTarget.transform.position, 1, aTarget.GetComponent<SpriteRenderer>().sortingLayerName);
-        PSoundController.PlaySound("punch_new");
+        PSoundController.PlaySound("punch_new", GetComponent<AudioSource>());
         //punch anim plays
 
         int lookNum = 0;

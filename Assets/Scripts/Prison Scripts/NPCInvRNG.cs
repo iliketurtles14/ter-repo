@@ -93,7 +93,7 @@ public class NPCInvRNG : MonoBehaviour
 
         npc.GetComponent<NPCCollectionData>().npcData.inventory[6] = aItem;
     }
-    private void SetGuardInv(GameObject npc)
+    public void SetGuardInv(GameObject npc)
     {
         int guardNum = Convert.ToInt32(npc.name.Split("d")[1]);
 

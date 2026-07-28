@@ -2029,7 +2029,7 @@ public class Tooltips : MonoBehaviour
 				{
 					case "wall": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedWall.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
 					case "fence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
-					case "electricFence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
+					case "electricFence": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedElectricFence.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
 					case "bars": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedBars.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
 					case "ventCover": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedVentCover.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;
 					case "slats": InventoryCanvas.transform.Find("TooltipText(Clone)").GetComponent<TextMeshProUGUI>().text = toPrint + " (" + mcs.touchedSlats.GetComponent<TileCollectionData>().tileData.currentDurability + "%)"; break;

@@ -30,6 +30,13 @@ public class SeeBadActions : MonoBehaviour
     private ToiletMenu toiletMenuScript;
     private Particles particlesScript;
     private Transform badObjects;
+    private Escaping escapingScript;
+    private Dictionary<string, string> solitaryDict = new Dictionary<string, string>
+    {
+        { "noDummy", "CaughtEmptyCell" }, { "outLate", "CaughtOutLate" }, { "openHole", "CaughtHole"},
+        { "openWall", "CaughtWall" }, { "openFence", "CaughtFence" }, { "openBars", "CaughtBars" },
+        { "openVent", "CaughtVent" }
+    };
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -45,6 +52,7 @@ public class SeeBadActions : MonoBehaviour
         toiletMenuScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
         MakeVectorLists();
         MakeBadObjectList();
 
@@ -128,20 +136,20 @@ public class SeeBadActions : MonoBehaviour
         availableBadObjects.Add("item");
         availableBadObjects.Add("outsideOnInsideMap");
         availableBadObjects.Add("npcLoot");
-        availableBadObjects.Add("noDummy");
+        availableBadObjects.Add("noDummy");//
         availableBadObjects.Add("missedRollcall");
-        availableBadObjects.Add("outLate");
+        availableBadObjects.Add("outLate");//
         availableBadObjects.Add("inmatePunch");
         availableBadObjects.Add("toilet");
         availableBadObjects.Add("untie");
         availableBadObjects.Add("sheets");
         availableBadObjects.Add("stepladder");
         availableBadObjects.Add("inUnsafeZone");
-        availableBadObjects.Add("openHole");
-        availableBadObjects.Add("openWall");
-        availableBadObjects.Add("openFence");
-        availableBadObjects.Add("openBars");
-        availableBadObjects.Add("openVent");
+        availableBadObjects.Add("openHole");//
+        availableBadObjects.Add("openWall");//
+        availableBadObjects.Add("openFence");//
+        availableBadObjects.Add("openBars");//
+        availableBadObjects.Add("openVent");//
     }
     private IEnumerator LookWait()
     {
@@ -381,7 +389,14 @@ public class SeeBadActions : MonoBehaviour
         //solitary
         if (data.solitary)
         {
-            StartCoroutine(solitaryScript.GoToSolitary(""));
+            if (solitaryDict.ContainsKey(badObject.name))
+            {
+                StartCoroutine(solitaryScript.GoToSolitary(solitaryDict[badObject.name]));
+            }
+            else
+            {
+                StartCoroutine(solitaryScript.GoToSolitary("CaughtTakeover"));//not sure what you were tthinking... (its a decent one for general solitary)
+            }
         }
 
         //item
@@ -679,7 +694,7 @@ public class SeeBadActions : MonoBehaviour
 
         if (shouldSolitary)
         {
-            solitaryScript.GoToSolitary("");
+            StartCoroutine(solitaryScript.GoToSolitary("CaughtToilet"));
         }
         toiletMenuScript.UnclogToilet(toilet.gameObject);
     }
@@ -751,6 +766,7 @@ public class SeeBadActions : MonoBehaviour
                 StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
                 player.GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
                 missionAskScript.savedMissions.Remove(mission);
+                escapingScript.good += 10;
             }
         }
     }
@@ -776,7 +792,21 @@ public class SeeBadActions : MonoBehaviour
         ItemData itemData = badObject.GetComponent<BadObjectData>().attachedObject.GetComponent<ItemCollectionData>().itemData;
         if (itemData.causeSolitary)
         {
-            StartCoroutine(solitaryScript.GoToSolitary(""));
+            switch (itemData.id)
+            {
+                case 123:
+                    StartCoroutine(solitaryScript.GoToSolitary("CaughtDirt"));
+                    break;
+                case 154:
+                    StartCoroutine(solitaryScript.GoToSolitary("CaughtWallBlock"));
+                    break;
+                case 151:
+                    StartCoroutine(solitaryScript.GoToSolitary("CaughtVentCover"));
+                    break;
+                default:
+                    StartCoroutine(solitaryScript.GoToSolitary("CaughtItem"));// a good general one ig
+                    break;
+            }
             yield break;
         }
         Destroy(badObject.GetComponent<BadObjectData>().attachedObject);

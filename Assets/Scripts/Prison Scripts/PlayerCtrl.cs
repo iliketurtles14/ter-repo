@@ -10,6 +10,7 @@ public class PlayerCtrl : MonoBehaviour
     public bool canMove;
     private PauseController pc;
     private PlayerCollectionData playerColData;
+    private Escaping escapingScript;
 
     private IniFile iniFile;
 
@@ -20,8 +21,9 @@ public class PlayerCtrl : MonoBehaviour
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         rb = GetComponent<Rigidbody2D>();
         playerColData = GetComponent<PlayerCollectionData>();
-
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
         iniFile = new IniFile(System.IO.Path.Combine(Application.streamingAssetsPath, "UserData.ini"));
+        StartCoroutine(EfficiencyLoop());
     }
     void Update()
     {
@@ -44,6 +46,17 @@ public class PlayerCtrl : MonoBehaviour
             {
                 Vector2 movement = new Vector2(speedX, speedY) * movSpeed;
                 rb.linearVelocity = movement;
+            }
+        }
+    }
+    private IEnumerator EfficiencyLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f / 45f);
+            if (canMove && rb.linearVelocity.x != 0 && rb.linearVelocity.y != 0 && !escapingScript.hasEscaped)
+            {
+                escapingScript.effNum++;
             }
         }
     }

@@ -23,6 +23,11 @@ public class Schedule : MonoBehaviour
         "Janitor", "Gardening", "Kitchen", "Woodshop", "Metalshop", "Mailman", "Deliveries",
         "Tailor", "Laundry", "Library"
     };
+    private Dictionary<string, string> periodMusicDict = new Dictionary<string, string>
+    {
+        { "B", "chow" }, { "L", "chow" }, { "D", "chow" }, { "R", "rollcall" }, { "LO", "lightsout" },
+        { "LD", "lockdown" }, { "S", "shower" }, { "E", "workout" }, { "FT", "freetime" }, { "W", "work" }
+    };
     private Lockdown lockdownScript;
     private PlayerCollectionData playerColData;
     private List<string> allowedPeriods = new List<string>
@@ -81,6 +86,7 @@ public class Schedule : MonoBehaviour
         if (lockdownScript.lockdownIsActive)
         {
             periodCode = "LD";
+            PMusicController.PlayMusic(periodMusicDict[periodCode]);
         }
         else if (!changedPeriod && sec == 0 && ((min - 1 != -1 && map.routineDict[min] != map.routineDict[min - 1]) || (min - 1 == -1 && map.routineDict[min] != map.routineDict[23])))
         {
@@ -91,9 +97,10 @@ public class Schedule : MonoBehaviour
             {
                 periodCode = "FT";
             }
+            PMusicController.PlayMusic(periodMusicDict[periodCode]);
         }
 
-        if(sec != 0)
+        if (sec != 0)
         {
             changedPeriod = false;
         }

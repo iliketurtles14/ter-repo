@@ -21,6 +21,7 @@ public class RecipeMenu : MonoBehaviour
     private CraftMenu craftMenuScript;
     private List<Transform> invSlots = new List<Transform>();
     private Sprite clear;
+    private Escaping escapingScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -30,6 +31,7 @@ public class RecipeMenu : MonoBehaviour
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         craftMenuScript = mc.Find("CraftMenuPanel").GetComponent<CraftMenu>();
         clear = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/clear");
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
         foreach(Transform slot in RootObjectCache.GetRoot("InventoryCanvas").transform.Find("GUIPanel"))
         {
             invSlots.Add(slot);
@@ -205,6 +207,7 @@ public class RecipeMenu : MonoBehaviour
 
         invScript.inventory[slotNum].itemData = null;
         invSlots[slotNum].GetComponent<Image>().sprite = clear;
+        escapingScript.good += 10;
     }
     public void Open(string text, Sprite itemSprite)
     {

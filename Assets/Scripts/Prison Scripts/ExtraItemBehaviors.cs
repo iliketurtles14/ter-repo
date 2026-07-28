@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class ExtraItemBehaviors : MonoBehaviour
@@ -22,6 +23,7 @@ public class ExtraItemBehaviors : MonoBehaviour
     private StatEffects statEffectsScript;
     private MakeBadObject mbo;
     private Transform badObjects;
+    private Light2D undergroundLight;
     private void Start()
     {
         selectionScript = GetComponent<InventorySelection>();
@@ -38,6 +40,7 @@ public class ExtraItemBehaviors : MonoBehaviour
         statEffectsScript = GetComponent<StatEffects>();
         mbo = GetComponent<MakeBadObject>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        undergroundLight = RootObjectCache.GetRoot("UndergroundLight").GetComponent<Light2D>();
         foreach(Transform slot in ic.Find("GUIPanel"))
         {
             invSlots.Add(slot.gameObject);
@@ -212,6 +215,34 @@ public class ExtraItemBehaviors : MonoBehaviour
                     BlockCamera(selectionScript.selectedSlotNum, mcs.touchedCamera);
                 }
             }
+        }
+        bool hasFlashlight = false;
+        foreach(InventoryItem item in inventoryScript.inventory)
+        {
+            if(item.itemData != null)
+            {
+                if(item.itemData.id == 174)
+                {
+                    hasFlashlight = true;
+                    break;
+                }
+                else
+                {
+                    hasFlashlight = false;
+                }
+            }
+            else
+            {
+                hasFlashlight = false;
+            }
+        }
+        if (hasFlashlight)
+        {
+            undergroundLight.pointLightOuterRadius = 8.8f;
+        }
+        else
+        {
+            undergroundLight.pointLightOuterRadius = 3.2f;
         }
     }
     private void TieUpNPC(int slot, GameObject npc)

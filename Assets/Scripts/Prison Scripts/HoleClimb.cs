@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -20,6 +22,7 @@ public class HoleClimb : MonoBehaviour
     private int playerLayer;
     private int uiLayer;
     public bool isUnderground;
+    public List<SpriteRenderer> brokenTileSRs = new List<SpriteRenderer>();
     public void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -91,6 +94,13 @@ public class HoleClimb : MonoBehaviour
         tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundObjects").gameObject.SetActive(false);
+        foreach(SpriteRenderer sr in brokenTileSRs)
+        {
+            if(sr != null)
+            {
+                sr.sortingLayerName = "Underground";
+            }
+        }
         undergroundLight.SetActive(false);
         globalLight.SetActive(true);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -112,6 +122,13 @@ public class HoleClimb : MonoBehaviour
         tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         tiles.Find("UndergroundObjects").gameObject.SetActive(true);
+        foreach (SpriteRenderer sr in brokenTileSRs)
+        {
+            if (sr != null)
+            {
+                sr.sortingLayerName = "UndergroundVisible";
+            }
+        }
         undergroundLight.SetActive(true);
         globalLight.SetActive(false);
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;

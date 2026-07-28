@@ -32,6 +32,8 @@ public class Giving : MonoBehaviour
     private ShopMenu shopMenuScript;
     private Schedule scheduleScript;
     private Jobs jobsScript;
+    private int goodNum;
+    private Escaping escapingScript;
     private void Start()
     {
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
@@ -48,6 +50,7 @@ public class Giving : MonoBehaviour
         shopMenuScript = mc.Find("NPCShopMenuPanel").GetComponent<ShopMenu>();
         scheduleScript = ic.Find("Period").GetComponent<Schedule>();
         jobsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Jobs>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
 
         canChangeMoney = true;
 
@@ -55,7 +58,7 @@ public class Giving : MonoBehaviour
         {
             invSlots.Add(child.gameObject);
         }
-        StartCoroutine(CloseMenu(false, false));
+        StartCoroutine(CloseMenu(false, false, false));
     }
     private void Update()
     {
@@ -159,7 +162,7 @@ public class Giving : MonoBehaviour
             if(!mcs.isTouchingInvSlot && !mcs.isTouchingIDPanel && !mcs.isTouchingGiveSlot && !mcs.isTouchingExtra && Input.GetMouseButtonDown(0) && !mcs.isTouchingButton)
             {
                 PSoundController.PlaySound("close");
-                StartCoroutine(CloseMenu(false, false));
+                StartCoroutine(CloseMenu(false, false, false));
             }
 
             //adding/subtracting money
@@ -214,7 +217,7 @@ public class Giving : MonoBehaviour
         GetComponent<Image>().enabled = true;
         GetComponent<BoxCollider2D>().enabled = true;
     }
-    public IEnumerator CloseMenu(bool goToID, bool goToShop)
+    public IEnumerator CloseMenu(bool goToID, bool goToShop, bool saySomething)
     {
         GiveBackOnClose();
         
@@ -230,6 +233,11 @@ public class Giving : MonoBehaviour
         {
             mc.Find("Black").GetComponent<Image>().enabled = false;
             pc.Unpause();
+            if (saySomething)
+            {
+                StartCoroutine(currentNPC.GetComponent<NPCSpeech>().MakeTextBox(currentNPC.GetComponent<NPCSpeech>().GetMessage("Gift_" + goodNum.ToString()), currentNPC.transform, false));
+                goodNum = 0;
+            }
         }
         foreach (Transform child in transform)
         {
@@ -284,15 +292,35 @@ public class Giving : MonoBehaviour
     }
     public void Give()
     {
+        if(money == 0 && !slotIsFull)
+        {
+            return;
+        }
+        
         int opinionToGive;
         int moneyOpn = Mathf.FloorToInt(money / 10f);
         int itemOpn = 0;
         try
         {
             itemOpn = item.itemData.opinion * 3;
+            goodNum = item.itemData.opinion;
         }
         catch { }
         opinionToGive = moneyOpn + itemOpn;
+
+        if(goodNum > 3)
+        {
+            goodNum = 3;
+        }
+        if(goodNum < 0)
+        {
+            goodNum = 0;
+        }
+
+        if(goodNum == 0 && money != 0)
+        {
+            goodNum = 1;
+        }
 
         currentNPC.GetComponent<NPCCollectionData>().npcData.opinion += opinionToGive;
 
@@ -320,6 +348,7 @@ public class Giving : MonoBehaviour
         }
         item = null;
         money = 0;
+        StartCoroutine(CloseMenu(false, false, true));
     }
     private void GiftJob()
     {
@@ -359,6 +388,7 @@ public class Giving : MonoBehaviour
                 StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));
                 player.GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
                 missionAskScript.savedMissions.Remove(mission);
+                escapingScript.good += 10;
                 PSoundController.PlaySound("buy");
             }
         }

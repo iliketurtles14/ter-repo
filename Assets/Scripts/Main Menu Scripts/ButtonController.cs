@@ -53,8 +53,12 @@ public class ButtonController : MonoBehaviour
     }
     public void MainCredits()
     {
-        StartCoroutine(creditsScript.StartCredits());
-        sc.PlaySound("rumble");
+        if (creditsScript.canStart)
+        {
+            StartCoroutine(creditsScript.StartCredits());
+            sc.PlaySound("rumble");
+            creditsScript.canStart = false;
+        }
     }
     public void MainOptions()
     {

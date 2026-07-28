@@ -11,6 +11,7 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
     private PauseController pc;
     public bool paused = false;
     public bool isQuitting = false;
+    public bool inOtherMenu;
 
     public void Start()
     {
@@ -23,14 +24,14 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
     {
         paused = pc.isPaused;
         
-        if (Input.GetKeyDown(KeyCode.Escape) && !paused)
+        if (Input.GetKeyDown(KeyCode.Escape) && !paused && !inOtherMenu)
         {
             PSoundController.PlaySound("open");
             OpenPauseMenu();
             return;
         } 
 
-        if (Input.GetKeyDown(KeyCode.Escape) && paused)
+        if (Input.GetKeyDown(KeyCode.Escape) && paused && !inOtherMenu)
         {
             PSoundController.PlaySound("close");
             ClosePauseMenu(false);
@@ -51,6 +52,10 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
 
             pc.Unpause();
         }
+        else
+        {
+            inOtherMenu = true;
+        }
     }
     public void OpenPauseMenu()
     {
@@ -63,5 +68,6 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
         black.GetComponent<Image>().enabled = true;
         
         pc.Pause(true);
+        inOtherMenu = false;
     }
 }

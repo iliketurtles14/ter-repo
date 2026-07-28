@@ -1,9 +1,10 @@
-using UnityEngine;
-using System.Diagnostics;
-using System.Collections;
 using System;
-using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Diagnostics;
 using System.Net;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DumperStartStop : MonoBehaviour
@@ -15,12 +16,39 @@ public class DumperStartStop : MonoBehaviour
     public PrisonSelect prisonSelectScript;
     private ApplyMainMenuData applyScript;
     public Transform mmc;
+    private IniFile iniFile;
+    public Image titlePanelImg;
+    public Sprite gradSprite;
+    public Sprite blueSprite;
     public bool isGoingToMainMenu; //for quitting from a prison (this is set in Pause.cs when quitting a prison)
 
     private void Awake()
     {
         applyScript = GetComponent<ApplyMainMenuData>();
-        
+        iniFile = new IniFile(System.IO.Path.Combine(UnityEngine.Application.streamingAssetsPath, "UserData.ini"));
+        int w = Display.main.systemWidth;
+        int h = Display.main.systemHeight;
+        switch(iniFile.Read("Screen", "Settings"))
+        {
+            case "0":
+                Screen.SetResolution(w, h, FullScreenMode.Windowed);
+                break;
+            case "1":
+                Screen.SetResolution(w, h, FullScreenMode.FullScreenWindow);
+                break;
+            case "2":
+                Screen.SetResolution(w, h, FullScreenMode.ExclusiveFullScreen);
+                break;
+        }
+        switch(iniFile.Read("TitleScreenBackground", "Settings"))
+        {
+            case "0":
+                titlePanelImg.sprite = gradSprite;
+                break;
+            case "1":
+                titlePanelImg.sprite = blueSprite;
+                break;
+        }
         StartCoroutine(LoadAll());
     }
     private void Update()

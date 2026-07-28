@@ -1,6 +1,8 @@
 using NUnit.Framework;
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class NPCSpeechController : MonoBehaviour
@@ -38,12 +40,18 @@ public class NPCSpeechController : MonoBehaviour
     private Transform aStar;
     private Map currentMap;
     private List<string> rollcallSpeechTypes = new List<string>();
+    private Transform player;
+    private Transform tiles;
+    private Solitary solitaryScript;
 
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         pc = GetComponent<PauseController>();
         aStar = RootObjectCache.GetRoot("A*").transform;
+        player = RootObjectCache.GetRoot("Player").transform;
+        tiles = RootObjectCache.GetRoot("Tiles").transform;
+        solitaryScript = GetComponent<Solitary>();
         StartCoroutine(StartWait());
     }
     private void Update()
@@ -104,13 +112,16 @@ public class NPCSpeechController : MonoBehaviour
                     }
                 }
             }
-            if(availableInmates.Count == 0)
+            Transform randInmate = null;
+            if(availableInmates.Count == 0 && inmateNames.Count > 1)
             {
                 yield return null;
                 continue;
             }
-
-            Transform randInmate = availableInmates[UnityEngine.Random.Range(0, availableInmates.Count)];
+            if(availableInmates.Count > 0)
+            {
+                randInmate = availableInmates[UnityEngine.Random.Range(0, availableInmates.Count)];
+            }
             Transform mainGuard = null;
             foreach(Transform npc in aStar)
             {
@@ -121,7 +132,7 @@ public class NPCSpeechController : MonoBehaviour
                 }
             }
 
-            if (normalPeriodCodes.Contains(scheduleScript.periodCode))
+            if (normalPeriodCodes.Contains(scheduleScript.periodCode) && randInmate != null)
             {
                 if(scheduleScript.periodCode == "B" || scheduleScript.periodCode == "D" || scheduleScript.periodCode == "L")
                 {
@@ -193,7 +204,7 @@ public class NPCSpeechController : MonoBehaviour
                 NPCSpeech speech = randInmate.GetComponent<NPCSpeech>();
                 StartCoroutine(speech.MakeTextBox(speech.GetMessage(periodSpeechDict[scheduleScript.periodCode]), randInmate, false));
             }
-            else if(scheduleScript.periodCode == "FT" || scheduleScript.periodCode == "W")
+            else if((scheduleScript.periodCode == "FT" || scheduleScript.periodCode == "W") && randInmate != null)
             {
                 bool shouldTalk = false;
                 while (true)
@@ -274,7 +285,8 @@ public class NPCSpeechController : MonoBehaviour
                         {
                             rand2 = inmateNames.Count - 1;//player
                         }
-                        rcPhaseStr = inmateNames[rand1] + " and " + inmateNames[rand2] + "";
+                        rcPhaseStr = inmateNames[rand1] + " and " + inmateNames[rand2];
+                        StartCoroutine(Shakedown(rand1, rand2));
                     }
                     else if(rcPhase == 2 && inmateNames.Count == 1)
                     {
@@ -282,6 +294,7 @@ public class NPCSpeechController : MonoBehaviour
                         if(UnityEngine.Random.Range(0, 10) == 0)//random easter egg ig
                         {
                             rcPhaseStr = inmateNames[0] + "... (aren't there supposed to be two?)";
+                            StartCoroutine(Shakedown(0, -1));
                         }
                     }
 
@@ -300,6 +313,155 @@ public class NPCSpeechController : MonoBehaviour
                 }
             }
             yield return null;
+        }
+    }
+    private IEnumerator Shakedown(int rand1, int rand2)
+    {
+        List<Transform> inmates = new List<Transform>();
+        foreach(Transform npc in aStar)
+        {
+            if (npc.name.Contains("Inmate"))
+            {
+                inmates.Add(npc);
+            }
+        }
+        Transform playerDesk = null;
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if (obj.name.Contains("PlayerDesk"))
+            {
+                playerDesk = obj;
+                break;
+            }
+        }
+        inmates.Add(player);
+
+        List<Transform> goToDesks = new List<Transform>();
+        if (inmates[rand1].GetComponent<NPCCollectionData>() != null && inmates[rand1].GetComponent<NPCCollectionData>().npcData.desk != null)
+        {
+            goToDesks.Add(inmates[rand1].GetComponent<NPCCollectionData>().npcData.desk.transform);
+        }
+        else if (inmates[rand1].name == "Player" && playerDesk != null)
+        {
+            goToDesks.Add(playerDesk);
+        }
+
+        if(rand2 != -1)
+        {
+            if (inmates[rand2].GetComponent<NPCCollectionData>() != null && inmates[rand2].GetComponent<NPCCollectionData>().npcData.desk != null)
+            {
+                goToDesks.Add(inmates[rand2].GetComponent<NPCCollectionData>().npcData.desk.transform);
+            }
+            else if (inmates[rand2].name == "Player" && playerDesk != null)
+            {
+                goToDesks.Add(playerDesk);
+            }
+        }
+
+        Debug.Log(goToDesks.Count);
+        foreach(Transform desk in goToDesks)
+        {
+            Debug.Log(desk.name);
+        }
+
+        while (true)
+        {
+            if(scheduleScript.periodCode != "R")
+            {
+                break;
+            }
+            yield return null;
+        }
+
+        List<Transform> availableGuards = new List<Transform>();
+        foreach(Transform npc in aStar)
+        {
+            if(npc.name.Contains("Guard") && !npc.GetComponent<NPCCollectionData>().npcData.isDead && !npc.GetComponent<NPCCollectionData>().npcData.isAggro)
+            {
+                availableGuards.Add(npc);
+            }
+        }
+
+        if(availableGuards.Count == 0)
+        {
+            yield break;
+        }
+
+        int rand = UnityEngine.Random.Range(0, availableGuards.Count);
+        Transform guard = availableGuards[rand];
+        NPCCollectionData npcColData = guard.GetComponent<NPCCollectionData>();
+        for (int i = 0; i < goToDesks.Count; i++)
+        {
+            //cehck for surroudning free tiles
+            List<Vector3> vectors = new List<Vector3>
+            {
+                new Vector3(1.6f, 0), new Vector3(-1.6f, 0), new Vector3(0, 1.6f), new Vector3(0, -1.6f)
+            };
+            Vector2 goToVector = Vector2.zero;
+            for (int j = 0; j < 4; j++)
+            {
+                GameObject checkerObj = new GameObject("CheckerObj");
+                checkerObj.AddComponent<BoxCollider2D>().size = new Vector2(.8f, .8f);
+                checkerObj.AddComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                checkerObj.GetComponent<BoxCollider2D>().isTrigger = true;
+                checkerObj.layer = LayerMask.NameToLayer("Ground");
+                checkerObj.transform.position = goToDesks[i].position + vectors[j];
+                yield return new WaitForFixedUpdate();
+
+                Collider2D checkerCollider = checkerObj.GetComponent<BoxCollider2D>();
+                List<Collider2D> hitColliders = new List<Collider2D>();
+                ContactFilter2D filter = ContactFilter2D.noFilter;
+                checkerCollider.Overlap(filter, hitColliders);
+                bool hitDigable = false;
+                foreach (Collider2D col in hitColliders)
+                {
+                    Debug.Log(j.ToString() + ": " + col.gameObject.name);
+                    if (col.CompareTag("Digable") && col.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                    {
+                        goToVector = col.transform.position;
+                        hitDigable = true;
+                        break;
+                    }
+                }
+                Destroy(checkerObj);
+                if (hitDigable)
+                {
+                    break;
+                }
+            }
+            if (goToVector == Vector2.zero)
+            {
+                continue;
+            }
+
+            Debug.Log("sending guard" + guard.name + " to " + goToVector);
+            guard.GetComponent<NPCAI>().SendToPos(goToVector);
+
+            while (true)
+            {
+                if(Vector2.Distance(guard.position, goToVector) <= .1f)
+                {
+                    break;
+                }
+                if(npcColData.npcData.isDead || npcColData.npcData.isAggro)
+                {
+                    yield break;
+                }
+                yield return null;
+            }
+            Debug.Log("Checking desk: " + goToDesks[i].name);
+            foreach (DeskItem item in goToDesks[i].GetComponent<DeskData>().deskInv)
+            {
+                if(item.itemData != null && item.itemData.isContraband)
+                {
+                    item.itemData = null;
+                    if (goToDesks[i].name.Contains("PlayerDesk"))
+                    {
+                        StartCoroutine(solitaryScript.GoToSolitary("CaughtShakedown"));
+                        yield break;
+                    }
+                }
+            }
         }
     }
 }

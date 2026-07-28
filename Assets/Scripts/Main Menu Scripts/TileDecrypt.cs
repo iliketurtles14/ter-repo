@@ -209,7 +209,7 @@ if __name__ == ""__main__"":
         var psi = new ProcessStartInfo
         {
             FileName = "py",
-            Arguments = $"-3 \"{tempScriptPath}\" dec \"{path}\"",
+            Arguments = $"-3 \"{tempScriptPath}\" dec \"{path}\" -f",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,

@@ -247,7 +247,14 @@ public class SetFacingDirections : MonoBehaviour //this is for what direction np
                     }
                 }
 
-                guardWP.GetComponent<WaypointData>().dir = GetDirection(guardWP.position, lowestDistanceWP.position);
+                if(lowestDistanceWP != null)
+                {
+                    guardWP.GetComponent<WaypointData>().dir = GetDirection(guardWP.position, lowestDistanceWP.position);
+                }
+                else
+                {
+                    guardWP.GetComponent<WaypointData>().dir = "any";
+                }
             }
         }
 

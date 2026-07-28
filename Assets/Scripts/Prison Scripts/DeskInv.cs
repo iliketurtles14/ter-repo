@@ -45,6 +45,7 @@ public class DeskInv : MonoBehaviour
     private MissionAsk missionAskScript;
     private InventorySelection selectionScript;
     private WarningMessage warningScript;
+    private Escaping escapingScript;
 
     public void Start()
     {
@@ -65,6 +66,7 @@ public class DeskInv : MonoBehaviour
         specialMessagesScript = InventoryCanvas.transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         missionAskScript = MenuCanvas.transform.Find("MissionPanel").GetComponent<MissionAsk>();
         selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -233,6 +235,7 @@ public class DeskInv : MonoBehaviour
                             Debug.Log("here");
                             cost = mission.pay;
                             missionAskScript.savedMissions.Remove(mission);
+                            escapingScript.good += 10;
                             break;
                         }
                     }

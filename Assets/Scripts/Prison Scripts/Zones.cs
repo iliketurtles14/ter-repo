@@ -43,6 +43,7 @@ public class Zones : MonoBehaviour
     public bool hasLostJob;
     private Transform mc;
     private CreateNote noteScript;
+    private Escaping escapingScript;
 
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
@@ -68,6 +69,7 @@ public class Zones : MonoBehaviour
         pc = GetComponent<PauseController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         noteScript = GetComponent<CreateNote>();
+        escapingScript = GetComponent<Escaping>();
 
         StartCoroutine(StartWait());
     }
@@ -79,6 +81,7 @@ public class Zones : MonoBehaviour
             player.GetComponent<PlayerCollectionData>().playerData.job = "";
             mc.Find("JobMenuPanel").GetComponent<JobMenu>().ResetJobButtons();
             noteScript.CreateWardenNote("loseJob", noteScript.GetNoteText("JobLose", -1), currentMap.warden);
+            escapingScript.bad += 15;
         }
     }
     private IEnumerator StartWait()
@@ -134,6 +137,7 @@ public class Zones : MonoBehaviour
                 if (!wentToCurrentZone && lastPeriodCode != "LO")
                 {
                     player.GetComponent<PlayerCollectionData>().playerData.heat += 35 * currentMap.npcLevel;
+                    escapingScript.bad += 10;
 
                     if (lastPeriodCode == "R" && !lockdownScript.lockdownIsActive)
                     {
@@ -271,7 +275,11 @@ public class Zones : MonoBehaviour
                     if (player.GetComponent<CapsuleCollider2D>().IsTouching(zone.GetComponent<BoxCollider2D>()))
                     {
                         isTouchingCurrentZone = true;
-                        wentToCurrentZone = true;
+                        if (!wentToCurrentZone)
+                        {
+                            wentToCurrentZone = true;
+                            escapingScript.good += 5;
+                        }
                         break;
                     }
                     else

@@ -26,6 +26,7 @@ public class PButtonController : MonoBehaviour
     private HelpMenu helpMenuScript;
     private Pause pauseScript;
     private RecipeMenu recipeMenuScript;
+    private SettingsMenu settingsMenuScript;
     private int groundLayer;
     private int undergroundLayer;
     private int ventLayer;
@@ -59,6 +60,7 @@ public class PButtonController : MonoBehaviour
         uiLayer = LayerMask.NameToLayer("UI");
         ventCoverLayer = LayerMask.NameToLayer("VentCovers");
         recipeMenuScript = mc.Find("RecipeMenuPanel").GetComponent<RecipeMenu>();
+        settingsMenuScript = mc.Find("SettingsMenuPanel").GetComponent<SettingsMenu>();
     }
     public void PauseContinue()
     {
@@ -72,7 +74,9 @@ public class PButtonController : MonoBehaviour
     }
     public void PauseOptions()
     {
-        //heh
+        PSoundController.PlaySound("open");
+        pauseScript.ClosePauseMenu(true);
+        settingsMenuScript.Open();
     }
     public void PauseQuit()
     {
@@ -116,6 +120,16 @@ public class PButtonController : MonoBehaviour
             helpMenuScript.Switch(-1);
             mc.Find("HelpMenuPanel").Find("HelpText").GetComponent<TextMeshProUGUI>().text = "HELP";
         }
+    }
+    public void SettingsBack()
+    {
+        PSoundController.PlaySound("close");
+        settingsMenuScript.Back(false);
+    }
+    public void SettingsSet()
+    {
+        PSoundController.PlaySound("plip");
+        settingsMenuScript.Set();
     }
     public void MissionYes()
     {
@@ -189,7 +203,7 @@ public class PButtonController : MonoBehaviour
     public void GiveNPCID()
     {
         PSoundController.PlaySound("plip");
-        StartCoroutine(givingScript.CloseMenu(true, false));
+        StartCoroutine(givingScript.CloseMenu(true, false, false));
     }
     public void NPCIDShop()
     {
@@ -199,7 +213,7 @@ public class PButtonController : MonoBehaviour
     public void GiveShop()
     {
         PSoundController.PlaySound("plip");
-        StartCoroutine(givingScript.CloseMenu(false, true));
+        StartCoroutine(givingScript.CloseMenu(false, true, false));
     }
     public void ShopNPCID()
     {

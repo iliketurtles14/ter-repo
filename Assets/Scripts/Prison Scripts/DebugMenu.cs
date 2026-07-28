@@ -329,6 +329,13 @@ public class DebugMenu : MonoBehaviour
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(true);
+                foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
+                {
+                    if (sr != null)
+                    {
+                        sr.sortingLayerName = "UndergroundVisible";
+                    }
+                }
                 undergroundLight.gameObject.SetActive(true);
                 globalLight.gameObject.SetActive(false);
                 holeClimbScript.isUnderground = true;
@@ -345,6 +352,13 @@ public class DebugMenu : MonoBehaviour
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
+                foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
+                {
+                    if (sr != null)
+                    {
+                        sr.sortingLayerName = "Underground";
+                    }
+                }
                 DisableAllLayerCollisions();
                 Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
                 Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
@@ -363,6 +377,13 @@ public class DebugMenu : MonoBehaviour
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
+                foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
+                {
+                    if (sr != null)
+                    {
+                        sr.sortingLayerName = "Underground";
+                    }
+                }
                 DisableAllLayerCollisions();
                 Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, false);
                 Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
@@ -384,6 +405,13 @@ public class DebugMenu : MonoBehaviour
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
+                foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
+                {
+                    if (sr != null)
+                    {
+                        sr.sortingLayerName = "Underground";
+                    }
+                }
                 DisableAllLayerCollisions();
                 Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, false);
                 Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, false);

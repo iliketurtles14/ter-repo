@@ -64,8 +64,7 @@ public class PlayerFloorCollision : MonoBehaviour
             foreach(Collider2D collider in hitColliders)
             {
                 if((collider.gameObject.name.StartsWith("DirtEmpty") ||
-                    collider.gameObject.name.StartsWith("100%HoleUp") ||
-                    collider.gameObject.name.StartsWith("Brace")) &&
+                    collider.gameObject.CompareTag("Digable")) &&
                     collider.gameObject.layer == undergroundLayer)
                 {
                     playerFloor = collider.gameObject;

@@ -23,6 +23,9 @@ public class Options : MonoBehaviour
     public Sprite gameplayButtonPressed;
     public Sprite audioButtonPressed;
     public Sprite visualButtonPressed;
+    public Image titlePanelImg;
+    public Sprite gradSprite;
+    public Sprite blueSprite;
     private Dictionary<string, string> childNameToFileNameDict = new Dictionary<string, string>
     {
         { "NormalizeCheckBox", "NormalizePlayerMovement" },
@@ -150,6 +153,30 @@ public class Options : MonoBehaviour
                     continue;
                 }
             }
+        }
+
+        int w = Display.main.systemWidth;
+        int h = Display.main.systemHeight;
+        switch (iniFile.Read("Screen", "Settings"))
+        {
+            case "0":
+                UnityEngine.Screen.SetResolution(w, h, FullScreenMode.Windowed);
+                break;
+            case "1":
+                UnityEngine.Screen.SetResolution(w, h, FullScreenMode.FullScreenWindow);
+                break;
+            case "2":
+                UnityEngine.Screen.SetResolution(w, h, FullScreenMode.ExclusiveFullScreen);
+                break;
+        }
+        switch (iniFile.Read("TitleScreenBackground", "Settings"))
+        {
+            case "0":
+                titlePanelImg.sprite = gradSprite;
+                break;
+            case "1":
+                titlePanelImg.sprite = blueSprite;
+                break;
         }
     }
 

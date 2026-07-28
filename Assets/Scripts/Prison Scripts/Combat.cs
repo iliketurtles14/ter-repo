@@ -19,6 +19,7 @@ public class Combat : MonoBehaviour
     private SpecialMessages specialMessagesScript;
     private FightEffects fightFX;
     private Particles particlesScript;
+    private Escaping escapingScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -30,6 +31,7 @@ public class Combat : MonoBehaviour
         specialMessagesScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
     }
     private void Update()
     {
@@ -137,6 +139,11 @@ public class Combat : MonoBehaviour
         if(npc.GetComponent<NPCCollectionData>().npcData.health == 0)
         {
             KillNPC(npc);
+        }
+
+        if (npc.name.StartsWith("Inmate") && !npc.GetComponent<NPCCombat>().isAggro)
+        {
+            StartCoroutine(npc.GetComponent<NPCSpeech>().MakeTextBox(npc.GetComponent<NPCSpeech>().GetMessage("Attacked"), npc.transform, false));
         }
 
         //aggro npc
@@ -256,6 +263,7 @@ public class Combat : MonoBehaviour
                 GetComponent<PlayerCollectionData>().playerData.money += mission.pay;
                 missionAskScript.savedMissions.Remove(mission);
                 PSoundController.PlaySound("buy");
+                escapingScript.good += 10;
             }
         }
     }

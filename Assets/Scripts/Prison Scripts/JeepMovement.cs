@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class JeepMovement : MonoBehaviour
 {
@@ -14,10 +15,20 @@ public class JeepMovement : MonoBehaviour
     private bool noMove;
     private bool isHitByStinger;
     private Death deathScript;
+    private Transform lightObj;
+    private Routine routineScript;
+    private Light2D light1;
+    private Light2D light2;
     private void Start()
     {
         deathScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Death>();
-        GetComponent<AudioSource>().PlayOneShot(DataSender.instance.SoundList[23]);
+        lightObj = transform.Find("FlashlightObj");
+        light1 = lightObj.Find("Flashlight1").GetComponent<Light2D>();
+        light2 = lightObj.Find("Flashlight2").GetComponent<Light2D>();
+        routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").GetComponent<Routine>();
+        GetComponent<AudioSource>().clip = DataSender.instance.SoundList[23];
+        GetComponent<AudioSource>().loop = true;
+        GetComponent<AudioSource>().Play();
     }
     private void OnEnable()
     {
@@ -31,6 +42,8 @@ public class JeepMovement : MonoBehaviour
         currentDir = jeepWPs[0].name.Replace("Jeep", "").ToLower();
         nextWPPos = jeepWPs[0].GetComponent<JeepWaypointConnection>().connectedWP.position;
         currentWP = jeepWPs[0];
+        lightObj.Find("Flashlight1").GetComponent<Light2D>().lightCookieSprite = DataSender.instance.PrisonObjectImages[100];
+        lightObj.Find("Flashlight2").GetComponent<Light2D>().lightCookieSprite = DataSender.instance.PrisonObjectImages[100];
         StartCoroutine(JeepMove());
     }
     private void OnTriggerEnter2D(Collider2D otherCollider)
@@ -88,6 +101,33 @@ public class JeepMovement : MonoBehaviour
                     case "left":
                     case "right":
                         GetComponent<BoxCollider2D>().size = new Vector2(4.8f, 3.2f);
+                        break;
+                }
+                int min = routineScript.min;
+                int sec = routineScript.sec;
+                if((min == 22 && sec >= 20) || min == 23 || (min >= 0 && min <= 6) || (min == 7 && sec <= 50))
+                {
+                    light1.intensity = 10;
+                    light2.intensity = 10;
+                }
+                else
+                {
+                    light1.intensity = 0;
+                    light2.intensity = 0;
+                }
+                switch (currentDir)
+                {
+                    case "up":
+                        lightObj.rotation = Quaternion.Euler(0, 0, 90);
+                        break;
+                    case "down":
+                        lightObj.rotation = Quaternion.Euler(0, 0, 270);
+                        break;
+                    case "left":
+                        lightObj.rotation = Quaternion.Euler(0, 0, 180);
+                        break;
+                    case "right":
+                        lightObj.rotation = Quaternion.Euler(0, 0, 0);
                         break;
                 }
                 BoxCollider2D killBox = transform.Find("KillBox").GetComponent<BoxCollider2D>();

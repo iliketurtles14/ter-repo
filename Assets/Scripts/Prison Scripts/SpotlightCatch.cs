@@ -34,7 +34,7 @@ public class SpotlightCatch : MonoBehaviour
 
             if (sendToSolitary)
             {
-                StartCoroutine(solitaryScript.GoToSolitary("Nice try " + col.GetComponent<PlayerCollectionData>().playerData.displayName + ",\n\nI'm not sure how you got out of your cell but it definitely won't happen again!\n\nAs punishment I'm placing you in solitary for a few days, hopefully it'll teach you a hard lesson!"));
+                StartCoroutine(solitaryScript.GoToSolitary("CaughtSpotlight"));
             }
         }
     }

@@ -36,6 +36,7 @@ public class NPCInv : MonoBehaviour
     private InventorySelection selectionScript;
     private bool tookItem;
     private MakeBadObject mbo;
+    private Escaping escapingScript;
     public void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
@@ -51,6 +52,7 @@ public class NPCInv : MonoBehaviour
         specialMessagesScript = ic.Find("SpecialMessagePanel").GetComponent<SpecialMessages>();
         selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
         mbo = RootObjectCache.GetRoot("ScriptObject").GetComponent<MakeBadObject>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
 
         //make slot list
         foreach (Transform child in npcInvMenu.Find("ItemPanel"))
@@ -258,8 +260,9 @@ public class NPCInv : MonoBehaviour
                     }
                     PSoundController.PlaySound("buy");
                     StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + cost, "favor"));
+                    escapingScript.good += 10;
                 }
-                    npcInv[npcInvSlotNumber].itemData = null;
+                npcInv[npcInvSlotNumber].itemData = null;
                 mcs.touchedNPCInvSlot.GetComponent<Image>().sprite = clearSprite;
                 tookItem = true;
             }

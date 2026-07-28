@@ -28,6 +28,9 @@ public class Solitary : MonoBehaviour
     private ToiletMenu toiletMenuScript;
     private bool startingSolitary;
     private LadderClimb ladderClimbScript;
+    private Transform badObjects;
+    private NPCInvRNG npcInvRNGScript;
+    private Escaping escapingScript;
     private void Start()
     {
         solitaryCanvas = RootObjectCache.GetRoot("SolitaryBlockerCanvas").transform;
@@ -48,6 +51,9 @@ public class Solitary : MonoBehaviour
         scheduleScript = ic.Find("Period").GetComponent<Schedule>();
         toiletMenuScript = mc.Find("ToiletMenuPanel").GetComponent<ToiletMenu>();
         ladderClimbScript = GetComponent<LadderClimb>();
+        badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        npcInvRNGScript = GetComponent<NPCInvRNG>();
+        escapingScript = GetComponent<Escaping>();
 
         StartCoroutine(StartWait());
     }
@@ -97,7 +103,8 @@ public class Solitary : MonoBehaviour
         {
             yield break;
         }
-        PSoundController.PlaySound("electric");
+        escapingScript.totalHeat += 100;
+        escapingScript.bad += 100;
         startingSolitary = true;
         solitaryCanvas.gameObject.SetActive(true);
         noteScript.CreateWardenNote("solitary", noteMsg, currentMap.warden);
@@ -400,8 +407,30 @@ public class Solitary : MonoBehaviour
                         obj.GetComponent<ToiletInv>().toiletInv[j] = null;
                     }
                 }
+            }
+        }
+        foreach(Transform bo in badObjects)
+        {
+            Destroy(bo.gameObject);
+        }
 
-                if(obj.GetComponent<DeskRNG>() != null && !obj.name.Contains("PlayerDesk"))
+        //rng desks and npc invs
+        foreach(Transform npc in aStar)
+        {
+            if (npc.name.Contains("Inmate"))
+            {
+                npcInvRNGScript.RandomizeNPCInv(npc.gameObject);
+            }
+            else if (npc.name.Contains("Guard"))
+            {
+                npcInvRNGScript.SetGuardInv(npc.gameObject);
+            }
+        }
+        for(int i = 0; i < 4; i++)
+        {
+            foreach(Transform obj in tiles.Find(layers[i]))
+            {
+                if (obj.GetComponent<DeskRNG>() != null)
                 {
                     obj.GetComponent<DeskRNG>().RandomizeDesk();
                 }

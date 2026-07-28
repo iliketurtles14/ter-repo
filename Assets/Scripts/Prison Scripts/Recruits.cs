@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using Pathfinding;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +14,9 @@ public class Recruits : MonoBehaviour
     private PlayerCollectionData playerColData;
     private Transform aStar;
     private List<Transform> recruits = new List<Transform>();
+    private WarningMessage warningScript;
+    private Map currentMap;
+    private string[] speechFile;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -19,6 +24,18 @@ public class Recruits : MonoBehaviour
         combatScript = player.GetComponent<Combat>();
         playerColData = player.GetComponent<PlayerCollectionData>();
         aStar = RootObjectCache.GetRoot("A*").transform;
+        warningScript = GetComponent<WarningMessage>();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
+        speechFile = currentMap.speech;
     }
     private void Update()
     {
@@ -84,6 +101,7 @@ public class Recruits : MonoBehaviour
             else if(npc.GetComponent<NPCCollectionData>().npcData.isRecruited)
             {
                 PSoundController.PlaySound("step");
+                StartCoroutine(warningScript.CreateWarningMessage(GetMessage("Dismiss")));
                 Disband(npc);
             }
         }
@@ -93,6 +111,7 @@ public class Recruits : MonoBehaviour
         Debug.Log("recruitng");
         if (addToRecruitNum)
         {
+            StartCoroutine(warningScript.CreateWarningMessage(GetMessage("Follow")));
             PSoundController.PlaySound("step");
         }
         npc.GetComponent<NPCAI>().enabled = false;
@@ -129,5 +148,41 @@ public class Recruits : MonoBehaviour
         npc.GetComponent<NPCCollectionData>().npcData.isRecruited = false;
 
         recruits.Remove(npc);
+    }
+    public string GetMessage(string messageType)
+    {
+        int count = Convert.ToInt32(GetINIVar(messageType, "Count", speechFile));
+        int rand = UnityEngine.Random.Range(1, count + 1);
+        return GetINIVar(messageType, rand.ToString(), speechFile);
+    }
+    public string GetINIVar(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+
+
+        if (line == null)
+        {
+            return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
     }
 }

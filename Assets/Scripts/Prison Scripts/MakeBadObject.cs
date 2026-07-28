@@ -610,27 +610,30 @@ public class MakeBadObject : MonoBehaviour
         }
 
         //broken tiles outside
-        foreach(Transform bo in badObjects)
+        if (hasSniper)
         {
-            if(bo.name == "openFence")
+            foreach (Transform bo in badObjects)
             {
-                if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.isOutside)
+                if (bo.name == "openFence")
                 {
-                    StartCoroutine(solitaryScript.GoToSolitary(""));
-                }
-            }
-            else if(bo.name == "openHole")
-            {
-                try //doing this try catch because in a certain case, the attachedObject for an openHole is just the BOAttachment object and doesnt have a tileData (those are always inside tho, so its ok)
-                {
-                    if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+                    if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.isOutside)
                     {
-                        StartCoroutine(solitaryScript.GoToSolitary(""));
+                        StartCoroutine(solitaryScript.GoToSolitary("CaughtSniperFence"));
                     }
                 }
-                catch
+                else if (bo.name == "openHole")
                 {
+                    try //doing this try catch because in a certain case, the attachedObject for an openHole is just the BOAttachment object and doesnt have a tileData (those are always inside tho, so its ok)
+                    {
+                        if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+                        {
+                            StartCoroutine(solitaryScript.GoToSolitary("CaughtSniperHoles"));
+                        }
+                    }
+                    catch
+                    {
 
+                    }
                 }
             }
         }

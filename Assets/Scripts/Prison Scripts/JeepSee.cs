@@ -98,14 +98,14 @@ public class JeepSee : MonoBehaviour
                     }
                 }
 
-                if (wallHit.HasValue)
-                {
-                    Debug.DrawLine(transform.position, wallHit.Value.point, Color.red);
-                }
-                else
-                {
-                    Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
-                }
+                //if (wallHit.HasValue)
+                //{
+                //    Debug.DrawLine(transform.position, wallHit.Value.point, Color.red);
+                //}
+                //else
+                //{
+                //    Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) + vector * rangeOfSight, Color.green);
+                //}
 
                 RaycastHit2D[] badHits;
                 try
@@ -130,10 +130,23 @@ public class JeepSee : MonoBehaviour
                 {
                     if (aHit.collider.CompareTag("BadObject"))
                     {
-                        if (aHit.collider.name == "inmateOutfit" && !zonesScript.isTouchingYourCell && routineScript.periodCode == "LO")
+                        if (aHit.collider.name == "inmateOutfit" && !zonesScript.isTouchingYourCell && !zonesScript.isTouchingSafe && routineScript.periodCode == "LO")
                         {
                             badHit = aHit;
-                            //StartCoroutine(solitaryScript.GoToSolitary());
+                            StartCoroutine(solitaryScript.GoToSolitary("CaughtJeepInmate"));
+                            yield return new WaitForEndOfFrame();
+                        }
+                        if (aHit.collider.name.Contains("open"))
+                        {
+                            badHit = aHit;
+                            if(aHit.collider.name == "openHole")
+                            {
+                                StartCoroutine(solitaryScript.GoToSolitary("CaughtJeepDig"));
+                            }
+                            else
+                            {
+                                StartCoroutine(solitaryScript.GoToSolitary("CaughtJeepEsc"));
+                            }
                             yield return new WaitForEndOfFrame();
                         }
                     }

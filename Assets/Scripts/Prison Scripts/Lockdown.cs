@@ -14,6 +14,7 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
     private Transform mc;
     private BellRing ringScript;
     private Schedule scheduleScript;
+    private Escaping escapingScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -22,11 +23,13 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
         mc.Find("LockdownTextPanel").Find("Text").GetComponent<TextMeshProUGUI>().text = "";
         ringScript = GetComponent<BellRing>();
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
+        escapingScript = GetComponent<Escaping>();
     }
     public void StartLockdown()
     {
         if (!lockdownIsActive)
         {
+            escapingScript.bad += 20;
             ringScript.RingBell();
             lockdownIsActive = true;
             heatLoopCoroutine = StartCoroutine(HeatLoop());
@@ -77,7 +80,7 @@ public class Lockdown : MonoBehaviour//20%, 40%, 80%
             {
                 lockdownIsActive = false;
                 StopLockdown();
-                StartCoroutine(solitaryScript.GoToSolitary(""));
+                StartCoroutine(solitaryScript.GoToSolitary("CaughtLockdown"));
             }
         }
     }

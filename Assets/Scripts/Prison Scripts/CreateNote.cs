@@ -104,6 +104,14 @@ public class CreateNote : MonoBehaviour
         {
             warden = warden.Replace("$warden", wardenNames[UnityEngine.Random.Range(0, wardenNames.Count)]);
         }
+        if (msg.StartsWith("Caught"))
+        {
+            string crime = msg;
+            msg = GetNoteText("CaughtMessage", -1);
+            msg = msg.Replace("$crime", crime);
+            msg = msg.Replace("$name", playerName);
+            msg = msg.Replace("#", "\n");
+        }
         panel.Find("NoteText").GetComponent<TextMeshProUGUI>().text = msg;
         panel.Find("WardenText").GetComponent<TextMeshProUGUI>().text = warden;
 

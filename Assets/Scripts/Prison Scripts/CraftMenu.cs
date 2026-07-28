@@ -34,6 +34,7 @@ public class CraftMenu : MonoBehaviour
     private Transform mc;
     private NotesMenu notesMenuScript;
     private List<List<int>> normalRecipes = new List<List<int>>();
+    private Escaping escapingScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -45,6 +46,7 @@ public class CraftMenu : MonoBehaviour
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         notesMenuScript = mc.Find("NotesMenuPanel").GetComponent<NotesMenu>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
 
         slot0 = transform.Find("ItemGrid").Find("Item0").gameObject;
         slot1 = transform.Find("ItemGrid").Find("Item1").gameObject;
@@ -341,6 +343,7 @@ public class CraftMenu : MonoBehaviour
         slot2.GetComponent<Image>().sprite = clear;
         craftedItem = creator.CreateItemData(results[UnityEngine.Random.Range(0, results.Count)]);
         craftedSlot.GetComponent<Image>().sprite = craftedItem.sprite;
+        escapingScript.good += Mathf.CeilToInt(reqInt / 10f);
 
         if (returnID != -1)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,10 +32,21 @@ public class MESoundController : MonoBehaviour
         { "jeep", 23 },
         { "TANK_BOOM", 24 }
     };
+    private AudioSource audioSource;
+    private IniFile iniFile;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        iniFile = new IniFile(System.IO.Path.Combine(UnityEngine.Application.streamingAssetsPath, "UserData.ini"));
+    }
+    private void Update()
+    {
+        audioSource.volume = Convert.ToInt32(iniFile.Read("Sounds", "Settings")) / 100f;
+    }
 
     public void PlaySound(string clipName)
     {
         int clipNum = soundDict[clipName];
-        GetComponent<AudioSource>().PlayOneShot(DataSender.instance.SoundList[clipNum]);
+        audioSource.PlayOneShot(DataSender.instance.SoundList[clipNum]);
     }
 }

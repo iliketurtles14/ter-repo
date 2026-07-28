@@ -11,6 +11,7 @@ public class Reading : MonoBehaviour
     private bool isReading = false;
     private bool stopReading = false;
     private bool isBusy;
+    private Escaping escapingScript;
     private StatEffects statEffectsScript;
     private void Start()
     {
@@ -18,6 +19,7 @@ public class Reading : MonoBehaviour
         itemBehavioursScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ItemBehaviours>();
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
     }
     public void Update()
     {
@@ -65,10 +67,14 @@ public class Reading : MonoBehaviour
             }
             yield return new WaitForSeconds(.045f);
         }
-        GetComponent<PlayerCollectionData>().playerData.intellect++;
-        StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect", GetComponent<SpriteRenderer>().sortingLayerName));
-        GetComponent<PlayerCollectionData>().playerData.energy += 5;
-        PSoundController.PlaySound("open");
+        if(GetComponent<PlayerCollectionData>().playerData.intellect < 100)
+        {
+            GetComponent<PlayerCollectionData>().playerData.intellect++;
+            StartCoroutine(statEffectsScript.MakeEffect(transform, "intellect", GetComponent<SpriteRenderer>().sortingLayerName));
+            GetComponent<PlayerCollectionData>().playerData.energy += 5;
+            PSoundController.PlaySound("open");
+            escapingScript.good += 1;
+        }
         isReading = false;
     }
 }

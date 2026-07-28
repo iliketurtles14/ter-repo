@@ -24,6 +24,7 @@ public class Jobs : MonoBehaviour
     private Saving savingScript;
     private Transform mc;
     private Zones zonesScript;
+    private Escaping escapingScript;
     private Dictionary<string, int> jobPayDict = new Dictionary<string, int>()
     {
         { "Janitor", 5 }, { "Gardening", 10 }, { "Tailor", 15 }, { "Laundry", 20 },
@@ -39,6 +40,7 @@ public class Jobs : MonoBehaviour
         savingScript = GetComponent<Saving>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         zonesScript = GetComponent<Zones>();
+        escapingScript = GetComponent<Escaping>();
         StartCoroutine(StartWait());
         HideQuotaPanel();
     }
@@ -142,6 +144,7 @@ public class Jobs : MonoBehaviour
         }
 
         player.GetComponent<PlayerCollectionData>().playerData.money += basePay + (5 * mult);
+        escapingScript.good += 20;
     }
     private IEnumerator FlashQuotaBar()
     {

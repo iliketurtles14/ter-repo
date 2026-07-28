@@ -5,13 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
-using System.Windows.Forms.VisualStyles;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
 using UnityEngine.Networking;
-using UnityEngine.Rendering;
-using UnityEngine.Tilemaps;
 
 public class LoadPrison : MonoBehaviour
 {
@@ -705,6 +700,7 @@ public class LoadPrison : MonoBehaviour
         SetShadows(currentTileDict);
         //doing zones now !!! >:3
         SetZones();
+        SetUndergroundDirt();
     }
     private void SetItems()
     {
@@ -1587,7 +1583,7 @@ public class LoadPrison : MonoBehaviour
                 {
                     case "Underground":
                         objInst.GetComponent<SpriteRenderer>().sortingOrder = 2;
-                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+                        objInst.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                         objInst.layer = undergroundLayer;
                         break;
                     case "Ground":
@@ -2108,6 +2104,108 @@ public class LoadPrison : MonoBehaviour
                         break;
 
                 }
+            }
+        }
+    }
+    private void SetUndergroundDirt()
+    {
+        GameObject dirtPrefab = Resources.Load<GameObject>("PrisonPrefabs/Underground/Dirt");
+        Vector3 northOffset = new Vector3(0, 1.6f);
+        Vector3 southOffset = new Vector3(0, -1.6f);
+        Vector3 eastOffset = new Vector3(1.6f, 0);
+        Vector3 westOffset = new Vector3(-1.6f, 0);
+        bool northOpen;
+        bool southOpen;
+        bool eastOpen;
+        bool westOpen;
+        foreach (Transform tile1 in tiles.Find("Underground"))
+        {
+            northOpen = false;
+            southOpen = false;
+            eastOpen = false;
+            westOpen = false;
+            if (tile1.CompareTag("Digable"))
+            {
+                foreach(Transform tile2 in tiles.Find("Underground"))
+                {
+                    if (tile2.position == tile1.position + northOffset)
+                    {
+                        northOpen = true;
+                    }
+                    if (tile2.position == tile1.position + southOffset)
+                    {
+                        southOpen = true;
+                    }
+                    if (tile2.position == tile1.position + eastOffset)
+                    {
+                        eastOpen = true;
+                    }
+                    if (tile2.position == tile1.position + westOffset)
+                    {
+                        westOpen = true;
+                    }
+                }
+                foreach(Transform obj in tiles.Find("UndergroundObjects"))
+                {
+                    if(obj.name == "Dirt(Clone)")
+                    {
+                        if (obj.position == tile1.position + northOffset)
+                        {
+                            northOpen = true;
+                        }
+                        if (obj.position == tile1.position + southOffset)
+                        {
+                            southOpen = true;
+                        }
+                        if (obj.position == tile1.position + eastOffset)
+                        {
+                            eastOpen = true;
+                        }
+                        if (obj.position == tile1.position + westOffset)
+                        {
+                            westOpen = true;
+                        }
+                    }
+                }
+                if (!northOpen)
+                {
+                    GameObject dirtObj = Instantiate(dirtPrefab, tile1.position + northOffset, Quaternion.identity, tiles.Find("UndergroundObjects"));
+                    dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                    dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
+                }
+                if (!southOpen)
+                {
+                    GameObject dirtObj = Instantiate(dirtPrefab, tile1.position + southOffset, Quaternion.identity, tiles.Find("UndergroundObjects"));
+                    dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                    dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
+                }
+                if (!eastOpen)
+                {
+                    GameObject dirtObj = Instantiate(dirtPrefab, tile1.position + eastOffset, Quaternion.identity, tiles.Find("UndergroundObjects"));
+                    dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                    dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
+                }
+                if (!westOpen)
+                {
+                    GameObject dirtObj = Instantiate(dirtPrefab, tile1.position + westOffset, Quaternion.identity, tiles.Find("UndergroundObjects"));
+                    dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
+                    dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
+                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
+                }
+            }
+        }
+        foreach (Transform tile in tiles.Find("UndergroundObjects"))
+        {
+            if (tile.name.StartsWith("Dirt(Clone)"))
+            {
+                tile.GetComponent<Collider2D>().enabled = true;
             }
         }
     }

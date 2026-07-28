@@ -23,12 +23,18 @@ public class NPCSpeech : MonoBehaviour
     private List<string> guardNames = new List<string>();
     private string playerName;
     private bool ready = false;
+    private OutfitController playerOC;
+    private List<string> guardOutfits = new List<string>
+    {
+        "Medic", "Guard", "GuardElf", "Henchman", "Soldier"
+    };
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
         speechFile = Resources.Load<TextAsset>("Speech").text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None); ;
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
+        playerOC = RootObjectCache.GetRoot("Player").GetComponent<OutfitController>();
 
         DestroyTextBox(transform);
         if(name != "VisitorNPC" && name != "CheckpointCharlie" && !name.Contains("Inmate") && !name.Contains("Guard"))
@@ -94,24 +100,38 @@ public class NPCSpeech : MonoBehaviour
     private void Talk()
     {
         string messageType = null;
-        if (name.StartsWith("Guard"))
+        if (guardOutfits.Contains(playerOC.outfit))
         {
-            messageType = "Guard_Talk";
+            if (name.StartsWith("Guard"))
+            {
+                messageType = "Outfit_Guard";
+            }
+            else if (name.StartsWith("Inmate"))
+            {
+                messageType = "Outfit_Inmate";
+            }
         }
-        else if (name.StartsWith("Inmate"))
+        else
         {
-            int opn = GetComponent<NPCCollectionData>().npcData.opinion;
-            if(opn < 33)
+            if (name.StartsWith("Guard"))
             {
-                messageType = "Rep_1";
+                messageType = "Guard_Talk";
             }
-            else if(opn > 33 && opn < 66)
+            else if (name.StartsWith("Inmate"))
             {
-                messageType = "Rep_2";
-            }
-            else if(opn > 66)
-            {
-                messageType = "Rep_3";
+                int opn = GetComponent<NPCCollectionData>().npcData.opinion;
+                if (opn < 33)
+                {
+                    messageType = "Rep_1";
+                }
+                else if (opn > 33 && opn < 66)
+                {
+                    messageType = "Rep_2";
+                }
+                else if (opn > 66)
+                {
+                    messageType = "Rep_3";
+                }
             }
         }
         StartCoroutine(statEffectsScript.MakeEffect(transform, "good", GetComponent<SpriteRenderer>().sortingLayerName));

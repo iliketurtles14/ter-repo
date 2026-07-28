@@ -559,6 +559,21 @@ public class ApplyPrisonData : MonoBehaviour
         spriteState = mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[360];
         mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState = spriteState;
+        //setttttings menu stuff
+        mc.Find("SettingsMenuPanel").GetComponent<Image>().sprite = UISprites[358];
+        mc.Find("SettingsMenuPanel").Find("MusicSlider").Find("Background").GetComponent<Image>().sprite = UISprites[368];
+        mc.Find("SettingsMenuPanel").Find("SoundsSlider").Find("Background").GetComponent<Image>().sprite = UISprites[368];
+        mc.Find("SettingsMenuPanel").Find("MusicSlider").Find("Handle Slide Area").Find("Handle").GetComponent<Image>().sprite = UISprites[370];
+        mc.Find("SettingsMenuPanel").Find("SoundsSlider").Find("Handle Slide Area").Find("Handle").GetComponent<Image>().sprite = UISprites[370];
+        mc.Find("SettingsMenuPanel").Find("ScreenPicker").Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+        mc.Find("SettingsMenuPanel").Find("ScreenPicker").Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+        mc.Find("SettingsMenuPanel").Find("ScreenPicker").GetComponent<Image>().sprite = UISprites[368];
+        mc.Find("SettingsMenuPanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[326];
+        mc.Find("SettingsMenuPanel").Find("SaveButton").GetComponent<Image>().sprite = UISprites[326];
+        spriteState = mc.Find("SettingsMenuPanel").Find("BackButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[327];
+        mc.Find("SettingsMenuPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("SettingsMenuPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
         //npcmenu stuff
         mc.Find("NPCMenuPanel").Find("StrengthIcon").GetComponent<Image>().sprite = UISprites[450];
         mc.Find("NPCMenuPanel").Find("SpeedIcon").GetComponent<Image>().sprite = UISprites[449];

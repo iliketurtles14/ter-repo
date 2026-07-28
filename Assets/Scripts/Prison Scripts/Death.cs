@@ -20,6 +20,8 @@ public class Death : MonoBehaviour
     private SetInitialOutfits setInitialOutfitsScript;
     private LadderClimb ladderClimbScript;
     private Transform badObjects;
+    private Escaping escapingScript;
+    private Lockdown lockdownScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player");
@@ -34,6 +36,8 @@ public class Death : MonoBehaviour
         setInitialOutfitsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<SetInitialOutfits>();
         ladderClimbScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LadderClimb>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
+        lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
 
         deathCanvas.gameObject.SetActive(false);
     }
@@ -66,6 +70,15 @@ public class Death : MonoBehaviour
         }
         StartCoroutine(PlayerFadeOut());
         PSoundController.PlaySound("en_hit");
+        escapingScript.bad += 15;
+        if (sittablesScript.onBed)
+        {
+            escapingScript.bad += 10;
+        }
+        if (lockdownScript.lockdownIsActive)
+        {
+            escapingScript.bad += 10;
+        }
     }
     private IEnumerator PlayerFadeOut()
     {

@@ -382,19 +382,14 @@ public class ItemBehaviours : MonoBehaviour
             if(distance <= 2.4f)
             {
                 touchedTileObject = mcs.touchedFloor.gameObject;
-                foreach(Transform obj in tiles.Find("GroundObjects")) //checks if able to dig
+                goodForDig = true;
+                foreach(Transform tile in tiles.Find("Underground"))
                 {
-                    if (!obj.name.StartsWith("100%HoleDown"))
+                    if(tile.position == mcs.touchedFloor.transform.position && !tile.CompareTag("Digable"))
                     {
-                        if(obj.position != touchedTileObject.transform.position)
-                        {
-                            goodForDig = true;
-                        }
-                        else if(obj.position == touchedTileObject.transform.position)
-                        {
-                            goodForDig = false;
-                            break;
-                        }
+                        goodForDig = false;
+                        PSoundController.PlaySound("lose");
+                        break;
                     }
                 }
                 whatAction = "digging down";
@@ -935,6 +930,7 @@ public class ItemBehaviours : MonoBehaviour
     }                                                           // vvv this touchedTile var is only for the bad object stuff
     public IEnumerator DigDown(TileData touchedTileData, GameObject touchedTile)
     {
+        dirtObject = null;
         bool shouldMakeBO = true;
         foreach(Transform bo in badObjects)
         {
@@ -978,7 +974,16 @@ public class ItemBehaviours : MonoBehaviour
         Vector3 southOffset = new Vector3(0, -1.6f);
         Vector3 eastOffset = new Vector3(1.6f, 0);
         Vector3 westOffset = new Vector3(-1.6f, 0);
-        if (shouldMakeDirt)
+
+        foreach(Transform tile in tiles.Find("Underground"))
+        {
+            if(tile.position == touchedTileObject.transform.position && tile.CompareTag("Digable"))
+            {
+                shouldMakeDirt = false;
+                break;
+            }
+        }
+        if (shouldMakeDirt)//shouldMakeDirt is also toggled based on the dug tile's current durability earlier in the script
         {
             GameObject emptyDirtObj = Instantiate(emptyDirtPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
             emptyDirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
@@ -999,6 +1004,18 @@ public class ItemBehaviours : MonoBehaviour
                 tile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
                 dirtObject = tile.gameObject;
                 break;
+            }
+        }
+        if(dirtObject == null)
+        {
+            foreach(Transform tile in tiles.Find("Underground"))
+            {
+                if(tile.position == touchedTileObject.transform.position && tile.CompareTag("Digable"))
+                {
+                    tile.GetComponent<TileCollectionData>().tileData.currentDurability = touchedTileData.currentDurability;
+                    dirtObject = tile.gameObject;
+                    break;
+                }
             }
         }
 
@@ -1044,26 +1061,40 @@ public class ItemBehaviours : MonoBehaviour
             BreakTile();
         }
 
-        if (!shouldMakeDirt)
+        foreach (Transform tile in tiles.Find("Underground"))
         {
-            yield break;
-        }
-
-        foreach(Transform tile in tiles.Find("UndergroundObjects"))
-        {
-            if(touchedTileObject.transform.position + northOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+            if (touchedTileObject.transform.position + northOffset == tile.position)
             {
                 northEmpty = true;
             }
-            if (touchedTileObject.transform.position + southOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+            if (touchedTileObject.transform.position + southOffset == tile.position)
             {
                 southEmpty = true;
             }
-            if (touchedTileObject.transform.position + eastOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+            if (touchedTileObject.transform.position + eastOffset == tile.position)
             {
                 eastEmpty = true;
             }
-            if (touchedTileObject.transform.position + westOffset == tile.position && tile.name.StartsWith("DirtEmpty"))
+            if (touchedTileObject.transform.position + westOffset == tile.position)
+            {
+                westEmpty = true;
+            }
+        }
+        foreach (Transform tile in tiles.Find("UndergroundObjects"))
+        {
+            if(touchedTileObject.transform.position + northOffset == tile.position && (tile.name.StartsWith("DirtEmpty") || tile.name == "Dirt(Clone)"))
+            {
+                northEmpty = true;
+            }
+            if (touchedTileObject.transform.position + southOffset == tile.position && (tile.name.StartsWith("DirtEmpty") || tile.name == "Dirt(Clone)"))
+            {
+                southEmpty = true;
+            }
+            if (touchedTileObject.transform.position + eastOffset == tile.position && (tile.name.StartsWith("DirtEmpty") || tile.name == "Dirt(Clone)"))
+            {
+                eastEmpty = true;
+            }
+            if (touchedTileObject.transform.position + westOffset == tile.position && (tile.name.StartsWith("DirtEmpty") || tile.name == "Dirt(Clone)"))
             {
                 westEmpty = true;
             }
@@ -1209,11 +1240,32 @@ public class ItemBehaviours : MonoBehaviour
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
+            emptyDirtObj.GetComponent<SpriteRenderer>().sprite = emptyDirtSprite;
 
             bool northEmpty = false;
             bool southEmpty = false;
             bool eastEmpty = false;
             bool westEmpty = false;
+
+            foreach (Transform tile in tiles.Find("Underground"))
+            {
+                if (touchedTileObject.transform.position + northOffset == tile.position)
+                {
+                    northEmpty = true;
+                }
+                if (touchedTileObject.transform.position + southOffset == tile.position)
+                {
+                    southEmpty = true;
+                }
+                if (touchedTileObject.transform.position + eastOffset == tile.position)
+                {
+                    eastEmpty = true;
+                }
+                if (touchedTileObject.transform.position + westOffset == tile.position)
+                {
+                    westEmpty = true;
+                }
+            }
 
             foreach (Transform tile in tiles.Find("UndergroundObjects"))
             {
@@ -1274,16 +1326,11 @@ public class ItemBehaviours : MonoBehaviour
 
             foreach (Transform tile in tiles.Find("UndergroundObjects"))
             {
-                if (!tile.name.StartsWith("Dirt(Clone)"))
-                {
-                    tile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
-                }
-
                 if (tile.name.StartsWith("Dirt(Clone)"))
                 {
                     tile.GetComponent<Collider2D>().enabled = true;
                 }
-                if (tile.name == "Rock(Clone)" || tile.name == "Mine(Clone)" || tile.name == "Brace(Clone)")
+                else if (tile.name == "Rock(Clone)" || tile.name == "Mine(Clone)" || tile.name == "Brace(Clone)" || tile.name.StartsWith("DirtEmpty"))
                 {
                     tile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 }
@@ -1343,7 +1390,7 @@ public class ItemBehaviours : MonoBehaviour
         Vector3 eastOffset = new Vector3(1.6f, 0);
         Vector3 westOffset = new Vector3(-1.6f, 0);
 
-        foreach (Transform tile in tiles.Find("Underground"))//checks for braces and holes
+        foreach (Transform tile in tiles.Find("UndergroundObjects"))//checks for braces and holes
         {
             if(tile.name == "DirtEmpty(Clone)")
             {
@@ -1362,18 +1409,17 @@ public class ItemBehaviours : MonoBehaviour
             }
         }
         //check for surrounding empty dirt tiles and set stability value accordingly
-        foreach(Transform tile1 in tiles.Find("Underground"))
+        foreach(Transform tile1 in tiles.Find("UndergroundObjects"))
         {
-            int tile1Stability = tile1.GetComponent<TileCollectionData>().tileData.holeStability;
-            
             if(tile1.name != "DirtEmpty(Clone)")
             {
                 continue;
             }
+            int tile1Stability = tile1.GetComponent<TileCollectionData>().tileData.holeStability;
 
-            if(tile1Stability == 3)
+            if (tile1Stability == 3)
             {
-                foreach(Transform tile2 in tiles.Find("Underground"))
+                foreach(Transform tile2 in tiles.Find("UndergroundObjects"))
                 {
                     if((tile1.position + northOffset == tile2.position ||
                         tile1.position + southOffset == tile2.position ||
@@ -1390,7 +1436,7 @@ public class ItemBehaviours : MonoBehaviour
             }
             else if(tile1Stability == 2)
             {
-                foreach (Transform tile2 in tiles.Find("Underground"))
+                foreach (Transform tile2 in tiles.Find("UndergroundObjects"))
                 {
                     if ((tile1.position + northOffset == tile2.position ||
                         tile1.position + southOffset == tile2.position ||
@@ -1407,14 +1453,14 @@ public class ItemBehaviours : MonoBehaviour
         }
 
         //look around the dirt to see if stable
-        foreach (Transform tile in tiles.Find("Underground"))
+        foreach (Transform tile in tiles.Find("UndergroundObjects"))
         {
             if ((touchedTileObject.transform.position == tile.position + eastOffset ||
                 touchedTileObject.transform.position == tile.position + westOffset ||
                 touchedTileObject.transform.position == tile.position + northOffset ||
                 touchedTileObject.transform.position == tile.position + southOffset) &&
-                tile.GetComponent<TileCollectionData>().tileData.holeStability > 1 &&
-                tile.gameObject.name == "DirtEmpty(Clone)")
+                tile.gameObject.name == "DirtEmpty(Clone)" &&
+                tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
             {
                 holeIsStable = true;
                 Debug.Log("holeIsStable is " + holeIsStable);
@@ -1424,6 +1470,21 @@ public class ItemBehaviours : MonoBehaviour
             {
                 holeIsStable = false;
                 Debug.Log("holeIsStable is " + holeIsStable);
+            }
+        }
+        if (!holeIsStable)
+        {
+            foreach(Transform tile in tiles.Find("Underground"))
+            {
+                if ((touchedTileObject.transform.position == tile.position + eastOffset ||
+                    touchedTileObject.transform.position == tile.position + westOffset ||
+                    touchedTileObject.transform.position == tile.position + northOffset ||
+                    touchedTileObject.transform.position == tile.position + southOffset) &&
+                    tile.CompareTag("Digable"))
+                {
+                    holeIsStable = true;
+                    break;
+                }
             }
         }
     }
@@ -1705,6 +1766,7 @@ public class ItemBehaviours : MonoBehaviour
                 emptyTile.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 emptyTile.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 emptyTile.transform.parent = tiles.Find("Underground");
+                holeClimbScript.brokenTileSRs.Add(emptyTile.GetComponent<SpriteRenderer>());
             }
             else if (!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
             {

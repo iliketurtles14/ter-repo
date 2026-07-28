@@ -1564,6 +1564,29 @@ JobGet=I've stamped your application as approved - welcome to prison industries!
 JobDumb=You need at least $intellect intellect to apply for that job, so your application has been declined and filed neatly away down my toilet.##Smarten yourself up boy!
 JobHeat=The cheek of applying for a job while you're in bad standing with the guards!##Learn to respect the basic rules of our fine prison and try again later. Scoot!
 JobBusy=I'm far too busy to be processing requests like this during a work period!##Move along and try again later..
+CaughtMessage=Nice try $name,##$crime##As punishment I'm placing you in solitary for a few days, hopefully it'll teach you a hard lesson!
+CaughtToilet=We found the contraband you'd stashed down your toilet. Try putting it somewhere less obvious next time!
+CaughtJeepInmate=The perimeter jeep patrol spotted you trying to make a run for it.
+CaughtJeepDig=The perimeter jeep patrol found evidence of digging, and we traced it back to  you.
+CaughtJeepEsc=The perimeter jeep patrol found evidence of an escape attempt, and we traced it back to you.
+CaughtEmptyCell=The night patrols noticed your cell was empty, so I called the big boys in to flush you out of hiding.
+CaughtOutLate=I'm not sure how you got out of your cell but it definitely won't happen again!
+CaughtFence=My boys found some fencing cut open and we've linked it back to you.
+CaughtBars=My boys found cell bars cut open and we've linked it back to you.
+CaughtVent=My boys found open vent panels and we've linked it back to you.
+CaughtWall=My boys found holes in the walls and we've linked it back to you.
+CaughtHole=My boys found evidence of tunnelling and we've linked it back to you.
+CaughtDirt=My boys found some tunnel dirt lying around, and traced it back to you.
+CaughtWallBlock=My boys found a wall block lying around, and traced it back to you.
+CaughtVentCover=My boys found a vent cover lying around, and traced it back to you.
+CaughtItem=My boys found an illegal item lying around, and traced it back to you.
+CaughtSniperDig=My boys in the towers spotted evidence of tunnelling and we've linked it back to you.
+CaughtSniperFence=My boys in the towers spotted fencing cut open and we've linked it back to you.
+CaughtShakedown=One of my boys found contraband stashed in your desk during a shakedown.
+CaughtKey=A prison key's been reported stolen and we've linked it back to you.
+CaughtLockdown=Unfortunately I had to bring in the cavalry to put an end to your shenanigans.
+CaughtSpotlight=You'll have to be quicker than that to dodge our spotlights!
+CaughtTakeover=Not sure what you were trying to accomplish but it didn't work!
 -----------DLC---------------------------------------------------
 
 [ET_Banter_Cage]
