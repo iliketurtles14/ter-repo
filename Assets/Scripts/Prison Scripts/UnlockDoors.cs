@@ -18,7 +18,7 @@ public class UnlockDoors : MonoBehaviour
     private Sprite unlockedSprite;
     private Schedule scheduleScript;
     private Routine routineScript;
-    private List<string> unlockedTypes = new List<string>();
+    public List<string> unlockedTypes = new List<string>();
     private bool ready;
     private bool doingCellLockWait;
     private Transform aStar;

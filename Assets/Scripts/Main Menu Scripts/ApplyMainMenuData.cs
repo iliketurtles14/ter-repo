@@ -179,6 +179,24 @@ public class ApplyMainMenuData : MonoBehaviour
         spriteState = mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[249];
         mmc.Find("PatchNotesPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        //save menu stuff
+        mmc.Find("SavePanel").GetComponent<Image>().sprite = UISprites[291];
+        for(int i = 0; i < 3; i++)
+        {
+            Transform button = mmc.Find("SavePanel").Find("Save" + i.ToString() + "Button");
+            button.GetComponent<Image>().sprite = UISprites[292];
+            spriteState = button.GetComponent<Button>().spriteState;
+            spriteState.highlightedSprite = UISprites[466];
+            button.GetComponent<Button>().spriteState = spriteState;
+        }
+        mmc.Find("SavePanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[296];
+        mmc.Find("SavePanel").Find("NoSaveButton").GetComponent<Image>().sprite = UISprites[296];
+        mmc.Find("SavePanel").Find("EraseButton").GetComponent<Image>().sprite = UISprites[296];
+        spriteState = mmc.Find("SavePanel").Find("BackButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[297];
+        mmc.Find("SavePanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
+        mmc.Find("SavePanel").Find("NoSaveButton").GetComponent<Button>().spriteState = spriteState;
+        mmc.Find("SavePanel").Find("EraseButton").GetComponent<Button>().spriteState = spriteState;
         //prison select backdrop
         mmc.Find("PrisonSelectPanel").GetComponent<Image>().sprite = UISprites[208];
         //arrows

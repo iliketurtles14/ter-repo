@@ -17,6 +17,7 @@ public class CPCharlie : MonoBehaviour
     private List<GameObject> slots = new List<GameObject>();
     private List<Transform> charlies = new List<Transform>();
     private bool ready;
+    public bool destroyedGate;
     private List<string> objLayers = new List<string>
     {
         "GroundObjects", "UndergroundObjects", "VentObjects", "RoofObjects"
@@ -103,6 +104,7 @@ public class CPCharlie : MonoBehaviour
             invScript.inventory[slot].itemData = null;
             slots[slot].GetComponent<Image>().sprite = clear;
             PSoundController.PlaySound("pickup");
+            destroyedGate = true;
         }
         else if(id == 256)
         {

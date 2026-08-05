@@ -59,6 +59,7 @@ public class DataSender : MonoBehaviour
     public List<AudioClip> SoundList = new List<AudioClip>();
     public List<AudioClip> MusicList = new List<AudioClip>();
     public string currentMapPath;
+    public int currentSave = -1;
     public static DataSender instance { get; private set; }
     
     public void SetFullLists(List<Sprite> item, List<Sprite> npc, List<Sprite> prisonObject, List<Sprite> ui)

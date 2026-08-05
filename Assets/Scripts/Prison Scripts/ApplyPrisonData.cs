@@ -559,6 +559,14 @@ public class ApplyPrisonData : MonoBehaviour
         spriteState = mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[360];
         mc.Find("HelpMenuPanel").Find("ReturnButton").GetComponent<Button>().spriteState = spriteState;
+        //quit menu stuff
+        mc.Find("QuitMenuPanel").GetComponent<Image>().sprite = UISprites[361];
+        mc.Find("QuitMenuPanel").Find("SureButton").GetComponent<Image>().sprite = UISprites[359];
+        mc.Find("QuitMenuPanel").Find("CancelButton").GetComponent<Image>().sprite = UISprites[359];
+        spriteState = mc.Find("QuitMenuPanel").Find("CancelButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[360];
+        mc.Find("QuitMenuPanel").Find("CancelButton").GetComponent<Button>().spriteState = spriteState;
+        mc.Find("QuitMenuPanel").Find("SureButton").GetComponent<Button>().spriteState = spriteState;
         //setttttings menu stuff
         mc.Find("SettingsMenuPanel").GetComponent<Image>().sprite = UISprites[358];
         mc.Find("SettingsMenuPanel").Find("MusicSlider").Find("Background").GetComponent<Image>().sprite = UISprites[368];

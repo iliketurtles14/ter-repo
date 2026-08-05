@@ -63,6 +63,7 @@ public class DumperStartStop : MonoBehaviour
     private IEnumerator ReloadMainMenu() //for quitting from a prison
     {
         //get mmc (waiting until the main menu scene is actually loaded
+        Transform blockerOut = null;
         while (true)
         {
             yield return null;
@@ -86,6 +87,21 @@ public class DumperStartStop : MonoBehaviour
                 break;
             }
         }
+        Scene aMainMenuScene = SceneManager.GetSceneByName("Main Menu");
+        MMMusicController mc = null;
+        foreach (var root in aMainMenuScene.GetRootGameObjects())
+        {
+            if (root.name == "BlockerCanvasOut")
+            {
+                blockerOut = root.transform;
+            }
+            else if(root.name == "MusicSource")
+            {
+                mc = root.gameObject.GetComponent<MMMusicController>();
+            }
+        }
+
+        blockerOut.GetComponent<Animator>().enabled = true;
 
         prisonSelectScript = mmc.Find("PrisonSelectPanel").GetComponent<PrisonSelect>();
 
@@ -103,6 +119,12 @@ public class DumperStartStop : MonoBehaviour
         //do textures and prisons
         applyScript.LoadImages();
         prisonSelectScript.ReloadPrisons(false);
+
+        //music
+        mc.canStartMusic = true;
+
+        yield return new WaitForSeconds(1.6f);
+        blockerOut.GetComponent<Animator>().enabled = false;
     }
     public IEnumerator LoadAll() //this is where it all starts...
     {

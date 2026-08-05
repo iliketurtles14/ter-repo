@@ -30,6 +30,7 @@ public class DebugMenu : MonoBehaviour
     private HoleClimb holeClimbScript;
     private Transform globalLight;
     private Transform undergroundLight;
+    private Saving savingScript;
     private void Start()
     {
         input = transform.Find("Input").GetComponent<TMP_InputField>();
@@ -57,6 +58,7 @@ public class DebugMenu : MonoBehaviour
         holeClimbScript = so.GetComponent<HoleClimb>();
         globalLight = RootObjectCache.GetRoot("GlobalLight").transform;
         undergroundLight = RootObjectCache.GetRoot("UndergroundLight").transform;
+        savingScript = so.GetComponent<Saving>();
         if (options.Read("DebugMode", "Settings") == "False")
         {
             gameObject.SetActive(false);
@@ -144,7 +146,8 @@ public class DebugMenu : MonoBehaviour
                 "/cameraView [float viewSize]\n\t" +
                 "/timeFreeze [true/false]\n\t" +
                 "/powerOff\n\t" +
-                "/layer [int layer (0,1,2,3)]";
+                "/layer [int layer (0,1,2,3)]\n\t" +
+                "/save";
             return;
         }
 
@@ -311,6 +314,20 @@ public class DebugMenu : MonoBehaviour
                     break;
             }
             output.text += "\nMoving to layer " + layerName + ".";
+            return;
+        }
+        if(command == "/save")
+        {
+            DataSender ds = DataSender.instance;
+            if(ds.currentSave == -1)
+            {
+                output.text += "\nCannot save a No Save prison.";
+            }
+            else
+            {
+                savingScript.Save();
+                output.text += "\nSaving to slot " + ds.currentSave + ".";
+            }
             return;
         }
         //keep at end

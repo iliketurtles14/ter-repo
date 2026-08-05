@@ -27,7 +27,11 @@ public class SmallMenuAnim : MonoBehaviour
     }
     public void Update()
     {
-        if(smallMenuScript.npcCharacter != null && smallMenuScript.npcType != null)
+        if (dataScript == null)
+        {
+            dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+        if (smallMenuScript.npcCharacter != null && smallMenuScript.npcType != null)
         {
             bodyDirSprites = smallMenuScript.characterSprites;
             

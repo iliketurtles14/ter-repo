@@ -2,6 +2,7 @@ using NUnit.Framework.Internal;
 using Ookii.Dialogs;
 using SFB;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -29,6 +30,7 @@ public class MEButtonController : MonoBehaviour
     public string itemsPath;
     public Transform canvases;
     public MESoundController sc;
+    public Transform blocker;
     //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     //{
     //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
@@ -894,9 +896,16 @@ public class MEButtonController : MonoBehaviour
     }
     public void ExitYes()
     {
+        sc.PlaySound("rumble");
+        StartCoroutine(ExitYesWait());
+    }
+    private IEnumerator ExitYesWait()
+    {
+        blocker.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds(.6f);
+        blocker.GetComponent<Animator>().enabled = false;
         Addressables.LoadSceneAsync("Main Menu");
         GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
-        sc.PlaySound("rumble");
     }
     public void ExitNo()
     {

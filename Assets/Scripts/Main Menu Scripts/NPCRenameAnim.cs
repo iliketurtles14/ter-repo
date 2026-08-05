@@ -19,7 +19,7 @@ public class NPCRenameAnim : MonoBehaviour
 
 
     public void OnEnable()
-    {
+    {        
         if (bodyDirSprites != null)
         {
             StartCoroutine(AnimCycle());
@@ -28,6 +28,11 @@ public class NPCRenameAnim : MonoBehaviour
     }
     public void Randomize()
     {
+        if (dataScript == null)
+        {
+            dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+
         if (tag == "Inmate")
         {
             outfitDirSprites = dataScript.InmateOutiftSprites;

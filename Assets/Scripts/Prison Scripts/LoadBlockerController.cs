@@ -36,7 +36,7 @@ public class LoadBlockerController : MonoBehaviour
     {
         loadCanvas.GetComponent<Animator>().enabled = true;
         routineScript.isFrozen = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         routineScript.isFrozen = false;
         Destroy(loadCanvas.gameObject);
         player.GetComponent<PlayerCtrl>().canMove = true;

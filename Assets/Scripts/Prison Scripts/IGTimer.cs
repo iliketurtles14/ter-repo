@@ -6,7 +6,7 @@ using TMPro;
 public class IGTimer : MonoBehaviour
 {
     public float igt;
-    private float pausedIGT;
+    public float pausedIGT;
     private TextMeshProUGUI tmp;
     private TextMeshProUGUI pausedTMP;
     private PauseController pc;

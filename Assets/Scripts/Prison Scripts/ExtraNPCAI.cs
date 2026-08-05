@@ -14,7 +14,7 @@ public class ExtraNPCAI : MonoBehaviour
     public Transform spawnWP;
     private List<Transform> guardWPs = new List<Transform>();
     private Transform tiles;
-    private bool alreadyWentToday;
+    public bool alreadyWentToday;
     private int dayWent;
     private Saving savingScript;
     private void Start()

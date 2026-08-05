@@ -33,7 +33,7 @@ public class Escaping : MonoBehaviour
     public int efficiency;
     public int total;
 
-    private int highestHeat;
+    public int highestHeat;
     public int totalHeat;
     public int effNum;
     private void Start()

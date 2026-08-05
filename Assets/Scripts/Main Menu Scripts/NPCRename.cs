@@ -60,9 +60,15 @@ public class NPCRename : MonoBehaviour
     private string setCharacter;
     public bool isStarting;
     public MMSoundController sc;
-
+    public Transform blocker;
+    public int currentSave = -1;
     private void OnEnable()
     {
+        if(dataScript == null)
+        {
+            dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+
         ClearPanel();
         ResetNPCGrid();
         LoadNPCGrid(prisonSelectScript.currentPrisonGuardNum + prisonSelectScript.currentPrisonInmateNum - 1);
@@ -77,6 +83,11 @@ public class NPCRename : MonoBehaviour
             spriteState.pressedSprite = SelectPressedSprite;
             child.GetComponent<Button>().spriteState = spriteState;
         }
+        foreach(Transform child in transform.Find("NPCGrid"))
+        {
+            child.GetComponent<Image>().sprite = ClearSprite;
+        }
+        NameText.text = "";
         StartCoroutine(RandomizeWait());
     }
     private void OnDisable()
@@ -360,8 +371,6 @@ public class NPCRename : MonoBehaviour
     public IEnumerator RandomizeWait()
     {
         yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
         Randomize();
     }
     private void ClearPanel()
@@ -442,8 +451,14 @@ public class NPCRename : MonoBehaviour
 
         smallMenuScript.OnOpen(lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName, lastPressedCharacter.tag, character);
     }
-    public void Transfer()
+    public IEnumerator Transfer()
     {
+        blocker.GetComponent<Animator>().enabled = true;
+        blocker.GetComponent<Animator>().Rebind();
+        blocker.GetComponent<Animator>().Update(0f);
+        blocker.GetComponent<Animator>().Play(0, 0, 0f);
+        yield return new WaitForSeconds(.6f);
+        
         int i = 0;
         foreach(Transform npc in transform.Find("NPCGrid"))
         {            
@@ -457,7 +472,7 @@ public class NPCRename : MonoBehaviour
         Debug.Log(prisonSelectScript.currentPrisonPath);
         dataSenderScript = DataSender.instance;
         dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
-
+        dataSenderScript.currentSave = currentSave;
         Addressables.LoadSceneAsync("Prison");
     }
 }

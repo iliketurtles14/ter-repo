@@ -10,7 +10,6 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
     private GameObject black;
     private PauseController pc;
     public bool paused = false;
-    public bool isQuitting = false;
     public bool inOtherMenu;
 
     public void Start()

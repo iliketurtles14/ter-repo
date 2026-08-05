@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -27,13 +28,7 @@ public class PButtonController : MonoBehaviour
     private Pause pauseScript;
     private RecipeMenu recipeMenuScript;
     private SettingsMenu settingsMenuScript;
-    private int groundLayer;
-    private int undergroundLayer;
-    private int ventLayer;
-    private int roofLayer;
-    private int playerLayer;
-    private int uiLayer;
-    private int ventCoverLayer;
+    private QuitMenu quitMenuScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -52,15 +47,9 @@ public class PButtonController : MonoBehaviour
         escapeObjectControllerScript = GetComponent<EscapeObjectController>();
         helpMenuScript = mc.Find("HelpMenuPanel").GetComponent<HelpMenu>();
         pauseScript = mc.Find("PauseMenuPanel").GetComponent<Pause>();
-        groundLayer = LayerMask.NameToLayer("Ground");
-        undergroundLayer = LayerMask.NameToLayer("Underground");
-        ventLayer = LayerMask.NameToLayer("Vents");
-        roofLayer = LayerMask.NameToLayer("Roof");
-        playerLayer = LayerMask.NameToLayer("Player");
-        uiLayer = LayerMask.NameToLayer("UI");
-        ventCoverLayer = LayerMask.NameToLayer("VentCovers");
         recipeMenuScript = mc.Find("RecipeMenuPanel").GetComponent<RecipeMenu>();
         settingsMenuScript = mc.Find("SettingsMenuPanel").GetComponent<SettingsMenu>();
+        quitMenuScript = mc.Find("QuitMenuPanel").GetComponent<QuitMenu>();
     }
     public void PauseContinue()
     {
@@ -78,21 +67,37 @@ public class PButtonController : MonoBehaviour
         pauseScript.ClosePauseMenu(true);
         settingsMenuScript.Open();
     }
+    //public void PauseQuit()
+    //{
+    //    PSoundController.PlaySound("rumble");
+    //    pauseScript.isQuitting = true;
+    //    Addressables.LoadSceneAsync("Main Menu");
+    //    GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
+    //    Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
+    //    Physics2D.IgnoreLayerCollision(uiLayer, undergroundLayer, true);
+    //    Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, true);
+    //    Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, true);
+    //    Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, true);
+    //    Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
+    //    Physics2D.IgnoreLayerCollision(playerLayer, undergroundLayer, true);
+    //    Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
+    //    Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
+    //}
     public void PauseQuit()
     {
+        PSoundController.PlaySound("open");
+        pauseScript.ClosePauseMenu(true);
+        quitMenuScript.Open();
+    }
+    public void QuitQuit()
+    {
         PSoundController.PlaySound("rumble");
-        pauseScript.isQuitting = true;
-        Addressables.LoadSceneAsync("Main Menu");
-        GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;
-        Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
-        Physics2D.IgnoreLayerCollision(uiLayer, undergroundLayer, true);
-        Physics2D.IgnoreLayerCollision(uiLayer, ventLayer, true);
-        Physics2D.IgnoreLayerCollision(uiLayer, roofLayer, true);
-        Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, true);
-        Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
-        Physics2D.IgnoreLayerCollision(playerLayer, undergroundLayer, true);
-        Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
-        Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
+        StartCoroutine(quitMenuScript.Quit());
+    }
+    public void QuitCancel()
+    {
+        PSoundController.PlaySound("close");
+        quitMenuScript.Cancel(false);
     }
     public void HelpButton(BaseEventData data)
     {

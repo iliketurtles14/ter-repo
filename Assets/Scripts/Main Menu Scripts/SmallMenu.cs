@@ -41,6 +41,11 @@ public class SmallMenu : MonoBehaviour
             return;
         }
 
+        if (dataScript == null)
+        {
+            dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+
         switch (characterNum)
         {
             case 0:

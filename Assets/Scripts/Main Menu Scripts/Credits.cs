@@ -21,7 +21,7 @@ public class Credits : MonoBehaviour
         blocker.GetComponent<Animator>().Rebind();
         blocker.GetComponent<Animator>().Update(0f);
         blocker.GetComponent<Animator>().Play(0, 0, 0f);
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(.6f);
         blocker.GetComponent<Animator>().enabled = false;
         audioSource.clip = creditsClip;
         audioSource.Play();

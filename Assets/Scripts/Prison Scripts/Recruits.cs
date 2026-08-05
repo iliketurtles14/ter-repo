@@ -13,7 +13,7 @@ public class Recruits : MonoBehaviour
     private Combat combatScript;
     private PlayerCollectionData playerColData;
     private Transform aStar;
-    private List<Transform> recruits = new List<Transform>();
+    public List<Transform> recruits = new List<Transform>();
     private WarningMessage warningScript;
     private Map currentMap;
     private string[] speechFile;
@@ -83,7 +83,7 @@ public class Recruits : MonoBehaviour
                 }
                 else
                 {
-                    Recruit(recruit, false);
+                    Recruit(recruit, false, false);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class Recruits : MonoBehaviour
             if (!npc.GetComponent<NPCCollectionData>().npcData.isRecruited &&
                 npc.GetComponent<NPCCollectionData>().npcData.opinion >= 80)
             {
-                Recruit(npc, true);
+                Recruit(npc, true, false);
             }
             else if(npc.GetComponent<NPCCollectionData>().npcData.isRecruited)
             {
@@ -106,10 +106,10 @@ public class Recruits : MonoBehaviour
             }
         }
     }
-    public void Recruit(Transform npc, bool addToRecruitNum)
+    public void Recruit(Transform npc, bool addToRecruitNum, bool isLoading)
     {
         Debug.Log("recruitng");
-        if (addToRecruitNum)
+        if (addToRecruitNum && !isLoading)
         {
             StartCoroutine(warningScript.CreateWarningMessage(GetMessage("Follow")));
             PSoundController.PlaySound("step");

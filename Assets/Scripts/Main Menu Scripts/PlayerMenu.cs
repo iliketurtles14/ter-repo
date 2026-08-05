@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,13 @@ public class PlayerMenu : MonoBehaviour
         playerCharacter = CharacterEnumClass.GetCharacterString(characterNum);
         transform.Find("NameText").GetComponent<TMP_InputField>().text = playerCharacter;
         transform.Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = playerCharacter;
+        transform.Find("Player").gameObject.SetActive(false);
+        StartCoroutine(Wait());
+    }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForEndOfFrame();
+        transform.Find("Player").gameObject.SetActive(true);
     }
     public void Update()
     {

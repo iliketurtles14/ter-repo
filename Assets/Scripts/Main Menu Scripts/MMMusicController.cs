@@ -18,6 +18,7 @@ public class MMMusicController : MonoBehaviour
     {
         if (canStartMusic && !hasStarted)
         {
+            Debug.Log("Starting Music");
             hasStarted = true;
             audioSource.clip = DataSender.instance.MusicList[40];
             audioSource.Play();
