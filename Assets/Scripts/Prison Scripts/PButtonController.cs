@@ -29,6 +29,7 @@ public class PButtonController : MonoBehaviour
     private RecipeMenu recipeMenuScript;
     private SettingsMenu settingsMenuScript;
     private QuitMenu quitMenuScript;
+    private SaveMenu saveMenuScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -50,6 +51,7 @@ public class PButtonController : MonoBehaviour
         recipeMenuScript = mc.Find("RecipeMenuPanel").GetComponent<RecipeMenu>();
         settingsMenuScript = mc.Find("SettingsMenuPanel").GetComponent<SettingsMenu>();
         quitMenuScript = mc.Find("QuitMenuPanel").GetComponent<QuitMenu>();
+        saveMenuScript = mc.Find("SaveMenuPanel").GetComponent<SaveMenu>();
     }
     public void PauseContinue()
     {
@@ -155,6 +157,25 @@ public class PButtonController : MonoBehaviour
     {
         PSoundController.PlaySound("plip");
         Debug.Log("pressed!");
+        playerIDInvScript.CloseMenu(true);
+        favorMenuScript.OpenMenu();
+    }
+    public void PlayerIDSave()
+    {
+        PSoundController.PlaySound("plip");
+        playerIDInvScript.CloseMenu(true);
+        saveMenuScript.Open();
+    }
+    public void SavePlayerID()
+    {
+        PSoundController.PlaySound("plip");
+        saveMenuScript.Close(true);
+        playerIDInvScript.OpenMenu();
+    }
+    public void SaveFavor()
+    {
+        PSoundController.PlaySound("plip");
+        saveMenuScript.Close(true);
         favorMenuScript.OpenMenu();
     }
     public void FavorCancel(BaseEventData data)
@@ -194,6 +215,13 @@ public class PButtonController : MonoBehaviour
     {
         PSoundController.PlaySound("plip");
         favorMenuScript.CloseMenu(true);
+        playerIDInvScript.OpenMenu();
+    }
+    public void FavorSave()
+    {
+        PSoundController.PlaySound("plip");
+        favorMenuScript.CloseMenu(true);
+        saveMenuScript.Open();
     }
     public void Give()
     {
@@ -229,6 +257,26 @@ public class PButtonController : MonoBehaviour
     {
         PSoundController.PlaySound("plip");
         StartCoroutine(shopMenuScript.CloseMenu(false, true));
+    }
+    public void SaveSave()
+    {
+        PSoundController.PlaySound("open");
+        saveMenuScript.AskIfSure("save");
+    }
+    public void SaveLoad()
+    {
+        PSoundController.PlaySound("open");
+        saveMenuScript.AskIfSure("load");
+    }
+    public void SaveYes()
+    {
+        PSoundController.PlaySound("rumble");
+        saveMenuScript.Yes();
+    }
+    public void SaveNo()
+    {
+        PSoundController.PlaySound("close");
+        saveMenuScript.No();
     }
     public void JobApply(BaseEventData data)
     {
@@ -280,7 +328,7 @@ public class PButtonController : MonoBehaviour
     public void InvID()
     {
         PSoundController.PlaySound("open");
-        StartCoroutine(playerIDInvScript.OpenMenu(false));
+        playerIDInvScript.OpenMenu();
     }
     public void CraftCraft()
     {

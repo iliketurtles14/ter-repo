@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class Map
 {
     public string fileName; //no extension
+    public int mapType; //0 - main, 1 - bonus, 2 - custom
     public string mapName;
     public string note;
     public string warden;
@@ -61,6 +62,7 @@ public class Map
 
     public Map(
         string fileName,
+        int mapType,
         string mapName,
         string note,
         string warden,
@@ -115,6 +117,7 @@ public class Map
     )
     {
         this.fileName = fileName;
+        this.mapType = mapType;
         this.mapName = mapName;
         this.note = note;
         this.warden = warden;

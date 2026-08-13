@@ -6,6 +6,11 @@ public class SetColliderShape : MonoBehaviour
     public Sprite sprite;
     private void Start()
     {
+        if (CompareTag("Digable"))
+        {
+            GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+            return;
+        }
         bool hasTransparency = false;
         Texture2D tex = sprite.texture;
         Rect rect = sprite.textureRect;

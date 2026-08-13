@@ -23,10 +23,10 @@ public class ButtonController : MonoBehaviour
     public MMSoundController sc;
     public Credits creditsScript;
     public Transform blocker;
+    public SaveSet saveSetScript;
     public void MainPlayGame()
     {
-        mmc.Find("SavePanel").gameObject.SetActive(true);
-        mmc.Find("Black").GetComponent<Image>().enabled = true;
+        StartCoroutine(SaveWait(false));
         foreach(Transform child in mmc.Find("TitlePanel"))
         {
             if(child.GetComponent<Button>() != null)
@@ -37,6 +37,17 @@ public class ButtonController : MonoBehaviour
         }
 
         sc.PlaySound("open");
+    }
+    private IEnumerator SaveWait(bool a) //i have no fucking clue what to name this boolean
+    {
+        saveSetScript.SetSaves();
+        yield return new WaitForEndOfFrame();
+        mmc.Find("SavePanel").gameObject.SetActive(true);
+        mmc.Find("Black").GetComponent<Image>().enabled = true;
+        if (a)
+        {
+            mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
+        }
     }
     public void MainPatchNotes()
     {
@@ -160,10 +171,24 @@ public class ButtonController : MonoBehaviour
 
         int num = Convert.ToInt32(clicked.name.Replace("Save", "").Replace("Button", ""));
         npcRenameScript.currentSave = num;
-        //check if save is real then do something if is real
-        mmc.Find("SavePanel").gameObject.SetActive(false);
-        mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
-        sc.PlaySound("open");
+        if(File.Exists(Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + num.ToString() + ".ini")))
+        {
+            foreach(Transform child in mmc.Find("SavePanel"))
+            {
+                if(child.GetComponent<Button>() != null)
+                {
+                    child.GetComponent<Button>().enabled = false;
+                }
+            }
+            StartCoroutine(npcRenameScript.LoadTransfer());
+            sc.PlaySound("rumble");
+        }
+        else
+        {
+            mmc.Find("SavePanel").gameObject.SetActive(false);
+            mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
+            sc.PlaySound("open");
+        }
     }
     public void SaveBack()
     {
@@ -186,9 +211,50 @@ public class ButtonController : MonoBehaviour
         mmc.Find("PrisonSelectPanel").gameObject.SetActive(true);
         sc.PlaySound("open");
     }
-    public void SaveErase()
+    public void SaveDelete(BaseEventData data)
     {
-        // do later
+        var pd = data as PointerEventData;
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        Transform saveButton = clicked.transform.parent;
+        saveButton.GetComponent<Button>().enabled = false;
+        saveButton.GetComponent<EventTrigger>().enabled = false;
+        saveButton.Find("YesButton").gameObject.SetActive(true);
+        saveButton.Find("NoButton").gameObject.SetActive(true);
+        saveButton.Find("DeleteButton").gameObject.SetActive(false);
+        saveButton.Find("LoadGameText").gameObject.SetActive(false);
+        saveButton.Find("SureText").gameObject.SetActive(true);
+        saveButton.Find("Head").gameObject.SetActive(false);
+        sc.PlaySound("plip");
+    }
+    public void SaveYes(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        int saveNum = Convert.ToInt32(clicked.transform.parent.name.Replace("Save", "").Replace("Button", ""));
+        try
+        {
+            File.Delete(Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + saveNum.ToString() + ".ini"));
+        }
+        catch { }
+
+        Transform saveButton = clicked.transform.parent;
+        saveButton.GetComponent<Button>().enabled = true;
+        saveButton.GetComponent<EventTrigger>().enabled = true;
+        saveSetScript.DeactivateSaveSlot(saveNum);
+        sc.PlaySound("toilet");
+    }
+    public void SaveNo(BaseEventData data)
+    {
+        var pd = data as PointerEventData;
+        var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
+
+        Transform saveButton = clicked.transform.parent;
+        saveButton.GetComponent<Button>().enabled = true;
+        saveButton.GetComponent<EventTrigger>().enabled = true;
+        saveSetScript.ActivateSaveSlot(Convert.ToInt32(saveButton.name.Replace("Save", "").Replace("Button", "")));
+        sc.PlaySound("plip");
     }
     public void PrisonSelectLeft()
     {
@@ -202,8 +268,7 @@ public class ButtonController : MonoBehaviour
     }
     public void PrisonSelectBack()
     {
-        mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
-        mmc.Find("SavePanel").gameObject.SetActive(true);
+        StartCoroutine(SaveWait(true));
 
         sc.PlaySound("close");
     }

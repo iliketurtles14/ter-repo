@@ -26,6 +26,7 @@ public class LoadPrison : MonoBehaviour
 
     private ApplyPrisonData dataScript;
     private ItemDataCreator creatorScript;
+    private Saving savingScript;
 
     private List<string> musicNames = new List<string>
     {
@@ -608,6 +609,7 @@ public class LoadPrison : MonoBehaviour
         givenDataScript = GetGivenData.instance;
         dataSenderScript = DataSender.instance;
         creatorScript = GetComponent<ItemDataCreator>();
+        savingScript = GetComponent<Saving>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         StartCoroutine(LoadWait());
     }
@@ -693,14 +695,29 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
+        bool isLoading = false;
+        if (DataSender.instance.currentSave != -1 && File.Exists(System.IO.Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini")))
+        {
+            Debug.Log("hey yeah im loading i think heh");
+            isLoading = true;
+        }
+
         SetGround();
         SetTiles(currentTileDict);
         SetObjects();
-        SetItems();
+        if (!isLoading)
+        {
+            SetItems();
+        }
         SetShadows(currentTileDict);
         //doing zones now !!! >:3
         SetZones();
         SetUndergroundDirt();
+
+        if (isLoading)
+        {
+            StartCoroutine(savingScript.Load());
+        }
     }
     private void SetItems()
     {
@@ -2670,7 +2687,22 @@ public class LoadPrison : MonoBehaviour
         string[] ventObjectProperties = GetINISet("VentObjectProperties", data).ToArray();
         string[] roofObjectProperties = GetINISet("RoofObjectProperties", data).ToArray();
 
-        Map map = new Map(fileName, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        string folder = Path.GetDirectoryName(path);
+        int type = 2;
+        switch (folder)
+        {
+            case "MainPrisons":
+                type = 0;
+                break;
+            case "BonusPrisons":
+                type = 1;
+                break;
+            case "CustomPrisons":
+                type = 2;
+                break;
+        }
+
+        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

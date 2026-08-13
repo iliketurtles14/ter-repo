@@ -85,7 +85,11 @@ public class NPCSpeechController : MonoBehaviour
                 rollcallSpeechTypes.Add("Rollcall_Banter");
                 break;
         }
-        foreach(Transform npc in aStar)
+        for(int i = 0; i < 15; i++)
+        {
+            yield return new WaitForEndOfFrame();//for loading cuz inmateNames
+        }
+        foreach (Transform npc in aStar)
         {
             if (npc.name.Contains("Inmate"))
             {
@@ -113,7 +117,7 @@ public class NPCSpeechController : MonoBehaviour
                 }
             }
             Transform randInmate = null;
-            if(availableInmates.Count == 0 && inmateNames.Count > 1)
+            if (availableInmates.Count == 0 && inmateNames.Count > 1)
             {
                 yield return null;
                 continue;

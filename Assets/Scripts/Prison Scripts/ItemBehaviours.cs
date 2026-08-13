@@ -1425,8 +1425,8 @@ public class ItemBehaviours : MonoBehaviour
                         tile1.position + southOffset == tile2.position ||
                         tile1.position + eastOffset == tile2.position ||
                         tile1.position + westOffset == tile2.position) &&
-                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3 &&
-                        tile2.name == "DirtEmpty(Clone)")
+                        tile2.name == "DirtEmpty(Clone)" && 
+                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
                     {
                         Debug.Log("Setting tiles to 2");
                         
@@ -1442,8 +1442,8 @@ public class ItemBehaviours : MonoBehaviour
                         tile1.position + southOffset == tile2.position ||
                         tile1.position + eastOffset == tile2.position ||
                         tile1.position + westOffset == tile2.position) &&
-                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3 &&
-                        tile2.name == "DirtEmpty(Clone)")
+                        tile2.name == "DirtEmpty(Clone)" && 
+                        tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
                     {
                         Debug.Log("Setting tiles to 1");
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 1;

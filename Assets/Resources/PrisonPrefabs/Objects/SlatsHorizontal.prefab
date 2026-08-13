@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5035422368066937127}
   - component: {fileID: -6640208237529574080}
   - component: {fileID: 8439669119709406694}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: SlatsHorizontal
   m_TagString: Slats
   m_Icon: {fileID: 0}
@@ -79,9 +79,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1263216873
+  m_SortingLayer: 3
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: f616b4005e0dd984da57b55ad1d888d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

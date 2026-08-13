@@ -10,6 +10,7 @@ public class ApplyMainMenuData : MonoBehaviour
     public LoadingPanel loadScript;
     public DataSender senderScript;
     public ButtonController bc;
+    public SaveSet saveSetScript;
     private List<Sprite> ItemSprites;
     private List<Sprite> NPCSprites;
     private List<Sprite> PrisonObjectSprites;
@@ -120,6 +121,10 @@ public class ApplyMainMenuData : MonoBehaviour
                 {
                     bc = root.GetComponent<ButtonController>();
                 }
+                else if(root.name == "SaveSet")
+                {
+                    saveSetScript = root.GetComponent<SaveSet>();
+                }
             }
         }
 
@@ -188,15 +193,15 @@ public class ApplyMainMenuData : MonoBehaviour
             spriteState = button.GetComponent<Button>().spriteState;
             spriteState.highlightedSprite = UISprites[466];
             button.GetComponent<Button>().spriteState = spriteState;
+
+            button.Find("NoButton").GetComponent<Image>().sprite = UISprites[542];
         }
         mmc.Find("SavePanel").Find("BackButton").GetComponent<Image>().sprite = UISprites[296];
         mmc.Find("SavePanel").Find("NoSaveButton").GetComponent<Image>().sprite = UISprites[296];
-        mmc.Find("SavePanel").Find("EraseButton").GetComponent<Image>().sprite = UISprites[296];
         spriteState = mmc.Find("SavePanel").Find("BackButton").GetComponent<Button>().spriteState;
         spriteState.highlightedSprite = UISprites[297];
         mmc.Find("SavePanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
         mmc.Find("SavePanel").Find("NoSaveButton").GetComponent<Button>().spriteState = spriteState;
-        mmc.Find("SavePanel").Find("EraseButton").GetComponent<Button>().spriteState = spriteState;
         //prison select backdrop
         mmc.Find("PrisonSelectPanel").GetComponent<Image>().sprite = UISprites[208];
         //arrows
@@ -259,6 +264,7 @@ public class ApplyMainMenuData : MonoBehaviour
         spriteState.highlightedSprite = UISprites[329];
         mmc.Find("NPCCustomizePanel").Find("StartGameButton").GetComponent<Button>().spriteState = spriteState;
         //script images
+        saveSetScript.SetHeadDict();
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonNormalSprite = UISprites[198];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().ButtonPressedSprite = UISprites[199];
         mmc.Find("TitlePanel").GetComponent<OnMainButtonPress>().PatchNotesButtonNormalSprite = UISprites[328];

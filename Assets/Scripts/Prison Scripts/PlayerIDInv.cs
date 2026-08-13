@@ -62,7 +62,7 @@ public class PlayerIDInv : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        CloseMenu();
+        CloseMenu(false);
     }
     public void Update()
     {
@@ -203,7 +203,7 @@ public class PlayerIDInv : MonoBehaviour
             {
                 //exiting the idmenu
                 PSoundController.PlaySound("close");
-                CloseMenu();
+                CloseMenu(false);
 
                 pauseScript.Unpause();
 
@@ -211,7 +211,7 @@ public class PlayerIDInv : MonoBehaviour
             }
         }
     }
-    public IEnumerator OpenMenu(bool fromFavor)
+    public void OpenMenu()
     {
         foreach(Transform child in transform)
         {
@@ -249,16 +249,11 @@ public class PlayerIDInv : MonoBehaviour
 
         MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = true;
 
-        if (!fromFavor)
-        {
-            pauseScript.Pause(false);
-        }
-
-        yield return new WaitForEndOfFrame();
+        pauseScript.Pause(false);
 
         idIsOpen = true;
     }
-    public void CloseMenu()
+    public void CloseMenu(bool goingToOther)
     {
         foreach (Transform child in transform)
         {
@@ -314,7 +309,11 @@ public class PlayerIDInv : MonoBehaviour
         transform.Find("Player").Find("Outfit").GetComponent<Image>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<Image>().enabled = false;
-        MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
         idIsOpen = false;
+        if (!goingToOther)
+        {
+            MenuCanvas.transform.Find("Black").GetComponent<Image>().enabled = false;
+            pauseScript.Unpause();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 public class SetInitialLocation : MonoBehaviour
@@ -16,7 +17,10 @@ public class SetInitialLocation : MonoBehaviour
         vitalScript = player.GetComponent<VitalController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
 
-        StartCoroutine(StartWait());
+        if (!File.Exists(Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini")))
+        {
+            StartCoroutine(StartWait());
+        }
     }
     private IEnumerator StartWait()
     {

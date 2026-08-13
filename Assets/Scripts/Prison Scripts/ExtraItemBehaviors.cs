@@ -266,11 +266,20 @@ public class ExtraItemBehaviors : MonoBehaviour
 
         GameObject sheet = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Sheet"));
         sheet.name = "Sheet";
-        sheet.transform.parent = tiles.Find("GroundObjects");
+        string parentName = LayerMask.LayerToName(bars.layer) + "Objects";
+        if(parentName == "VentsObjects")
+        {
+            parentName = "VentObjects";
+        }
+        sheet.transform.parent = tiles.Find(parentName);
         sheet.transform.position = new Vector3(bars.transform.position.x, bars.transform.position.y, -1);
         sheet.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[173];
         sheet.layer = bars.layer;
         sheet.GetComponent<SpriteRenderer>().sortingLayerName = bars.GetComponent<SpriteRenderer>().sortingLayerName;
+        if(sheet.GetComponent<SpriteRenderer>().sortingLayerName == "Underground")
+        {
+            sheet.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
+        }
         BadObjectData data = new BadObjectData
         {
             sheets = true,
@@ -305,7 +314,7 @@ public class ExtraItemBehaviors : MonoBehaviour
 
         GameObject dummy = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/" + dummyName));
         dummy.name = dummyName;
-        dummy.transform.parent = tiles.Find("GroundObjects");
+        dummy.transform.parent = bed.transform.parent;
         dummy.transform.position = new Vector3(bed.transform.position.x, bed.transform.position.y, -1);
         dummy.GetComponent<SpriteRenderer>().sprite = dummySprite;
         dummy.GetComponent<SpriteRenderer>().sortingLayerName = bed.GetComponent<SpriteRenderer>().sortingLayerName;

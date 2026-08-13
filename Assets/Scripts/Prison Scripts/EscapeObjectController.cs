@@ -235,22 +235,31 @@ public class EscapeObjectController : MonoBehaviour
             switch (mcs.touchedEscapeObject.name)
             {
                 case "DTAFComputerDown":
-                    PSoundController.PlaySound("buy");
-                    downPCDone = true;
-                    mcs.touchedEscapeObject.tag = "Untagged";
-                    mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    if(handler.objectivesCleared == 1)
+                    {
+                        PSoundController.PlaySound("buy");
+                        downPCDone = true;
+                        mcs.touchedEscapeObject.tag = "Untagged";
+                        mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    }
                     break;
                 case "DTAFComputerLeft":
-                    PSoundController.PlaySound("buy");
-                    leftPCDone = true;
-                    mcs.touchedEscapeObject.tag = "Untagged";
-                    mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    if(handler.objectivesCleared == 1)
+                    {
+                        PSoundController.PlaySound("buy");
+                        leftPCDone = true;
+                        mcs.touchedEscapeObject.tag = "Untagged";
+                        mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    }
                     break;
                 case "DTAFComputerRight":
-                    PSoundController.PlaySound("buy");
-                    rightPCDone = true;
-                    mcs.touchedEscapeObject.tag = "Untagged";
-                    mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    if(handler.objectivesCleared == 1)
+                    {
+                        PSoundController.PlaySound("buy");
+                        rightPCDone = true;
+                        mcs.touchedEscapeObject.tag = "Untagged";
+                        mcs.touchedEscapeObject.GetComponent<DTAFComputerAnimation>().enabled = true;
+                    }
                     break;
                 case "SSTree":
                     switch (handler.objectivesCleared)

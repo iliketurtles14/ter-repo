@@ -17,6 +17,7 @@ public class FavorMenu : MonoBehaviour
     private MouseCollisionOnItems mcs;
     private Transform mc;
     private bool favorMenuIsOpen;
+    private SaveMenu saveMenuScript;
     private void Start()
     {
         playerIDInvScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>();
@@ -24,6 +25,7 @@ public class FavorMenu : MonoBehaviour
         missionAskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("MissionPanel").GetComponent<MissionAsk>();
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        saveMenuScript = mc.Find("SaveMenuPanel").GetComponent<SaveMenu>();
         CloseMenu(false);
         StartCoroutine(StartWait());
     }
@@ -107,13 +109,9 @@ public class FavorMenu : MonoBehaviour
         }
         return msg.Replace("\n", "").Replace("\r", "");
     }
-    public void CloseMenu(bool goToPlayerID)
+    public void CloseMenu(bool goingToOther)
     {
-        if (goToPlayerID)
-        {
-            StartCoroutine(playerIDInvScript.OpenMenu(true));
-        }
-        else
+        if(!goingToOther)
         {
             mc.Find("Black").GetComponent<Image>().enabled = false;
             pc.Unpause();
@@ -163,10 +161,6 @@ public class FavorMenu : MonoBehaviour
         transform.Find("MissionScrollView").gameObject.SetActive(true);
         GetComponent<Image>().enabled = true;
         GetComponent<BoxCollider2D>().enabled = true;
-        mc.Find("Black").GetComponent<Image>().enabled = true;
-        //you dont have to pause here since the game will already be paused
-        playerIDInvScript.CloseMenu();
-        mc.Find("Black").GetComponent<Image>().enabled = true;
     }
     public string GetINIVar(string header, string varName, string[] file)
     {

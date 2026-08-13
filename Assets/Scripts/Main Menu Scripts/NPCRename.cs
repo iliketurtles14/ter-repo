@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using System.IO;
 
 public class NPCRename : MonoBehaviour
 {
@@ -474,5 +475,63 @@ public class NPCRename : MonoBehaviour
         dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
         dataSenderScript.currentSave = currentSave;
         Addressables.LoadSceneAsync("Prison");
+    }
+    public IEnumerator LoadTransfer()
+    {
+        blocker.GetComponent<Animator>().enabled = true;
+        blocker.GetComponent<Animator>().Rebind();
+        blocker.GetComponent<Animator>().Update(0f);
+        blocker.GetComponent<Animator>().Play(0, 0, 0f);
+        yield return new WaitForSeconds(.6f);
+
+        string[] saveFile = File.ReadAllLines(Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + currentSave.ToString() + ".ini"));
+        int type = Convert.ToInt32(GetINIVar("Map", "Type", saveFile));
+        string fileName = GetINIVar("Map", "FileName", saveFile);
+        Dictionary<int, string> pathDict = new Dictionary<int, string>
+        {
+            { 0, "MainPrisons" }, { 1, "BonusPrisons" }, { 2, "CustomPrisons" }
+        };
+        string path = Path.Combine(Application.streamingAssetsPath, "Prisons", pathDict[type], fileName + ".zmap");
+        dataSenderScript = DataSender.instance;
+        dataSenderScript.SetCurrentMapPath(path);
+        dataSenderScript.currentSave = currentSave;
+        saveScript = NPCSave.instance;
+        saveScript.SetPlayer(GetINIVar("Player", "Name", saveFile), Convert.ToInt32(GetINIVar("Player", "Character", saveFile)));
+        Addressables.LoadSceneAsync("Prison");
+    }
+    public string GetINIVar(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Contains("[") && file[j].Contains("]") && j != i)
+                    {
+                        line = null;
+                        break;
+                    }
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+
+
+        if (line == null)
+        {
+            return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
     }
 }

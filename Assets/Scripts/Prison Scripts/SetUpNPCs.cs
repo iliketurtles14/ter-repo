@@ -1,14 +1,17 @@
-using System.Collections;
-using UnityEngine;
-using Pathfinding;
+using JetBrains.Annotations;
 using NavMeshPlus.Components;
 using NUnit.Framework;
-using System.Runtime.CompilerServices;
+using Pathfinding;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
+using UnityEditor.U2D.Tooling.Analyzer;
+using UnityEngine;
 using UnityEngine.AI;
-using JetBrains.Annotations;
 
 public class SetUpNPCs : MonoBehaviour
 {
@@ -42,6 +45,12 @@ public class SetUpNPCs : MonoBehaviour
     }
     private IEnumerator NPCSetUp()
     {
+        bool isLoading = false;
+        if(DataSender.instance.currentSave != -1 && File.Exists(System.IO.Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini")))
+        {
+            isLoading = true;
+        }
+        
         //make navmesh surface and a* surface
 
         foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
@@ -147,8 +156,11 @@ public class SetUpNPCs : MonoBehaviour
             {
                 npc.name = "Guard" + (i - inmateAmount + 1);
             }
-            npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i].Replace("\n", "").Replace("\r", "");
-            npc.GetComponent<NPCCollectionData>().npcData.charNum = NPCSave.instance.npcCharacters[i];
+            if (!isLoading)
+            {
+                npc.GetComponent<NPCCollectionData>().npcData.displayName = NPCSave.instance.npcNames[i].Replace("\n", "").Replace("\r", "");
+                npc.GetComponent<NPCCollectionData>().npcData.charNum = NPCSave.instance.npcCharacters[i];
+            }
 
             //npc stats
             if (npc.name.StartsWith("Inmate"))
@@ -182,10 +194,13 @@ public class SetUpNPCs : MonoBehaviour
             npc.GetComponent<NavMeshAgent>().updateUpAxis = false;
 
             //set guard pos randomly
-            if(npc.name.Contains("Guard") && gWaypoints.Count > 0)
+            if (!isLoading) //guard pos on loading is set further down with the inmates
             {
-                rand = UnityEngine.Random.Range(0, gWaypoints.Count);
-                npc.transform.position = gWaypoints[rand].position;
+                if (npc.name.Contains("Guard") && gWaypoints.Count > 0)
+                {
+                    rand = UnityEngine.Random.Range(0, gWaypoints.Count);
+                    npc.transform.position = gWaypoints[rand].position;
+                }
             }
 
             //other
@@ -206,14 +221,29 @@ public class SetUpNPCs : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         //send inmates to beds
-        foreach (Transform npc in aStar)
+        if (!isLoading)
         {
-            if (npc.name.StartsWith("Inmate"))
+            foreach (Transform npc in aStar)
             {
-                if (npc.GetComponent<NPCCollectionData>().npcData.bed != null)
+                if (npc.name.StartsWith("Inmate"))
                 {
-                    sleepScript.Sleep(npc.gameObject, npc.GetComponent<NPCCollectionData>().npcData.bed);
+                    if (npc.GetComponent<NPCCollectionData>().npcData.bed != null)
+                    {
+                        sleepScript.Sleep(npc.gameObject, npc.GetComponent<NPCCollectionData>().npcData.bed);
+                    }
                 }
+            }
+        }
+        else
+        {
+            string[] saveFile = File.ReadAllLines(System.IO.Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini"));
+            foreach(Transform npc in aStar)
+            {
+                string posStr = GetINIVar(npc.name, "Position", saveFile);
+                float x = Convert.ToSingle(posStr.Split(",")[0]);
+                float y = Convert.ToSingle(posStr.Split(",")[1]);
+                Vector2 pos = new Vector2(x, y);
+                npc.position = pos;
             }
         }
 
@@ -266,4 +296,40 @@ public class SetUpNPCs : MonoBehaviour
         visitorNPC.name = "VisitorNPC";
         visitorNPC.transform.parent = aStar;
     }
+    public string GetINIVar(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Contains("[") && file[j].Contains("]") && j != i)
+                    {
+                        line = null;
+                        break;
+                    }
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+
+
+        if (line == null)
+        {
+            return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
+    }
 }
+
