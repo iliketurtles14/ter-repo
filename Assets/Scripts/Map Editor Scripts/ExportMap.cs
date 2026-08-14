@@ -112,7 +112,6 @@ public class ExportMap : MonoBehaviour
     }
     private void SetTiles()
     {
-        Debug.Log("Setting tiles...");
 
         text += "\n";
         
@@ -484,9 +483,8 @@ public class ExportMap : MonoBehaviour
                 File.Move(originalZip, candidate);
             }
         }
-        catch (Exception ex)
+        catch
         {
-            Debug.LogError("Failed to rename map archive: " + ex.Message);
         }
 
     }

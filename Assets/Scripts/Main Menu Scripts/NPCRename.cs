@@ -286,7 +286,6 @@ public class NPCRename : MonoBehaviour
         {
             animList.Add(child.gameObject.GetComponent<NPCRenameAnim>());
         }
-        Debug.Log(prisonSelectScript.currentPrisonInmateNum);
         for(int i = 0; i < (prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum); i++)
         {
             int rand = UnityEngine.Random.Range(1, 10);
@@ -470,7 +469,6 @@ public class NPCRename : MonoBehaviour
         tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
         saveScript = NPCSave.instance;
         saveScript.SetNPC(setNames, setCharacters);
-        Debug.Log(prisonSelectScript.currentPrisonPath);
         dataSenderScript = DataSender.instance;
         dataSenderScript.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
         dataSenderScript.currentSave = currentSave;

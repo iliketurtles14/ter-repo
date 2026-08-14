@@ -383,7 +383,6 @@ public class DeskRNG : MonoBehaviour
                 {
                     continue;
                 }
-                Debug.Log(objName + " pos: " + deskPos.x + ", " + deskPos.y + ", " + deskPos.z);
                 List<int> itemIDs = new List<int>();
                 string[] rawItemIDs = rawItems.Split(",");
                 for(int j = 0; j < 20; j++)

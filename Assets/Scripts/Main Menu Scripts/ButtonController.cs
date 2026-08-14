@@ -49,6 +49,20 @@ public class ButtonController : MonoBehaviour
             mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
         }
     }
+    public void PlayTestClose()
+    {
+        mmc.Find("PlayTestPanel").gameObject.SetActive(false);
+        foreach(Transform button in mmc.Find("TitlePanel"))
+        {
+            if(button.GetComponent<Button>() != null)
+            {
+                button.GetComponent<Button>().enabled = true;
+                button.GetComponent<EventTrigger>().enabled = true;
+            }
+        }
+        mmc.Find("Black").GetComponent<Image>().enabled = false;
+        sc.PlaySound("close");
+    }
     public void MainPatchNotes()
     {
         mmc.Find("PatchNotesPanel").gameObject.SetActive(true);

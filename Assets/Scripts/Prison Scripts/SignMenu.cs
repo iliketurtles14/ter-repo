@@ -81,7 +81,6 @@ public class SignMenu : MonoBehaviour //the parent of this object is ScriptObjec
                 float objY = Convert.ToSingle(objDataStr.Split(";")[0].Split(",")[1]);
 
                 Vector2 objPos = new Vector2((objX * 1.6f) - 1.6f, (objY * 1.6f) - 1.6f);
-                Debug.Log("pos: " + objPos);
 
                 string header = Regex.Unescape(objDataStr.Split("{HEADER}:")[1].Split("{BODY}:")[0]);
                 string body = Regex.Unescape(objDataStr.Split("{BODY}:")[1]);

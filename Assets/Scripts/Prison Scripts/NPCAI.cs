@@ -648,7 +648,6 @@ public class NPCAI : MonoBehaviour
     private IEnumerator InmateCanteen()
     {
         atCanteenSeat = false;
-        Debug.Log("Is in canteen");
         
         //get canteen postiions
         List<Vector3> canteenPositions = new List<Vector3>();
@@ -1484,11 +1483,9 @@ public class NPCAI : MonoBehaviour
     }
     private IEnumerator InmateJobs()
     {
-        Debug.Log("In Job for inmate " + npcNum.ToString());
         BoxCollider2D outBoxCollider = transform.Find("OutBox").GetComponent<BoxCollider2D>();
         if (hasNormalJob)
         {
-            Debug.Log(positions.Count);
             int i = 0;
             while (true)
             {
@@ -1811,7 +1808,6 @@ public class NPCAI : MonoBehaviour
             {
                 break;
             }
-            Debug.Log(Vector2.Distance(transform.position, pos));
             yield return new WaitForEndOfFrame();
         }
         StartCoroutine(FinishMovement(false));

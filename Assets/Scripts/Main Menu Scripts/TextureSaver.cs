@@ -34,7 +34,6 @@ public class TextureSaver : MonoBehaviour
             byte[] bytes = textureList[i].EncodeToPNG(); // Convert Texture2D to PNG byte array
             string filePath = Path.Combine(saveFolderPath, $"Texture_{i}.png"); // Unique file name
             File.WriteAllBytes(filePath, bytes);
-            Debug.Log("Saved texture: " + filePath);
         }
     }
 }

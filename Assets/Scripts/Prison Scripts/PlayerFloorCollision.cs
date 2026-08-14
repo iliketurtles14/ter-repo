@@ -77,7 +77,6 @@ public class PlayerFloorCollision : MonoBehaviour
             touchedRoofFloor = null;
             position = transform.position - new Vector3(0, .4f, 0);
             hitColliders = Physics2D.OverlapPointAll(position);
-            Debug.Log(hitColliders.Length);
             foreach (Collider2D collider in hitColliders)
             {
                 if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == groundLayer)

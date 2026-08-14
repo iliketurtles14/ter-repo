@@ -153,7 +153,6 @@ public class Jeeps : MonoBehaviour
                         int loopStartIndex = cycledWPs.IndexOf(currentWP);
                         List<Transform> actualLoop = cycledWPs.GetRange(loopStartIndex, cycledWPs.Count - loopStartIndex);
 
-                        Debug.Log("Adding a jeep path");
                         wpPaths[i].Add(new List<Transform>(actualLoop));
 
                         foreach (Transform a in cycledWPs)
@@ -176,7 +175,6 @@ public class Jeeps : MonoBehaviour
         {
             for(int j = 0; j < wpPaths[i].Count; j++)
             {
-                Debug.Log("Spawning Jeep at layer " + i.ToString());
                 GameObject jeep = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Jeep"));
                 jeep.GetComponent<JeepMovement>().jeepWPs = wpPaths[i][j]; //holy shit lmao
                 jeep.transform.position = wpPaths[i][j][0].position;

@@ -179,7 +179,6 @@ public class NPCSpeech : MonoBehaviour
 
             if (!isTalking && messageType != null && !textBoxIsActive)
             {
-                Debug.Log("Making Text Box");
                 StartCoroutine(MakeTextBox(GetMessage(messageType), transform, false));
             }
             yield return null;

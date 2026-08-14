@@ -23,13 +23,11 @@ public class ItemSpawn : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Debug.Log("Awaiting item ID...\nPress Enter when done or press Escape to cancel.");
             inEnterMode = true;
         }
 
         if (inEnterMode && Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Canceled.");
             inEnterMode = false;
             idStr = "";
         }
@@ -49,7 +47,6 @@ public class ItemSpawn : MonoBehaviour
         {
             int id = Convert.ToInt32(idStr);
 
-            Debug.Log("Creating item: " + id);
             try
             {
                 ItemData data = creatorScript.CreateItemData(id);
@@ -57,7 +54,6 @@ public class ItemSpawn : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Invalid ID.");
             }
 
             inEnterMode = false;

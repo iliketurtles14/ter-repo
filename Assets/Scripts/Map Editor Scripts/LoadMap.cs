@@ -381,7 +381,6 @@ public class LoadMap : MonoBehaviour
     }
     private void LoadTiles()
     {
-        Debug.Log("Loading tiles...");
         Texture2D tileset;
         string tilesetChoice = GetINIVar("Properties", "Tileset", data);
 
@@ -767,7 +766,6 @@ public class LoadMap : MonoBehaviour
     }
     private void PlaceObj(string layer, Vector2 pos, string name)
     {
-        Debug.Log("Placing Object: " + name);
         
         List<string> objectPanels = new List<string>
         {

@@ -76,10 +76,6 @@ public class CmapConvert : MonoBehaviour
             cmapFile[i] = cmapFile[i].Replace("\n", "").Replace("\r", "");
         }
 
-        foreach(char c in GetINIVar("Jobs", "Janitor", cmapFile))
-        {
-            Debug.Log(c);
-        }
         GetProperties();
         GetZones();
         GetTiles();
@@ -202,7 +198,6 @@ public class CmapConvert : MonoBehaviour
         {
             library = true;
         }
-        Debug.Log(janitor);
 
         startingJob = GetINIVar("Jobs", "StartingJob", cmapFile);
     }
@@ -308,7 +303,6 @@ public class CmapConvert : MonoBehaviour
 
                 if (isEmptyRow)
                 {
-                    Debug.Log("Row " + i.ToString() + " on layer " + layer + " is empty.");
                     if (layer == "[Tiles]")
                     {
                         for(int j = 0; j < 108; j++)

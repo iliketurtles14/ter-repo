@@ -228,7 +228,6 @@ public class CraftMenu : MonoBehaviour
     }
     public void Craft()
     {
-        Debug.Log("Trying to craft...");
 
         List<string> crSet = GetINISet("Crafting Recipes", currentMap.items);
         List<string> tempList = new List<string>();
@@ -282,7 +281,6 @@ public class CraftMenu : MonoBehaviour
 
         if (!matchesMap)
         {
-            Debug.Log("No crafting recipes match the given crafting input. Returning...");
             PSoundController.PlaySound("lose");
             return;
         }
@@ -324,7 +322,6 @@ public class CraftMenu : MonoBehaviour
 
         if (reqInt > player.GetComponent<PlayerCollectionData>().playerData.intellect)
         {
-            Debug.Log("Player is too stupid to craft this. Returning...");
             PSoundController.PlaySound("lose");
             return;
         }
@@ -349,9 +346,7 @@ public class CraftMenu : MonoBehaviour
         {
             item0 = creator.CreateItemData(returnID);
             slot0.GetComponent<Image>().sprite = item0.sprite;
-            Debug.Log("Returning an item...");
         }
-        Debug.Log("Finished crafting.");
         PSoundController.PlaySound("buy");
     }
     public void AddCraftNote(List<int> ingredients, List<int> results, int intellect)
@@ -365,7 +360,6 @@ public class CraftMenu : MonoBehaviour
         {
             cnToAdd += ingredient.ToString() + "+";
         }
-        Debug.Log(cnToAdd);
         cnToAdd = cnToAdd.Substring(0, cnToAdd.Length - 1);
         cnToAdd += "=";
         string recipe = cnToAdd;

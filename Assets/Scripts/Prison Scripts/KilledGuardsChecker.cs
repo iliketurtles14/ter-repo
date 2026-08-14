@@ -45,7 +45,6 @@ public class KilledGuardsChecker : MonoBehaviour//.2, .4, .8
             guardColDatas.Add(guard.GetComponent<NPCCollectionData>());
         }
 
-        Debug.Log(guardColDatas.Count);
         ready = true;
     }
     private void Update()
@@ -69,7 +68,6 @@ public class KilledGuardsChecker : MonoBehaviour//.2, .4, .8
 
         if(guardKillCount >= guardColDatas.Count * .4f && !lockdownScript.lockdownIsActive)
         {
-            Debug.Log("doing lockdonw");
             lockdownScript.StartLockdown();
             lockdownScript.isRiotLockdown = true;
         }

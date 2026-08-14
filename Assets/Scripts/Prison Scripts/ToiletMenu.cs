@@ -212,7 +212,6 @@ public class ToiletMenu : MonoBehaviour
     }
     private void OpenMenu()
     {
-        Debug.Log("Opening menu");
         mc.Find("Black").GetComponent<Image>().enabled = true;
         SetItems();
         GetComponent<Image>().enabled = true;
@@ -226,7 +225,6 @@ public class ToiletMenu : MonoBehaviour
     }
     private void CloseMenu()
     {
-        Debug.Log("Closing Menu");
         mc.Find("Black").GetComponent<Image>().enabled = false;
         pc.Unpause();
         GetComponent<Image>().enabled = false;
@@ -298,7 +296,6 @@ public class ToiletMenu : MonoBehaviour
                 toilet.GetComponent<SpriteRenderer>().sprite = toiletDownClogged;
                 break;
         }
-        Debug.Log("Toilet got clogged");
         //do water animation stuff
         for(int i = 0; i < 4; i++)
         {

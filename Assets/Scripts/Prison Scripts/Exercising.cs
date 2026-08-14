@@ -216,7 +216,6 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator LeaveEquipment()
     {
-        Debug.Log("Leaving Equipment.");
         running = false;
         isLeaving = true;
         itemBehavioursScript.DestroyActionBar();
@@ -627,7 +626,6 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator PunchBagPunch()
     {
-        Debug.Log("bag is punched");
         currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[235];
         yield return new WaitForSeconds(.15f);
         currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[237];
@@ -636,7 +634,6 @@ public class Exercising : MonoBehaviour
     }
     public IEnumerator SpeedBagPunch()
     {
-        Debug.Log("bag is punched");
         currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[240];
         yield return new WaitForSeconds(.117f);
         currentEquipment.transform.Find("Bag").GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[241];
@@ -654,7 +651,6 @@ public class Exercising : MonoBehaviour
         {
             if (punching)
             {
-                Debug.Log("doing punch anim");
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
@@ -666,36 +662,35 @@ public class Exercising : MonoBehaviour
                 float timer = 0f;
                 while (timer < 0.467f)
                 {
-                    if (!running) { Debug.Log("stopping early during punch anim"); yield break; } // Exit coroutine early
-                    if (punching) { Debug.Log("punching again during punch anim"); break; } // Break timer to return to main loop
+                    if (!running) { yield break; } // Exit coroutine early
+                    if (punching) { break; } // Break timer to return to main loop
                     timer += Time.deltaTime;
                     yield return null;
                 }
             }
             else
             {
-                Debug.Log("not punching");
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
                 {
                     transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][2][0];
                 }
 
-                if (!running) { Debug.Log("not running1"); break; }
-                if (punching) { Debug.Log("punching1"); continue; }
+                if (!running) { break; }
+                if (punching) { continue; }
 
                 // Custom timer for .266 seconds
                 float timer = 0f;
                 while (timer < 0.266f)
                 {
-                    if (!running) { Debug.Log("stopping early during wait"); yield break; } // Exit coroutine early
-                    if (punching) { Debug.Log("punching again during wait"); break; } // Break timer to return to main loop
+                    if (!running) { yield break; } // Exit coroutine early
+                    if (punching) { break; } // Break timer to return to main loop
                     timer += Time.deltaTime;
                     yield return null;
                 }
 
-                if (!running) { Debug.Log("not running2"); break; }
-                if (punching) { Debug.Log("punching2"); continue; }
+                if (!running) { break; }
+                if (punching) { continue; }
 
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][1];
                 if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
@@ -707,8 +702,8 @@ public class Exercising : MonoBehaviour
                 timer = 0f;
                 while (timer < 0.266f)
                 {
-                    if (!running) { Debug.Log("stopping early during second wait"); yield break; } // Exit coroutine early
-                    if (punching) { Debug.Log("punching again during second wait"); break; } // Break timer to return to main loop
+                    if (!running) { yield break; } // Exit coroutine early
+                    if (punching) { break; } // Break timer to return to main loop
                     timer += Time.deltaTime;
                     yield return null;
                 }

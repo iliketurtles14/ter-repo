@@ -85,7 +85,7 @@ public class NPCSpeechController : MonoBehaviour
                 rollcallSpeechTypes.Add("Rollcall_Banter");
                 break;
         }
-        for(int i = 0; i < 15; i++)
+        for(int i = 0; i < 20; i++)
         {
             yield return new WaitForEndOfFrame();//for loading cuz inmateNames
         }
@@ -362,11 +362,6 @@ public class NPCSpeechController : MonoBehaviour
             }
         }
 
-        Debug.Log(goToDesks.Count);
-        foreach(Transform desk in goToDesks)
-        {
-            Debug.Log(desk.name);
-        }
 
         while (true)
         {
@@ -419,7 +414,6 @@ public class NPCSpeechController : MonoBehaviour
                 bool hitDigable = false;
                 foreach (Collider2D col in hitColliders)
                 {
-                    Debug.Log(j.ToString() + ": " + col.gameObject.name);
                     if (col.CompareTag("Digable") && col.gameObject.layer == LayerMask.NameToLayer("Ground"))
                     {
                         goToVector = col.transform.position;
@@ -438,7 +432,6 @@ public class NPCSpeechController : MonoBehaviour
                 continue;
             }
 
-            Debug.Log("sending guard" + guard.name + " to " + goToVector);
             guard.GetComponent<NPCAI>().SendToPos(goToVector);
 
             while (true)
@@ -453,7 +446,6 @@ public class NPCSpeechController : MonoBehaviour
                 }
                 yield return null;
             }
-            Debug.Log("Checking desk: " + goToDesks[i].name);
             foreach (DeskItem item in goToDesks[i].GetComponent<DeskData>().deskInv)
             {
                 if(item.itemData != null && item.itemData.isContraband)

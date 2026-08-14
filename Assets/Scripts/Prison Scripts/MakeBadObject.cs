@@ -559,13 +559,11 @@ public class MakeBadObject : MonoBehaviour
                 attachedObject = player
             };
             CreateBadObject(data, "missedRollcall");
-            Debug.Log("making missedRollcall");
         }
         else if(missedRollcall && (!lockdownScript.lockdownIsActive || lockdownScript.isRiotLockdown))
         {
             missedRollcall = false;
             DestroyBadObject("missedRollcall");
-            Debug.Log("destroying msisedRolclalllalfladjkfasj;dfklasj;f");
         }
 
         ///not bad object dependent

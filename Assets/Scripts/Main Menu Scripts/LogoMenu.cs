@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LogoMenu : MonoBehaviour
@@ -11,6 +13,7 @@ public class LogoMenu : MonoBehaviour
     public Transform titlePanel;
     public MMSoundController sc;
     public MMMusicController mc;
+    public Transform mmc;
     private IEnumerator LogoWait()
     {
         for(int i = 0; i < 3; i++)
@@ -70,7 +73,25 @@ public class LogoMenu : MonoBehaviour
         titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;
         titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = true;
 
+        if(titlePanel.transform.Find("VersionText").GetComponent<TextMeshProUGUI>().text == "PLAY-TEST")
+        {
+            OpenPlayTestMenu();
+        }
+
         gameObject.SetActive(false);
+    }
+    private void OpenPlayTestMenu()
+    {
+        mmc.Find("PlayTestPanel").gameObject.SetActive(true);
+        mmc.Find("Black").GetComponent<Image>().enabled = true;
+        foreach (Transform button in mmc.Find("TitlePanel"))
+        {
+            if (button.GetComponent<Button>() != null)
+            {
+                button.GetComponent<Button>().enabled = false;
+                button.GetComponent<EventTrigger>().enabled = false;
+            }
+        }
     }
     private void OnDisable()
     {

@@ -113,17 +113,11 @@ public class PlayerIDInv : MonoBehaviour
                 }
             }
 
-            try
-            {
-                Debug.Log(Input.GetMouseButtonDown(0) + " " +  mcs.isTouchingInvSlot + " " + (inventoryList[invSlotNumber].itemData != null) + " " + inventoryList[invSlotNumber].itemData.defense + " " + !outfitIsFull);
-            }
-            catch { }
 
             if (mcs.isTouchingInvSlot && inventoryList[invSlotNumber].itemData != null && 
                 inventoryList[invSlotNumber].itemData.defense != -1 && 
                 Input.GetMouseButtonDown(0) && !outfitIsFull)
             {
-                Debug.Log("here");
                 idInv[0].itemData = inventoryList[invSlotNumber].itemData;
                 outfitSlot.GetComponent<Image>().sprite = inventoryList[invSlotNumber].itemData.sprite;
                 inventoryList[invSlotNumber].itemData = null;

@@ -1,11 +1,7 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Missions : MonoBehaviour
@@ -97,7 +93,6 @@ public class Missions : MonoBehaviour
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         speechFile = currentMap.speech;
 
-        Debug.Log(speechFile.Length + " is the length of the speech file.");
 
         foreach(Transform npc in aStar)
         {

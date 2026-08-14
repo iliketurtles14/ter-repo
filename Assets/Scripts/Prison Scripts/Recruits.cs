@@ -108,7 +108,6 @@ public class Recruits : MonoBehaviour
     }
     public void Recruit(Transform npc, bool addToRecruitNum, bool isLoading)
     {
-        Debug.Log("recruitng");
         if (addToRecruitNum && !isLoading)
         {
             StartCoroutine(warningScript.CreateWarningMessage(GetMessage("Follow")));
@@ -136,7 +135,6 @@ public class Recruits : MonoBehaviour
     }
     public void Disband(Transform npc)
     {
-        Debug.Log("disbanding");
         npc.GetComponent<NavMeshAgent>().stoppingDistance = 0;
         npc.GetComponent<NavMeshAgent>().enabled = false;
         if (!npc.GetComponent<NPCCollectionData>().npcData.isDead)

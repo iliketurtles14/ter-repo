@@ -627,10 +627,6 @@ public class LoadPrison : MonoBehaviour
         
         currentMap = MakeMapObject(dataSenderScript.currentMapPath);
 
-        foreach(char c in currentMap.tilesetStr)
-        {
-            Debug.Log(c);
-        }
 
         Dictionary<int, string> currentTileDict;
         currentTileDict = customDict;
@@ -698,7 +694,6 @@ public class LoadPrison : MonoBehaviour
         bool isLoading = false;
         if (DataSender.instance.currentSave != -1 && File.Exists(System.IO.Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini")))
         {
-            Debug.Log("hey yeah im loading i think heh");
             isLoading = true;
         }
 
@@ -1083,7 +1078,6 @@ public class LoadPrison : MonoBehaviour
     {
         Texture2D groundTex;
         string groundChoice = currentMap.groundStr;
-        Debug.Log("Setting " + groundChoice);
 
         if (groundChoice != "Custom")
         {
@@ -1094,7 +1088,6 @@ public class LoadPrison : MonoBehaviour
             else
             {
                 int prisonIndex = tilesetDict[prisonDict[groundChoice]];
-                Debug.Log("prisonIndex = " + prisonIndex);
                 groundTex = givenDataScript.groundTextureList[prisonIndex];
             }
         }
@@ -1164,7 +1157,6 @@ public class LoadPrison : MonoBehaviour
             undergroundArr, groundArr, ventArr, roofArr
         };
 
-        Debug.Log("size: " + sizeX.ToString() + ", " + sizeY.ToString());
 
         foreach (int[,] array in arrays)
         {
@@ -1517,9 +1509,6 @@ public class LoadPrison : MonoBehaviour
     }
     private void SetObjects()
     {
-        Debug.Log("objVars count = " + currentMap.objVars.Count);
-        Debug.Log("objNames count = " + currentMap.objNames.Count);
-
         int groundLayer = LayerMask.NameToLayer("Ground");
         int undergroundLayer = LayerMask.NameToLayer("Underground");
         int ventLayer = LayerMask.NameToLayer("Vents");
@@ -2680,7 +2669,6 @@ public class LoadPrison : MonoBehaviour
         }
 
         string fileName = Path.GetFileNameWithoutExtension(path);
-        Debug.Log("Prison Path: " + fileName);
 
         string[] groundObjectProperties = GetINISet("GroundObjectProperties", data).ToArray();
         string[] undergroundObjectProperties = GetINISet("UndergroundObjectProperties", data).ToArray();
@@ -2688,6 +2676,7 @@ public class LoadPrison : MonoBehaviour
         string[] roofObjectProperties = GetINISet("RoofObjectProperties", data).ToArray();
 
         string folder = Path.GetDirectoryName(path);
+        folder = Path.GetFileName(folder);
         int type = 2;
         switch (folder)
         {

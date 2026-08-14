@@ -48,7 +48,6 @@ public class PayphoneMenu : MonoBehaviour
         tip2 = Regex.Unescape(currentMap.hint2);
         tip3 = Regex.Unescape(currentMap.hint3);
 
-        Debug.Log(tip1);
 
         transform.Find("Tip1Button").Find("Text").GetComponent<TextMeshProUGUI>().text = "Locked ($" + baseCost + ")";
         transform.Find("Tip2Button").Find("Text").GetComponent<TextMeshProUGUI>().text = "Locked ($" + (baseCost + 10) + ")";
@@ -84,7 +83,6 @@ public class PayphoneMenu : MonoBehaviour
     }
     public void BuyTip(int hintNum)
     {
-        Debug.Log(hintNum);
 
         switch (hintNum)
         {

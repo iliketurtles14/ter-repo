@@ -838,7 +838,6 @@ public class MEButtonController : MonoBehaviour
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
 
         sc.PlaySound("plip");
-        Debug.Log(clicked.name);
         if (clicked.name != "CustomButton")
         {
             string whatPrison = "";

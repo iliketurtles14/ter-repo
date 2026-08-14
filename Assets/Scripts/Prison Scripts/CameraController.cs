@@ -185,13 +185,6 @@ public class CameraController : MonoBehaviour
                 {
                     if (aHit.collider.CompareTag("BadObject"))
                     {
-                        Debug.Log(aHit.collider.name);
-                    }
-                }
-                foreach (RaycastHit2D aHit in badHits)
-                {
-                    if (aHit.collider.CompareTag("BadObject"))
-                    {
                         if (availableBadObjects.Contains(aHit.collider.name))
                         {
                             badHit = aHit;

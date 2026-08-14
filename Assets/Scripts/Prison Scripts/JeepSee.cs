@@ -123,13 +123,6 @@ public class JeepSee : MonoBehaviour
                 {
                     if (aHit.collider.CompareTag("BadObject"))
                     {
-                        Debug.Log(aHit.collider.name);
-                    }
-                }
-                foreach (RaycastHit2D aHit in badHits)
-                {
-                    if (aHit.collider.CompareTag("BadObject"))
-                    {
                         if (aHit.collider.name == "inmateOutfit" && !zonesScript.isTouchingYourCell && !zonesScript.isTouchingSafe && routineScript.periodCode == "LO")
                         {
                             badHit = aHit;

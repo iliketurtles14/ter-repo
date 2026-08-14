@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class SaveMenu : MonoBehaviour
@@ -11,6 +12,7 @@ public class SaveMenu : MonoBehaviour
     private PauseController pc;
     private MouseCollisionOnItems mcs;
     private string currentType;
+    private bool isQuitting;
     private void Start()
     {
         savingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Saving>();
@@ -79,9 +81,11 @@ public class SaveMenu : MonoBehaviour
             savingScript.Save();
             No();
         }
-        else if(currentType == "load")
+        else if(currentType == "load" && !isQuitting)
         {
-            No();//...
+            //fade out
+            Addressables.LoadSceneAsync("Prison");
+            isQuitting = true;
         }
     }
     public void No()

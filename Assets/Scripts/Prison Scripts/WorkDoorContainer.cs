@@ -37,7 +37,6 @@ public class WorkDoorContainer : MonoBehaviour
                     posX -= 1.6f;
                     posY -= 1.6f;
 
-                    Debug.Log(posX.ToString() + ", " + posY.ToString());
 
                     if (transform.position == new Vector3(posX, posY, 0))
                     {

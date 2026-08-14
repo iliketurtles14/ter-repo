@@ -177,7 +177,7 @@ public class PrisonSelect : MonoBehaviour
         {
             case 0:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonPressed;
-                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
+                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonNormal;
 
                 currentPrisonIcons = mainPrisonIcons;
@@ -190,7 +190,7 @@ public class PrisonSelect : MonoBehaviour
                 break;
             case 1:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonNormal;
-                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonPressed;
+                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonPressed;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonNormal;
 
                 currentPrisonIcons = bonusPrisonIcons;
@@ -203,7 +203,7 @@ public class PrisonSelect : MonoBehaviour
                 break;
             case 2:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonNormal;
-                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
+                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonPressed;
 
                 currentPrisonIcons = customPrisonIcons;

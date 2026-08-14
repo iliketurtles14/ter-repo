@@ -1,19 +1,12 @@
 using NavMeshPlus.Components;
-using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using UnityEngine.XR;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using Color = UnityEngine.Color;
 
 public class Saving : MonoBehaviour
@@ -269,7 +262,24 @@ public class Saving : MonoBehaviour
         }
 		save += "\n";
 		save += "Position=" + player.position.x + "," + player.position.y + "\n";
-		save += "Layer=" + LayerMask.LayerToName(player.gameObject.layer) + "\n";
+        string pLayer = "Ground";
+        if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Ground")))
+        {
+            pLayer = "Ground";
+        }
+        else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Vents")))
+        {
+            pLayer = "Vents";
+        }
+        else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Roof")))
+        {
+            pLayer = "Roof";
+        }
+        else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Underground")))
+        {
+            pLayer = "Underground";
+        }
+        save += "Layer=" + pLayer + "\n";
 		save += "Job=" + playerData.job.Replace("\n", "") + "\n";
 		save += "Missions=";
 		foreach(Mission mission in missionAskScript.savedMissions) // in the order of the MissionData class
@@ -358,14 +368,20 @@ public class Saving : MonoBehaviour
 				save += "Shop=";
 				bool hasShop1 = false;
 				bool hasShop2 = false;
-				if(npc.name == shopsScript.shop1NPC.name)
+				if(shopsScript.shop1NPC != null)
 				{
-					hasShop1 = true;
-				}
-				else if(npc.name == shopsScript.shop2NPC.name)
+					if(npc.name == shopsScript.shop1NPC.name)
+					{
+                        hasShop1 = true;
+                    }
+                }
+				else if(shopsScript.shop2NPC != null)
 				{
-					hasShop2 = true;
-				}
+					if(npc.name == shopsScript.shop2NPC.name)
+					{
+                        hasShop2 = true;
+                    }
+                }
 				if(hasShop1 || hasShop2)
 				{
 					List<NPCInvItem> shop = null;
@@ -889,9 +905,26 @@ public class Saving : MonoBehaviour
 			float x = Convert.ToSingle(sittablePos.Split(",")[0]);
 			float y = Convert.ToSingle(sittablePos.Split(",")[1]);
 			Vector3 vect = new Vector2(x, y);
-			foreach (Transform obj in tiles.Find(layerDict[LayerMask.LayerToName(player.gameObject.layer)]))
+			string pLayer = "Ground";
+            if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Ground")))
+            {
+                pLayer = "Ground";
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Vents")))
+            {
+                pLayer = "Vents";
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Roof")))
+            {
+                pLayer = "Roof";
+            }
+            else if (!Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Underground")))
+            {
+                pLayer = "Underground";
+            }
+            foreach (Transform obj in tiles.Find(layerDict[pLayer]))
 			{
-				if(obj.position.x == x && obj.position.y == y)
+				if(Vector2.Distance(obj.position, vect) <= .1f)
 				{
 					sittablesScript.sittable = obj.gameObject;
 					break;
@@ -1107,7 +1140,6 @@ public class Saving : MonoBehaviour
 						index++;
 						continue;
 					}
-					Debug.Log("tile index = " + index.ToString());
 					string[] vars = GetINIVar("Tiles", index.ToString(), saveFile).Split(",");
 					tile.GetComponent<TileCollectionData>().tileData.currentDurability = Convert.ToInt32(vars[0]);
 					tile.GetComponent<TileCollectionData>().tileData.holeIsUnder = vars[1] == "True";

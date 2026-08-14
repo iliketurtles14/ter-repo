@@ -85,12 +85,10 @@ public class DeskStand : MonoBehaviour
             }
             if (!isClimbing)
             {
-                Debug.Log("Here");
                 foreach (GameObject sl in stepladders)
                 {
                     if (player.GetComponent<CapsuleCollider2D>().IsTouching(sl.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                     {
-                        Debug.Log("trying to climb stepladder");
                         isClimbing = true;
                         StartCoroutine(ClimbDesk(sl));
                         break;

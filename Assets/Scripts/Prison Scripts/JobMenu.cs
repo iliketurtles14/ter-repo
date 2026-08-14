@@ -56,7 +56,6 @@ public class JobMenu : MonoBehaviour
     {
         if (menuIsOpen && !mcs.isTouchingIDPanel && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("here");
             PSoundController.PlaySound("close");
             CloseJobBoard();
         }
@@ -107,7 +106,6 @@ public class JobMenu : MonoBehaviour
 
         currentJob = job;
 
-        Debug.Log(job);
 
         bool canApply = true;
         bool canResign = false;

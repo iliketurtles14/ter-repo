@@ -65,7 +65,6 @@ public class SetInitialOutfits : MonoBehaviour
         mc.Find("PlayerMenuPanel").Find("Outfit").GetComponent<Image>().sprite = data.sprite;
         outfitData = data;
 
-        Debug.Log($"Setting outfits for {aStar.childCount} NPCs");
 
         foreach(Transform npc in aStar)
         {
@@ -76,7 +75,6 @@ public class SetInitialOutfits : MonoBehaviour
             
             NPCData npcData = npc.GetComponent<NPCCollectionData>().npcData;
             
-            Debug.Log($"Processing {npc.name}, inventory is null? {npcData.inventory == null}");
             
             npcData.inventory = new List<NPCInvItem>();
             
@@ -86,7 +84,6 @@ public class SetInitialOutfits : MonoBehaviour
                 npcData.inventory.Add(new NPCInvItem());
             }
             
-            Debug.Log($"{npc.name} inventory count: {npcData.inventory.Count}");
             
             if (npc.name.Contains("Guard"))
             {
@@ -106,7 +103,6 @@ public class SetInitialOutfits : MonoBehaviour
 
                 data = itemDataCreatorScript.CreateItemData(outfitItemID);
                 npcData.inventory[7].itemData = data;
-                Debug.Log($"Set guard outfit for {npc.name}, itemData is null? {npcData.inventory[7].itemData == null}");
 
             }
             else if (npc.name.Contains("Inmate"))
@@ -133,10 +129,8 @@ public class SetInitialOutfits : MonoBehaviour
                 }
 
                 npcData.inventory[7].itemData = itemDataCreatorScript.CreateItemData(outfitItemID);
-                Debug.Log($"Set inmate outfit for {npc.name}, itemData is null? {npcData.inventory[7].itemData == null}");
             }
         }
         
-        Debug.Log("SetOutfits complete");
     }
 }

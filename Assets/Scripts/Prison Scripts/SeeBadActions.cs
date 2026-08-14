@@ -1,10 +1,6 @@
-using Ookii.Dialogs;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class SeeBadActions : MonoBehaviour
 {
@@ -228,13 +224,6 @@ public class SeeBadActions : MonoBehaviour
                 }
 
                 RaycastHit2D? badHit = null;
-                foreach (RaycastHit2D aHit in badHits)
-                {
-                    if (aHit.collider.CompareTag("BadObject"))
-                    {
-                        Debug.Log(aHit.collider.name);
-                    }
-                }
                 foreach (RaycastHit2D aHit in badHits)
                 {
                     if (aHit.collider.CompareTag("BadObject"))
@@ -750,7 +739,6 @@ public class SeeBadActions : MonoBehaviour
             }
         }
 
-        Debug.Log(distractionMissions.Count);
 
         if(distractionMissions.Count == 0)
         {
@@ -760,7 +748,6 @@ public class SeeBadActions : MonoBehaviour
         string currentPeriod = scheduleScript.period;
         foreach(Mission mission in distractionMissions)
         {
-            Debug.Log(currentPeriod + ", " + mission.period);
             if(mission.period == currentPeriod)
             {
                 StartCoroutine(specialMessagesScript.MakeMessage("You completed a Favor!\n+$" + mission.pay, "favor"));

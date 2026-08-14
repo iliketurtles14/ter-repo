@@ -1,12 +1,7 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PButtonController : MonoBehaviour
 {
@@ -156,7 +151,6 @@ public class PButtonController : MonoBehaviour
     public void PlayerIDFavor()
     {
         PSoundController.PlaySound("plip");
-        Debug.Log("pressed!");
         playerIDInvScript.CloseMenu(true);
         favorMenuScript.OpenMenu();
     }
@@ -358,14 +352,12 @@ public class PButtonController : MonoBehaviour
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
 
-        Debug.Log("(before): " + clicked.name);
         
         if (clicked.name != "Tip1Button" && clicked.name != "Tip2Button" && clicked.name != "Tip3Button") //actual button (ts would hit the text object and not the button)
         {
             clicked = clicked.transform.parent.gameObject;
         }
 
-        Debug.Log(clicked.name);
 
         string buttonText = clicked.transform.Find("Text").GetComponent<TextMeshProUGUI>().text;
         if(buttonText == "Unlocked")

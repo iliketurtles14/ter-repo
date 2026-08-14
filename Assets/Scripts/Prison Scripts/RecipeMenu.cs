@@ -126,10 +126,6 @@ public class RecipeMenu : MonoBehaviour
             if (note.Contains("=" + randID.ToString()))
             {
                 string[] ingredients = note.Split("=")[0].Split("+");
-                foreach(string str in ingredients)
-                {
-                    Debug.Log(str);
-                }
                 List<string> ingList = ingredients.ToList();
                 if(ingList.Count >= 1)
                 {
@@ -143,10 +139,6 @@ public class RecipeMenu : MonoBehaviour
                 {
                     id2 = Convert.ToInt32(ingredients[2]);
                 }
-                Debug.Log(id0);
-                Debug.Log(id1);
-                Debug.Log(id2);
-
                 if (note.Contains("_"))
                 {
                     intellectReq = Convert.ToInt32(note.Split("_")[1]);

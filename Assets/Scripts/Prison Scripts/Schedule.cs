@@ -56,10 +56,6 @@ public class Schedule : MonoBehaviour
         map = loadPrisonScript.currentMap;
         canStart = true;
 
-        for(int i = 0; i < 24; i++)
-        {
-            Debug.Log(map.routineDict[i] + " --> " + i);
-        }
     }
 
     void Update()
@@ -153,7 +149,6 @@ public class Schedule : MonoBehaviour
             {
                 if(mission.type == "distract" && mission.period == favorPeriod)
                 {
-                    Debug.Log("Removing distraction mission.");
                     missionAskScript.savedMissions.Remove(mission);
                 }
             }

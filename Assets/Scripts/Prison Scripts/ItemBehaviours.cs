@@ -459,12 +459,10 @@ public class ItemBehaviours : MonoBehaviour
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedDirt.transform.position);
             if (distance <= 2.4f)
             {
-                Debug.Log("here1");
                 touchedTileObject = mcs.touchedDirt;
                 CheckStability(mcs.touchedDirt);
                 if (!holeIsStable)
                 {
-                    Debug.Log("here2");
                     return;
                 }
                 whatAction = "digging";
@@ -1384,7 +1382,6 @@ public class ItemBehaviours : MonoBehaviour
     }
     public void CheckStability(GameObject touchedTileObject)
     {
-        Debug.Log("Checking Stability");
         Vector3 northOffset = new Vector3(0, 1.6f);
         Vector3 southOffset = new Vector3(0, -1.6f);
         Vector3 eastOffset = new Vector3(1.6f, 0);
@@ -1400,7 +1397,6 @@ public class ItemBehaviours : MonoBehaviour
                     {
                         if(obj.position == tile.position)
                         {
-                            Debug.Log("Setting tiles to 3");
                             tile.GetComponent<TileCollectionData>().tileData.holeStability = 3;
                             break;
                         }
@@ -1428,7 +1424,6 @@ public class ItemBehaviours : MonoBehaviour
                         tile2.name == "DirtEmpty(Clone)" && 
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
                     {
-                        Debug.Log("Setting tiles to 2");
                         
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 2;
                     }
@@ -1445,7 +1440,6 @@ public class ItemBehaviours : MonoBehaviour
                         tile2.name == "DirtEmpty(Clone)" && 
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability != 3)
                     {
-                        Debug.Log("Setting tiles to 1");
                         tile2.GetComponent<TileCollectionData>().tileData.holeStability = 1;
                     }
                 }
@@ -1463,13 +1457,11 @@ public class ItemBehaviours : MonoBehaviour
                 tile.GetComponent<TileCollectionData>().tileData.holeStability > 1)
             {
                 holeIsStable = true;
-                Debug.Log("holeIsStable is " + holeIsStable);
                 break;
             }
             else
             {
                 holeIsStable = false;
-                Debug.Log("holeIsStable is " + holeIsStable);
             }
         }
         if (!holeIsStable)

@@ -234,7 +234,6 @@ public class Combat : MonoBehaviour
 
         barWidth = healthPercent * .22f;
 
-        Debug.Log(" barWidth = " + barWidth + " healthPercent = " + healthPercent + " currentHealth = " + currentHealth + " maxHealth = " + maxHealth);
 
         combatHealth.transform.Find("Bar").GetComponent<SpriteRenderer>().size = new Vector2(barWidth, .02f);
         combatHealth.transform.Find("Bar").transform.localPosition = new Vector3(-.11f + (barWidth / 2), 0);

@@ -221,7 +221,6 @@ public class DeskInv : MonoBehaviour
                             if(npc.GetComponent<NPCCollectionData>().npcData.desk == desk)
                             {
                                 npcName = npc.GetComponent<NPCCollectionData>().npcData.displayName;
-                                Debug.Log(npcName);
                                 break;
                             }
                         }
@@ -232,7 +231,6 @@ public class DeskInv : MonoBehaviour
                     {
                         if(mission.target == npcName && mission.item == id)
                         {
-                            Debug.Log("here");
                             cost = mission.pay;
                             missionAskScript.savedMissions.Remove(mission);
                             escapingScript.good += 10;
