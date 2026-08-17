@@ -71,7 +71,7 @@ This is probably because you downloaded the source code of the project and not a
 
 If you are having an issue that is not mentioned here, join the Discord server and ask for help there.
 
-#Frequently Asked Questions
+# Frequently Asked Questions
 
 ## "Do I really need to have all the DLC for The Escapists?"
 
