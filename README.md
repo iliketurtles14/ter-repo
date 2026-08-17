@@ -70,3 +70,45 @@ This is probably because you downloaded the source code of the project and not a
 ## Unlisted Issues
 
 If you are having an issue that is not mentioned here, join the Discord server and ask for help there.
+
+#Frequently Asked Questions
+
+## "Do I really need to have all the DLC for The Escapists?"
+
+Yes. The game will not work without the DLC.
+
+## "Can I use a pirated version of The Escapists?"
+
+No. Most likely, it will not work. Either way, you should really buy The Escapists on Steam. This is not a project that will allow for piracy of The Escapists.
+
+## "What new features does this have over the original Escapists?"
+
+This game focuses on bringing more quality-of-life features to The Escapists, such as widescreen support, new and improved UI, more customizability, and much more.
+
+## "Is this a mod?"
+
+No. This is a completely new game and not a mod.
+
+## "Will there be modding support?"
+
+Modding is not currently supported, however, I do intend on maybe adding it in the future.
+
+## "How many people are working on this game?"
+
+Just me! However, many people have helped in other ways towards this game's creation. See the credits in-game. If you would like to help with the creation of this game, please reach out or submit a PR!
+
+## "Is this an official remaster?"
+
+No. This is a fan-made remaster of The Escapists.
+
+## "What does Team17 think of this project?"
+
+From what I can see, they are indifferent. There was a DMCA attack on this repository in early 2026, however it most likely did not come from Team17, as they did not respond to my counter-claim.
+
+## "How can I see the progress of this project?"
+
+You can either join the Discord server (linked above) or watch the dev logs on my YouTube channel (https://www.youtube.com/@iliketheturtles14).
+
+## "Will there be support for other platforms?"
+
+Currently, no. However, there have been some work-arounds to have some Linux compatibility. MacOS will never be supported and neither will mobile platforms.
