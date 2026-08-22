@@ -8,8 +8,8 @@ public class PMusicController : MonoBehaviour
     private static Map currentMap;
     private static Dictionary<string, int> musicDict = new Dictionary<string, int>
     {
-        { "chow", 0 }, { "escaped", 1 }, { "lightsout", 2 }, { "freetime", 3 }, { "rollcall", 4 },
-        { "shower", 5 }, { "work", 6 }, { "workout", 7 }, { "lockdown", 8 }
+        { "chow", 0 }, { "escaped", 1 }, { "lightsout", 2 }, { "lockdown", 3 }, { "rollcall", 4 },
+        { "shower", 5 }, { "work", 6 }, { "workout", 7 }, { "freetime", 8 }
     };
     private static AudioSource audioSource;
     private IniFile iniFile;

@@ -5,117 +5,121 @@ using UnityEngine;
 
 public class Showers : MonoBehaviour
 {
-    private Schedule scheduleScript;
-    private bool doAnim;
-    private SpriteRenderer thisSR;
-    private List<Sprite> sprites = new List<Sprite>();
+    private bool isOn;
+    private BoxCollider2D bc;
     private PauseController pc;
+    private List<Transform> npcsInShower = new List<Transform>();
+    private bool playerIsInShower;
+    private Transform player;
+    private Transform aStar;
+    private SpriteRenderer sr;
     private void Start()
     {
-        scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
-        thisSR = GetComponent<SpriteRenderer>();
+        bc = GetComponent<BoxCollider2D>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
-        StartCoroutine(StartWait());
+        player = RootObjectCache.GetRoot("Player").transform;
+        aStar = RootObjectCache.GetRoot("A*").transform;
+        sr = GetComponent<SpriteRenderer>();
+        StartCoroutine(ShowerAnim());
     }
-    private IEnumerator StartWait()
+    private void FixedUpdate()
     {
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        DataSender ds = DataSender.instance;
-        sprites.Add(ds.PrisonObjectImages[57]);
-        sprites.Add(ds.PrisonObjectImages[58]);
-        sprites.Add(ds.PrisonObjectImages[59]);
-        StartCoroutine(Anim());
-    }
-    private void Update()
-    {
-        if (doAnim)
+        List<Collider2D> hitCols = new List<Collider2D>();
+        ContactFilter2D filter = ContactFilter2D.noFilter;
+        bc.Overlap(filter, hitCols);
+        npcsInShower.Clear();
+        bool shouldTurnOn = false;
+        foreach(Collider2D col in hitCols)
         {
-            thisSR.enabled = true;
+            if (col.gameObject.name.Contains("Inmate") && col.GetComponent<NPCCollectionData>() != null && col.gameObject.layer == gameObject.layer)
+            {
+                if (!npcsInShower.Contains(col.transform))
+                {
+                    shouldTurnOn = true;
+                    npcsInShower.Add(col.transform);
+                }
+            }
+            else if(col.gameObject.name == "Player" && !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), col.gameObject.layer))
+            {
+                playerIsInShower = true;
+                shouldTurnOn = true;
+            }
+        }
+
+        isOn = shouldTurnOn;
+
+        if(npcsInShower.Count > 0)
+        {
+            foreach(Transform npc in npcsInShower)
+            {
+                npc.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+        foreach(Transform npc in aStar)
+        {
+            if (!npcsInShower.Contains(npc) && npc.name.Contains("Inmate"))
+            {
+                if(npc.GetComponent<OutfitController>().currentOutfitID != -1)
+                {
+                    npc.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
+                }
+            }
+        }
+
+        if (playerIsInShower)
+        {
+            player.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
         }
         else
         {
-            thisSR.enabled = false;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.name == "Player" || (other.gameObject.CompareTag("NPC") && other.gameObject.name.StartsWith("Inmate")))
-        {
-            if(other.gameObject.name.Contains("Inmate") && scheduleScript.periodCode == "S")
+            if(player.GetComponent<OutfitController>().currentOutfitID != -1)
             {
-                doAnim = true;
-            }
-            else if(other.gameObject.name == "Player")
-            {
-                doAnim = true;
+                player.Find("Outfit").GetComponent<SpriteRenderer>().enabled = true;
             }
         }
     }
-    private void OnTriggerStay2D(Collider2D other)
+    private IEnumerator ShowerAnim()
     {
-        if (other.gameObject.name == "Player" || (other.gameObject.CompareTag("NPC") && other.gameObject.name.StartsWith("Inmate")))
-        {
-            if (other.gameObject.name.Contains("Inmate") && scheduleScript.periodCode == "S")
-            {
-                doAnim = true;
-            }
-            else if (other.gameObject.name == "Player")
-            {
-                doAnim = true;
-            }
-        }
-    }
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Player" || (other.gameObject.CompareTag("NPC") && other.gameObject.name.StartsWith("Inmate")))
-        {
-            doAnim = false;
-        }
-    }
-    private IEnumerator Anim()
-    {
+        List<Sprite> sprList = new List<Sprite>();
+        DataSender ds = DataSender.instance;
+        sprList.Add(ds.PrisonObjectImages[57]);
+        sprList.Add(ds.PrisonObjectImages[58]);
+        sprList.Add(ds.PrisonObjectImages[59]);
         while (true)
         {
-            thisSR.sprite = sprites[0];
-            float time = 0f;
-            while(time < .1f)
+            if (!isOn)
             {
-                if (pc.isPaused)
+                yield return null;
+                sr.enabled = false;
+                continue;
+            }
+            sr.enabled = true;
+
+            for(int i = 0; i < 3; i++)
+            {
+                sr.sprite = sprList[i];
+                float time = 0f;
+                while(time <= .067f)
+                {
+                    if (pc.isPaused)
+                    {
+                        yield return null;
+                        continue;
+                    }
+                    if (!isOn)
+                    {
+                        break;
+                    }
+                    yield return null;
+                    time += Time.deltaTime;
+                }
+                if (!isOn)
                 {
                     yield return null;
                     continue;
                 }
-                time += Time.deltaTime;
-                yield return null;
             }
-            thisSR.sprite = sprites[1];
-            time = 0f;
-            while (time < .1f)
-            {
-                if (pc.isPaused)
-                {
-                    yield return null;
-                    continue;
-                }
-                time += Time.deltaTime;
-                yield return null;
-            }
-            thisSR.sprite = sprites[2];
-            time = 0f;
-            while (time < .1f)
-            {
-                if (pc.isPaused)
-                {
-                    yield return null;
-                    continue;
-                }
-                time += Time.deltaTime;
-                yield return null;
-            }
+            yield return null;
         }
     }
 }

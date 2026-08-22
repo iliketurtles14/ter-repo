@@ -2332,7 +2332,7 @@ public class LoadPrison : MonoBehaviour
         AudioClip workout = null;
         Dictionary<string, int> freetimeDict = new Dictionary<string, int>
         {
-            { "perks", 23 }, { "stalag", 39 }, { "shankton", 27 }, {"jungle", 21 }, { "sanpancho", 26 },
+            { "perks", 24 }, { "stalag", 39 }, { "shankton", 27 }, {"jungle", 21 }, { "sanpancho", 26 },
             { "irongate", 20 }, { "JC", 29 }, { "BC", 27 }, { "london", 27 }, { "PCP", 27 }, { "SS", 29 },
             { "DTAF", 2 }, { "ET", 11 }, { "alca", 0 }, { "fhurst", 27 }, { "epsilon", 27 }, { "bamford", 27 }
         };

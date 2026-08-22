@@ -20,7 +20,6 @@ public class Sittables : MonoBehaviour
     private InventorySelection selectionScript;
     private int previousBodyLayer;
     private int previousOutfitLayer;
-    private PlayerShowerOutfit pso;
     public bool canLeaveSittable;
     private void Start()
     {
@@ -31,14 +30,13 @@ public class Sittables : MonoBehaviour
         HPAScript = player.GetComponent<HPAChecker>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         selectionScript = GetComponent<InventorySelection>();
-        pso = player.GetComponent<PlayerShowerOutfit>();
     }
     public void Update()
     {
         HPAScript.isSeated = onSittable;
         isBusy = HPAScript.isBusy;
         
-        if(!pso.isShowering && !onSittable)
+        if(!onSittable)
         {
             ResetRates();
         }

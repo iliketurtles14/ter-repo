@@ -9,8 +9,8 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
 {
     private GameObject black;
     private PauseController pc;
-    public bool paused = false;
     public bool inOtherMenu;
+    private bool thisIsOpen;
 
     public void Start()
     {
@@ -21,16 +21,14 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
     }
     public void Update()
     {
-        paused = pc.isPaused;
-        
-        if (Input.GetKeyDown(KeyCode.Escape) && !paused && !inOtherMenu)
+        if (Input.GetKeyDown(KeyCode.Escape) && !pc.isPaused && !inOtherMenu)
         {
             PSoundController.PlaySound("open");
             OpenPauseMenu();
             return;
         } 
 
-        if (Input.GetKeyDown(KeyCode.Escape) && paused && !inOtherMenu)
+        if (Input.GetKeyDown(KeyCode.Escape) && pc.isPaused && !inOtherMenu && thisIsOpen)
         {
             PSoundController.PlaySound("close");
             ClosePauseMenu(false);
@@ -48,13 +46,13 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
         if (!goingSomewhereElse)
         {
             black.GetComponent<Image>().enabled = false;
-
             pc.Unpause();
         }
         else
         {
             inOtherMenu = true;
         }
+        thisIsOpen = false;
     }
     public void OpenPauseMenu()
     {
@@ -68,5 +66,6 @@ public class Pause : MonoBehaviour //lol i finally changed this script to be bet
         
         pc.Pause(true);
         inOtherMenu = false;
+        thisIsOpen = true;
     }
 }
