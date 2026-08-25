@@ -59,7 +59,7 @@ If CTFAK did *not* open, make sure you have installed all of the needed dependen
 
 This is most likely caused due to the game not having all of the tilesets from The Escapists.
 
-This means you either don't have all of the DLC for The Escapists installed, or you haven't installed Python or the blowfish PyPI package.
+This means you either don't have all of the DLC for The Escapists installed, or you are using a version of The Escapists that is not the Steam version (this includes pirated versions).
 
 ## "I can't find the TER executable."
 
