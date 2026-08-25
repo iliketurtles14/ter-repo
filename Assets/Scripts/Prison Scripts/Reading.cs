@@ -13,6 +13,7 @@ public class Reading : MonoBehaviour
     private bool isBusy;
     private Escaping escapingScript;
     private StatEffects statEffectsScript;
+    private PauseController pc;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -20,6 +21,7 @@ public class Reading : MonoBehaviour
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
         escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
     }
     public void Update()
     {
@@ -35,11 +37,6 @@ public class Reading : MonoBehaviour
                 PSoundController.PlaySound("open");
                 StartCoroutine(Read(mcs.touchedReader.name));
             }
-        }
-        if (isReading && Vector2.Distance(oldPos, transform.position) > .1f)
-        {
-            stopReading = true;
-            isReading = false;
         }
     }
     public IEnumerator Read(string readerName)
@@ -61,8 +58,15 @@ public class Reading : MonoBehaviour
         }
         for (int i = 0; i < 49; i++)
         {
-            if (stopReading)
+            if (pc.isPaused)
             {
+                yield return null;
+                i--;
+                continue;
+            }
+            if (Vector2.Distance(oldPos, transform.position) > .1f)
+            {
+                isReading = false;
                 yield break;
             }
             yield return new WaitForSeconds(.045f);

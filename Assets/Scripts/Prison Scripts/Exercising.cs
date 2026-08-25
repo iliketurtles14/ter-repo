@@ -14,6 +14,7 @@ public class Exercising : MonoBehaviour
     private GameObject ic;
     private Transform so;
     private ApplyPrisonData applyPrisonDataScript;
+    private PauseController pc;
     private HPAChecker HPAScript;
     private GameObject barLine;
     private GameObject actionBarPanel;
@@ -47,6 +48,7 @@ public class Exercising : MonoBehaviour
         actionBarPanel = ic.transform.Find("ActionBarPanel").gameObject;
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
         statEffectsScript = so.GetComponent<StatEffects>();
+        pc = so.GetComponent<PauseController>();
 
         barLine = Resources.Load<GameObject>("BarLine");
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
@@ -286,6 +288,11 @@ public class Exercising : MonoBehaviour
 
         while (onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
             
             if(!hasAdded && GetComponent<PlayerCollectionData>().playerData.energy < 100)
@@ -371,6 +378,11 @@ public class Exercising : MonoBehaviour
         reps = 0;
         while(onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Skips: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
 
@@ -416,6 +428,11 @@ public class Exercising : MonoBehaviour
         reps = 0;
         while (onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
             if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
@@ -503,6 +520,11 @@ public class Exercising : MonoBehaviour
         reps = 0;
         while(onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Hits: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
 
@@ -550,6 +572,11 @@ public class Exercising : MonoBehaviour
         OutfitController oc = GetComponent<OutfitController>();
         while (true)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             if(cycle == 8)
             {
                 cycle = 0;
@@ -565,6 +592,11 @@ public class Exercising : MonoBehaviour
             while(timer < .266f)
             {
                 if (isLeaving) { yield break; }
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -589,6 +621,11 @@ public class Exercising : MonoBehaviour
         reps = 0;
         while (onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Hits: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
             
@@ -649,6 +686,11 @@ public class Exercising : MonoBehaviour
 
         while (true)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             if (punching)
             {
                 GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][3][0];
@@ -664,6 +706,11 @@ public class Exercising : MonoBehaviour
                 {
                     if (!running) { yield break; } // Exit coroutine early
                     if (punching) { break; } // Break timer to return to main loop
+                    if (pc.isPaused)
+                    {
+                        yield return null;
+                        continue;
+                    }
                     timer += Time.deltaTime;
                     yield return null;
                 }
@@ -685,6 +732,11 @@ public class Exercising : MonoBehaviour
                 {
                     if (!running) { yield break; } // Exit coroutine early
                     if (punching) { break; } // Break timer to return to main loop
+                    if (pc.isPaused)
+                    {
+                        yield return null;
+                        continue;
+                    }
                     timer += Time.deltaTime;
                     yield return null;
                 }
@@ -704,6 +756,11 @@ public class Exercising : MonoBehaviour
                 {
                     if (!running) { yield break; } // Exit coroutine early
                     if (punching) { break; } // Break timer to return to main loop
+                    if (pc.isPaused)
+                    {
+                        yield return null;
+                        continue;
+                    }
                     timer += Time.deltaTime;
                     yield return null;
                 }
@@ -726,6 +783,11 @@ public class Exercising : MonoBehaviour
         reps = 0;
         while(onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Presses: " + reps.ToString());
             if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
             {
@@ -803,6 +865,11 @@ public class Exercising : MonoBehaviour
         StartCoroutine(TreadmillWalk());
         while(onEquipment && !isLeaving)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             itemBehavioursScript.CreateActionText("Distance: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
             if (Input.GetKeyDown(KeyCode.Q) && onQ && GetComponent<PlayerCollectionData>().playerData.energy < 100)
@@ -860,6 +927,11 @@ public class Exercising : MonoBehaviour
 
         while(true)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][2][0];
             if (transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
@@ -870,6 +942,11 @@ public class Exercising : MonoBehaviour
                 break;
             }
             yield return new WaitForSeconds(.266f);
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             if (!running)
             {
                 break;
@@ -884,6 +961,11 @@ public class Exercising : MonoBehaviour
                 break;
             }
             yield return new WaitForSeconds(.266f);
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
             if (!running)
             {
                 break;
@@ -894,6 +976,12 @@ public class Exercising : MonoBehaviour
     {
         while (true)
         {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            
             if (onEquipment && (currentEquipment.name.StartsWith("Benchpress") || currentEquipment.name.StartsWith("PushupMat") || currentEquipment.name.StartsWith("PullupBar")))
             {
                 if (amountOfBars > 0)

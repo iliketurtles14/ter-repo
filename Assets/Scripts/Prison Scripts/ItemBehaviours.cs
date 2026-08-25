@@ -16,6 +16,7 @@ using Image = UnityEngine.UI.Image;
 public class ItemBehaviours : MonoBehaviour
 {
     private InventorySelection selectionScript;
+    private PauseController pc;
     private Transform badObjects;
     private MakeBadObject mbo;
     private WarningMessage warningScript;
@@ -123,6 +124,7 @@ public class ItemBehaviours : MonoBehaviour
         warningScript = GetComponent<WarningMessage>();
         mbo = GetComponent<MakeBadObject>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        pc = GetComponent<PauseController>();
 
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -1557,6 +1559,12 @@ public class ItemBehaviours : MonoBehaviour
             for(int i = 0; i < 49; i++)
             {
                 if (cancelBar) { yield break; }
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    i--;
+                    continue;
+                }
                 rect.sizeDelta = new Vector2(rect.sizeDelta.x + 5, 25);
                 rect.anchoredPosition = new Vector2(rect.anchoredPosition.x + 2.5f, rect.anchoredPosition.y);
                 yield return new WaitForSeconds(.045f);
@@ -1607,6 +1615,11 @@ public class ItemBehaviours : MonoBehaviour
                     float time = 0;
                     while(time < .532f && barIsMoving)
                     {
+                        if (pc.isPaused)
+                        {
+                            yield return null;
+                            continue;
+                        }
                         time += Time.deltaTime;
                         yield return null;
                     }
@@ -1623,6 +1636,11 @@ public class ItemBehaviours : MonoBehaviour
                     float time = 0;
                     while (time < .532f && barIsMoving)
                     {
+                        if (pc.isPaused)
+                        {
+                            yield return null;
+                            continue;
+                        }
                         time += Time.deltaTime;
                         yield return null;
                     }

@@ -46,6 +46,7 @@ public class DeskInv : MonoBehaviour
     private InventorySelection selectionScript;
     private WarningMessage warningScript;
     private Escaping escapingScript;
+    private PauseController pc;
 
     public void Start()
     {
@@ -67,6 +68,7 @@ public class DeskInv : MonoBehaviour
         missionAskScript = MenuCanvas.transform.Find("MissionPanel").GetComponent<MissionAsk>();
         selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
         escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
 
         //make slot list
         foreach (Transform child in transform)
@@ -345,6 +347,12 @@ public class DeskInv : MonoBehaviour
             if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
             for (int i = 1; i <= 49; i++)
             {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    i--;
+                    continue;
+                }
                 if (itemBehavioursScript.cancelBar || oldDeskPos != desk.transform.position) { isOpening = false; yield break; }
                 yield return new WaitForSeconds(.045f);
             }

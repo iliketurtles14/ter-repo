@@ -397926,3 +397926,6289 @@ Scene: Prison
 At: 8/22/2026 8:42:49 PM
 PLEASE DONT FORGET TO CHANGE THIS
 
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:05 AM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:05 AM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:05 AM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:09 AM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:10 AM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:10 AM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_alca_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_BC_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_campepsilon_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_CCL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_DTAF_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_EA_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_escapeteam_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_fortbamford_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_pcpen_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_SS_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_TOL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_tutorial_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:13 AM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:14 AM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:15 AM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:16 AM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:17 AM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:18 AM
+amount of loads: 132
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:47:20 AM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:25 AM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:31 AM
+Scanning - Process took 14 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:31 AM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:31 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:31 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:31 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:47:32 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Exception]
+Scene: Prison
+At: 8/24/2026 3:48:58 AM
+MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:06 AM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:06 AM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:06 AM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:07 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:08 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:09 AM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:10 AM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_alca_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_BC_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_campepsilon_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_CCL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_DTAF_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_EA_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_escapeteam_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_fortbamford_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_pcpen_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_SS_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_TOL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_tutorial_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:12 AM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:13 AM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:14 AM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:15 AM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:16 AM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:17 AM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:17 AM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:18 AM
+amount of loads: 139
+
+[Log]
+Scene: Main Menu
+At: 8/24/2026 3:49:18 AM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:22 AM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+Scanning - Process took 14 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:27 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:28 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:28 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:28 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/24/2026 3:49:28 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:34 AM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:34 AM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:34 AM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:35 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:36 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:36 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:37 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_alca_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:38 AM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:39 AM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_BC_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_campepsilon_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_CCL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_DTAF_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:40 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_EA_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_escapeteam_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_fortbamford_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_pcpen_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_SS_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_TOL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_tutorial_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:41 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:42 AM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:43 AM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:44 AM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:45 AM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:46 AM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:46 AM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:46 AM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:46 AM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:46 AM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:47 AM
+amount of loads: 143
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:11:48 AM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:11:53 AM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:11:59 AM
+Scanning - Process took 14 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:11:59 AM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:12:00 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:17 AM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:17 AM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:17 AM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:18 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:19 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:19 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:19 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:19 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:20 AM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:21 AM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_alca_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_BC_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_campepsilon_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:22 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_CCL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_DTAF_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_EA_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_escapeteam_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_fortbamford_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_pcpen_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:23 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_SS_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_TOL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_tutorial_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:24 AM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:25 AM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:26 AM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:27 AM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:28 AM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:28 AM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:28 AM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:28 AM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:28 AM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:29 AM
+amount of loads: 135
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:14:29 AM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:34 AM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:39 AM
+Scanning - Process took 14 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:39 AM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:14:40 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:04 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:05 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:06 AM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:07 AM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:07 AM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:07 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:07 AM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:08 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_alca_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_BC_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_campepsilon_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_CCL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_DTAF_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_EA_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:09 AM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_escapeteam_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_fortbamford_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_pcpen_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_SS_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_TOL_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:10 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\tiles_tutorial_decr.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:11 AM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:12 AM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:13 AM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:14 AM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:15 AM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:16 AM
+amount of loads: 133
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 2:17:17 AM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:20 AM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:25 AM
+Scanning - Process took 14 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 2:17:26 AM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:07 PM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:07 PM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:07 PM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:08 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:09 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:09 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:09 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:09 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:10 PM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:11 PM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_alca.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_BC.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_campepsilon.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_CCL.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_DTAF.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_EA.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_escapeteam.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_fortbamford.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_pcpen.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_SS.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_TOL.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Exception occurred while loading tiles_tutorial.gif: {ex.Message}
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.267 seconds.
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:27:12 PM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:19 PM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:19 PM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:19 PM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 7:32:19 PM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:19 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:20 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:21 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:22 PM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_alca.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_BC.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_campepsilon.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_CCL.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_DTAF.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_EA.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_escapeteam.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_fortbamford.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_pcpen.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_SS.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_TOL.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Exception occurred while loading tiles_tutorial.gif:no decode delegate for this image format `' @ error/blob.c/BlobToImage/481
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:32:23 PM
+Loaded AudioClip: 2.38 seconds.
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 7:32:24 PM
+ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:02 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:03 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:04 PM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:05 PM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:06 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:07 PM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:08 PM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:09 PM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:10 PM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:11 PM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:11 PM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:11 PM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:11 PM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:11 PM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:12 PM
+amount of loads: 132
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 7:35:12 PM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:17 PM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:23 PM
+Scanning - Process took 15 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:23 PM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:23 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:23 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 7:35:24 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Failed to start CTFAK.Cli: StandardOut has not been redirected or the process hasn't started yet.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Starting Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Couldn't receive the data. Trying again...
+
+[Exception]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+InvalidOperationException: Insecure connection not allowed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:28 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:29 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Couldn't receive the data. Trying again...
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Received Data
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Lists Made
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Images Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Sounds Processed
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Loaded AudioClip: 0.82 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Sounds Converted
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Stopping Dumper
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:30 PM
+Loading Prisons
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Images Applied
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Loaded AudioClip: 0.058 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Loaded AudioClip: 0.145 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Loaded AudioClip: 0.2 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:31 PM
+Loaded AudioClip: 0.19 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.229 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\ground_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.217 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\soil.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.263 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.259 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_alca.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.406 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_BC.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.515 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_campepsilon.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.267 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_CCL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.762 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_DTAF.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.124 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_EA.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.065 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_escapeteam.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.734 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_fortbamford.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.03 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_pcpen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 1.964 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_SS.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.382 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_TOL.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.798 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully decrypted tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded tiles_tutorial.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 1.191 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_irongate.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.122 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_jungle.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Invalid WAV file format.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Failed to convert byte array to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_perks.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 0.788 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_sanpancho.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 1.554 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_shanktonstatepen.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Loaded AudioClip: 2.38 seconds.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully loaded texture from D:\Steam\steamapps\common\The Escapists\Data\images\custom\tiles_cus_stalagflucht.gif
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully Converted alca.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully Converted chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully Converted DTAF.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully Converted DTAF_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:32 PM
+Successfully Converted DTAF_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted DTAF_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted DTAF_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted DTAF_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted DTAF_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted DTAF_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escaped.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escapeteam.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:33 PM
+Successfully Converted escteam_trumpet.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted escteam_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted escteam_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted irongate.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted jungle.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted perks.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:34 PM
+Successfully Converted sanpancho.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted shanktonstatepen.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted SS.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted SS_chow.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted SS_lightsout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted SS_lockdown.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:35 PM
+Successfully Converted SS_rollcall.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted SS_shower.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted SS_sign1.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted SS_sign2.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted SS_work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted SS_workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted stalagflucht.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted theme.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted tutorial.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted work.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:36 PM
+Successfully Converted workout.ogg to AudioClip.
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:37 PM
+amount of loads: 136
+
+[Log]
+Scene: Main Menu
+At: 8/25/2026 8:00:37 PM
+Starting Music
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:41 PM
+Scanning - Process took 4 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:46 PM
+Scanning - Process took 15 ms to complete
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:46 PM
+Sources 8480
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+
+[Log]
+Scene: Prison
+At: 8/25/2026 8:00:47 PM
+PLEASE DONT FORGET TO CHANGE THIS
+

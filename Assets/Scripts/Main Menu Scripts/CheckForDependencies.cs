@@ -9,7 +9,7 @@ using UnityEngine;
 public class CheckForDependencies : MonoBehaviour
 {
     public bool hasChecked = false;
-    public string pythonType;
+    //public string pythonType;
     private void Start()
     {
         CheckDependencies();
@@ -40,69 +40,69 @@ public class CheckForDependencies : MonoBehaviour
         }
         catch { }
 
-        //python 3
-        bool hasPython = false;
-        string whichPython = null;
+        ////python 3
+        //bool hasPython = false;
+        //string whichPython = null;
 
-        string[] candidates = { "py -3", "python", "python3" };
+        //string[] candidates = { "py -3", "python", "python3" };
 
-        foreach (var candidate in candidates)
-        {
-            try
-            {
-                var parts = candidate.Split(' ');
-                var process = new Process();
-                process.StartInfo.FileName = parts[0];
-                process.StartInfo.Arguments = parts.Length > 1 ? parts[1] + " --version" : "--version";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
+        //foreach (var candidate in candidates)
+        //{
+        //    try
+        //    {
+        //        var parts = candidate.Split(' ');
+        //        var process = new Process();
+        //        process.StartInfo.FileName = parts[0];
+        //        process.StartInfo.Arguments = parts.Length > 1 ? parts[1] + " --version" : "--version";
+        //        process.StartInfo.RedirectStandardOutput = true;
+        //        process.StartInfo.RedirectStandardError = true;
+        //        process.StartInfo.UseShellExecute = false;
+        //        process.StartInfo.CreateNoWindow = true;
 
-                process.Start();
+        //        process.Start();
 
-                string output = process.StandardOutput.ReadToEnd() +
-                                process.StandardError.ReadToEnd();
+        //        string output = process.StandardOutput.ReadToEnd() +
+        //                        process.StandardError.ReadToEnd();
 
-                process.WaitForExit(1000);
+        //        process.WaitForExit(1000);
 
-                var match = Regex.Match(output, @"Python\s+(\d+)\.(\d+)");
-                if (match.Success)
-                {
-                    int major = int.Parse(match.Groups[1].Value);
-                    int minor = int.Parse(match.Groups[2].Value);
+        //        var match = Regex.Match(output, @"Python\s+(\d+)\.(\d+)");
+        //        if (match.Success)
+        //        {
+        //            int major = int.Parse(match.Groups[1].Value);
+        //            int minor = int.Parse(match.Groups[2].Value);
 
-                    if (major > 3 || (major == 3 && minor >= 4))
-                    {
-                        hasPython = true;
-                        whichPython = candidate;
-                        break;
-                    }
-                }
-            }
-            catch { }
-        }
+        //            if (major > 3 || (major == 3 && minor >= 4))
+        //            {
+        //                hasPython = true;
+        //                whichPython = candidate;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
-        pythonType = whichPython;
-        //blowfish python package
-        bool hasBlowfish = false;
-        if (hasPython)
-        {
-            try
-            {
-                var process = new Process();
-                process.StartInfo.FileName = "py";
-                process.StartInfo.Arguments = "-c \"import blowfish\"";
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
+        //pythonType = whichPython;
+        ////blowfish python package
+        //bool hasBlowfish = false;
+        //if (hasPython)
+        //{
+        //    try
+        //    {
+        //        var process = new Process();
+        //        process.StartInfo.FileName = "py";
+        //        process.StartInfo.Arguments = "-c \"import blowfish\"";
+        //        process.StartInfo.UseShellExecute = false;
+        //        process.StartInfo.CreateNoWindow = true;
 
-                process.Start();
-                process.WaitForExit(1000);
+        //        process.Start();
+        //        process.WaitForExit(1000);
 
-                hasBlowfish = process.ExitCode == 0;
-            }
-            catch { }
-        }
+        //        hasBlowfish = process.ExitCode == 0;
+        //    }
+        //    catch { }
+        //}
 
         //escapists filepath
         bool hasEscapists = false;
@@ -135,8 +135,8 @@ public class CheckForDependencies : MonoBehaviour
         string desktopMsg = "";
         string runtimeMsg = "";
         string coreMsg = "";
-        string pythonMsg = "";
-        string blowfishMsg = "";
+        //string pythonMsg = "";
+        //string blowfishMsg = "";
 
         bool makeDependencyMsg = false;
 
@@ -155,20 +155,20 @@ public class CheckForDependencies : MonoBehaviour
             coreMsg = "ASP.NET Core Runtime 6.0";
             makeDependencyMsg = true;
         }
-        if (!hasPython)
-        {
-            pythonMsg = "Python 3.4+";
-            makeDependencyMsg = true;
-        }
-        if (!hasBlowfish)
-        {
-            blowfishMsg = "PyPI blowfish Package";
-            makeDependencyMsg = true;
-        }
+        //if (!hasPython)
+        //{
+        //    pythonMsg = "Python 3.4+";
+        //    makeDependencyMsg = true;
+        //}
+        //if (!hasBlowfish)
+        //{
+        //    blowfishMsg = "PyPI blowfish Package";
+        //    makeDependencyMsg = true;
+        //}
 
         List<string> messages = new List<string>
         {
-            desktopMsg, runtimeMsg, coreMsg, pythonMsg, blowfishMsg
+            desktopMsg, runtimeMsg, coreMsg
         };
 
         if (makeDependencyMsg)

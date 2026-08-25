@@ -1,3 +1,4 @@
+using EscapistsMapTools.Encryption;
 using ImageMagick;
 using NUnit.Framework;
 using System;
@@ -14,7 +15,6 @@ public class GetGivenData : MonoBehaviour
 {
     public DataSender senderScript;
     public LoadingPanel loadScript;
-    public TileDecrypt tileDecryptScript;
     public CheckForDependencies dependenciesScript;
 
     public List<Texture2D> groundTextureList = new List<Texture2D>();
@@ -140,47 +140,35 @@ public class GetGivenData : MonoBehaviour
         foreach (string validFile in validFiles)
         {
             //decrypt
-            tileDecryptScript.DecryptTileset(Path.Combine(tilePath, validFile));
+            //tileDecryptScript.DecryptTileset(Path.Combine(tilePath, validFile));
+            string key = "mothking";
+            BlowfishCompat bf = new BlowfishCompat(key);
+            byte[] fileBytes = await File.ReadAllBytesAsync(Path.Combine(tilePath, validFile));
+            fileBytes = bf.Decrypt(fileBytes);
+
             loadScript.LogLoad($"Successfully decrypted {validFile}");
 
-            string encryptedPath = Path.Combine(tilePath, validFile);
-            string[] parts = encryptedPath.Split('.');
-            string part1 = parts[0] + "_decr.";
-            string part2 = parts[1];
-            string decryptedPath = part1 + part2;
-
-            string filePath = decryptedPath;
-            if (File.Exists(filePath))
+            try
             {
-                try
+                Texture2D texture = LoadGifAsTexture2D(fileBytes);
+                if (texture != null)
                 {
-                    byte[] fileData = await File.ReadAllBytesAsync(filePath);
-                    Texture2D texture = LoadGifAsTexture2D(fileData);
-                    if (texture != null)
+                    ReplaceColorWithTransparency(texture, Color.white, 0.0001f);
+                    if(validFile == "tiles_DTAF.gif")
                     {
-                        ReplaceColorWithTransparency(texture, Color.white, 0.0001f);
-                        if(validFile == "tiles_DTAF.gif")
-                        {
-                            ReplaceColorWithTransparency(texture, new Color(48f / 255f, 1f, 0f));
-                        }
-                        tileTextureList.Add(texture);
-                        loadScript.LogLoad($"Successfully loaded texture from {filePath}");
-
-                        File.Delete(filePath);
+                        ReplaceColorWithTransparency(texture, new Color(48f / 255f, 1f, 0f));
                     }
-                    else
-                    {
-                        loadScript.LogLoad($"Failed to load texture from {filePath}");
-                    }
+                    tileTextureList.Add(texture);
+                    loadScript.LogLoad($"Successfully loaded " + validFile);
                 }
-                catch (Exception ex)
+                else
                 {
-                    loadScript.LogLoad($"Exception occurred while loading texture from {filePath}: {ex.Message}");
+                    loadScript.LogLoad($"Failed to load " + validFile);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                loadScript.LogLoad($"File {filePath} does not exist.");
+                loadScript.LogLoad($"Exception occurred while loading " + validFile + ":" + ex.Message);
             }
         }
 
