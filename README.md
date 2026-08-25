@@ -33,9 +33,7 @@ The Escapists on Steam with all DLC: https://store.steampowered.com/app/298630/T
 
 These can be found here: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-Python 3.4+: https://www.python.org/downloads/
-
-PyPI blowfish Package: https://pypi.org/project/blowfish (Paste ```py -3 -m pip install blowfish``` into Command Prompt.)
+**You no longer need Python or the blowfish PyPI package.**
 
 ## Setting The Escapists File Path
 
