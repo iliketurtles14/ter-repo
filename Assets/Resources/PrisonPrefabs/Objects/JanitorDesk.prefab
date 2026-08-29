@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -6483118007283386190}
   - component: {fileID: 4308634893678182137}
   - component: {fileID: 3256052722442004754}
-  - component: {fileID: 1106639911941055254}
   m_Layer: 6
   m_Name: JanitorDesk
   m_TagString: Desk
@@ -168,19 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5c26af5b0ac1742840dd57dd5ee113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeskRNG
---- !u!114 &1106639911941055254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4890311591341647152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f01ce22cd57b8149949e2b8a33873aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeskPickUp
-  isPickedUp: 0
 --- !u!1 &8141906061432510317
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class NPCPickup : MonoBehaviour
     private BodyController bc;
     private OutfitController oc;
     private PlayerCollectionData playerColData;
+    private DeskStand deskStandScript;
+    private DeskPickUp deskPickUpScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -20,12 +22,14 @@ public class NPCPickup : MonoBehaviour
         bc = player.GetComponent<BodyController>();
         oc = player.GetComponent<OutfitController>();
         playerColData = player.GetComponent<PlayerCollectionData>();
+        deskStandScript = GetComponent<DeskStand>();
+        deskPickUpScript = GetComponent<DeskPickUp>();
     }
     private void Update()
     {
         hpa.hasPickedUp = hasPickedUp;
         
-        if (mcs.isTouchingNPC && Input.GetMouseButtonDown(1) && !hpa.isBusy && !hasPickedUp)
+        if (mcs.isTouchingNPC && Input.GetMouseButtonDown(1) && !hpa.isBusy && !hasPickedUp && !deskPickUpScript.isPickedUp && !deskStandScript.hasClimbed && !deskStandScript.isClimbing)
         {
             if (mcs.touchedNPC.GetComponent<NPCCollectionData>().npcData.isDead)
             {
@@ -34,6 +38,7 @@ public class NPCPickup : MonoBehaviour
                 {
                     PSoundController.PlaySound("pickup");
                     hasPickedUp = true;
+                    deskStandScript.isPickedUp = true;
                     pickedUpNPC = mcs.touchedNPC;
                 }
             }
@@ -58,6 +63,7 @@ public class NPCPickup : MonoBehaviour
                     bc.deskIsPickedUp = false;
                     oc.deskIsPickedUp = false;
                     hasPickedUp = false;
+                    deskStandScript.isPickedUp = false;
                     pickedUpNPC = null;
                 }
             }
@@ -71,6 +77,7 @@ public class NPCPickup : MonoBehaviour
             bc.deskIsPickedUp = false;
             oc.deskIsPickedUp = false;
             hasPickedUp = false;
+            deskStandScript.isPickedUp = false;
             pickedUpNPC = null;
         }
     }

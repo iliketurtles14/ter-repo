@@ -39,7 +39,7 @@ public class Showers : MonoBehaviour
                     npcsInShower.Add(col.transform);
                 }
             }
-            else if(col.gameObject.name == "Player" && !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), col.gameObject.layer))
+            else if(col.gameObject.name == "Player" && !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), gameObject.layer))
             {
                 playerIsInShower = true;
                 shouldTurnOn = true;

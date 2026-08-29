@@ -60,7 +60,7 @@ public class Sittables : MonoBehaviour
             clearTile = false;
             Vector3 bedOffset;
             Vector3 otherPossibleTileBedOffset;
-            if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
+            if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("Lounger") ||
                 sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed") //when making a horizontal bed, change otherPossibleTileBedOffset to -1.6, 0
             {
                 bedOffset = new Vector3(0, .8f);
@@ -181,7 +181,7 @@ public class Sittables : MonoBehaviour
         sittable.GetComponent<BoxCollider2D>().enabled = false;
 
         Vector3 climbOffset;
-        if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("SunChair") ||
+        if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("Lounger") ||
             sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed")
         {
             if (NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
@@ -278,7 +278,7 @@ public class Sittables : MonoBehaviour
                 }
             }
         }
-        else if (sittable.name.StartsWith("SunChair") || sittable.name.StartsWith("SolitaryBed"))
+        else if (sittable.name.StartsWith("Lounger") || sittable.name.StartsWith("SolitaryBed"))
         {
             vitalScript.energyRate = 1;
             vitalScript.energyRateAmount = 2;

@@ -20,6 +20,8 @@ public class DeskPickUp : MonoBehaviour
     private bool isBusy;
     private PlayerCollectionData playerColData;
     private Transform badObjects;
+    private NPCPickup npcPickupScript;
+    public bool inDoor;
     private void Start()
     {
         deskScript = RootObjectCache.GetRoot("MenuCanvas").transform.Find("DeskMenuPanel").GetComponent<DeskInv>();
@@ -31,6 +33,7 @@ public class DeskPickUp : MonoBehaviour
         HPAScript = player.GetComponent<HPAChecker>();
         playerColData = player.GetComponent<PlayerCollectionData>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
+        npcPickupScript = GetComponent<NPCPickup>();
 
         deskVector = new Vector3(0, .8f);
     }
@@ -39,7 +42,7 @@ public class DeskPickUp : MonoBehaviour
         HPAScript.hasPickedUp = isPickedUp;
         isBusy = HPAScript.isBusy;
         
-        if (!isBusy && mcs.isTouchingDesk && !isPickedUp && mcs.touchedDesk == gameObject)
+        if (!isBusy && mcs.isTouchingDesk && !isPickedUp && !npcPickupScript.hasPickedUp && !deskStandScript.hasClimbed && !deskStandScript.isClimbing && !inDoor)
         {
             distance = Vector2.Distance(player.position, mcs.touchedDesk.transform.position);
             if (distance <= 2.4f && Input.GetMouseButtonDown(1) && !deskScript.deskIsOpen)
@@ -96,9 +99,9 @@ public class DeskPickUp : MonoBehaviour
     private void DropDesk(GameObject floor)
     {
         PSoundController.PlaySound("throw");
-        GetComponent<BoxCollider2D>().isTrigger = false;
-        transform.position = floor.transform.position;
-        GetComponent<SpriteRenderer>().sortingOrder = 2;
+        desk.GetComponent<BoxCollider2D>().isTrigger = false;
+        desk.transform.position = floor.transform.position;
+        desk.GetComponent<SpriteRenderer>().sortingOrder = 2;
         deskStandScript.isPickedUp = false;
 
         foreach(Transform bo in badObjects)

@@ -83,6 +83,8 @@ public class Death : MonoBehaviour
     private IEnumerator PlayerFadeOut()
     {
         deathCanvas.gameObject.SetActive(true);
+        player.GetComponent<SpriteRenderer>().sortingOrder = 5;
+        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 6;
         yield return new WaitForSeconds(1);
         //send player to medic
         GameObject medicBed = null;

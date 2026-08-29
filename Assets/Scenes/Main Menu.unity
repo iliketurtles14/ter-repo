@@ -5654,7 +5654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY-TEST
+  m_text: PLAY-TEST 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c6988ec93bc0fe4a801bad30261a44b, type: 2}
   m_sharedMaterial: {fileID: 2961706140005284644, guid: 7c6988ec93bc0fe4a801bad30261a44b, type: 2}
@@ -8759,7 +8759,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   senderScript: {fileID: 947147254}
   loadScript: {fileID: 612815398}
-  tileDecryptScript: {fileID: 1596822500}
   dependenciesScript: {fileID: 1733689723}
   groundTextureList: []
   tileTextureList: []
@@ -29071,7 +29070,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CheckForDependencies
   hasChecked: 0
-  pythonType: 
 --- !u!114 &1733689724
 MonoBehaviour:
   m_ObjectHideFlags: 0

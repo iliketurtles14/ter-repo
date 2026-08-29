@@ -132,13 +132,6 @@ public class DeskStand : MonoBehaviour
 
         player.GetComponent<PlayerCtrl>().enabled = false;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        foreach(GameObject aDesk in desks)
-        {
-            if (aDesk.GetComponent<DeskPickUp>())
-            {
-                aDesk.GetComponent<DeskPickUp>().enabled = false;
-            }
-        }
         yield return new WaitForFixedUpdate();
         foreach (GameObject aDesk in desks)
         {
@@ -186,17 +179,13 @@ public class DeskStand : MonoBehaviour
 
         HideVents();
 
-        foreach (GameObject aDesk in desks)
-        {
-            aDesk.GetComponent<BoxCollider2D>().isTrigger = false;
-            if (aDesk.GetComponent<DeskPickUp>())
-            {
-                aDesk.GetComponent<DeskPickUp>().enabled = true;
-            }
-        }
         foreach(GameObject sl in stepladders)
         {
             sl.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        foreach (GameObject aDesk in desks)
+        {
+            aDesk.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         int uiLayer = LayerMask.NameToLayer("UI");
         int ventCoverLayer = LayerMask.NameToLayer("VentCovers");

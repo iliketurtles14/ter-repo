@@ -14615,6 +14615,7 @@ GameObject:
   - component: {fileID: 567059246}
   - component: {fileID: 567059247}
   - component: {fileID: 567059248}
+  - component: {fileID: 567059249}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -16266,6 +16267,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8c5883fe375694e98c2fc3d6c0bccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stashes
+--- !u!114 &567059249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f01ce22cd57b8149949e2b8a33873aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeskPickUp
+  isPickedUp: 0
 --- !u!1 &573411685
 GameObject:
   m_ObjectHideFlags: 0

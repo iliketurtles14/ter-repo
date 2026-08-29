@@ -10,6 +10,8 @@ public class Doors : MonoBehaviour
     private List<BoxCollider2D> doorColliders = new List<BoxCollider2D>();
     private Inventory inventoryScript;
     private Transform mc;
+    private DeskPickUp deskPickUpScript;
+    private List<GameObject> openedDoors = new List<GameObject>();
     private Dictionary<string, List<int>> doorKeyDict = new Dictionary<string, List<int>>() //go from door name to id's of keys that work on that door
     {
         { "CellDoor", new List<int>(){0,5} }, { "UtilityDoor", new List<int>(){2,7} },
@@ -26,6 +28,7 @@ public class Doors : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         inventoryScript = GetComponent<Inventory>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        deskPickUpScript = GetComponent<DeskPickUp>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -51,9 +54,21 @@ public class Doors : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        List<Collider2D> hitCols = new List<Collider2D>();
+        ContactFilter2D filter = ContactFilter2D.noFilter;
         foreach(BoxCollider2D bc in doorColliders)
         {
-            if (player.GetComponent<CapsuleCollider2D>().IsTouching(bc))
+            bc.Overlap(filter, hitCols);
+            bool isHit = false;
+            foreach(Collider2D col in hitCols)
+            {
+                if(col.gameObject.name == "Player" && !Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), bc.gameObject.layer))
+                {
+                    isHit = true;
+                    break;
+                }
+            }
+            if (isHit)
             {
                 if (CanOpen(bc.gameObject))
                 {
@@ -63,17 +78,39 @@ public class Doors : MonoBehaviour
                     }
                     bc.isTrigger = true;
                     bc.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+                    if (!openedDoors.Contains(bc.gameObject))
+                    {
+                        openedDoors.Add(bc.gameObject);
+                    }
                 }
             }
             else
             {
                 bc.isTrigger = false;
                 bc.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                if (openedDoors.Contains(bc.gameObject))
+                {
+                    openedDoors.Remove(bc.gameObject);
+                }
             }
+        }
+
+        if(openedDoors.Count > 0)
+        {
+            deskPickUpScript.inDoor = true;
+        }
+        else
+        {
+            deskPickUpScript.inDoor = false;
         }
     }
     private bool CanOpen(GameObject door)
     {
+        if (deskPickUpScript.isPickedUp)
+        {
+            return false;
+        }
+        
         switch (door.name)
         {
             case "BlankDoor":
