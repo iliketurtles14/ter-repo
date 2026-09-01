@@ -1,15 +1,11 @@
 using EscapistsMapTools.Encryption;
 using ImageMagick;
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Networking;
-using static Unity.Burst.Intrinsics.X86;
 
 public class GetGivenData : MonoBehaviour
 {
@@ -270,20 +266,28 @@ public class GetGivenData : MonoBehaviour
         };
         foreach (string file in files)
         {
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(System.IO.Path.Combine(musicPath, file), AudioType.OGGVORBIS))
-            {
-                yield return www.SendWebRequest();
+            yield return null; //this is so that the loading doesnt freeze for a bit before finishing
+            byte[] data = File.ReadAllBytes(Path.Combine(musicPath, file));
+            AudioClip clip = OggVorbis.VorbisPlugin.ToAudioClip(data, file);
+            musicList.Add(clip);
+            loadScript.LogLoad("Successfully Converted " + file + " to AudioClip.");
 
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    loadScript.LogLoad("Error loading " + file);
-                }
-                else
-                {
-                    loadScript.LogLoad("Successfully Converted " + file + " to AudioClip.");
-                    musicList.Add(DownloadHandlerAudioClip.GetContent(www));
-                }
-            }
+            //            vvvv bad stuff vvvv
+
+            //using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://" + System.IO.Path.Combine(musicPath, file), AudioType.OGGVORBIS))
+            //{
+            //    yield return www.SendWebRequest();
+
+            //    if (www.result != UnityWebRequest.Result.Success)
+            //    {
+            //        loadScript.LogLoad("Error loading " + file);
+            //    }
+            //    else
+            //    {
+            //        loadScript.LogLoad("Successfully Converted " + file + " to AudioClip.");
+            //        musicList.Add(DownloadHandlerAudioClip.GetContent(www));
+            //    }
+            //}
         }
         DataSender.instance.SetMusicList(musicList);
         doneWithMusicLoad = true;
@@ -334,33 +338,6 @@ public class GetGivenData : MonoBehaviour
 
         texture.SetPixels(pixels);
         texture.Apply();
-    }
-    private IEnumerator PlayAudioClipFromDisk(string filePath)
-    {
-        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file:///" + filePath, AudioType.OGGVORBIS))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
-                if (clip != null)
-                {
-                    AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-                    audioSource.clip = clip;
-                    audioSource.Play();
-                    Debug.Log($"Playing audio clip from {filePath}");
-                }
-                else
-                {
-                    Debug.LogError($"Failed to load audio clip from {filePath}");
-                }
-            }
-            else
-            {
-                Debug.LogError($"Failed to load audio clip from {filePath}: {www.error}");
-            }
-        }
     }
     private void Awake()
     {

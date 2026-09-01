@@ -80,6 +80,7 @@ public class Saving : MonoBehaviour
 	private List<Transform> toilets = new List<Transform>();
 	private List<Transform> cameras = new List<Transform>();
 	public float jobQuotaBarSize = 0;
+	private FanController fanControllerScript;
     private void Start()
 	{
 		player = RootObjectCache.GetRoot("Player").transform;
@@ -106,6 +107,7 @@ public class Saving : MonoBehaviour
 		creator = GetComponent<ItemDataCreator>();
 		clear = Resources.Load<Sprite>("Main Menu Resources/UI Stuff/clear");
 		mbo = GetComponent<MakeBadObject>();
+		fanControllerScript = GetComponent<FanController>();
 		foreach(Transform slot in ic.Find("GUIPanel"))
 		{
 			slots.Add(slot);
@@ -672,6 +674,23 @@ public class Saving : MonoBehaviour
 				}
 				save += index + "=";
 				save += obj.GetComponent<EscapeObjectHandler>().objectivesCleared + "\n";
+				index++;
+			}
+		}
+		save += "\n";
+		save += "[FanSwitches]\n";
+		index = 0;
+		for(int i = 0; i < 4; i++)
+		{
+			foreach(Transform obj in tiles.Find(objLayers[i]))
+			{
+				if(obj.name != "FanSwitch")
+				{
+					index++;
+					continue;
+				}
+				save += index + "=";
+				save += obj.GetComponent<FanHandler>().isOn + "\n";
 				index++;
 			}
 		}
@@ -1527,8 +1546,26 @@ public class Saving : MonoBehaviour
 					index++;
 					continue;
 				}
+				index++;
 				int numCleared = Convert.ToInt32(GetINIVar("EscapeObjects", index.ToString(), saveFile));
 				SetEscapeObject(obj.gameObject, numCleared);
+			}
+		}
+
+		index = 0;
+		for(int i = 0; i < 4; i++)
+		{
+			foreach(Transform obj in tiles.Find(objLayers[i]))
+			{
+				if(obj.name != "FanSwitch")
+				{
+					index++;
+					continue;
+				}
+				index++;
+				bool isOn = GetINIVar("FanSwitches", index.ToString(), saveFile) == "True";
+				obj.GetComponent<FanHandler>().isOn = !isOn; //i do this so that the FlipFanSwitch() function thinks that the fan switch is currently the opposite of what it should be. dont worry about it.
+				fanControllerScript.FlipFanSwitch(obj.gameObject);
 			}
 		}
 

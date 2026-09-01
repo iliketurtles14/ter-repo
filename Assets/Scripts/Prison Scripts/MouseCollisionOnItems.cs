@@ -140,6 +140,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedStatBar;
     public bool isTouchingStash;
     public GameObject touchedStash;
+    public bool isTouchingFanSwitch;
+    public GameObject touchedFanSwitch;
+    public bool isTouchingHypertube;
+    public GameObject touchedHypertube;
 
     //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
@@ -211,6 +215,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Equipment", //workout stuff
             "Reader",
             "Zipline",
+            "Hypertube",
+            "FanSwitch",
             "Dummy",
             "Sittable", //beds, chairs, anything that you can sit on
             "FoodTable",
@@ -442,6 +448,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingZipline = true;
                     touchedZipline = highestPriorityObject;
                     break;
+                case "Hypertube":
+                    isTouchingHypertube = true;
+                    touchedHypertube = highestPriorityObject;
+                    break;
+                case "FanSwitch":
+                    isTouchingFanSwitch = true;
+                    touchedFanSwitch = highestPriorityObject;
+                    break;
                 case "Dummy":
                     isTouchingDummy = true;
                     touchedDummy = highestPriorityObject;
@@ -672,5 +686,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedStatBar = null;
         isTouchingStash = false;
         touchedStash = null;
+        isTouchingFanSwitch = false;
+        touchedFanSwitch = null;
+        isTouchingHypertube = false;
+        touchedHypertube = null;
     }
 }

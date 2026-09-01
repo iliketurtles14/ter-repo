@@ -18,6 +18,7 @@ public class HPAChecker : MonoBehaviour //HPA means High-Priority Action
     public bool isPunching;
     public bool isDead;
     public bool isBeingElectrocuted;
+    public bool isInHypertube;
 
     public bool isBusy;
 
@@ -40,7 +41,8 @@ public class HPAChecker : MonoBehaviour //HPA means High-Priority Action
             isZipping,
             isPunching,
             isDead,
-            isBeingElectrocuted
+            isBeingElectrocuted,
+            isInHypertube
         };
     }
     private void Update()
