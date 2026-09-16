@@ -32,6 +32,7 @@ public class ExportMap : MonoBehaviour
     {
         Transform properties = uic.Find("PropertiesPanel");
         Transform advanced = uic.Find("AdvancedPanel");
+        Transform npc = uic.Find("NPCPanel");
         SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
 
         text += "[Properties]\n";
@@ -55,8 +56,12 @@ public class ExportMap : MonoBehaviour
         text += "Hint2=" + Regex.Escape(uic.Find("HintPanel").Find("Hint2Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Hint3=" + Regex.Escape(uic.Find("HintPanel").Find("Hint3Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Snowing=" + subMenuControllerScript.snowing + "\n";
-        text += "POWOutfits=" + subMenuControllerScript.powOutfits + "\n";
         text += "StunRods=" + subMenuControllerScript.stunRods + "\n";
+        text += "WardenCharacter=" + npc.Find("WardenPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
+        text += "NPCCharacter=" + npc.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
+        text += "NPCOutfit=" + npc.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
+        text += "PlayerCharacter=" + npc.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
+        text += "PlayerOutfit=" + npc.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
 
         //set the mapSize variable for empty tile placing
         string sizeStr = properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text;

@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HypertubeController : MonoBehaviour
@@ -8,6 +10,10 @@ public class HypertubeController : MonoBehaviour
     private bool inHypertube;
     private HPAChecker hpaScript;
     private Transform mc;
+    private List<string> objLayers = new List<string>
+    {
+        "UndergroundObjects", "GroundObjects", "VentObjects", "RoofObjects"
+    };
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -62,6 +68,68 @@ public class HypertubeController : MonoBehaviour
     }
     private IEnumerator TubeMove(GameObject tubeOpening)
     {
+        //get list of tubes for the player to move in
+        List<GameObject> tubes = new List<GameObject>();
+        List<GameObject> openTubes = new List<GameObject>();
 
+        string currentDir = "";
+        if (tubeOpening.name.Contains("Up"))
+        {
+            currentDir = "up";
+        }
+        else if (tubeOpening.name.Contains("Down"))
+        {
+            currentDir = "down";
+        }
+        else if (tubeOpening.name.Contains("Left"))
+        {
+            currentDir = "left";
+        }
+        else if (tubeOpening.name.Contains("Right"))
+        {
+            currentDir = "right";
+        }
+
+        Dictionary<string, Vector2> dirDict = new Dictionary<string, Vector2>
+        {
+            { "up", new Vector2(0, 1.6f) }, { "down", new Vector2(0, -1.6f) },
+            { "left", new Vector2(-1.6f, 0) }, { "right", new Vector2(1.6f, 0) }
+        };
+
+        tubes.Add(tubeOpening);
+        GameObject lastTube = tubeOpening;
+        foreach(Transform obj in tubeOpening.transform.parent)
+        {
+            Vector3 dirVector = dirDict[currentDir];
+
+            if(Vector2.Distance(obj.position, lastTube.transform.position + dirVector) <= .1f)
+            {
+                lastTube = obj.gameObject;
+                if (lastTube.name.Contains("Up"))
+                {
+                    currentDir = "up";
+                }
+                else if (lastTube.name.Contains("Down"))
+                {
+                    currentDir = "down";
+                }
+                else if (lastTube.name.Contains("Left"))
+                {
+                    currentDir = "left";
+                }
+                else if (lastTube.name.Contains("Right"))
+                {
+                    currentDir = "right";
+                }
+                tubes.Add(lastTube);
+                if (lastTube.name.Contains("Open"))
+                {
+                    openTubes.Add(lastTube);
+                }
+            }
+        }
+
+        //move player throught that
+        yield return null;
     }
 }

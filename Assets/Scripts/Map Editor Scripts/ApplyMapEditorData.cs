@@ -734,6 +734,9 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "JingleSantaSleigh":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[378];
                     break;
+                case "Reindeer":
+                    obj.GetComponent<Image>().sprite = NPCSprites[2229];
+                    break;
             }
         }
         foreach(Transform obj in uic.Find("Christmas2Panel"))
@@ -763,7 +766,17 @@ public class ApplyMapEditorData : MonoBehaviour
         //item panel item
         uic.Find("ItemsPanel").Find("Item").GetComponent<Image>().sprite = AddPaddingToSprite(ItemSprites[6], 1);
         uic.Find("ItemsPanel").Find("Item").GetComponent<RectTransform>().sizeDelta += new Vector2(10, 10);
-        
+        //npc panel stuff
+        uic.Find("NPCPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        foreach(Transform child in uic.Find("NPCPanel"))
+        {
+            if (child.name.Contains("Picker"))
+            {
+                child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+                child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+                child.GetComponent<Image>().sprite = UISprites[368];
+            }
+        }
         //job panel checkboxes
         foreach (Transform child in uic.Find("JobPanel").Find("CheckBoxGrid1"))
         {
@@ -777,7 +790,6 @@ public class ApplyMapEditorData : MonoBehaviour
         GetComponent<JobPanelController>().uncheckedSprite = UISprites[447];
         //extras panel checkboxes
         uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
-        uic.Find("ExtrasPanel").Find("POWCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = UISprites[447];
         //submenucontroller checkbox sprites
         GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];

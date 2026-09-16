@@ -111,6 +111,7 @@ TagManager:
   - HighWall
   - IDNPC
   - Stash
+  - Reindeer
   layers:
   - Default
   - TransparentFX

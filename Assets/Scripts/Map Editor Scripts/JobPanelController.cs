@@ -124,13 +124,5 @@ public class JobPanelController : MonoBehaviour
         {
             uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
         }
-        if (smc.powOutfits)
-        {
-            uic.Find("ExtrasPanel").Find("POWCheckbox").GetComponent<Image>().sprite = checkedSprite;
-        }
-        else
-        {
-            uic.Find("ExtrasPanel").Find("POWCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
-        }
     }
 }

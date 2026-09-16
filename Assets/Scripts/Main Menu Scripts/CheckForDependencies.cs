@@ -191,7 +191,7 @@ public class CheckForDependencies : MonoBehaviour
         if (!hasAllDLC && hasEscapists)
         {
             msg += "You do not have all DLC for The Escapists.\n";
-            msg += "This will cause certain prisons and features of the Map Editor to break.";
+            msg += "The game will not work properly without this.";
         }
         if(!makeDependencyMsg && hasEscapists && hasAllDLC)
         {

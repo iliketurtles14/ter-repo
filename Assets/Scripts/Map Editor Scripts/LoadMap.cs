@@ -333,14 +333,6 @@ public class LoadMap : MonoBehaviour
         {
             smc.snowing = false;
         }
-        if (GetINIVar("Properties", "POWOutfits", data) == "True")
-        {
-            smc.powOutfits = true;
-        }
-        else
-        {
-            smc.powOutfits = false;
-        }
         if (GetINIVar("Properties", "StunRods", data) == "True")
         {
             smc.stunRods = true;
@@ -349,6 +341,13 @@ public class LoadMap : MonoBehaviour
         {
             smc.stunRods = false;
         }
+
+        Transform npcPanel = uic.Find("NPCPanel");
+        npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "WardenCharacter", data));
+        npcPanel.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "NPCCharacter", data));
+        npcPanel.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "NPCOutfit", data));
+        npcPanel.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "PlayerCharacter", data));
+        npcPanel.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "PlayerOutfit", data));
     }
     private void DeleteTiles()
     {

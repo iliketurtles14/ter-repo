@@ -155,6 +155,13 @@ public class MEButtonController : MonoBehaviour
         uic.Find("JobPanel").gameObject.SetActive(true);
         sc.PlaySound("open");
     }
+    public void PropertiesNPC()
+    {
+        pc.DeactivateButtons();
+        uic.Find("Black").gameObject.SetActive(true);
+        uic.Find("NPCPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
+    }
     public void PropertiesExtras()
     {
         pc.DeactivateButtons();
@@ -215,6 +222,13 @@ public class MEButtonController : MonoBehaviour
     public void HintClose()
     {
         uic.Find("HintPanel").gameObject.SetActive(false);
+        uic.Find("Black").gameObject.SetActive(false);
+        smc.ReactivateButtons();
+        sc.PlaySound("close");
+    }
+    public void NPCClose()
+    {
+        uic.Find("NPCPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         smc.ReactivateButtons();
         sc.PlaySound("close");

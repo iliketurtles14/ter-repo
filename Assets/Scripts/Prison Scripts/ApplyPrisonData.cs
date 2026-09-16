@@ -24,6 +24,8 @@ public class ApplyPrisonData : MonoBehaviour
     private StatEffects statEffectsScript;
 
     public List<Sprite> sniperSprites = new List<Sprite>();
+    public List<Sprite> reindeerSprites = new List<Sprite>();
+    public List<Sprite> rudolphSprites = new List<Sprite>();
 
 
     ///NPC SPRITE RULES:
@@ -723,6 +725,26 @@ public class ApplyPrisonData : MonoBehaviour
         sniperSprites.Add(NPCSprites[1448]);
         sniperSprites.Add(NPCSprites[1449]);
         sniperSprites.Add(NPCSprites[1450]);
+
+        //reindeer
+        reindeerSprites.Add(NPCSprites[2229]);
+        reindeerSprites.Add(NPCSprites[2230]);
+        reindeerSprites.Add(NPCSprites[2231]);
+        reindeerSprites.Add(NPCSprites[2232]);
+        reindeerSprites.Add(NPCSprites[2594]);
+        reindeerSprites.Add(NPCSprites[2595]);
+        reindeerSprites.Add(NPCSprites[2597]);
+        reindeerSprites.Add(NPCSprites[2596]);
+
+        //rudolph
+        rudolphSprites.Add(NPCSprites[2691]);
+        rudolphSprites.Add(NPCSprites[2692]);
+        rudolphSprites.Add(NPCSprites[2231]);
+        rudolphSprites.Add(NPCSprites[2232]);
+        rudolphSprites.Add(NPCSprites[2693]);
+        rudolphSprites.Add(NPCSprites[2694]);
+        rudolphSprites.Add(NPCSprites[2689]);
+        rudolphSprites.Add(NPCSprites[2690]);
 
         //dirt and holes
         itemBehavioursScript.hole24 = PrisonObjectSprites[136];

@@ -144,6 +144,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedFanSwitch;
     public bool isTouchingHypertube;
     public GameObject touchedHypertube;
+    public bool isTouchingReindeer;
+    public GameObject touchedReindeer;
 
     //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
@@ -187,6 +189,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "NPC",
             "Player",
             "ExtraNPC",
+            "Reindeer",
             "Desk",
             "ItemBox",
             "JobBox",
@@ -335,6 +338,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "ExtraNPC":
                     isTouchingExtraNPC = true;
                     touchedExtraNPC = highestPriorityObject;
+                    break;
+                case "Reindeer":
+                    isTouchingReindeer = true;
+                    touchedReindeer = highestPriorityObject;
                     break;
                 case "Desk":
                     isTouchingDesk = true;
@@ -690,5 +697,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedFanSwitch = null;
         isTouchingHypertube = false;
         touchedHypertube = null;
+        isTouchingReindeer = false;
+        touchedReindeer = null;
     }
 }

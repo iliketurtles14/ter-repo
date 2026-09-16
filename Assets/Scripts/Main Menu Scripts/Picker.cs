@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Picker : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class Picker : MonoBehaviour
     private TextMeshProUGUI tmp;
     public int currentIndex;
     public MMSoundController soundController;
+    public MESoundController meSoundController;
     private void Start()
     {
         tmp = transform.Find("Text").GetComponent<TextMeshProUGUI>();
@@ -19,13 +22,19 @@ public class Picker : MonoBehaviour
     }
     public void PickerLeft()
     {
-        if(soundController == null)
+        string sceneName = SceneManager.GetActiveScene().name;
+        switch (sceneName)
         {
-            PSoundController.PlaySound("plip");
-        }
-        else
-        {
-            soundController.PlaySound("plip");
+            case "Prison":
+                PSoundController.PlaySound("plip");
+                break;
+            case "Main Menu":
+                soundController.PlaySound("plip");
+                break;
+            case "Map Editor":
+                meSoundController.PlaySound("plip");
+                break;
+
         }
         if (currentIndex > 0 && options.Count > 0)
         {
@@ -38,13 +47,19 @@ public class Picker : MonoBehaviour
     }
     public void PickerRight()
     {
-        if(soundController == null)
+        string sceneName = SceneManager.GetActiveScene().name;
+        switch (sceneName)
         {
-            PSoundController.PlaySound("plip");
-        }
-        else
-        {
-            soundController.PlaySound("plip");
+            case "Prison":
+                PSoundController.PlaySound("plip");
+                break;
+            case "Main Menu":
+                soundController.PlaySound("plip");
+                break;
+            case "Map Editor":
+                meSoundController.PlaySound("plip");
+                break;
+
         }
         if (currentIndex < options.Count - 1 && options.Count > 0)
         {

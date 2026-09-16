@@ -68,6 +68,7 @@ public class Tooltips : MonoBehaviour
 	private int printedShopSlotNumber;
 	private int printedToiletSlotNumber;
 	private int printedCameraTime;
+	private string printedReindeerName;
 	private string printCameraTime;
 	private int printedStatNum;
 
@@ -1670,6 +1671,25 @@ public class Tooltips : MonoBehaviour
 			return;
 		}
 		if(showingTooltip && tooltipType == "stash" && !mcs.isTouchingStash)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//reindeer
+		if(mcs.isTouchingReindeer && !showingTooltip)
+		{
+			toPrint = mcs.touchedReindeer.GetComponent<ReindeerHandler>().displayName;
+			tooltipType = "reindeer";
+			printedReindeerName = mcs.touchedReindeer.GetComponent<ReindeerHandler>().displayName;
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "reindeer" && !mcs.isTouchingReindeer)
+		{
+			DestroyTooltip();
+			return;
+		}
+		if(showingTooltip && tooltipType == "reindeer" && mcs.isTouchingReindeer && mcs.touchedReindeer.GetComponent<ReindeerHandler>().displayName != printedReindeerName)
 		{
 			DestroyTooltip();
 			return;

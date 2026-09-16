@@ -15025,6 +15025,8 @@ GameObject:
   - component: {fileID: 567059247}
   - component: {fileID: 567059248}
   - component: {fileID: 567059249}
+  - component: {fileID: 567059251}
+  - component: {fileID: 567059252}
   m_Layer: 0
   m_Name: ScriptObject
   m_TagString: Untagged
@@ -15253,6 +15255,8 @@ MonoBehaviour:
   PrisonObjectSprites: []
   UISprites: []
   sniperSprites: []
+  reindeerSprites: []
+  rudolphSprites: []
   RabbitHoldingSprites: []
   BaldEagleHoldingSprites: []
   LiferHoldingSprites: []
@@ -16690,6 +16694,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeskPickUp
   isPickedUp: 0
   inDoor: 0
+--- !u!114 &567059251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b75598215b7a664188b35dbf76e0a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetUpReindeers
+--- !u!114 &567059252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567059157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556cfb848005c9d4e8efdb56ae0d2899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReindeerPickup
 --- !u!1 &573411685
 GameObject:
   m_ObjectHideFlags: 0
@@ -54096,6 +54124,12 @@ MonoBehaviour:
   touchedStatBar: {fileID: 0}
   isTouchingStash: 0
   touchedStash: {fileID: 0}
+  isTouchingFanSwitch: 0
+  touchedFanSwitch: {fileID: 0}
+  isTouchingHypertube: 0
+  touchedHypertube: {fileID: 0}
+  isTouchingReindeer: 0
+  touchedReindeer: {fileID: 0}
 --- !u!1 &1956077075
 GameObject:
   m_ObjectHideFlags: 0
@@ -56694,7 +56728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2111006229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58814,6 +58848,7 @@ MonoBehaviour:
   isPunching: 0
   isDead: 0
   isBeingElectrocuted: 0
+  isInHypertube: 0
   isBusy: 0
 --- !u!1 &1578911972627056336
 GameObject:

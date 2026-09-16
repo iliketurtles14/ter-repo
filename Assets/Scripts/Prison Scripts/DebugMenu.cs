@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -31,6 +33,10 @@ public class DebugMenu : MonoBehaviour
     private Transform globalLight;
     private Transform undergroundLight;
     private Saving savingScript;
+    private List<string> objLayers = new List<string>
+    {
+        "GroundObjects", "UndergroundObjects", "VentObjects", "RoofObjects"
+    };
     private void Start()
     {
         input = transform.Find("Input").GetComponent<TMP_InputField>();
@@ -147,7 +153,8 @@ public class DebugMenu : MonoBehaviour
                 "/timeFreeze [true/false]\n\t" +
                 "/powerOff\n\t" +
                 "/layer [int layer (0,1,2,3)]\n\t" +
-                "/save";
+                "/save\n\t" +
+                "/rudolph";
             return;
         }
 
@@ -328,6 +335,21 @@ public class DebugMenu : MonoBehaviour
                 savingScript.Save();
                 output.text += "\nSaving to slot " + ds.currentSave + ".";
             }
+            return;
+        }
+        if(command == "/rudolph")
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                foreach(Transform obj in tiles.Find(objLayers[i]))
+                {
+                    if(obj.name == "Reindeer")
+                    {
+                        obj.GetComponent<ReindeerHandler>().displayName = "Rudolph";
+                    }
+                }
+            }
+            output.text += "\nAll reindeer have been renamed to \"Rudolph\".";
             return;
         }
         //keep at end
