@@ -17526,6 +17526,8 @@ MonoBehaviour:
   saveScript: {fileID: 1168379241}
   playerName: 
   playerCharacter: 
+  prisonSelectScript: {fileID: 1665980459}
+  playerOutfit: 
   characterNum: 0
   MainMenuCanvas: {fileID: 256175213}
   normalSprite: {fileID: 0}
@@ -27653,7 +27655,10 @@ MonoBehaviour:
   customPrisonPaths: []
   currentPrisonInmateNum: 0
   currentPrisonGuardNum: 0
-  currentPrisonHasPOW: 0
+  currentPrisonNPCOutfit: 
+  currentPrisonNPCBody: 
+  currentPrisonPlayerOutfit: 
+  currentPrisonPlayerBody: 
   currentPrisonPath: 
   mainPrisonIcons: []
   mainPrisonNames: []

@@ -11,6 +11,8 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using System.IO;
+using System.Linq;
+using NUnit.Framework.Constraints;
 
 public class NPCRename : MonoBehaviour
 {
@@ -63,11 +65,27 @@ public class NPCRename : MonoBehaviour
     public MMSoundController sc;
     public Transform blocker;
     public int currentSave = -1;
+    private string npcOutfitType;
+    private string npcBodyType;
+    private Dictionary<List<Sprite>, string> charDict = new Dictionary<List<Sprite>, string>();
+    private List<string> etNames = new List<string>
+    {
+        "Cage", "Sean", "Andy"
+    };
+    private List<string> dtafNames = new List<string>
+    {
+        "Elbrah", "Chen", "Piers", "Mourn", "Lazeeboi", "Blonde", "Walton", "Prowler", "Crane"
+    };
     private void OnEnable()
     {
         if(dataScript == null)
         {
             dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
+        }
+        
+        if(charDict.Count == 0)
+        {
+            MakeCharDict();
         }
 
         ClearPanel();
@@ -90,6 +108,30 @@ public class NPCRename : MonoBehaviour
         }
         NameText.text = "";
         StartCoroutine(RandomizeWait());
+    }
+    private void MakeCharDict()
+    {
+        charDict = new Dictionary<List<Sprite>, string>
+        {
+            { dataScript.RabbitSprites, "Rabbit" }, { dataScript.BaldEagleSprites, "BaldEagle" },
+            { dataScript.LiferSprites, "Lifer" }, { dataScript.YoungBuckSprites, "YoungBuck" },
+            { dataScript.OldTimerSprites, "OldTimer" }, { dataScript.BillyGoatSprites, "BillyGoat" },
+            { dataScript.FrosephSprites, "Froseph" }, { dataScript.TangoSprites, "Tango" },
+            { dataScript.MaruSprites, "Maru" }, { dataScript.BuddyWalkingSprites, "Buddy" },
+            { dataScript.IceElfWalkingSprites, "IceElf" }, { dataScript.BlackElfWalkingSprites, "BlackElf" },
+            { dataScript.YellowElfWalkingSprites, "YellowElf" }, { dataScript.PinkElfWalkingSprites, "PinkElf" },
+            { dataScript.OrangeElfWalkingSprites, "OrangeElf" }, { dataScript. BrownElfWalkingSprites, "BrownElf" },
+            { dataScript.WhiteElfWalkingSprites, "WhiteElf" }, { dataScript.GenieWalkingSprites, "Genie" },
+            { dataScript.GuardElfWalkingSprites, "GuardElf" }, { dataScript.ConnellyWalkingSprites, "Connelly" },
+            { dataScript.ElbrahWalkingSprites, "Elbrah" }, { dataScript.ChenWalkingSprites, "Chen" },
+            { dataScript.PiersWalkingSprites, "Piers" }, { dataScript.MournWalkingSprites, "Mourn" },
+            { dataScript.LazeeboiWalkingSprites, "Lazeeboi" }, { dataScript.BlondeWalkingSprites, "Blonde" },
+            { dataScript.WaltonWalkingSprites, "Walton" }, { dataScript.ProwlerWalkingSprites, "Prowler" },
+            { dataScript.CraneWalkingSprites, "Crane" }, { dataScript.HenchmanWalkingSprites, "Henchman" },
+            { dataScript.ClintWalkingSprites, "Clint" }, { dataScript.CageWalkingSprites, "Cage" },
+            { dataScript.SeanWalkingSprites, "Sean" }, { dataScript.AndyWalkingSprites, "Andy" },
+            { dataScript.SoldierWalkingSprites, "Soldier" }
+        };
     }
     private void OnDisable()
     {
@@ -286,72 +328,192 @@ public class NPCRename : MonoBehaviour
         {
             animList.Add(child.gameObject.GetComponent<NPCRenameAnim>());
         }
+        List<int> availableInmateChars = new List<int>();
+        List<int> availableGuardChars = new List<int>();
+        switch (prisonSelectScript.currentPrisonNPCBody)
+        {
+            case "Normal":
+                for(int i = 0; i < 9; i++)
+                {
+                    availableInmateChars.Add(i);
+                    availableGuardChars.Add(i);
+                }
+                break;
+            case "SS":
+                for(int i = 10; i < 19; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(19);
+                break;
+            case "ET":
+                for(int i = 32; i < 34; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(34);
+                break;
+            case "DTAF":
+                for(int i = 20; i < 29; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(29);
+                break;
+        }
         for(int i = 0; i < (prisonSelectScript.currentPrisonInmateNum - 1 + prisonSelectScript.currentPrisonGuardNum); i++)
         {
-            int rand = UnityEngine.Random.Range(1, 10);
-            switch (rand)
-            {
-                case 1: 
-                    characterSprites = dataScript.RabbitSprites;
-                    setCharacter = "Rabbit";
-                    break;
-                case 2:
-                    characterSprites = dataScript.BaldEagleSprites;
-                    setCharacter = "BaldEagle";
-                    break;
-                case 3:
-                    characterSprites = dataScript.LiferSprites;
-                    setCharacter = "Lifer";
-                    break;
-                case 4:
-                    characterSprites = dataScript.YoungBuckSprites;
-                    setCharacter = "YoungBuck";
-                    break;
-                case 5:
-                    characterSprites = dataScript.OldTimerSprites;
-                    setCharacter = "OldTimer";
-                    break;
-                case 6: characterSprites = dataScript.BillyGoatSprites;
-                    setCharacter = "BillyGoat";
-                    break;
-                case 7:
-                    characterSprites = dataScript.FrosephSprites;
-                    setCharacter = "Froseph";
-                    break;
-                case 8:
-                    characterSprites = dataScript.TangoSprites;
-                    setCharacter = "Tango";
-                    break;
-                case 9:
-                    characterSprites = dataScript.MaruSprites;
-                    setCharacter = "Maru";
-                    break;
-            }
-            
+            bool isInmate = i < prisonSelectScript.currentPrisonInmateNum - 1;
+            bool isGuard = i >= prisonSelectScript.currentPrisonInmateNum - 1;
 
-            if(i < prisonSelectScript.currentPrisonInmateNum - 1)
+            int rand = 0;
+            if (isInmate)
+            {
+                rand = UnityEngine.Random.Range(0, availableInmateChars.Count);
+                rand += availableInmateChars[0];
+            }
+            else if (isGuard)
+            {
+                rand = UnityEngine.Random.Range(0, availableGuardChars.Count);
+                rand += availableGuardChars[0];
+            }
+
+            var pair = charDict.ElementAt(rand);
+            if (isInmate)
+            {
+                switch (prisonSelectScript.currentPrisonNPCBody)
+                {
+                    case "ET":
+                        int index = i;
+                        if (index >= 3)
+                        {
+                            index %= 3;
+                        }
+                        pair = charDict.ElementAt(index + 31);
+                        break;
+                    case "DTAF":
+                        index = i;
+                        if (index >= 9)
+                        {
+                            index %= 9;
+                        }
+                        pair = charDict.ElementAt(index + 20);
+                        break;
+                    case "SS":
+                        index = i;
+                        if (index >= 8)
+                        {
+                            index %= 8;
+                        }
+                        pair = charDict.ElementAt(index + 10);
+                        break;
+                }
+            }
+            setCharacter = pair.Value;
+            characterSprites = pair.Key;
+
+            if (isInmate)
             {
                 transform.Find("NPCGrid").Find("Inmate" + (i + 1)).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
-            else if(i >= prisonSelectScript.currentPrisonInmateNum - 1)
+            else if(isGuard)
             {
                 transform.Find("NPCGrid").Find("Guard" + (i - (prisonSelectScript.currentPrisonInmateNum - 2))).GetComponent<CustomNPCCollectionData>().customNPCData.npcType = setCharacter;
             }
             animList[i].bodyDirSprites = characterSprites;
+
+            switch (prisonSelectScript.currentPrisonNPCOutfit)
+            {
+                case "Inmate":
+                    if (isInmate)
+                    {
+                        animList[i].outfitDirSprites = dataScript.InmateOutiftSprites;
+                    }
+                    else if (isGuard)
+                    {
+                        animList[i].outfitDirSprites = dataScript.GuardOutfitSprites;
+                    }
+                    break;
+                case "POW":
+                    if (isInmate)
+                    {
+                        animList[i].outfitDirSprites = dataScript.POWOutfitWalkingSprites;
+                    }
+                    else if (isGuard)
+                    {
+                        animList[i].outfitDirSprites = dataScript.GuardOutfitSprites;
+                    }
+                    break;
+                case "Elf":
+                    if (isInmate)
+                    {
+                        animList[i].outfitDirSprites = dataScript.ElfOutfitWalkingSprites;
+                    }
+                    else if (isGuard)
+                    {
+                        animList[i].outfitDirSprites = dataScript.GuardElfOutfitWalkingSprites;
+                    }
+                    break;
+                case "Prisoner":
+                    if (isInmate)
+                    {
+                        animList[i].outfitDirSprites = dataScript.PrisonerOutfitWalkingSprites;
+                    }
+                    else if (isGuard)
+                    {
+                        animList[i].outfitDirSprites = dataScript.SoldierOutfitWalkingSprites;
+                    }
+                    break;
+                case "Tux":
+                    if (isInmate)
+                    {
+                        animList[i].outfitDirSprites = dataScript.TuxOutfitWalkingSprites;
+                    }
+                    else if (isGuard)
+                    {
+                        animList[i].outfitDirSprites = dataScript.HenchmanOutfitWalkingSprites;
+                    }
+                    break;
+            }
         }
-        foreach(Transform child in NPCGrid.transform)
+        foreach (Transform child in NPCGrid.transform)
         {
             child.gameObject.GetComponent<NPCRenameAnim>().Randomize();
         }
-        
+
         currentNames = new List<string>(names);
 
         //inmates
         for(int i = 1; i <= prisonSelectScript.currentPrisonInmateNum - 1; i++)
         {
-            int rand = UnityEngine.Random.Range(0, currentNames.Count - 1);
-            NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = currentNames[rand];
-            currentNames.RemoveAt(rand);
+            if(prisonSelectScript.currentPrisonNPCBody != "ET" && prisonSelectScript.currentPrisonNPCBody != "DTAF")
+            {
+                int rand = UnityEngine.Random.Range(0, currentNames.Count - 1);
+                NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = currentNames[rand];
+                currentNames.RemoveAt(rand);
+            }
+            else
+            {
+                switch (prisonSelectScript.currentPrisonNPCBody)
+                {
+                    case "ET":
+                        int index = i;
+                        if (index >= 3)
+                        {
+                            index %= 3;
+                        }
+                        NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = etNames[index];
+                        break;
+                    case "DTAF":
+                        index = i;
+                        if (index >= 9)
+                        {
+                            index %= 9;
+                        }
+                        NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = dtafNames[index];
+                        break;
+                }
+            }
         }
         //guards
         for(int i = 1; i <= prisonSelectScript.currentPrisonGuardNum; i++)
@@ -412,43 +574,7 @@ public class NPCRename : MonoBehaviour
     }
     private void SendData()
     {
-        if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.BaldEagleSprites)
-        {
-            character = "BaldEagle";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.BillyGoatSprites)
-        {
-            character = "BillyGoat";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.FrosephSprites)
-        {
-            character = "Froseph";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.LiferSprites)
-        {
-            character = "Lifer";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.MaruSprites)
-        {
-            character = "Maru";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.OldTimerSprites)
-        {
-            character = "OldTimer";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.RabbitSprites)
-        {
-            character = "Rabbit";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.TangoSprites)
-        {
-            character = "Tango";
-        }
-        else if (lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites == dataScript.YoungBuckSprites)
-        {
-            character = "YoungBuck";
-        }
-
+        character = charDict[lastPressedCharacter.GetComponent<NPCRenameAnim>().bodyDirSprites];
         smallMenuScript.OnOpen(lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName, lastPressedCharacter.tag, character);
     }
     public IEnumerator Transfer()

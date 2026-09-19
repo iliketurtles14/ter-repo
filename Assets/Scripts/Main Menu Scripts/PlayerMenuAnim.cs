@@ -43,9 +43,18 @@ public class PlayerMenuAnim : MonoBehaviour
                 case "Rabbit": bodyDirSprites = dataScript.RabbitSprites; break;
                 case "Tango": bodyDirSprites = dataScript.TangoSprites; break;
                 case "YoungBuck": bodyDirSprites = dataScript.YoungBuckSprites; break;
-
+                case "Buddy": bodyDirSprites = dataScript.BuddyWalkingSprites; break;
+                case "Connelly": bodyDirSprites = dataScript.ConnellyWalkingSprites; break;
+                case "Clint": bodyDirSprites = dataScript.ClintWalkingSprites; break;
             }
-            outfitDirSprites = dataScript.InmateOutiftSprites;
+            switch (playerMenuScript.playerOutfit)
+            {
+                case "Inmate": outfitDirSprites = dataScript.InmateOutiftSprites; break;
+                case "POW": outfitDirSprites = dataScript.POWOutfitWalkingSprites; break;
+                case "Elf": outfitDirSprites = dataScript.ElfOutfitWalkingSprites; break;
+                case "Prisoner": outfitDirSprites = dataScript.PrisonerOutfitWalkingSprites; break;
+                case "Tux": outfitDirSprites = dataScript.TuxOutfitWalkingSprites; break;
+            }
             transform.Find("Outfit").position = transform.position;
             GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];
             transform.Find("Outfit").GetComponent<Image>().sprite = outfitDirSprites[whichCycle + 6];

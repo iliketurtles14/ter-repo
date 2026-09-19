@@ -35,22 +35,34 @@ public class PrisonSelect : MonoBehaviour
     public List<string> customPrisonPaths = new List<string>();
     public int currentPrisonInmateNum;
     public int currentPrisonGuardNum;
-    public bool currentPrisonHasPOW;
+    public string currentPrisonNPCOutfit;
+    public string currentPrisonNPCBody;
+    public string currentPrisonPlayerOutfit;
+    public string currentPrisonPlayerBody;
     public string currentPrisonPath;
     public List<Sprite> mainPrisonIcons = new List<Sprite>();
     private List<int> mainPrisonInmateNums = new List<int>();
     private List<int> mainPrisonGuardNums = new List<int>();
-    private List<bool> mainPrisonHasPOWBools = new List<bool>();
+    private List<string> mainPrisonNPCOutfits = new List<string>();
+    private List<string> mainPrisonNPCBodies = new List<string>();
+    private List<string> mainPrisonPlayerOutfits = new List<string>();
+    private List<string> mainPrisonPlayerBodies = new List<string>();
     public List<string> mainPrisonNames = new List<string>();
     public List<Sprite> bonusPrisonIcons = new List<Sprite>();
     private List<int> bonusPrisonInmateNums = new List<int>();
     private List<int> bonusPrisonGuardNums = new List<int>();
-    private List<bool> bonusPrisonHasPOWBools = new List<bool>();
+    private List<string> bonusPrisonNPCOutfits = new List<string>();
+    private List<string> bonusPrisonNPCBodies = new List<string>();
+    private List<string> bonusPrisonPlayerOutfits = new List<string>();
+    private List<string> bonusPrisonPlayerBodies = new List<string>();
     public List<string> bonusPrisonNames = new List<string>();
     private List<Sprite> customPrisonIcons = new List<Sprite>();
     private List<int> customPrisonInmateNums = new List<int>();
     private List<int> customPrisonGuardNums = new List<int>();
-    private List<bool> customPrisonHasPOWBools = new List<bool>();
+    private List<string> customPrisonNPCOutfits = new List<string>();
+    private List<string> customPrisonNPCBodies = new List<string>();
+    private List<string> customPrisonPlayerOutfits = new List<string>();
+    private List<string> customPrisonPlayerBodies = new List<string>();
     public List<string> customPrisonNames = new List<string>();
     public List<string> mainPrisonNamesNormal = new List<string>();
     public List<string> bonusPrisonNamesNormal = new List<string>();
@@ -70,7 +82,10 @@ public class PrisonSelect : MonoBehaviour
     private List<Sprite> currentPrisonIcons = new List<Sprite>();
     private List<int> currentPrisonInmateNums = new List<int>();
     private List<int> currentPrisonGuardNums = new List<int>();
-    private List<bool> currentPrisonHasPOWBools = new List<bool>();
+    private List<string> currentPrisonNPCOutfits = new List<string>();
+    private List<string> currentPrisonNPCBodies = new List<string>();
+    private List<string> currentPrisonPlayerOutfits = new List<string>();
+    private List<string> currentPrisonPlayerBodies = new List<string>();
     public List<string> currentPrisonNames = new List<string>();
     public List<string> currentPrisonPaths = new List<string>();
     public int amountOfCurrentPrisons;
@@ -79,6 +94,14 @@ public class PrisonSelect : MonoBehaviour
     public Sprite continueButtonGood;
     public bool showGrid;
     private bool ready = false;
+    private Dictionary<int, string> bodyDict = new Dictionary<int, string> //these dictionaries correlate to the NPCPanel pickers in the map editor scene
+    {
+        { 0, "Normal" }, { 1, "SS" }, { 2, "ET" }, { 3, "DTAF" }
+    };
+    private Dictionary<int, string> outfitDict = new Dictionary<int, string>
+    {
+        { 0, "Inmate" }, { 1, "POW" }, { 2, "Elf" }, { 3, "Prisoner" }, { 4, "Tux" }
+    };
     private void Start()
     {
         DataSender ds = DataSender.instance;
@@ -185,7 +208,10 @@ public class PrisonSelect : MonoBehaviour
                 currentPrisonInmateNums = mainPrisonInmateNums;
                 currentPrisonNamesNormal = mainPrisonNamesNormal;
                 currentPrisonGuardNums = mainPrisonGuardNums;
-                currentPrisonHasPOWBools = mainPrisonHasPOWBools;
+                currentPrisonNPCBodies = mainPrisonNPCBodies;
+                currentPrisonNPCOutfits = mainPrisonNPCOutfits;
+                currentPrisonPlayerBodies = mainPrisonPlayerBodies;
+                currentPrisonPlayerOutfits = mainPrisonPlayerOutfits;
                 currentPrisonPaths = mainPrisonPaths;
                 break;
             case 1:
@@ -198,7 +224,10 @@ public class PrisonSelect : MonoBehaviour
                 currentPrisonNamesNormal = bonusPrisonNamesNormal;
                 currentPrisonInmateNums = bonusPrisonInmateNums;
                 currentPrisonGuardNums = bonusPrisonGuardNums;
-                currentPrisonHasPOWBools = bonusPrisonHasPOWBools;
+                currentPrisonNPCBodies = bonusPrisonNPCBodies;
+                currentPrisonNPCOutfits = bonusPrisonNPCOutfits;
+                currentPrisonPlayerBodies = bonusPrisonPlayerBodies;
+                currentPrisonPlayerOutfits = bonusPrisonPlayerOutfits;
                 currentPrisonPaths = bonusPrisonPaths;
                 break;
             case 2:
@@ -211,7 +240,10 @@ public class PrisonSelect : MonoBehaviour
                 currentPrisonNamesNormal = customPrisonNamesNormal;
                 currentPrisonInmateNums = customPrisonInmateNums;
                 currentPrisonGuardNums = customPrisonGuardNums;
-                currentPrisonHasPOWBools = customPrisonHasPOWBools;
+                currentPrisonNPCBodies = customPrisonNPCBodies;
+                currentPrisonNPCOutfits = customPrisonNPCOutfits;
+                currentPrisonPlayerBodies = customPrisonPlayerBodies;
+                currentPrisonPlayerOutfits = customPrisonPlayerOutfits;
                 currentPrisonPaths = customPrisonPaths;
                 break;
         }
@@ -222,7 +254,6 @@ public class PrisonSelect : MonoBehaviour
             CurrentPrisonObject.GetComponent<Image>().sprite = clearSprite;
             currentPrisonGuardNum = 0;
             currentPrisonInmateNum = 0;
-            currentPrisonHasPOW = false;
             currentPrisonPath = null;
 
             transform.Find("ContinueButton").GetComponent<Image>().sprite = continueButtonMad;
@@ -241,7 +272,10 @@ public class PrisonSelect : MonoBehaviour
             CurrentPrisonObject.GetComponent<Image>().sprite = currentPrisonIcons[whichPrison];
             currentPrisonGuardNum = currentPrisonGuardNums[whichPrison];
             currentPrisonInmateNum = currentPrisonInmateNums[whichPrison];
-            currentPrisonHasPOW = currentPrisonHasPOWBools[whichPrison];
+            currentPrisonNPCBody = currentPrisonNPCBodies[whichPrison];
+            currentPrisonNPCOutfit = currentPrisonNPCOutfits[whichPrison];
+            currentPrisonPlayerBody = currentPrisonPlayerBodies[whichPrison];
+            currentPrisonPlayerOutfit = currentPrisonPlayerOutfits[whichPrison];
             currentPrisonPath = currentPrisonPaths[whichPrison];
 
             transform.Find("ContinueButton").GetComponent<Image>().sprite = ButtonNormalSprite;
@@ -392,14 +426,18 @@ public class PrisonSelect : MonoBehaviour
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
                 }
-                if (GetINIVar("Properties", "POWOutfits", data) == "True")
-                {
-                    mainPrisonHasPOWBools.Add(true);
-                }
-                else
-                {
-                    mainPrisonHasPOWBools.Add(false);
-                }
+                mainPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
+                mainPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);
+                mainPrisonPlayerBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))]);
+                mainPrisonPlayerOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))]);
+                //if (GetINIVar("Properties", "POWOutfits", data) == "True")
+                //{
+                //    mainPrisonHasPOWBools.Add(true);
+                //}
+                //else
+                //{
+                //    mainPrisonHasPOWBools.Add(false);
+                //}
 
                 for (int j = 0; j < data.Length; j++)
                 {
@@ -430,14 +468,18 @@ public class PrisonSelect : MonoBehaviour
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
                 }
-                if (GetINIVar("Properties", "POWOutfits", data) == "True")
-                {
-                    bonusPrisonHasPOWBools.Add(true);
-                }
-                else
-                {
-                    bonusPrisonHasPOWBools.Add(false);
-                }
+                bonusPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
+                bonusPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);
+                bonusPrisonPlayerBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))]);
+                bonusPrisonPlayerOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))]);
+                //if (GetINIVar("Properties", "POWOutfits", data) == "True")
+                //{
+                //    bonusPrisonHasPOWBools.Add(true);
+                //}
+                //else
+                //{
+                //    bonusPrisonHasPOWBools.Add(false);
+                //}
 
                 for (int j = 0; j < data.Length; j++)
                 {
@@ -491,14 +533,18 @@ public class PrisonSelect : MonoBehaviour
             {
                 Directory.Delete(Path.Combine(extractPath, "Items"), true);
             }
-            if (GetINIVar("Properties", "POWOutfits", data) == "True")
-            {
-                customPrisonHasPOWBools.Add(true);
-            }
-            else
-            {
-                customPrisonHasPOWBools.Add(false);
-            }
+            customPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
+            customPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);
+            customPrisonPlayerBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))]);
+            customPrisonPlayerOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))]);
+            //if (GetINIVar("Properties", "POWOutfits", data) == "True")
+            //{
+            //    customPrisonHasPOWBools.Add(true);
+            //}
+            //else
+            //{
+            //    customPrisonHasPOWBools.Add(false);
+            //}
 
             for (int j = 0; j < data.Length; j++)
             {
@@ -538,14 +584,22 @@ public class PrisonSelect : MonoBehaviour
             mainPrisonIcons.Clear();
             mainPrisonInmateNums.Clear();
             mainPrisonGuardNums.Clear();
-            mainPrisonHasPOWBools.Clear();
+            mainPrisonNPCBodies.Clear();
+            mainPrisonNPCOutfits.Clear();
+            mainPrisonPlayerBodies.Clear();
+            mainPrisonPlayerOutfits.Clear();
+            //mainPrisonHasPOWBools.Clear();
             mainPrisonNames.Clear();
             amountOfMainPrisons = 0;
             bonusPrisonPaths.Clear();
             bonusPrisonIcons.Clear();
             bonusPrisonInmateNums.Clear();
             bonusPrisonGuardNums.Clear();
-            bonusPrisonHasPOWBools.Clear();
+            bonusPrisonNPCBodies.Clear();
+            bonusPrisonNPCOutfits.Clear();
+            bonusPrisonPlayerBodies.Clear();
+            bonusPrisonPlayerOutfits.Clear();
+            //bonusPrisonHasPOWBools.Clear();
             bonusPrisonNames.Clear();
             amountOfBonusPrisons = 0;
             mainPrisonNamesNormal.Clear();
@@ -555,7 +609,11 @@ public class PrisonSelect : MonoBehaviour
         customPrisonIcons.Clear();
         customPrisonInmateNums.Clear();
         customPrisonGuardNums.Clear();
-        customPrisonHasPOWBools.Clear();
+        customPrisonNPCBodies.Clear();
+        customPrisonNPCOutfits.Clear();
+        customPrisonPlayerBodies.Clear();
+        customPrisonPlayerOutfits.Clear();
+        //customPrisonHasPOWBools.Clear();
         customPrisonNames.Clear();
         amountOfCustomPrisons = 0;
         customPrisonNamesNormal.Clear();
@@ -587,6 +645,34 @@ public class PrisonSelect : MonoBehaviour
 
         string[] parts = line.Split('=');
 
+        return parts[1];
+    }
+    public string GetINIVarForPicker(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (line == null)
+        {
+            return "0"; //this is the only change between this and the GetINIVar() method
+        }
+
+        string[] parts = line.Split('=');
         return parts[1];
     }
     private Sprite ConvertPNGToSprite(string path)

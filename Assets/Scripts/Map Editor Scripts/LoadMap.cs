@@ -343,11 +343,11 @@ public class LoadMap : MonoBehaviour
         }
 
         Transform npcPanel = uic.Find("NPCPanel");
-        npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "WardenCharacter", data));
-        npcPanel.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "NPCCharacter", data));
-        npcPanel.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "NPCOutfit", data));
-        npcPanel.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "PlayerCharacter", data));
-        npcPanel.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVar("Properties", "PlayerOutfit", data));
+        npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "WardenCharacter", data));
+        npcPanel.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data));
+        npcPanel.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data));
+        npcPanel.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data));
+        npcPanel.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data));
     }
     private void DeleteTiles()
     {
@@ -928,11 +928,37 @@ public class LoadMap : MonoBehaviour
             }
         }
 
-
-
         if (line == null)
         {
             return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
+    }
+    public string GetINIVarForPicker(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (line == null)
+        {
+            return "0"; //this is the only change between this and the GetINIVar() method
         }
 
         string[] parts = line.Split('=');

@@ -32,15 +32,6 @@ public class NPCRenameAnim : MonoBehaviour
         {
             dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
         }
-
-        if (tag == "Inmate")
-        {
-            outfitDirSprites = dataScript.InmateOutiftSprites;
-        }
-        else if (tag == "Guard")
-        {
-            outfitDirSprites = dataScript.GuardOutfitSprites;
-        }
     }
 
     public void Update()
