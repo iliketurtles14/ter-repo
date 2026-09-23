@@ -57,6 +57,7 @@ public class ExportMap : MonoBehaviour
         text += "Hint3=" + Regex.Escape(uic.Find("HintPanel").Find("Hint3Input").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Snowing=" + subMenuControllerScript.snowing + "\n";
         text += "StunRods=" + subMenuControllerScript.stunRods + "\n";
+        text += "SSVisitors=" + subMenuControllerScript.ssVisitors + "\n";
         text += "WardenCharacter=" + npc.Find("WardenPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "NPCCharacter=" + npc.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "NPCOutfit=" + npc.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";

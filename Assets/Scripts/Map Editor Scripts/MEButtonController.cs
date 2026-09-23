@@ -282,8 +282,8 @@ public class MEButtonController : MonoBehaviour
                 case "SnowingCheckbox":
                     smc.snowing = false;
                     break;
-                case "POWCheckbox":
-                    smc.powOutfits = false;
+                case "SSVisitorsCheckbox":
+                    smc.ssVisitors = false;
                     break;
                 case "StunRodCheckbox":
                     smc.stunRods = false;
@@ -329,8 +329,8 @@ public class MEButtonController : MonoBehaviour
                 case "SnowingCheckbox":
                     smc.snowing = true;
                     break;
-                case "POWCheckbox":
-                    smc.powOutfits = true;
+                case "SSVisitorsCheckbox":
+                    smc.ssVisitors = true;
                     break;
                 case "StunRodCheckbox":
                     smc.stunRods = true;

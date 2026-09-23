@@ -791,6 +791,7 @@ public class ApplyMapEditorData : MonoBehaviour
         //extras panel checkboxes
         uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        uic.Find("ExtrasPanel").Find("SSVisitorsCheckbox").GetComponent<Image>().sprite = UISprites[447];
         //submenucontroller checkbox sprites
         GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
         GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];

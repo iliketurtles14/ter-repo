@@ -44,7 +44,7 @@ public class VisitorNPCAnimation : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
-        isSS = currentMap.mapName == "Santa's Sweatshop";
+        isSS = currentMap.ssVisitors;
         newVisitorSprites = new List<Sprite>();
         for (int i = 0; i < 6; i++)
         {

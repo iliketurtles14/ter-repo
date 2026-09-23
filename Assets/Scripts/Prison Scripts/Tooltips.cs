@@ -86,6 +86,7 @@ public class Tooltips : MonoBehaviour
 	private Giving givingScript;
 	private ShopMenu shopMenuScript;
 	private ToiletMenu toiletMenuScript;
+	private string defaultWardenName;
 	public void Start()
 	{
 		PlayerTransform = RootObjectCache.GetRoot("Player").transform;
@@ -118,6 +119,22 @@ public class Tooltips : MonoBehaviour
 		yield return new WaitForEndOfFrame();
 		yield return new WaitForEndOfFrame();
 		currentMap = GetComponent<LoadPrison>().currentMap;
+
+		switch (currentMap.wardenCharacter)
+		{
+			case "Normal":
+				defaultWardenName = "Warden";
+				break;
+			case "Ringmaster":
+				defaultWardenName = "Ringmaster";
+				break;
+			case "Santa":
+				defaultWardenName = "Santa";
+				break;
+			case "Villain":
+				defaultWardenName = "Villain";
+				break;
+		}
 	}
 	public void Update()
 	{
@@ -1908,11 +1925,11 @@ public class Tooltips : MonoBehaviour
 				case "Warden":
 					if (!string.IsNullOrEmpty(currentMap.warden))
 					{
-						toPrint = "Warden " + currentMap.warden;
+						toPrint = currentMap.warden;
 					}
 					else
 					{
-						toPrint = "Warden";
+						toPrint = defaultWardenName;
 					}
 					break;
 				case "JobOfficer":
@@ -1937,8 +1954,15 @@ public class Tooltips : MonoBehaviour
 			switch (mcs.touchedExtraNPC.name)
 			{
 				case "Warden":
-					str = "Warden" + currentMap.warden;
-					break;
+					if (!string.IsNullOrEmpty(currentMap.warden))
+					{
+                        str = currentMap.warden;
+                    }
+					else
+					{
+						str = defaultWardenName;
+					}
+                    break;
 				case "JobOfficer":
 					str = "Employment Staff";
 					break;

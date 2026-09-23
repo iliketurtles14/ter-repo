@@ -40,8 +40,13 @@ public class Map
     public string hint2;
     public string hint3;
     public bool snowing;
-    public bool powOutfits;
     public bool stunRods;
+    public bool ssVisitors;
+    public string playerBody;
+    public string playerOutfit;
+    public string npcBody;
+    public string npcOutfit;
+    public string wardenCharacter;
     public Dictionary<int, string> routineDict;
     public string startingJob;
     public bool janitor;
@@ -95,8 +100,13 @@ public class Map
         string hint2,
         string hint3,
         bool snowing,
-        bool powOutfits,
         bool stunRods,
+        bool ssVisitors,
+        string playerBody,
+        string playerOutfit,
+        string npcBody,
+        string npcOutfit,
+        string wardenCharacter,
         Dictionary<int, string> routineDict,
         string startingJob,
         bool janitor,
@@ -149,8 +159,13 @@ public class Map
         this.hint2 = hint2;
         this.hint3 = hint3;
         this.snowing = snowing;
-        this.powOutfits = powOutfits;
         this.stunRods = stunRods;
+        this.ssVisitors = ssVisitors;
+        this.playerBody = playerBody;
+        this.playerOutfit = playerOutfit;
+        this.npcBody = npcBody;
+        this.npcOutfit = npcOutfit;
+        this.wardenCharacter = wardenCharacter;
         this.routineDict = routineDict;
         this.startingJob = startingJob;
         this.janitor = janitor;

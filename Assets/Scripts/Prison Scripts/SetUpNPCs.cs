@@ -56,10 +56,13 @@ public class SetUpNPCs : MonoBehaviour
             }
         }
 
-        GridGraph grid = AstarPath.active.data.graphs.OfType<GridGraph>().FirstOrDefault();
-        grid.center = new Vector3((map.sizeX * 1.6f / 2) - .8f, (map.sizeY * 1.6f / 2) - .8f);
-        grid.SetDimensions(map.sizeX, map.sizeY, 1.6f);
-        AstarPath.active.Scan();
+        GridGraph[] grids = AstarPath.active.data.graphs.OfType<GridGraph>().ToArray();
+        for(int i = 0; i < grids.Count(); i++)
+        {
+            grids[i].center = new Vector3((map.sizeX * 1.6f / 2) - .8f, (map.sizeY * 1.6f / 2) - .8f);
+            grids[i].SetDimensions(map.sizeX, map.sizeY, 1.6f);
+            AstarPath.active.Scan(grids[i]);
+        }
 
         surface.BuildNavMesh();
 

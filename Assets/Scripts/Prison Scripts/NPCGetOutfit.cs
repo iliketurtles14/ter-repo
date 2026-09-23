@@ -17,6 +17,14 @@ public class NPCGetOutfit : MonoBehaviour
     private bool isGoing;
     private Map currentMap;
     private ItemDataCreator creator;
+    private Dictionary<string, int> inmateOutfitDict = new Dictionary<string, int>
+    {
+        { "Inmate", 29 }, { "POW", 33 }, { "Elf", 40 }, { "Prisoner", 50 }, { "Tux", 45 }
+    };
+    private Dictionary<string, int> guardOutfitDict = new Dictionary<string, int>
+    {
+        { "Inmate", 39 }, { "POW", 39 }, { "Elf", 44 }, { "Prisoner", 54 }, { "Tux", 49 }
+    };
     private void Start()
     {
         StartCoroutine(StartWait());
@@ -150,18 +158,11 @@ public class NPCGetOutfit : MonoBehaviour
 
         if (isInmate)
         {
-            if (currentMap.powOutfits)
-            {
-                npcColData.npcData.inventory[7].itemData = creator.CreateItemData(33);
-            }
-            else
-            {
-                npcColData.npcData.inventory[7].itemData = creator.CreateItemData(29);
-            }
+            npcColData.npcData.inventory[7].itemData = creator.CreateItemData(inmateOutfitDict[currentMap.npcOutfit]);
         }
         else if (isGuard)
         {
-            npcColData.npcData.inventory[7].itemData = creator.CreateItemData(39);
+            npcColData.npcData.inventory[7].itemData = creator.CreateItemData(guardOutfitDict[currentMap.npcOutfit]);
         }
     }
 }

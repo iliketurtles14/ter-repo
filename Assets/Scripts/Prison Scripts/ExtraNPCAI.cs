@@ -17,6 +17,9 @@ public class ExtraNPCAI : MonoBehaviour
     public bool alreadyWentToday;
     private int dayWent;
     private Saving savingScript;
+    public bool bypassWardenRequirements;
+    private bool useSpriteOffset;
+    private Map currentMap;
     private void Start()
     {
         //9 - job and medic spawn
@@ -28,6 +31,12 @@ public class ExtraNPCAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         savingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Saving>();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
+
+        if(currentMap.wardenCharacter == "Santa" || currentMap.wardenCharacter == "Ringmaster")
+        {
+            useSpriteOffset = true;
+        }
 
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
@@ -215,7 +224,7 @@ public class ExtraNPCAI : MonoBehaviour
     {
         while (true)
         {
-            if (alreadyWentToday)
+            if (alreadyWentToday && !bypassWardenRequirements)
             {
                 yield return null;
                 continue;
@@ -225,10 +234,11 @@ public class ExtraNPCAI : MonoBehaviour
             
             while (true)
             {
-                if (routineScript.min == rand)
+                if (routineScript.min == rand || bypassWardenRequirements)
                 {
                     alreadyWentToday = true;
                     dayWent = routineScript.day;
+                    bypassWardenRequirements = false;
                     break;
                 }
                 yield return null;
@@ -236,7 +246,14 @@ public class ExtraNPCAI : MonoBehaviour
 
             //spawn
             transform.position = spawnWP.position;
-            GetComponent<SpriteRenderer>().enabled = true;
+            if (useSpriteOffset)
+            {
+                transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().enabled = true;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = true;
+            }
             transform.Find("SpeechCanvas").gameObject.SetActive(true);
             GetComponent<CapsuleCollider2D>().enabled = true;
 
@@ -275,7 +292,14 @@ public class ExtraNPCAI : MonoBehaviour
             }
 
             //despawn
-            GetComponent<SpriteRenderer>().enabled = false;
+            if (useSpriteOffset)
+            {
+                transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().enabled = false;
+            }
             GetComponent<CapsuleCollider2D>().enabled = false;
             transform.Find("SpeechCanvas").gameObject.SetActive(false);
 

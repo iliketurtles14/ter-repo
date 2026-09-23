@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,9 +22,13 @@ public class SmallMenu : MonoBehaviour
     public Sprite pressedSetSprite;
     public Sprite sadSetSprite;
     public List<Sprite> characterSprites = new List<Sprite>();
+    public List<Sprite> outfitSprites = new List<Sprite>();
+    public PrisonSelect prisonSelectScript;
+    private Dictionary<List<Sprite>, string> charDict = new Dictionary<List<Sprite>, string>();
 
     public void OnOpen(string name, string type, string character)
     {
+        MakeCharDict();
         npcName = name;
         npcType = type;
         npcCharacter = character;
@@ -33,6 +39,31 @@ public class SmallMenu : MonoBehaviour
         transform.Find("SetButton").GetComponent<Image>().sprite = normalSetSprite;
 
         isOpen = true;
+    }
+    private void MakeCharDict()
+    {
+        charDict = new Dictionary<List<Sprite>, string>
+        {
+            { dataScript.RabbitSprites, "Rabbit" }, { dataScript.BaldEagleSprites, "BaldEagle" },
+            { dataScript.LiferSprites, "Lifer" }, { dataScript.YoungBuckSprites, "YoungBuck" },
+            { dataScript.OldTimerSprites, "OldTimer" }, { dataScript.BillyGoatSprites, "BillyGoat" },
+            { dataScript.FrosephSprites, "Froseph" }, { dataScript.TangoSprites, "Tango" },
+            { dataScript.MaruSprites, "Maru" }, { dataScript.BuddyWalkingSprites, "Buddy" },
+            { dataScript.IceElfWalkingSprites, "IceElf" }, { dataScript.BlackElfWalkingSprites, "BlackElf" },
+            { dataScript.YellowElfWalkingSprites, "YellowElf" }, { dataScript.PinkElfWalkingSprites, "PinkElf" },
+            { dataScript.OrangeElfWalkingSprites, "OrangeElf" }, { dataScript. BrownElfWalkingSprites, "BrownElf" },
+            { dataScript.WhiteElfWalkingSprites, "WhiteElf" }, { dataScript.GenieWalkingSprites, "Genie" },
+            { dataScript.GuardElfWalkingSprites, "GuardElf" }, { dataScript.ConnellyWalkingSprites, "Connelly" },
+            { dataScript.ElbrahWalkingSprites, "Elbrah" }, { dataScript.ChenWalkingSprites, "Chen" },
+            { dataScript.PiersWalkingSprites, "Piers" }, { dataScript.MournWalkingSprites, "Mourn" },
+            { dataScript.LazeeboiWalkingSprites, "Lazeeboi" }, { dataScript.BlondeWalkingSprites, "Blonde" },
+            { dataScript.WaltonWalkingSprites, "Walton" }, { dataScript.ProwlerWalkingSprites, "Prowler" },
+            { dataScript.CraneWalkingSprites, "Crane" }, { dataScript.HenchmanWalkingSprites, "Henchman" },
+            { dataScript.ClintWalkingSprites, "Clint" }, { dataScript.CageWalkingSprites, "Cage" },
+            { dataScript.SeanWalkingSprites, "Sean" }, { dataScript.AndyWalkingSprites, "Andy" },
+            { dataScript.SoldierWalkingSprites, "Soldier" }
+        };
+
     }
     private void Update()
     {
@@ -45,39 +76,98 @@ public class SmallMenu : MonoBehaviour
         {
             dataScript = GetGivenData.instance.GetComponent<ApplyMainMenuData>();
         }
+        var pair = charDict.ElementAt(characterNum);
+        characterSprites = pair.Key;
 
-        switch (characterNum)
+        switch (prisonSelectScript.currentPrisonNPCOutfit)
         {
-            case 0:
-                characterSprites = dataScript.RabbitSprites;
+            case "Inmate":
+                if (npcType == "Inmate")
+                {
+                    outfitSprites = dataScript.InmateOutiftSprites;
+                }
+                else if (npcType == "Guard")
+                {
+                    outfitSprites = dataScript.GuardOutfitSprites;
+                }
                 break;
-            case 1:
-                characterSprites = dataScript.BaldEagleSprites;
+            case "POW":
+                if (npcType == "Inmate")
+                {
+                    outfitSprites = dataScript.POWOutfitWalkingSprites;
+                }
+                else if (npcType == "Guard")
+                {
+                    outfitSprites = dataScript.GuardOutfitSprites;
+                }
                 break;
-            case 2:
-                characterSprites = dataScript.LiferSprites;
+            case "Elf":
+                if (npcType == "Inmate")
+                {
+                    outfitSprites = dataScript.ElfOutfitWalkingSprites;
+                }
+                else if (npcType == "Guard")
+                {
+                    outfitSprites = dataScript.GuardElfOutfitWalkingSprites;
+                }
                 break;
-            case 3:
-                characterSprites = dataScript.YoungBuckSprites;
+            case "Prisoner":
+                if (npcType == "Inmate")
+                {
+                    outfitSprites = dataScript.PrisonerOutfitWalkingSprites;
+                }
+                else if (npcType == "Guard")
+                {
+                    outfitSprites = dataScript.SoldierOutfitWalkingSprites;
+                }
                 break;
-            case 4:
-                characterSprites = dataScript.OldTimerSprites;
-                break;
-            case 5:
-                characterSprites = dataScript.BillyGoatSprites;
-                break;
-            case 6:
-                characterSprites = dataScript.FrosephSprites;
-                break;
-            case 7:
-                characterSprites = dataScript.TangoSprites;
-                break;
-            case 8:
-                characterSprites = dataScript.MaruSprites;
+            case "Tux":
+                if (npcType == "Inmate")
+                {
+                    outfitSprites = dataScript.TuxOutfitWalkingSprites;
+                }
+                else if (npcType == "Guard")
+                {
+                    outfitSprites = dataScript.HenchmanOutfitWalkingSprites;
+                }
                 break;
         }
 
-        if (characterNum == 0)
+        List<int> availableInmateChars = new List<int>();
+        List<int> availableGuardChars = new List<int>();
+        switch (prisonSelectScript.currentPrisonNPCBody)
+        {
+            case "Normal":
+                for (int i = 0; i < 9; i++)
+                {
+                    availableInmateChars.Add(i);
+                    availableGuardChars.Add(i);
+                }
+                break;
+            case "SS":
+                for (int i = 10; i < 18; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(18);
+                break;
+            case "ET":
+                for (int i = 31; i < 34; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(34);
+                break;
+            case "DTAF":
+                for (int i = 20; i < 29; i++)
+                {
+                    availableInmateChars.Add(i);
+                }
+                availableGuardChars.Add(29);
+                break;
+        }
+
+        if ((npcType == "Inmate" && characterNum == availableInmateChars[0]) || (npcType == "Guard" && characterNum == availableGuardChars[0]))
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = false;
             transform.Find("LeftArrow").GetComponent<Button>().enabled = false;
@@ -88,7 +178,7 @@ public class SmallMenu : MonoBehaviour
             transform.Find("LeftArrow").GetComponent<Button>().enabled = true;
         }
 
-        if (characterNum == 8)
+        if ((npcType == "Inmate" && characterNum == availableInmateChars[availableInmateChars.Count - 1]) || (npcType == "Guard" && characterNum == availableGuardChars[availableGuardChars.Count - 1]))
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = false;
             transform.Find("RightArrow").GetComponent<Button>().enabled = false;

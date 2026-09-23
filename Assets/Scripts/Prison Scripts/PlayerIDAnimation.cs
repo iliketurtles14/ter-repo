@@ -23,6 +23,9 @@ public class PlayerIDAnimation : MonoBehaviour
             case 6: bodyDirSprites = DataSender.instance.FrosephSprites; break;
             case 7: bodyDirSprites = DataSender.instance.TangoSprites; break;
             case 8: bodyDirSprites = DataSender.instance.MaruSprites; break;
+            case 9: bodyDirSprites = DataSender.instance.BuddyWalkingSprites; break;
+            case 30: bodyDirSprites = DataSender.instance.ClintWalkingSprites; break;
+            case 19: bodyDirSprites = DataSender.instance.ConnellyWalkingSprites; break;
         }
         outfitDirSprites = DataSender.instance.InmateOutfitSprites;
         StartCoroutine(AnimCycle());

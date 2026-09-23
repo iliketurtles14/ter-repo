@@ -15,20 +15,6 @@ public class PlayerAnimation : MonoBehaviour
     public bool shouldRestartCycle;
     public void OnEnable()
     {
-        switch (NPCSave.instance.playerCharacter)
-        {
-            case 0: bodyDirSprites = DataSender.instance.RabbitSprites; break;
-            case 1: bodyDirSprites = DataSender.instance.BaldEagleSprites; break;
-            case 2: bodyDirSprites = DataSender.instance.LiferSprites; break;
-            case 3: bodyDirSprites = DataSender.instance.YoungBuckSprites; break;
-            case 4: bodyDirSprites = DataSender.instance.OldTimerSprites; break;
-            case 5: bodyDirSprites = DataSender.instance.BillyGoatSprites; break;
-            case 6: bodyDirSprites = DataSender.instance.FrosephSprites; break;
-            case 7: bodyDirSprites = DataSender.instance.TangoSprites; break;
-            case 8: bodyDirSprites = DataSender.instance.MaruSprites; break;
-        }
-        outfitDirSprites = DataSender.instance.InmateOutfitSprites;
-
         StartCoroutine(DirWait());
         StartCoroutine(AnimCycle());
     }
@@ -50,9 +36,20 @@ public class PlayerAnimation : MonoBehaviour
                 case "down": lookNum = 6; break;
             }
 
-            GetComponent<SpriteRenderer>().sprite = bodyDirSprites[lookNum + whichCycle];
-            transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitDirSprites[lookNum + whichCycle];
+            if(lookNum + whichCycle + 1 > bodyDirSprites.Count())
+            {
+                return;
+            }
 
+            try
+            {
+                GetComponent<SpriteRenderer>().sprite = bodyDirSprites[lookNum + whichCycle];
+                transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = outfitDirSprites[lookNum + whichCycle];
+            }
+            catch
+            {
+
+            }
         }
     }
     public IEnumerator AnimCycle()

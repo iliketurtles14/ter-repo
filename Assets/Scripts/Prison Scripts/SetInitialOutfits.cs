@@ -12,6 +12,14 @@ public class SetInitialOutfits : MonoBehaviour
     public ItemData outfitData;
     private ItemDataCreator itemDataCreatorScript;
     private Transform aStar;
+    private Dictionary<string, int> inmateOutfitDict = new Dictionary<string, int>
+    {
+        { "Inmate", 29 }, { "POW", 33 }, { "Elf", 40 }, { "Prisoner", 50 }, { "Tux", 45 }
+    };
+    private Dictionary<string, int> guardOutfitDict = new Dictionary<string, int>
+    {
+        { "Inmate", 39 }, { "POW", 39 }, { "Elf", 44 }, { "Prisoner", 54 }, { "Tux", 49 }
+    };
 
     private void Start()
     {
@@ -34,30 +42,7 @@ public class SetInitialOutfits : MonoBehaviour
     }
     private void SetOutfits()
     {
-        int outfitItemID;
-
-        if (!map.powOutfits)
-        {
-            outfitItemID = 29;
-        }
-        else
-        {
-            outfitItemID = 33;
-        }
-
-        //check if special prison (DTAF, SS, etc...)
-        switch (map.mapName)
-        {
-            case "Duct Tapes are Forever":
-                outfitItemID = 45;
-                break;
-            case "Santa's Sweatshop":
-                outfitItemID = 40;
-                break;
-            case "Escape Team":
-                outfitItemID = 50;
-                break;
-        }
+        int outfitItemID = inmateOutfitDict[map.playerOutfit];
 
         //find the right itemData and set the stuff to the outfit slot
         ItemData data = itemDataCreatorScript.CreateItemData(outfitItemID);
@@ -83,23 +68,11 @@ public class SetInitialOutfits : MonoBehaviour
             {
                 npcData.inventory.Add(new NPCInvItem());
             }
-            
-            
+
+
             if (npc.name.Contains("Guard"))
             {
-                outfitItemID = 39;
-                switch (map.mapName)
-                {
-                    case "Duct Tapes are Forever":
-                        outfitItemID = 49;
-                        break;
-                    case "Santa's Sweatshop":
-                        outfitItemID = 44;
-                        break;
-                    case "Escape Team":
-                        outfitItemID = 54;
-                        break;
-                }
+                outfitItemID = guardOutfitDict[map.npcOutfit];
 
                 data = itemDataCreatorScript.CreateItemData(outfitItemID);
                 npcData.inventory[7].itemData = data;
@@ -107,26 +80,7 @@ public class SetInitialOutfits : MonoBehaviour
             }
             else if (npc.name.Contains("Inmate"))
             {
-                if (!map.powOutfits)
-                {
-                    outfitItemID = 29;
-                }
-                else
-                {
-                    outfitItemID = 33;
-                }
-                switch (map.mapName)
-                {
-                    case "Duct Tapes are Forever":
-                        outfitItemID = 45;
-                        break;
-                    case "Santa's Sweatshop":
-                        outfitItemID = 40;
-                        break;
-                    case "Escape Team":
-                        outfitItemID = 50;
-                        break;
-                }
+                outfitItemID = inmateOutfitDict[map.npcOutfit];
 
                 npcData.inventory[7].itemData = itemDataCreatorScript.CreateItemData(outfitItemID);
             }

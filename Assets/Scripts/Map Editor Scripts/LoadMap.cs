@@ -325,22 +325,9 @@ public class LoadMap : MonoBehaviour
         }
 
         Transform extrasPanel = uic.Find("ExtrasPanel");
-        if (GetINIVar("Properties", "Snowing", data) == "True")
-        {
-            smc.snowing = true;
-        }
-        else
-        {
-            smc.snowing = false;
-        }
-        if (GetINIVar("Properties", "StunRods", data) == "True")
-        {
-            smc.stunRods = true;
-        }
-        else
-        {
-            smc.stunRods = false;
-        }
+        smc.snowing = GetINIVar("Properties", "Snowing", data) == "True";
+        smc.stunRods = GetINIVar("Properties", "StunRods", data) == "True";
+        smc.ssVisitors = GetINIVar("Properties", "SSVisitors", data) == "True";
 
         Transform npcPanel = uic.Find("NPCPanel");
         npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "WardenCharacter", data));

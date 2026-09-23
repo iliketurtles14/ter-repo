@@ -24,16 +24,12 @@ public class PlayerMenu : MonoBehaviour
     public void OnEnable()
     {
         SetPlayerThings();
-        characterNum = Random.Range(0, availablePlayerChars.Count);
-        playerCharacter = CharacterEnumClass.GetCharacterString(characterNum);
-        transform.Find("NameText").GetComponent<TMP_InputField>().text = playerCharacter;
-        transform.Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = playerCharacter;
-        transform.Find("Player").gameObject.SetActive(false);
         StartCoroutine(Wait());
     }
     private void SetPlayerThings()
     {
         playerOutfit = prisonSelectScript.currentPrisonPlayerOutfit;
+        availablePlayerChars.Clear();
         switch (prisonSelectScript.currentPrisonPlayerBody)
         {
             case "Normal":
@@ -43,7 +39,7 @@ public class PlayerMenu : MonoBehaviour
                 }
                 break;
             case "SS":
-                availablePlayerChars.Add(10); //buddy
+                availablePlayerChars.Add(9); //buddy
                 break;
             case "ET":
                 availablePlayerChars.Add(30); //clint
@@ -52,6 +48,11 @@ public class PlayerMenu : MonoBehaviour
                 availablePlayerChars.Add(19); //connelly
                 break;
         }
+        characterNum = Random.Range(availablePlayerChars[0], availablePlayerChars[availablePlayerChars.Count - 1]);
+        playerCharacter = CharacterEnumClass.GetCharacterString(characterNum);
+        transform.Find("NameText").GetComponent<TMP_InputField>().text = playerCharacter;
+        transform.Find("NameText").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text = playerCharacter;
+        transform.Find("Player").gameObject.SetActive(false);
     }
     private IEnumerator Wait()
     {
@@ -67,7 +68,7 @@ public class PlayerMenu : MonoBehaviour
         
         playerCharacter = CharacterEnumClass.GetCharacterString(characterNum);
         characterNum = CharacterEnumClass.GetCharacterInt(playerCharacter);
-        if (characterNum == 0)
+        if (characterNum == availablePlayerChars[0])
         {
             transform.Find("LeftArrow").GetComponent<Image>().enabled = false;
             transform.Find("LeftArrow").GetComponent<Button>().enabled = false;
@@ -78,7 +79,7 @@ public class PlayerMenu : MonoBehaviour
             transform.Find("LeftArrow").GetComponent<Button>().enabled = true;
         }
 
-        if (characterNum == availablePlayerChars.Count - 1)
+        if (characterNum == availablePlayerChars[availablePlayerChars.Count - 1])
         {
             transform.Find("RightArrow").GetComponent<Image>().enabled = false;
             transform.Find("RightArrow").GetComponent<Button>().enabled = false;

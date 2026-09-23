@@ -54,7 +54,18 @@ public class LoadPrison : MonoBehaviour
     {
         { 0, "Underground" }, { 1, "Ground" }, { 2, "Vents" }, { 3, "Roof" }
     };
-
+    private Dictionary<int, string> outfitDict = new Dictionary<int, string>
+    {
+        { 0, "Inmate" }, { 1, "POW" }, { 2, "Elf" }, { 3, "Prisoner" }, { 4, "Tux" }
+    };
+    private Dictionary<int, string> bodyDict = new Dictionary<int, string>
+    {
+        { 0, "Normal" }, { 1, "SS" }, { 2, "ET" }, { 3, "DTAF" }
+    };
+    private Dictionary<int, string> wardenCharacterDict = new Dictionary<int, string>
+    {
+        { 0, "Normal" }, { 1, "Santa" }, { 2, "Ringmaster" }, { 3, "Villain" }
+    };
     //these dictionaries compare the tile ID to what tile it should be based on the prison
     private Dictionary<int, string> perksDict = new Dictionary<int, string>()
     {
@@ -2419,23 +2430,24 @@ public class LoadPrison : MonoBehaviour
         string hint2 = Regex.Unescape(GetINIVar("Properties", "Hint2", data));
         string hint3 = Regex.Unescape(GetINIVar("Properties", "Hint3", data));
         string snowingStr = GetINIVar("Properties", "Snowing", data);
-        string powStr = GetINIVar("Properties", "POWOutifts", data);
         string stunRodsStr = GetINIVar("Properties", "StunRods", data);
+        string ssVisitorsStr = GetINIVar("Properties", "SSVisitors", data);
         bool snowing = false;
-        bool powOutfits = false;
         bool stunRods = false;
         if (snowingStr == "True")
         {
             snowing = true;
         }
-        if (powStr == "True")
-        {
-            powOutfits = true;
-        }
         if (stunRodsStr == "True")
         {
             stunRods = true;
         }
+        bool ssVisitors = ssVisitorsStr == "True";
+        string playerBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))];
+        string playerOutfit = outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))];
+        string npcBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))];
+        string npcOutfit = outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))];
+        string wardenCharacter = wardenCharacterDict[Convert.ToInt32(GetINIVarForPicker("Properties", "WardenCharacter", data))];
         List<string> routineSet = GetINISet("Routine", data);
         Dictionary<int, string> routineDict = new Dictionary<int, string>();
         foreach (string str in routineSet)
@@ -2691,7 +2703,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, powOutfits, stunRods, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)
@@ -2792,11 +2804,37 @@ public class LoadPrison : MonoBehaviour
             }
         }
 
-
-
         if (line == null)
         {
             return null;
+        }
+
+        string[] parts = line.Split('=');
+        return parts[1];
+    }
+    public string GetINIVarForPicker(string header, string varName, string[] file)
+    {
+        string line = null;
+
+        for (int i = 0; i < file.Length; i++)
+        {
+            if (file[i].Contains(header) && file[i].Contains('[') && file[i].Contains(']'))
+            {
+                for (int j = i; j < file.Length; j++)
+                {
+                    if (file[j].Split('=')[0] == varName)
+                    {
+                        line = file[j];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (line == null)
+        {
+            return "0"; //this is the only change between this and the GetINIVar() method
         }
 
         string[] parts = line.Split('=');

@@ -19,17 +19,53 @@ public class ExtraNPCAnimation : MonoBehaviour
     private List<Sprite> jobOfficerSprites;
     private List<Sprite> wardenSprites;
     private List<Sprite> currentSprites;
+    private List<Sprite> santaSprites;
+    private List<Sprite> ringmasterSprites;
+    private List<Sprite> villainSprites;
+    private Map currentMap;
+    private bool useSpriteOffset;
     private void Start()
     {
         applyScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
         medicSprites = applyScript.MedicSprites;
         jobOfficerSprites = applyScript.JobOfficerSprites;
         wardenSprites = applyScript.WardenSprites;
+        santaSprites = applyScript.SantaSprites;
+        ringmasterSprites = applyScript.RingmasterSprites;
+        villainSprites = applyScript.VillainSprites;
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
 
         switch (name)
         {
             case "Warden":
-                currentSprites = wardenSprites;
+                switch (currentMap.wardenCharacter)
+                {
+                    case "Normal":
+                        currentSprites = wardenSprites;
+                        break;
+                    case "Santa":
+                        currentSprites = santaSprites;
+                        transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().size = new Vector2(3.2f, 3.2f);
+                        GetComponent<SpriteRenderer>().enabled = false;
+                        GetComponent<CapsuleCollider2D>().size = new Vector2(2, 2.2f);
+                        GetComponent<CapsuleCollider2D>().offset = new Vector2(0, .3f);
+                        useSpriteOffset = true;
+                        break;
+                    case "Ringmaster":
+                        currentSprites = ringmasterSprites;
+                        transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 3.2f);
+                        GetComponent<SpriteRenderer>().enabled = false;
+                        GetComponent<CapsuleCollider2D>().size = new Vector2(1.6f, 2.4f);
+                        GetComponent<CapsuleCollider2D>().offset = new Vector2(0, .4f);
+                        useSpriteOffset = true;
+                        break;
+                    case "Villain":
+                        currentSprites = villainSprites;
+                        break;
+                    default:
+                        currentSprites = wardenSprites;
+                        break;
+                }
                 break;
             case "JobOfficer":
                 currentSprites = jobOfficerSprites;
@@ -37,6 +73,14 @@ public class ExtraNPCAnimation : MonoBehaviour
             case "Medic":
                 currentSprites = medicSprites;
                 break;
+        }
+        if (!useSpriteOffset)
+        {
+            Destroy(transform.Find("SpriteOffset").gameObject);
+        }
+        else
+        {
+            transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().enabled = false;
         }
     }
     private void OnEnable()
@@ -67,7 +111,14 @@ public class ExtraNPCAnimation : MonoBehaviour
 
             try
             {
-                GetComponent<SpriteRenderer>().sprite = currentSprites[lookNum + whichCycle];
+                if (useSpriteOffset)
+                {
+                    transform.Find("SpriteOffset").GetComponent<SpriteRenderer>().sprite = currentSprites[lookNum + whichCycle];
+                }
+                else
+                {
+                    GetComponent<SpriteRenderer>().sprite = currentSprites[lookNum + whichCycle];
+                }
             }
             catch { }
         }

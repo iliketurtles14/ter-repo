@@ -33,6 +33,7 @@ public class DebugMenu : MonoBehaviour
     private Transform globalLight;
     private Transform undergroundLight;
     private Saving savingScript;
+    private Transform aStar;
     private List<string> objLayers = new List<string>
     {
         "GroundObjects", "UndergroundObjects", "VentObjects", "RoofObjects"
@@ -65,6 +66,7 @@ public class DebugMenu : MonoBehaviour
         globalLight = RootObjectCache.GetRoot("GlobalLight").transform;
         undergroundLight = RootObjectCache.GetRoot("UndergroundLight").transform;
         savingScript = so.GetComponent<Saving>();
+        aStar = RootObjectCache.GetRoot("A*").transform;
         if (options.Read("DebugMode", "Settings") == "False")
         {
             gameObject.SetActive(false);
@@ -154,7 +156,8 @@ public class DebugMenu : MonoBehaviour
                 "/powerOff\n\t" +
                 "/layer [int layer (0,1,2,3)]\n\t" +
                 "/save\n\t" +
-                "/rudolph";
+                "/rudolph\n\t" +
+                "/wardenMove";
             return;
         }
 
@@ -350,6 +353,29 @@ public class DebugMenu : MonoBehaviour
                 }
             }
             output.text += "\nAll reindeer have been renamed to \"Rudolph\".";
+            return;
+        }
+        if(command == "/wardenMove")
+        {
+            Transform warden = null;
+            foreach(Transform npc in aStar)
+            {
+                if(npc.name == "Warden")
+                {
+                    warden = npc;
+                    break;
+                }
+            }
+            if(warden == null)
+            {
+                output.text += "\nThe warden is not active in this prison.";
+                return;
+            }
+            else
+            {
+                warden.GetComponent<ExtraNPCAI>().bypassWardenRequirements = true;
+                output.text += "\nSetting ExtraNPCAI.bypassWardenRequirements to true.";
+            }
             return;
         }
         //keep at end

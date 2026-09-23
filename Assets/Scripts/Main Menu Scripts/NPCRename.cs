@@ -215,8 +215,16 @@ public class NPCRename : MonoBehaviour
     }
     public void OnNPCClick()
     {
-        hasPressedCharacter = true;
         lastPressedCharacter = lastTouchedCharacter;
+        try //just a check for if this is an acutal npc button or not tstssssssfas;lkdfj;alskdf;
+        {
+            NameText.text = lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName;
+        }
+        catch
+        {
+            return;
+        }
+        hasPressedCharacter = true;
         pressedNum = selectionNum;
         pressedCharacterAmount++;
         NameText.text = lastPressedCharacter.GetComponent<CustomNPCCollectionData>().customNPCData.displayName;
@@ -340,14 +348,14 @@ public class NPCRename : MonoBehaviour
                 }
                 break;
             case "SS":
-                for(int i = 10; i < 19; i++)
+                for(int i = 10; i < 18; i++)
                 {
                     availableInmateChars.Add(i);
                 }
-                availableGuardChars.Add(19);
+                availableGuardChars.Add(18);
                 break;
             case "ET":
-                for(int i = 32; i < 34; i++)
+                for(int i = 31; i < 34; i++)
                 {
                     availableInmateChars.Add(i);
                 }
@@ -484,12 +492,12 @@ public class NPCRename : MonoBehaviour
         currentNames = new List<string>(names);
 
         //inmates
-        for(int i = 1; i <= prisonSelectScript.currentPrisonInmateNum - 1; i++)
+        for(int i = 0; i <= prisonSelectScript.currentPrisonInmateNum - 2; i++)
         {
             if(prisonSelectScript.currentPrisonNPCBody != "ET" && prisonSelectScript.currentPrisonNPCBody != "DTAF")
             {
                 int rand = UnityEngine.Random.Range(0, currentNames.Count - 1);
-                NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = currentNames[rand];
+                NPCGrid.transform.Find("Inmate" + (i + 1).ToString()).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = currentNames[rand];
                 currentNames.RemoveAt(rand);
             }
             else
@@ -502,7 +510,7 @@ public class NPCRename : MonoBehaviour
                         {
                             index %= 3;
                         }
-                        NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = etNames[index];
+                        NPCGrid.transform.Find("Inmate" + (i + 1).ToString()).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = etNames[index];
                         break;
                     case "DTAF":
                         index = i;
@@ -510,16 +518,16 @@ public class NPCRename : MonoBehaviour
                         {
                             index %= 9;
                         }
-                        NPCGrid.transform.Find("Inmate" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = dtafNames[index];
+                        NPCGrid.transform.Find("Inmate" + (i + 1).ToString()).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = dtafNames[index];
                         break;
                 }
             }
         }
         //guards
-        for(int i = 1; i <= prisonSelectScript.currentPrisonGuardNum; i++)
+        for(int i = 0; i <= prisonSelectScript.currentPrisonGuardNum - 1; i++)
         {
             int rand = UnityEngine.Random.Range(0, currentNames.Count);
-            NPCGrid.transform.Find("Guard" + i).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = "Officer " + currentNames[rand];
+            NPCGrid.transform.Find("Guard" + (i + 1).ToString()).GetComponent<CustomNPCCollectionData>().customNPCData.displayName = "Officer " + currentNames[rand];
             currentNames.RemoveAt(rand);
         }
         currentNames = names;

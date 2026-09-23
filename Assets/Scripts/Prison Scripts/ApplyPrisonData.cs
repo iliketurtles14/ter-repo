@@ -469,6 +469,9 @@ public class ApplyPrisonData : MonoBehaviour
     public List<Sprite> MedicSprites = new List<Sprite>();
     public List<Sprite> JobOfficerSprites = new List<Sprite>();
     public List<Sprite> WardenSprites = new List<Sprite>();
+    public List<Sprite> SantaSprites = new List<Sprite>();
+    public List<Sprite> RingmasterSprites = new List<Sprite>();
+    public List<Sprite> VillainSprites = new List<Sprite>();
 
     public List<Sprite> VisitorSprites = new List<Sprite>(); //this includes all visitor sprites, so each character is separated by 8 sprites
     private void Start()
@@ -513,7 +516,7 @@ public class ApplyPrisonData : MonoBehaviour
     private void LoadImages()
     {
         SpriteState spriteState;
-        
+
         //tooltip panel
         ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[283];
         ic.Find("ActionBarHitBox").GetComponent<Image>().sprite = UISprites[349];
@@ -688,7 +691,7 @@ public class ApplyPrisonData : MonoBehaviour
 
         //toilet menu
         mc.Find("ToiletMenuPanel").GetComponent<Image>().sprite = UISprites[70];
-        foreach(Transform slot in mc.Find("ToiletMenuPanel").Find("Slots"))
+        foreach (Transform slot in mc.Find("ToiletMenuPanel").Find("Slots"))
         {
             slot.GetComponent<Image>().sprite = UISprites[33];
         }
@@ -709,7 +712,7 @@ public class ApplyPrisonData : MonoBehaviour
             mc.Find("NoteGetJobMenuPanel"),
             mc.Find("NoteSolitaryMenuPanel")
         };
-        foreach(Transform panel in panels)
+        foreach (Transform panel in panels)
         {
             panel.Find("ContinueButton").GetComponent<Image>().sprite = UISprites[377];
             spriteState = panel.Find("ContinueButton").GetComponent<Button>().spriteState;
@@ -2903,6 +2906,33 @@ public class ApplyPrisonData : MonoBehaviour
         JobOfficerSprites.Add(NPCSprites[569]);
         JobOfficerSprites.Add(NPCSprites[573]);
         JobOfficerSprites.Add(NPCSprites[572]);
+
+        SantaSprites.Add(NPCSprites[2321]); //32x32
+        SantaSprites.Add(NPCSprites[2322]);
+        SantaSprites.Add(NPCSprites[2326]);
+        SantaSprites.Add(NPCSprites[2325]);
+        SantaSprites.Add(NPCSprites[2323]);
+        SantaSprites.Add(NPCSprites[2324]);
+        SantaSprites.Add(NPCSprites[2327]);
+        SantaSprites.Add(NPCSprites[2328]);
+
+        RingmasterSprites.Add(NPCSprites[1714]); //16x32
+        RingmasterSprites.Add(NPCSprites[1715]);
+        RingmasterSprites.Add(NPCSprites[1720]);
+        RingmasterSprites.Add(NPCSprites[1721]);
+        RingmasterSprites.Add(NPCSprites[1716]);
+        RingmasterSprites.Add(NPCSprites[1717]);
+        RingmasterSprites.Add(NPCSprites[1718]);
+        RingmasterSprites.Add(NPCSprites[1719]);
+
+        VillainSprites.Add(NPCSprites[2114]); //16x16
+        VillainSprites.Add(NPCSprites[2115]);
+        VillainSprites.Add(NPCSprites[2120]);
+        VillainSprites.Add(NPCSprites[2121]);
+        VillainSprites.Add(NPCSprites[2116]);
+        VillainSprites.Add(NPCSprites[2117]);
+        VillainSprites.Add(NPCSprites[2118]);
+        VillainSprites.Add(NPCSprites[2119]);
 
         //visitor sprites
         VisitorSprites.Add(NPCSprites[544]);// 0

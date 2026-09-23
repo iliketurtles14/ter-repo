@@ -33,7 +33,7 @@ public class SubMenuController : MonoBehaviour
     public bool mailman;
     public bool library;
     public bool snowing;
-    public bool powOutfits;
+    public bool ssVisitors;
     public bool stunRods;
 
     public Dictionary<string, string> prisonDict = new Dictionary<string, string>()

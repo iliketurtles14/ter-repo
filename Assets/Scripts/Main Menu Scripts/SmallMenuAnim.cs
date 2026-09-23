@@ -33,16 +33,19 @@ public class SmallMenuAnim : MonoBehaviour
         }
         if (smallMenuScript.npcCharacter != null && smallMenuScript.npcType != null)
         {
-            bodyDirSprites = smallMenuScript.characterSprites;
-            
-            if (smallMenuScript.npcType == "Inmate")
+            try
             {
-                outfitDirSprites = dataScript.InmateOutiftSprites;
+                bodyDirSprites = smallMenuScript.characterSprites;
             }
-            else if (smallMenuScript.npcType == "Guard")
+            catch
             {
-                outfitDirSprites = dataScript.GuardOutfitSprites;
+                return;
             }
+            if(bodyDirSprites.Count == 0)
+            {
+                return;
+            }
+            outfitDirSprites = smallMenuScript.outfitSprites;
             transform.Find("Outfit").position = transform.position;
 
             GetComponent<Image>().sprite = bodyDirSprites[whichCycle + 6];
