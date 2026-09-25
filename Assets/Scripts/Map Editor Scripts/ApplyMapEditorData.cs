@@ -792,6 +792,8 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("SSVisitorsCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        //functionless checkbox
+        uic.Find("FunctionlessCheckbox").GetComponent<Image>().sprite = MakeColorTransparent(UISprites[447], new Color(51f / 255f, 51f / 255f, 51f / 255f));
         //submenucontroller checkbox sprites
         GetComponent<SubMenuController>().uncheckedBoxSprite = UISprites[447];
         GetComponent<SubMenuController>().checkedBoxSprite = UISprites[448];
@@ -807,5 +809,46 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("WorkDoorPanel").Find("ExitButton").GetComponent<Image>().sprite = UISprites[542];
         //dirt
         grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+    }
+    private Sprite MakeColorTransparent(Sprite source, Color color) //ts ai sorry
+    {
+        Texture2D sourceTexture = source.texture;
+
+        Rect rect = source.rect;
+        Color[] pixels = sourceTexture.GetPixels(
+            (int)rect.x,
+            (int)rect.y,
+            (int)rect.width,
+            (int)rect.height
+        );
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i] == color)
+            {
+                pixels[i].a = 0f;
+            }
+        }
+
+        Texture2D newTexture = new Texture2D(
+            (int)rect.width,
+            (int)rect.height,
+            TextureFormat.RGBA32,
+            false
+        );
+
+        newTexture.SetPixels(pixels);
+        newTexture.filterMode = FilterMode.Point;
+        newTexture.Apply();
+
+        return Sprite.Create(
+            newTexture,
+            new Rect(0, 0, newTexture.width, newTexture.height),
+            new Vector2(
+                source.pivot.x / source.rect.width,
+                source.pivot.y / source.rect.height
+            ),
+            source.pixelsPerUnit
+        );
     }
 }

@@ -31,6 +31,7 @@ public class MEButtonController : MonoBehaviour
     public Transform canvases;
     public MESoundController sc;
     public Transform blocker;
+    private bool menuIsCollapsed;
     //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     //{
     //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
@@ -907,6 +908,56 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ExitPanel").gameObject.SetActive(true);
         sc.PlaySound("open");
     }
+    public void CollapseMenu()
+    {
+        List<string> thingsToCollapse = new List<string>
+        {
+            "TilesPanel", "PropertiesPanel", "ZonesPanel",
+            "FilePanel", "AdvancedPanel", "WaypointsPanel",
+            "CellsPanel", "SecurityPanel", "JobsPanel",
+            "GymPanel", "MiscPanel", "DoorsPanel",
+            "ZiplinePanel", "SpecialPanel", "ETPanel",
+            "DTAF1Panel", "DTAF2Panel", "Christmas1Panel",
+            "Christmas2Panel", "ItemsPanel", "ObjectsArrowsPanel",
+            "CollapseButton", "FunctionlessCheckbox", "FunctionlessText",
+            "GroundButton", "UndergroundButton", "VentsButton",
+            "RoofButton", "ZonesButton", "MenuPanel"
+        };
+        //-582.5
+
+        if (!menuIsCollapsed)
+        {
+            foreach(Transform thing in uic)
+            {
+                if (thingsToCollapse.Contains(thing.name))
+                {
+                    thing.localPosition += new Vector3(-535f, 0, 0);
+                }
+            }
+            SpriteState spriteState = uic.Find("CollapseButton").GetComponent<Button>().spriteState;
+            spriteState.highlightedSprite = Resources.Load<Sprite>("Map Editor Resources/UI/menurightpressed");
+            uic.Find("CollapseButton").GetComponent<Button>().spriteState = spriteState;
+            uic.Find("CollapseButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Map Editor Resources/UI/menuright");
+            sc.PlaySound("close");
+            menuIsCollapsed = true;
+        }
+        else
+        {
+            foreach (Transform thing in uic)
+            {
+                if (thingsToCollapse.Contains(thing.name))
+                {
+                    thing.localPosition += new Vector3(535f, 0, 0);
+                }
+            }
+            SpriteState spriteState = uic.Find("CollapseButton").GetComponent<Button>().spriteState;
+            spriteState.highlightedSprite = Resources.Load<Sprite>("Map Editor Resources/UI/menuleftpressed");
+            uic.Find("CollapseButton").GetComponent<Button>().spriteState = spriteState;
+            uic.Find("CollapseButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Map Editor Resources/UI/menuleft");
+            sc.PlaySound("open");
+            menuIsCollapsed = false;
+        }
+    }
     public void ExitYes()
     {
         sc.PlaySound("rumble");
@@ -1183,6 +1234,8 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = false;
         uic.Find("AdvancedButton").GetComponent<Button>().enabled = false;
         uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = false;
+        uic.Find("CollapseButton").GetComponent<Button>().enabled = false;
+        uic.Find("CollapseButton").GetComponent<EventTrigger>().enabled = false;
         try
         {
             uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(false);
@@ -1216,6 +1269,8 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = true;
         uic.Find("AdvancedButton").GetComponent<Button>().enabled = true;
         uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("CollapseButton").GetComponent<Button>().enabled = true;
+        uic.Find("CollapseButton").GetComponent<EventTrigger>().enabled = true;
         try
         {
             uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(true);

@@ -75,12 +75,17 @@ public class MESignController : MonoBehaviour
         uic.Find("ZoneObjectsButton").GetComponent<EventTrigger>().enabled = true;
         uic.Find("AdvancedButton").GetComponent<Button>().enabled = true;
         uic.Find("AdvancedButton").GetComponent<EventTrigger>().enabled = true;
+        uic.Find("CollapseButton").GetComponent<Button>().enabled = true;
+        uic.Find("CollapseButton").GetComponent<EventTrigger>().enabled = true;
         try
         {
             uic.Find(panelSelectScript.currentPanel).gameObject.SetActive(true);
         }
         catch { }
-        GetComponent<ObjectsPanelController>().canBeShown = true;
+        if (panelSelectScript.currentPanel == "ObjectsPanel")
+        {
+            GetComponent<ObjectsPanelController>().canBeShown = true;
+        }
         canvases.gameObject.SetActive(true);
     }
 }
