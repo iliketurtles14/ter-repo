@@ -23,6 +23,8 @@ The source code presented in the ```main``` branch is stuff pushed daily, and wi
 
 Note: There is a warning screen that will appear at the start of the game if you do not have everything installed correctly.
 
+Here is a video guide for installing TER: https://www.youtube.com/watch?v=Kg144qruIaw
+
 ## Dependencies
 
 Download the latest release of The Escapists Reincarcerated.
