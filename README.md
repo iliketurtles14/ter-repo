@@ -95,7 +95,7 @@ Modding is not currently supported, however, I do intend on maybe adding it in t
 
 ## "How many people are working on this game?"
 
-Just me! However, many people have helped in other ways towards this game's creation. See the credits in-game. If you would like to help with the creation of this game, please reach out or submit a PR!
+Just me! However, many people have helped in other ways towards this game's creation. See the credits below and in-game. If you would like to help with the creation of this game, please reach out or submit a PR!
 
 ## "Is this an official remaster?"
 
