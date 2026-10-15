@@ -134,74 +134,128 @@ iliketurtles14
 ### Extra Help
 
 Unity
+
 Git
+
 GitHub
+
 AITYunivers (CTFAK 2.0)
+
 prezmop (escapistscrypto)
+
 Aaron Granberg (A* Pathfinding Project)
+
 MishaBring (Credits Music)
+
 BravoTheWavo (Electrocution Sprites)
+
 Remec (EscMapper)
+
 WasSoup (The Escapists Lockdown Drip Remix)
+
 Maxime "Epoc" Gross (Craft N' Escape)
+
 Icerecruit (UI Design)
 
 ### Special Visitor Characters
 
 MishaBring
+
 Spider-Kyle
+
 Generic_Mystic
+
 Manatxo
+
 thebigpenguin
+
 Noah Moonsong
 
 ### Special Thanks!!!
 
 thePixelianWarrior
+
 LuckySai
+
 Mr0Boring
+
 Siegfried
+
 MaxerV19
+
 noorisastar
+
 Icerecruit
+
 BravoTheWavo
+
 SlideSlime
+
 BlaketheBlock
+
 Spider-Kyle
+
 PsycloneX
+
 c1z gd guy
+
 Dbeme
+
 playgamesgo
+
 DIL
+
 Viviane17
+
 Shelly
 
 ### The Escapists Speedrunning Community
 
 jawn
+
 Jodabro
+
 RedWhaley14
+
 Mclovin
+
 ExoticCreep
+
 Generic_Mystic
+
 Manatxo
+
 BlaketheBlock
+
 Grais
+
 DanC
+
 Icerecruit
+
 Josh
+
 KoxDC
+
 meinaimsuckt
+
 NinjaNas
+
 sladke
+
 SmytheSR
+
 Mastermaxify
+
 WeldeenYT
 
 ### Very Special Thanks!!!!!
-### *(Thanks for being amazing friends!)*
+*(Thanks for being amazing friends!)*
 
 Manatxo
+
 Icerecruit
+
 Generic_Mystic
+
 BlaketheBlock
