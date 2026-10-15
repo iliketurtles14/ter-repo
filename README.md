@@ -1,7 +1,7 @@
 ![alt text](TheEscapists.png)
 ![alt text](Reincarcerated.png)
 
-# The Escapists Reincarcerated Repository
+# General Information
 
 This is the repository for The Escapists Reincarcerated.
 
@@ -9,15 +9,13 @@ The Escapists Reincarcerated is a remake of The Escapists in Unity.
 
 This is only officially supported for Windows systems. Linux work-arounds can be found in the Discord (linked below).
 
-The CTFAK 2.0: https://github.com/CTFAK/CTFAK2.0 (you do NOT have to download this)
-
 Discord: https://discord.gg/pPWrSgwBRW
 
-For fully built and "stable" releases, go to the "Releases" section.
+For fully built and "stable" releases, go to the ``Releases`` section.
 
 TER uses Unity 6000.3.9f1 as of February 24, 2026. This is not expected to change, however, there have been multiple older versions of Unity used throughout this project in older commits. Don't ask me which ones at what time, because you can check for yourself! :)
 
-The source code presented in the ```main``` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
+The source code presented in the ``main`` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
 
 # Installation
 
@@ -83,7 +81,9 @@ No. Most likely, it will not work. Either way, you should really buy The Escapis
 
 ## "What new features does this have over the original Escapists?"
 
-This game focuses on bringing more quality-of-life features to The Escapists, such as widescreen support, new and improved UI, more customizability, and much more.
+This game focuses on bringing more quality-of-life features to The Escapists, such as widescreen support, new and improved UI, and much more.
+
+A big focus for this project is more customizability with making custom maps. You can use the DLC objects, make custom routines, have set NPC pathing, have custom sizes of the map, make custom desks, etc..
 
 ## "Is this a mod?"
 
