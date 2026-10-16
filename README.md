@@ -1,7 +1,7 @@
 ![alt text](TheEscapists.png)
 ![alt text](Reincarcerated.png)
 
-# The Escapists Reincarcerated Repository
+# General Information
 
 This is the repository for The Escapists Reincarcerated.
 
@@ -9,15 +9,13 @@ The Escapists Reincarcerated is a remake of The Escapists in Unity.
 
 This is only officially supported for Windows systems. Linux work-arounds can be found in the Discord (linked below).
 
-The CTFAK 2.0: https://github.com/CTFAK/CTFAK2.0 (you do NOT have to download this)
-
 Discord: https://discord.gg/pPWrSgwBRW
 
-For fully built and "stable" releases, go to the "Releases" section.
+For fully built and "stable" releases, go to the ``Releases`` section.
 
 TER uses Unity 6000.3.9f1 as of February 24, 2026. This is not expected to change, however, there have been multiple older versions of Unity used throughout this project in older commits. Don't ask me which ones at what time, because you can check for yourself! :)
 
-The source code presented in the ```main``` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
+The source code presented in the ``main`` branch is stuff pushed daily, and will not be the same as what is seen in the released versions most of the time.
 
 # Installation
 
@@ -83,7 +81,9 @@ No. Most likely, it will not work. Either way, you should really buy The Escapis
 
 ## "What new features does this have over the original Escapists?"
 
-This game focuses on bringing more quality-of-life features to The Escapists, such as widescreen support, new and improved UI, more customizability, and much more.
+This game focuses on bringing more quality-of-life features to The Escapists, such as widescreen support, new and improved UI, and much more.
+
+A big focus for this project is more customizability with making custom maps. You can use the DLC objects, make custom routines, have set NPC pathing, have custom sizes of the map, make custom desks, etc..
 
 ## "Is this a mod?"
 
@@ -95,7 +95,7 @@ Modding is not currently supported, however, I do intend on maybe adding it in t
 
 ## "How many people are working on this game?"
 
-Just me! However, many people have helped in other ways towards this game's creation. See the credits in-game. If you would like to help with the creation of this game, please reach out or submit a PR!
+Just me! However, many people have helped in other ways towards this game's creation. See the credits below and in-game. If you would like to help with the creation of this game, please reach out or submit a PR!
 
 ## "Is this an official remaster?"
 
@@ -112,3 +112,150 @@ You can either join the Discord server (linked above) or watch the dev logs on m
 ## "Will there be support for other platforms?"
 
 Currently, no. However, there have been some work-arounds to have some Linux compatibility. MacOS will never be supported and neither will mobile platforms.
+
+# Credits
+
+## Original Game (The Escapists)
+
+### Developer
+
+Mouldy Toof Studios, Chris Davis
+
+### Publisher
+
+Team17
+
+## The Escapists Reincarcerated
+
+### Developer
+
+iliketurtles14
+
+### Extra Help
+
+Unity
+
+Git
+
+GitHub
+
+AITYunivers (CTFAK 2.0)
+
+prezmop (escapistscrypto)
+
+Aaron Granberg (A* Pathfinding Project)
+
+MishaBring (Credits Music)
+
+BravoTheWavo (Electrocution Sprites)
+
+Remec (EscMapper)
+
+WasSoup (The Escapists Lockdown Drip Remix)
+
+Maxime "Epoc" Gross (Craft N' Escape)
+
+Icerecruit (UI Design)
+
+### Special Visitor Characters
+
+MishaBring
+
+Spider-Kyle
+
+Generic_Mystic
+
+Manatxo
+
+thebigpenguin
+
+Noah Moonsong
+
+### Special Thanks!!!
+
+thePixelianWarrior
+
+LuckySai
+
+Mr0Boring
+
+Siegfried
+
+MaxerV19
+
+noorisastar
+
+Icerecruit
+
+BravoTheWavo
+
+SlideSlime
+
+BlaketheBlock
+
+Spider-Kyle
+
+PsycloneX
+
+c1z gd guy
+
+Dbeme
+
+playgamesgo
+
+DIL
+
+Viviane17
+
+Shelly
+
+### The Escapists Speedrunning Community
+
+jawn
+
+Jodabro
+
+RedWhaley14
+
+Mclovin
+
+ExoticCreep
+
+Generic_Mystic
+
+Manatxo
+
+BlaketheBlock
+
+Grais
+
+DanC
+
+Icerecruit
+
+Josh
+
+KoxDC
+
+meinaimsuckt
+
+NinjaNas
+
+sladke
+
+SmytheSR
+
+Mastermaxify
+
+WeldeenYT
+
+### Very Special Thanks!!!!!
+*(Thanks for being amazing friends!)*
+
+Manatxo
+
+Icerecruit
+
+Generic_Mystic
+
+BlaketheBlock
