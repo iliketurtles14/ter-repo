@@ -64,6 +64,11 @@ public class Schedule : MonoBehaviour
         {
             return;
         }
+
+        if (map.tutorial)
+        {
+            return;
+        }
         
         //favor stuff
         foreach(Mission mission in missionAskScript.savedMissions)

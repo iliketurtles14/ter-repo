@@ -32,13 +32,10 @@ public class WorkDoorContainer : MonoBehaviour
                 {
                     string rawPos = line.Split("=")[1].Split(";")[0];
                     string aJob = line.Split(";")[1];
-                    float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
-                    float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
-                    posX -= 1.6f;
-                    posY -= 1.6f;
+                    float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f - 1.6f;
+                    float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f - 1.6f;
 
-
-                    if (transform.position == new Vector3(posX, posY, 0))
+                    if (Vector2.Distance(transform.position, new Vector2(posX, posY)) <= .1f)
                     {
                         job = aJob;
                         break;
@@ -59,10 +56,10 @@ public class WorkDoorContainer : MonoBehaviour
 
                 string rawPos = line.Split("=")[1].Split(";")[0];
                 string aJob = line.Split(";")[1];
-                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
-                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
+                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f - 1.6f;
+                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f - 1.6f;
 
-                if (transform.position == new Vector3(posX, posY, 0))
+                if (Vector2.Distance(transform.position, new Vector2(posX, posY)) <= .1f)
                 {
                     job = aJob;
                     break;
@@ -81,10 +78,10 @@ public class WorkDoorContainer : MonoBehaviour
 
                 string rawPos = line.Split("=")[1].Split(";")[0];
                 string aJob = line.Split(";")[1];
-                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
-                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
+                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f - 1.6f;
+                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f - 1.6f;
 
-                if (transform.position == new Vector3(posX, posY, 0))
+                if (Vector2.Distance(transform.position, new Vector2(posX, posY)) <= .1f)
                 {
                     job = aJob;
                     break;
@@ -103,10 +100,10 @@ public class WorkDoorContainer : MonoBehaviour
 
                 string rawPos = line.Split("=")[1].Split(";")[0];
                 string aJob = line.Split(";")[1];
-                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f;
-                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f;
+                float posX = Convert.ToInt32(rawPos.Split(",")[0]) * 1.6f - 1.6f;
+                float posY = Convert.ToInt32(rawPos.Split(",")[1]) * 1.6f - 1.6f;
 
-                if (transform.position == new Vector3(posX, posY, 0))
+                if (Vector2.Distance(transform.position, new Vector2(posX, posY)) <= .1f)
                 {
                     job = aJob;
                     break;

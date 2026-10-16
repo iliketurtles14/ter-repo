@@ -35,7 +35,8 @@ public class SubMenuController : MonoBehaviour
     public bool snowing;
     public bool ssVisitors;
     public bool stunRods;
-
+    public bool perksMsgs;
+    public bool tutorial;
     public Dictionary<string, string> prisonDict = new Dictionary<string, string>()
     {
         { "Center Perks", "perks" }, { "Stalag Flucht", "stalag" }, { "Shankton State Pen", "shankton" },

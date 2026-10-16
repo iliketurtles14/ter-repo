@@ -44,6 +44,8 @@ public class Zones : MonoBehaviour
     private Transform mc;
     private CreateNote noteScript;
     private Escaping escapingScript;
+    public bool shouldGoToTutorialPoint;
+    public Vector2 tutorialPointPos;
 
     private Dictionary<string, string> zoneDict = new Dictionary<string, string>() //go from period code to zone name
     {
@@ -164,9 +166,43 @@ public class Zones : MonoBehaviour
     {
         while (true)
         {
-            if (isTouchingCurrentZone)
+            if (isTouchingCurrentZone && !shouldGoToTutorialPoint)
             {
                 arrow.SetActive(false);
+                yield return null;
+                continue;
+            }
+            if(currentMap.tutorial && !shouldGoToTutorialPoint)
+            {
+                arrow.SetActive(false);
+                yield return null;
+                continue;
+            }
+
+            if (shouldGoToTutorialPoint)
+            {
+                //hole - 80,121.6
+                //vent - 73.6f, 104
+                Vector2 adirection = tutorialPointPos - (Vector2)ic.position;
+
+                angle = Mathf.Atan2(adirection.y, adirection.x) * Mathf.Rad2Deg;
+
+                arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                float axDist = Mathf.Cos(angle * Mathf.Deg2Rad) * distanceFromPlayer;
+                float ayDist = Mathf.Sin(angle * Mathf.Deg2Rad) * distanceFromPlayer;
+
+                arrow.transform.localPosition = new Vector3(axDist, ayDist, 0);
+
+                if (Vector2.Distance(player.position, tutorialPointPos) < 4.8f)
+                {
+                    arrow.SetActive(false);
+                }
+                else
+                {
+                    arrow.SetActive(true);
+                }
+
                 yield return null;
                 continue;
             }

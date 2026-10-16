@@ -328,6 +328,8 @@ public class LoadMap : MonoBehaviour
         smc.snowing = GetINIVar("Properties", "Snowing", data) == "True";
         smc.stunRods = GetINIVar("Properties", "StunRods", data) == "True";
         smc.ssVisitors = GetINIVar("Properties", "SSVisitors", data) == "True";
+        smc.perksMsgs = GetINIVar("Properties", "PerksMsgs", data) == "True";
+        smc.tutorial = GetINIVar("Properties", "Tutorial", data) == "True";
 
         Transform npcPanel = uic.Find("NPCPanel");
         npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "WardenCharacter", data));
@@ -507,6 +509,7 @@ public class LoadMap : MonoBehaviour
                 switch (obj.name)
                 {
                     case "Item":
+                    case "Item-":
                         foreach (string line in currentList)
                         {
                             string name = line.Split("=")[0];
@@ -616,6 +619,33 @@ public class LoadMap : MonoBehaviour
                             if (distance < .01f)
                             {
                                 obj.GetComponent<MEJobContainer>().job = job;
+                                break;
+                            }
+                        }
+                        break;
+                    case "InmateSet":
+                    case "GuardSet":
+                        foreach(string line in currentList)
+                        {
+                            string name = line.Split("=")[0];
+                            if(name != obj.name)
+                            {
+                                continue;
+                            }
+                            string position = line.Split("=")[1].Split(";")[0];
+                            float posX = Convert.ToSingle(position.Split(",")[0]);
+                            float posY = Convert.ToSingle(position.Split(",")[1]);
+                            posX = (posX * 1.6f) - 1.6f;
+                            posY = (posY * 1.6f) - 1.6f;
+                            Vector2 pos = new Vector2(posX, posY);
+                            string wpID = line.Split("=")[1].Split(";")[1].Split(",")[0];
+                            string wpOrder = line.Split("=")[1].Split(";")[1].Split(",")[1];
+
+                            float distance = Vector2.Distance(obj.position, pos);
+                            if(distance < .01f)
+                            {
+                                obj.GetComponent<MESetWaypointContainer>().id = Convert.ToInt32(wpID);
+                                obj.GetComponent<MESetWaypointContainer>().order = Convert.ToInt32(wpOrder);
                                 break;
                             }
                         }
@@ -760,6 +790,13 @@ public class LoadMap : MonoBehaviour
             "DTAF2Panel", "Christmas1Panel", "Christmas2Panel", "ItemsPanel"
         };
 
+        bool isFuntionless = false;
+        if (name.Contains("-"))
+        {
+            name = name.Replace("-", "");
+            isFuntionless = true;
+        }
+
         Sprite objSprite = null;
         GameObject objToPlace = null;
         foreach(string panel in objectPanels)
@@ -794,6 +831,17 @@ public class LoadMap : MonoBehaviour
         else
         {
             placedObj.GetComponent<SpriteRenderer>().sortingOrder = 5;
+        }
+
+        //functionless object stufffff
+        if (isFuntionless)
+        {
+            placedObj.name = placedObj.name + "-";
+            GameObject functionlessCanvas = Instantiate(Resources.Load<GameObject>("MapEditorPrefabs/FunctionlessObj"));
+            functionlessCanvas.name = "FunctionlessObj";
+            functionlessCanvas.transform.parent = placedObj.transform;
+            functionlessCanvas.transform.localPosition = new Vector3(0, 0, 0);
+            functionlessCanvas.transform.Find("Canvas").Find("Rect").GetComponent<RectTransform>().sizeDelta = placedObj.GetComponent<SpriteRenderer>().size;
         }
 
         //special properties for certain objects
@@ -853,6 +901,17 @@ public class LoadMap : MonoBehaviour
                 canvas5.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);
                 canvas5.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                 placedObj.AddComponent<MEJobContainer>();
+                break;
+            case "InmateSet":
+            case "GuardSet":
+                GameObject canvas6 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                canvas6.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "setWaypoint";
+                canvas6.transform.parent = canvases.Find(realLayer);
+                canvas6.transform.position = placedObj.transform.position;
+                canvas6.name = "SpecialObjectCanvas";
+                canvas6.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);
+                canvas6.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+                placedObj.AddComponent<MESetWaypointContainer>();
                 break;
         }
     }

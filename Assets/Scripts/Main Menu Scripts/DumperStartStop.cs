@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -24,6 +25,10 @@ public class DumperStartStop : MonoBehaviour
 
     private void Awake()
     {
+        //this is for the decimal stuff (see bugs channel)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+
         applyScript = GetComponent<ApplyMainMenuData>();
         iniFile = new IniFile(System.IO.Path.Combine(UnityEngine.Application.streamingAssetsPath, "UserData.ini"));
         int w = Display.main.systemWidth;

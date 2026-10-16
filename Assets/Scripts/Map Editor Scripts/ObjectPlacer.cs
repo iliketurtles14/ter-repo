@@ -11,6 +11,7 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
     public MouseCollisionOnMap mcs;
     public Transform highlight;
     public bool inDeleteMode;
+    public bool placeFunctionless;
 
     private Dictionary<int, int> layerDict = new Dictionary<int, int>() //releates LayerController.currentLayer with the sorting orders of objects depending on the layer
     {
@@ -96,6 +97,17 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                 placedObj.GetComponent<SpriteRenderer>().sortingOrder = 5;
             }
 
+            //functionless object stufffff
+            if (placeFunctionless)
+            {
+                placedObj.name = placedObj.name + "-";
+                GameObject functionlessCanvas = Instantiate(Resources.Load<GameObject>("MapEditorPrefabs/FunctionlessObj"));
+                functionlessCanvas.name = "FunctionlessObj";
+                functionlessCanvas.transform.parent = placedObj.transform;
+                functionlessCanvas.transform.localPosition = new Vector3(0, 0, 0);
+                functionlessCanvas.transform.Find("Canvas").Find("Rect").GetComponent<RectTransform>().sizeDelta = placedObj.GetComponent<SpriteRenderer>().size;
+            }
+
             //special properties for certain objects
             switch (objToPlace.name)
             {
@@ -152,6 +164,17 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                     canvas5.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);
                     canvas5.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                     placedObj.AddComponent<MEJobContainer>();
+                    break;
+                case "InmateSet":
+                case "GuardSet":
+                    GameObject canvas6 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
+                    canvas6.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "setWaypoint";
+                    canvas6.transform.parent = canvases.Find(layer);
+                    canvas6.transform.position = placedObj.transform.position;
+                    canvas6.name = "SpecialObjectCanvas";
+                    canvas6.GetComponent<RectTransform>().sizeDelta = new Vector2(1.6f, 1.6f);
+                    canvas6.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
+                    placedObj.AddComponent<MESetWaypointContainer>();
                     break;
             }
         }

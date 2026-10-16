@@ -79,7 +79,17 @@ public class Routine : MonoBehaviour
         day = 1;
         sec = 50;
         min = startingMin;
-        StartCoroutine(TimerCoroutine());
+        if (!currentMap.tutorial)
+        {
+            StartCoroutine(TimerCoroutine());
+        }
+        else
+        {
+            timeText.text = "The Escapists - Tutorial Mode";
+            min = 12; //setting the time to this so that the lighting is daytime
+            sec = 0;
+            day = 1;
+        }
     }
     private void Update()
     {

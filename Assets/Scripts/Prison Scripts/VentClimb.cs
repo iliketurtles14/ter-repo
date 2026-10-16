@@ -66,9 +66,9 @@ public class VentClimb : MonoBehaviour
                 float distance = Vector2.Distance(player.transform.position, mcs.touchedOpenVent.transform.position);
                 desks = deskStandScript.desks;
                 bool deskIsUnderVent = false;
-                foreach(GameObject desk in desks)
+                foreach (GameObject desk in desks)
                 {
-                    if(desk.transform.position + offsetVector == mcs.touchedOpenVent.transform.position)
+                    if (Vector2.Distance(desk.transform.position + offsetVector, mcs.touchedOpenVent.transform.position) <= .01f)
                     {
                         deskIsUnderVent = true;
                         break;

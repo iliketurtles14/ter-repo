@@ -792,6 +792,8 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("StunRodCheckbox").GetComponent<Image>().sprite = UISprites[447];
         uic.Find("ExtrasPanel").Find("SSVisitorsCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        uic.Find("ExtrasPanel").Find("PerksMessagesCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        uic.Find("ExtrasPanel").Find("TutorialCheckbox").GetComponent<Image>().sprite = UISprites[447];
         //functionless checkbox
         uic.Find("FunctionlessCheckbox").GetComponent<Image>().sprite = MakeColorTransparent(UISprites[447], new Color(51f / 255f, 51f / 255f, 51f / 255f));
         //submenucontroller checkbox sprites
@@ -807,6 +809,7 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("ExtrasPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         uic.Find("AdvancedHelpPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         uic.Find("WorkDoorPanel").Find("ExitButton").GetComponent<Image>().sprite = UISprites[542];
+        uic.Find("SetWaypointPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         //dirt
         grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
     }

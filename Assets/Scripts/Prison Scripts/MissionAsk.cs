@@ -18,6 +18,7 @@ public class MissionAsk : MonoBehaviour
     private ItemDataCreator creator;
     private Transform aStar;
     private bool ready;
+    private Map currentMap;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -41,11 +42,16 @@ public class MissionAsk : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         ready = true;
     }
     private void Update()
     {
         if (!ready)
+        {
+            return;
+        }
+        if (currentMap.tutorial)
         {
             return;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,6 +26,8 @@ public class PButtonController : MonoBehaviour
     private SettingsMenu settingsMenuScript;
     private QuitMenu quitMenuScript;
     private SaveMenu saveMenuScript;
+    private Map currentMap;
+    private TutorialController tutControllerScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -47,6 +50,17 @@ public class PButtonController : MonoBehaviour
         settingsMenuScript = mc.Find("SettingsMenuPanel").GetComponent<SettingsMenu>();
         quitMenuScript = mc.Find("QuitMenuPanel").GetComponent<QuitMenu>();
         saveMenuScript = mc.Find("SaveMenuPanel").GetComponent<SaveMenu>();
+        tutControllerScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<TutorialController>();
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
     }
     public void PauseContinue()
     {
@@ -80,6 +94,11 @@ public class PButtonController : MonoBehaviour
     //    Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, true);
     //    Physics2D.IgnoreLayerCollision(playerLayer, roofLayer, true);
     //}
+    public void TutorialContinue()
+    {
+        tutControllerScript.CloseTutNote();
+        PSoundController.PlaySound("close");
+    }
     public void PauseQuit()
     {
         PSoundController.PlaySound("open");
@@ -330,8 +349,15 @@ public class PButtonController : MonoBehaviour
     }
     public void CraftNotes()
     {
-        PSoundController.PlaySound("open");
-        craftMenuScript.CloseMenu(true);
+        if (currentMap.tutorial)
+        {
+            PSoundController.PlaySound("lose");
+        }
+        else
+        {
+            PSoundController.PlaySound("open");
+            craftMenuScript.CloseMenu(true);
+        }
     }
     public void NotesCraft()
     {

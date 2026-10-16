@@ -45,7 +45,11 @@ public class Shops : MonoBehaviour
             }
         }
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
-
+        if (currentMap.tutorial)
+        {
+            SetDurdenShop();
+            yield break;
+        }
         string[] itemsFile = currentMap.items;
         for(int i = 0; i < currentMap.itemAmount; i++)
         {
@@ -82,6 +86,10 @@ public class Shops : MonoBehaviour
         {
             return;
         }
+        if (currentMap.tutorial)
+        {
+            return;
+        }
 
         foreach(GameObject npc in npcs)
         {
@@ -98,6 +106,15 @@ public class Shops : MonoBehaviour
             SetShops();
             yield return new WaitForSeconds(180);
         }
+    }
+    public void SetDurdenShop()
+    {
+        ItemData data = creator.CreateItemData(134);
+        NPCInvItem item = new NPCInvItem();
+        item.itemData = data;
+        shop1.Add(item);
+        shop1NPC = aStar.Find("Inmate1").gameObject;
+        shop1NPC.GetComponent<NPCCollectionData>().npcData.hasShop = true;
     }
     public void SetShops()
     {

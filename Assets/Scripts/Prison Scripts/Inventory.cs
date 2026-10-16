@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
     private ItemSwell swellScript;
     private MakeBadObject mbo;
     private Transform badObjects;
-
+    private Map currentMap;
     private int groundLayer;
     private int undergroundLayer;
     private int ventLayer;
@@ -55,12 +55,21 @@ public class Inventory : MonoBehaviour
         uiLayer = LayerMask.NameToLayer("UI");
         mbo = GetComponent<MakeBadObject>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
-
         for (int i = 0; i < 6; i++)
         {
             InventoryItem blankItem = new InventoryItem();
             inventory.Add(blankItem);
         }
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
     }
     public void Update()
     {
@@ -243,6 +252,12 @@ public class Inventory : MonoBehaviour
     }
     public void DropItem(int slotIndex, string slotName)
     {
+        if (currentMap.tutorial)
+        {
+            PSoundController.PlaySound("lose");
+            return;
+        }
+        
         if (!deskStandScript.hasClimbed && !deskStandScript.isClimbing && !itemBehavioursScript.isRoping) //checks if standing on a desk
         {
             foreach(GameObject item in GameObject.FindGameObjectsWithTag("Item"))//checks if item is in the way

@@ -10,6 +10,7 @@ public class InmatePlayerFight : MonoBehaviour
     private Schedule scheduleScript;
     private PauseController pc;
     private Transform player;
+    private Map currentMap;
     private void Start()
     {
         aStar = RootObjectCache.GetRoot("A*").transform;
@@ -25,6 +26,11 @@ public class InmatePlayerFight : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
+        if (currentMap.tutorial)
+        {
+            yield break;
+        }
         foreach (Transform npc in aStar)
         {
             if (npc.name.Contains("Inmate"))

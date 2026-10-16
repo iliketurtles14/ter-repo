@@ -16,7 +16,7 @@ public class FavorMenu : MonoBehaviour
     private MissionAsk missionAskScript;
     private MouseCollisionOnItems mcs;
     private Transform mc;
-    private bool favorMenuIsOpen;
+    public bool favorMenuIsOpen;
     private SaveMenu saveMenuScript;
     private void Start()
     {

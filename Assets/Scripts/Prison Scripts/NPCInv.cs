@@ -17,7 +17,7 @@ public class NPCInv : MonoBehaviour
     private List<InventoryItem> inventoryList = new List<InventoryItem>();
     private Inventory inventoryScript;
     private Transform mc;
-    private bool menuIsOpen;
+    public bool menuIsOpen;
     private MouseCollisionOnItems mcs;
     private GameObject player;
     private int invSlotNumber;

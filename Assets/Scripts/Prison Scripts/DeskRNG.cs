@@ -20,6 +20,7 @@ public class DeskRNG : MonoBehaviour
     private ApplyPrisonData applyScript;
     private Transform mc;
     private List<DeskItem> deskInv;
+    private Map currentMap;
     private Dictionary<int, int> itemSpriteDict = new Dictionary<int, int>() //this was even more of a bitch to code
     {
         { 0, 6 }, { 1, 7 }, { 2, 64 }, { 3, 4 }, { 4, 113 }, { 5, 68 }, { 6, 67 }, { 7, 66 },
@@ -86,7 +87,7 @@ public class DeskRNG : MonoBehaviour
     {
         "Center Perks", "Stalag Flucht", "Shankton State Pen", "Jungle Compound",
         "San Pancho", "HMP Irongate", "Jingle Cells", "Banned Camp",
-        "London Tower", "Paris Central Pen", "Santa's Sweatshop", "Duct Tapes are Forever",
+        "London Tower", "Paris Central Pen", "Santa's Sweatshop", "Duct Tapes Are Forever",
         "Escape Team", "Alcatraz", "Fhurst Peak Correctional", "Camp Epsilon",
         "Fort Bamford"
     };
@@ -164,7 +165,22 @@ public class DeskRNG : MonoBehaviour
                 }
             }
         }
-        RandomizeDesk();
+        if (loadPrisonScript.currentMap.tutorial)
+        {
+            SetTutorialDesks();
+        }
+        else
+        {
+            RandomizeDesk();
+        }
+    }
+    private void SetTutorialDesks()
+    {
+        if(name == "PlayerDesk")
+        {
+            AddItem(20);
+            AddItem(135);
+        }
     }
     public void RandomizeDesk()
     {

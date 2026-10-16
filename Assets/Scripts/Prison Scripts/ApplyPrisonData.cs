@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine.Rendering.Universal;
 
 public class ApplyPrisonData : MonoBehaviour
 {
@@ -516,7 +517,8 @@ public class ApplyPrisonData : MonoBehaviour
     private void LoadImages()
     {
         SpriteState spriteState;
-
+        //tutorial canvas
+        RootObjectCache.GetRoot("TutorialCanvas").transform.Find("Panel").GetComponent<Light2D>().lightCookieSprite = UISprites[387];
         //tooltip panel
         ic.Find("ActionBar").GetComponent<Image>().sprite = UISprites[283];
         ic.Find("ActionBarHitBox").GetComponent<Image>().sprite = UISprites[349];
@@ -587,6 +589,12 @@ public class ApplyPrisonData : MonoBehaviour
         spriteState.highlightedSprite = UISprites[327];
         mc.Find("SettingsMenuPanel").Find("BackButton").GetComponent<Button>().spriteState = spriteState;
         mc.Find("SettingsMenuPanel").Find("SaveButton").GetComponent<Button>().spriteState = spriteState;
+        //tutorial menu stuff
+        mc.Find("TutorialMenuPanel").GetComponent<Image>().sprite = UISprites[408];
+        mc.Find("TutorialMenuPanel").Find("ContinueButton").GetComponent<Image>().sprite = UISprites[395];
+        spriteState = mc.Find("TutorialMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[396];
+        mc.Find("TutorialMenuPanel").Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
         //npcmenu stuff
         mc.Find("NPCMenuPanel").Find("StrengthIcon").GetComponent<Image>().sprite = UISprites[450];
         mc.Find("NPCMenuPanel").Find("SpeedIcon").GetComponent<Image>().sprite = UISprites[449];

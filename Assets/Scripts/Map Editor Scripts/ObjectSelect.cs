@@ -44,7 +44,7 @@ public class ObjectSelect : MonoBehaviour
             obj.name == "InmateCanteen" || obj.name == "InmateWaypoint" || obj.name == "InmateShower" ||
             obj.name.StartsWith("Jeep") || obj.name == "JobWaypoint" || obj.name == "MedicWaypoint" ||
             obj.name == "Mines" || obj.name == "NPCSpawnpoint" || obj.name == "Spotlight" || obj.name == "Light" ||
-            obj.name == "Raft")
+            obj.name == "Raft" || obj.name == "InmateSet" || obj.name == "GuardSet")
         {
             hasSelectedSpecial = true;
         }

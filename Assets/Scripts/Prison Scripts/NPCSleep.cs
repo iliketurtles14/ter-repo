@@ -7,8 +7,13 @@ public class NPCSleep : MonoBehaviour
     public void Sleep(GameObject npc, GameObject bed)
     {
         npc.GetComponent<AILerp>().canMove = false;
+        StartCoroutine(WaitForIttttt(npc, bed));
+    }
+    private IEnumerator WaitForIttttt(GameObject npc, GameObject bed)
+    {
+        yield return new WaitForEndOfFrame();
         Vector3 bedOffset;
-        if(npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
+        if (npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
         {
             bedOffset = new Vector3(0, .4f);
         }
@@ -22,11 +27,6 @@ public class NPCSleep : MonoBehaviour
         npc.GetComponent<NPCAnimation>().enabled = false;
         BodyController bc = npc.GetComponent<BodyController>();
         npc.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][1];
-        StartCoroutine(WaitForIttttt(npc));
-    }
-    private IEnumerator WaitForIttttt(GameObject npc)
-    {
-        yield return new WaitForEndOfFrame();
         OutfitController oc = npc.GetComponent<OutfitController>();
         if (npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
         {

@@ -31,6 +31,7 @@ public class ShopMenu : MonoBehaviour
     private PauseController pc;
     private Shops shopsScript;
     private List<GameObject> costObjects = new List<GameObject>();
+    private Map currentMap;
     private void Start()
     {
         clearSprite = Resources.Load<Sprite>("PrisonResources/UI Stuff/clear");
@@ -56,8 +57,17 @@ public class ShopMenu : MonoBehaviour
         {
             costObjects.Add(child.gameObject);
         }
-
+        StartCoroutine(StartWait());
         StartCoroutine(CloseMenu(false, false));
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
     }
     private void Update()
     {
@@ -228,21 +238,28 @@ public class ShopMenu : MonoBehaviour
 
         float opnMult = 1.5f - (currentNPC.GetComponent<NPCCollectionData>().npcData.opinion / 100f);
 
-        for(int i = 0; i < 4; i++)
+        if (currentMap.tutorial)
         {
-            try
+            prices[0] = 0;
+        }
+        else
+        {
+            for (int i = 0; i < 4; i++)
             {
-                prices[i] = Mathf.CeilToInt(shopItems[i].itemData.cost * opnMult);
-                costObjects[i].GetComponent<TextMeshProUGUI>().text = "$" + prices[i].ToString();
-            }
-            catch
-            {
-                prices[i] = -1;
-                costObjects[i].GetComponent<TextMeshProUGUI>().text = "";
-            }
-            if (prices[i] == -1)
-            {
-                costObjects[i].GetComponent<TextMeshProUGUI>().text = "";
+                try
+                {
+                    prices[i] = Mathf.CeilToInt(shopItems[i].itemData.cost * opnMult);
+                    costObjects[i].GetComponent<TextMeshProUGUI>().text = "$" + prices[i].ToString();
+                }
+                catch
+                {
+                    prices[i] = -1;
+                    costObjects[i].GetComponent<TextMeshProUGUI>().text = "";
+                }
+                if (prices[i] == -1)
+                {
+                    costObjects[i].GetComponent<TextMeshProUGUI>().text = "";
+                }
             }
         }
 

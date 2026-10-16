@@ -13,7 +13,7 @@ public class NPCIDInv : MonoBehaviour
     //public GameObject outfitSlot;
     //public GameObject weaponSlot;
     public int invSlotNumber;
-    private bool idIsOpen;
+    public bool idIsOpen;
     private PauseController pc;
     private Sprite clearSprite;
     public GameObject currentNPC;

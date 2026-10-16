@@ -71,6 +71,10 @@ public class LayerController : MonoBehaviour
         canvases.Find("Underground").gameObject.SetActive(false);
         canvases.Find("Vent").gameObject.SetActive(false);
         canvases.Find("Roof").gameObject.SetActive(false);
+        DisableFunctionlessObjects("Ground");
+        DisableFunctionlessObjects("Vent");
+        DisableFunctionlessObjects("Roof");
+        DisableFunctionlessObjects("Underground");
     }
     private void EnableGround(bool withCanvases)
     {
@@ -80,6 +84,7 @@ public class LayerController : MonoBehaviour
         if (withCanvases)
         {
             canvases.Find("Ground").gameObject.SetActive(true);
+            EnableFunctionlessObjects("Ground");
         }
     }
     private void EnableUnderground()
@@ -88,6 +93,7 @@ public class LayerController : MonoBehaviour
         tiles.Find("UndergroundObjects").gameObject.SetActive(true);
         grounds.Find("Underground").GetComponent<SpriteRenderer>().enabled = true;
         canvases.Find("Underground").gameObject.SetActive(true);
+        EnableFunctionlessObjects("Underground");
     }
     private void EnableVents()
     {
@@ -96,6 +102,7 @@ public class LayerController : MonoBehaviour
         grounds.Find("Vent").GetComponent<SpriteRenderer>().enabled = true;
         canvases.Find("Vent").gameObject.SetActive(true);
         EnableGround(false);
+        EnableFunctionlessObjects("Vent");
     }
     private void EnableRoof()
     {
@@ -104,11 +111,32 @@ public class LayerController : MonoBehaviour
         grounds.Find("Roof").GetComponent<SpriteRenderer>().enabled = true;
         canvases.Find("Roof").gameObject.SetActive(true);
         EnableGround(false);
+        EnableFunctionlessObjects("Roof");
     }
     private void EnableZones()
     {
         tiles.Find("Zones").gameObject.SetActive(true);
         grounds.Find("Zones").GetComponent<SpriteRenderer>().enabled = true;
         EnableGround(false);
+    }
+    private void EnableFunctionlessObjects(string layer) //Ground, Vent, Roof, Underground
+    {
+        foreach(Transform obj in tiles.Find(layer + "Objects"))
+        {
+            if (obj.name.Contains("-"))
+            {
+                obj.Find("FunctionlessObj").gameObject.SetActive(true);
+            }
+        }
+    }
+    private void DisableFunctionlessObjects(string layer)
+    {
+        foreach(Transform obj in tiles.Find(layer + "Objects"))
+        {
+            if (obj.name.Contains("-"))
+            {
+                obj.Find("FunctionlessObj").gameObject.SetActive(false);
+            }
+        }
     }
 }

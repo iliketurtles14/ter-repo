@@ -20,6 +20,7 @@ public class Combat : MonoBehaviour
     private FightEffects fightFX;
     private Particles particlesScript;
     private Escaping escapingScript;
+    private LoadPrison loadPrisonScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -32,6 +33,7 @@ public class Combat : MonoBehaviour
         fightFX = RootObjectCache.GetRoot("ScriptObject").GetComponent<FightEffects>();
         particlesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Particles>();
         escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
+        loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
     }
     private void Update()
     {
@@ -131,6 +133,11 @@ public class Combat : MonoBehaviour
             netDamage = 0;
         }
 
+        if (loadPrisonScript.currentMap.tutorial)
+        {
+            netDamage = 100;
+        }
+
         npc.GetComponent<NPCCollectionData>().npcData.health -= netDamage;
         if(npc.GetComponent<NPCCollectionData>().npcData.health < 0)
         {
@@ -203,6 +210,10 @@ public class Combat : MonoBehaviour
     public void LockOn(GameObject npc)
     {
         if (npc.GetComponent<NPCCollectionData>().npcData.isRecruited)
+        {
+            return;
+        }
+        if(npc.name != "Guard1" && loadPrisonScript.currentMap.tutorial)
         {
             return;
         }

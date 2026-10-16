@@ -51,7 +51,7 @@ public class MEItemController : MonoBehaviour
     {
         foreach (Transform obj in tiles.Find("GroundObjects"))
         {
-            if (obj.name == "Item")
+            if (obj.name == "Item" || obj.name == "Item-")
             {
                 try
                 {
@@ -79,7 +79,7 @@ public class MEItemController : MonoBehaviour
         }
         foreach (Transform obj in tiles.Find("UndergroundObjects"))
         {
-            if (obj.name == "Item")
+            if (obj.name == "Item" || obj.name == "Item-")
             {
                 try
                 {
@@ -107,7 +107,7 @@ public class MEItemController : MonoBehaviour
         }
         foreach (Transform obj in tiles.Find("VentObjects"))
         {
-            if (obj.name == "Item")
+            if (obj.name == "Item" || obj.name == "Item-")
             {
                 try
                 {
@@ -135,7 +135,7 @@ public class MEItemController : MonoBehaviour
         }
         foreach (Transform obj in tiles.Find("RoofObjects"))
         {
-            if (obj.name == "Item")
+            if (obj.name == "Item" || obj.name == "Item-")
             {
                 try
                 {

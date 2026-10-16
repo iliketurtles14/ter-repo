@@ -9,7 +9,7 @@ using System.IO;
 
 public class CraftMenu : MonoBehaviour
 {
-    private bool menuIsOpen;
+    public bool menuIsOpen;
     private bool menuIsFull;
     private bool invIsFull;
     public ItemData item0;

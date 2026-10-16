@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using NavMeshPlus.Components;
 using Pathfinding;
 using System;
@@ -5,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -139,9 +141,86 @@ public class SetUpNPCs : MonoBehaviour
             availableJobs.Remove(map.startingJob);
         }
 
+        //set set waypoint stuff
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "InmateSet" || obj.name == "GuardSet")
+            {
+                foreach(string line in map.groundObjectProperties)
+                {
+                    if (!line.Contains("="))
+                    {
+                        continue;
+                    }
+
+                    string objName = line.Split("=")[0];
+                    if(objName == obj.name)
+                    {
+                        string rawPos = line.Split("=")[1].Split(";")[0];
+                        float posX = Convert.ToSingle(rawPos.Split(",")[0]) * 1.6f - 1.6f;
+                        float posY = Convert.ToSingle(rawPos.Split(",")[1]) * 1.6f - 1.6f;
+                        Vector2 pos = new Vector2(posX, posY);
+                        if(Vector2.Distance(pos, obj.position) <= .01f)
+                        {
+                            string rawData = line.Split(";")[1];
+                            int id = Convert.ToInt32(rawData.Split(",")[0]);
+                            int order = Convert.ToInt32(rawData.Split(",")[1]);
+                            obj.GetComponent<SetWaypointHandler>().id = id;
+                            obj.GetComponent<SetWaypointHandler>().order = order;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //determine what inmates and guards should go to set waypoints if any
+        List<int> inmateSetIDs = new List<int>();
+        List<int> guardSetIDs = new List<int>();
+        List<int> inmateIndexesToBeSet = new List<int>();
+        List<int> guardIndexesToBeSet = new List<int>();
+        foreach (Transform obj in tiles.Find("GroundObjects"))
+        {
+            if (obj.name == "InmateSet" && !inmateSetIDs.Contains(obj.GetComponent<SetWaypointHandler>().id))
+            {
+                inmateSetIDs.Add(obj.GetComponent<SetWaypointHandler>().id);
+            }
+            else if (obj.name == "GuardSet" && !guardSetIDs.Contains(obj.GetComponent<SetWaypointHandler>().id))
+            {
+                guardSetIDs.Add(obj.GetComponent<SetWaypointHandler>().id);
+            }
+        }
+
+        foreach(int num in guardSetIDs)
+        {
+            Debug.Log(num);
+        }
+
+        for(int i = 0; i < inmateSetIDs.Count; i++)
+        {
+            inmateIndexesToBeSet.Add(i);
+        }
+        for(int i = 3; i < guardSetIDs.Count; i++)
+        {
+            guardIndexesToBeSet.Add(i);
+        }
+        if(guardIndexesToBeSet.Count != guardSetIDs.Count)
+        {
+            int diff = guardSetIDs.Count - guardIndexesToBeSet.Count;
+            for(int i = 0; i < diff && i < 3; i++)  
+            {
+                guardIndexesToBeSet.Add(i);
+            }
+        }
+
+        foreach(int num in guardIndexesToBeSet)
+        {
+            Debug.Log(num);
+        }
 
         for (int i = 0; i < npcAmount; i++)
         {
+            bool isSet = false;
             GameObject npc = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/NPC"));
             NPCData data = new NPCData();
             npc.GetComponent<NPCCollectionData>().npcData = data;
@@ -191,8 +270,51 @@ public class SetUpNPCs : MonoBehaviour
             npc.GetComponent<NavMeshAgent>().updateRotation = false;
             npc.GetComponent<NavMeshAgent>().updateUpAxis = false;
 
+            //do set waypoint stuff
+            if (npc.name.StartsWith("Inmate"))
+            {
+                if (inmateIndexesToBeSet.Contains(i))
+                {
+                    npc.GetComponent<NPCAI>().hasSetPath = true;
+                    npc.GetComponent<NPCAI>().setPathID = inmateSetIDs[i];
+                    Debug.Log(npc.name + " is set.");
+                    isSet = true;
+                }
+            }
+            else if (npc.name.StartsWith("Guard"))
+            {
+                if (guardIndexesToBeSet.Contains(i - inmateAmount))
+                {
+                    npc.GetComponent<NPCAI>().hasSetPath = true;
+                    npc.GetComponent<NPCAI>().setPathID = guardSetIDs[i - inmateAmount];
+                    Debug.Log(npc.name + " is set.");
+                    isSet = true;
+                }
+            }
+
+            if (isSet && !isLoading)
+            {
+                Vector2 posToGo = Vector2.zero;
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(npc.name.StartsWith("Inmate") && obj.name == "InmateSet" &&
+                        npc.GetComponent<NPCAI>().setPathID == obj.GetComponent<SetWaypointHandler>().id)
+                    {
+                        posToGo = obj.position;
+                        break;
+                    }
+                    else if(npc.name.StartsWith("Guard") && obj.name == "GuardSet" &&
+                        npc.GetComponent<NPCAI>().setPathID == obj.GetComponent<SetWaypointHandler>().id)
+                    {
+                        posToGo = obj.position;
+                        break;
+                    }
+                }
+                npc.transform.position = posToGo;
+            }
+
             //set guard pos randomly
-            if (!isLoading) //guard pos on loading is set further down with the inmates
+            if (!isLoading && !isSet) //guard pos on loading is set further down with the inmates
             {
                 if (npc.name.Contains("Guard") && gWaypoints.Count > 0)
                 {
@@ -223,7 +345,7 @@ public class SetUpNPCs : MonoBehaviour
         {
             foreach (Transform npc in aStar)
             {
-                if (npc.name.StartsWith("Inmate"))
+                if (npc.name.StartsWith("Inmate") && !npc.GetComponent<NPCAI>().hasSetPath)
                 {
                     if (npc.GetComponent<NPCCollectionData>().npcData.bed != null)
                     {

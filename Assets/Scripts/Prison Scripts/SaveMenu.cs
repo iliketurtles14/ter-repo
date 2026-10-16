@@ -7,7 +7,7 @@ public class SaveMenu : MonoBehaviour
 {
     private Saving savingScript;
     private bool canSave;
-    private bool menuIsOpen;
+    public bool menuIsOpen;
     private Transform mc;
     private PauseController pc;
     private MouseCollisionOnItems mcs;

@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -715,6 +717,7 @@ public class LoadPrison : MonoBehaviour
         {
             SetItems();
         }
+        SetFunctionlessItems();
         SetShadows(currentTileDict);
         //doing zones now !!! >:3
         SetZones();
@@ -787,6 +790,74 @@ public class LoadPrison : MonoBehaviour
                 itemObj.layer = gameObjectLayers[i];
             }
         }
+    }
+    private void SetFunctionlessItems()
+    {
+        List<string[]> objectProperties = new List<string[]>()
+        {
+            currentMap.undergroundObjectProperties,
+            currentMap.groundObjectProperties,
+            currentMap.ventObjectProperties,
+            currentMap.roofObjectProperties
+        };
+        List<string> objectLayers = new List<string>()
+        {
+            "UndergroundObjects",
+            "GroundObjects",
+            "VentObjects",
+            "RoofObjects"
+        };
+        List<string> sortingLayers = new List<string>()
+        {
+            "Underground",
+            "Ground",
+            "Vents",
+            "Roof"
+        };
+        List<int> gameObjectLayers = new List<int>()
+        {
+            LayerMask.NameToLayer("Underground"),
+            LayerMask.NameToLayer("Ground"),
+            LayerMask.NameToLayer("Vents"),
+            LayerMask.NameToLayer("Roof")
+        };
+
+        for (int i = 0; i < 4; i++)
+        {
+            foreach (string line in objectProperties[i])
+            {
+                string lineName = "";
+                try
+                {
+                    lineName = line.Split("=")[0];
+                }
+                catch
+                {
+                    continue;
+                }
+                if (lineName != "Item-")
+                {
+                    continue;
+                }
+                string lineData = line.Split("=")[1];
+                string rawPos = lineData.Split(";")[0];
+                int itemID = Convert.ToInt32(lineData.Split(";")[1]);
+                Vector2 pos = new Vector2(Convert.ToSingle(rawPos.Split(",")[0]), Convert.ToSingle(rawPos.Split(",")[1]));
+                pos = new Vector2((pos.x * 1.6f) - 1.6f, (pos.y * 1.6f) - 1.6f);
+
+                GameObject itemObj = new GameObject();
+                itemObj.name = "FunctionlessItem";
+                itemObj.AddComponent<SpriteRenderer>().sprite = creatorScript.CreateItemData(itemID).sprite;
+                itemObj.GetComponent<SpriteRenderer>().sortingLayerID = 3;
+                itemObj.GetComponent<SpriteRenderer>().sortingLayerName = sortingLayers[i];
+                itemObj.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
+                itemObj.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
+                itemObj.transform.position = pos;
+                itemObj.transform.parent = tiles.Find(objectLayers[i]);
+                itemObj.layer = gameObjectLayers[i];
+            }
+        }
+
     }
     private void SetShadows(Dictionary<int, string> tileDict)
     {
@@ -1531,6 +1602,13 @@ public class LoadPrison : MonoBehaviour
             float[] objVars = currentMap.objVars[i];
             string objName = currentMap.objNames[i];
 
+            bool isFunctionless = false;
+            if (objName.Contains("-"))
+            {
+                objName = objName.Replace("-", "");
+                isFunctionless = true;
+            }
+
             bool objIsAvailable = false;
             GameObject objPrefab = null;
             foreach (GameObject obj in Resources.LoadAll<GameObject>("PrisonPrefabs/Objects"))
@@ -2121,6 +2199,26 @@ public class LoadPrison : MonoBehaviour
                         break;
 
                 }
+
+                //functionless objects owo
+                if (isFunctionless)
+                {
+                    objInst.name = "FunctionlessObject";
+                    objInst.tag = "Untagged";
+                    
+                    foreach (Component comp in objInst.GetComponents<Component>())
+                    {
+                        if (comp is SpriteRenderer or Collider2D or Transform)
+                        {
+                            continue;
+                        }
+
+                        if (comp is Behaviour behaviour)
+                        {
+                            behaviour.enabled = false;
+                        }
+                    }
+                }
             }
         }
     }
@@ -2443,6 +2541,8 @@ public class LoadPrison : MonoBehaviour
             stunRods = true;
         }
         bool ssVisitors = ssVisitorsStr == "True";
+        bool perksMsgs = GetINIVar("Properties", "PerksMsgs", data) == "True";
+        bool tutorial = GetINIVar("Properties", "Tutorial", data) == "True";
         string playerBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))];
         string playerOutfit = outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))];
         string npcBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))];
@@ -2703,7 +2803,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

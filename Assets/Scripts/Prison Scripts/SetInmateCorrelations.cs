@@ -41,7 +41,7 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
         }
         foreach(Transform npc in aStar)
         {
-            if (npc.name.StartsWith("Inmate"))
+            if (npc.name.StartsWith("Inmate") && !npc.GetComponent<NPCAI>().hasSetPath)
             {
                 inmates.Add(npc);
             }
@@ -49,10 +49,9 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
     }
     private void SetInmateOrder()
     {
-        foreach(Transform npc in inmates)
+        for(int i = 0; i < inmates.Count; i++)
         {
-            int num = Convert.ToInt32(npc.name.Replace("Inmate", "")) - 1;
-            npc.GetComponent<NPCCollectionData>().npcData.order = num;
+            inmates[i].GetComponent<NPCCollectionData>().npcData.order = i;
         }
     }
     private void ConnectDeskToBed()
@@ -87,7 +86,11 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
             {
                 npc.GetComponent<NPCCollectionData>().npcData.bed = beds[npc.GetComponent<NPCCollectionData>().npcData.order].gameObject;
             }
-            catch { }
+            catch(Exception ex)
+            { 
+                Debug.Log(ex.Message);
+                Debug.Log(beds.Count + ", " + npc.GetComponent<NPCCollectionData>().npcData.order);
+            }
         }
     }
     private void SetInmateDesk()

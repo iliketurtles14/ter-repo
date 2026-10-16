@@ -7,6 +7,7 @@ public class LoadBlockerController : MonoBehaviour
     private Routine routineScript;
     private Transform player;
     private Sittables sittablesScript;
+    private TutorialController tutControllerScript;
     private void Start()
     {
         loadCanvas = RootObjectCache.GetRoot("LoadBlockerCanvas").transform;
@@ -15,6 +16,7 @@ public class LoadBlockerController : MonoBehaviour
         sittablesScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Sittables>();
         player.GetComponent<PlayerCtrl>().canMove = false;
         sittablesScript.canLeaveSittable = false;
+        tutControllerScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<TutorialController>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -38,6 +40,7 @@ public class LoadBlockerController : MonoBehaviour
         routineScript.isFrozen = true;
         yield return new WaitForSeconds(1.5f);
         routineScript.isFrozen = false;
+        tutControllerScript.canStart = true;
         Destroy(loadCanvas.gameObject);
         player.GetComponent<PlayerCtrl>().canMove = true;
         sittablesScript.canLeaveSittable = true;

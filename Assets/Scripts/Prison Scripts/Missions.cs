@@ -39,6 +39,10 @@ public class Missions : MonoBehaviour
         {
             return;
         }
+        if (currentMap.tutorial)
+        {
+            return;
+        }
         
         foreach(Transform npc in aStar)
         {
@@ -93,6 +97,10 @@ public class Missions : MonoBehaviour
         currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         speechFile = currentMap.speech;
 
+        if (currentMap.tutorial)
+        {
+            yield break;
+        }
 
         foreach(Transform npc in aStar)
         {

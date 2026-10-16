@@ -69,6 +69,10 @@ public class Stashes : MonoBehaviour
             int rand = UnityEngine.Random.Range(0, stashes.Count);
             stashes[rand].SetActive(true);
             stashes.RemoveAt(rand);
+            if(stashes.Count <= 0)
+            {
+                break;
+            }
         }
         foreach(GameObject stash in stashes)
         {

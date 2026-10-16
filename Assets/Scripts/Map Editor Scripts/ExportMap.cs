@@ -58,6 +58,8 @@ public class ExportMap : MonoBehaviour
         text += "Snowing=" + subMenuControllerScript.snowing + "\n";
         text += "StunRods=" + subMenuControllerScript.stunRods + "\n";
         text += "SSVisitors=" + subMenuControllerScript.ssVisitors + "\n";
+        text += "PerksMsgs=" + subMenuControllerScript.perksMsgs + "\n";
+        text += "Tutorial=" + subMenuControllerScript.tutorial + "\n";
         text += "WardenCharacter=" + npc.Find("WardenPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "NPCCharacter=" + npc.Find("NPCBodyPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "NPCOutfit=" + npc.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
@@ -253,6 +255,10 @@ public class ExportMap : MonoBehaviour
                     int id = obj.GetComponent<MEItemIDContainer>().id;
                     text += "Item=" + posX + "," + posY + ";" + id + "\n";
                     break;
+                case "Item-":
+                    id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item-=" + posX + "," + posY + ";" + id + "\n";
+                    break;
                 case "ChristmasDesk":
                 case "DTAFSpecialDesk":
                 case "ETSpecialDesk":
@@ -275,6 +281,13 @@ public class ExportMap : MonoBehaviour
                 case "WorkDoor":
                     string job = obj.GetComponent<MEJobContainer>().job;
                     text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
+                case "InmateSet":
+                case "GuardSet":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
+                    string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
+                    text += wpID + "," + wpOrder + "\n";
                     break;
             }
         }
@@ -290,6 +303,10 @@ public class ExportMap : MonoBehaviour
                     int id = obj.GetComponent<MEItemIDContainer>().id;
                     text += "Item=" + posX + "," + posY + ";" + id + "\n";
                     break;
+                case "Item-":
+                    id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item-=" + posX + "," + posY + ";" + id + "\n";
+                    break;
                 case "ChristmasDesk":
                 case "DTAFSpecialDesk":
                 case "ETSpecialDesk":
@@ -312,6 +329,13 @@ public class ExportMap : MonoBehaviour
                 case "WorkDoor":
                     string job = obj.GetComponent<MEJobContainer>().job;
                     text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
+                case "InmateSet":
+                case "GuardSet":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
+                    string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
+                    text += wpID + "," + wpOrder + "\n";
                     break;
             }
         }
@@ -327,6 +351,10 @@ public class ExportMap : MonoBehaviour
                     int id = obj.GetComponent<MEItemIDContainer>().id;
                     text += "Item=" + posX + "," + posY + ";" + id + "\n";
                     break;
+                case "Item-":
+                    id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item-=" + posX + "," + posY + ";" + id + "\n";
+                    break;
                 case "ChristmasDesk":
                 case "DTAFSpecialDesk":
                 case "ETSpecialDesk":
@@ -349,6 +377,13 @@ public class ExportMap : MonoBehaviour
                 case "WorkDoor":
                     string job = obj.GetComponent<MEJobContainer>().job;
                     text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
+                case "InmateSet":
+                case "GuardSet":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
+                    string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
+                    text += wpID + "," + wpOrder + "\n";
                     break;
             }
         }
@@ -364,6 +399,10 @@ public class ExportMap : MonoBehaviour
                     int id = obj.GetComponent<MEItemIDContainer>().id;
                     text += "Item=" + posX + "," + posY + ";" + id + "\n";
                     break;
+                case "Item-":
+                    id = obj.GetComponent<MEItemIDContainer>().id;
+                    text += "Item-=" + posX + "," + posY + ";" + id + "\n";
+                    break;
                 case "ChristmasDesk":
                 case "DTAFSpecialDesk":
                 case "ETSpecialDesk":
@@ -386,6 +425,13 @@ public class ExportMap : MonoBehaviour
                 case "WorkDoor":
                     string job = obj.GetComponent<MEJobContainer>().job;
                     text += obj.name + "=" + posX + "," + posY + ";" + job + "\n";
+                    break;
+                case "InmateSet":
+                case "GuardSet":
+                    text += obj.name + "=" + posX + "," + posY + ";";
+                    string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
+                    string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
+                    text += wpID + "," + wpOrder + "\n";
                     break;
             }
         }

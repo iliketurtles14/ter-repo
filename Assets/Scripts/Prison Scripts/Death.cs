@@ -22,6 +22,7 @@ public class Death : MonoBehaviour
     private Transform badObjects;
     private Escaping escapingScript;
     private Lockdown lockdownScript;
+    private LoadPrison loadPrisonScript;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player");
@@ -38,6 +39,7 @@ public class Death : MonoBehaviour
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
         lockdownScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Lockdown>();
+        loadPrisonScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>();
 
         deathCanvas.gameObject.SetActive(false);
     }
@@ -199,7 +201,10 @@ public class Death : MonoBehaviour
                 }
             }
         }
-        StartCoroutine(NPCWake(npc));
+        if (!loadPrisonScript.currentMap.tutorial)
+        {
+            StartCoroutine(NPCWake(npc));
+        }
         PSoundController.PlaySound("en_hit");
     }
     private IEnumerator NPCWake(GameObject npc)

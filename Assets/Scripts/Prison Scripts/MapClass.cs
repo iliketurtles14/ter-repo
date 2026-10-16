@@ -42,6 +42,8 @@ public class Map
     public bool snowing;
     public bool stunRods;
     public bool ssVisitors;
+    public bool perksMsgs;
+    public bool tutorial;
     public string playerBody;
     public string playerOutfit;
     public string npcBody;
@@ -102,6 +104,8 @@ public class Map
         bool snowing,
         bool stunRods,
         bool ssVisitors,
+        bool perksMsgs,
+        bool tutorial,
         string playerBody,
         string playerOutfit,
         string npcBody,
@@ -161,6 +165,8 @@ public class Map
         this.snowing = snowing;
         this.stunRods = stunRods;
         this.ssVisitors = ssVisitors;
+        this.perksMsgs = perksMsgs;
+        this.tutorial = tutorial;
         this.playerBody = playerBody;
         this.playerOutfit = playerOutfit;
         this.npcBody = npcBody;

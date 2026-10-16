@@ -32,6 +32,7 @@ public class MEButtonController : MonoBehaviour
     public MESoundController sc;
     public Transform blocker;
     private bool menuIsCollapsed;
+    private ObjectPlacer objectPlacerScript;
     //private Dictionary<string, int> tilesetDict = new Dictionary<string, int>()
     //{
     //    { "alca", 0 }, { "BC", 1 }, { "campepsilon", 2 }, { "CCL", 3 },
@@ -62,6 +63,7 @@ public class MEButtonController : MonoBehaviour
         smc = GetComponent<SubMenuController>();
         panelSelectScript = GetComponent<PanelSelect>();
         layerControllerScript = GetComponent<LayerController>();
+        objectPlacerScript = GetComponent<ObjectPlacer>();
     }
     public void FileLoad()
     {
@@ -289,6 +291,12 @@ public class MEButtonController : MonoBehaviour
                 case "StunRodCheckbox":
                     smc.stunRods = false;
                     break;
+                case "PerksMessagesCheckbox":
+                    smc.perksMsgs = false;
+                    break;
+                case "Tutorial":
+                    smc.tutorial = false;
+                    break;
             }
         }
         else if(clicked.GetComponent<Image>().sprite == smc.uncheckedBoxSprite)
@@ -336,8 +344,26 @@ public class MEButtonController : MonoBehaviour
                 case "StunRodCheckbox":
                     smc.stunRods = true;
                     break;
+                case "PerksMessagesCheckbox":
+                    smc.perksMsgs = true;
+                    break;
+                case "TutorialCheckbox":
+                    smc.tutorial = true;
+                    break;
             }
         }
+
+        if(clicked.name == "FunctionlessCheckbox" && objectPlacerScript.placeFunctionless)
+        {
+            clicked.GetComponent<Image>().sprite = MakeColorTransparent(smc.uncheckedBoxSprite, new Color(51f / 255f, 51f / 255f, 51f / 255f));
+            objectPlacerScript.placeFunctionless = false;
+        }
+        else if(clicked.name == "FunctionlessCheckbox" && !objectPlacerScript.placeFunctionless)
+        {
+            clicked.GetComponent<Image>().sprite = MakeColorTransparent(smc.checkedBoxSprite, new Color(51f / 255f, 51f / 255f, 51f / 255f));
+            objectPlacerScript.placeFunctionless = true;
+        }
+
         sc.PlaySound("plip");
     }
     public void JobClose()
@@ -523,6 +549,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("FilePanel").gameObject.SetActive(true);
         uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(false);
+        uic.Find("FunctionlessText").gameObject.SetActive(false);
+
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "FilePanel";
@@ -535,6 +564,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
         uic.Find("AdvancedPanel").gameObject.SetActive(false);
+
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(false);
+        uic.Find("FunctionlessText").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -549,6 +581,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("FilePanel").gameObject.SetActive(false);
         uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(true);
+        uic.Find("FunctionlessText").gameObject.SetActive(true);
+
         GetComponent<ObjectsPanelController>().canBeShown = true;
 
         panelSelectScript.currentPanel = "ObjectsPanel";
@@ -561,6 +596,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ZonesPanel").gameObject.SetActive(true);
         uic.Find("FilePanel").gameObject.SetActive(false);
         uic.Find("AdvancedPanel").gameObject.SetActive(false);
+
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(false);
+        uic.Find("FunctionlessText").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -575,6 +613,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("FilePanel").gameObject.SetActive(false);
         uic.Find("AdvancedPanel").gameObject.SetActive(false);
 
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(false);
+        uic.Find("FunctionlessText").gameObject.SetActive(false);
+
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
         panelSelectScript.currentPanel = "PropertiesPanel";
@@ -587,6 +628,9 @@ public class MEButtonController : MonoBehaviour
         uic.Find("ZonesPanel").gameObject.SetActive(false);
         uic.Find("FilePanel").gameObject.SetActive(false);
         uic.Find("AdvancedPanel").gameObject.SetActive(true);
+
+        uic.Find("FunctionlessCheckbox").gameObject.SetActive(false);
+        uic.Find("FunctionlessText").gameObject.SetActive(false);
 
         GetComponent<ObjectsPanelController>().canBeShown = false;
 
@@ -979,10 +1023,16 @@ public class MEButtonController : MonoBehaviour
     }
     public void SpecialObject(BaseEventData data)
     {
+        StartCoroutine(SpecialObjectWait(data));
+    }
+    private IEnumerator SpecialObjectWait(BaseEventData data)
+    {
+        yield return new WaitForEndOfFrame();
+        
         var pd = data as PointerEventData;
         if (pd == null)
         {
-            return;
+            yield break; ;
         }
 
         var clicked = pd.pointerPress ?? pd.pointerCurrentRaycast.gameObject ?? gameObject;
@@ -1009,10 +1059,10 @@ public class MEButtonController : MonoBehaviour
                 break;
         }
 
-        foreach(Transform obj in tiles.Find(layer + "Objects"))
+        foreach (Transform obj in tiles.Find(layer + "Objects"))
         {
             float distance = Vector2.Distance(obj.position, currentCanvas.position);
-            if(distance <= .01f)
+            if (distance <= .01f)
             {
                 currentObject = obj;
                 break;
@@ -1042,6 +1092,11 @@ public class MEButtonController : MonoBehaviour
                 GetComponent<MEJobController>().currentDoor = currentObject;
                 uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text = currentObject.GetComponent<MEJobContainer>().job;
                 uic.Find("WorkDoorPanel").gameObject.SetActive(true);
+                break;
+            case "setWaypoint":
+                GetComponent<MESetWaypointController>().currentWaypoint = currentObject;
+                GetComponent<MESetWaypointController>().SetNums();
+                uic.Find("SetWaypointPanel").gameObject.SetActive(true);
                 break;
         }
         uic.Find("Black").gameObject.SetActive(true);
@@ -1079,6 +1134,15 @@ public class MEButtonController : MonoBehaviour
     {
         GetComponent<MEJobController>().currentDoor.GetComponent<MEJobContainer>().job = uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text;
         uic.Find("WorkDoorPanel").gameObject.SetActive(false);
+        uic.Find("Black").gameObject.SetActive(false);
+        ActivateButtonsForSpecialObjects();
+        sc.PlaySound("close");
+    }
+    public void SetWaypointClose()
+    {
+        GetComponent<MESetWaypointController>().currentWaypoint.GetComponent<MESetWaypointContainer>().id = Convert.ToInt32(uic.Find("SetWaypointPanel").Find("IDNum").GetComponent<TMP_InputField>().text);
+        GetComponent<MESetWaypointController>().currentWaypoint.GetComponent<MESetWaypointContainer>().order = Convert.ToInt32(uic.Find("SetWaypointPanel").Find("OrderNum").GetComponent<TMP_InputField>().text);
+        uic.Find("SetWaypointPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         ActivateButtonsForSpecialObjects();
         sc.PlaySound("close");
@@ -1281,5 +1345,46 @@ public class MEButtonController : MonoBehaviour
             GetComponent<ObjectsPanelController>().canBeShown = true;
         }
         canvases.gameObject.SetActive(true);
+    }
+    private Sprite MakeColorTransparent(Sprite source, Color color) //ts ai sorry
+    {
+        Texture2D sourceTexture = source.texture;
+
+        Rect rect = source.rect;
+        Color[] pixels = sourceTexture.GetPixels(
+            (int)rect.x,
+            (int)rect.y,
+            (int)rect.width,
+            (int)rect.height
+        );
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i] == color)
+            {
+                pixels[i].a = 0f;
+            }
+        }
+
+        Texture2D newTexture = new Texture2D(
+            (int)rect.width,
+            (int)rect.height,
+            TextureFormat.RGBA32,
+            false
+        );
+
+        newTexture.SetPixels(pixels);
+        newTexture.filterMode = FilterMode.Point;
+        newTexture.Apply();
+
+        return Sprite.Create(
+            newTexture,
+            new Rect(0, 0, newTexture.width, newTexture.height),
+            new Vector2(
+                source.pivot.x / source.rect.width,
+                source.pivot.y / source.rect.height
+            ),
+            source.pixelsPerUnit
+        );
     }
 }

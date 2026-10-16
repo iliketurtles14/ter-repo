@@ -26,6 +26,7 @@ public class UnlockDoors : MonoBehaviour
     private List<NPCCollectionData> npcColDatas = new List<NPCCollectionData>();
     private Zones zonesScript;
     public bool hasLockedCells;
+    private Map currentMap;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
@@ -43,6 +44,7 @@ public class UnlockDoors : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
         foreach (Transform npc in aStar)
         {
             if (npc.name.Contains("Inmate"))
@@ -108,6 +110,10 @@ public class UnlockDoors : MonoBehaviour
     private void Update()
     {
         if (!ready)
+        {
+            return;
+        }
+        if (currentMap.tutorial)
         {
             return;
         }

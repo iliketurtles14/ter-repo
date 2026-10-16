@@ -24,6 +24,7 @@ public class InmateFight : MonoBehaviour
     private List<Transform> inmates = new List<Transform>();
     private Transform aStar;
     private int cooldown;
+    private Map currentMap;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -38,6 +39,11 @@ public class InmateFight : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
+        if (currentMap.tutorial)
+        {
+            yield break;
+        }
         foreach(Transform npc in aStar)
         {
             if(npc.name.Contains("Inmate"))

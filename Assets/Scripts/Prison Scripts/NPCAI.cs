@@ -43,7 +43,7 @@ public class NPCAI : MonoBehaviour
     public string dirToLook = "any";
     private bool canChangeDir;
     private NPCCollectionData npcColData;
-    private bool ready;
+    public bool ready = false;
     public bool followSchedule = true;
     public bool atCanteenSeat; //for speech
     public bool atExerciseEquipment; //for speech and pausing
@@ -51,6 +51,11 @@ public class NPCAI : MonoBehaviour
     public bool atGuardRollcall; //for speech (only for guard1)
     public PauseController pc;
     public int jobQuota;
+    public bool hasSetPath; //for GuardSet and InmateSet waypoint objects (this is set in SetUpNPCs.cs)
+    public int setPathID;
+    private Transform nextSetWP;
+    private List<Transform> setWPs = new List<Transform>();
+    private int currentSetWPIndex;
     private void Start()
     {   
         //get npctype and num
@@ -101,6 +106,10 @@ public class NPCAI : MonoBehaviour
         LoadNormalJobPositions();
         LoadDeskPositions();
         LoadGuardBedPositions();
+        if (hasSetPath)
+        {
+            LoadSetWaypoints();
+        }
     }
     private void LoadGuardBedPositions()
     {
@@ -292,6 +301,31 @@ public class NPCAI : MonoBehaviour
             }
         }
     }
+    private void LoadSetWaypoints()
+    {
+        string wpName = "";
+        if (name.StartsWith("Inmate"))
+        {
+            wpName = "InmateSet";
+        }
+        else if (name.StartsWith("Guard"))
+        {
+            wpName = "GuardSet";
+        }
+
+        List<Transform> wps = new List<Transform>(); //unsorted
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == wpName && setPathID == obj.GetComponent<SetWaypointHandler>().id)
+            {
+                wps.Add(obj);
+            }
+        }
+
+        wps.Sort((a, b) => a.GetComponent<SetWaypointHandler>().order.CompareTo(b.GetComponent<SetWaypointHandler>().order));
+
+        setWPs.AddRange(wps);
+    }
     private void OnDisable()
     {
         isMoving = false;
@@ -334,7 +368,12 @@ public class NPCAI : MonoBehaviour
             LoadNormalJobPositions();
         }
 
-        if (!followSchedule)
+        if(hasSetPath)
+        {
+            StartCoroutine(GoToSetWaypoint());
+        }
+
+        if (!followSchedule || hasSetPath)
         {
             return;
         }
@@ -351,8 +390,11 @@ public class NPCAI : MonoBehaviour
             if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
             {
                 SetCurrentWaypoint();
-                seeker.StartPath(transform.position, currentWaypoint.position);
-                isMoving = true;
+                if(currentWaypoint != null)
+                {
+                    seeker.StartPath(transform.position, currentWaypoint.position);
+                    isMoving = true;
+                }
             }
         }
         else if (isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
@@ -572,7 +614,7 @@ public class NPCAI : MonoBehaviour
             int rand = UnityEngine.Random.Range(0, currentPossibleWaypoints.Count);
             currentWaypoint = currentPossibleWaypoints[rand];
         }
-        else
+        else if(npcNum - 1 < currentPossibleWaypoints.Count)
         {
             currentWaypoint = currentPossibleWaypoints[npcNum - 1];
         }
@@ -1790,7 +1832,44 @@ public class NPCAI : MonoBehaviour
             }
         }
     }
-    public void SendToPos(Vector2 pos) //p much js for guards ts
+    private IEnumerator GoToSetWaypoint()
+    {
+        if (isMoving)
+        {
+            yield break;
+        }
+
+        if(nextSetWP == null)
+        {
+            nextSetWP = setWPs[0];
+            currentSetWPIndex = 0;
+        }
+
+        isMoving = true;
+        canChangeDir = false;
+        dirToLook = "any";
+        followSchedule = false;
+        seeker.StartPath(transform.position, nextSetWP.position);
+        while (true)
+        {
+            if(Vector2.Distance(transform.position, nextSetWP.position) <= .1f)
+            {
+                break;
+            }
+            yield return null;
+        }
+        seeker.CancelCurrentPathRequest(true);
+
+        currentSetWPIndex++;
+        if(currentSetWPIndex == setWPs.Count)
+        {
+            currentSetWPIndex = 0;
+        }
+        nextSetWP = setWPs[currentSetWPIndex];
+
+        isMoving = false;
+    }
+    public void SendToPos(Vector2 pos) //p much js for guards ts and set stuff
     {
         OnDisable();
         StartCoroutine(SendToPosWait(pos));

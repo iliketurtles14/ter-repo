@@ -10,12 +10,32 @@ public class MapMove : MonoBehaviour
     };
     public Transform tiles;
     public Transform canvases;
-    public int moveX;
-    public int moveY;
+    private int moveX;
+    private int moveY;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            moveY = 1;
+            moveX = 0;
+            MoveMap();
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            moveY = -1;
+            moveX = 0;
+            MoveMap();
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            moveX = -1;
+            moveY = 0;
+            MoveMap();
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            moveX = 1;
+            moveY = 0;
             MoveMap();
         }
     }
