@@ -13878,7 +13878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -16494,6 +16494,8 @@ MonoBehaviour:
   timeInPeriod: 0
   isOverriding: 0
   hasLostJob: 0
+  shouldGoToTutorialPoint: 0
+  tutorialPointPos: {x: 0, y: 0}
 --- !u!114 &567059200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23209,7 +23211,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $67
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
@@ -24699,6 +24701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCInv
   npc: {fileID: 0}
+  menuIsOpen: 0
   npcInv: []
 --- !u!1 &817273473
 GameObject:
@@ -24907,7 +24910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $67
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
@@ -31559,7 +31562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $67
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
@@ -35006,6 +35009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCIDInv
   invSlotNumber: 0
+  idIsOpen: 0
   currentNPC: {fileID: 0}
 --- !u!1 &1184905616
 GameObject:
@@ -38228,6 +38232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d302c0ddcc20ac4abe9b2e29f40f91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  menuIsOpen: 0
 --- !u!1 &1304038374
 GameObject:
   m_ObjectHideFlags: 0
@@ -41918,7 +41923,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $67
+  m_text: $0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
@@ -42643,6 +42648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52adfb4fea661fa48a5b2bf0fca32b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftMenu
+  menuIsOpen: 0
   item0:
     displayName: 
     deskTier: 0
@@ -49153,6 +49159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332be658d677b6a409fc564f56a1460b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FavorMenu
+  favorMenuIsOpen: 0
 --- !u!1 &1674392208
 GameObject:
   m_ObjectHideFlags: 0
@@ -60693,9 +60700,9 @@ RectTransform:
   - {fileID: 968115632}
   - {fileID: 1168742413}
   - {fileID: 588740527}
+  - {fileID: 523887851}
   - {fileID: 1562776028}
   - {fileID: 1933501341}
-  - {fileID: 523887851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -27,6 +27,7 @@ public class SeeBadActions : MonoBehaviour
     private Particles particlesScript;
     private Transform badObjects;
     private Escaping escapingScript;
+    private Map currentMap;
     private Dictionary<string, string> solitaryDict = new Dictionary<string, string>
     {
         { "noDummy", "CaughtEmptyCell" }, { "outLate", "CaughtOutLate" }, { "openHole", "CaughtHole"},
@@ -52,7 +53,6 @@ public class SeeBadActions : MonoBehaviour
         MakeVectorLists();
         MakeBadObjectList();
 
-        StartCoroutine(LookWait());
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -62,6 +62,7 @@ public class SeeBadActions : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         foreach(Transform npc in transform.parent)
         {
             if(npc.name.Contains("Guard") && npc.name != "Guard1" && npc.name != "Guard2" && npc.name != "Guard3")
@@ -69,6 +70,7 @@ public class SeeBadActions : MonoBehaviour
                 guardsNotSpecial.Add(npc);
             }
         }
+        StartCoroutine(LookWait());
     }
     private void MakeVectorLists()
     {
@@ -161,7 +163,7 @@ public class SeeBadActions : MonoBehaviour
     {
         while (true)
         {
-            if (pc.isPaused || GetComponent<NPCCollectionData>().npcData.isSleeping || GetComponent<NPCCollectionData>().npcData.isDead)
+            if (pc.isPaused || GetComponent<NPCCollectionData>().npcData.isSleeping || GetComponent<NPCCollectionData>().npcData.isDead || currentMap.tutorial)
             {
                 yield return null;
                 continue;

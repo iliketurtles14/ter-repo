@@ -263,6 +263,7 @@ public class TutorialController : MonoBehaviour
         GameObject bObj = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Underground/Dirt"));
         bObj.transform.position = new Vector2(80, 124.8f);
         bObj.name = "Dirt(Clone)";
+        bObj.transform.parent = tiles.Find("UndergroundObjects");
         firstDirt = bObj;
 
         //zone thing
@@ -387,13 +388,14 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Climb up into the open vent by LEFT CLICKing on it. Once inside make your way to a nearby cell.", 1));
+
+        StartCoroutine(SetTutTextBox("Climb up into the open vent by LEFT CLICKing on it. Once inside make your way to a nearby cell.", 2));
         SetGreenArrow(durdenVent, .8f);
         zonesScript.shouldGoToTutorialPoint = true;
         bool hasDeactivatedVent = false;
         while (true)
         {
-            if(!hasDeactivatedVent && !Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Vent")))
+            if(!hasDeactivatedVent && !Physics2D.GetIgnoreLayerCollision(player.gameObject.layer, LayerMask.NameToLayer("Vents")))
             {
                 hasDeactivatedVent = true;
                 foreach(Transform obj in tiles.Find("GroundObjects"))
@@ -422,7 +424,7 @@ public class TutorialController : MonoBehaviour
         }
         zonesScript.shouldGoToTutorialPoint = false;
 
-        StartCoroutine(SetTutTextBox("The flashing bag icon over Durden's head means he has items to sell. RIGHT CLICK on him to open up his profile.", 1));
+        StartCoroutine(SetTutTextBox("The flashing bag icon over Durden's head means he has items to sell. RIGHT CLICK on him to open up his profile.", 2));
         bool alreadyOnShop = false;
         bool alreadyOnSlot = false;
         bool alreadyOnDurd = false;
@@ -443,7 +445,7 @@ public class TutorialController : MonoBehaviour
                 alreadyOnShop = false;
                 alreadyOnDurd = false;
             }
-            else if(!alreadyOnDurd)
+            else if(!alreadyOnDurd && !npcIDInvScript.idIsOpen && !shopMenuScript.menuIsOpen && !givingScript.menuIsOpen)
             {
                 SetGreenArrow(durden, 1.6f);
                 alreadyOnDurd = true;
@@ -458,7 +460,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Great, now you can craft a weapon! Open the CRAFT menu and add the two items.", 1));
+        StartCoroutine(SetTutTextBox("Great, now you can craft a weapon! Open the CRAFT menu and add the two items.", 2));
         bool hasCraftedSockMace = false;
         bool alreadyOnSockMace = false;
         bool alreadyOnCraftButton = false;
@@ -547,7 +549,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("To use a weapon you first need to equip it. So open up your profile and let's do that.", 1));
+        StartCoroutine(SetTutTextBox("To use a weapon you first need to equip it. So open up your profile and let's do that.", 2));
         bool alreadyOnInvIDButton = false;
         bool alreadyOnIDButton = false;
         alreadyOnSockMace = false;
@@ -590,8 +592,8 @@ public class TutorialController : MonoBehaviour
             }
             yield return null;
         }
-
-        StartCoroutine(SetTutTextBox("Let's try it out! Press SPACE to toggle combat mode on and off. With it on, click on the guard to target him.", 1));
+        unlockDoorsScript.aUnlockDoors(new List<string> { "yellow" });
+        StartCoroutine(SetTutTextBox("Let's try it out! Press SPACE to toggle combat mode on and off. With it on, click on the guard to target him.", 2));
         bool alreadyOnFragile = false;
         NPCCollectionData fragileColData = officerFragile.GetComponent<NPCCollectionData>();
         while (true)
@@ -609,7 +611,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Ouch! If you stand next to the unconcious guard and LEFT CLICK on him you can loot his items. Grab his outfit!", 1));
+        StartCoroutine(SetTutTextBox("Ouch! If you stand next to the unconcious guard and LEFT CLICK on him you can loot his items. Grab his outfit!", 2));
         alreadyOnFragile = false;
         bool alreadyOnFragileOutfit = false;
         while (true)
@@ -634,7 +636,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Let's play dress-up. Equip the guard outfit in your profile.", 1));
+        StartCoroutine(SetTutTextBox("Let's play dress-up. Equip the guard outfit in your profile.", 2));
         alreadyOnIDButton = false;
         bool alreadyOnOutfitSlot = false;
         bool alreadyOnGuardOutfit = false;
@@ -677,7 +679,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Lookin' good! Now go outside to the right and head north past the guards, where your exit awaits...", 1));
+        StartCoroutine(SetTutTextBox("Lookin' good! Now go outside to the right and head north past the guards, where your exit awaits...", 2));
         zonesScript.tutorialPointPos = new Vector2(80, 121.6f);
         zonesScript.shouldGoToTutorialPoint = true;
         unlockDoorsScript.aUnlockDoors(new List<string> { "purple" });
@@ -705,7 +707,7 @@ public class TutorialController : MonoBehaviour
         }
         zonesScript.shouldGoToTutorialPoint = false;
 
-        StartCoroutine(SetTutTextBox("Dark down here isn't it? RIGHT CLICK to pick up that shovel and let's get digging!", 1));
+        StartCoroutine(SetTutTextBox("Dark down here isn't it? RIGHT CLICK to pick up that shovel and let's get digging!", 2));
         bool alreadyOnGroundShovel = false;
         bool alreadyOnDirt = false;
         bool alreadyOnShovel = false;
@@ -764,7 +766,7 @@ public class TutorialController : MonoBehaviour
         }
         dirtFlashObj.transform.position = Vector2.zero;
 
-        StartCoroutine(SetTutTextBox("Digging on an empty space allows you to dig UPWARDS and emerge from the underground.", 1));
+        StartCoroutine(SetTutTextBox("Digging on an empty space allows you to dig UPWARDS and emerge from the underground.", 2));
         alreadyOnShovel = false;
         alreadyOnDirt = false;
         Collider2D dirtCol = secondDirt.GetComponent<Collider2D>();
@@ -805,7 +807,7 @@ public class TutorialController : MonoBehaviour
         {
             yield return null;
         }
-        StartCoroutine(SetTutTextBox("That wasn't too tough was it? All you have to do now is walk on out. Freedom has never tasted so good!", 1));
+        StartCoroutine(SetTutTextBox("That wasn't too tough was it? All you have to do now is walk on out. Freedom has never tasted so good!", 2));
     }
     private bool DeskIsEmpty()
     {
@@ -828,11 +830,13 @@ public class TutorialController : MonoBehaviour
         {
             if(item == null || item.itemData == null)
             {
+                index++;
                 continue;
             }
             
             if(item.itemData.id == itemID)
             {
+                Debug.Log("here1: " + index.ToString());
                 foundIt = true;
                 break;
             }
@@ -845,11 +849,13 @@ public class TutorialController : MonoBehaviour
             {
                 if (item == null || item.itemData == null)
                 {
+                    index++;
                     continue;
                 }
 
                 if (item.itemData.id == backupID)
                 {
+                    Debug.Log("here2: " + index.ToString());
                     foundIt = true;
                     break;
                 }
@@ -871,6 +877,7 @@ public class TutorialController : MonoBehaviour
         {
             if(item == null || item.itemData == null)
             {
+                index++;
                 continue;
             }
             if(item.itemData.id == itemID)
@@ -887,6 +894,7 @@ public class TutorialController : MonoBehaviour
             {
                 if (item == null || item.itemData == null)
                 {
+                    index++;
                     continue;
                 }
 
@@ -948,11 +956,6 @@ public class TutorialController : MonoBehaviour
         ic.Find("HintPanel").gameObject.SetActive(true);
         while (time <= .217f)
         {
-            if (pc.isPaused)
-            {
-                yield return null;
-                continue;
-            }
             time += Time.deltaTime;
             yield return null;
         }
@@ -960,11 +963,6 @@ public class TutorialController : MonoBehaviour
         img.sprite = spr;
         while (time <= .217f)
         {
-            if (pc.isPaused)
-            {
-                yield return null;
-                continue;
-            }
             time += Time.deltaTime;
             yield return null;
         }
@@ -972,11 +970,6 @@ public class TutorialController : MonoBehaviour
         img.sprite = sprFlash;
         while (time <= .217f)
         {
-            if (pc.isPaused)
-            {
-                yield return null;
-                continue;
-            }
             time += Time.deltaTime;
             yield return null;
         }
@@ -988,7 +981,9 @@ public class TutorialController : MonoBehaviour
         {
             return;
         }
-        
+
+        tutArrow.gameObject.SetActive(true);
+
         if(arrowCoroutine != null)
         {
             StopCoroutine(arrowCoroutine);
@@ -1007,13 +1002,19 @@ public class TutorialController : MonoBehaviour
 
         while (true)
         {
+            if(objToFollow == null)
+            {
+                break;
+            }
             Vector3 pos = objToFollow.transform.position;
+            int zPos = 0;
             if (doRectStuff)
             {
-                pos = cam.ScreenToWorldPoint(RectTransformUtility.WorldToScreenPoint(null, rect.position));
+                pos = cam.ScreenToWorldPoint(RectTransformUtility.WorldToScreenPoint(cam, rect.position));
+                zPos = 1;
             }
             
-            tutArrow.position = pos + new Vector3(0, distFromObj, 0);
+            tutArrow.position = pos + new Vector3(0, distFromObj, zPos);
             yield return null;
         }
     }
@@ -1065,6 +1066,8 @@ public class TutorialController : MonoBehaviour
         sr.sortingLayerName = "Ground";
         placeholderDesk.transform.position = new Vector3(102.4f, 86.4f, 0);
         placeholderDesk.transform.parent = tiles.Find("GroundObjects");
+        sr.drawMode = SpriteDrawMode.Sliced;
+        sr.size = new Vector2(1.6f, 1.6f);
     }
     private IEnumerator DirtFlashObjAnim()
     {
