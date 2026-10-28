@@ -201,6 +201,10 @@ public class TutorialController : MonoBehaviour
         pcd.playerData.strength = 100;
         pcd.playerData.speed = 100;
         pcd.playerData.intellect = 100;
+        pcd.playerData.health = 50;
+        pcd.playerData.money = 10;
+        pcd.playerData.energy = 0;
+        pcd.playerData.heat = 0;
 
         //player name
         pcd.playerData.displayName = "Prisoner";
@@ -214,8 +218,21 @@ public class TutorialController : MonoBehaviour
             }
         }
 
-        //turn off favor and shop icons on npcs
+        //npc characters
         foreach(Transform npc in aStar)
+        {
+            if(npc.name.Contains("Inmate") || npc.name.Contains("Guard"))
+            {
+                npc.GetComponent<NPCCollectionData>().npcData.charNum = 0;
+            }
+        }
+
+        //player char
+        NPCSave.instance.playerCharacter = 0;
+        mc.Find("PlayerMenuPanel").Find("Player").GetComponent<PlayerIDAnimation>().bodyDirSprites = DataSender.instance.RabbitSprites;
+
+        //turn off favor and shop icons on npcs
+        foreach (Transform npc in aStar)
         {
             if(npc.name != "Inmate1")
             {
@@ -256,7 +273,13 @@ public class TutorialController : MonoBehaviour
             aObj.GetComponent<SpriteRenderer>().sprite = ds.PrisonObjectImages[25];
             aObj.transform.position = dirtPositions[i];
             aObj.transform.parent = tiles.Find("UndergroundObjects");
-            aObj.name = "EmptyDirt(Clone)";
+            aObj.name = "DirtEmpty(Clone)";
+            aObj.GetComponent<TileCollectionData>().tileData = new TileData
+            {
+                currentDurability = 100,
+                holeStability = 3,
+                tileType = "obstacle"
+            };
         }
 
         //make dirt object at (80, 124.8)
@@ -264,6 +287,12 @@ public class TutorialController : MonoBehaviour
         bObj.transform.position = new Vector2(80, 124.8f);
         bObj.name = "Dirt(Clone)";
         bObj.transform.parent = tiles.Find("UndergroundObjects");
+        bObj.GetComponent<TileCollectionData>().tileData = new TileData
+        {
+            currentDurability = 100,
+            holeStability = -1,
+            tileType = "obstacle"
+        };
         firstDirt = bObj;
 
         //zone thing
@@ -275,7 +304,7 @@ public class TutorialController : MonoBehaviour
         flashy.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
         flashy.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0, 128);
         flashy.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
-        flashy.GetComponent<SpriteRenderer>().sortingOrder = 3;
+        flashy.GetComponent<SpriteRenderer>().sortingOrder = 4;
         flashy.transform.position = new Vector2(0, 0);
         flashy.transform.parent = tiles.Find("UndergroundObjects");
         dirtFlashObj = flashy;
@@ -478,7 +507,7 @@ public class TutorialController : MonoBehaviour
             else if(craftMenuScript.menuIsOpen && !hasCraftedSockMace)
             {
                 GameObject slot = GetInvSlotObj(135, 134);
-                if(slot == null)
+                if(craftMenuScript.craftedItem == null)
                 {
                     currentSlot = null;
                     List<ItemData> items = new List<ItemData>
@@ -514,9 +543,24 @@ public class TutorialController : MonoBehaviour
                         alreadyOnSlot = false;
                         SetGreenArrow(mc.Find("CraftMenuPanel").Find("CraftButton").gameObject, .8f);
                     }
-                    else
+                    else if(!alreadyOnCRAFTButton)
                     {
-                        HideGreenArrow();
+                        if (slot != null)
+                        {
+                            alreadyOnSockMace = false;
+                            alreadyOnCraftButton = false;
+                            alreadyOnCRAFTButton = false;
+                            alreadyOnSlot = true;
+                            SetGreenArrow(slot, .8f);
+                        }
+                        else if (slot == null)
+                        {
+                            alreadyOnSockMace = false;
+                            alreadyOnCraftButton = false;
+                            alreadyOnCRAFTButton = false;
+                            alreadyOnSlot = false;
+                            HideGreenArrow();
+                        }
                     }
                 }
                 else
@@ -541,6 +585,11 @@ public class TutorialController : MonoBehaviour
                 SetGreenArrow(ic.Find("CraftButton").gameObject, .8f);
             }
 
+            if(hasCraftedSockMace && craftMenuScript.craftedItem == null)
+            {
+                break;
+            }
+
             if(!craftMenuScript.menuIsOpen && hasCraftedSockMace)
             {
                 break;
@@ -558,8 +607,8 @@ public class TutorialController : MonoBehaviour
             //playermenupaenl, savemenuapelna, favor
             if (playerMenuScript.idIsOpen)
             {
-                GameObject slot = GetInvSlotObj(68, -1);
-                if(slot != null && !alreadyOnSockMace)
+                GameObject slot = GetInvSlotObj(66, -1);
+                if(slot != null)
                 {
                     alreadyOnSockMace = true;
                     alreadyOnInvIDButton = false;
@@ -568,6 +617,9 @@ public class TutorialController : MonoBehaviour
                 }
                 else
                 {
+                    alreadyOnSockMace = false;
+                    alreadyOnInvIDButton = false;
+                    alreadyOnIDButton = false;
                     HideGreenArrow();
                 }
             }
@@ -586,7 +638,7 @@ public class TutorialController : MonoBehaviour
                 SetGreenArrow(mc.Find("SaveMenuPanel").Find("IDButton").gameObject, .8f);
             }
 
-            if (playerMenuScript.idInv[1] != null && playerMenuScript.idInv[1].itemData != null && playerMenuScript.idInv[1].itemData.id == 68)
+            if (playerMenuScript.idInv[1] != null && playerMenuScript.idInv[1].itemData != null && playerMenuScript.idInv[1].itemData.id == 66)
             {
                 break;
             }
@@ -636,7 +688,7 @@ public class TutorialController : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(SetTutTextBox("Let's play dress-up. Equip the guard outfit in your profile.", 2));
+        StartCoroutine(SetTutTextBox("Let's play dress-up. Equip the guard outfit in your profile.", 1));
         alreadyOnIDButton = false;
         bool alreadyOnOutfitSlot = false;
         bool alreadyOnGuardOutfit = false;
@@ -649,14 +701,14 @@ public class TutorialController : MonoBehaviour
                 alreadyOnGuardOutfit = false;
                 alreadyOnOutfitSlot = false;
             }
-            else if(!alreadyOnOutfitSlot && playerMenuScript.idIsOpen && playerMenuScript.idInv[1] != null && playerMenuScript.idInv[1].itemData != null && playerMenuScript.idInv[1].itemData.id == 29)
+            else if(!alreadyOnOutfitSlot && playerMenuScript.idIsOpen && playerMenuScript.idInv[0] != null && playerMenuScript.idInv[0].itemData != null && playerMenuScript.idInv[0].itemData.id == 29)
             {
                 SetGreenArrow(mc.Find("PlayerMenuPanel").Find("Outfit").gameObject, .8f);
                 alreadyOnIDButton = false;
                 alreadyOnOutfitSlot = true;
                 alreadyOnGuardOutfit = false;
             }
-            else if(!alreadyOnGuardOutfit && playerMenuScript.idIsOpen && (playerMenuScript.idInv[1] == null || playerMenuScript.idInv[1].itemData == null))
+            else if(!alreadyOnGuardOutfit && playerMenuScript.idIsOpen && (playerMenuScript.idInv[0] == null || playerMenuScript.idInv[0].itemData == null))
             {
                 GameObject slot = GetInvSlotObj(39, -1);
                 if(slot == null)
@@ -672,7 +724,7 @@ public class TutorialController : MonoBehaviour
                 }
             }
             
-            if(playerMenuScript.idInv[1] != null && playerMenuScript.idInv[1].itemData != null && playerMenuScript.idInv[1].itemData.id == 39)
+            if(playerMenuScript.idInv[0] != null && playerMenuScript.idInv[0].itemData != null && playerMenuScript.idInv[0].itemData.id == 39)
             {
                 break;
             }
@@ -707,7 +759,7 @@ public class TutorialController : MonoBehaviour
         }
         zonesScript.shouldGoToTutorialPoint = false;
 
-        StartCoroutine(SetTutTextBox("Dark down here isn't it? RIGHT CLICK to pick up that shovel and let's get digging!", 2));
+        StartCoroutine(SetTutTextBox("Dark down here isn't it? RIGHT CLICK to pick up that shovel and let's get digging!", 1));
         bool alreadyOnGroundShovel = false;
         bool alreadyOnDirt = false;
         bool alreadyOnShovel = false;
@@ -753,7 +805,7 @@ public class TutorialController : MonoBehaviour
         GameObject secondDirt = null;
         foreach(Transform obj in tiles.Find("UndergroundObjects"))
         {
-            if(obj.name.Contains("DirtEmpty") && Vector2.Distance(obj.position, new Vector2(80, 126.4f)) <= .1f)
+            if(obj.name.Contains("DirtEmpty") && Vector2.Distance(obj.position, new Vector2(80, 124.8f)) <= .1f)
             {
                 secondDirt = obj.gameObject;
                 break;

@@ -32,6 +32,10 @@ public class SubMenuController : MonoBehaviour
     public bool deliveries;
     public bool mailman;
     public bool library;
+    public bool manure;
+    public bool taskmaster;
+    public bool toymaker;
+    public bool letter;
     public bool snowing;
     public bool ssVisitors;
     public bool stunRods;

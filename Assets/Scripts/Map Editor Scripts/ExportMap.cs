@@ -16,6 +16,13 @@ public class ExportMap : MonoBehaviour
     public Transform uic;
 
     private Vector2 mapSize;
+    private Dictionary<int, string> jobDict = new Dictionary<int, string>
+    {
+        { 0, "" }, { 1, "Janitor" }, { 2, "Woodshop" }, { 3, "Gardening" }, { 4, "Metalshop" },
+        { 5, "Laundry" }, { 6, "Deliveries" }, { 7, "Kitchen" }, { 8, "Mailman" }, { 9, "Tailor" },
+        { 10, "Library" }, { 11, "ManureControl" }, { 12, "Taskmaster" }, { 13, "Toymaker" },
+        { 14, "LetterOrganization" }
+    };
 
     public void Export()
     {
@@ -106,7 +113,7 @@ public class ExportMap : MonoBehaviour
 
         text += "\n";
         text += "[Jobs] \n";
-        text += "StartingJob=" + jobPanel.Find("StartingJobInput").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "StartingJob=" + jobDict[jobPanel.Find("StartingJobPicker").GetComponent<Picker>().currentIndex] + "\n";
         text += "Janitor=" + subMenuControllerScript.janitor + "\n";
         text += "Gardening=" + subMenuControllerScript.gardening + "\n";
         text += "Laundry=" + subMenuControllerScript.laundry + "\n";
@@ -117,6 +124,10 @@ public class ExportMap : MonoBehaviour
         text += "Deliveries=" + subMenuControllerScript.deliveries + "\n";
         text += "Mailman=" + subMenuControllerScript.mailman + "\n";
         text += "Library=" + subMenuControllerScript.library + "\n";
+        text += "ManureControl=" + subMenuControllerScript.manure + "\n";
+        text += "Taskmaster=" + subMenuControllerScript.taskmaster + "\n";
+        text += "Toymaker=" + subMenuControllerScript.toymaker + "\n";
+        text += "LetterOrganization=" + subMenuControllerScript.letter + "\n";
     }
     private void SetTiles()
     {

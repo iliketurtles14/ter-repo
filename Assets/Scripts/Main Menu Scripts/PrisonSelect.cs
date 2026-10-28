@@ -200,7 +200,7 @@ public class PrisonSelect : MonoBehaviour
         {
             case 0:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonPressed;
-                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
+                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonNormal;
 
                 currentPrisonIcons = mainPrisonIcons;
@@ -216,7 +216,7 @@ public class PrisonSelect : MonoBehaviour
                 break;
             case 1:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonNormal;
-                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonPressed;
+                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonPressed;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonNormal;
 
                 currentPrisonIcons = bonusPrisonIcons;
@@ -232,7 +232,7 @@ public class PrisonSelect : MonoBehaviour
                 break;
             case 2:
                 transform.Find("MainPrisonsButton").GetComponent<Image>().sprite = mainPrisonsButtonNormal;
-                //transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
+                transform.Find("BonusPrisonsButton").GetComponent<Image>().sprite = bonusPrisonsButtonNormal;
                 transform.Find("CustomPrisonsButton").GetComponent<Image>().sprite = customPrisonsButtonPressed;
 
                 currentPrisonIcons = customPrisonIcons;
@@ -529,9 +529,13 @@ public class PrisonSelect : MonoBehaviour
             {
                 File.Delete(Path.Combine(extractPath, "Speech.ini"));
             }
-            if(Directory.Exists(Path.Combine(extractPath, "Items")))
+            if (Directory.Exists(Path.Combine(extractPath, "Items")))
             {
                 Directory.Delete(Path.Combine(extractPath, "Items"), true);
+            }
+            if(File.Exists(Path.Combine(extractPath, "Items.ini")))
+            {
+                File.Delete(Path.Combine(extractPath, "Items.ini"));
             }
             customPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
             customPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);

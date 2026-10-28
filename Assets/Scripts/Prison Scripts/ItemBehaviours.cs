@@ -99,6 +99,7 @@ public class ItemBehaviours : MonoBehaviour
     public int currentHeight;
     public int ropeTileHeight;
     public bool isRoping;
+    private Map currentMap;
     public void Start()
     {
         electrocutionScript = GetComponent<Electrocution>();
@@ -139,6 +140,16 @@ public class ItemBehaviours : MonoBehaviour
 
         InventoryCanvas.transform.Find("ActionBar").GetComponent<Image>().enabled = false;
         ActionTextBox.text = "";
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
     }
     public void Update()
     {
@@ -1352,6 +1363,11 @@ public class ItemBehaviours : MonoBehaviour
                 }
             }
 
+            if (currentMap.tutorial)
+            {
+                shouldRock = false;
+            }
+
             if (shouldRock)
             {
                 GameObject rockPrefab = Resources.Load<GameObject>("PrisonPrefabs/Objects/Rock");
@@ -1833,6 +1849,11 @@ public class ItemBehaviours : MonoBehaviour
     }
     private void AddBrokenTileItem()
     {
+        if (currentMap.tutorial)
+        {
+            return;
+        }
+        
         bool shouldGoToFloor = true;
         for(int i = 0; i < 6; i++)
         {

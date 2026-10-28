@@ -768,7 +768,16 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("ItemsPanel").Find("Item").GetComponent<RectTransform>().sizeDelta += new Vector2(10, 10);
         //npc panel stuff
         uic.Find("NPCPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
-        foreach(Transform child in uic.Find("NPCPanel"))
+        foreach (Transform child in uic.Find("NPCPanel"))
+        {
+            if (child.name.Contains("Picker"))
+            {
+                child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+                child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+                child.GetComponent<Image>().sprite = UISprites[368];
+            }
+        }
+        foreach (Transform child in uic.Find("JobPanel"))
         {
             if (child.name.Contains("Picker"))
             {

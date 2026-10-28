@@ -746,7 +746,7 @@ public class LoadPrison : MonoBehaviour
         };
         List<string> sortingLayers = new List<string>()
         {
-            "Underground",
+            "UndergroundVisible",
             "Ground",
             "Vents",
             "Roof"

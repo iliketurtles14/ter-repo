@@ -60,6 +60,13 @@ public class LoadMap : MonoBehaviour
         { "epsilon", "campepsilon" }, { "bamford", "fortbamford" }, { "tutorial", "tutorial" }
     };
 
+    private Dictionary<string, int> jobDict = new Dictionary<string, int>
+    {
+        { "", 0 }, { "Janitor", 1 }, { "Woodshop", 2 }, { "Gardening", 3 }, { "Metalshop", 4 },
+        { "Laundry", 5 }, { "Deliveries", 6 }, { "Kitchen", 7 }, { "Mailman", 8 }, { "Tailor", 9 },
+        { "Library", 10 }, { "ManureControl", 11 }, { "Taskmaster", 12 }, { "Toymaker", 13 },
+        { "LetterOrganization", 14 } 
+    };
     public Sprite checkedBox;
     public Sprite uncheckedBox;
     private void Start()
@@ -240,88 +247,39 @@ public class LoadMap : MonoBehaviour
         hintPanel.Find("Hint2Input").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Hint2", data));
         hintPanel.Find("Hint3Input").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Hint3", data));
         Transform jobPanel = uic.Find("JobPanel");
-        jobPanel.Find("StartingJobInput").GetComponent<TMP_InputField>().text = GetINIVar("Jobs", "StartingJob", data);
+        try
+        {
+            jobPanel.Find("StartingJobPicker").GetComponent<Picker>().currentIndex = jobDict[GetINIVar("Jobs", "StartingJob", data)];
+        }
+        catch 
+        {
+            jobPanel.Find("StartingJobPicker").GetComponent<Picker>().currentIndex = 0;
+        }
 
         SubMenuController smc = GetComponent<SubMenuController>();
-        if (GetINIVar("Jobs", "Janitor", data) == "True")
+        smc.janitor = GetINIVar("Jobs", "Janitor", data) == "True";
+        smc.gardening = GetINIVar("Jobs", "Gardening", data) == "True";
+        smc.laundry = GetINIVar("Jobs", "Laundry", data) == "True";
+        smc.kitchen = GetINIVar("Jobs", "Kitchen", data) == "True";
+        smc.tailor = GetINIVar("Jobs", "Tailor", data) == "True";
+        smc.woodshop = GetINIVar("Jobs", "Woodshop", data) == "True";
+        smc.metalshop = GetINIVar("Jobs", "Metalshop", data) == "True";
+        smc.deliveries = GetINIVar("Jobs", "Deliveries", data) == "True";
+        smc.mailman = GetINIVar("Jobs", "Mailman", data) == "True";
+        smc.library = GetINIVar("Jobs", "Library", data) == "True";
+        try //if a prison is old and doesnt have these
         {
-            smc.janitor = true;
+            smc.manure = GetINIVar("Jobs", "ManureControl", data) == "True";
+            smc.taskmaster = GetINIVar("Jobs", "Taskmaster", data) == "True";
+            smc.toymaker = GetINIVar("Jobs", "Toymaker", data) == "True";
+            smc.letter = GetINIVar("Jobs", "LetterOrganization", data) == "True";
         }
-        else
+        catch
         {
-            smc.janitor = false;
-        }
-        if (GetINIVar("Jobs", "Gardening", data) == "True")
-        {
-            smc.gardening = true;
-        }
-        else
-        {
-            smc.gardening = false;
-        }
-        if (GetINIVar("Jobs", "Laundry", data) == "True")
-        {
-            smc.laundry = true;
-        }
-        else
-        {
-            smc.laundry = false;
-        }
-        if (GetINIVar("Jobs", "Kitchen", data) == "True")
-        {
-            smc.kitchen = true;
-        }
-        else
-        {
-            smc.kitchen = false;
-        }
-        if (GetINIVar("Jobs", "Tailor", data) == "True")
-        {
-            smc.tailor = true;
-        }
-        else
-        {
-            smc.tailor = false;
-        }
-        if (GetINIVar("Jobs", "Woodshop", data) == "True")
-        {
-            smc.woodshop = true;
-        }
-        else
-        {
-            smc.woodshop = false;
-        }
-        if (GetINIVar("Jobs", "Metalshop", data) == "True")
-        {
-            smc.metalshop = true;
-        }
-        else
-        {
-            smc.metalshop = false;
-        }
-        if (GetINIVar("Jobs", "Deliveries", data) == "True")
-        {
-            smc.deliveries = true;
-        }
-        else
-        {
-            smc.deliveries = false;
-        }
-        if (GetINIVar("Jobs", "Mailman", data) == "True")
-        {
-            smc.mailman = true;
-        }
-        else
-        {
-            smc.mailman = false;
-        }
-        if (GetINIVar("Jobs", "Library", data) == "True")
-        {
-            smc.library = true;
-        }
-        else
-        {
-            smc.library = false;
+            smc.manure = false;
+            smc.taskmaster = false;
+            smc.toymaker = false;
+            smc.letter = false;
         }
 
         Transform extrasPanel = uic.Find("ExtrasPanel");
