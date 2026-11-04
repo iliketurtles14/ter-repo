@@ -61,6 +61,10 @@ public class Map
     public bool deliveries;
     public bool mailman;
     public bool library;
+    public bool letter;
+    public bool toymaker;
+    public bool taskmaster;
+    public bool manure;
     public List<int[]> tilesList; //each int[] is like this: [tile],[posx],[posy],[layer (0, 1, 2, 3)]
     public List<string> objNames; //ground, underground, vent, roof (order)
     public List<float[]> objVars; //[posx],[posy],[layer]
@@ -123,6 +127,10 @@ public class Map
         bool deliveries,
         bool mailman,
         bool library,
+        bool letter,
+        bool toymaker,
+        bool taskmaster,
+        bool manure,
         List<int[]> tilesList,
         List<string> objNames,
         List<float[]> objVars,
@@ -184,6 +192,10 @@ public class Map
         this.deliveries = deliveries;
         this.mailman = mailman;
         this.library = library;
+        this.letter = letter;
+        this.toymaker = toymaker;
+        this.taskmaster = taskmaster;
+        this.manure = manure;
         this.tilesList = tilesList;
         this.objNames = objNames;
         this.objVars = objVars;

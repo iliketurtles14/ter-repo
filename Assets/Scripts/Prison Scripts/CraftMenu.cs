@@ -228,7 +228,11 @@ public class CraftMenu : MonoBehaviour
     }
     public void Craft()
     {
-
+        if(craftedItem != null)
+        {
+            PSoundController.PlaySound("lose");
+            return;
+        }
         List<string> crSet = GetINISet("Crafting Recipes", currentMap.items);
         List<string> tempList = new List<string>();
         foreach (string str in crSet)

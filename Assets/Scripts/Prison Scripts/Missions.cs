@@ -101,13 +101,29 @@ public class Missions : MonoBehaviour
         {
             yield break;
         }
-
-        foreach(Transform npc in aStar)
+        bool shouldDoGuardMissions = false;
+        foreach (Transform npc in aStar)
         {
             if (npc.name.StartsWith("Inmate"))
             {
                 npc.Find("IconCanvas").Find("MissionIcon").gameObject.SetActive(false);
             }
+            else if (npc.name.StartsWith("Guard"))
+            {
+                shouldDoGuardMissions = true;
+            }
+        }
+
+        if (!shouldDoGuardMissions)
+        {
+            missions = new List<string>
+            {
+                "inmateBeat",
+                "distract",
+                "give",
+                "stealInmateBody",
+                "stealDesk",
+            };
         }
 
         MakeItemLists();

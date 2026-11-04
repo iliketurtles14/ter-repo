@@ -9,11 +9,15 @@ public class WeedController : MonoBehaviour //also for spills
 {
     public int weedAmount;
     public int spillAmount;
+    public int poopAmount;
     private Transform tiles;
     private List<Vector3> weedLocations;
     private List<Vector3> spillLocations;
+    private List<Vector3> poopLocations;
     private ApplyPrisonData applyPrisonDataScript;
     private bool ready;
+    private bool hasReindeer;
+    private Map currentMap;
     private void Start()
     {
         tiles = RootObjectCache.GetRoot("Tiles").transform;
@@ -27,6 +31,16 @@ public class WeedController : MonoBehaviour //also for spills
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
+        hasReindeer = false;
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "Reindeer")
+            {
+                hasReindeer = true;
+                break;
+            }
+        }
         ready = true;
         MakeLists();
     }
@@ -45,19 +59,35 @@ public class WeedController : MonoBehaviour //also for spills
         {
             CreateSpill();
         }
+        if((currentMap.manure || hasReindeer) && poopAmount < 2 && poopLocations.Count != 0)
+        {
+            CreatePoop();
+        }
     }
     private void MakeLists()
     {
+        bool shouldDoPoop = false;
+        if(currentMap.manure || hasReindeer)
+        {
+            shouldDoPoop = true;
+        }
+        
         List<Vector3> possibleWeedLocations = new List<Vector3>();
         List<Vector3> actualWeedLocations = new List<Vector3>();
         List<Vector3> possibleSpillLocations = new List<Vector3>();
         List<Vector3> actualSpillLocations = new List<Vector3>();
+        List<Vector3> possiblePoopLocations = new List<Vector3>();
+        List<Vector3> actualPoopLocations = new List<Vector3>();
         foreach (Transform obj in tiles.Find("GroundObjects"))
         {
             if (obj.name == "InmateWaypoint")
             {
                 possibleWeedLocations.Add(obj.position);
                 possibleSpillLocations.Add(obj.position);
+                if (shouldDoPoop)
+                {
+                    possiblePoopLocations.Add(obj.position);
+                }
             }
         }
         foreach (Vector3 pos in possibleWeedLocations)
@@ -80,9 +110,26 @@ public class WeedController : MonoBehaviour //also for spills
                 }
             }
         }
+        if (shouldDoPoop)
+        {
+            foreach (Vector3 pos in possiblePoopLocations)
+            {
+                foreach (Transform tile in tiles.Find("Ground"))
+                {
+                    if (tile.position == pos && tile.name == "Empty")
+                    {
+                        actualPoopLocations.Add(pos);
+                    }
+                }
+            }
+        }
 
         weedLocations = actualWeedLocations;
         spillLocations = actualSpillLocations;
+        if (shouldDoPoop)
+        {
+            poopLocations = actualPoopLocations;
+        }
     }
     public void CreateWeed()
     {
@@ -106,5 +153,22 @@ public class WeedController : MonoBehaviour //also for spills
         spill.GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[33];
 
         spillAmount++;
+    }
+    public void CreatePoop()
+    {
+        if(!currentMap.manure && !hasReindeer)
+        {
+            return;
+        }
+
+        int rand = UnityEngine.Random.Range(0, poopLocations.Count);
+
+        GameObject poop = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Objects/Poop"));
+        poop.name = "Poop";
+        poop.transform.parent = tiles.Find("GroundObjects");
+        poop.transform.position = poopLocations[rand];
+        poop.GetComponent<SpriteRenderer>().sprite = applyPrisonDataScript.PrisonObjectSprites[345];
+
+        poopAmount++;
     }
 }

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5494193924481687301}
   - component: {fileID: 6583994315493892344}
   - component: {fileID: 8813258754161067754}
+  - component: {fileID: 8398271079459588323}
   m_Layer: 6
   m_Name: SSLetterShredder
-  m_TagString: Untagged
+  m_TagString: JobBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +139,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.5, y: 2.3}
   m_EdgeRadius: 0
+--- !u!114 &8398271079459588323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7649661233908366611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b05fe13c3d7fcc41a250088acf48796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

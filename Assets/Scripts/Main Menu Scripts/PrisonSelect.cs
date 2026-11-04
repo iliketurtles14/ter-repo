@@ -94,6 +94,8 @@ public class PrisonSelect : MonoBehaviour
     public Sprite continueButtonGood;
     public bool showGrid;
     private bool ready = false;
+    public NPCRename npcRenameScript;
+    private TextMeshProUGUI saveTMP;
     private Dictionary<int, string> bodyDict = new Dictionary<int, string> //these dictionaries correlate to the NPCPanel pickers in the map editor scene
     {
         { 0, "Normal" }, { 1, "SS" }, { 2, "ET" }, { 3, "DTAF" }
@@ -122,9 +124,19 @@ public class PrisonSelect : MonoBehaviour
         bonusPrisonIcons.Add(ds.UIImages[517]);
         bonusPrisonIcons.Add(ds.UIImages[514]);
         bonusPrisonIcons.Add(ds.UIImages[515]);
+        saveTMP = transform.Find("SaveText").GetComponent<TextMeshProUGUI>();
     }
     public void Update()
     {
+        if(npcRenameScript.currentSave != -1)
+        {
+            saveTMP.text = "Save " + (npcRenameScript.currentSave + 1).ToString() + " Selected";
+        }
+        else
+        {
+            saveTMP.text = "No Save Selected";
+        }
+        
         switch (whichTab)
         {
             case 0:
@@ -452,6 +464,7 @@ public class PrisonSelect : MonoBehaviour
             }
             for (int i = 0; i < bonusPrisonPaths.Count; i++)
             {
+                Debug.Log("here");
                 string extractPath = Path.Combine(Application.streamingAssetsPath, "Prisons", "BonusPrisons") + Path.DirectorySeparatorChar;
                 ZipFile.ExtractToDirectory(bonusPrisonPaths[i], extractPath);
                 string[] data = File.ReadAllLines(Path.Combine(extractPath, "Data.ini"));

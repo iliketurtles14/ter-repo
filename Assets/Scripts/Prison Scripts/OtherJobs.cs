@@ -26,10 +26,12 @@ public class OtherJobs : MonoBehaviour //this is for all jobs that arent tied to
         {
             switch (player.GetComponent<PlayerCollectionData>().playerData.job)
             {
+                case "Taskmaster":
                 case "Mailman":
                 case "Library":
                     int id;
-                    if(player.GetComponent<PlayerCollectionData>().playerData.job == "Mailman")
+                    if(player.GetComponent<PlayerCollectionData>().playerData.job == "Mailman" ||
+                        player.GetComponent<PlayerCollectionData>().playerData.job == "Taskmaster")
                     {
                         id = 107;
                     }

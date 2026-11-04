@@ -219,7 +219,7 @@ public class ItemBehaviours : MonoBehaviour
         {
             Deselect();
         }
-        //clearning
+        //clearning (also for poops)
         if(!isBusy && mcs.isTouchingSpill && Input.GetMouseButtonDown(0) && selectedCleaningItem && !barIsMoving)
         {
             float distance = Vector2.Distance(PlayerTransform.position, mcs.touchedSpill.transform.position);

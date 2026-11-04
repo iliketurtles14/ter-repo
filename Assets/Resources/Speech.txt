@@ -1500,6 +1500,10 @@ Gardening=Dream of working in the great outdoors Being at one with nature and al
 Mailman=I hate to be the bearer of bad news, which is why I'm asking you to do it for me.#Collect mail from the mailroom and deliver it to the inmates it's addressed to. You can either give it to them personally or leave it ON (not in) their cell desk.
 Metalshop=The automotive industry is booming! The only booming you will hear is the sound of licence plates being pressed. The harder you work, the sooner I get my sporty little convertible.#Take metal sheets from the container in the metalshop and use them on the presses to create license plates. Put the finished plates in the relevant container.
 Deliveries=What's inside those boxes isn't of concern to you. I just want them moving UNTAMPERED to where they need to go. #Take packages from the delivery truck and place them in the relevant storage containers.
+Manure Control=There's a lot of reindeer on this island, and that means a lot of reindeer poop someone has to clean up. Be that someone!
+Toymaker=The toymaker is tasked with making the toys that Santa will deliver. Except, these Christmas gifts are hardly the amazing presents that kids want.##Still, they're a step up from a lump of coal on Christmas morning!
+Taskmaster=It's all go at Santa's Sweatshop, but without someone to hand out the tasks, it'd all grind to a halt!##Deliver the task lists to the elves so they know exactly what they're doing. They'll hate you for it sure, but hey, don't shoot the messenger!
+Letter Organization=Never have you had so much power at your fingertips in a job role.##Like a festive secretary, it's down to you to sort the nice and nasty letters into their designated places using the new fangled efficiency based system we have set up!
 
 [Help_Buttons]
 0=Controls

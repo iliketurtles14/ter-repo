@@ -268,6 +268,41 @@ public class ApplyMapEditorData : MonoBehaviour
                 obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
             }
         }
+        foreach(Transform obj in uic.Find("SSJobsPanel"))
+        {
+            switch (obj.name)
+            {
+                case "JanitorDesk":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[93];
+                    break;
+                case "SSLetterBags":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[334];
+                    break;
+                case "SSLetterBasket":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[339];
+                    break;
+                case "SSLetterShredder":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[340];
+                    break;
+                case "SSToyBox":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[186];
+                    break;
+                case "SSMailBox":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[204];
+                    break;
+                case "SSToyWoodBox":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[351];
+                    break;
+            }
+        }
+        foreach(Transform obj in uic.Find("SSJobsPanel"))
+        {
+            if(obj.name != "SSJobsText")
+            {
+                obj.GetComponent<Image>().sprite = AddPaddingToSprite(obj.GetComponent<Image>().sprite, 1);
+                obj.GetComponent<RectTransform>().sizeDelta += new Vector2(10f, 10f);
+            }
+        }
         foreach (Transform obj in uic.Find("GymPanel"))
         {
             switch (obj.name)
@@ -654,9 +689,6 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "SSBoxHorizontal":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[333];
                     break;
-                case "SSLetterBags":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[334];
-                    break;
                 case "SSPresent1":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[335];
                     break;
@@ -665,12 +697,6 @@ public class ApplyMapEditorData : MonoBehaviour
                     break;
                 case "SSPresent3":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[337];
-                    break;
-                case "SSLetterBasket":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[339];
-                    break;
-                case "SSLetterShredder":
-                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[340];
                     break;
                 case "SSGuardBedDouble":
                     obj.GetComponent<Image>().sprite = PrisonObjectSprites[343];
@@ -784,6 +810,20 @@ public class ApplyMapEditorData : MonoBehaviour
                 child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
                 child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
                 child.GetComponent<Image>().sprite = UISprites[368];
+            }
+        }
+        //tileset editor panel stuff
+        foreach(Transform child in uic.Find("TilesetPanel"))
+        {
+            if (child.name.Contains("Picker"))
+            {
+                child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+                child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+                child.GetComponent<Image>().sprite = UISprites[368];
+            }
+            else if (child.name.Contains("Checkbox"))
+            {
+                child.GetComponent<Image>().sprite = UISprites[447];
             }
         }
         //job panel checkboxes

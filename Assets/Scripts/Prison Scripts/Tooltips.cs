@@ -1403,6 +1403,15 @@ public class Tooltips : MonoBehaviour
 				case "Freezer":
 					toPrint = "Freezer";
 					break;
+				case "SSToyWoodBox":
+					toPrint = "Wood Box";
+					break;
+				case "SSLetterBags":
+					toPrint = "Letter Sack";
+					break;
+				case "SSMailBox":
+					toPrint = "Task Letters";
+					break;
 				default:
 					if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
 					{
@@ -1445,6 +1454,12 @@ public class Tooltips : MonoBehaviour
 					break;
 				case "Freezer":
 					str = "Freezer";
+					break;
+				case "SSToyWoodBox":
+					str = "Wood Box";
+					break;
+				case "SSLetterBags":
+					str = "Letter Sack";
 					break;
 				default:
 					if (mcs.touchedItemBox.name.StartsWith("DeliveryTruck"))
@@ -1532,6 +1547,15 @@ public class Tooltips : MonoBehaviour
 				case "PlatesBox":
 					toPrint = "License Container";
 					break;
+				case "SSToyBox":
+					toPrint = "Toy Box";
+					break;
+				case "SSLetterShredder":
+					toPrint = "Letter Shredder";
+					break;
+				case "SSLetterBasket":
+					toPrint = "Letter Basket";
+					break;
 			}
 			tooltipType = "jobBox";
 			StartCoroutine(DrawTooltip(toPrint));
@@ -1566,9 +1590,18 @@ public class Tooltips : MonoBehaviour
 				case "PlatesBox":
 					str = "License Container";
 					break;
-			}
+				case "SSToyBox":
+					str = "Toy Box";
+					break;
+                case "SSLetterShredder":
+                    str = "Letter Shredder";
+                    break;
+                case "SSLetterBasket":
+                    str = "Letter Basket";
+                    break;
+            }
 
-			if(str != toPrint)
+            if (str != toPrint)
 			{
 				DestroyTooltip();
 				return;

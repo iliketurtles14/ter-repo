@@ -12,6 +12,7 @@ public class TileSpriteSetter : MonoBehaviour
     public Texture2D devTiles;
     public List<Sprite> sprites = new List<Sprite>();
     public Transform tiles;
+    public Transform uic;
     private void Start()
     {
         SetSprites(devTiles);
@@ -19,6 +20,10 @@ public class TileSpriteSetter : MonoBehaviour
     public void SetSprites(Texture2D tileset)
     {
         foreach(Transform tile in tilesPanel.Find("TileGrid"))
+        {
+            Destroy(tile.gameObject);
+        }
+        foreach(Transform tile in uic.Find("TilesetPanel").Find("TileGrid"))
         {
             Destroy(tile.gameObject);
         }
@@ -32,6 +37,13 @@ public class TileSpriteSetter : MonoBehaviour
             tile.GetComponent<Image>().sprite = sprites[i];
             tile.name = "tile" + i;
             tile.tag = "Button";
+
+            //tileset menu stuff
+            GameObject tile2 = Instantiate(tileObject, uic.Find("TilesetPanel").Find("TileGrid"));
+            tile2.GetComponent<Image>().sprite = sprites[i];
+            tile2.name = "tile" + i;
+            tile2.tag = "Button";
+
             i++;
         }
 

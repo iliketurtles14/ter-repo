@@ -8,9 +8,9 @@ public class ObjectsPanelController : MonoBehaviour
     private Dictionary<int, string> panelNameDict = new Dictionary<int, string> //relates the objectPanelNum to what the panel's name is
     {
         { 0, "WaypointsPanel" }, { 1, "CellsPanel" }, { 2, "SecurityPanel" },
-        { 3, "JobsPanel" }, { 4, "GymPanel" }, { 5, "MiscPanel" }, { 6, "DoorsPanel" },
-        { 7, "ZiplinePanel" }, { 8, "SpecialPanel" }, { 9, "ETPanel" }, { 10, "DTAF1Panel" },
-        { 11, "DTAF2Panel" }, { 12, "Christmas1Panel" }, { 13, "Christmas2Panel" }, { 14, "ItemsPanel" }
+        { 3, "JobsPanel" }, { 4, "SSJobsPanel" }, { 5, "GymPanel" }, { 6, "MiscPanel" }, { 7, "DoorsPanel" },
+        { 8, "ZiplinePanel" }, { 9, "SpecialPanel" }, { 10, "ETPanel" }, { 11, "DTAF1Panel" },
+        { 12, "DTAF2Panel" }, { 13, "Christmas1Panel" }, { 14, "Christmas2Panel" }, { 15, "ItemsPanel" }
     };
     private List<Transform> panelList = new List<Transform>();
     public Transform uic;
@@ -24,7 +24,7 @@ public class ObjectsPanelController : MonoBehaviour
     }
     private void Start()
     {
-        for(int i = 0; i < 15; i++) //lol just didnt wanna code out adding all the panels
+        for(int i = 0; i < 16; i++) //lol just didnt wanna code out adding all the panels
         {
             panelList.Add(uic.Find(panelNameDict[i]));
         }

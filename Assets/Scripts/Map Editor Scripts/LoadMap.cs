@@ -743,7 +743,7 @@ public class LoadMap : MonoBehaviour
         
         List<string> objectPanels = new List<string>
         {
-            "WaypointsPanel", "CellsPanel", "SecurityPanel", "JobsPanel", "GymPanel",
+            "WaypointsPanel", "CellsPanel", "SecurityPanel", "JobsPanel", "SSJobsPanel", "GymPanel",
             "MiscPanel", "DoorsPanel", "ZiplinePanel", "SpecialPanel", "ETPanel", "DTAF1Panel",
             "DTAF2Panel", "Christmas1Panel", "Christmas2Panel", "ItemsPanel"
         };

@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class ItemBoxes : MonoBehaviour
 {
-    MouseCollisionOnItems mcs;
-    ItemDataCreator creator;
-    Inventory inventoryScript;
-    Transform aStar;
-    Transform ic;
-    Transform player;
-    List<GameObject> invSlots = new List<GameObject>();
-    List<string> inmateNames = new List<string>();
+    private MouseCollisionOnItems mcs;
+    private ItemDataCreator creator;
+    private Inventory inventoryScript;
+    private Transform aStar;
+    private Transform ic;
+    private Transform player;
+    private List<GameObject> invSlots = new List<GameObject>();
+    private List<string> inmateNames = new List<string>();
+    private int nextSSToyWoodBoxItem = 215;
+    
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -48,7 +50,7 @@ public class ItemBoxes : MonoBehaviour
         if(mcs.isTouchingItemBox && Input.GetMouseButtonDown(0))
         {
             float distance = Vector2.Distance(player.position, mcs.touchedItemBox.transform.position);
-            if(distance <= 2.4f)
+            if(distance <= 2.4f || (mcs.touchedItemBox.name == "SSLetterBags" && distance <= 5.6f))
             {
                 switch (mcs.touchedItemBox.name)
                 {
@@ -83,6 +85,7 @@ public class ItemBoxes : MonoBehaviour
                     case "Freezer":
                         AddItem(147, false);
                         break;
+                    case "SSMailBox":
                     case "MailBox":
                         AddItem(107, true);
                         break;
@@ -94,6 +97,26 @@ public class ItemBoxes : MonoBehaviour
                         break;
                     case "TimberBox":
                         AddItem(139, false);
+                        break;
+                    case "SSLetterBags":
+                        List<int> items = new List<int> { 200, 197 };
+                        rand = UnityEngine.Random.Range(0, 2);
+                        AddItem(items[rand], false);
+                        break;
+                    case "SSToyWoodBox":
+                        AddItem(nextSSToyWoodBoxItem, false);
+                        if(nextSSToyWoodBoxItem == 215)
+                        {
+                            nextSSToyWoodBoxItem = 163;
+                        }
+                        else if(nextSSToyWoodBoxItem == 163)
+                        {
+                            nextSSToyWoodBoxItem = 215;
+                        }
+                        else
+                        {
+                            nextSSToyWoodBoxItem = 215; //js in case ig
+                        }
                         break;
                 }
             }

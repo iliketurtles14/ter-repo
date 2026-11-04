@@ -1,3 +1,4 @@
+using Pathfinding;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,8 @@ public class JobBoxes : MonoBehaviour
     private Dictionary<string, string> jobContainerDict = new Dictionary<string, string>() //goes from job box to what job its associated with
     {
         { "BlueBox", "Deliveries" }, { "RedBox", "Deliveries" }, { "CleanLaundry", "Laundry" },
-        { "FurnitureBox", "Woodshop" }, { "PlatesBox", "Metalshop" }
+        { "FurnitureBox", "Woodshop" }, { "PlatesBox", "Metalshop" }, { "SSToyBox", "Toymaker" },
+        { "SSLetterBasket", "Letter Organization" }, { "SSLetterShredder", "Letter Organization" }
     };
     private void Start()
     {
@@ -87,6 +89,27 @@ public class JobBoxes : MonoBehaviour
                 break;
             case "PlatesBox":
                 if(id == 182)
+                {
+                    inventoryScript.inventory[invIndex].itemData = null;
+                    denom = 19;
+                }
+                break;
+            case "SSToyBox":
+                if(id == 214 || id == 216 || id == 217 || id == 218)
+                {
+                    inventoryScript.inventory[invIndex].itemData = null;
+                    denom = 10;
+                }
+                break;
+            case "SSLetterBasket":
+                if(id == 200)
+                {
+                    inventoryScript.inventory[invIndex].itemData = null;
+                    denom = 19;
+                }
+                break;
+            case "SSLetterShredder":
+                if(id == 197)
                 {
                     inventoryScript.inventory[invIndex].itemData = null;
                     denom = 19;

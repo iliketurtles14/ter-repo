@@ -12,6 +12,7 @@ public class ReindeerPickup : MonoBehaviour
     private Vector3 offsetVector;
     private BodyController bc;
     private OutfitController oc;
+    private Particles particlesScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -22,6 +23,7 @@ public class ReindeerPickup : MonoBehaviour
         offsetVector = new Vector2(0, .8f);
         bc = player.GetComponent<BodyController>();
         oc = player.GetComponent<OutfitController>();
+        particlesScript = GetComponent<Particles>();
     }
     private void Update()
     {
@@ -65,6 +67,7 @@ public class ReindeerPickup : MonoBehaviour
                     deskStandScript.isPickedUp = false;
                     pickedUpDeer.GetComponent<ReindeerAI>().shouldMove = true;
                     pickedUpDeer = null;
+                    particlesScript.CreateDust(pickedUpDeer.transform.position, 1, "Ground");
                 }
             }
         }

@@ -205,6 +205,54 @@ public class NPCAI : MonoBehaviour
                 timeBetweenPositions = 1;
                 hasNormalJob = true;
                 break;
+            case "Toymaker":
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "SSToyWoodBox")
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if(obj.name == "SSToyBox")
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
+            case "Letter Organization":
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.StartsWith("SSLetterBags"))
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.StartsWith("SSLetterBasket"))
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                foreach(Transform obj in tiles.Find("GroundObjects"))
+                {
+                    if (obj.name.StartsWith("SSLetterShredder"))
+                    {
+                        positions.Add(obj);
+                        break;
+                    }
+                }
+                timeBetweenPositions = 1;
+                hasNormalJob = true;
+                break;
             case "Deliveries":
                 foreach (Transform obj in tiles.Find("GroundObjects"))
                 {
@@ -458,6 +506,59 @@ public class NPCAI : MonoBehaviour
     {
         currentPossibleWaypoints = new List<Transform>();
 
+        //put cases here that dont need to be in the foreach down below (this makes it so that if there are no waypoints at all, the npcs can still do these things :3)
+        //make sure to put `return;` in the `if` statement for the certain period
+        switch (period)
+        {
+            case "W":
+                if (npcType == "Inmate" && !string.IsNullOrEmpty(npcColData.npcData.job) && !isAtJob)
+                {
+                    isFreeWalking = false;
+                    isAtJob = true;
+                    StartCoroutine(InmateJobs());
+                    return;
+                }
+                break;
+            case "LO":
+                if (npcType == "Inmate")
+                {
+                    isFreeWalking = false;
+                    isAtBed = true;
+                    StartCoroutine(InmateBed());
+                    return;
+                }
+                break;
+            case "LD":
+                if (npcType == "Inmate")
+                {
+                    isFreeWalking = false;
+                    isAtLockdown = true;
+                    StartCoroutine(InmateLockdown());
+                    return;
+                }
+                break;
+            case "B":
+            case "L":
+            case "D":
+                if (npcType == "Inmate" && !isInCanteen)
+                {
+                    isFreeWalking = false;
+                    isInCanteen = true;
+                    StartCoroutine(InmateCanteen());
+                    return;
+                }
+                break;
+            case "E":
+                if (npcType == "Inmate" && !isInGym)
+                {
+                    isFreeWalking = false;
+                    isInGym = true;
+                    StartCoroutine(InmateExercise());
+                    return;
+                }
+                break;
+        }
+
         foreach (Transform waypoint in tiles.Find("GroundObjects"))
         {
             if (waypoint.CompareTag("Waypoint"))
@@ -491,21 +592,9 @@ public class NPCAI : MonoBehaviour
                                 currentPossibleWaypoints.Add(waypoint);
                             }
                         }
-                        else if(npcType == "Inmate")
-                        {
-                            isFreeWalking = false;
-                            isAtBed = true;
-                            StartCoroutine(InmateBed());
-                        }
                         break;
                     case "W":
-                        if(npcType == "Inmate" && !string.IsNullOrEmpty(npcColData.npcData.job) && !isAtJob)
-                        {
-                            isFreeWalking = false;
-                            isAtJob = true;
-                            StartCoroutine(InmateJobs());
-                        }
-                        else if(npcType == "Inmate" && string.IsNullOrEmpty(npcColData.npcData.job) && waypoint.name == "InmateWaypoint")
+                        if(npcType == "Inmate" && string.IsNullOrEmpty(npcColData.npcData.job) && waypoint.name == "InmateWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
@@ -517,13 +606,7 @@ public class NPCAI : MonoBehaviour
                         }
                         break;
                     case "LD":
-                        if(npcType == "Inmate")
-                        {
-                            isFreeWalking = false;
-                            isAtLockdown = true;
-                            StartCoroutine(InmateLockdown());
-                        }
-                        else if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
+                        if(npcType == "Guard" && waypoint.name == "GuardWaypoint")
                         {
                             isFreeWalking = true;
                             currentPossibleWaypoints.Add(waypoint);
@@ -550,13 +633,7 @@ public class NPCAI : MonoBehaviour
                     case "B":
                     case "L":
                     case "D":
-                        if (npcType == "Inmate" && !isInCanteen)
-                        {
-                            isFreeWalking = false;
-                            isInCanteen = true;
-                            StartCoroutine(InmateCanteen());
-                        }
-                        else if (npcType == "Guard" && waypoint.name == "GuardCanteen" && isImportantGuard)
+                        if (npcType == "Guard" && waypoint.name == "GuardCanteen" && isImportantGuard)
                         {
                             isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
@@ -568,13 +645,7 @@ public class NPCAI : MonoBehaviour
                         }
                         break;
                     case "E":
-                        if (npcType == "Inmate" && !isInGym)
-                        {
-                            isFreeWalking = false;
-                            isInGym = true;
-                            StartCoroutine(InmateExercise());
-                        }
-                        else if (npcType == "Guard" && waypoint.name == "GuardGym" && isImportantGuard)
+                        if (npcType == "Guard" && waypoint.name == "GuardGym" && isImportantGuard)
                         {
                             isFreeWalking = false;
                             currentPossibleWaypoints.Add(waypoint);
@@ -702,6 +773,11 @@ public class NPCAI : MonoBehaviour
                 canteenPositions.Add(waypoint.position + new Vector3(-1.6f, 0, 0));
                 canteenPositions.Add(waypoint.position + new Vector3(1.6f, 0, 0));
             }
+        }
+
+        if(canteenPositions.Count == 0)
+        {
+            yield break;
         }
 
         //randomly choose one to go to
@@ -882,6 +958,10 @@ public class NPCAI : MonoBehaviour
                     currentEquipmentPos = equipment.position;
                 }
             }
+        }
+        if(currentEquipment == null)
+        {
+            yield break;
         }
         seeker.StartPath(transform.position, currentEquipmentPos);
 
@@ -1536,7 +1616,7 @@ public class NPCAI : MonoBehaviour
                     i = 0;
                     jobQuota++;
                 }
-                else if(i == 1 && job == "Deliveries")
+                else if(i == 1 && (job == "Deliveries" || job == "Letter Organization"))
                 {
                     jobQuota++;
                 }
@@ -1545,7 +1625,6 @@ public class NPCAI : MonoBehaviour
                 if(currentObj != null)
                 {
                     BoxCollider2D currentObjCollider = currentObj.GetComponent<BoxCollider2D>();
-
                     seeker.StartPath(transform.position, currentObj.position);
                     while (true)
                     {
@@ -1581,6 +1660,54 @@ public class NPCAI : MonoBehaviour
         {
             switch (job)
             {
+                case "Manure Control": //come back to tsf
+                    while (true)
+                    {
+                        Transform currentPoop = null;
+                        foreach (Transform obj in tiles.Find("GroundObjects"))
+                        {
+                            if (obj.name == "Poop")
+                            {
+                                currentPoop = obj;
+                                break;
+                            }
+                        }
+
+                        if (currentPoop != null)
+                        {
+                            seeker.StartPath(transform.position, currentPoop.position);
+                            while (true)
+                            {
+                                float distance = Vector2.Distance(transform.position, currentPoop.position);
+                                if (distance < .8f)
+                                {
+                                    seeker.CancelCurrentPathRequest(true);
+                                    break;
+                                }
+                                yield return null;
+                            }
+                            float time = 0f;
+                            while (time < 2f)
+                            {
+                                if (!isAtJob)
+                                {
+                                    yield break;
+                                }
+                                time += Time.deltaTime;
+                                yield return null;
+                            }
+                            Destroy(currentPoop.gameObject);
+                            weedScript.poopAmount--;
+                            jobQuota++;
+                        }
+
+                        if (!isAtJob)
+                        {
+                            break;
+                        }
+                        yield return null;
+                    }
+                    break;
                 case "Janitor":
                     while (true)
                     {
@@ -1754,10 +1881,12 @@ public class NPCAI : MonoBehaviour
                     }
                     break;
                 case "Mailman":
+                case "Taskmaster":
                     Transform mailBoxPos = null;
                     foreach(Transform obj in tiles.Find("GroundObjects"))
                     {
-                        if(obj.name == "MailBox")
+                        if((job == "Mailman" && obj.name == "MailBox") || 
+                            (job == "Taskmaster" && obj.name == "SSMailBox"))
                         {
                             mailBoxPos = obj;
                             break;

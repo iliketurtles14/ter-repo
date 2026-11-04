@@ -74,7 +74,7 @@ public class DeskRNG : MonoBehaviour
         { "Banned Camp", new List<int>() { 5, 15, 20, 20, 30, 10 } },
         { "London Tower", new List<int>() { 5, 15, 20, 20, 30, 10 } },
         { "Paris Central Pen", new List<int>() { 5, 15, 20, 20, 30, 10 } },
-        { "Santas Sweatshop", new List<int>() { 5, 15, 20, 20, 30, 10 } },
+        { "Santa's Sweatshop", new List<int>() { 5, 15, 20, 20, 30, 10 } },
         { "Duct Tapes Are Forever", new List<int>() { 10, 15, 20, 20, 30, 5 } },
         { "Escape Team", new List<int>() { 5, 10, 15, 30, 30, 10 } },
         { "Alcatraz", new List<int>() { 5, 10, 15, 25, 25, 20 } },

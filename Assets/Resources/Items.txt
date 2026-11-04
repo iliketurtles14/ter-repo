@@ -3953,7 +3953,7 @@ Defense=-1
 Strength=-1
 Opinion=0
 CameraBlock=-1
-Sprite=153
+Sprite=253
 
 [164]
 Name=Cork

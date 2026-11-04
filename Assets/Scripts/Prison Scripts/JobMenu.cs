@@ -22,7 +22,8 @@ public class JobMenu : MonoBehaviour
     private Dictionary<string, int> jobIntDict = new Dictionary<string, int>() //compares a job to its required intellect
     {
         { "Janitor", 10 }, { "Gardening", 20 }, { "Tailor", 30 }, { "Laundry", 30 }, { "Library", 40 },
-        { "Kitchen", 40 }, { "Mailman", 50 }, { "Woodshop", 50 }, { "Deliveries", 60 }, { "Metalshop", 70 }
+        { "Kitchen", 40 }, { "Mailman", 50 }, { "Woodshop", 50 }, { "Deliveries", 60 }, { "Metalshop", 70 },
+        { "Toymaker", 50 }, { "Taskmaster", 50 }, { "Letter Organization", 60 }, { "Manure Control", 10 }
     };
     private void Start()
     {
@@ -272,6 +273,22 @@ public class JobMenu : MonoBehaviour
         if (currentMap.kitchen)
         {
             availableJobs.Add("Kitchen");
+        }
+        if (currentMap.letter)
+        {
+            availableJobs.Add("Letter Organization");
+        }
+        if (currentMap.taskmaster)
+        {
+            availableJobs.Add("Taskmaster");
+        }
+        if (currentMap.toymaker)
+        {
+            availableJobs.Add("Toymaker");
+        }
+        if (currentMap.manure)
+        {
+            availableJobs.Add("Manure Control");
         }
 
         Transform content = transform.Find("JobScrollRect").Find("Viewport").Find("Content");

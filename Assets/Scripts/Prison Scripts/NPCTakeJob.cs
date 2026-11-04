@@ -11,7 +11,8 @@ public class NPCTakeJob : MonoBehaviour
     private Dictionary<string, int> jobQuotaDict = new Dictionary<string, int>
     {
         { "Janitor", 5 }, { "Gardening", 5 }, { "Mailman", 3 }, { "Library", 3 }, { "Laundry", 15 },
-        { "Deliveries", 7 }, { "Kitchen", 10 }, { "Tailor", 15 }, { "Woodshop", 15 }, { "Metalshop", 10 }
+        { "Deliveries", 7 }, { "Kitchen", 10 }, { "Tailor", 15 }, { "Woodshop", 15 }, { "Metalshop", 10 },
+        { "Letter Organization", 7 }, { "Taskmaster", 3 }, { "Toymaker", 15 }, { "Manure Control", 5 }
     };
     private void Start()
     {

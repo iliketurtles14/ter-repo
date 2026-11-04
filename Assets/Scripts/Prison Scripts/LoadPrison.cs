@@ -1829,6 +1829,7 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[95];
                         break;
                     case "MailBox":
+                    case "SSMailBox":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[204];
                         break;
                     case "TailorBox":
@@ -1850,6 +1851,7 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[87];
                         break;
                     case "FurnitureBox":
+                    case "SSToyBox":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[186];
                         break;
                     case "DeliveryTruckUp":
@@ -2561,56 +2563,20 @@ public class LoadPrison : MonoBehaviour
             }
         }
         string startingJob = GetINIVar("Jobs", "StartingJob", data);
-        bool janitor = false;
-        bool gardening = false;
-        bool laundry = false;
-        bool kitchen = false;
-        bool tailor = false;
-        bool woodshop = false;
-        bool metalshop = false;
-        bool deliveries = false;
-        bool mailman = false;
-        bool library = false;
-        if (GetINIVar("Properties", "Janitor", data) == "True")
-        {
-            janitor = true;
-        }
-        if (GetINIVar("Properties", "Gardening", data) == "True")
-        {
-            gardening = true;
-        }
-        if (GetINIVar("Properties", "Laundry", data) == "True")
-        {
-            laundry = true;
-        }
-        if (GetINIVar("Properties", "Kitchen", data) == "True")
-        {
-            kitchen = true;
-        }
-        if (GetINIVar("Properties", "Tailor", data) == "True")
-        {
-            tailor = true;
-        }
-        if (GetINIVar("Properties", "Woodshop", data) == "True")
-        {
-            woodshop = true;
-        }
-        if (GetINIVar("Properties", "Metalshop", data) == "True")
-        {
-            metalshop = true;
-        }
-        if (GetINIVar("Properties", "Deliveries", data) == "True")
-        {
-            deliveries = true;
-        }
-        if (GetINIVar("Properties", "Mailman", data) == "True")
-        {
-            mailman = true;
-        }
-        if (GetINIVar("Properties", "Library", data) == "True")
-        {
-            library = true;
-        }
+        bool janitor = GetINIVar("Properties", "Janitor", data) == "True";
+        bool gardening = GetINIVar("Properties", "Gardening", data) == "True";
+        bool laundry = GetINIVar("Properties", "Laundry", data) == "True";
+        bool kitchen = GetINIVar("Properties", "Kitchen", data) == "True";
+        bool tailor = GetINIVar("Properties", "Tailor", data) == "True";
+        bool woodshop = GetINIVar("Properties", "Woodshop", data) == "True";
+        bool metalshop = GetINIVar("Properties", "Metalshop", data) == "True";
+        bool deliveries = GetINIVar("Properties", "Deliveries", data) == "True";
+        bool mailman = GetINIVar("Properties", "Mailman", data) == "True";
+        bool library = GetINIVar("Properties", "Library", data) == "True";
+        bool letter = GetINIVar("Properties", "LetterOrganization", data) == "True";
+        bool toymaker = GetINIVar("Properties", "Toymaker", data) == "True";
+        bool taskmaster = GetINIVar("Properties", "Taskmaster", data) == "True";
+        bool manure = GetINIVar("Properties", "ManureControl", data) == "True";
         List<int[]> tilesList = new List<int[]>();
         List<string> groundTiles = GetINISet("GroundTiles", data);
         List<string> undergroundTiles = GetINISet("UndergroundTiles", data);
@@ -2803,7 +2769,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, tilesList, objNames, objVars, zoneNames, zoneVars);
+        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

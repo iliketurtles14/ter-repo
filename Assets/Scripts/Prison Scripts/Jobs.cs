@@ -29,7 +29,8 @@ public class Jobs : MonoBehaviour
     {
         { "Janitor", 5 }, { "Gardening", 10 }, { "Tailor", 15 }, { "Laundry", 20 },
         { "Library", 25 }, { "Kitchen", 30 }, { "Mailman", 35 }, { "Woodshop", 40 },
-        { "Deliveries", 45 }, { "Metalshop", 50 }
+        { "Deliveries", 45 }, { "Metalshop", 50 }, { "Letter Organization", 45 },
+        { "Taskmaster", 35 }, { "Toymaker", 40 }, { "Manure Control", 5 }
     };
     private void Start()
     {

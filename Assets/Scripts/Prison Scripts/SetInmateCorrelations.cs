@@ -65,6 +65,10 @@ public class SetInmateCorrelations : MonoBehaviour //this is for correlations wi
                 float distance = Vector2.Distance(bed.position, desk.position);
                 distances.Add(distance);
             }
+            if(distances.Count == 0)
+            {
+                return;
+            }
             float lowestDistance = distances.Min();
             foreach(Transform desk in desks)
             {

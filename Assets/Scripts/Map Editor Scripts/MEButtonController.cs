@@ -282,6 +282,18 @@ public class MEButtonController : MonoBehaviour
                 case "LibraryCheckbox":
                     smc.library = false;
                     break;
+                case "ManureControlCheckbox":
+                    smc.manure = false;
+                    break;
+                case "TaskmasterCheckbox":
+                    smc.taskmaster = false;
+                    break;
+                case "LetterOrganizationCheckbox":
+                    smc.letter = false;
+                    break;
+                case "ToymakerCheckbox":
+                    smc.toymaker = false;
+                    break;
                 case "SnowingCheckbox":
                     smc.snowing = false;
                     break;
@@ -334,6 +346,18 @@ public class MEButtonController : MonoBehaviour
                     break;
                 case "LibraryCheckbox":
                     smc.library = true;
+                    break;
+                case "ManureControlCheckbox":
+                    smc.manure = true;
+                    break;
+                case "TaskmasterCheckbox":
+                    smc.taskmaster = true;
+                    break;
+                case "LetterOrganizationCheckbox":
+                    smc.letter = true;
+                    break;
+                case "ToymakerCheckbox":
+                    smc.toymaker = true;
                     break;
                 case "SnowingCheckbox":
                     smc.snowing = true;
@@ -667,14 +691,14 @@ public class MEButtonController : MonoBehaviour
         GetComponent<ObjectsPanelController>().objectPanelNum--;
         if(GetComponent<ObjectsPanelController>().objectPanelNum < 0)
         {
-            GetComponent<ObjectsPanelController>().objectPanelNum = 14;
+            GetComponent<ObjectsPanelController>().objectPanelNum = 15;
         }
         sc.PlaySound("plip");
     }
     public void ObjectsRight()
     {
         GetComponent<ObjectsPanelController>().objectPanelNum++;
-        if(GetComponent<ObjectsPanelController>().objectPanelNum > 14)
+        if(GetComponent<ObjectsPanelController>().objectPanelNum > 15)
         {
             GetComponent<ObjectsPanelController>().objectPanelNum = 0;
         }
@@ -941,6 +965,31 @@ public class MEButtonController : MonoBehaviour
         uic.Find("AdvancedHelpPanel").gameObject.SetActive(false);
         sc.PlaySound("close");
     }
+    public void TilesetClose()
+    {
+        StartCoroutine(TilesetCloseWait());
+    }
+    private IEnumerator TilesetCloseWait()
+    {
+        yield return new WaitForEndOfFrame();
+        uic.Find("Black").gameObject.SetActive(false);
+        uic.Find("TilesetPanel").gameObject.SetActive(false);
+        sc.PlaySound("close");
+    }
+    public void TilesetHelp()
+    {
+        //hi
+    }
+    public void TilesetAddPreset()
+    {
+        //hi
+    }
+    public void TilesEdit()
+    {
+        uic.Find("Black").gameObject.SetActive(true);
+        uic.Find("TilesetPanel").gameObject.SetActive(true);
+        sc.PlaySound("open");
+    }
     public void Origin()
     {
         camera.position = new Vector3(((gridScript.sizeX * 1.6f) / 2f) - .8f, ((gridScript.sizeY * 1.6f) / 2f) - .8f, -1);
@@ -958,7 +1007,7 @@ public class MEButtonController : MonoBehaviour
         {
             "TilesPanel", "PropertiesPanel", "ZonesPanel",
             "FilePanel", "AdvancedPanel", "WaypointsPanel",
-            "CellsPanel", "SecurityPanel", "JobsPanel",
+            "CellsPanel", "SecurityPanel", "JobsPanel", "SSJobsPanel",
             "GymPanel", "MiscPanel", "DoorsPanel",
             "ZiplinePanel", "SpecialPanel", "ETPanel",
             "DTAF1Panel", "DTAF2Panel", "Christmas1Panel",

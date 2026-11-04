@@ -108,6 +108,38 @@ public class JobPanelController : MonoBehaviour
         {
             uic.Find("JobPanel").Find("CheckBoxGrid2").Find("LibraryCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
         }
+        if (smc.letter)
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid2").Find("LetterOrganizationCheckbox").GetComponent<Image>().sprite = checkedSprite;
+        }
+        else
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid2").Find("LetterOrganizationCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
+        }
+        if (smc.toymaker)
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid1").Find("ToymakerCheckbox").GetComponent<Image>().sprite = checkedSprite;
+        }
+        else
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid1").Find("ToymakerCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
+        }
+        if (smc.taskmaster)
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid2").Find("TaskmasterCheckbox").GetComponent<Image>().sprite = checkedSprite;
+        }
+        else
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid2").Find("TaskmasterCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
+        }
+        if (smc.manure)
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid1").Find("ManureControlCheckbox").GetComponent<Image>().sprite = checkedSprite;
+        }
+        else
+        {
+            uic.Find("JobPanel").Find("CheckBoxGrid1").Find("ManureControlCheckbox").GetComponent<Image>().sprite = uncheckedSprite;
+        }
         if (smc.snowing)
         {
             uic.Find("ExtrasPanel").Find("SnowingCheckbox").GetComponent<Image>().sprite = checkedSprite;

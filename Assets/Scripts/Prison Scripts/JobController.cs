@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using UnityEngine;
 
 public class JobController : MonoBehaviour
@@ -71,6 +72,22 @@ public class JobController : MonoBehaviour
         {
             availableJobs.Add("Metalshop");
         }
+        if (map.letter)
+        {
+            availableJobs.Add("Letter Organization");
+        }
+        if (map.taskmaster)
+        {
+            availableJobs.Add("Taskmaster");
+        }
+        if (map.toymaker)
+        {
+            availableJobs.Add("Toymaker");
+        }
+        if (map.manure)
+        {
+            availableJobs.Add("Manure Control");
+        }
 
         for(int i = 0; i < availableJobs.Count; i++)
         {
@@ -83,7 +100,7 @@ public class JobController : MonoBehaviour
 
         foreach(Transform npc in aStar)
         {
-            if(availableJobs.Count > 0 && !npc.GetComponent<NPCCollectionData>().npcData.isGuard)
+            if(availableJobs.Count > 0 && npc.name.Contains("Inmate"))
             {
                 int rand = UnityEngine.Random.Range(0, availableJobs.Count);
                 npc.GetComponent<NPCCollectionData>().npcData.job = availableJobs[rand];
