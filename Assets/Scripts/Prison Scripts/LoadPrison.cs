@@ -69,6 +69,7 @@ public class LoadPrison : MonoBehaviour
         { 0, "Normal" }, { 1, "Santa" }, { 2, "Ringmaster" }, { 3, "Villain" }
     };
     //these dictionaries compare the tile ID to what tile it should be based on the prison
+    /*
     private Dictionary<int, string> perksDict = new Dictionary<int, string>()
     {
         { 0, "inFloor" }, { 1, "inFloor" }, { 2, "inFloor" }, { 3, "obstacle" },
@@ -601,7 +602,7 @@ public class LoadPrison : MonoBehaviour
         { 92, "obstNoShad" }, { 93, "obstNoShad" }, { 94, "obstNoShad" }, { 95, "obstNoShad" },
         { 96, "obstNoShad" }, { 97, "obstNoShad" }, { 98, "obstNoShad" }, { 99, "obstNoShad" }
     };
-
+    */
     private GetGivenData givenDataScript;
     private DataSender dataSenderScript;
 

@@ -26,8 +26,13 @@ public class ExportMap : MonoBehaviour
 
     public void Export()
     {
+        SubMenuController smc = GetComponent<SubMenuController>();
         text = "";
         SetProperties();
+        if (smc.customTileAttributes)
+        {
+            SetCustomTileAttributes();
+        }
         SetRoutine();
         SetJobs();
         SetTiles();
@@ -72,6 +77,7 @@ public class ExportMap : MonoBehaviour
         text += "NPCOutfit=" + npc.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "PlayerCharacter=" + npc.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
         text += "PlayerOutfit=" + npc.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex.ToString() + "\n";
+        text += "CustomTileAttributes=" + subMenuControllerScript.customTileAttributes + "\n";
 
         //set the mapSize variable for empty tile placing
         string sizeStr = properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text;
@@ -79,6 +85,17 @@ public class ExportMap : MonoBehaviour
         int sizeX = Convert.ToInt32(sizeParts[0]);
         int sizeY = Convert.ToInt32(sizeParts[1]);
         mapSize = new Vector2(sizeX, sizeY);
+    }
+    private void SetCustomTileAttributes()
+    {
+        text += "\n";
+        text += "[TileAttributes]\n";
+        METilesetMenu tm = uic.Find("TilesetPanel").GetComponent<METilesetMenu>();
+        for(int i = 0; i < 100; i++)
+        {
+            Tile tile = tm.tileList[i];
+            text += "tile" + i.ToString() + "=" + tile.type.ToString() + ";" + tile.roofLedgeType.ToString() + ";" + tile.roofFloorHeight.ToString() + ";" + tile.drawsShads + ";" + tile.drawAbovePlayer + ";" + tile.canPath + ";" + tile.belowShads + ";" + tile.seeThrough + ";" + tile.isBroken + "\n";
+        }
     }
     private void SetRoutine()
     {

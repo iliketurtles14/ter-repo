@@ -174,6 +174,10 @@ public class LoadMap : MonoBehaviour
         groundsParent.GetComponent<GroundSizeSet>().SetSize();
 
         LoadZones();
+
+        // vv keep at bottom vv
+        SubMenuController smc = GetComponent<SubMenuController>();
+        smc.RenewCheckboxes();
     }
     private Sprite ConvertPNGToSprite(string path)
     {
@@ -295,6 +299,44 @@ public class LoadMap : MonoBehaviour
         npcPanel.Find("NPCOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data));
         npcPanel.Find("PlayerBodyPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data));
         npcPanel.Find("PlayerOutfitPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data));
+
+        Transform tilesPanel = uic.Find("TilesPanel");
+        try //if a prison is old and doesnt have this
+        {
+            smc.customTileAttributes = GetINIVar("Properties", "CustomTileAttributes", data) == "True";
+        }
+        catch
+        {
+            smc.customTileAttributes = false;
+        }
+
+        if (smc.customTileAttributes)
+        {
+            METilesetMenu tm = uic.Find("TilesetPanel").GetComponent<METilesetMenu>();
+            List<Tile> tileList = new List<Tile>();
+            for (int k = 0; k < 100; k++) //i and j are already used... :sob:
+            {
+                string rawTileData = GetINIVar("TileAttributes", "tile" + k.ToString(), data);
+                string[] tileData = rawTileData.Split(";");
+                int type = Convert.ToInt32(tileData[0]);
+                int roofLedgeType = Convert.ToInt32(tileData[1]);
+                int roofFloorHeight = Convert.ToInt32(tileData[2]);
+                bool drawsShads = tileData[3] == "True";
+                bool drawAbovePlayer = tileData[4] == "True";
+                bool canPath = tileData[5] == "True";
+                bool belowShads = tileData[6] == "True";
+                bool seeThrough = tileData[7] == "True";
+                bool isBroken = tileData[8] == "True";
+                Tile tile = new Tile(type, roofLedgeType, roofFloorHeight, drawsShads, drawAbovePlayer, canPath, belowShads, seeThrough, isBroken);
+                tileList.Add(tile);
+            }
+            tm.tileList = tileList;
+        }
+        else
+        {
+            METilesetMenu tm = uic.Find("TilesetPanel").GetComponent<METilesetMenu>();
+            tm.tileList = null;
+        }
     }
     private void DeleteTiles()
     {

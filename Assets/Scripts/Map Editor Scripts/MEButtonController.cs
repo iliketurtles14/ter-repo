@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -306,7 +307,7 @@ public class MEButtonController : MonoBehaviour
                 case "PerksMessagesCheckbox":
                     smc.perksMsgs = false;
                     break;
-                case "Tutorial":
+                case "TutorialCheckbox":
                     smc.tutorial = false;
                     break;
             }
@@ -377,7 +378,20 @@ public class MEButtonController : MonoBehaviour
             }
         }
 
-        if(clicked.name == "FunctionlessCheckbox" && objectPlacerScript.placeFunctionless)
+        if(clicked.name == "CustomCheckbox" && smc.customTileAttributes)
+        {
+            clicked.GetComponent<Image>().sprite = RemoveBottomTwoRows(smc.uncheckedBoxSprite);
+            smc.customTileAttributes = false;
+            uic.Find("TilesPanel").Find("EditButton").gameObject.SetActive(false);
+        }
+        else if(clicked.name == "CustomCheckbox" && !smc.customTileAttributes)
+        {
+            clicked.GetComponent<Image>().sprite = RemoveBottomTwoRows(smc.checkedBoxSprite);
+            smc.customTileAttributes = true;
+            uic.Find("TilesPanel").Find("EditButton").gameObject.SetActive(true);
+        }
+
+        if (clicked.name == "FunctionlessCheckbox" && objectPlacerScript.placeFunctionless)
         {
             clicked.GetComponent<Image>().sprite = MakeColorTransparent(smc.uncheckedBoxSprite, new Color(51f / 255f, 51f / 255f, 51f / 255f));
             objectPlacerScript.placeFunctionless = false;
@@ -1434,6 +1448,44 @@ public class MEButtonController : MonoBehaviour
                 source.pivot.y / source.rect.height
             ),
             source.pixelsPerUnit
+        );
+    }
+    private Sprite RemoveBottomTwoRows(Sprite original) //ts ai
+    {
+        Texture2D texture = original.texture;
+
+        // Get the sprite's pixels (accounting for its position in the texture atlas)
+        Rect rect = original.textureRect;
+        Color[] pixels = texture.GetPixels(
+            (int)rect.x,
+            (int)rect.y,
+            (int)rect.width,
+            (int)rect.height
+        );
+
+        int width = (int)rect.width;
+        int height = (int)rect.height;
+
+        // Make the bottom two rows transparent
+        for (int y = 0; y < 2 && y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                pixels[y * width + x].a = 0f;
+            }
+        }
+
+        // Create a new texture and sprite
+        Texture2D newTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        newTexture.filterMode = FilterMode.Point;
+        newTexture.SetPixels(pixels);
+        newTexture.Apply();
+
+        return Sprite.Create(
+            newTexture,
+            new Rect(0, 0, width, height),
+            original.pivot / new Vector2(width, height),
+            original.pixelsPerUnit
         );
     }
 }

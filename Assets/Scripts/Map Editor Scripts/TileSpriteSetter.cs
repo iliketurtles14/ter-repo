@@ -42,7 +42,7 @@ public class TileSpriteSetter : MonoBehaviour
             GameObject tile2 = Instantiate(tileObject, uic.Find("TilesetPanel").Find("TileGrid"));
             tile2.GetComponent<Image>().sprite = sprites[i];
             tile2.name = "tile" + i;
-            tile2.tag = "Button";
+            tile2.tag = "EditTile";
 
             i++;
         }

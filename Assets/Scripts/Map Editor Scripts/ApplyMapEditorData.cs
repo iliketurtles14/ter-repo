@@ -794,6 +794,8 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("ItemsPanel").Find("Item").GetComponent<RectTransform>().sizeDelta += new Vector2(10, 10);
         //npc panel stuff
         uic.Find("NPCPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
+        //tile panel stuff
+        uic.Find("TilesPanel").Find("CustomCheckbox").GetComponent<Image>().sprite = RemoveBottomTwoRows(UISprites[447]);
         foreach (Transform child in uic.Find("NPCPanel"))
         {
             if (child.name.Contains("Picker"))
@@ -901,6 +903,44 @@ public class ApplyMapEditorData : MonoBehaviour
                 source.pivot.y / source.rect.height
             ),
             source.pixelsPerUnit
+        );
+    }
+    private Sprite RemoveBottomTwoRows(Sprite original) //ts ai
+    {
+        Texture2D texture = original.texture;
+
+        // Get the sprite's pixels (accounting for its position in the texture atlas)
+        Rect rect = original.textureRect;
+        Color[] pixels = texture.GetPixels(
+            (int)rect.x,
+            (int)rect.y,
+            (int)rect.width,
+            (int)rect.height
+        );
+
+        int width = (int)rect.width;
+        int height = (int)rect.height;
+
+        // Make the bottom two rows transparent
+        for (int y = 0; y < 2 && y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                pixels[y * width + x].a = 0f;
+            }
+        }
+
+        // Create a new texture and sprite
+        Texture2D newTexture = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        newTexture.filterMode = FilterMode.Point;
+        newTexture.SetPixels(pixels);
+        newTexture.Apply();
+
+        return Sprite.Create(
+            newTexture,
+            new Rect(0, 0, width, height),
+            original.pivot / new Vector2(width, height),
+            original.pixelsPerUnit
         );
     }
 }

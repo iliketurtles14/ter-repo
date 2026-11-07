@@ -10,6 +10,7 @@ public class TilePlacer : MonoBehaviour
     public LayerController layerControllerScript;
     public bool inDeleteMode = false;
     public string layer;
+    public Transform uic;
     private void Start()
     {
         foreach(Transform layer in tiles)
@@ -44,21 +45,8 @@ public class TilePlacer : MonoBehaviour
                 break;
         }
 
-        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones")
+        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones" && !uic.Find("TilesetPanel").gameObject.activeInHierarchy)
         {
-            //foreach(Transform tile in tiles.Find(layer))
-            //{
-            //    if(tile.position == highlight.position)
-            //    {
-            //        canPlace = false;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        canPlace = true;
-            //    }
-            //}
-
             PlaceTile(layer, GetComponent<TileSelect>().selectedTile);
         }
 

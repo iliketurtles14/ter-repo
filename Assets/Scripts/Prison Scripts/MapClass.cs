@@ -70,6 +70,7 @@ public class Map
     public List<float[]> objVars; //[posx],[posy],[layer]
     public List<string> zoneNames;
     public List<float[]> zoneVars; //[posx],[posy],[sizex],[sizey]
+    public List<Tile> tilesetData;
 
     public Map(
         string fileName,
@@ -135,7 +136,8 @@ public class Map
         List<string> objNames,
         List<float[]> objVars,
         List<string> zoneNames,
-        List<float[]> zoneVars
+        List<float[]> zoneVars,
+        List<Tile> tilesetData
     )
     {
         this.fileName = fileName;
@@ -202,5 +204,6 @@ public class Map
         this.zoneNames = zoneNames;
         this.zoneVars = zoneVars;
         this.itemAmount = itemAmount;
+        this.tilesetData = tilesetData;
     }
 }

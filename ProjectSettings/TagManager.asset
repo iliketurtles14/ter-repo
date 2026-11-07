@@ -112,6 +112,7 @@ TagManager:
   - IDNPC
   - Stash
   - Reindeer
+  - EditTile
   layers:
   - Default
   - TransparentFX
