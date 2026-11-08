@@ -68,6 +68,11 @@ public class LoadPrison : MonoBehaviour
     {
         { 0, "Normal" }, { 1, "Santa" }, { 2, "Ringmaster" }, { 3, "Villain" }
     };
+    private List<string> prisonNames = new List<string> //without tutorial
+    {
+        "perks", "stalag", "shankton", "jungle", "sanpancho", "irongate", "JC", "BC", "london", "PCP", "SS", "DTAF", "ET", "alca", "fhurst",
+        "epsilon", "bamford"
+    };
     //these dictionaries compare the tile ID to what tile it should be based on the prison
     /*
     private Dictionary<int, string> perksDict = new Dictionary<int, string>()
@@ -641,70 +646,6 @@ public class LoadPrison : MonoBehaviour
         
         currentMap = MakeMapObject(dataSenderScript.currentMapPath);
 
-
-        Dictionary<int, string> currentTileDict;
-        currentTileDict = customDict;
-        switch (currentMap.tilesetStr)
-        {
-            case "perks":
-                currentTileDict = perksDict;
-                break;
-            case "stalag":
-                currentTileDict = stalagDict;
-                break;
-            case "shankton":
-                currentTileDict = shanktonDict;
-                break;
-            case "jungle":
-                currentTileDict = jungleDict;
-                break;
-            case "sanpancho":
-                currentTileDict = panchoDict;
-                break;
-            case "irongate":
-                currentTileDict = hmpDict;
-                break;
-            case "JC":
-                currentTileDict = jingleDict;
-                break;
-            case "BC":
-                currentTileDict = bcDict;
-                break;
-            case "london":
-                currentTileDict = tolDict;
-                break;
-            case "PCP":
-                currentTileDict = pcpDict;
-                break;
-            case "SS":
-                currentTileDict = ssDict;
-                break;
-            case "DTAF":
-                currentTileDict = dtafDict;
-                break;
-            case "ET":
-                currentTileDict = etDict;
-                break;
-            case "alca":
-                currentTileDict = alcaDict;
-                break;
-            case "fhurst":
-                currentTileDict = fhurstDict;
-                break;
-            case "epsilon":
-                currentTileDict = epsilonDict;
-                break;
-            case "bamford":
-                currentTileDict = bamfordDict;
-                break;
-            case "tutorial":
-                currentTileDict = tutorialDict;
-                break;
-            case "Custom":
-                currentTileDict = customDict;
-                break;
-        }
-
         bool isLoading = false;
         if (DataSender.instance.currentSave != -1 && File.Exists(System.IO.Path.Combine(Application.streamingAssetsPath, "Saves", "Save" + DataSender.instance.currentSave.ToString() + ".ini")))
         {
@@ -712,14 +653,14 @@ public class LoadPrison : MonoBehaviour
         }
 
         SetGround();
-        SetTiles(currentTileDict);
+        SetTiles();
         SetObjects();
         if (!isLoading)
         {
             SetItems();
         }
         SetFunctionlessItems();
-        SetShadows(currentTileDict);
+        SetShadows();
         //doing zones now !!! >:3
         SetZones();
         SetUndergroundDirt();
@@ -860,25 +801,17 @@ public class LoadPrison : MonoBehaviour
         }
 
     }
-    private void SetShadows(Dictionary<int, string> tileDict)
+    private void SetShadows()
     {
         int sizeX = currentMap.sizeX;
         int sizeY = currentMap.sizeY;
         char[,] shadArr = new char[sizeX, sizeY];
         char[,] roofShadArr = new char[sizeX, sizeY];
 
-        List<string> tTypes = new List<string>()
-        {
-            "chip", "cut", "elec", "bar", "obstacle", "horiLedge", "vertLedge", "horiWall", "vertWall"
-        };
         List<string> eTypes = new List<string>()
         {
             "WorkDoor", "BlankDoor", "WhiteDoor", "GuardDoor", "StaffDoor", "EnteranceDoor",
             "CellDoor", "UtilityDoor"
-        };
-        List<string> oTypes = new List<string>() //for the roof
-        {
-            "inFloor", "outFloor", "highFloor", "medFloor", "lowFloor"
         };
 
         // fill with o
@@ -896,6 +829,73 @@ public class LoadPrison : MonoBehaviour
             for(int y = 0; y < sizeY; y++)
             {
                 roofShadArr[x, y] = 'd';
+            }
+        }
+
+
+        // tiels
+
+        /*
+         * 't' - casts shadows and is above shadows
+         * 'd' - doesnt cast shadows and is above shadows
+         * 'o' - doesnt cast shadows and is below shadows
+         * 'g' - does cast shadows and is below shadows
+         * 'e' - doors (does cast shadows and makes a full shad at it)
+         * 
+         * (shads)
+         * 'f' - full shad
+         * 'b' - bottom shad
+         * 'r' - right shad
+        */
+        foreach (int[] tileVars in currentMap.tilesList)
+        {
+            if (tileVars[0] == 100)
+            {
+                continue;
+            }
+            
+            Tile tileObj = currentMap.tilesetData[tileVars[0]];
+
+            int x = tileVars[1] - 1;
+            int y = tileVars[2] - 1;
+
+            if (tileVars[3] == 1 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //ground
+            {
+                if (tileObj.drawsShads && !tileObj.belowShads)
+                {
+                    shadArr[x, y] = 't';
+                }
+                else if (!tileObj.drawsShads && !tileObj.belowShads)
+                {
+                    shadArr[x, y] = 'd';
+                }
+                else if(tileObj.drawsShads && tileObj.belowShads)
+                {
+                    shadArr[x, y] = 'g';
+                }
+                else if(!tileObj.drawsShads && tileObj.belowShads)
+                {
+                    shadArr[x, y] = 'o';
+                }
+            }
+            if (tileVars[3] == 3 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //roof
+            {
+                if (tileObj.drawsShads && !tileObj.belowShads)
+                {
+                    roofShadArr[x, y] = 't';
+                }
+                else if (!tileObj.drawsShads && !tileObj.belowShads)
+                {
+                    roofShadArr[x, y] = 'd';
+                }
+                else if (tileObj.drawsShads && tileObj.belowShads)
+                {
+                    roofShadArr[x, y] = 'g';
+                }
+                else if (!tileObj.drawsShads && tileObj.belowShads)
+                {
+                    roofShadArr[x, y] = 'o';
+                }
             }
         }
 
@@ -923,72 +923,28 @@ public class LoadPrison : MonoBehaviour
             }
         }
 
-        // tiels
-        foreach (int[] tileVars in currentMap.tilesList)
-        {
-            int x = tileVars[1] - 1;
-            int y = tileVars[2] - 1;
-
-            if (tileVars[3] == 1 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //ground
-            {
-                if (tileVars[0] != 100 && tTypes.Contains(tileDict[tileVars[0]]))
-                {
-                    shadArr[x, y] = 't';
-                }
-                else if (tileVars[0] != 100 && tileDict[tileVars[0]] == "obstNoShad")
-                {
-                    shadArr[x, y] = 'd';
-                }
-            }
-            if (tileVars[3] == 3 && x >= 0 && x < sizeX && y >= 0 && y < sizeY) //roof
-            {
-                if (tileVars[0] != 100 && tTypes.Contains(tileDict[tileVars[0]]))
-                {
-                    roofShadArr[x, y] = 't';
-                }
-                else if (tileVars[0] != 100 && tileDict[tileVars[0]] == "obstNoShad")
-                {
-                    roofShadArr[x, y] = 'd';
-                }
-                else if (tileVars[0] != 100 && oTypes.Contains(tileDict[tileVars[0]]))
-                {
-                    roofShadArr[x, y] = 'o';
-                }
-            }
-        }
-
-        //System.Text.StringBuilder sb = new System.Text.StringBuilder();
-        //for (int y = sizeY - 1; y >= 0; y--)
-        //{
-        //    for (int x = 0; x < sizeX; x++)
-        //    {
-        //        if (roofShadArr[x, y] == '\0')
-        //        {
-        //            roofShadArr[x, y] = ' ';
-        //        }
-                
-        //        sb.Append(roofShadArr[x, y]);
-        //    }
-        //    sb.AppendLine();
-        //}
-        //File.WriteAllText("C:\\Users\\ilike\\OneDrive\\Desktop\\as.txt", sb.ToString());
-
         // shads
-        for (int y = sizeY - 1; y >= 0; y--) // iterating top downwards
+        bool[,] groundG = new bool[sizeX, sizeY];
+
+        for (int x = 0; x < sizeX; x++)
+            for (int y = 0; y < sizeY; y++)
+                groundG[x, y] = shadArr[x, y] == 'g';
+
+        for (int y = sizeY - 1; y >= 0; y--)
         {
             for (int x = sizeX - 1; x >= 0; x--)
             {
                 if (shadArr[x, y] == 'o' || shadArr[x, y] == 'd')
                     continue;
 
-                if (shadArr[x, y] == 't' || shadArr[x, y] == 'e')
+                if (shadArr[x, y] == 't' || shadArr[x, y] == 'e' || groundG[x, y])
                 {
                     // Cast Right
                     if (x + 1 < sizeX)
                     {
                         if (shadArr[x + 1, y] == 'b')
                             shadArr[x + 1, y] = 'f';
-                        else if (shadArr[x + 1, y] == 'o')
+                        else if (shadArr[x + 1, y] == 'o' || groundG[x + 1, y])
                             shadArr[x + 1, y] = 'r';
                     }
 
@@ -997,14 +953,17 @@ public class LoadPrison : MonoBehaviour
                     {
                         if (shadArr[x, y - 1] == 'r')
                             shadArr[x, y - 1] = 'f';
-                        else if (shadArr[x, y - 1] == 'o')
+                        else if (shadArr[x, y - 1] == 'o' || groundG[x, y - 1])
                             shadArr[x, y - 1] = 'b';
                     }
 
-                    // Cast Corner (Right + Down)
+                    // Cast Corner
                     if (x + 1 < sizeX && y - 1 >= 0)
                     {
-                        if (shadArr[x + 1, y - 1] != 't' && shadArr[x + 1, y - 1] != 'd' && shadArr[x + 1, y - 1] != 'e')
+                        if (shadArr[x + 1, y - 1] != 't' &&
+                            shadArr[x + 1, y - 1] != 'd' &&
+                            shadArr[x + 1, y - 1] != 'e' &&
+                            !groundG[x + 1, y - 1])
                         {
                             shadArr[x + 1, y - 1] = 'f';
                         }
@@ -1013,21 +972,27 @@ public class LoadPrison : MonoBehaviour
             }
         }
         // roof shads
-        for (int y = sizeY - 1; y >= 0; y--) // iterating top downwards
+        bool[,] roofG = new bool[sizeX, sizeY];
+
+        for (int x = 0; x < sizeX; x++)
+            for (int y = 0; y < sizeY; y++)
+                roofG[x, y] = roofShadArr[x, y] == 'g';
+
+        for (int y = sizeY - 1; y >= 0; y--)
         {
             for (int x = sizeX - 1; x >= 0; x--)
             {
                 if (roofShadArr[x, y] == 'o' || roofShadArr[x, y] == 'd')
                     continue;
 
-                if (roofShadArr[x, y] == 't' || roofShadArr[x, y] == 'e')
+                if (roofShadArr[x, y] == 't' || roofShadArr[x, y] == 'e' || roofG[x, y])
                 {
                     // Cast Right
                     if (x + 1 < sizeX)
                     {
                         if (roofShadArr[x + 1, y] == 'b')
                             roofShadArr[x + 1, y] = 'f';
-                        else if (roofShadArr[x + 1, y] == 'o')
+                        else if (roofShadArr[x + 1, y] == 'o' || roofG[x + 1, y])
                             roofShadArr[x + 1, y] = 'r';
                     }
 
@@ -1036,14 +1001,17 @@ public class LoadPrison : MonoBehaviour
                     {
                         if (roofShadArr[x, y - 1] == 'r')
                             roofShadArr[x, y - 1] = 'f';
-                        else if (roofShadArr[x, y - 1] == 'o')
+                        else if (roofShadArr[x, y - 1] == 'o' || roofG[x, y - 1])
                             roofShadArr[x, y - 1] = 'b';
                     }
 
-                    // Cast Corner (Right + Down)
+                    // Cast Corner
                     if (x + 1 < sizeX && y - 1 >= 0)
                     {
-                        if (roofShadArr[x + 1, y - 1] != 't' && roofShadArr[x + 1, y - 1] != 'd' && roofShadArr[x + 1, y - 1] != 'e')
+                        if (roofShadArr[x + 1, y - 1] != 't' &&
+                            roofShadArr[x + 1, y - 1] != 'd' &&
+                            roofShadArr[x + 1, y - 1] != 'e' &&
+                            !roofG[x + 1, y - 1])
                         {
                             roofShadArr[x + 1, y - 1] = 'f';
                         }
@@ -1051,8 +1019,6 @@ public class LoadPrison : MonoBehaviour
                 }
             }
         }
-
-
         // change doors to full shads
         for (int x = 0; x < sizeX; x++)
         {
@@ -1227,7 +1193,7 @@ public class LoadPrison : MonoBehaviour
         }
         tiles.Find("UndergroundPlane").position = new Vector2((x - 1) * .8f, (y - 1) * .8f);
     }
-    private void SetTiles(Dictionary<int, string> tileDict)
+    private void SetTiles()
     {
         int sizeX = currentMap.sizeX;
         int sizeY = currentMap.sizeY;
@@ -1240,12 +1206,32 @@ public class LoadPrison : MonoBehaviour
             undergroundArr, groundArr, ventArr, roofArr
         };
 
+        int[,] groundTopArr = new int[sizeX, sizeY];
+        int[,] undergroundTopArr = new int[sizeX, sizeY];
+        int[,] ventTopArr = new int[sizeX, sizeY];
+        int[,] roofTopArr = new int[sizeX, sizeY];
+        List<int[,]> topArrays = new List<int[,]>
+        {
+            undergroundTopArr, groundTopArr, ventTopArr, roofTopArr
+        };
+
 
         foreach (int[,] array in arrays)
         {
-            for(int x = 0; x < sizeX; x++)
+            for (int x = 0; x < sizeX; x++)
             {
-                for(int y = 0; y < sizeY; y++)
+                for (int y = 0; y < sizeY; y++)
+                {
+                    array[x, y] = 100;
+                }
+            }
+        }
+
+        foreach (int[,] array in topArrays)
+        {
+            for (int x = 0; x < sizeX; x++)
+            {
+                for (int y = 0; y < sizeY; y++)
                 {
                     array[x, y] = 100;
                 }
@@ -1259,8 +1245,14 @@ public class LoadPrison : MonoBehaviour
 
             if (x >= 0 && x < sizeX && y >= 0 && y < sizeY)
             {
-                //Debug.Log("point: " + x.ToString() + ", " + y.ToString());
-                arrays[tileVars[3]][x, y] = tileVars[0];
+                if (tileVars[0] < 100 && !currentMap.tilesetData[tileVars[0]].drawAbovePlayer)
+                {
+                    arrays[tileVars[3]][x, y] = tileVars[0];
+                }
+                else
+                {
+                    topArrays[tileVars[3]][x, y] = tileVars[0];
+                }
             }
         }
 
@@ -1269,6 +1261,10 @@ public class LoadPrison : MonoBehaviour
         Sprite undergroundTiles = null;
         Sprite ventTiles = null;
         Sprite roofTiles = null;
+        Sprite groundTopTiles = null;
+        Sprite undergroundTopTiles = null;
+        Sprite ventTopTiles = null;
+        Sprite roofTopTiles = null;
         int index = 0;
         List<Sprite> tileSprites = SliceAndDice(currentMap.tileset);
         foreach (int[,] array in arrays)
@@ -1282,12 +1278,12 @@ public class LoadPrison : MonoBehaviour
             Color32[] clearPixels = new Color32[width * 16 * height * 16];
             texture.SetPixels32(clearPixels);
 
-            for(int x = 0; x < width; x++)
+            for (int x = 0; x < width; x++)
             {
-                for(int y = 0; y < height; y++)
+                for (int y = 0; y < height; y++)
                 {
                     int piece = array[x, y];
-                    if(piece != 100) //clear
+                    if (piece != 100) //clear
                     {
                         Color[] pixels = tileSprites[piece].texture.GetPixels((int)tileSprites[piece].rect.x, (int)tileSprites[piece].rect.y, 16, 16);
 
@@ -1319,6 +1315,103 @@ public class LoadPrison : MonoBehaviour
 
             index++;
         }
+        foreach (int[,] array in arrays)
+        {
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+
+            Texture2D texture = new Texture2D(width * 16, height * 16, TextureFormat.RGBA32, false);
+            texture.filterMode = FilterMode.Point;
+
+            Color32[] clearPixels = new Color32[width * 16 * height * 16];
+            texture.SetPixels32(clearPixels);
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int piece = array[x, y];
+                    if (piece != 100) //clear
+                    {
+                        Color[] pixels = tileSprites[piece].texture.GetPixels((int)tileSprites[piece].rect.x, (int)tileSprites[piece].rect.y, 16, 16);
+
+                        int pixelX = x * 16;
+                        int pixelY = y * 16;
+
+                        texture.SetPixels(pixelX, pixelY, 16, 16, pixels);
+                    }
+                }
+            }
+
+            texture.Apply();
+
+            switch (index)
+            {
+                case 0:
+                    undergroundTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 1:
+                    groundTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 2:
+                    ventTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 3:
+                    roofTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+            }
+
+            index++;
+        }
+        index = 0;
+        foreach (int[,] array in topArrays)
+        {
+            int width = array.GetLength(0);
+            int height = array.GetLength(1);
+
+            Texture2D texture = new Texture2D(width * 16, height * 16, TextureFormat.RGBA32, false);
+            texture.filterMode = FilterMode.Point;
+
+            Color32[] clearPixels = new Color32[width * 16 * height * 16];
+            texture.SetPixels32(clearPixels);
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    int piece = array[x, y];
+                    if (piece != 100) //clear
+                    {
+                        Color[] pixels = tileSprites[piece].texture.GetPixels((int)tileSprites[piece].rect.x, (int)tileSprites[piece].rect.y, 16, 16);
+
+                        int pixelX = x * 16;
+                        int pixelY = y * 16;
+
+                        texture.SetPixels(pixelX, pixelY, 16, 16, pixels);
+                    }
+                }
+            }
+
+            texture.Apply();
+
+            switch (index)
+            {
+                case 0:
+                    undergroundTopTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 1:
+                    groundTopTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 2:
+                    ventTopTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+                case 3:
+                    roofTopTiles = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f, .5f), 100f);
+                    break;
+            }
+
+            index++;
+        }
 
         tiles.Find("GroundTiles").GetComponent<SpriteRenderer>().sprite = groundTiles;
         Vector2 size = tiles.Find("GroundTiles").GetComponent<SpriteRenderer>().size;
@@ -1330,6 +1423,14 @@ public class LoadPrison : MonoBehaviour
         tiles.Find("VentTiles").position = tiles.Find("GroundTiles").position;
         tiles.Find("RoofTiles").GetComponent<SpriteRenderer>().sprite = roofTiles;
         tiles.Find("RoofTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("GroundTopTiles").GetComponent<SpriteRenderer>().sprite = groundTopTiles;
+        tiles.Find("GroundTopTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sprite = undergroundTopTiles;
+        tiles.Find("UndergroundTopTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>().sprite = ventTopTiles;
+        tiles.Find("VentTopTiles").position = tiles.Find("GroundTiles").position;
+        tiles.Find("RoofTopTiles").GetComponent<SpriteRenderer>().sprite = roofTopTiles;
+        tiles.Find("RoofTopTiles").position = tiles.Find("GroundTiles").position;
 
         //actual tile objects for collision
         int groundLayer = LayerMask.NameToLayer("Ground");
@@ -1345,7 +1446,6 @@ public class LoadPrison : MonoBehaviour
                 GameObject emptyTile = new GameObject("Empty");
                 emptyTile.transform.position = emptyTilePos;
                 emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
-                emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "outFloor";
                 emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 emptyTile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                 emptyTile.AddComponent<NavMeshModifier>();
@@ -1356,14 +1456,12 @@ public class LoadPrison : MonoBehaviour
                 emptyTile.transform.parent = tiles.Find("Ground");
                 continue;
             }
-            
-            string tileType = tileDict[tileVars[0]];
+            Tile tileObj = currentMap.tilesetData[tileVars[0]];
             //Debug.Log("Tile ID: " + tileVars[0] + ", TileType: " + tileType);
             string tileLayer = layerDict[tileVars[3]];
 
             GameObject tile;
-            if(tileType == "highFloor" || tileType == "medFloor" || tileType == "lowFloor" ||
-                tileType == "outFloor" || tileType == "inFloor")
+            if (tileObj.GetTileType() == "inFloor" || tileObj.GetTileType() == "outFloor")
             {
                 tile = Instantiate(Resources.Load<GameObject>("PrisonPrefabs/Tiles/Floor"), tiles.Find(tileLayer));
             }
@@ -1376,7 +1474,6 @@ public class LoadPrison : MonoBehaviour
             tile.transform.position = tilePos;
             tile.name = tileVars[0].ToString();
             tile.GetComponent<TileCollectionData>().tileData = new TileData();
-            tile.GetComponent<TileCollectionData>().tileData.tileType = tileType;
             tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             tile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
             tile.AddComponent<SetColliderShape>().sprite = tileSprites[tileVars[0]];
@@ -1401,170 +1498,164 @@ public class LoadPrison : MonoBehaviour
         //set tile tags
         foreach (Transform tile in tiles.Find("Ground"))
         {
-            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, currentMap);
+            if(tileObj == null)
+            {
+                continue;
+            }
+            switch (tileObj.GetTileType())
             {
                 case "inFloor":
                 case "outFloor":
-                case "lowFloor":
-                case "medFloor":
-                case "highFloor":
                     tile.tag = "Digable";
                     break;
-                case "chip":
+                case "wall":
                     tile.tag = "Wall";
                     break;
-                case "cut":
+                case "fence":
                     tile.tag = "Fence";
                     break;
-                case "elec":
+                case "elecFence":
                     tile.tag = "ElectricFence";
                     break;
-                case "bar":
+                case "bars":
                     tile.tag = "Bars";
                     break;
                 case "obstacle":
-                case "obstNoShad":
-                case "nw":
-                case "ne":
-                case "sw":
-                case "se":
-                case "box":
                     tile.tag = "Obstacle";
                     break;
+            }
+            switch (tileObj.GetRoofLedgeType())
+            {
                 case "horiLedge":
                 case "vertLedge":
                     tile.tag = "RoofLedge";
                     break;
-                case "horiWall":
-                case "vertWall":
+                case "horiHigh":
+                case "vertHigh":
                     tile.tag = "HighWall";
                     break;
             }
         }
         foreach (Transform tile in tiles.Find("Underground"))
         {
-
-            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, currentMap);
+            if (tileObj == null)
+            {
+                continue;
+            }
+            switch (tileObj.GetTileType())
             {
                 case "inFloor":
                 case "outFloor":
-                case "lowFloor":
-                case "medFloor":
-                case "highFloor":
                     tile.tag = "Digable";
                     break;
-                case "chip":
+                case "wall":
                     tile.tag = "Wall";
                     break;
-                case "cut":
+                case "fence":
                     tile.tag = "Fence";
                     break;
-                case "elec":
+                case "elecFence":
                     tile.tag = "ElectricFence";
                     break;
-                case "bar":
+                case "bars":
                     tile.tag = "Bars";
                     break;
                 case "obstacle":
-                case "obstNoShad":
-                case "nw":
-                case "ne":
-                case "sw":
-                case "se":
-                case "box":
                     tile.tag = "Obstacle";
                     break;
+            }
+            switch (tileObj.GetRoofLedgeType())
+            {
                 case "horiLedge":
                 case "vertLedge":
                     tile.tag = "RoofLedge";
                     break;
-                case "horiWall":
-                case "vertWall":
+                case "horiHigh":
+                case "vertHigh":
                     tile.tag = "HighWall";
                     break;
             }
         }
         foreach (Transform tile in tiles.Find("Vents"))
         {
-
-            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, currentMap);
+            if (tileObj == null)
+            {
+                continue;
+            }
+            switch (tileObj.GetTileType())
             {
                 case "inFloor":
                 case "outFloor":
-                case "lowFloor":
-                case "medFloor":
-                case "highFloor":
                     tile.tag = "Digable";
                     break;
-                case "chip":
+                case "wall":
                     tile.tag = "Wall";
                     break;
-                case "cut":
+                case "fence":
                     tile.tag = "Fence";
                     break;
-                case "elec":
+                case "elecFence":
                     tile.tag = "ElectricFence";
                     break;
-                case "bar":
+                case "bars":
                     tile.tag = "Bars";
                     break;
                 case "obstacle":
-                case "obstNoShad":
-                case "nw":
-                case "ne":
-                case "sw":
-                case "se":
-                case "box":
                     tile.tag = "Obstacle";
                     break;
+            }
+            switch (tileObj.GetRoofLedgeType())
+            {
                 case "horiLedge":
                 case "vertLedge":
                     tile.tag = "RoofLedge";
                     break;
-                case "horiWall":
-                case "vertWall":
+                case "horiHigh":
+                case "vertHigh":
                     tile.tag = "HighWall";
                     break;
             }
         }
         foreach (Transform tile in tiles.Find("Roof"))
         {
-            switch (tile.GetComponent<TileCollectionData>().tileData.tileType)
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, currentMap);
+            if (tileObj == null)
+            {
+                continue;
+            }
+            switch (tileObj.GetTileType())
             {
                 case "inFloor":
                 case "outFloor":
-                case "lowFloor":
-                case "medFloor":
-                case "highFloor":
                     tile.tag = "Digable";
                     break;
-                case "chip":
+                case "wall":
                     tile.tag = "Wall";
                     break;
-                case "cut":
+                case "fence":
                     tile.tag = "Fence";
                     break;
-                case "elec":
+                case "elecFence":
                     tile.tag = "ElectricFence";
                     break;
-                case "bar":
+                case "bars":
                     tile.tag = "Bars";
                     break;
                 case "obstacle":
-                case "obstNoShad":
-                case "nw":
-                case "ne":
-                case "sw":
-                case "se":
-                case "box":
                     tile.tag = "Obstacle";
                     break;
+            }
+            switch (tileObj.GetRoofLedgeType())
+            {
                 case "horiLedge":
                 case "vertLedge":
                     tile.tag = "RoofLedge";
                     break;
-                case "horiWall":
-                case "vertWall":
+                case "horiHigh":
+                case "vertHigh":
                     tile.tag = "HighWall";
                     break;
             }
@@ -1577,7 +1668,12 @@ public class LoadPrison : MonoBehaviour
             {
                 foreach (Transform tile2 in tiles.Find("Ground"))
                 {
-                    if (tile2.GetComponent<TileCollectionData>().tileData.tileType == "inFloor" &&
+                    Tile tileObj = TileTools.GetTileObj(tile2.gameObject, currentMap);
+                    if (tileObj == null)
+                    {
+                        continue;
+                    }
+                    if (tileObj.GetTileType() == "inFloor" &&
                         (tile2.position == tile1.position + new Vector3(1.6f, 0) ||
                         tile2.position == tile1.position + new Vector3(-1.6f, 0) ||
                         tile2.position == tile1.position + new Vector3(0, 1.6f) ||
@@ -1776,7 +1872,6 @@ public class LoadPrison : MonoBehaviour
                     case "Vent":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[137];
                         objInst.GetComponent<TileCollectionData>().tileData = new TileData();
-                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
                         objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                         objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
@@ -1812,14 +1907,12 @@ public class LoadPrison : MonoBehaviour
                     case "SlatsHorizontal":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[139];
                         objInst.GetComponent<TileCollectionData>().tileData = new TileData();
-                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
                         objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                         objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
                     case "SlatsVertical":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[40];
                         objInst.GetComponent<TileCollectionData>().tileData = new TileData();
-                        objInst.GetComponent<TileCollectionData>().tileData.tileType = null;
                         objInst.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                         objInst.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         break;
@@ -2291,7 +2384,6 @@ public class LoadPrison : MonoBehaviour
                     dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                     dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
                 }
                 if (!southOpen)
                 {
@@ -2299,7 +2391,6 @@ public class LoadPrison : MonoBehaviour
                     dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                     dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
                 }
                 if (!eastOpen)
                 {
@@ -2307,7 +2398,6 @@ public class LoadPrison : MonoBehaviour
                     dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                     dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
                 }
                 if (!westOpen)
                 {
@@ -2315,7 +2405,6 @@ public class LoadPrison : MonoBehaviour
                     dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                     dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                    dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
                 }
             }
         }
@@ -2546,6 +2635,65 @@ public class LoadPrison : MonoBehaviour
         bool ssVisitors = ssVisitorsStr == "True";
         bool perksMsgs = GetINIVar("Properties", "PerksMsgs", data) == "True";
         bool tutorial = GetINIVar("Properties", "Tutorial", data) == "True";
+        bool customTileAttributes = GetINIVar("Properties", "CustomTileAttributes", data) == "True";
+        List<Tile> tileList = new List<Tile>();
+        if (customTileAttributes)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                string rawTileData = GetINIVar("TileAttributes", "tile" + i.ToString(), data);
+                string[] tileData = rawTileData.Split(";");
+                int tileType = Convert.ToInt32(tileData[0]);
+                int roofLedgeType = Convert.ToInt32(tileData[1]);
+                int roofFloorHeight = Convert.ToInt32(tileData[2]);
+                bool drawsShads = tileData[3] == "True";
+                bool drawAbovePlayer = tileData[4] == "True";
+                bool canPath = tileData[5] == "True";
+                bool belowShads = tileData[6] == "True";
+                bool seeThrough = tileData[7] == "True";
+                bool isBroken = tileData[8] == "True";
+                Tile tile = new Tile(tileType, roofLedgeType, roofFloorHeight, drawsShads, drawAbovePlayer, canPath, belowShads, seeThrough, isBroken);
+                tileList.Add(tile);
+            }
+        }
+        else
+        {
+            string theMapName = tilesetStr;
+            if (!prisonNames.Contains(theMapName))
+            {
+                theMapName = "perks"; //default to the perks tileset preset
+            }
+            string[] tilesetData = Resources.Load<TextAsset>("TilesetData").text.Split("\n");
+            for(int i = 0; i < 100; i++)
+            {
+                string rawTileData = GetINIVar(theMapName, "tile" + i.ToString(), tilesetData);
+                string[] tileData = rawTileData.Split(";");
+                int tileType = Convert.ToInt32(tileData[0]);
+                int roofLedgeType = Convert.ToInt32(tileData[1]);
+                int roofFloorHeight = Convert.ToInt32(tileData[2]);
+                bool drawsShads = tileData[3] == "True";
+                bool drawAbovePlayer = tileData[4] == "True";
+                bool canPath = tileData[5] == "True";
+                bool belowShads = tileData[6] == "True";
+                bool seeThrough = tileData[7] == "True";
+                bool isBroken = tileData[8] == "True";
+                Tile tile = new Tile(tileType, roofLedgeType, roofFloorHeight, drawsShads, drawAbovePlayer, canPath, belowShads, seeThrough, isBroken);
+                tileList.Add(tile);
+            }
+        }
+        Tile brokenTile = null;
+        foreach(Tile tile in tileList)
+        {
+            if (tile.isBroken)
+            {
+                brokenTile = tile;
+                break;
+            }
+        }
+        if(brokenTile == null)
+        {
+            brokenTile = new Tile(4, 0, 1, false, false, true, true, true, true);
+        }
         string playerBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))];
         string playerOutfit = outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerOutfit", data))];
         string npcBody = bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))];
@@ -2770,7 +2918,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars);
+        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars, tileList, brokenTile);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

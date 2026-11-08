@@ -107,8 +107,10 @@ public class LadderClimb : MonoBehaviour
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
                 tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentTopTiles").gameObject.SetActive(false);
                 tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
                 DisableAllLayerCollisions();
@@ -119,8 +121,10 @@ public class LadderClimb : MonoBehaviour
                 player.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
                 tiles.Find("VentTiles").gameObject.SetActive(true);
+                tiles.Find("VentTopTiles").gameObject.SetActive(true);
                 tiles.Find("VentObjects").gameObject.SetActive(true);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
                 DisableAllLayerCollisions();
@@ -134,8 +138,10 @@ public class LadderClimb : MonoBehaviour
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(true);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(true);
                 tiles.Find("RoofObjects").gameObject.SetActive(true);
                 tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentTopTiles").gameObject.SetActive(false);
                 tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(true);
                 DisableAllLayerCollisions();
@@ -175,6 +181,8 @@ public class LadderClimb : MonoBehaviour
             aColor.a = 1;
             sr.color = aColor;
         }
+        SpriteRenderer ventTopTilesSpriteRenderer = tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTopTilesSpriteRenderer.color.r, ventTopTilesSpriteRenderer.color.g, ventTopTilesSpriteRenderer.color.b, 1);
     }
     public void SendToGround()//for death and solitary and other things that need to force the player to ground
     {                         //(includes hole climb stuff too heh)
@@ -182,14 +190,17 @@ public class LadderClimb : MonoBehaviour
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
         tiles.Find("RoofTiles").gameObject.SetActive(false);
+        tiles.Find("RoofTopTiles").gameObject.SetActive(false);
         tiles.Find("RoofObjects").gameObject.SetActive(false);
         tiles.Find("VentTiles").gameObject.SetActive(false);
+        tiles.Find("VentTopTiles").gameObject.SetActive(false);
         tiles.Find("VentObjects").gameObject.SetActive(false);
         tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
         DisableAllLayerCollisions();
         Physics2D.IgnoreLayerCollision(uiLayer, groundLayer, false);
         Physics2D.IgnoreLayerCollision(playerLayer, groundLayer, false);
         tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+        tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundObjects").gameObject.SetActive(false);
         undergroundLight.SetActive(false);

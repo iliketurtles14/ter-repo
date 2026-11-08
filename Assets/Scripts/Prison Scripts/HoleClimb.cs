@@ -92,6 +92,7 @@ public class HoleClimb : MonoBehaviour
         player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
         tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+        tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
         tiles.Find("UndergroundObjects").gameObject.SetActive(false);
         foreach(SpriteRenderer sr in brokenTileSRs)
@@ -120,6 +121,7 @@ public class HoleClimb : MonoBehaviour
         player.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
+        tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
         tiles.Find("UndergroundObjects").gameObject.SetActive(true);
         foreach (SpriteRenderer sr in brokenTileSRs)

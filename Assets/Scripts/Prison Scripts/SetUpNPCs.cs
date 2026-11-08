@@ -52,9 +52,25 @@ public class SetUpNPCs : MonoBehaviour
 
         foreach(Transform obj in tiles.Find("GroundObjects")) //make objects like seats that normally have collision have no collision for npc's
         {                 //REMEMBER TO ALSO ADD THIS TO THE LOWER FOREACH LOOP IF ADDING NEW OBJECTS THAT SHOULDNT HAVE COLLISION WITH INMATES
+                          //NOW YOU ALSO HAVE TO ADD IT TO THE ASTAR LOOP BELOW
             if (obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.Contains("Bed"))
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            }
+        }
+        List<Transform> tilesToSetBack = new List<Transform>();
+        foreach(Transform tile in tiles.Find("Ground"))
+        {
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, map);
+            if(tileObj == null)
+            {
+                continue;
+            }
+            if(!tileObj.canPath && tile.GetComponent<Collider2D>().isTrigger)
+            {
+                tilesToSetBack.Add(tile);
+                tile.GetComponent<Collider2D>().isTrigger = false;
+                Debug.Log("here for " + tile.name);
             }
         }
 
@@ -66,6 +82,51 @@ public class SetUpNPCs : MonoBehaviour
             AstarPath.active.Scan(grids[i]);
         }
 
+        GridGraph graph = AstarPath.active.data.gridGraph;
+        foreach(GridNodeBase node in graph.nodes)
+        {
+            node.Walkable = false;
+        }
+        foreach(Transform tile in tiles.Find("Ground"))
+        {
+            Tile tileObj = TileTools.GetTileObj(tile.gameObject, map);
+            if (tileObj != null && tileObj.canPath)
+            {
+                Bounds bounds = tile.GetComponent<Collider2D>().bounds;
+
+                GraphUpdateObject guo = new GraphUpdateObject(bounds);
+                guo.modifyWalkability = true;
+                guo.setWalkability = true;
+                guo.updatePhysics = false;
+
+                AstarPath.active.UpdateGraphs(guo);
+            }
+        }
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if(obj.name == "Seat" || obj.gameObject.CompareTag("Equipment") || obj.gameObject.CompareTag("Door") || obj.name.Contains("Bed"))
+            {
+                //do nothing
+            }
+            else
+            {
+                Collider2D col = obj.GetComponent<Collider2D>();
+                if(col == null)
+                {
+                    continue;
+                }
+                Bounds bounds = col.bounds;
+
+                GraphUpdateObject guo = new GraphUpdateObject(bounds);
+                guo.modifyWalkability = true;
+                guo.setWalkability = false;
+                guo.updatePhysics = false;
+
+                AstarPath.active.UpdateGraphs(guo);
+            }
+        }
+        AstarPath.active.FlushGraphUpdates();
+
         surface.BuildNavMesh();
 
         foreach (Transform obj in tiles.Find("GroundObjects"))
@@ -74,6 +135,10 @@ public class SetUpNPCs : MonoBehaviour
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = false;
             }
+        }
+        foreach (Transform tile in tilesToSetBack)
+        {
+            tile.GetComponent<Collider2D>().isTrigger = true;
         }
 
         //make npc property list

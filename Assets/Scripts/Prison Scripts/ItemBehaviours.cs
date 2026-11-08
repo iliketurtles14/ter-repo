@@ -584,8 +584,10 @@ public class ItemBehaviours : MonoBehaviour
         usedSlotNumber = slotNumber;
         TileData touchedTileData = touchedTileObject.GetComponent<TileCollectionData>().tileData;
         ropeTile = null;
+        Tile tile = TileTools.GetTileObj(touchedTileObject, currentMap);
+        string roofLedgeType = tile.GetRoofLedgeType();
 
-        if((touchedTileData.tileType == "vertWall" || touchedTileData.tileType == "horiWall") && 
+        if((roofLedgeType == "vertHigh" || roofLedgeType == "horiHigh") && 
             selectedItemData.id != 102)
         {
             yield break;
@@ -593,7 +595,7 @@ public class ItemBehaviours : MonoBehaviour
 
         //get tile to rope to
         Vector3 ropeTilePos = new Vector3();
-        if(touchedTileData.tileType == "vertLedge" || touchedTileData.tileType == "vertWall")
+        if(roofLedgeType == "vertLedge" || roofLedgeType == "vertHigh")
         {
             if (PlayerTransform.position.x < touchedTileObject.transform.position.x)//if player is to the left of the ledge
             {
@@ -606,7 +608,7 @@ public class ItemBehaviours : MonoBehaviour
             ropeTilePos.y = touchedTileObject.transform.position.y;
             ropeTilePos.z = touchedTileObject.transform.position.z;
         }
-        else if(touchedTileData.tileType == "horiLedge" || touchedTileData.tileType == "horiWall")
+        else if(roofLedgeType == "horiLedge" || roofLedgeType == "horiHigh")
         {
             if (PlayerTransform.position.y < touchedTileObject.transform.position.y)//if player is below the ledge
             {
@@ -658,7 +660,7 @@ public class ItemBehaviours : MonoBehaviour
             yield break;
         }
         //the ropeTile being null means that you are roping/grappling off of the roof instead of onto another part of the roof
-        if(ropeTile == null && touchedTileData.tileType != "vertLedge" && touchedTileData.tileType != "horiLedge")//check if roping off the roof normally
+        if(ropeTile == null && roofLedgeType != "vertLedge" && roofLedgeType != "horiLedge")//check if roping off the roof normally
         {
             //check if there is an obstacle in the way
             Vector3 obstacleOffset = new Vector3(0, -1.6f, 0);
@@ -747,7 +749,7 @@ public class ItemBehaviours : MonoBehaviour
             PlayerTransform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             yield break;
         }
-        else if(ropeTile == null && (touchedTileData.tileType == "vertLedge" || touchedTileData.tileType == "horiLedge"))//check if roping off the roof via top wall (grapple only)
+        else if(ropeTile == null && (roofLedgeType == "vertLedge" || roofLedgeType == "horiLedge"))//check if roping off the roof via top wall (grapple only)
         {
             //check if there is an obstacle in the way
             Vector3 obstacleOffset = new Vector3(0, -1.6f, 0);
@@ -818,8 +820,10 @@ public class ItemBehaviours : MonoBehaviour
         }
         //see if possible based on height
         GameObject lastTouchedRoofFloor = PlayerTransform.GetComponent<PlayerFloorCollision>().lastTouchedRoofFloor;
-        string lastTouchedRoofFloorType = lastTouchedRoofFloor.GetComponent<TileCollectionData>().tileData.tileType;
-        string ropeTileType = ropeTile.GetComponent<TileCollectionData>().tileData.tileType;
+        Tile lastTouchedTile = TileTools.GetTileObj(lastTouchedRoofFloor, currentMap);
+        string lastTouchedRoofFloorType = lastTouchedTile.GetRoofFloorHeight();
+        Tile ropeTileObj = TileTools.GetTileObj(ropeTile, currentMap);
+        string ropeTileType = ropeTileObj.GetRoofFloorHeight();
 
         currentHeight = 2; //default height (if floor isnt an actual roof floor)        
         if(lastTouchedRoofFloorType == "highFloor")
@@ -1000,7 +1004,6 @@ public class ItemBehaviours : MonoBehaviour
             emptyDirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            emptyDirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             emptyDirtObj.GetComponent<SpriteRenderer>().sprite = emptyDirtSprite;
         }
         GameObject halfHoleDownObject = Instantiate(halfHoleDownPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("GroundObjects"));
@@ -1121,7 +1124,6 @@ public class ItemBehaviours : MonoBehaviour
             dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!southEmpty)
         {
@@ -1129,7 +1131,6 @@ public class ItemBehaviours : MonoBehaviour
             dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!eastEmpty)
         {
@@ -1137,7 +1138,6 @@ public class ItemBehaviours : MonoBehaviour
             dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
         if (!westEmpty)
         {
@@ -1145,7 +1145,6 @@ public class ItemBehaviours : MonoBehaviour
             dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
         }
     }
     public IEnumerator DigUp(TileData touchedTileData)
@@ -1250,7 +1249,6 @@ public class ItemBehaviours : MonoBehaviour
             emptyDirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             emptyDirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-            emptyDirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             emptyDirtObj.GetComponent<SpriteRenderer>().sprite = emptyDirtSprite;
 
             bool northEmpty = false;
@@ -1308,7 +1306,6 @@ public class ItemBehaviours : MonoBehaviour
                 dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                 dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!southEmpty)
             {
@@ -1316,7 +1313,6 @@ public class ItemBehaviours : MonoBehaviour
                 dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                 dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!eastEmpty)
             {
@@ -1324,7 +1320,6 @@ public class ItemBehaviours : MonoBehaviour
                 dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                 dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
             if (!westEmpty)
             {
@@ -1332,7 +1327,6 @@ public class ItemBehaviours : MonoBehaviour
                 dirtObj.GetComponent<TileCollectionData>().tileData = new TileData();
                 dirtObj.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 dirtObj.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                dirtObj.GetComponent<TileCollectionData>().tileData.tileType = "obstacle";
             }
 
             foreach (Transform tile in tiles.Find("UndergroundObjects"))
@@ -1374,7 +1368,6 @@ public class ItemBehaviours : MonoBehaviour
                 GameObject rockObject = Instantiate(rockPrefab, touchedTileObject.transform.position, Quaternion.identity, tiles.Find("UndergroundObjects"));
                 rockObject.transform.position = touchedTileObject.transform.position + new Vector3(0, 0, -1);
                 rockObject.GetComponent<TileCollectionData>().tileData = new TileData();
-                rockObject.GetComponent<TileCollectionData>().tileData.tileType = "chip";
                 rockObject.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                 rockObject.GetComponent<SpriteRenderer>().sprite = rockSprite;
                 rockObject.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
@@ -1745,12 +1738,11 @@ public class ItemBehaviours : MonoBehaviour
             touchedTileObject.GetComponent<Collider2D>().enabled = false;
             GameObject emptyTile = new GameObject("BrokenTile");
             emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
-            emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "inFloor";
             emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             emptyTile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
             emptyTile.AddComponent<BoxCollider2D>().isTrigger = true;
             emptyTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
-            emptyTile.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("PrisonResources/Object Sprites/EmptyTileSprite");
+            emptyTile.AddComponent<SpriteRenderer>().sprite = TileTools.GetBrokenTileSprite(currentMap);
             emptyTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
             emptyTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
             emptyTile.AddComponent<NavMeshModifier>();
@@ -1775,7 +1767,7 @@ public class ItemBehaviours : MonoBehaviour
                         mbo.CreateBadObject(data, "openWall");
                         break;
                     case "cutting":
-                        if(touchedTileObject.GetComponent<TileCollectionData>().tileData.tileType == "bars")
+                        if(TileTools.GetTileObj(touchedTileObject, currentMap).GetTileType() == "bars")
                         {
                             mbo.CreateBadObject(data, "openBars");
                         }

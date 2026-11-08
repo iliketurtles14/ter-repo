@@ -157,7 +157,8 @@ public class DebugMenu : MonoBehaviour
                 "/layer [int layer (0,1,2,3)]\n\t" +
                 "/save\n\t" +
                 "/rudolph\n\t" +
-                "/wardenMove";
+                "/wardenMove\n\t" +
+                "/getPlayerFloorTileData";
             return;
         }
 
@@ -378,6 +379,29 @@ public class DebugMenu : MonoBehaviour
             }
             return;
         }
+        if(command == "/getPlayerFloorTileData")
+        {
+            Tile tile = player.GetComponent<PlayerFloorCollision>().playerFloorTile;
+            if(tile == null)
+            {
+                output.text += "\nplayerFloorTile is null.";
+                return;
+            }
+            else
+            {
+                string outText = "\ntype: " + tile.GetTileType() + "\n";
+                outText += "roofLedgeType: " + tile.GetRoofLedgeType() + "\n";
+                outText += "roofFloorHeight: " + tile.GetRoofFloorHeight() + "\n";
+                outText += "drawsShads: " + tile.drawsShads + "\n";
+                outText += "drawAbovePlayer: " + tile.drawAbovePlayer + "\n";
+                outText += "canPath: " + tile.canPath + "\n";
+                outText += "belowShads: " + tile.belowShads + "\n";
+                outText += "seeThrough: " + tile.seeThrough + "\n";
+                outText += "isBroken: " + tile.isBroken;
+                output.text += outText;
+            }
+            return;
+        }
         //keep at end
         output.text += "\nInvalid command. Type \"/help\" for help with using the Debug Menu.";
     }
@@ -392,6 +416,7 @@ public class DebugMenu : MonoBehaviour
                 player.GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
+                tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "UndergroundVisible";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(true);
                 foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
@@ -410,11 +435,14 @@ public class DebugMenu : MonoBehaviour
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
                 tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentTopTiles").gameObject.SetActive(false);
                 tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+                tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
                 foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
@@ -435,11 +463,14 @@ public class DebugMenu : MonoBehaviour
                 player.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
                 tiles.Find("RoofTiles").gameObject.SetActive(false);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(false);
                 tiles.Find("RoofObjects").gameObject.SetActive(false);
                 tiles.Find("VentTiles").gameObject.SetActive(true);
+                tiles.Find("VentTopTiles").gameObject.SetActive(true);
                 tiles.Find("VentObjects").gameObject.SetActive(true);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(false);
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+                tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
                 foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
@@ -463,11 +494,14 @@ public class DebugMenu : MonoBehaviour
                 player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Roof";
                 tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
                 tiles.Find("RoofTiles").gameObject.SetActive(true);
+                tiles.Find("RoofTopTiles").gameObject.SetActive(true);
                 tiles.Find("RoofObjects").gameObject.SetActive(true);
                 tiles.Find("VentTiles").gameObject.SetActive(false);
+                tiles.Find("VentTopTiles").gameObject.SetActive(false);
                 tiles.Find("VentObjects").gameObject.SetActive(false);
                 tiles.Find("RoofShadowPlane").gameObject.SetActive(true);
                 tiles.Find("UndergroundTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
+                tiles.Find("UndergroundTopTiles").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundPlane").GetComponent<SpriteRenderer>().sortingLayerName = "Underground";
                 tiles.Find("UndergroundObjects").gameObject.SetActive(false);
                 foreach (SpriteRenderer sr in holeClimbScript.brokenTileSRs)
@@ -514,5 +548,7 @@ public class DebugMenu : MonoBehaviour
             aColor.a = 1;
             sr.color = aColor;
         }
+        SpriteRenderer ventTopTilesSpriteRenderer = tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTopTilesSpriteRenderer.color.r, ventTopTilesSpriteRenderer.color.g, ventTopTilesSpriteRenderer.color.b, 1);
     }
 }

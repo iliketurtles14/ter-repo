@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using NavMeshPlus.Components;
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class PatchUpPickUp : MonoBehaviour
     private WarningMessage warningScript;
     private MakeBadObject mbo;
     private Transform player;
+    private Map currentMap;
+    private bool ready = false;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -32,9 +35,25 @@ public class PatchUpPickUp : MonoBehaviour
         {
             invSlots.Add(slot.gameObject);
         }
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = GetComponent<LoadPrison>().currentMap;
+        ready = true;
     }
     private void Update()
     {
+        if (!ready)
+        {
+            return;
+        }
+
         if(Input.GetMouseButtonDown(1) && mcs.isTouchingPatchUp)
         {
             bool invIsFull = true;
@@ -187,7 +206,6 @@ public class PatchUpPickUp : MonoBehaviour
             {
                 GameObject emptyTile = new GameObject("BrokenTile");
                 emptyTile.AddComponent<TileCollectionData>().tileData = new TileData();
-                emptyTile.GetComponent<TileCollectionData>().tileData.tileType = "inFloor";
                 emptyTile.AddComponent<BoxCollider2D>().isTrigger = true;
                 emptyTile.GetComponent<BoxCollider2D>().size = new Vector2(1.6f, 1.6f);
                 if (mcs.touchedPatchUp.GetComponent<PatchUpHandler>().hasHoleUnder)
@@ -203,7 +221,7 @@ public class PatchUpPickUp : MonoBehaviour
                     emptyTile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                 }
                 emptyTile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
-                emptyTile.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("PrisonResources/Object Sprites/EmptyTileSprite");
+                emptyTile.AddComponent<SpriteRenderer>().sprite = TileTools.GetBrokenTileSprite(currentMap);
                 emptyTile.GetComponent<SpriteRenderer>().drawMode = SpriteDrawMode.Sliced;
                 emptyTile.GetComponent<SpriteRenderer>().size = new Vector2(1.6f, 1.6f);
                 emptyTile.AddComponent<NavMeshModifier>();

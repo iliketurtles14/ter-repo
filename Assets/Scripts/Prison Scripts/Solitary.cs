@@ -306,12 +306,13 @@ public class Solitary : MonoBehaviour
             if(tile.GetComponent<TileCollectionData>() != null)
             {
                 TileCollectionData tileColData = tile.GetComponent<TileCollectionData>();
-                switch (tileColData.tileData.tileType)
+                Tile tileData = TileTools.GetTileObj(tile, currentMap);
+                switch (tileData.GetTileType())
                 {
-                    case "chip":
-                    case "elec":
-                    case "cut":
-                    case "bar":
+                    case "wall":
+                    case "elecFence":
+                    case "fence":
+                    case "bars":
                         tile.GetComponent<BoxCollider2D>().enabled = true;
                         tileColData.tileData.currentDurability = 100;
                         break;
@@ -327,7 +328,6 @@ public class Solitary : MonoBehaviour
                 slat.transform.position = tile.transform.position;
                 slat.GetComponent<TileCollectionData>().tileData = new TileData
                 {
-                    tileType = null,
                     currentDurability = 100,
                     holeStability = -1
                 };
@@ -346,7 +346,6 @@ public class Solitary : MonoBehaviour
                 slat.transform.position = tile.transform.position;
                 slat.GetComponent<TileCollectionData>().tileData = new TileData
                 {
-                    tileType = null,
                     currentDurability = 100,
                     holeStability = -1
                 };
@@ -390,7 +389,6 @@ public class Solitary : MonoBehaviour
                     vent.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[137];
                     vent.transform.position = obj.position;
                     vent.GetComponent<TileCollectionData>().tileData = new TileData();
-                    vent.GetComponent<TileCollectionData>().tileData.tileType = null;
                     vent.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
                     vent.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                     Destroy(obj.gameObject);

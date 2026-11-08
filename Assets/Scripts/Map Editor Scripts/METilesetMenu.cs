@@ -204,10 +204,7 @@ public class METilesetMenu : MonoBehaviour
                 case 99:
                     tile = new Tile(6, 0, 0, true, false, false, false, false, false);
                     break;
-                case 23: //obstacles with shads ontop
-                    tile = new Tile(6, 0, 0, true, false, false, true, false, false);
-                    break;
-                case 78: //obstacles with shads ontop making no shads (water)
+                case 78: //obstacles with shads ontop making no shads (water and bushes)
                 case 82:
                 case 86:
                 case 89:
@@ -216,6 +213,7 @@ public class METilesetMenu : MonoBehaviour
                 case 98:
                 case 53:
                 case 57:
+                case 23:
                     tile = new Tile(6, 0, 0, false, false, false, true, false, false);
                     break;
                 case 20: //chippable walls

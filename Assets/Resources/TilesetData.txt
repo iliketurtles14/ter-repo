@@ -1,4 +1,4 @@
-[Center Perks​​]
+[perks]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -99,7 +99,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;False;False;False;True;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[Stalag Flucht​]
+[stalag]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -200,7 +200,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;1;False;False;True;True;True;False
 tile99=5;0;1;False;False;True;True;True;False
-[Shankton State Pen​]
+[shankton]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -301,7 +301,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;False;False;False;True;False;False
 tile99=6;0;0;False;False;False;True;False;False
-[Jungle Compound​​]
+[jungle]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -402,7 +402,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;0;False;False;True;True;True;False
 tile99=5;0;0;False;False;True;True;True;False
-[San Pancho​]
+[sanpancho]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -503,7 +503,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;True;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[HMP Irongate​]
+[irongate]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -604,7 +604,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;False;False;False;True;False;False
 tile99=5;0;0;False;False;True;True;True;False
-[Jingle Cells​​]
+[JC​]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -705,7 +705,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=4;0;1;False;False;True;True;True;False
 tile99=6;0;0;True;False;False;False;False;False
-[Banned Camp​]
+[BC]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -806,7 +806,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;False;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[London Tower​]
+[london]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -907,7 +907,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;1;False;False;True;True;True;False
 tile99=5;0;1;False;False;True;True;True;False
-[Paris Central Pen​​]
+[PCP]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1008,7 +1008,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;1;False;False;True;True;True;False
 tile99=5;0;1;False;False;True;True;True;False
-[Santa's Sweatshop​​]
+[SS]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1109,7 +1109,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=4;0;1;False;False;True;True;True;False
 tile98=6;0;0;True;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[Duct Tapes Are Forever​​]
+[DTAF]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1210,7 +1210,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=6;0;0;True;False;False;False;False;False
 tile98=6;0;0;True;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[Escape Team​​]
+[ET]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1311,7 +1311,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;1;False;False;True;True;True;False
 tile99=5;0;1;False;False;True;True;True;False
-[Alcatraz​]
+[alca]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1412,7 +1412,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=5;0;1;False;False;True;True;True;False
 tile99=6;0;0;True;False;False;False;False;False
-[Fhurst Peak Correctional​]
+[fhurst]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1513,7 +1513,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;True;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[Camp Epsilon​​]
+[epsilon]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False
@@ -1614,7 +1614,7 @@ tile96=6;0;0;True;False;False;False;False;False
 tile97=5;0;1;False;False;True;True;True;False
 tile98=6;0;0;True;False;False;False;False;False
 tile99=6;0;0;True;False;False;False;False;False
-[Fort Bamford​]
+[bamford]
 tile0=4;0;1;False;False;True;True;True;False
 tile1=4;0;1;False;False;True;True;True;False
 tile2=4;0;1;False;False;True;True;True;False

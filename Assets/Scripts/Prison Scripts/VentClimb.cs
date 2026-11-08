@@ -120,6 +120,7 @@ public class VentClimb : MonoBehaviour
         Physics2D.IgnoreLayerCollision(uiLayer, ventCoverLayer, false);
         Physics2D.IgnoreLayerCollision(playerLayer, ventLayer, false);
         tiles.Find("VentTiles").gameObject.SetActive(true);
+        tiles.Find("VentTopTiles").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true);
         player.GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
         player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingLayerName = "Vents";
@@ -186,6 +187,7 @@ public class VentClimb : MonoBehaviour
             tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false;
 
             tiles.Find("VentTiles").gameObject.SetActive(false);
+            tiles.Find("VentTopTiles").gameObject.SetActive(false);
             tiles.Find("VentObjects").gameObject.SetActive(false);
 
             player.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
@@ -225,5 +227,7 @@ public class VentClimb : MonoBehaviour
             aColor.a = 1;
             sr.color = aColor;
         }
+        SpriteRenderer ventTopTilesSpriteRenderer = tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTopTilesSpriteRenderer.color.r, ventTopTilesSpriteRenderer.color.g, ventTopTilesSpriteRenderer.color.b, 1);
     }
 }

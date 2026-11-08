@@ -152,9 +152,10 @@ public class MakeBadObject : MonoBehaviour
             hasInmateOutfit = false;
         }
 
+
         //outside
         if (!Physics2D.GetIgnoreLayerCollision(playerLayer, groundLayer) &&
-            player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+            player.GetComponent<PlayerFloorCollision>().playerFloorTile.GetTileType() == "outFloor")
         {
             isOutside = true;
         }
@@ -623,7 +624,7 @@ public class MakeBadObject : MonoBehaviour
                 {
                     try //doing this try catch because in a certain case, the attachedObject for an openHole is just the BOAttachment object and doesnt have a tileData (those are always inside tho, so its ok)
                     {
-                        if (bo.GetComponent<BadObjectData>().attachedObject.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+                        if(TileTools.GetTileObj(bo.GetComponent<BadObjectData>().attachedObject, currentMap).GetTileType() == "outFloor")
                         {
                             StartCoroutine(solitaryScript.GoToSolitary("CaughtSniperHoles"));
                         }

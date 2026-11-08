@@ -198,6 +198,7 @@ public class DeskStand : MonoBehaviour
         aColor.a = 170f / 256f;
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().color = aColor;
         tiles.Find("VentTiles").gameObject.SetActive(true);
+        tiles.Find("VentTopTiles").gameObject.SetActive(true);
         tiles.Find("VentObjects").gameObject.SetActive(true); //enable vent objects
 
         SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
@@ -209,12 +210,15 @@ public class DeskStand : MonoBehaviour
             aColor.a = .75f;
             sr.color = aColor;
         }
+        SpriteRenderer ventTopTilesSpriteRenderer = tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTopTilesSpriteRenderer.color.r, ventTopTilesSpriteRenderer.color.g, ventTopTilesSpriteRenderer.color.b, .75f);
     }
     private void HideVents()
     {
         tiles.Find("Backdrop").GetComponent<SpriteRenderer>().enabled = false; //diable backdrop
         tiles.Find("VentObjects").gameObject.SetActive(false); //disable vent objects
         tiles.Find("VentTiles").gameObject.SetActive(false); //disable vent tiles
+        tiles.Find("VentTopTiles").gameObject.SetActive(false); //disable vent tiles
 
         SpriteRenderer ventTilesSpriteRenderer = tiles.Find("VentTiles").GetComponent<SpriteRenderer>();
         SpriteRenderer[] ventObjectSpriteRenderers = tiles.Find("VentObjects").GetComponentsInChildren<SpriteRenderer>();
@@ -225,5 +229,7 @@ public class DeskStand : MonoBehaviour
             aColor.a = 1;
             sr.color = aColor;
         }
+        SpriteRenderer ventTopTilesSpriteRenderer = tiles.Find("VentTopTiles").GetComponent<SpriteRenderer>();
+        ventTilesSpriteRenderer.color = new Color(ventTopTilesSpriteRenderer.color.r, ventTopTilesSpriteRenderer.color.g, ventTopTilesSpriteRenderer.color.b, 1);
     }
 }

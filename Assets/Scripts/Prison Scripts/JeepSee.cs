@@ -15,6 +15,7 @@ public class JeepSee : MonoBehaviour
     private Zones zonesScript;
     private Schedule routineScript;
     private Solitary solitaryScript;
+    private Map currentMap;
     private void Start()
     {
         routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -37,6 +38,12 @@ public class JeepSee : MonoBehaviour
     }
     private IEnumerator LookLoop()
     {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         while (true)
         {
             Vector2 vectorDontUse = Vector2.zero;
@@ -91,7 +98,8 @@ public class JeepSee : MonoBehaviour
                 RaycastHit2D? wallHit = null;
                 foreach (RaycastHit2D aHit in wallHits)
                 {
-                    if (aHit.collider.CompareTag("Wall"))
+                    Tile tile = TileTools.GetTileObj(aHit.collider.gameObject, currentMap);
+                    if (tile != null && !tile.seeThrough)
                     {
                         wallHit = aHit;
                         break;

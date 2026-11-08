@@ -198,7 +198,8 @@ public class SeeBadActions : MonoBehaviour
                 RaycastHit2D? wallHit = null;
                 foreach (RaycastHit2D aHit in wallHits)
                 {
-                    if (aHit.collider.CompareTag("Wall") || aHit.collider.CompareTag("Obstacle") || aHit.collider.CompareTag("HighWall") || aHit.collider.CompareTag("RoofLedge"))
+                    Tile tile = TileTools.GetTileObj(aHit.collider.gameObject, currentMap);
+                    if(tile != null && !tile.seeThrough)
                     {
                         wallHit = aHit;
                         break;

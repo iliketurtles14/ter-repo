@@ -498,7 +498,6 @@ public class ExtraItemBehaviors : MonoBehaviour
                         vent.name = "Vent";
                         vent.GetComponent<SpriteRenderer>().sprite = DataSender.instance.PrisonObjectImages[137];
                         vent.GetComponent<TileCollectionData>().tileData = new TileData();
-                        vent.GetComponent<TileCollectionData>().tileData.tileType = null;
                         vent.GetComponent<TileCollectionData>().tileData.currentDurability = 5;
                         vent.GetComponent<TileCollectionData>().tileData.holeStability = -1;
                         vent.GetComponent<SpriteRenderer>().sortingLayerName = layerTilesName;

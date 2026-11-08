@@ -1,8 +1,11 @@
+using System.Collections;
+using System.Net;
 using UnityEngine;
 
 public class PlayerFloorCollision : MonoBehaviour
 {
     public GameObject playerFloor;
+    public Tile playerFloorTile;
     public GameObject lastTouchedRoofFloor;
     public GameObject touchedRoofFloor;
     private Vector2 position = new Vector2();
@@ -12,6 +15,8 @@ public class PlayerFloorCollision : MonoBehaviour
     private int ventLayer;
     private int roofLayer;
     private int playerLayer;
+    private Map currentMap;
+    private bool ready = false;
     private void Start()
     {
         groundLayer = LayerMask.NameToLayer("Ground");
@@ -19,9 +24,25 @@ public class PlayerFloorCollision : MonoBehaviour
         ventLayer = LayerMask.NameToLayer("Vents");
         roofLayer = LayerMask.NameToLayer("Roof");
         playerLayer = LayerMask.NameToLayer("Player");
+        StartCoroutine(StartWait());
+    }
+    private IEnumerator StartWait()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
+        ready = true;
     }
     private void FixedUpdate()// 12 - vent, 13 - roof, 10 - ground
     {
+        if (!ready)
+        {
+            return;
+        }
+        
         if(!Physics2D.GetIgnoreLayerCollision(playerLayer, ventLayer))
         {
             touchedRoofFloor = null;
@@ -35,6 +56,7 @@ public class PlayerFloorCollision : MonoBehaviour
                     collider.gameObject.layer == ventLayer)
                 {
                     playerFloor = collider.gameObject;
+                    playerFloorTile = TileTools.GetTileObj(playerFloor, currentMap);
                 }
             }
         }
@@ -68,6 +90,7 @@ public class PlayerFloorCollision : MonoBehaviour
                     collider.gameObject.layer == undergroundLayer)
                 {
                     playerFloor = collider.gameObject;
+                    playerFloorTile = TileTools.GetTileObj(playerFloor, currentMap);
                     break;
                 }
             }
@@ -82,6 +105,7 @@ public class PlayerFloorCollision : MonoBehaviour
                 if (collider.gameObject.CompareTag("Digable") && collider.gameObject.layer == groundLayer)
                 {
                     playerFloor = collider.gameObject;
+                    playerFloorTile = TileTools.GetTileObj(playerFloor, currentMap);
                 }
             }
         }

@@ -57,7 +57,7 @@ public class InOutController : MonoBehaviour
         }
 
         if (!Physics2D.GetIgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Ground")) &&
-            player.GetComponent<PlayerFloorCollision>().playerFloor.GetComponent<TileCollectionData>().tileData.tileType == "outFloor")
+            player.GetComponent<PlayerFloorCollision>().playerFloorTile.GetTileType() == "outFloor")
         {
             isOutside = true;
         }

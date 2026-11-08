@@ -278,7 +278,6 @@ public class TutorialController : MonoBehaviour
             {
                 currentDurability = 100,
                 holeStability = 3,
-                tileType = "obstacle"
             };
         }
 
@@ -291,7 +290,6 @@ public class TutorialController : MonoBehaviour
         {
             currentDurability = 100,
             holeStability = -1,
-            tileType = "obstacle"
         };
         firstDirt = bObj;
 

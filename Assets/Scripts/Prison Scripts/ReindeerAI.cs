@@ -8,6 +8,7 @@ public class ReindeerAI : MonoBehaviour
     public float speed;
     public bool shouldMove;
     private ReindeerAnimation animScript;
+    private Map currentMap;
     private void Start()
     {
         animScript = GetComponent<ReindeerAnimation>();
@@ -16,6 +17,12 @@ public class ReindeerAI : MonoBehaviour
     }
     private IEnumerator AILoop()
     {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        currentMap = RootObjectCache.GetRoot("ScriptObject").GetComponent<LoadPrison>().currentMap;
         while (true)
         {
             float time = 0f;
@@ -71,7 +78,8 @@ public class ReindeerAI : MonoBehaviour
             bool hitSomething = false;
             foreach (Collider2D col in hitCols)
             {
-                if (col.gameObject.layer == gameObject.layer && !col.isTrigger)
+                Tile tile = TileTools.GetTileObj(col.gameObject, currentMap);
+                if (col.gameObject.layer == gameObject.layer && ((tile == null && !col.isTrigger) || (tile != null && !tile.canPath)))
                 {
                     hitSomething = true;
                     break;
