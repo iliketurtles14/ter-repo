@@ -104,6 +104,10 @@ public class CreateNote : MonoBehaviour
         {
             warden = warden.Replace("$warden", wardenNames[UnityEngine.Random.Range(0, wardenNames.Count)]);
         }
+        if (warden.Contains("$name"))
+        {
+            warden = warden.Replace("$name", playerName);
+        }
         if (msg.StartsWith("Caught"))
         {
             string crime = msg;
@@ -117,10 +121,18 @@ public class CreateNote : MonoBehaviour
 
         foreach(Transform child in panel)
         {
+            if(child.name == "SigBlocker")
+            {
+                continue;
+            }
             child.gameObject.SetActive(true);
         }
         panel.GetComponent<BoxCollider2D>().enabled = true;
         panel.GetComponent<Image>().enabled = true;
+        if (string.IsNullOrEmpty(warden))
+        {
+            panel.Find("SigBlocker").gameObject.SetActive(true);
+        }
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(true);
         inNote = true;

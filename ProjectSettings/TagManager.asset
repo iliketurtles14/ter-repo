@@ -113,6 +113,7 @@ TagManager:
   - Stash
   - Reindeer
   - EditTile
+  - Sniper
   layers:
   - Default
   - TransparentFX

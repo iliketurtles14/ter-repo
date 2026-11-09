@@ -154,6 +154,16 @@ public class GetGivenData : MonoBehaviour
                     {
                         ReplaceColorWithTransparency(texture, new Color(48f / 255f, 1f, 0f));
                     }
+                    else if(validFile == "tiles_CCL.gif")
+                    {
+                        ReplaceColorWithTransparency(texture, new Color(0f, 250f / 255f, 6f / 255f), 0.01f, true);
+                        ReplaceColorWithTransparency(texture, new Color(132f / 255f, 0f, 124f / 255f), 0.01f, true);
+                        ReplaceColorWithTransparency(texture, new Color(240f / 255f, 0f, 1f), 0.01f, true);
+                    }
+                    else if(validFile == "tiles_BC.gif")
+                    {
+                        ReplaceColorWithTransparency(texture, new Color(1f, 0f, 0f), .01f, true);
+                    }
                     tileTextureList.Add(texture);
                     loadScript.LogLoad($"Successfully loaded " + validFile);
                 }
@@ -322,7 +332,7 @@ public class GetGivenData : MonoBehaviour
         }
     }
 
-    private void ReplaceColorWithTransparency(Texture2D texture, Color color, float tolerance = 0.01f)
+    private void ReplaceColorWithTransparency(Texture2D texture, Color color, float tolerance = 0.01f, bool almostTransparent = false)
     {
         Color[] pixels = texture.GetPixels();
 
@@ -332,7 +342,14 @@ public class GetGivenData : MonoBehaviour
                 Mathf.Abs(pixels[i].g - color.g) < tolerance &&
                 Mathf.Abs(pixels[i].b - color.b) < tolerance)
             {
-                pixels[i] = new Color(pixels[i].r, pixels[i].g, pixels[i].b, 0);
+                if (!almostTransparent)
+                {
+                    pixels[i] = new Color(pixels[i].r, pixels[i].g, pixels[i].b, 0);
+                }
+                else
+                {
+                    pixels[i] = new Color(0, 0, 0, 1f / 255f);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
 using NavMeshPlus.Components;
+using NavMeshPlus.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ public class LoadPrison : MonoBehaviour
         "perks", "stalag", "shankton", "jungle", "sanpancho", "irongate", "JC", "BC", "london", "PCP", "SS", "DTAF", "ET", "alca", "fhurst",
         "epsilon", "bamford"
     };
-    //these dictionaries compare the tile ID to what tile it should be based on the prison
+    //these dictionaries compare the tile ID to what tile it should be based on the prison (not used anymore. replaced with the Tile class and the TilesetAttributes.txt file in Resources)
     /*
     private Dictionary<int, string> perksDict = new Dictionary<int, string>()
     {
@@ -612,15 +613,6 @@ public class LoadPrison : MonoBehaviour
     private DataSender dataSenderScript;
 
     private Transform tiles;
-
-    private List<string> shadowTileLayers = new List<string>() //this is for shadows
-    {
-        "Ground", "Roof"
-    };
-    private List<string> shadowObjectLayers = new List<string>()//this is for shadows
-    {
-        "GroundObjects", "RoofObjects"
-    };
 
     public Map currentMap;
     private void Start()
@@ -1185,8 +1177,8 @@ public class LoadPrison : MonoBehaviour
         }
         else
         {
-            float sizeX = groundTransform.GetComponent<SpriteRenderer>().size.x;
-            float sizeY = groundTransform.GetComponent<SpriteRenderer>().size.y;
+            float sizeX = groundTransform.GetComponent<SpriteRenderer>().size.x * 10f;
+            float sizeY = groundTransform.GetComponent<SpriteRenderer>().size.y * 10f;
 
             groundTransform.position = new Vector2(-.8f, -.8f);
             groundTransform.position += new Vector3(sizeX / 2f, sizeY / 2f, 0);
@@ -1477,6 +1469,14 @@ public class LoadPrison : MonoBehaviour
             tile.GetComponent<TileCollectionData>().tileData.currentDurability = 100;
             tile.GetComponent<TileCollectionData>().tileData.holeStability = -1;
             tile.AddComponent<SetColliderShape>().sprite = tileSprites[tileVars[0]];
+            if (!tileObj.canPath)
+            {
+                tile.GetComponent<NavMeshModifier>().area = 1; //not walkable
+            }
+            else
+            {
+                tile.GetComponent<NavMeshModifier>().area = 0; //walkable
+            }
 
             switch (tileLayer)
             {
@@ -1805,6 +1805,10 @@ public class LoadPrison : MonoBehaviour
                 }
                 //add things with unique sortingOrders here vvv
                 if (objInst.name.StartsWith("Detector"))
+                {
+                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
+                }
+                else if(objInst.name == "SSTreeTop")
                 {
                     objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
                 }
@@ -2292,6 +2296,9 @@ public class LoadPrison : MonoBehaviour
                         break;
                     case "Wall":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[349];
+                        break;
+                    case "SSTreeTop":
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[377];
                         break;
 
                 }

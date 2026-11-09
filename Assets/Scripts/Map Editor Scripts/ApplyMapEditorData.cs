@@ -763,6 +763,9 @@ public class ApplyMapEditorData : MonoBehaviour
                 case "Reindeer":
                     obj.GetComponent<Image>().sprite = NPCSprites[2229];
                     break;
+                case "SSTreeTop":
+                    obj.GetComponent<Image>().sprite = PrisonObjectSprites[377];
+                    break;
             }
         }
         foreach(Transform obj in uic.Find("Christmas2Panel"))
@@ -863,6 +866,12 @@ public class ApplyMapEditorData : MonoBehaviour
         uic.Find("SetWaypointPanel").Find("CloseButton").GetComponent<Image>().sprite = UISprites[542];
         //dirt
         grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
+        //note menu
+        uic.Find("NotePanel").GetComponent<Image>().sprite = UISprites[223];
+        uic.Find("NotePanel").Find("ContinueButton").GetComponent<Image>().sprite = UISprites[377];
+        SpriteState spriteState = uic.Find("NotePanel").Find("ContinueButton").GetComponent<Button>().spriteState;
+        spriteState.highlightedSprite = UISprites[378];
+        uic.Find("NotePanel").Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
     }
     private Sprite MakeColorTransparent(Sprite source, Color color) //ts ai sorry
     {

@@ -107,6 +107,7 @@ public class PrisonSelect : MonoBehaviour
     private void Start()
     {
         DataSender ds = DataSender.instance;
+        mainPrisonIcons.Add(ds.UIImages[518]);
         mainPrisonIcons.Add(ds.UIImages[519]);
         mainPrisonIcons.Add(ds.UIImages[520]);
         mainPrisonIcons.Add(ds.UIImages[521]);

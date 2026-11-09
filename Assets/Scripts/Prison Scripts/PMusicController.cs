@@ -40,8 +40,19 @@ public class PMusicController : MonoBehaviour
             RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().clip = currentMap.music[musicDict[musicClip]];
             RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().Play();
         }
+        else if(musicClip == "tutorial")
+        {
+            audioSource.Stop();
+            audioSource.clip = DataSender.instance.MusicList[41];
+            audioSource.Play();
+        }
         else
         {
+            if (currentMap.tutorial)
+            {
+                return;
+            }
+            
             audioSource.Stop();
             audioSource.clip = currentMap.music[musicDict[musicClip]];
             audioSource.Play();

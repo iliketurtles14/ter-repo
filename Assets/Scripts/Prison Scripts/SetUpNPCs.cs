@@ -58,21 +58,6 @@ public class SetUpNPCs : MonoBehaviour
                 obj.GetComponent<BoxCollider2D>().isTrigger = true;
             }
         }
-        List<Transform> tilesToSetBack = new List<Transform>();
-        foreach(Transform tile in tiles.Find("Ground"))
-        {
-            Tile tileObj = TileTools.GetTileObj(tile.gameObject, map);
-            if(tileObj == null)
-            {
-                continue;
-            }
-            if(!tileObj.canPath && tile.GetComponent<Collider2D>().isTrigger)
-            {
-                tilesToSetBack.Add(tile);
-                tile.GetComponent<Collider2D>().isTrigger = false;
-                Debug.Log("here for " + tile.name);
-            }
-        }
 
         GridGraph[] grids = AstarPath.active.data.graphs.OfType<GridGraph>().ToArray();
         for(int i = 0; i < grids.Count(); i++)
@@ -135,10 +120,6 @@ public class SetUpNPCs : MonoBehaviour
             {
                 obj.GetComponent<BoxCollider2D>().isTrigger = false;
             }
-        }
-        foreach (Transform tile in tilesToSetBack)
-        {
-            tile.GetComponent<Collider2D>().isTrigger = true;
         }
 
         //make npc property list

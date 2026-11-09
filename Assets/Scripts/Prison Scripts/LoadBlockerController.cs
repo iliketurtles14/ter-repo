@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LoadBlockerController : MonoBehaviour
@@ -8,6 +9,11 @@ public class LoadBlockerController : MonoBehaviour
     private Transform player;
     private Sittables sittablesScript;
     private TutorialController tutControllerScript;
+    private Dictionary<string, string> periodMusicDict = new Dictionary<string, string>
+    {
+        { "B", "chow" }, { "L", "chow" }, { "D", "chow" }, { "R", "rollcall" }, { "LO", "lightsout" },
+        { "LD", "lockdown" }, { "S", "shower" }, { "E", "workout" }, { "FT", "freetime" }, { "W", "work" }
+    };
     private void Start()
     {
         loadCanvas = RootObjectCache.GetRoot("LoadBlockerCanvas").transform;
@@ -44,5 +50,6 @@ public class LoadBlockerController : MonoBehaviour
         Destroy(loadCanvas.gameObject);
         player.GetComponent<PlayerCtrl>().canMove = true;
         sittablesScript.canLeaveSittable = true;
+        PMusicController.PlayMusic(periodMusicDict[routineScript.periodCode]);
     }
 }

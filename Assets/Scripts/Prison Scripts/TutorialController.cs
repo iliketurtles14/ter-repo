@@ -180,6 +180,9 @@ public class TutorialController : MonoBehaviour
     }
     private void SetTutorialStuff()
     {
+        //music
+        PMusicController.PlayMusic("tutorial");
+
         //activate tutarrow
         tutArrow.gameObject.SetActive(true);
         tutArrow.Find("Canvas").Find("Panel").GetComponent<Image>().sprite = DataSender.instance.UIImages[398];

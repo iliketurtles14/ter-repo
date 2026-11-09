@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class ObjectSelect : MonoBehaviour
     public Material unlitMat;
     public GameObject highlight;
     public bool hasSelectedSpecial;
+    public TextMeshProUGUI selectedTMP;
 
     private void Update()
     {
@@ -27,6 +29,15 @@ public class ObjectSelect : MonoBehaviour
         if(currentPanel != "ObjectsPanel" && hasSelected)
         {
             DeselectObject();
+        }
+
+        if(hasSelected && selectedObj != null)
+        {
+            selectedTMP.text = selectedObj.name;
+        }
+        else
+        {
+            selectedTMP.text = "";
         }
     }
     public void SelectObject(GameObject obj)

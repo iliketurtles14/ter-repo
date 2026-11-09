@@ -1280,6 +1280,10 @@ public class Tooltips : MonoBehaviour
 			{
 				toPrint = "Internet";
 			}
+			else if (mcs.touchedReader.name.StartsWith("Bookshelf"))
+			{
+				toPrint = "Bookshelf";
+			}
 			tooltipType = "reader";
 			StartCoroutine(DrawTooltip(toPrint));
 			return;
@@ -1296,6 +1300,10 @@ public class Tooltips : MonoBehaviour
 			if (mcs.touchedReader.name.StartsWith("ComputerTable"))
 			{
 				str = "Internet";
+			}
+			else if (mcs.touchedReader.name.StartsWith("Bookshelf"))
+			{
+				str = "Bookshelf";
 			}
 
 			if(str != toPrint)
@@ -1725,6 +1733,19 @@ public class Tooltips : MonoBehaviour
 			DestroyTooltip();
 			return;
 		}
+		//snipers
+		if(mcs.isTouchingSniper && !showingTooltip)
+		{
+			toPrint = "Tower Guard";
+			tooltipType = "sniper";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "sniper" && !mcs.isTouchingSniper)
+		{
+			DestroyTooltip();
+			return;
+		}
 		//reindeer
 		if(mcs.isTouchingReindeer && !showingTooltip)
 		{
@@ -2036,7 +2057,7 @@ public class Tooltips : MonoBehaviour
 				textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(0, 1, 0);
 			}
 		}
-		else if(tooltipType == "charlie")
+		else if(tooltipType == "charlie" || tooltipType == "sniper")
         {   //guard: 115, 196, 243
 			textBox.GetComponent<TextMeshProUGUI>().color = new UnityEngine.Color(115f / 255f, 196f / 255f, 243f / 255f);
 		}

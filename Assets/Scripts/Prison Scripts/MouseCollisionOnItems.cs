@@ -146,6 +146,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedHypertube;
     public bool isTouchingReindeer;
     public GameObject touchedReindeer;
+    public bool isTouchingSniper;
+    public GameObject touchedSniper;
 
     //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
@@ -206,6 +208,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "Stepladder",
             "InmateBed",
             "Charlie",
+            "Sniper",
             "Camera",
             "Ladder(Roof)",
             "Ladder(Vent)",
@@ -528,6 +531,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                     isTouchingSlats = true;
                     touchedSlats = highestPriorityObject;
                     break;
+                case "Sniper":
+                    isTouchingSniper = true;
+                    touchedSniper = highestPriorityObject;
+                    break;
             }
         }
     }
@@ -699,5 +706,7 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedHypertube = null;
         isTouchingReindeer = false;
         touchedReindeer = null;
+        isTouchingSniper = false;
+        touchedSniper = null;
     }
 }
