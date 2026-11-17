@@ -867,11 +867,33 @@ public class ApplyMapEditorData : MonoBehaviour
         //dirt
         grounds.Find("Underground").GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[24];
         //note menu
-        uic.Find("NotePanel").GetComponent<Image>().sprite = UISprites[223];
-        uic.Find("NotePanel").Find("ContinueButton").GetComponent<Image>().sprite = UISprites[377];
-        SpriteState spriteState = uic.Find("NotePanel").Find("ContinueButton").GetComponent<Button>().spriteState;
-        spriteState.highlightedSprite = UISprites[378];
-        uic.Find("NotePanel").Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
+        uic.Find("NotePanel").Find("NormalNote").GetComponent<Image>().sprite = UISprites[223];
+        uic.Find("NotePanel").Find("NoSigNote").GetComponent<Image>().sprite = UISprites[526];
+        uic.Find("NotePanel").Find("ETNote").GetComponent<Image>().sprite = UISprites[509];
+        uic.Find("NotePanel").Find("DTAFNote").GetComponent<Image>().sprite = UISprites[531];
+        uic.Find("NotePanel").Find("AlcaNote").GetComponent<Image>().sprite = UISprites[470];
+        List<Transform> notePanels = new List<Transform>
+        {
+            uic.Find("NotePanel").Find("NormalNote"),
+            uic.Find("NotePanel").Find("NoSigNote"),
+            uic.Find("NotePanel").Find("ETNote"),
+            uic.Find("NotePanel").Find("DTAFNote"),
+            uic.Find("NotePanel").Find("AlcaNote")
+        };
+        foreach(Transform panel in notePanels)
+        {
+            panel.Find("ContinueButton").GetComponent<Image>().sprite = UISprites[377];
+            SpriteState spriteState = panel.Find("ContinueButton").GetComponent<Button>().spriteState;
+            spriteState.highlightedSprite = UISprites[378];
+            panel.Find("ContinueButton").GetComponent<Button>().spriteState = spriteState;
+        }
+        //note options menu
+        Transform optionsMenu = uic.Find("NotePanel").Find("OptionsPanel");
+        optionsMenu.Find("SeparateNamesCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        optionsMenu.Find("AlcaCheckbox").GetComponent<Image>().sprite = UISprites[447];
+        optionsMenu.Find("NotePicker").Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+        optionsMenu.Find("NotePicker").Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+        optionsMenu.Find("NotePicker").GetComponent<Image>().sprite = UISprites[368];
     }
     private Sprite MakeColorTransparent(Sprite source, Color color) //ts ai sorry
     {

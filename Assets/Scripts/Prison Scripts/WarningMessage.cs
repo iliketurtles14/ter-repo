@@ -34,7 +34,7 @@ public class WarningMessage : MonoBehaviour
 
         player.Find("WarningCanvas").Find("WarningSides").GetComponent<Image>().enabled = true;
         player.Find("WarningCanvas").Find("WarningBackdrop").GetComponent<Image>().enabled = true;
-        player.Find("WarningCanvas").Find("WarningText").GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 255);
+        player.Find("WarningCanvas").Find("WarningText").GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
 
         yield return new WaitForSeconds(1);
         if(amountOfMessages <= 1)

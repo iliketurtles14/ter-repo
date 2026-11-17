@@ -96,6 +96,7 @@ public class PrisonSelect : MonoBehaviour
     private bool ready = false;
     public NPCRename npcRenameScript;
     private TextMeshProUGUI saveTMP;
+    public bool onTutorial;
     private Dictionary<int, string> bodyDict = new Dictionary<int, string> //these dictionaries correlate to the NPCPanel pickers in the map editor scene
     {
         { 0, "Normal" }, { 1, "SS" }, { 2, "ET" }, { 3, "DTAF" }
@@ -129,6 +130,8 @@ public class PrisonSelect : MonoBehaviour
     }
     public void Update()
     {
+        onTutorial = whichTab == 0 && whichPrison == 0;
+
         if(npcRenameScript.currentSave != -1)
         {
             saveTMP.text = "Save " + (npcRenameScript.currentSave + 1).ToString() + " Selected";
@@ -439,6 +442,14 @@ public class PrisonSelect : MonoBehaviour
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
                 }
+                if(File.Exists(Path.Combine(extractPath, "Items.ini")))
+                {
+                    File.Delete(Path.Combine(extractPath, "Items.ini"));
+                }
+                if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
+                {
+                    File.Delete(Path.Combine(extractPath, "Speech.ini"));
+                }
                 mainPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
                 mainPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);
                 mainPrisonPlayerBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "PlayerCharacter", data))]);
@@ -481,6 +492,14 @@ public class PrisonSelect : MonoBehaviour
                 if (File.Exists(Path.Combine(extractPath, "Ground.png")))
                 {
                     File.Delete(Path.Combine(extractPath, "Ground.png"));
+                }
+                if (File.Exists(Path.Combine(extractPath, "Items.ini")))
+                {
+                    File.Delete(Path.Combine(extractPath, "Items.ini"));
+                }
+                if (File.Exists(Path.Combine(extractPath, "Speech.ini")))
+                {
+                    File.Delete(Path.Combine(extractPath, "Speech.ini"));
                 }
                 bonusPrisonNPCBodies.Add(bodyDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCCharacter", data))]);
                 bonusPrisonNPCOutfits.Add(outfitDict[Convert.ToInt32(GetINIVarForPicker("Properties", "NPCOutfit", data))]);

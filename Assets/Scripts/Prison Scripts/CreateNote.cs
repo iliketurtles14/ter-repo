@@ -45,7 +45,11 @@ public class CreateNote : MonoBehaviour
     {
         List<Transform> panels = new List<Transform>()
         {
-            mc.Find("NoteDay1MenuPanel"),
+            mc.Find("NormalNote"),
+            mc.Find("NoSigNote"),
+            mc.Find("ETNote"),
+            mc.Find("DTAFNote"),
+            mc.Find("AlcaNote"),
             mc.Find("NoteLoseJobMenuPanel"),
             mc.Find("NoteGetJobMenuPanel"),
             mc.Find("NoteSolitaryMenuPanel")
@@ -70,13 +74,25 @@ public class CreateNote : MonoBehaviour
         pc.Unpause();
         inNote = false;
     }
-    public void CreateWardenNote(string type, string msg, string warden) //day1, loseJob, getJob, solitary
+    public void CreateWardenNote(string type, string msg, string warden) //normal, dtaf, et, noSig, alca, loseJob, getJob, solitary
     {
         Transform panel = null;
         switch (type)
         {
-            case "day1":
-                panel = mc.Find("NoteDay1MenuPanel");
+            case "normal":
+                panel = mc.Find("NormalNote");
+                break;
+            case "dtaf":
+                panel = mc.Find("DTAFNote");
+                break;
+            case "et":
+                panel = mc.Find("ETNote");
+                break;
+            case "noSig":
+                panel = mc.Find("NoSigNote");
+                break;
+            case "alca":
+                panel = mc.Find("AlcaNote");
                 break;
             case "loseJob":
                 panel = mc.Find("NoteLoseJobMenuPanel");
@@ -117,22 +133,17 @@ public class CreateNote : MonoBehaviour
             msg = msg.Replace("#", "\n");
         }
         panel.Find("NoteText").GetComponent<TextMeshProUGUI>().text = msg;
-        panel.Find("WardenText").GetComponent<TextMeshProUGUI>().text = warden;
+        if(panel.Find("WardenText") != null)
+        {
+            panel.Find("WardenText").GetComponent<TextMeshProUGUI>().text = warden;
+        }
 
         foreach(Transform child in panel)
         {
-            if(child.name == "SigBlocker")
-            {
-                continue;
-            }
             child.gameObject.SetActive(true);
         }
         panel.GetComponent<BoxCollider2D>().enabled = true;
         panel.GetComponent<Image>().enabled = true;
-        if (string.IsNullOrEmpty(warden))
-        {
-            panel.Find("SigBlocker").gameObject.SetActive(true);
-        }
         mc.Find("Black").GetComponent<Image>().enabled = true;
         pc.Pause(true);
         inNote = true;

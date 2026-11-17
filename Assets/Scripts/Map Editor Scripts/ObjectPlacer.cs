@@ -167,6 +167,7 @@ public class ObjectPlacer : MonoBehaviour //TilePlacer handles the background wo
                     break;
                 case "InmateSet":
                 case "GuardSet":
+                case "DTAFShark":
                     GameObject canvas6 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
                     canvas6.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "setWaypoint";
                     canvas6.transform.parent = canvases.Find(layer);

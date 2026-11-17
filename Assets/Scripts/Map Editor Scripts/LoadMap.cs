@@ -227,8 +227,8 @@ public class LoadMap : MonoBehaviour
         advanced.Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Speech", data);
         advanced.Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Tooltips", data);
         advanced.Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Items", data);
-        uic.Find("NotePanel").Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Note", data));
-        uic.Find("NotePanel").Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Warden", data);
+        //uic.Find("NotePanel").Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Note", data));
+        //uic.Find("NotePanel").Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Warden", data);
         Transform routinePanel = uic.Find("RoutinePanel");
         Transform routineGrid1 = routinePanel.Find("RoutineInputGrid1");
         Transform routineGrid2 = routinePanel.Find("RoutineInputGrid2");
@@ -292,6 +292,40 @@ public class LoadMap : MonoBehaviour
         smc.ssVisitors = GetINIVar("Properties", "SSVisitors", data) == "True";
         smc.perksMsgs = GetINIVar("Properties", "PerksMsgs", data) == "True";
         smc.tutorial = GetINIVar("Properties", "Tutorial", data) == "True";
+        smc.diffWardenName = GetINIVar("Properties", "UseDiffWardenName", data) == "True";
+        smc.alcaNote = GetINIVar("Properties", "UseAlcaNote", data) == "True";
+
+        Transform notePanel = uic.Find("NotePanel");
+        List<Transform> notePanels = new List<Transform>
+        {
+            uic.Find("NotePanel").Find("NormalNote"), uic.Find("NotePanel").Find("NoSigNote"),
+            uic.Find("NotePanel").Find("DTAFNote"), uic.Find("NotePanel").Find("ETNote")
+        };
+        int noteTypeNum = Convert.ToInt32(GetINIVar("Properties", "NoteType", data));
+        Transform theNotePanel = notePanels[noteTypeNum];
+        string noteEscaped = GetINIVar("Properties", "Note", data);
+        if (String.IsNullOrEmpty(noteEscaped))
+        {
+            noteEscaped = "";
+        }
+        theNotePanel.Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(noteEscaped);
+        if(theNotePanel.name == "NormalNote")
+        {
+            theNotePanel.Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Warden", data);
+        }
+        string alcaNoteEscaped = GetINIVar("Properties", "AlcaNote", data);
+        if (String.IsNullOrEmpty(alcaNoteEscaped))
+        {
+            alcaNoteEscaped = "";
+        }
+        uic.Find("NotePanel").Find("AlcaNote").Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(alcaNoteEscaped);
+        uic.Find("NotePanel").Find("OptionsPanel").Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "DiffWardenName", data);
+        uic.Find("NotePanel").Find("OptionsPanel").Find("NotePicker").GetComponent<Picker>().currentIndex = noteTypeNum;
+        foreach(Transform panel in notePanels)
+        {
+            panel.gameObject.SetActive(false);
+        }
+        notePanels[noteTypeNum].gameObject.SetActive(true);
 
         Transform npcPanel = uic.Find("NPCPanel");
         npcPanel.Find("WardenPicker").GetComponent<Picker>().currentIndex = Convert.ToInt32(GetINIVarForPicker("Properties", "WardenCharacter", data));
@@ -625,6 +659,7 @@ public class LoadMap : MonoBehaviour
                         break;
                     case "InmateSet":
                     case "GuardSet":
+                    case "DTAFShark":
                         foreach(string line in currentList)
                         {
                             string name = line.Split("=")[0];
@@ -904,6 +939,7 @@ public class LoadMap : MonoBehaviour
                 break;
             case "InmateSet":
             case "GuardSet":
+            case "DTAFShark":
                 GameObject canvas6 = Instantiate(canvases.Find("SpecialObjectCanvas").gameObject);
                 canvas6.transform.Find("Button").GetComponent<SpecialButtonTypeContainer>().type = "setWaypoint";
                 canvas6.transform.parent = canvases.Find(realLayer);

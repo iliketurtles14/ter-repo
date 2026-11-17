@@ -149,16 +149,17 @@ public class DebugMenu : MonoBehaviour
                 "/timeFast [true/false]\n\t" +
                 "/generatorFlip\n\t" +
                 "/oob [true/false]\n\t" +
-                "/setSpeed [int speed (default:10)]\n\t" +
+                "/setSpeed [float speed (default:10)]\n\t" +
                 "/godMode [true/false]\n\t" +
-                "/cameraView [float viewSize]\n\t" +
+                "/cameraView [float viewSize (default:10.8)]\n\t" +
                 "/timeFreeze [true/false]\n\t" +
                 "/powerOff\n\t" +
                 "/layer [int layer (0,1,2,3)]\n\t" +
                 "/save\n\t" +
                 "/rudolph\n\t" +
                 "/wardenMove\n\t" +
-                "/getPlayerFloorTileData";
+                "/getPlayerFloorTileData\n\t" +
+                "/sharkSpeed [float speed (default:3.5)]";
             return;
         }
 
@@ -401,6 +402,29 @@ public class DebugMenu : MonoBehaviour
                 output.text += outText;
             }
             return;
+        }
+        if (args[0] == "/sharkSpeed")
+        {
+            float newSpeed = 0f;
+            try
+            {
+                newSpeed = Convert.ToSingle(args[1]);
+            }
+            catch
+            {
+                output.text += "\nInvalid shark speed.";
+            }
+            for(int i = 0; i < 4; i++)
+            {
+                foreach(Transform obj in tiles.Find(objLayers[i]))
+                {
+                    if(obj.name == "DTAFShark")
+                    {
+                        obj.GetComponent<SharkAI>().speed = newSpeed;
+                    }
+                }
+            }
+            output.text += "\nSetting the sharks' speeds to " + newSpeed.ToString() + ".";
         }
         //keep at end
         output.text += "\nInvalid command. Type \"/help\" for help with using the Debug Menu.";

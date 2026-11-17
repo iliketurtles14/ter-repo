@@ -27842,6 +27842,7 @@ MonoBehaviour:
   continueButtonGood: {fileID: 0}
   showGrid: 0
   npcRenameScript: {fileID: 827161743}
+  onTutorial: 0
 --- !u!1 &1681240761
 GameObject:
   m_ObjectHideFlags: 0
@@ -29393,6 +29394,7 @@ MonoBehaviour:
   creditsScript: {fileID: 844128790}
   blocker: {fileID: 707583161}
   saveSetScript: {fileID: 1851668186}
+  tileSetterScript: {fileID: 574071301}
 --- !u!4 &1738218530
 Transform:
   m_ObjectHideFlags: 0

@@ -148,6 +148,10 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
     public GameObject touchedReindeer;
     public bool isTouchingSniper;
     public GameObject touchedSniper;
+    public bool isTouchingDTAFShark;
+    public GameObject touchedDTAFShark;
+    public bool isTouchingAlcaBoat;
+    public GameObject touchedAlcaBoat;
 
     //IF YOU ARE ADDING A UI ELEMENT, MAKE SURE TO ADD IT INTO PauseController.cs !!!!!!!!!
     private void Start()
@@ -198,6 +202,8 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
             "ItemTransformer",
             "JobBoard",
             "TV",
+            "AlcaBoat",
+            "DTAFShark",
             "Payphone",
             "EscapeObject",
             "Generator",
@@ -369,6 +375,14 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
                 case "TV":
                     isTouchingTV = true;
                     touchedTV = highestPriorityObject;
+                    break;
+                case "AlcaBoat":
+                    isTouchingAlcaBoat = true;
+                    touchedAlcaBoat = highestPriorityObject;
+                    break;
+                case "DTAFShark":
+                    isTouchingDTAFShark = true;
+                    touchedDTAFShark = highestPriorityObject;
                     break;
                 case "Payphone":
                     isTouchingPayphone = true;
@@ -708,5 +722,9 @@ public class MouseCollisionOnItems : MonoBehaviour //this started as an item scr
         touchedReindeer = null;
         isTouchingSniper = false;
         touchedSniper = null;
+        isTouchingDTAFShark = false;
+        touchedDTAFShark = null;
+        isTouchingAlcaBoat = false;
+        touchedAlcaBoat = null;
     }
 }

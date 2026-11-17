@@ -131,8 +131,17 @@ public class Routine : MonoBehaviour
                 }
                 else
                 {
-                    noteScript.CreateWardenNote("day1", currentMap.note, currentMap.warden);
+                    Dictionary<int, string> noteTypeDict = new Dictionary<int, string>
+                    {
+                        { 0, "normal" }, { 1, "noSig" }, { 2, "dtaf" }, { 3, "et" }
+                    };
+                    noteScript.CreateWardenNote(noteTypeDict[currentMap.noteType], currentMap.note, currentMap.warden);
                 }
+            }
+
+            if(sec == 58 && min == startingMin && day == 1 && currentMap.useAlcaNote)
+            {
+                noteScript.CreateWardenNote("alca", currentMap.alcaNote, "");
             }
 
             if(sec == 60)

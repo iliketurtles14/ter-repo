@@ -2145,7 +2145,7 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[310];
                         break;
                     case "DTAFShark":
-                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[317];
+                        objInst.name = "DTAFSharkWP";
                         break;
                     case "DTAFPlaque":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[320];
@@ -2501,8 +2501,32 @@ public class LoadPrison : MonoBehaviour
         }
 
         string mapName = GetINIVar("Properties", "MapName", data);
-        string note = Regex.Unescape(GetINIVar("Properties", "Note", data));
+        string note = GetINIVar("Properties", "Note", data);
+        if (string.IsNullOrEmpty(note))
+        {
+            note = "";
+        }
+        note = Regex.Unescape(note);
+        string alcaNote = GetINIVar("Properties", "AlcaNote", data);
+        if (string.IsNullOrEmpty(alcaNote))
+        {
+            alcaNote = "";
+        }
+        alcaNote = Regex.Unescape(alcaNote);
+        bool useAlcaNote = GetINIVar("Properties", "UseAlcaNote", data) == "True";
+        int noteType = 0;
+        try
+        {
+            noteType = Convert.ToInt32(GetINIVar("Properties", "NoteType", data));
+        }
+        catch { }
+        bool useDiffWardenName = GetINIVar("Properties", "UseDiffWardenName", data) == "True";
         string warden = GetINIVar("Properties", "Warden", data);
+        string wardenName = warden;
+        if (useDiffWardenName)
+        {
+            wardenName = GetINIVar("Properties", "DiffWardenName", data);
+        }
         int guardCount = Convert.ToInt32(GetINIVar("Properties", "Guards", data));
         int inmateCount = Convert.ToInt32(GetINIVar("Properties", "Inmates", data));
         string tilesetStr = GetINIVar("Properties", "Tileset", data);
@@ -2925,7 +2949,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, warden, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars, tileList, brokenTile);
+        Map map = new Map(fileName, type, mapName, note, noteType, wardenName, warden, useAlcaNote, alcaNote, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars, tileList, brokenTile);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

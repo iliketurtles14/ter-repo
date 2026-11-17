@@ -78,13 +78,11 @@ public class Escaping : MonoBehaviour
         if(player.position.x <= westBound || player.position.x >= eastBound ||
             player.position.y <= southBound || player.position.y >= northBound)
         {
-            hasEscaped = true;
             StartCoroutine(Escape());
         }
 
         if (zonesScript.isTouchingEscape)
         {
-            hasEscaped = true;
             StartCoroutine(Escape());
         }
 

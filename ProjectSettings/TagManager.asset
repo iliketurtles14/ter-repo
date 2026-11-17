@@ -114,6 +114,8 @@ TagManager:
   - Reindeer
   - EditTile
   - Sniper
+  - DTAFShark
+  - AlcaBoat
   layers:
   - Default
   - TransparentFX

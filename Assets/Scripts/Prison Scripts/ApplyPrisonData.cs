@@ -709,13 +709,21 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Button>().spriteState = spriteState;
 
         //warden notes
-        mc.Find("NoteDay1MenuPanel").GetComponent<Image>().sprite = UISprites[223];
+        mc.Find("NormalNote").GetComponent<Image>().sprite = UISprites[223];
+        mc.Find("NoSigNote").GetComponent<Image>().sprite = UISprites[526];
+        mc.Find("ETNote").GetComponent<Image>().sprite = UISprites[509];
+        mc.Find("DTAFNote").GetComponent<Image>().sprite = UISprites[531];
+        mc.Find("AlcaNote").GetComponent<Image>().sprite = UISprites[470];
         mc.Find("NoteLoseJobMenuPanel").GetComponent<Image>().sprite = UISprites[271];
         mc.Find("NoteGetJobMenuPanel").GetComponent<Image>().sprite = UISprites[272];
         mc.Find("NoteSolitaryMenuPanel").GetComponent<Image>().sprite = UISprites[285];
         List<Transform> panels = new List<Transform>()
         {
-            mc.Find("NoteDay1MenuPanel"),
+            mc.Find("NormalNote"),
+            mc.Find("NoSigNote"),
+            mc.Find("ETNote"),
+            mc.Find("DTAFNote"),
+            mc.Find("AlcaNote"),
             mc.Find("NoteLoseJobMenuPanel"),
             mc.Find("NoteGetJobMenuPanel"),
             mc.Find("NoteSolitaryMenuPanel")

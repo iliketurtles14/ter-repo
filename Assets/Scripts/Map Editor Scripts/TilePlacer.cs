@@ -45,7 +45,7 @@ public class TilePlacer : MonoBehaviour
                 break;
         }
 
-        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones" && !uic.Find("TilesetPanel").gameObject.activeInHierarchy)
+        if (!inDeleteMode && highlight.position != new Vector3(9999, 9999) && !mcs.isTouchingMenu && !mcs.isTouchingButton && !mcs.isTouchingBlack && Input.GetMouseButton(0) && GetComponent<TileSelect>().hasSelected && layer != "Zones" && !uic.Find("TilesetPanel").gameObject.activeInHierarchy)
         {
             PlaceTile(layer, GetComponent<TileSelect>().selectedTile);
         }

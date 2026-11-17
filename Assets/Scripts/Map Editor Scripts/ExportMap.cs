@@ -50,8 +50,26 @@ public class ExportMap : MonoBehaviour
         text += "[Properties]\n";
         text += "Version=0.0.7\n";
         text += "MapName=" + properties.Find("NameInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Note=" + Regex.Escape(uic.Find("NotePanel").Find("NoteInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
-        text += "Warden=" + uic.Find("NotePanel").Find("WardenInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        List<Transform> notePanels = new List<Transform>
+        {
+            uic.Find("NotePanel").Find("NormalNote"), uic.Find("NotePanel").Find("NoSigNote"),
+            uic.Find("NotePanel").Find("DTAFNote"), uic.Find("NotePanel").Find("ETNote")
+        };
+        int noteType = uic.Find("NotePanel").Find("OptionsPanel").Find("NotePicker").GetComponent<Picker>().currentIndex;
+        text += "Note=" + Regex.Escape(notePanels[noteType].Find("NoteInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
+        text += "NoteType=" + noteType.ToString() + "\n";
+        if(noteType == 0)
+        {
+            text += "Warden=" + notePanels[noteType].Find("WardenInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        }
+        else
+        {
+            text += "Warden=\n";
+        }
+        text += "UseDiffWardenName=" + subMenuControllerScript.diffWardenName + "\n";
+        text += "DiffWardenName=" + uic.Find("NotePanel").Find("OptionsPanel").Find("WardenInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
+        text += "UseAlcaNote=" + subMenuControllerScript.alcaNote + "\n";
+        text += "AlcaNote=" + Regex.Escape(uic.Find("NotePanel").Find("AlcaNote").Find("NoteInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text) + "\n";
         text += "Guards=" + properties.Find("GuardsNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Inmates=" + properties.Find("InmatesNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Tileset=" + properties.Find("TilesetResultText").GetComponent<TextMeshProUGUI>().text + "\n";
@@ -312,6 +330,7 @@ public class ExportMap : MonoBehaviour
                     break;
                 case "InmateSet":
                 case "GuardSet":
+                case "DTAFShark":
                     text += obj.name + "=" + posX + "," + posY + ";";
                     string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
                     string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
@@ -360,6 +379,7 @@ public class ExportMap : MonoBehaviour
                     break;
                 case "InmateSet":
                 case "GuardSet":
+                case "DTAFShark":
                     text += obj.name + "=" + posX + "," + posY + ";";
                     string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
                     string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
@@ -408,6 +428,7 @@ public class ExportMap : MonoBehaviour
                     break;
                 case "InmateSet":
                 case "GuardSet":
+                case "DTAFShark":
                     text += obj.name + "=" + posX + "," + posY + ";";
                     string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
                     string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();
@@ -456,6 +477,7 @@ public class ExportMap : MonoBehaviour
                     break;
                 case "InmateSet":
                 case "GuardSet":
+                case "DTAFShark":
                     text += obj.name + "=" + posX + "," + posY + ";";
                     string wpID = obj.GetComponent<MESetWaypointContainer>().id.ToString();
                     string wpOrder = obj.GetComponent<MESetWaypointContainer>().order.ToString();

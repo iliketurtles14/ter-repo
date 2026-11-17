@@ -10,7 +10,11 @@ public class Map
     public int mapType; //0 - main, 1 - bonus, 2 - custom
     public string mapName;
     public string note;
-    public string warden;
+    public int noteType; //normal, no sig, dtaf, et
+    public string wardenName; //for the npc
+    public string warden; //for the note
+    public bool useAlcaNote;
+    public string alcaNote;
     public int guardCount;
     public int inmateCount;
     public string tilesetStr;
@@ -78,7 +82,11 @@ public class Map
         int mapType,
         string mapName,
         string note,
+        int noteType,
+        string wardenName,
         string warden,
+        bool useAlcaNote,
+        string alcaNote,
         int guardCount,
         int inmateCount,
         string tilesetStr,
@@ -146,7 +154,11 @@ public class Map
         this.mapType = mapType;
         this.mapName = mapName;
         this.note = note;
+        this.noteType = noteType;
+        this.wardenName = wardenName;
         this.warden = warden;
+        this.useAlcaNote = useAlcaNote;
+        this.alcaNote = alcaNote;
         this.guardCount = guardCount;
         this.inmateCount = inmateCount;
         this.tilesetStr = tilesetStr;

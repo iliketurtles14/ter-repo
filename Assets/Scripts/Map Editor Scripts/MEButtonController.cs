@@ -216,6 +216,20 @@ public class MEButtonController : MonoBehaviour
         smc.ReactivateButtons();
         sc.PlaySound("close");
     }
+    public void NoteAlca()
+    {
+        uic.Find("NotePanel").Find("AlcaNote").gameObject.SetActive(true);
+        uic.Find("NotePanel").Find("Black").gameObject.SetActive(true);
+        uic.Find("Black").gameObject.SetActive(false);
+        sc.PlaySound("open");
+    }
+    public void NoteAlcaContinue()
+    {
+        uic.Find("NotePanel").Find("AlcaNote").gameObject.SetActive(false);
+        uic.Find("NotePanel").Find("Black").gameObject.SetActive(false);
+        uic.Find("Black").gameObject.SetActive(true);
+        sc.PlaySound("close");
+    }
     public void RoutineClose()
     {
         uic.Find("RoutinePanel").gameObject.SetActive(false);
@@ -310,6 +324,15 @@ public class MEButtonController : MonoBehaviour
                 case "TutorialCheckbox":
                     smc.tutorial = false;
                     break;
+                case "SeparateNamesCheckbox":
+                    smc.diffWardenName = false;
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("WardenInputField").gameObject.SetActive(false);
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("WardenText").gameObject.SetActive(false);
+                    break;
+                case "AlcaCheckbox":
+                    smc.alcaNote = false;
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("EditAlcaButton").gameObject.SetActive(false);
+                    break;
             }
         }
         else if(clicked.GetComponent<Image>().sprite == smc.uncheckedBoxSprite)
@@ -374,6 +397,15 @@ public class MEButtonController : MonoBehaviour
                     break;
                 case "TutorialCheckbox":
                     smc.tutorial = true;
+                    break;
+                case "SeparateNamesCheckbox":
+                    smc.diffWardenName = true;
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("WardenInputField").gameObject.SetActive(true);
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("WardenText").gameObject.SetActive(true);
+                    break;
+                case "AlcaCheckbox":
+                    smc.alcaNote = true;
+                    uic.Find("NotePanel").Find("OptionsPanel").Find("EditAlcaButton").gameObject.SetActive(true);
                     break;
             }
         }

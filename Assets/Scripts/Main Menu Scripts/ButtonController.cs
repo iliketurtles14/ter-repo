@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -24,6 +26,7 @@ public class ButtonController : MonoBehaviour
     public Credits creditsScript;
     public Transform blocker;
     public SaveSet saveSetScript;
+    public TileSetter tileSetterScript;
     public void MainPlayGame()
     {
         StartCoroutine(SaveWait(false));
@@ -288,9 +291,46 @@ public class ButtonController : MonoBehaviour
     }
     public void PrisonSelectContinue()
     {
-        mmc.Find("PlayerPanel").gameObject.SetActive(true);
-        mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
-        sc.PlaySound("open");
+        if (prisonSelectScript.onTutorial)
+        {
+            mmc.Find("PrisonSelectPanel").Find("ContinueButton").GetComponent<EventTrigger>().enabled = false;
+            if (!npcRenameScript.isStarting)
+            {
+                npcRenameScript.isStarting = true;
+                StartCoroutine(TutorialTransfer());
+                sc.PlaySound("rumble");
+            }
+        }
+        else
+        {
+            mmc.Find("PlayerPanel").gameObject.SetActive(true);
+            mmc.Find("PrisonSelectPanel").gameObject.SetActive(false);
+            sc.PlaySound("open");
+        }
+    }
+    private IEnumerator TutorialTransfer() //a modified version of NPCRename's Transfer() function for tutorial maps
+    {
+        blocker.GetComponent<Animator>().enabled = true;
+        blocker.GetComponent<Animator>().Rebind();
+        blocker.GetComponent<Animator>().Update(0f);
+        blocker.GetComponent<Animator>().Play(0, 0, 0f);
+        yield return new WaitForSeconds(.6f);
+
+        PlayerMenuScript.saveScript.SetPlayer("name", 0);
+
+        List<string> names = new List<string>();
+        List<int> types = new List<int>();
+        for(int i = 0; i < 13; i++)
+        {
+            names.Add("name");
+            types.Add(0);
+        }
+        tileSetterScript.SetTiles(prisonSelectScript.whichPrison);
+        NPCSave.instance.SetNPC(names, types);
+        DataSender ds = DataSender.instance;
+        ds.SetCurrentMapPath(prisonSelectScript.currentPrisonPath);
+        ds.currentSave = -1;
+        Addressables.LoadSceneAsync("Prison");
     }
     public void PrisonSelectMainPrisons()
     {

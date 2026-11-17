@@ -42,6 +42,8 @@ public class SubMenuController : MonoBehaviour
     public bool perksMsgs;
     public bool tutorial;
     public bool customTileAttributes;
+    public bool diffWardenName;
+    public bool alcaNote;
     //IF YOU MAKE A NEW CHECKBOX, PLEASE ADD IT TO THE RenewCheckboxes() FUNCTION BELOW!!!!
     public Dictionary<string, string> prisonDict = new Dictionary<string, string>()
     {
@@ -94,6 +96,28 @@ public class SubMenuController : MonoBehaviour
         {
             tilesPanel.Find("CustomCheckbox").GetComponent<Image>().sprite = RemoveBottomTwoRows(uncheckedBoxSprite);
             tilesPanel.Find("EditButton").gameObject.SetActive(false);
+        }
+
+        Transform notePanel = uic.Find("NotePanel").Find("OptionsPanel");
+        notePanel.Find("SeparateNamesCheckbox").GetComponent<Image>().sprite = checkDict[diffWardenName];
+        notePanel.Find("AlcaCheckbox").GetComponent<Image>().sprite = checkDict[diffWardenName];
+        if (diffWardenName)
+        {
+            notePanel.Find("WardenInputField").gameObject.SetActive(true);
+            notePanel.Find("WardenText").gameObject.SetActive(true);
+        }
+        else
+        {
+            notePanel.Find("WardenInputField").gameObject.SetActive(false);
+            notePanel.Find("WardenText").gameObject.SetActive(false);
+        }
+        if (alcaNote)
+        {
+            notePanel.Find("EditAlcaButton").gameObject.SetActive(true);
+        }
+        else
+        {
+            notePanel.Find("EditAlcaButton").gameObject.SetActive(false);
         }
     }
     public void ReactivateButtons()

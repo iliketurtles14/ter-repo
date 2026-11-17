@@ -1746,8 +1746,34 @@ public class Tooltips : MonoBehaviour
 			DestroyTooltip();
 			return;
 		}
+		//shark
+		if (mcs.isTouchingDTAFShark && !showingTooltip)
+		{
+			toPrint = "Fin";
+			tooltipType = "shark";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if (showingTooltip && tooltipType == "shark" && !mcs.isTouchingDTAFShark)
+		{
+			DestroyTooltip();
+			return;
+		}
+		//alca boat
+		if(mcs.isTouchingAlcaBoat && !showingTooltip)
+		{
+			toPrint = "Prisoner Boat";
+			tooltipType = "alcaBoat";
+			StartCoroutine(DrawTooltip(toPrint));
+			return;
+		}
+		if(showingTooltip && tooltipType == "alcaBoat" && !mcs.isTouchingAlcaBoat)
+		{
+			DestroyTooltip();
+			return;
+		}
 		//reindeer
-		if(mcs.isTouchingReindeer && !showingTooltip)
+		if (mcs.isTouchingReindeer && !showingTooltip)
 		{
 			toPrint = mcs.touchedReindeer.GetComponent<ReindeerHandler>().displayName;
 			tooltipType = "reindeer";
@@ -1977,9 +2003,9 @@ public class Tooltips : MonoBehaviour
 			switch (mcs.touchedExtraNPC.name)
 			{
 				case "Warden":
-					if (!string.IsNullOrEmpty(currentMap.warden))
+					if (!string.IsNullOrEmpty(currentMap.wardenName))
 					{
-						toPrint = currentMap.warden;
+						toPrint = currentMap.wardenName;
 					}
 					else
 					{
@@ -2008,9 +2034,9 @@ public class Tooltips : MonoBehaviour
 			switch (mcs.touchedExtraNPC.name)
 			{
 				case "Warden":
-					if (!string.IsNullOrEmpty(currentMap.warden))
+					if (!string.IsNullOrEmpty(currentMap.wardenName))
 					{
-                        str = currentMap.warden;
+                        str = currentMap.wardenName;
                     }
 					else
 					{
