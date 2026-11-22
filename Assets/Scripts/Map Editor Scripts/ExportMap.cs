@@ -20,8 +20,8 @@ public class ExportMap : MonoBehaviour
     {
         { 0, "" }, { 1, "Janitor" }, { 2, "Woodshop" }, { 3, "Gardening" }, { 4, "Metalshop" },
         { 5, "Laundry" }, { 6, "Deliveries" }, { 7, "Kitchen" }, { 8, "Mailman" }, { 9, "Tailor" },
-        { 10, "Library" }, { 11, "ManureControl" }, { 12, "Taskmaster" }, { 13, "Toymaker" },
-        { 14, "LetterOrganization" }
+        { 10, "Library" }, { 11, "Manure Control" }, { 12, "Taskmaster" }, { 13, "Toymaker" },
+        { 14, "Letter Organization" }
     };
 
     public void Export()

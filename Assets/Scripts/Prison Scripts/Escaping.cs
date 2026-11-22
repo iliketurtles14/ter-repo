@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AdaptivePerformance;
 using UnityEngine.AddressableAssets;
+using static Unity.Collections.AllocatorManager;
 
 public class Escaping : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Escaping : MonoBehaviour
     private bool hasResetHeat;
     private Transform aStar;
     private Transform ic;
+    private Transform blocker;
 
     //esc calc stuff
     public int pStats;
@@ -36,6 +38,7 @@ public class Escaping : MonoBehaviour
     public int highestHeat;
     public int totalHeat;
     public int effNum;
+    private bool canQuit = false;
     private void Start()
     {
         player = RootObjectCache.GetRoot("Player").transform;
@@ -45,6 +48,7 @@ public class Escaping : MonoBehaviour
         routineScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Time").GetComponent<Routine>();
         aStar = RootObjectCache.GetRoot("A*").transform;
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
+        blocker = RootObjectCache.GetRoot("BlockerCanvas").transform;
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -65,9 +69,9 @@ public class Escaping : MonoBehaviour
     {
         if (!ready || hasEscaped)
         {
-            if (hasEscaped && Input.GetMouseButtonDown(0) && !isQuitting)
+            if (hasEscaped && Input.GetMouseButtonDown(0) && !isQuitting && canQuit)
             {
-                Leave();
+                StartCoroutine(Leave());
             }
             else
             {
@@ -101,6 +105,11 @@ public class Escaping : MonoBehaviour
             hasResetHeat = false;
         }
     }
+    private IEnumerator CanQuitWait()
+    {
+        yield return new WaitForSeconds(3);
+        canQuit = true;
+    }
     public IEnumerator Escape()
     {
         if (hasEscaped)
@@ -110,6 +119,8 @@ public class Escaping : MonoBehaviour
         
         hasEscaped = true;
 
+        StartCoroutine(CanQuitWait());
+        
         Calculate();
 
         pc.Pause(true);
@@ -215,8 +226,12 @@ public class Escaping : MonoBehaviour
         ec.Find("EscapeMenuPanel").Find("EfficiencyValue").GetComponent<TextMeshProUGUI>().text = efficiency.ToString();
         ec.Find("EscapeMenuPanel").Find("OverallScoreValue").GetComponent<TextMeshProUGUI>().text = total.ToString();
     }
-    private void Leave()
+    private IEnumerator Leave()
     {
+        PSoundController.PlaySound("rumble");
+        blocker.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds(.6f);
+        blocker.GetComponent<Animator>().enabled = false;
         isQuitting = true;
         Addressables.LoadSceneAsync("Main Menu");
         GetGivenData.instance.GetComponent<DumperStartStop>().isGoingToMainMenu = true;

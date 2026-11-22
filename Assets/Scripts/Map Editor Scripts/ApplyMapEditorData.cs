@@ -808,6 +808,15 @@ public class ApplyMapEditorData : MonoBehaviour
                 child.GetComponent<Image>().sprite = UISprites[368];
             }
         }
+        foreach(Transform child in uic.Find("WorkDoorPanel"))
+        {
+            if (child.name.Contains("Picker"))
+            {
+                child.Find("LeftButton").GetComponent<Image>().sprite = UISprites[213];
+                child.Find("RightButton").GetComponent<Image>().sprite = UISprites[214];
+                child.GetComponent<Image>().sprite = UISprites[368];
+            }
+        }
         foreach (Transform child in uic.Find("JobPanel"))
         {
             if (child.name.Contains("Picker"))

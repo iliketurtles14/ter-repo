@@ -178,6 +178,8 @@ public class Sittables : MonoBehaviour
     }
     public IEnumerator ClimbSittable()
     {
+        yield return new WaitForEndOfFrame();
+        
         sittable.GetComponent<BoxCollider2D>().enabled = false;
 
         Vector3 climbOffset;
@@ -251,6 +253,10 @@ public class Sittables : MonoBehaviour
         else if (sittable.name.StartsWith("Seat") || sittable.name.StartsWith("VisitorPlayer"))
         {
             vitalScript.energyRate = 1;
+            if (player.GetComponent<PlayerCollectionData>().playerData.hasFood)
+            {
+                vitalScript.energyRateAmount = 6;
+            }
             vitalScript.energyRateAmount = 2;
         }
         else if (sittable.name.StartsWith("MedicBed"))

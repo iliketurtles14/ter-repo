@@ -28,6 +28,7 @@ public class PButtonController : MonoBehaviour
     private SaveMenu saveMenuScript;
     private Map currentMap;
     private TutorialController tutControllerScript;
+    private SleepMenu sleepScript;
     private void Start()
     {
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
@@ -51,6 +52,7 @@ public class PButtonController : MonoBehaviour
         quitMenuScript = mc.Find("QuitMenuPanel").GetComponent<QuitMenu>();
         saveMenuScript = mc.Find("SaveMenuPanel").GetComponent<SaveMenu>();
         tutControllerScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<TutorialController>();
+        sleepScript = mc.Find("SleepMenuPanel").GetComponent<SleepMenu>();
         StartCoroutine(StartWait());
     }
     private IEnumerator StartWait()
@@ -290,6 +292,16 @@ public class PButtonController : MonoBehaviour
     {
         PSoundController.PlaySound("close");
         saveMenuScript.No();
+    }
+    public void SleepSave()
+    {
+        StartCoroutine(sleepScript.Sleep());
+        PSoundController.PlaySound("close");
+    }
+    public void SleepCancel()
+    {
+        sleepScript.Close();
+        PSoundController.PlaySound("close");
     }
     public void JobApply(BaseEventData data)
     {

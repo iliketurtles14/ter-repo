@@ -13,6 +13,7 @@ public class Showers : MonoBehaviour
     private Transform player;
     private Transform aStar;
     private SpriteRenderer sr;
+    private VitalController vitalScript;
     private void Start()
     {
         bc = GetComponent<BoxCollider2D>();
@@ -20,6 +21,7 @@ public class Showers : MonoBehaviour
         player = RootObjectCache.GetRoot("Player").transform;
         aStar = RootObjectCache.GetRoot("A*").transform;
         sr = GetComponent<SpriteRenderer>();
+        vitalScript = player.GetComponent<VitalController>();
         StartCoroutine(ShowerAnim());
     }
     private void FixedUpdate()
@@ -69,6 +71,8 @@ public class Showers : MonoBehaviour
         if (playerIsInShower)
         {
             player.Find("Outfit").GetComponent<SpriteRenderer>().enabled = false;
+            vitalScript.energyRate = 1;
+            vitalScript.energyRateAmount = 5;
         }
         else
         {

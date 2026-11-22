@@ -14,6 +14,8 @@ public class Reading : MonoBehaviour
     private Escaping escapingScript;
     private StatEffects statEffectsScript;
     private PauseController pc;
+    private PlayerCollectionData playerColData;
+    private WarningMessage warningScript;
     private void Start()
     {
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
@@ -22,17 +24,25 @@ public class Reading : MonoBehaviour
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
         escapingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Escaping>();
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
+        playerColData = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>();
+        warningScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<WarningMessage>();
     }
     public void Update()
     {
         HPAScript.isReading = isReading;
         isBusy = HPAScript.isBusy;
 
-        if(!isBusy && Input.GetMouseButtonDown(0) && mcs.isTouchingReader && GetComponent<PlayerCollectionData>().playerData.energy < 100 && !isReading)
+        if(!isBusy && Input.GetMouseButtonDown(0) && mcs.isTouchingReader && !isReading)
         {
             float distance = Vector2.Distance(transform.position, mcs.touchedReader.transform.position);
             if (distance <= 2.4f)
             {
+                if(playerColData.playerData.energy >= 100)
+                {
+                    StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                    PSoundController.PlaySound("lose");
+                    return;
+                }
                 oldPos = transform.position;
                 PSoundController.PlaySound("open");
                 StartCoroutine(Read(mcs.touchedReader.name));

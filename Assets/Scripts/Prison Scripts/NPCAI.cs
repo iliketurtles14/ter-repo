@@ -56,6 +56,8 @@ public class NPCAI : MonoBehaviour
     private Transform nextSetWP;
     private List<Transform> setWPs = new List<Transform>();
     private int currentSetWPIndex;
+    private Vector3 oldPos;
+    private bool checkingForStall;
     private void Start()
     {   
         //get npctype and num
@@ -102,6 +104,8 @@ public class NPCAI : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
+
+        oldPos = transform.position;
         ready = true;
         LoadNormalJobPositions();
         LoadDeskPositions();
@@ -402,6 +406,13 @@ public class NPCAI : MonoBehaviour
             return;
         }
 
+        if(oldPos == transform.position && !checkingForStall && isMoving)
+        {
+            checkingForStall = true;
+            StartCoroutine(StallWait());
+        }
+        oldPos = transform.position;
+
         //get period
         period = scheduleScript.periodCode;
 
@@ -433,17 +444,7 @@ public class NPCAI : MonoBehaviour
 
         if (!isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
-            currentWaypoint = null;
-            SetCurrentPossibleWaypoints();
-            if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
-            {
-                SetCurrentWaypoint();
-                if(currentWaypoint != null)
-                {
-                    seeker.StartPath(transform.position, currentWaypoint.position);
-                    isMoving = true;
-                }
-            }
+            DoSearch();
         }
         else if (isMoving && !isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed)
         {
@@ -500,6 +501,41 @@ public class NPCAI : MonoBehaviour
         else
         {
             dirToLook = "any";
+        }
+    }
+    private IEnumerator StallWait()
+    {
+        float time = 0f;
+        while(time < 5f)
+        {
+            if (pc.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+            if(oldPos != transform.position)
+            {
+                yield break;
+            }
+            time += Time.deltaTime;
+            yield return null;
+        }
+        DoSearch();
+        checkingForStall = false;
+    }
+    public void DoSearch()
+    {
+        //this is for times when the npc is stalling and needs to be reset
+        currentWaypoint = null;
+        SetCurrentPossibleWaypoints();
+        if (!isInCanteen && !isInGym && !isAtJob && !isAtLockdown && !isAtBed) //isInCanteen and isInGym can get set to true at SetCurrentPossibleWaypoints()
+        {
+            SetCurrentWaypoint();
+            if (currentWaypoint != null)
+            {
+                seeker.StartPath(transform.position, currentWaypoint.position);
+                isMoving = true;
+            }
         }
     }
     private void SetCurrentPossibleWaypoints()

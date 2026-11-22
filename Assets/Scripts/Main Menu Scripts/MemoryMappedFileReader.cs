@@ -160,6 +160,10 @@ public class MemoryMappedFileReader : MonoBehaviour
         {
             UIImages.Add(ImageList[i]);
         }
+
+        //change some images if need be
+        PrisonObjectImages[329] = ShiftTextureLeft(PrisonObjectImages[329], 4);
+
         canApply = true;
         loadScript.LogLoad("Lists Made");
     }
@@ -195,7 +199,29 @@ public class MemoryMappedFileReader : MonoBehaviour
                data[0] == 'R' && data[1] == 'I' && data[2] == 'F' && data[3] == 'F' &&
                data[8] == 'W' && data[9] == 'A' && data[10] == 'V' && data[11] == 'E';
     }
-    
+    public Texture2D ShiftTextureLeft(Texture2D texture, int pixels)
+    {
+        int width = texture.width;
+        int height = texture.height;
+
+        Color[] original = texture.GetPixels();
+        Color[] shifted = new Color[original.Length];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = pixels; x < width; x++)
+            {
+                shifted[y * width + (x - pixels)] = original[y * width + x];
+            }
+        }
+
+        Texture2D result = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        result.filterMode = FilterMode.Point;
+        result.SetPixels(shifted);
+        result.Apply();
+
+        return result;
+    }
     /*private Dictionary<string, List<string>> DeserializeData(string jsonData)
     {
         Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();

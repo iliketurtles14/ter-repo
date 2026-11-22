@@ -1,7 +1,9 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class SaveMenu : MonoBehaviour
 {
@@ -13,12 +15,14 @@ public class SaveMenu : MonoBehaviour
     private MouseCollisionOnItems mcs;
     private string currentType;
     private bool isQuitting;
+    private Transform blocker;
     private void Start()
     {
         savingScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<Saving>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         mcs = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("MouseOverlay").GetComponent<MouseCollisionOnItems>();
+        blocker = RootObjectCache.GetRoot("BlockerCanvas").transform;
         Close(false);
     }
     private void Update()
@@ -83,10 +87,16 @@ public class SaveMenu : MonoBehaviour
         }
         else if(currentType == "load" && !isQuitting)
         {
-            //fade out
-            Addressables.LoadSceneAsync("Prison");
+            StartCoroutine(LoadFade());
             isQuitting = true;
         }
+    }
+    private IEnumerator LoadFade()
+    {
+        blocker.GetComponent<Animator>().enabled = true;
+        yield return new WaitForSeconds(.6f);
+        blocker.GetComponent<Animator>().enabled = false;
+        Addressables.LoadSceneAsync("Prison");
     }
     public void No()
     {

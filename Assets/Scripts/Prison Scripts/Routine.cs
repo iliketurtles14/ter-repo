@@ -157,68 +157,7 @@ public class Routine : MonoBehaviour
 
             if(sec == 0 && min == 0)
             {
-                day++;
-
-                //make everything that happens here also happen at sleeping and solitary day advances
-                foreach(Transform obj in tiles.Find("GroundObjects"))
-                {
-                    if (obj.CompareTag("Item"))
-                    {
-                        bool shouldPutBO = true;
-                        foreach(Transform bo in badObjects)
-                        {
-                            if(bo.GetComponent<BadObjectData>().attachedObject == obj.gameObject)
-                            {
-                                shouldPutBO = false;
-                                break;
-                            }
-                        }
-                        if (shouldPutBO)
-                        {
-                            BadObjectData data = new BadObjectData
-                            {
-                                item = true,
-                                attachedObject = obj.gameObject
-                            };
-                            mbo.CreateBadObject(data, "item");
-                        }
-                    }
-                }
-
-                List<string> availableJobs = new List<string>(validJobs);
-
-
-                foreach(Transform inmate in aStar)
-                {
-                    if (inmate.name.Contains("Inmate"))
-                    {
-                        if (availableJobs.Contains(inmate.GetComponent<NPCCollectionData>().npcData.job))
-                        {
-                            availableJobs.Remove(inmate.GetComponent<NPCCollectionData>().npcData.job);
-                        }
-                    }
-                }
-                if (availableJobs.Contains(player.GetComponent<PlayerCollectionData>().playerData.job))
-                {
-                    availableJobs.Remove(player.GetComponent<PlayerCollectionData>().playerData.job);
-                }
-
-                foreach(Transform inmate in aStar)
-                {
-                    if(availableJobs.Count == 0)
-                    {
-                        break;
-                    }
-                    if (inmate.name.Contains("Inmate"))
-                    {
-                        if (string.IsNullOrEmpty(inmate.GetComponent<NPCCollectionData>().npcData.job))
-                        {
-                            inmate.GetComponent<NPCCollectionData>().npcData.job = availableJobs[0];
-                            availableJobs.RemoveAt(0);
-                        }
-                    }
-                }
-                mc.Find("JobMenuPanel").GetComponent<JobMenu>().ResetJobButtons();
+                AdvanceDay();
             }
 
             if(min < 10)
@@ -259,5 +198,70 @@ public class Routine : MonoBehaviour
 
             timeText.text = time + " - " + period + " (" + "Day " + day + ")";
         }
+    }
+    public void AdvanceDay()
+    {
+        day++;
+
+        //make everything that happens here also happen at sleeping and solitary day advances
+        foreach (Transform obj in tiles.Find("GroundObjects"))
+        {
+            if (obj.CompareTag("Item"))
+            {
+                bool shouldPutBO = true;
+                foreach (Transform bo in badObjects)
+                {
+                    if (bo.GetComponent<BadObjectData>().attachedObject == obj.gameObject)
+                    {
+                        shouldPutBO = false;
+                        break;
+                    }
+                }
+                if (shouldPutBO)
+                {
+                    BadObjectData data = new BadObjectData
+                    {
+                        item = true,
+                        attachedObject = obj.gameObject
+                    };
+                    mbo.CreateBadObject(data, "item");
+                }
+            }
+        }
+
+        List<string> availableJobs = new List<string>(validJobs);
+
+
+        foreach (Transform inmate in aStar)
+        {
+            if (inmate.name.Contains("Inmate"))
+            {
+                if (availableJobs.Contains(inmate.GetComponent<NPCCollectionData>().npcData.job))
+                {
+                    availableJobs.Remove(inmate.GetComponent<NPCCollectionData>().npcData.job);
+                }
+            }
+        }
+        if (availableJobs.Contains(player.GetComponent<PlayerCollectionData>().playerData.job))
+        {
+            availableJobs.Remove(player.GetComponent<PlayerCollectionData>().playerData.job);
+        }
+
+        foreach (Transform inmate in aStar)
+        {
+            if (availableJobs.Count == 0)
+            {
+                break;
+            }
+            if (inmate.name.Contains("Inmate"))
+            {
+                if (string.IsNullOrEmpty(inmate.GetComponent<NPCCollectionData>().npcData.job))
+                {
+                    inmate.GetComponent<NPCCollectionData>().npcData.job = availableJobs[0];
+                    availableJobs.RemoveAt(0);
+                }
+            }
+        }
+        mc.Find("JobMenuPanel").GetComponent<JobMenu>().ResetJobButtons();
     }
 }

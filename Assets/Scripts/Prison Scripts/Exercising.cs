@@ -37,6 +37,8 @@ public class Exercising : MonoBehaviour
     private bool isBusy;
     private StatEffects statEffectsScript;
     private int reps;
+    private WarningMessage warningScript;
+    private PlayerCollectionData playerColData;
     public void Start()
     {
         so = RootObjectCache.GetRoot("ScriptObject").transform;
@@ -49,6 +51,8 @@ public class Exercising : MonoBehaviour
         HPAScript = RootObjectCache.GetRoot("Player").GetComponent<HPAChecker>();
         statEffectsScript = so.GetComponent<StatEffects>();
         pc = so.GetComponent<PauseController>();
+        playerColData = RootObjectCache.GetRoot("Player").GetComponent<PlayerCollectionData>();
+        warningScript = so.GetComponent<WarningMessage>();
 
         barLine = Resources.Load<GameObject>("BarLine");
         ic.transform.Find("ActionBarHitBox").GetComponent<Image>().enabled = false;
@@ -295,10 +299,18 @@ public class Exercising : MonoBehaviour
             }
             itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
             
-            if(!hasAdded && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            if(!hasAdded)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
+                    if(playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+                    
                     onQ = false;
                     onE = true;
 
@@ -306,6 +318,14 @@ public class Exercising : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.E) && onE)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     onQ = true;
                     onE = false;
 
@@ -390,11 +410,19 @@ public class Exercising : MonoBehaviour
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
             }
-            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            else if (amountOfBars >= 35)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
                 if (Input.GetKeyDown(KeyCode.Q) && !hasAdded)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     subGain++;
                     reps++;
                     PSoundController.PlaySound("throw");
@@ -434,10 +462,18 @@ public class Exercising : MonoBehaviour
                 continue;
             }
             itemBehavioursScript.CreateActionText("Reps: " + reps.ToString());
-            if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            if (hasAdded == false)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     onQ = false;
                     onE = true;
 
@@ -445,6 +481,14 @@ public class Exercising : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.E) && onE)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     onQ = true;
                     onE = false;
 
@@ -533,11 +577,19 @@ public class Exercising : MonoBehaviour
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
                 punching = false;
             }
-            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            else if (amountOfBars >= 35)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
                 if (Input.GetKeyUp(KeyCode.Q) && !hasAdded)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     punching = true;
                     subGain++;
                     reps++;//1, 2, new
@@ -634,11 +686,19 @@ public class Exercising : MonoBehaviour
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[349];
                 punching = false;
             }
-            else if (amountOfBars >= 35 && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            else if (amountOfBars >= 35)
             {
                 ic.transform.Find("ActionBarHitBox").GetComponent<Image>().sprite = applyPrisonDataScript.UISprites[347];
                 if (Input.GetKeyDown(KeyCode.Q) && !hasAdded)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     punching = true;
                     subGain++;
                     reps++;
@@ -789,10 +849,18 @@ public class Exercising : MonoBehaviour
                 continue;
             }
             itemBehavioursScript.CreateActionText("Presses: " + reps.ToString());
-            if (hasAdded == false && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            if (hasAdded == false)
             {
                 if (Input.GetKeyDown(KeyCode.Q) && onQ)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     onQ = false;
                     onE = true;
 
@@ -800,6 +868,14 @@ public class Exercising : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.E) && onE)
                 {
+                    if (playerColData.playerData.energy >= 100)
+                    {
+                        PSoundController.PlaySound("lose");
+                        StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                        yield return null;
+                        continue;
+                    }
+
                     onQ = true;
                     onE = false;
 
@@ -872,8 +948,16 @@ public class Exercising : MonoBehaviour
             }
             itemBehavioursScript.CreateActionText("Distance: " + reps.ToString());
             GetComponent<PlayerAnimation>().enabled = false;
-            if (Input.GetKeyDown(KeyCode.Q) && onQ && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            if (Input.GetKeyDown(KeyCode.Q) && onQ)
             {
+                if (playerColData.playerData.energy >= 100)
+                {
+                    PSoundController.PlaySound("lose");
+                    StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                    yield return null;
+                    continue;
+                }
+
                 onQ = false;
                 onE = true;
                 subDistanceNum++;
@@ -886,8 +970,16 @@ public class Exercising : MonoBehaviour
                     amountOfBars += 3;
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.E) && onE && GetComponent<PlayerCollectionData>().playerData.energy < 100)
+            else if (Input.GetKeyDown(KeyCode.E) && onE)
             {
+                if (playerColData.playerData.energy >= 100)
+                {
+                    PSoundController.PlaySound("lose");
+                    StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                    yield return null;
+                    continue;
+                }
+
                 onQ = true;
                 onE = false;
                 subDistanceNum++;

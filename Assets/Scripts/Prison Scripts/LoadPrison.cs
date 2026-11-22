@@ -1812,6 +1812,18 @@ public class LoadPrison : MonoBehaviour
                 {
                     objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
                 }
+                else if(objInst.name.Contains("Candy") && objInst.name.Contains("Top"))
+                {
+                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
+                }
+                else if(objInst.name == "SSCarpet" || objInst.name == "DTAFCarpet" || objInst.name == "DTAFSharkWalkway")
+                {
+                    objInst.transform.position = new Vector3(objInst.transform.position.x, objInst.transform.position.y, 1);
+                }
+                else if(objInst.name == "DTAFPlantTop")
+                {
+                    objInst.GetComponent<SpriteRenderer>().sortingOrder = 7;
+                }
 
                 dataScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<ApplyPrisonData>();
                 ItemSprites = dataScript.ItemSprites;

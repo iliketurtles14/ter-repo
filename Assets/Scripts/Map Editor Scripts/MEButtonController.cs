@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -57,6 +58,11 @@ public class MEButtonController : MonoBehaviour
         { "JC", "CCL" }, { "BC", "BC" }, { "london", "TOL" }, { "PCP", "pcpen" }, { "SS", "SS" },
         { "DTAF", "DTAF" }, { "ET", "escapeteam" }, { "alca", "alca" }, { "fhurst", "EA" },
         { "epsilon", "campepsilon" }, { "bamford", "fortbamford" }, { "tutorial", "tutorial" }
+    };
+    private List<string> validJobs = new List<string>
+    {
+        "None", "Janitor", "Woodshop", "Gardening", "Metalshop", "Laundry", "Deliveries",
+        "Kitchen", "Mailman", "Tailor", "Library", "Manure Control", "Taskmaster", "Toymaker", "Letter Organization"
     };
     private void Start()
     {
@@ -1185,7 +1191,12 @@ public class MEButtonController : MonoBehaviour
                 break;
             case "workDoor":
                 GetComponent<MEJobController>().currentDoor = currentObject;
-                uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text = currentObject.GetComponent<MEJobContainer>().job;
+                Picker picker = uic.Find("WorkDoorPanel").Find("JobPicker").GetComponent<Picker>();
+                if (!validJobs.Contains(currentObject.GetComponent<MEJobContainer>().job))
+                {
+                    currentObject.GetComponent<MEJobContainer>().job = "None";
+                }
+                picker.currentIndex = validJobs.IndexOf(currentObject.GetComponent<MEJobContainer>().job);
                 uic.Find("WorkDoorPanel").gameObject.SetActive(true);
                 break;
             case "setWaypoint":
@@ -1227,7 +1238,8 @@ public class MEButtonController : MonoBehaviour
     }
     public void WorkDoorClose()
     {
-        GetComponent<MEJobController>().currentDoor.GetComponent<MEJobContainer>().job = uic.Find("WorkDoorPanel").Find("JobInputField").GetComponent<TMP_InputField>().text;
+        GetComponent<MEJobController>().currentDoor.GetComponent<MEJobContainer>().job = validJobs[uic.Find("WorkDoorPanel").Find("JobPicker").GetComponent<Picker>().currentIndex];
+        Debug.Log("setting job to " + GetComponent<MEJobController>().currentDoor.GetComponent<MEJobContainer>().job);
         uic.Find("WorkDoorPanel").gameObject.SetActive(false);
         uic.Find("Black").gameObject.SetActive(false);
         ActivateButtonsForSpecialObjects();

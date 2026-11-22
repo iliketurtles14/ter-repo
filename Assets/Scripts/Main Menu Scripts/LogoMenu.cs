@@ -9,18 +9,19 @@ public class LogoMenu : MonoBehaviour
     private bool shouldStay = true;
     private bool hasStarted;
     public bool canStart = false;
-    private string currentScreen = "blank"; //text, logos, blank
+    private string currentScreen = "reinc";
     public Transform titlePanel;
     public MMSoundController sc;
     public MMMusicController mc;
     public Transform mmc;
     private IEnumerator LogoWait()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 4; i++)
         {
             yield return new WaitForEndOfFrame();
+            mc.canStartMusic = true;
             float time = 0f;
-            while (shouldStay && time < 2.4f)
+            while (shouldStay && time < 1.2f)
             {
                 yield return null;
                 time += Time.deltaTime;
@@ -48,19 +49,22 @@ public class LogoMenu : MonoBehaviour
     }
     private void ChangeScreen()
     {
-        if(currentScreen == "blank")
+        if(currentScreen == "reinc")
         {
-            transform.Find("IntroText").gameObject.SetActive(true);
-            mc.canStartMusic = true;
+            currentScreen = "turt";
+            transform.Find("TextBlocker").localPosition = new Vector2(0, -250);
+        }
+        else if(currentScreen == "turt")
+        {
+            currentScreen = "based";
+            transform.Find("TextBlocker").localPosition = new Vector2(0, -430);
+        }
+        else if(currentScreen == "based")
+        {
             currentScreen = "text";
+            transform.Find("TextBlocker").localPosition = new Vector2(0, -785);
         }
         else if(currentScreen == "text")
-        {
-            transform.Find("IntroText").gameObject.SetActive(false);
-            //transform.Find("Logos").gameObject.SetActive(true);
-            currentScreen = "logos";
-        }
-        else if(currentScreen == "logos")
         {
             EndLogos();
         }
@@ -73,11 +77,12 @@ public class LogoMenu : MonoBehaviour
         titlePanel.transform.Find("OptionsButton").GetComponent<Button>().enabled = true;
         titlePanel.transform.Find("MapEditorButton").GetComponent<Button>().enabled = true;
 
-        if(titlePanel.transform.Find("VersionText").GetComponent<TextMeshProUGUI>().text == "PLAY-TEST")
+        if(titlePanel.transform.Find("VersionText").GetComponent<TextMeshProUGUI>().text.Contains("PLAY-TEST"))
         {
             OpenPlayTestMenu();
         }
 
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
     private void OpenPlayTestMenu()

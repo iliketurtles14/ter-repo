@@ -30,12 +30,15 @@ public class VitalController : MonoBehaviour
     private bool doneWithWait = false;
     private StatEffects statEffectsScript;
     private SpriteRenderer sr;
+    private PauseController pc;
+    private float hungerTime = 0;
 
     public void Start()
     {
         ic = RootObjectCache.GetRoot("InventoryCanvas").transform;
         statEffectsScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<StatEffects>();
         sr = GetComponent<SpriteRenderer>();
+        pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
 
         energyRate = 5;
         healthRate = 3;
@@ -51,6 +54,7 @@ public class VitalController : MonoBehaviour
         StartCoroutine(EnergyDeplete());
         StartCoroutine(HealthGain());
         StartCoroutine(HeatDeplete());
+        StartCoroutine(HungerDeplete());
         data.health = 15;
         data.energy = 20;
         data.money = 10;
@@ -105,6 +109,11 @@ public class VitalController : MonoBehaviour
         if(data.heat > 99)
         {
             data.heat = 99;
+        }
+
+        if(energyRateAmount == 6)
+        {
+            hungerTime = 20;
         }
     }
     public void SetVitals()
@@ -234,6 +243,17 @@ public class VitalController : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(energyRate);
+            float time = 0f;
+            while(time < energyRate)
+            {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
             if(data.energy > 0)
             {
                 data.energy -= energyRateAmount;
@@ -253,7 +273,17 @@ public class VitalController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(healthRate);
+            float time = 0f;
+            while(time < healthRate)
+            {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
             if(data.health < Mathf.FloorToInt(data.strength / 2))
             {
                 data.health += healthRateAmount;
@@ -269,7 +299,17 @@ public class VitalController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3);
+            float time = 0f;
+            while(time < 3)
+            {
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
             if(data.heat > 0)
             {
                 data.heat--;
@@ -279,6 +319,33 @@ public class VitalController : MonoBehaviour
                 data.heat = 0;
             }
             yield return null;
+        }
+    }
+    public IEnumerator HungerDeplete()
+    {
+        while (true)
+        {
+            if(hungerTime == 0)
+            {
+                yield return null;
+                continue;
+            }
+            float time = 0f;
+            while(time < 5)
+            {
+                if(energyRateAmount < 3)
+                {
+                    energyRateAmount = 3;
+                }
+                if (pc.isPaused)
+                {
+                    yield return null;
+                    continue;
+                }
+                time += Time.deltaTime;
+                yield return null;
+            }
+            hungerTime--;
         }
     }
 }

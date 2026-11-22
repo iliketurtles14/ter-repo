@@ -126,6 +126,21 @@ public class ButtonController : MonoBehaviour
         Application.Quit();
 #endif
     }
+    public void MainYouTube()
+    {
+        sc.PlaySound("plip");
+        Application.OpenURL("https://www.youtube.com/@iliketheturtles14");
+    }
+    public void MainGitHub()
+    {
+        sc.PlaySound("plip");
+        Application.OpenURL("https://www.github.com/iliketurtles14/ter-repo");
+    }
+    public void MainDiscord()
+    {
+        sc.PlaySound("plip");
+        Application.OpenURL("https://discord.gg/pPWrSgwBRW");
+    }
     public void PatchBack()
     {
         foreach(Transform child in mmc.Find("TitlePanel"))

@@ -100,6 +100,8 @@ public class ItemBehaviours : MonoBehaviour
     public int ropeTileHeight;
     public bool isRoping;
     private Map currentMap;
+    private VitalController vitalScript;
+    private PlayerCollectionData playerColData;
     public void Start()
     {
         electrocutionScript = GetComponent<Electrocution>();
@@ -126,7 +128,9 @@ public class ItemBehaviours : MonoBehaviour
         mbo = GetComponent<MakeBadObject>();
         badObjects = RootObjectCache.GetRoot("BadObjects").transform;
         pc = GetComponent<PauseController>();
-
+        vitalScript = player.GetComponent<VitalController>();
+        playerColData = player.GetComponent<PlayerCollectionData>();
+        
         playerLayer = LayerMask.NameToLayer("Player");
         groundLayer = LayerMask.NameToLayer("Ground");
         undergroundLayer = LayerMask.NameToLayer("Underground");
@@ -200,7 +204,6 @@ public class ItemBehaviours : MonoBehaviour
         {
             Deselect();
         }
-
 
         //gardening
         if(!isBusy && mcs.isTouchingWeed && Input.GetMouseButtonDown(0) && selectedGardeningItem && !barIsMoving)
@@ -1541,6 +1544,7 @@ public class ItemBehaviours : MonoBehaviour
             if (player.GetComponent<PlayerCollectionData>().playerData.energy >= 100)
             {
                 StartCoroutine(warningScript.CreateWarningMessage("You are too fatigued."));
+                PSoundController.PlaySound("lose");
                 yield break;
             }
         }

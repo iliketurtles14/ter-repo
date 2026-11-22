@@ -6,7 +6,7 @@ public class NPCSleep : MonoBehaviour
 {
     public void Sleep(GameObject npc, GameObject bed)
     {
-        npc.GetComponent<AILerp>().canMove = false;
+        npc.GetComponent<AILerp>().enabled = false;
         StartCoroutine(WaitForIttttt(npc, bed));
     }
     private IEnumerator WaitForIttttt(GameObject npc, GameObject bed)
@@ -43,10 +43,12 @@ public class NPCSleep : MonoBehaviour
                 }
             }
         }
+        npc.GetComponent<AILerp>().enabled = true;
     }
     public void Wake(GameObject npc)
     {
         npc.GetComponent<NPCCollectionData>().npcData.isSleeping = false;
         npc.GetComponent<NPCAnimation>().enabled = true;
+        npc.GetComponent<NPCAI>().DoSearch();
     }
 }

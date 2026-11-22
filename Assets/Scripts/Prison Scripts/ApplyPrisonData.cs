@@ -708,6 +708,20 @@ public class ApplyPrisonData : MonoBehaviour
         mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Image>().sprite = UISprites[427];
         mc.Find("ToiletMenuPanel").Find("FlushButton").GetComponent<Button>().spriteState = spriteState;
 
+        //sleep menuSleepMenuPanel
+        mc.Find("SleepMenuPanel").GetComponent<Image>().sprite = UISprites[454];
+        foreach(Transform child in mc.Find("SleepMenuPanel"))
+        {
+            if (child.GetComponent<Button>())
+            {
+                child.GetComponent<Image>().sprite = UISprites[452];
+                spriteState = child.GetComponent<Button>().spriteState;
+                spriteState.highlightedSprite = UISprites[453];
+                child.GetComponent<Button>().spriteState = spriteState;
+            }
+        }
+
+
         //warden notes
         mc.Find("NormalNote").GetComponent<Image>().sprite = UISprites[223];
         mc.Find("NoSigNote").GetComponent<Image>().sprite = UISprites[526];

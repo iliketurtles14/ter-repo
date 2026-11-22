@@ -12,7 +12,7 @@ public class PMusicController : MonoBehaviour
         { "shower", 5 }, { "work", 6 }, { "workout", 7 }, { "freetime", 8 }
     };
     private static AudioSource audioSource;
-    private IniFile iniFile;
+    private static IniFile iniFile;
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -36,6 +36,7 @@ public class PMusicController : MonoBehaviour
     {
         if(musicClip == "escaped")
         {
+            RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().volume = Convert.ToInt32(iniFile.Read("Music", "Settings")) / 100f;
             RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().Stop();
             RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().clip = currentMap.music[musicDict[musicClip]];
             RootObjectCache.GetRoot("EscapeMusicSource").GetComponent<AudioSource>().Play();
