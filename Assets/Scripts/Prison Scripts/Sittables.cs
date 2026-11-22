@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sittables : MonoBehaviour
@@ -44,7 +43,7 @@ public class Sittables : MonoBehaviour
         if (!isBusy && mcs.isTouchingSittable && Input.GetMouseButtonDown(0) && !onSittable && !selectionScript.aSlotSelected)
         {
             float distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position);
-            if (mcs.touchedSittable.name == "Locker")
+            if (mcs.touchedSittable.name.Contains("Locker"))
             {
                 distance = Vector2.Distance(player.transform.position, mcs.touchedSittable.transform.position + new Vector3(0, -.8f));
             }
@@ -60,12 +59,20 @@ public class Sittables : MonoBehaviour
             clearTile = false;
             Vector3 bedOffset;
             Vector3 otherPossibleTileBedOffset;
-            if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("Lounger") ||
+            bool onHoriBed = false;
+            if (sittable.name.StartsWith("PlayerBedVertical") || sittable.name.StartsWith("Lounger") ||
                 sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed") //when making a horizontal bed, change otherPossibleTileBedOffset to -1.6, 0
             {
                 bedOffset = new Vector3(0, .8f);
                 otherPossibleTileBedOffset = new Vector3(0, -1.6f);
                 onBed = true;
+            }
+            else if (sittable.name.StartsWith("PlayerBedHorizontal"))
+            {
+                bedOffset = new Vector3(-.8f, 0);
+                otherPossibleTileBedOffset = new Vector3(-1.6f, 0);
+                onBed = true;
+                onHoriBed = true;
             }
             else
             {
@@ -75,7 +82,7 @@ public class Sittables : MonoBehaviour
             }
 
             Vector3 lockerOffset;
-            if (sittable.name.StartsWith("Locker"))
+            if (sittable.name.Contains("Locker"))
             {
                 lockerOffset = new Vector3(0, -.8f);
                 otherPossibleTileBedOffset = new Vector3(0, -1.6f);
@@ -84,7 +91,6 @@ public class Sittables : MonoBehaviour
             else
             {
                 lockerOffset = Vector3.zero;
-                otherPossibleTileBedOffset = Vector3.zero;
                 inLocker = false;
             }
 
@@ -106,7 +112,11 @@ public class Sittables : MonoBehaviour
                 leaveVector = new Vector3(1.6f, 0);
             }
 
-            if (onBed && Input.GetKeyDown(KeyCode.S))
+            if (onBed && Input.GetKeyDown(KeyCode.S) && !onHoriBed)
+            {
+                return;
+            }
+            if(onBed && Input.GetKeyDown(KeyCode.D) && onHoriBed)
             {
                 return;
             }
@@ -156,7 +166,7 @@ public class Sittables : MonoBehaviour
         
         player.GetComponent<PlayerAnimation>().enabled = true;
 
-        if (sittable.name.StartsWith("Locker"))
+        if (sittable.name.Contains("Locker"))
         {
             player.GetComponent<SpriteRenderer>().sortingOrder = 5;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 6;
@@ -186,7 +196,12 @@ public class Sittables : MonoBehaviour
         if (sittable.name.StartsWith("PlayerBed") || sittable.name.StartsWith("Lounger") ||
             sittable.name.StartsWith("MedicBed") || sittable.name == "SolitaryBed")
         {
-            if (NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
+            if (sittable.name.StartsWith("PlayerBedHorizontal"))
+            {
+                climbOffset = new Vector3(-.3f, .1f);
+                onBed = true;
+            }
+            else if (NPCSave.instance.playerCharacter != 1) //if not baldeagle (cuz baldeagle has a smaller sleeping sprite)
             {
                 climbOffset = new Vector3(0, .4f);
                 onBed = true;
@@ -197,7 +212,7 @@ public class Sittables : MonoBehaviour
                 onBed = true;
             }
         }
-        else if (sittable.name.StartsWith("Locker"))
+        else if (sittable.name.Contains("Locker"))
         {
             climbOffset = new Vector3(0, -.8f);
             inLocker = true;
@@ -227,7 +242,7 @@ public class Sittables : MonoBehaviour
         BodyController bc = player.GetComponent<BodyController>();
         OutfitController oc = player.GetComponent<OutfitController>();
 
-        if (sittable.name.StartsWith("PlayerBed"))
+        if (sittable.name.StartsWith("PlayerBedVertical"))
         {
             vitalScript.energyRate = 1;
             vitalScript.energyRateAmount = 2;
@@ -250,7 +265,18 @@ public class Sittables : MonoBehaviour
                 }
             }
         }
-        else if (sittable.name.StartsWith("Seat") || sittable.name.StartsWith("VisitorPlayer"))
+        else if (sittable.name.StartsWith("PlayerBedHorizontal"))
+        {
+            vitalScript.energyRate = 1;
+            vitalScript.energyRateAmount = 2;
+            player.GetComponent<PlayerAnimation>().enabled = false;
+            player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][2];
+            if (player.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+            {
+                player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][2];
+            }
+        }
+        else if (sittable.name.StartsWith("Seat") || sittable.name.StartsWith("VisitorPlayer") || sittable.name == "ETChair")
         {
             vitalScript.energyRate = 1;
             if (player.GetComponent<PlayerCollectionData>().playerData.hasFood)
@@ -306,7 +332,7 @@ public class Sittables : MonoBehaviour
                 }
             }
         }
-        else if (sittable.name.StartsWith("Locker"))
+        else if (sittable.name.Contains("Locker"))
         {
             player.GetComponent<SpriteRenderer>().sortingOrder = 0;
             player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sortingOrder = 0;

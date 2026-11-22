@@ -21,25 +21,45 @@ public class NPCSleep : MonoBehaviour
         {
             bedOffset = new Vector3(0, .35f);
         }
-
-        npc.transform.position = bed.transform.position + bedOffset;
-        npc.GetComponent<NPCCollectionData>().npcData.isSleeping = true;
-        npc.GetComponent<NPCAnimation>().enabled = false;
-        BodyController bc = npc.GetComponent<BodyController>();
-        npc.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][1];
-        OutfitController oc = npc.GetComponent<OutfitController>();
-        if (npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+        if (bed.name.Contains("Horizontal"))
         {
-            npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
-            if (oc.outfit == "Inmate")
+            bedOffset = new Vector3(-.3f, .1f);
+        }
+
+        if (bed.name.Contains("Horizontal"))
+        {
+            npc.transform.position = bed.transform.position + bedOffset;
+            npc.GetComponent<NPCCollectionData>().npcData.isSleeping = true;
+            npc.GetComponent<NPCAnimation>().enabled = false;
+            BodyController bc = npc.GetComponent<BodyController>();
+            npc.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][2];
+            OutfitController oc = npc.GetComponent<OutfitController>();
+            if (npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
             {
-                if (npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
+                npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][2];
+            }
+        }
+        else
+        {
+            npc.transform.position = bed.transform.position + bedOffset;
+            npc.GetComponent<NPCCollectionData>().npcData.isSleeping = true;
+            npc.GetComponent<NPCAnimation>().enabled = false;
+            BodyController bc = npc.GetComponent<BodyController>();
+            npc.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][1];
+            OutfitController oc = npc.GetComponent<OutfitController>();
+            if (npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().enabled)
+            {
+                npc.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
+                if (oc.outfit == "Inmate")
                 {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.25f, 0);
-                }
-                else
-                {
-                    npc.transform.Find("Outfit").localPosition = new Vector3(0, -.2f, 0);
+                    if (npc.GetComponent<NPCCollectionData>().npcData.charNum != 1)
+                    {
+                        npc.transform.Find("Outfit").localPosition = new Vector3(0, -.25f, 0);
+                    }
+                    else
+                    {
+                        npc.transform.Find("Outfit").localPosition = new Vector3(0, -.2f, 0);
+                    }
                 }
             }
         }

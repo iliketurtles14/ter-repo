@@ -116,6 +116,7 @@ TagManager:
   - Sniper
   - DTAFShark
   - AlcaBoat
+  - Table
   layers:
   - Default
   - TransparentFX

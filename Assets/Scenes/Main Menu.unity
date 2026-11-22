@@ -5885,7 +5885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY-TEST 2
+  m_text: PLAY-TEST 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c6988ec93bc0fe4a801bad30261a44b, type: 2}
   m_sharedMaterial: {fileID: 2961706140005284644, guid: 7c6988ec93bc0fe4a801bad30261a44b, type: 2}
@@ -20684,40 +20684,35 @@ MonoBehaviour:
   m_text: 'PLEASE READ:
 
 
-    Welcome to the PLAY-TEST version of The Escapists Reincarcerated!
+    Welcome to the PLAY-TEST 3 version of The Escapists
+    Reincarcerated!
 
 
-    This
-    is an early version of what will be the 1.0.0 version of this game. YOU are tasked
-    to play this and find bugs, glitches, and anything I may have missed while developing
-    this. Have a field day! Look for anything I may have missed/messed up. Search
-    every corner.
+    This is an early version of what will be the 1.0.0 version
+    of this game. YOU are tasked to play this and find bugs, glitches, and anything
+    I may have missed while developing this. Have a field day! Look for anything
+    I may have missed/messed up. Search every corner.
 
 
-    Please provide feedback and bug reports in the Discord server
-    for this project (you can find the link to this in the GitHub repository for
-    this project).
+    Please provide feedback
+    and bug reports in the Discord server for this project (you can find the link
+    to this in the GitHub repository for this project).
 
 
-    All of this is subject to change (obviously).
+    All of this is subject
+    to change (obviously).
 
 
-    If you
-    are a content creator, it would be preferable if you would make a video on this.
-    (The more play-testers, the better!)
+    If you are a content creator, it would be preferable
+    if you would make a video on this. (The more play-testers, the better!)
 
 
-    You may notice that Bonus prisons
-    are not available to play now. There are still some mechanics in the more complex
-    DLC maps that are not yet implemented. These will be in 1.0.0.
+    IF
+    YOU FIND BUGS: There is a debug log file in the files of this game that shows
+    error logs and other things that are important for me to debug. This file is
+    located in:
 
-
-    IF YOU FIND
-    BUGS: There is a debug log file in the files of this game that shows error logs
-    and other things that are important for me to debug. This file is located in:
-
-    The
-    Escapists Reincarcerated/Assets/StreamingAssets/log.txt'
+    The Escapists Reincarcerated/Assets/StreamingAssets/log.txt'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}
   m_sharedMaterial: {fileID: 3945515202519179421, guid: 24847eac70a39104f96250ba2489cfc7, type: 2}

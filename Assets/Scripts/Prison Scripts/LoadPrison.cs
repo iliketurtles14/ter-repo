@@ -20,7 +20,6 @@ public class LoadPrison : MonoBehaviour
     public Dictionary<int, Sprite> customItemSprites = new Dictionary<int, Sprite>();
     public string[] speech;
     public string[] items;
-    public string[] tooltips;
 
     private List<Sprite> ItemSprites = new List<Sprite>();
     private List<Sprite> NPCSprites = new List<Sprite>();
@@ -2301,7 +2300,7 @@ public class LoadPrison : MonoBehaviour
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[265];
                         break;
                     case "PlayerBedHorizontal":
-                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[267];
+                        objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[265];
                         break;
                     case "Concrete":
                         objInst.GetComponent<SpriteRenderer>().sprite = PrisonObjectSprites[282];
@@ -2471,11 +2470,6 @@ public class LoadPrison : MonoBehaviour
         {
             speech = Resources.Load<TextAsset>("Speech").text.Split("\n");
         }
-        if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
-        {
-            tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
-            File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
-        }
         if (File.Exists(Path.Combine(extractPath, "Items.ini")))
         {
             items = File.ReadAllLines(Path.Combine(extractPath, "Items.ini"));
@@ -2547,7 +2541,6 @@ public class LoadPrison : MonoBehaviour
         string musicStr = GetINIVar("Properties", "Music", data);
         string speechStr = GetINIVar("Properties", "Speech", data);
         string itemsStr = GetINIVar("Properties", "Items", data);
-        string tooltipsStr = GetINIVar("Properties", "Tooltips", data);
         if (tilesetStr != "Custom")
         {
             tileset = TextureToSprite(givenDataScript.tileTextureList[tilesetDict[prisonDict[tilesetStr]]]);
@@ -2961,7 +2954,7 @@ public class LoadPrison : MonoBehaviour
                 break;
         }
 
-        Map map = new Map(fileName, type, mapName, note, noteType, wardenName, warden, useAlcaNote, alcaNote, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tooltipsStr, tileset, ground, icon, speech, items, tooltips, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars, tileList, brokenTile);
+        Map map = new Map(fileName, type, mapName, note, noteType, wardenName, warden, useAlcaNote, alcaNote, guardCount, inmateCount, tilesetStr, groundStr, musicStr, speechStr, itemsStr, tileset, ground, icon, speech, items, music, customItemSprites, groundObjectProperties, undergroundObjectProperties, ventObjectProperties, roofObjectProperties, amountOfItems, npcLevel, grounds, sizeX, sizeY, hint1, hint2, hint3, snowing, stunRods, ssVisitors, perksMsgs, tutorial, playerBody, playerOutfit, npcBody, npcOutfit, wardenCharacter, routineDict, startingJob, janitor, gardening, laundry, kitchen, tailor, woodshop, metalshop, deliveries, mailman, library, letter, toymaker, taskmaster, manure, tilesList, objNames, objVars, zoneNames, zoneVars, tileList, brokenTile);
         return map;
     }
     private Sprite ConvertPNGToSprite(string path)

@@ -1,17 +1,10 @@
-using Ookii.Dialogs;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Build;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public class TutorialController : MonoBehaviour
 {

@@ -875,7 +875,7 @@ public class NPCAI : MonoBehaviour
         Vector3 currentCanteenSeatPos = Vector3.zero;
         foreach(Transform seat in tiles.Find("GroundObjects"))
         {
-            if(seat.name == "Seat")
+            if(seat.name == "Seat" || seat.name == "ETChair")
             {
                 if(seat.GetComponent<SeatNumber>().seatNumber == npcNum)
                 {

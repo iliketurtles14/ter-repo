@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
@@ -832,7 +831,7 @@ public class MEButtonController : MonoBehaviour
                     uic.Find("AdvancedPanel").Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = "Normal";
                 }
                 break;
-            case "Items":
+            case "ItemsButton":
                 try
                 {
                     itemsPath = StandaloneFileBrowser.OpenFilePanel(msg, "", extensions, false)[0];

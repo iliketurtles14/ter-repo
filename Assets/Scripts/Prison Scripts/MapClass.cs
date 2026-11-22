@@ -22,13 +22,11 @@ public class Map
     public string musicStr;
     public string speechStr;//
     public string itemsStr;//
-    public string tooltipsStr;//
     public Sprite tileset;
     public Sprite ground;
     public Sprite icon;
     public string[] speech;//
     public string[] items;//
-    public string[] tooltips;//
     public List<AudioClip> music;//
     public Dictionary<int, Sprite> customItemSpriteDict;//
     public string[] groundObjectProperties;       //these are just the INISet of those headers in the
@@ -94,13 +92,11 @@ public class Map
         string musicStr,
         string speechStr,
         string itemsStr,
-        string tooltipsStr,
         Sprite tileset,
         Sprite ground,
         Sprite icon,
         string[] speech,
         string[] items,
-        string[] tooltips,
         List<AudioClip> music,
         Dictionary<int, Sprite> customItemSpriteDict,
         string[] groundObjectProperties,
@@ -166,13 +162,11 @@ public class Map
         this.musicStr = musicStr;
         this.speechStr = speechStr;
         this.itemsStr = itemsStr;
-        this.tooltipsStr = tooltipsStr;
         this.tileset = tileset;
         this.ground = ground;
         this.icon = icon;
         this.speech = speech;
         this.items = items;
-        this.tooltips = tooltips;
         this.music = music;
         this.customItemSpriteDict = customItemSpriteDict;
         this.groundObjectProperties = groundObjectProperties;

@@ -1327,11 +1327,11 @@ public class Tooltips : MonoBehaviour
 			{
 				toPrint = "Sun Lounger";
 			}
-			else if (mcs.touchedSittable.name.StartsWith("Seat"))
+			else if (mcs.touchedSittable.name.StartsWith("Seat") || mcs.touchedSittable.name == "ETChair")
 			{
 				toPrint = "Sit Down";
 			}
-			else if (mcs.touchedSittable.name.StartsWith("Locker"))
+			else if (mcs.touchedSittable.name.Contains("Locker"))
 			{
 				toPrint = "Cabinet (hide)";
 			}
@@ -1364,11 +1364,11 @@ public class Tooltips : MonoBehaviour
 			{
 				str = "Sun Lounger";
 			}
-			else if (mcs.touchedSittable.name.StartsWith("Seat"))
+			else if (mcs.touchedSittable.name.StartsWith("Seat") || mcs.touchedSittable.name == "ETChair")
 			{
 				str = "Sit Down";
 			}
-			else if (mcs.touchedSittable.name.StartsWith("Locker"))
+			else if (mcs.touchedSittable.name.Contains("Locker"))
 			{
 				str = "Cabinet (hide)";
 			}

@@ -80,7 +80,7 @@ public class SetFacingDirections : MonoBehaviour //this is for what direction np
         {
             foreach (Transform obj in tiles.Find("GroundObjects"))
             {
-                if (obj.name == "Seat")
+                if (obj.name == "Seat" || obj.name == "ETChair")
                 {
                     //checking if the seat is within the zone
                     Vector2 zoneSize = canteenZone.GetComponent<BoxCollider2D>().size;
@@ -99,7 +99,7 @@ public class SetFacingDirections : MonoBehaviour //this is for what direction np
         {
             foreach(Transform obj in tiles.Find("GroundObjects"))
             {
-                if(obj.name == "Seat")
+                if(obj.name == "Seat" || obj.name == "ETChair")
                 {
                     canteenChairs.Add(obj);
                 }
@@ -192,7 +192,7 @@ public class SetFacingDirections : MonoBehaviour //this is for what direction np
 
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
-            if(obj.name == "Seat")
+            if(obj.name == "Seat" || obj.name == "ETChair")
             {
                 allChairs.Add(obj);
             }

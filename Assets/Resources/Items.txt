@@ -6404,7 +6404,7 @@ CameraBlock=-1
 Sprite=161
 
 [266]
-Name=Somberero
+Name=Sombrero
 DeskTier=0
 InInmateInv=False
 Cost=-1

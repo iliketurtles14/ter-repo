@@ -163,6 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964829237872583789}
   - component: {fileID: 1887256364397733173}
+  - component: {fileID: 2735384982364480770}
   m_Layer: 6
   m_Name: Bag
   m_TagString: Untagged
@@ -232,7 +233,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 7
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -244,3 +245,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2735384982364480770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182619619790057633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b630054e0012b409480e79b96dc406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

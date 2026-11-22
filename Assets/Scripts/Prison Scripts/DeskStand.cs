@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System;
 
 public class DeskStand : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class DeskStand : MonoBehaviour
     public bool shouldStepOff = true;
     public HPAChecker HPAScript;
     private bool desksAreLoaded;
+    private List<GameObject> tables = new List<GameObject>();
     private void Start()
     {
         StartCoroutine(StartWait());
@@ -46,6 +48,17 @@ public class DeskStand : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         desks = GameObject.FindGameObjectsWithTag("Desk");
+        foreach(Transform obj in tiles.Find("GroundObjects"))
+        {
+            if (obj.CompareTag("Table"))
+            {
+                tables.Add(obj.gameObject);
+            }
+            else if (obj.CompareTag("FoodTable"))
+            {
+                tables.Add(obj.gameObject);
+            }
+        }
         desksAreLoaded = true;
     }
     private void Update()
@@ -76,7 +89,7 @@ public class DeskStand : MonoBehaviour
         {
             foreach (GameObject desk in desks)
             {
-                if (desk.name != "YardWorkBox" && desk.name != "CutleryTable" && player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                if (player.GetComponent<CapsuleCollider2D>().IsTouching(desk.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
                 {
                     isClimbing = true;
                     StartCoroutine(ClimbDesk(desk));
@@ -91,6 +104,18 @@ public class DeskStand : MonoBehaviour
                     {
                         isClimbing = true;
                         StartCoroutine(ClimbDesk(sl));
+                        break;
+                    }
+                }
+            }
+            if (!isClimbing)
+            {
+                foreach(GameObject table in tables)
+                {
+                    if (player.GetComponent<CapsuleCollider2D>().IsTouching(table.transform.Find("ClimbingArea").GetComponent<BoxCollider2D>()) && Input.GetKeyDown(KeyCode.F))
+                    {
+                        isClimbing = true;
+                        StartCoroutine(ClimbDesk(table));
                         break;
                     }
                 }
@@ -120,6 +145,17 @@ public class DeskStand : MonoBehaviour
             }
             if (!isOnADesk)
             {
+                foreach(GameObject table in tables)
+                {
+                    if (player.GetComponent<CapsuleCollider2D>().IsTouching(table.GetComponent<BoxCollider2D>()))
+                    {
+                        isOnADesk = true;
+                        break;
+                    }
+                }
+            }
+            if (!isOnADesk)
+            {
                 hasClimbed = false;
                 hasJumped = false;
                 StepOffDesk();
@@ -141,7 +177,10 @@ public class DeskStand : MonoBehaviour
         {
             sl.GetComponent<BoxCollider2D>().isTrigger = true;
         }
-
+        foreach(GameObject table in tables)
+        {
+            table.GetComponent<BoxCollider2D>().isTrigger = true;
+        }
         Vector3 deskVector = desk.transform.position;
         float speed = 5f;
         Vector3 direction = ((deskVector) - player.transform.position).normalized;
@@ -186,6 +225,10 @@ public class DeskStand : MonoBehaviour
         foreach (GameObject aDesk in desks)
         {
             aDesk.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        foreach(GameObject table in tables)
+        {
+            table.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         int uiLayer = LayerMask.NameToLayer("UI");
         int ventCoverLayer = LayerMask.NameToLayer("VentCovers");

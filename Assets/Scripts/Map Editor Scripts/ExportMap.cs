@@ -48,7 +48,6 @@ public class ExportMap : MonoBehaviour
         SubMenuController subMenuControllerScript = GetComponent<SubMenuController>();
 
         text += "[Properties]\n";
-        text += "Version=0.0.7\n";
         text += "MapName=" + properties.Find("NameInputField").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";
         List<Transform> notePanels = new List<Transform>
         {
@@ -76,7 +75,6 @@ public class ExportMap : MonoBehaviour
         text += "Ground=" + properties.Find("GroundResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Music=" + advanced.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Speech=" + advanced.Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text + "\n";
-        text += "Tooltips=" + advanced.Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Items=" + advanced.Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "Icon=" + properties.Find("IconResultText").GetComponent<TextMeshProUGUI>().text + "\n";
         text += "NPCLevel=" + properties.Find("NPCLevelNum").Find("Text Area").Find("Text").GetComponent<TextMeshProUGUI>().text + "\n";

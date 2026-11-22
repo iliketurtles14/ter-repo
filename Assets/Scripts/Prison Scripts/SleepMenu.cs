@@ -17,6 +17,7 @@ public class SleepMenu : MonoBehaviour
     private Transform tiles;
     private PauseController pc;
     private Transform mc;
+    private InventorySelection selectionScript;
     private void Start()
     {
         scheduleScript = RootObjectCache.GetRoot("InventoryCanvas").transform.Find("Period").GetComponent<Schedule>();
@@ -29,6 +30,7 @@ public class SleepMenu : MonoBehaviour
         tiles = RootObjectCache.GetRoot("Tiles").transform;
         pc = RootObjectCache.GetRoot("ScriptObject").GetComponent<PauseController>();
         mc = RootObjectCache.GetRoot("MenuCanvas").transform;
+        selectionScript = RootObjectCache.GetRoot("ScriptObject").GetComponent<InventorySelection>();
 
         DataSender ds = DataSender.instance;
         if(ds.currentSave == -1)
@@ -55,7 +57,7 @@ public class SleepMenu : MonoBehaviour
             return;
         }
 
-        if(Input.GetMouseButtonDown(0) && mcs.isTouchingSittable && mcs.touchedSittable.name.Contains("PlayerBed"))
+        if(!selectionScript.aSlotSelected && Input.GetMouseButtonDown(0) && mcs.isTouchingSittable && mcs.touchedSittable.name.Contains("PlayerBed"))
         {
             float distance = Vector2.Distance(player.position, mcs.touchedSittable.transform.position);
             if(distance > 2.4f)

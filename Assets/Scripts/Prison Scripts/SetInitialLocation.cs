@@ -38,12 +38,18 @@ public class SetInitialLocation : MonoBehaviour
         //get bed location
         Vector3 bedLocation = Vector3.zero;
 
+        bool isHori = false;
         foreach(Transform obj in tiles.Find("GroundObjects"))
         {
-            if(obj.name == "PlayerBedVertical")
+            if(obj.name == "PlayerBedVertical" || obj.name == "PlayerBedHorizontal")
             {
                 bedLocation = obj.position;
                 sittablesScript.sittable = obj.gameObject;
+                if(obj.name == "PlayerBedHorizontal")
+                {
+                    isHori = true;
+                }
+                break;
             }
         }
         if(bedLocation == Vector3.zero)
@@ -61,6 +67,10 @@ public class SetInitialLocation : MonoBehaviour
         {
             player.position = bedLocation + new Vector3(0, .35f); //offset for beds. this is in Sittables.cs
         }
+        if (isHori)
+        {
+            player.position = bedLocation + new Vector3(-.3f, .1f);
+        }
         sittablesScript.onSittable = true;
         sittablesScript.onBed = true;
 
@@ -71,18 +81,26 @@ public class SetInitialLocation : MonoBehaviour
         vitalScript.energyRate = 1;
         vitalScript.energyRateAmount = 2;
         player.GetComponent<PlayerAnimation>().enabled = false;
-        player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][1];
-        player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
-        int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
-        if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
+        if (isHori)
         {
-            if(NPCSave.instance.playerCharacter != 1)
+            player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][2];
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][2];
+        }
+        else
+        {
+            player.GetComponent<SpriteRenderer>().sprite = bc.characterDict[bc.character][0][1];
+            player.transform.Find("Outfit").GetComponent<SpriteRenderer>().sprite = oc.outfitDict[oc.outfit][0][1];
+            int outfitItemID = mc.Find("PlayerMenuPanel").GetComponent<PlayerIDInv>().idInv[0].itemData.id;
+            if (outfitItemID == 29 || outfitItemID == 30 || outfitItemID == 31 || outfitItemID == 32) //check if its an inmate outfit (this is because the inmate sleeping outfit sprite is not 16x16 like every other sprite for some reason)
             {
-                player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
-            }
-            else
-            {
-                player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                if (NPCSave.instance.playerCharacter != 1)
+                {
+                    player.transform.Find("Outfit").localPosition = new Vector3(0, -.025f, 0);
+                }
+                else
+                {
+                    player.transform.Find("Outfit").localPosition = new Vector3(0, -.02f, 0);
+                }
             }
         }
     }

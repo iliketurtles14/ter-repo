@@ -34,7 +34,6 @@ public class LoadMap : MonoBehaviour
     public string[] data = null;
     public string[] speech = null;
     public string[] items = null;
-    public string[] tooltips = null;
 
     private List<string> musicNames = new List<string>
     {
@@ -121,11 +120,6 @@ public class LoadMap : MonoBehaviour
             {
                 speech = File.ReadAllLines(Path.Combine(extractPath, "Speech.ini"));
                 File.Delete(Path.Combine(extractPath, "Speech.ini"));
-            }
-            if (File.Exists(Path.Combine(extractPath, "Tooltips.ini")))
-            {
-                tooltips = File.ReadAllLines(Path.Combine(extractPath, "Tooltips.ini"));
-                File.Delete(Path.Combine(extractPath, "Tooltips.ini"));
             }
             if (File.Exists(Path.Combine(extractPath, "Items.ini")))
             {
@@ -225,7 +219,6 @@ public class LoadMap : MonoBehaviour
         properties.Find("SizeResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Size", data);
         advanced.Find("MusicResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Music", data);
         advanced.Find("SpeechResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Speech", data);
-        advanced.Find("TooltipsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Tooltips", data);
         advanced.Find("ItemsResultText").GetComponent<TextMeshProUGUI>().text = GetINIVar("Properties", "Items", data);
         //uic.Find("NotePanel").Find("NoteInputField").GetComponent<TMP_InputField>().text = Regex.Unescape(GetINIVar("Properties", "Note", data));
         //uic.Find("NotePanel").Find("WardenInputField").GetComponent<TMP_InputField>().text = GetINIVar("Properties", "Warden", data);

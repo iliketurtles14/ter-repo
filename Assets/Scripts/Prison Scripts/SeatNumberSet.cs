@@ -26,7 +26,7 @@ public class SeatNumberSet : MonoBehaviour
         int i = 1;
         foreach(Transform seat in tiles.Find("GroundObjects"))
         {
-            if(seat.name == "Seat")
+            if(seat.name == "Seat" || seat.name == "ETChair")
             {
                 seat.GetComponent<SeatNumber>().seatNumber = i;
                 i++;

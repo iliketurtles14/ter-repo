@@ -1,13 +1,7 @@
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms.VisualStyles;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.PlayerLoop;
-using static UnityEditor.PlayerSettings;
 
 public class Sharks : MonoBehaviour
 {
